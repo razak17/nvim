@@ -205,9 +205,34 @@ lsp.handlers[M.textDocument_definition] = function(_, result, ctx)
   if client then goto_definition_handler(client, result, ctx) end
 end
 
--- References handler
-lsp.handlers[M.textDocument_references] = function(_, _, _)
-  require('telescope.builtin').lsp_references()
+local function references_handler()
+  local params = {}
+  if
+    vim.bo.filetype == 'typescript' or vim.bo.filetype == 'typescriptreact'
+  then
+    -- for typescript, filter out import statements
+    local Path = require('plenary.path')
+    params.post_process_results = function(list)
+      return vim.tbl_filter(function(match)
+        local file = match.uri:gsub('file://', '')
+        local lnum = match.range.start.line
+        if lnum + 1 == vim.fn.line('.') and file == vim.fn.expand('%:p') then
+          -- drop the declaration i'm asking the references from...
+          -- not sure why typescript is listing the declaration in the references...
+          return false
+        end
+        local path = Path.new(file)
+        local contents = path:read()
+        local it = contents:gmatch('([^\n]*)\n?')
+        local line = ''
+        for _i = 0, lnum, 1 do
+          line = it()
+        end
+        return not line:match('^%s*import ')
+      end, list)
+    end
+  end
+  require('telescope.builtin').lsp_references(params)
 end
 
 -- References handler
@@ -350,7 +375,7 @@ local function setup_mappings(client, bufnr)
     {
       'n',
       'gr',
-      lsp.buf.references,
+      references_handler,
       desc = 'references',
       capability = M.textDocument_references,
     },
