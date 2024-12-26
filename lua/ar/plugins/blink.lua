@@ -114,14 +114,7 @@ return {
               end
               return items
             end,
-            opts = {
-              -- the minimum length of the current word to start searching
-              -- (if the word is shorter than this, the search will not start)
-              prefix_min_len = 5,
-              -- The number of lines to show around each match in the preview window
-              context_size = 5,
-              max_filesize = '1M',
-            },
+            opts = { prefix_min_len = 5 },
           },
           dadbod = { name = '[DB]', module = 'vim_dadbod_completion.blink' },
         },
