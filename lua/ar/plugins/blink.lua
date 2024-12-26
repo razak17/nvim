@@ -59,16 +59,32 @@ return {
       },
       sources = {
         completion = {
-          enabled_providers = {
-            'lsp',
-            'path',
-            'snippets',
-            'buffer',
-            'luasnip',
-            'ripgrep',
-            'copilot',
-            'dadbod',
-          },
+          enabled_providers = function(_)
+            local node = vim.treesitter.get_node()
+            local providers = {
+              'lsp',
+              'path',
+              'snippets',
+              'buffer',
+              'luasnip',
+              'ripgrep',
+              -- 'copilot',
+              'dadbod',
+            }
+
+            if
+              node
+              and vim.tbl_contains(
+                { 'comment', 'line_comment', 'block_comment' },
+                node:type()
+              )
+            then
+              return { 'buffer' }
+            else
+              if ar.ai.enable then table.insert(providers, 2, 'copilot') end
+              return providers
+            end
+          end,
         },
         appearance = {
           use_nvim_cmp_as_default = true,
@@ -79,6 +95,7 @@ return {
         },
         providers = {
           copilot = {
+            enabled = ar.ai.enable,
             name = 'copilot',
             module = 'blink-cmp-copilot',
             kind = 'Copilot',
@@ -175,7 +192,7 @@ return {
       'mikavilpas/blink-ripgrep.nvim',
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',
-      'giuxtaposition/blink-cmp-copilot',
+      { 'giuxtaposition/blink-cmp-copilot', cond = ar.ai.enable },
       {
         'saghen/blink.compat',
         version = '*',
