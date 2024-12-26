@@ -10,19 +10,9 @@ return {
   'kevinhwang91/promise-async',
   'kkharji/sqlite.lua',
   'tpope/vim-rhubarb',
-  'nvchad/volt',
   { 'tyru/capture.vim', cmd = { 'Capture' } },
   { 'jghauser/mkdir.nvim', lazy = false },
   { 'Rasukarusan/nvim-block-paste', cmd = { 'Block' } },
-  {
-    'nvzone/timerly',
-    cmd = 'TimerlyToggle',
-    init = function()
-      ar.add_to_menu('command_palette', {
-        ['Toggle Timer'] = 'TimerlyToggle',
-      })
-    end,
-  },
   {
     'ryoppippi/nvim-reset',
     cond = false,

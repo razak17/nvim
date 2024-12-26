@@ -2,30 +2,6 @@ local minimal = ar.plugins.minimal
 
 return {
   {
-    'nvchad/minty',
-    cond = not minimal,
-    init = function()
-      ar.add_to_menu('toggle', {
-        ['Toggle Color Picker'] = function()
-          -- For border or without border
-          require('minty.huefy').open()
-          -- add border=false for flat look on shades window
-        end,
-      })
-    end,
-    keys = {
-      {
-        '<leader>oP',
-        '<Cmd>lua require("minty.huefy").open( { border = true } )<CR>',
-        desc = 'toggle minty',
-      },
-    },
-    config = function()
-      require('minty.huefy').open()
-      require('minty.shades').open()
-    end,
-  },
-  {
     'catgoose/nvim-colorizer.lua',
     config = function() require('colorizer').setup() end,
     cmd = {

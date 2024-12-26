@@ -1,22 +1,6 @@
 local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
-  {
-    'nvchad/showkeys',
-    cond = not minimal,
-    init = function()
-      ar.add_to_menu(
-        'command_palette',
-        { ['Toggle Screencaster'] = 'ShowkeysToggle' }
-      )
-    end,
-    cmd = 'ShowkeysToggle',
-    opts = {
-      position = 'top-right',
-      timeout = 1,
-      maxkeys = 17,
-    },
-  },
   --------------------------------------------------------------------------------
   -- Disabled
   --------------------------------------------------------------------------------
