@@ -159,7 +159,7 @@ end
 ---@param client vim.lsp.Client
 local function jump_to_first_definition(result, client)
   if #result == 1 then
-    vim.lsp.util.show_document(result[1], client.offset_encoding)
+    lsp.util.show_document(result[1], client.offset_encoding)
     return
   end
 
@@ -183,26 +183,35 @@ local function jump_to_first_definition(result, client)
   end
 end
 
+---@param client vim.lsp.Client
+---@param result table
+---@param ctx table
+local function goto_definition_handler(client, result, ctx)
+  if result == nil or vim.tbl_isempty(result) then
+    local _ = lsp.log.info() and lsp.log.info(ctx.method, 'No location found')
+    return nil
+  end
+
+  if vim.islist(result) then
+    jump_to_first_definition(result, client)
+  else
+    lsp.util.show_document(result, client.offset_encoding)
+  end
+  vim.cmd([[norm! zz]])
+end
+
 lsp.handlers[M.textDocument_definition] = function(_, result, ctx)
   local client = vim.lsp.get_client_by_id(ctx.client_id)
-  if client then
-    if result == nil or vim.tbl_isempty(result) then
-      local _ = lsp.log.info() and lsp.log.info(ctx.method, 'No location found')
-      return nil
-    end
-
-    if vim.islist(result) then
-      jump_to_first_definition(result, client)
-    else
-      vim.lsp.util.show_document(result, client.offset_encoding)
-    end
-  end
+  if client then goto_definition_handler(client, result, ctx) end
 end
 
 -- References handler
 lsp.handlers[M.textDocument_references] = function(_, _, _)
   require('telescope.builtin').lsp_references()
 end
+
+-- References handler
+lsp.handlers[M.textDocument_references] = function(_, _, _) references_handler() end
 
 --------------------------------------------------------------------------------
 --  Truncate typescript inlay hints
@@ -322,10 +331,19 @@ local function setup_mappings(client, bufnr)
     {
       'n',
       'gd',
-      lsp.buf.definition,
+      function()
+        local params = lsp.util.make_position_params(0, client.offset_encoding)
+        lsp.buf_request(
+          bufnr,
+          M.textDocument_definition,
+          params,
+          function(_, result, ctx)
+            if client then goto_definition_handler(client, result, ctx) end
+          end
+        )
+      end,
       desc = 'definition',
       capability = M.textDocument_definition,
-      exclude = { 'ts_ls', 'vtsls' },
     },
     { 'n', 'gl', diagnostic_float(), desc = 'cursor diagnostics' },
     { 'n', 'gL', diagnostic_float(true), desc = 'line diagnostics' },
