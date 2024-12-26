@@ -1,7 +1,9 @@
+local M = {}
+
 --- File renaming with LSP support
 ---@param from string
 ---@param to string
-local function on_rename_file(from, to)
+function M.on_rename_file(from, to)
   local clients = vim.lsp.get_clients()
   for _, client in ipairs(clients) do
     if client.supports_method('workspace/willRenameFiles') then
@@ -20,6 +22,4 @@ local function on_rename_file(from, to)
   end
 end
 
-ar.helpers = {
-  on_rename_file = on_rename_file,
-}
+return M

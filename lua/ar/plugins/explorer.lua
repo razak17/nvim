@@ -1,11 +1,12 @@
 local icons, codicons, copy = ar.ui.icons, ar.ui.codicons, ar.copy
 local highlight, lsp_hls = ar.highlight, ar.ui.lsp.highlights
 local api, fn = vim.api, vim.fn
+local utils = require('ar.utils.fs')
 
 ---@param from string
 ---@param to string
 local function on_rename(from, to)
-  if ar.explorer.rename == 'local' then ar.helpers.on_rename_file(from, to) end
+  if ar.explorer.rename == 'local' then utils.on_rename_file(from, to) end
   if ar.explorer.rename == 'snacks' then
     local snacks_ok, snacks = pcall(require, 'snacks')
     if not snacks_ok then return end
