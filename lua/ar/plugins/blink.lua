@@ -15,14 +15,10 @@ return {
     },
     opts = {
       appearance = {
-        -- sets the fallback highlight groups to nvim-cmp's highlight groups
-        -- useful for when your theme doesn't support blink.cmp
-        -- will be removed in a future release, assuming themes add support
-        use_nvim_cmp_as_default = false,
-        -- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-        -- adjusts spacing to ensure icons are aligned
+        use_nvim_cmp_as_default = true,
         nerd_font_variant = 'mono',
       },
+      signature = { enabled = true },
       completion = {
         accept = {
           -- experimental auto-brackets support
@@ -64,42 +60,32 @@ return {
         },
       },
       sources = {
-        compat = {},
-        completion = {
-          enabled_providers = function(_)
-            local node = vim.treesitter.get_node()
-            local providers = {
-              'lsp',
-              'path',
-              'snippets',
-              'buffer',
-              'luasnip',
-              'ripgrep',
-              'dadbod',
-              'nvim-px-to-rem',
-            }
+        default = function()
+          local node = vim.treesitter.get_node()
+          local providers = {
+            'lsp',
+            'path',
+            'snippets',
+            'buffer',
+            'luasnip',
+            'ripgrep',
+            'dadbod',
+            'nvim-px-to-rem',
+          }
 
-            if
-              node
-              and vim.tbl_contains(
-                { 'comment', 'line_comment', 'block_comment' },
-                node:type()
-              )
-            then
-              return { 'buffer' }
-            else
-              if ar.ai.enable then table.insert(providers, 2, 'copilot') end
-              return providers
-            end
-          end,
-        },
-        appearance = {
-          use_nvim_cmp_as_default = true,
-          nerd_font_variant = 'mono',
-        },
-        signature = {
-          enabled = true,
-        },
+          if
+            node
+            and vim.tbl_contains(
+              { 'comment', 'line_comment', 'block_comment' },
+              node:type()
+            )
+          then
+            return { 'buffer' }
+          else
+            if ar.ai.enable then table.insert(providers, 2, 'copilot') end
+            return providers
+          end
+        end,
         providers = {
           lsp = { name = '[LSP]' },
           path = { name = '[PATH]' },
@@ -109,7 +95,6 @@ return {
             enabled = ar.ai.enable,
             name = '[CPL]',
             module = 'blink-cmp-copilot',
-            kind = 'Copilot',
             score_offset = 100,
             async = true,
           },
@@ -141,7 +126,18 @@ return {
         },
       },
       keymap = {
-        preset = 'enter',
+        preset = 'default',
+        ['<C-l>'] = { 'snippet_forward', 'fallback' },
+        ['<C-h>'] = { 'snippet_backward', 'fallback' },
+        ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
+        ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
+        ['<CR>'] = { 'accept', 'fallback' },
+        ['<C-space>'] = {
+          'show',
+          'show_documentation',
+          'hide_documentation',
+          'fallback',
+        },
         ['<A-1>'] = {
           function(cmp) cmp.accept({ index = 1 }) end,
         },
