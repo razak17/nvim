@@ -55,15 +55,6 @@ function M.generate_plugins()
     table.insert(file_content, p)
   end
 
-  table.insert(file_content, '')
-  table.insert(file_content, '## 🗃️ Version manager')
-  table.insert(file_content, '')
-  table.insert(file_content, '- [bob](https://github.com/MordechaiHadad/bob)')
-  table.insert(file_content, '')
-  table.insert(file_content, '## ✨ GUI')
-  table.insert(file_content, '')
-  table.insert(file_content, '- [Neovide](https://neovide.dev/)')
-
   local file, err = io.open(vim.fn.stdpath('config') .. '/PLUGINS.md', 'w')
   if not file then error(err) end
   file:write(table.concat(file_content, '\n'))
