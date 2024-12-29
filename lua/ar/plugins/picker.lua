@@ -143,6 +143,7 @@ return {
           ['--info'] = 'default', -- hidden OR inline:⏐
           ['--reverse'] = false,
           ['--scrollbar'] = '▓',
+          ['--no-scrollbar'] = true,
           ['--ellipsis'] = ui.icons.misc.ellipsis,
         },
         fzf_colors = {
