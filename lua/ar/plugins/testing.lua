@@ -238,4 +238,73 @@ return {
       },
     },
   },
+  {
+    'quolpr/quicktest.nvim',
+    cond = not minimal,
+    init = function()
+      vim.g.whichkey_add_spec({
+        { '<leader>tq', group = 'Quicktest' },
+      })
+    end,
+    keys = {
+      {
+        '<leader>tql',
+        function()
+          local qt = require('quicktest')
+          qt.run_line('auto', 'auto', { additional_args = { '-count=5' } })
+        end,
+        desc = 'quicktest: test run line',
+      },
+      {
+        '<leader>tqf',
+        function() require('quicktest').run_file() end,
+        desc = 'quicktest: test run file',
+      },
+      {
+        '<leader>tqd',
+        function() require('quicktest').run_dir() end,
+        desc = 'quicktest: test run dir',
+      },
+      {
+        '<leader>tqa',
+        function() require('quicktest').run_all() end,
+        desc = 'quicktest: test run all',
+      },
+      {
+        '<leader>tqp',
+        function() require('quicktest').run_previous() end,
+        desc = 'quicktest: test run previous',
+      },
+      {
+        '<leader>tqt',
+        function() require('quicktest').toggle_win('split') end,
+        desc = 'quicktest: test toggle window',
+      },
+      {
+        '<leader>tqc',
+        function() require('quicktest').cancel_current_run() end,
+        desc = 'quicktest: test cancel run',
+      },
+    },
+    opts = function()
+      return {
+        adapters = {
+          require('quicktest.adapters.golang')({
+            args = function(bufnt, args)
+              vim.list_extend(args, { '-count=1' })
+              return args
+            end,
+          }),
+          require('quicktest.adapters.vitest'),
+          require('quicktest.adapters.elixir'),
+          require('quicktest.adapters.dart'),
+          require('quicktest.adapters.playwright'),
+        },
+        default_win_mode = 'split',
+        use_experimental_colorizer = true,
+      }
+    end,
+    config = function(_, opts) require('quicktest').setup(opts) end,
+    dependencies = { 'nvim-lua/plenary.nvim', 'MunifTanjim/nui.nvim' },
+  },
 }
