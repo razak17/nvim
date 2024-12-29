@@ -7,57 +7,18 @@ return {
     'folke/snacks.nvim',
     priority = 1000,
     lazy = false,
+    -- stylua: ignore
     keys = {
-      {
-        '<leader>nx',
-        function() require('snacks').notifier.hide() end,
-        desc = 'snacks: dismiss all notifications',
-      },
-      {
-        '<leader>nh',
-        function() require('snacks').notifier.show_history() end,
-        desc = 'snacks: show notification history',
-      },
-      {
-        '<leader>gbb',
-        function() require('snacks').git.blame_line() end,
-        desc = 'snacks: git blame line',
-      },
-      {
-        '<leader>goo',
-        function() require('snacks').gitbrowse() end,
-        desc = 'snacks: open current line',
-      },
-      {
-        '<leader>gh',
-        function() require('snacks').lazygit.log_file() end,
-        desc = 'snacks: log (file)',
-      },
-      {
-        '<leader>gH',
-        function() require('snacks').lazygit.log() end,
-        desc = 'snacks: log (cwd)',
-      },
-      {
-        '<leader>or',
-        function() require('snacks').rename.rename_file() end,
-        desc = 'Rename File',
-      },
-      {
-        '<leader>o/',
-        function() require('snacks').terminal() end,
-        desc = 'snacks: toggle terminal',
-      },
-      {
-        '<leader>ps',
-        function() require('snacks').profiler.scratch() end,
-        desc = 'snacks: profiler scratch buffer',
-      },
-      {
-        '<leader>pu',
-        function() require('snacks').profiler.toggle() end,
-        desc = 'snacks: toggle profiler',
-      },
+      { '<leader>nx', function() Snacks.notifier.hide() end, desc = 'snacks: dismiss all notifications' },
+      { '<leader>nh', function() Snacks.notifier.show_history() end, desc = 'snacks: show notification history' },
+      { '<leader>gbb', function() Snacks.git.blame_line() end, desc = 'snacks: git blame line' },
+      { '<leader>goo', function() Snacks.gitbrowse() end, desc = 'snacks: open current line' },
+      { '<leader>gh', function() Snacks.lazygit.log_file() end, desc = 'snacks: log (file)' },
+      { '<leader>gH', function() Snacks.lazygit.log() end, desc = 'snacks: log (cwd)' },
+      { '<leader>or', function() Snacks.rename.rename_file() end, desc = 'Rename File' },
+      { '<leader>o/', function() Snacks.terminal() end, desc = 'snacks: toggle terminal' },
+      { '<leader>ps', function() Snacks.profiler.scratch() end, desc = 'snacks: profiler scratch buffer' },
+      { '<leader>pu', function() Snacks.profiler.toggle() end, desc = 'snacks: toggle profiler' },
     },
     opts = {
       styles = {
@@ -91,10 +52,9 @@ return {
       zen = {},
     },
     init = function()
-      local snacks = require('snacks')
       ar.add_to_menu('command_palette', {
         ['Neovim News'] = function()
-          snacks.win({
+          Snacks.win({
             file = vim.api.nvim_get_runtime_file('doc/news.txt', false)[1],
             width = 0.6,
             height = 0.6,
@@ -110,33 +70,33 @@ return {
       })
       ar.add_to_menu('toggle', {
         ['Toggle Light/Dark Background'] = function()
-          snacks.toggle.option(
+          Snacks.toggle.option(
             'background',
             { off = 'light', on = 'dark', name = 'Dark Background' }
           )
         end,
         ['Toggle Relative Number'] = function()
-          snacks.toggle.option('relativenumber', { name = 'Relative Number' })
+          Snacks.toggle.option('relativenumber', { name = 'Relative Number' })
         end,
-        ['Toggle Terminal'] = function() snacks.terminal() end,
+        ['Toggle Terminal'] = function() Snacks.terminal() end,
         ['Toggle Dim'] = function()
-          if snacks.dim.enabled then
-            snacks.dim.disable()
+          if Snacks.dim.enabled then
+            Snacks.dim.disable()
           else
-            snacks.dim.enable({ enabled = true })
+            Snacks.dim.enable({ enabled = true })
           end
         end,
-        ['Toggle Zoom'] = "lua require('snacks').zen.zoom()",
-        ['Toggle Zen'] = "lua require('snacks').zen.zen()",
-        ['Toggle Scratch'] = "lua require('snacks').scratch()",
-        ['Toggle Scratch Buffer'] = "lua require('snacks').scratch.select()",
+        ['Toggle Zoom'] = function() Snacks.zen.zoom() end,
+        ['Toggle Zen'] = function() Snacks.zen.zen() end,
+        ['Toggle Scratch'] = function() Snacks.scratch() end,
+        ['Toggle Scratch Buffer'] = function() Snacks.scratch.select() end,
       })
       vim.api.nvim_create_autocmd('User', {
         pattern = 'VeryLazy',
         callback = function()
           -- Setup some globals for debugging (lazy-loaded)
-          _G.dd = function(...) snacks.debug.inspect(...) end
-          _G.bt = function() snacks.debug.backtrace() end
+          _G.dd = function(...) Snacks.debug.inspect(...) end
+          _G.bt = function() Snacks.debug.backtrace() end
           vim.print = _G.dd -- Override print to use snacks for `:=` command
         end,
       })
@@ -168,6 +128,6 @@ return {
         })
       end
     end,
-    config = function(_, opts) require('snacks').setup(opts) end,
+    config = function(_, opts) Snacks.setup(opts) end,
   },
 }
