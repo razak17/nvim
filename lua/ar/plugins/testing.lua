@@ -21,10 +21,7 @@ return {
     init = function()
       vim.g.whichkey_add_spec({
         { '<leader>t', group = 'Testing' },
-        { '<leader>tc', group = 'Coverage' },
         { '<leader>tn', group = 'Neotest' },
-        { '<leader>to', group = 'Overseer' },
-        { '<leader>tv', group = 'Vim-test' },
       })
     end,
     keys = {
@@ -97,6 +94,11 @@ return {
   {
     'vim-test/vim-test',
     cond = not minimal,
+    init = function()
+      vim.g.whichkey_add_spec({
+        { '<leader>tv', group = 'Vim-test' },
+      })
+    end,
     keys = {
       { '<leader>tvc', '<cmd>TestClass<cr>', desc = 'vim-test: class' },
       { '<leader>tvf', '<cmd>TestFile<cr>', desc = 'vim-test: file' },
@@ -115,6 +117,11 @@ return {
   {
     'stevearc/overseer.nvim',
     cond = not minimal,
+    init = function()
+      vim.g.whichkey_add_spec({
+        { '<leader>to', group = 'Overseer' },
+      })
+    end,
     keys = {
       {
         '<leader>toR',
@@ -179,6 +186,11 @@ return {
   {
     'andythigpen/nvim-coverage',
     cond = not minimal,
+    init = function()
+      vim.g.whichkey_add_spec({
+        { '<leader>tc', group = 'Coverage' },
+      })
+    end,
     keys = {
       {
         '<leader>tcl',
