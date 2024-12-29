@@ -34,6 +34,7 @@ local env = vim.env
 ---@alias ArWhichLspProgress 'builtin' | 'noice' | 'snacks'
 ---@alias ArWhichStatuscolumn 'local' | 'plugin'
 ---@alias ArWhichWinbar 'local' | 'plugin'
+---@alias ArWhichNotifier 'nvim-notify' | 'snacks'
 
 ---@class ArAIModels
 ---@field claude boolean
@@ -174,7 +175,8 @@ local namespace = {
     current = true,
   },
   colorscheme = 'onedark',
-  notifier = 'nvim-notify',
+  ---@type ArWhichNotifier
+  notifier = 'snacks',
   debug = { enable = false },
   ---@type ArExplorer
   explorer = {

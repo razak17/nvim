@@ -70,10 +70,8 @@ return {
       bufdelete = { enabled = false },
       quickfile = { enabled = true },
       notifier = {
+        border = border,
         enabled = ar.notifier == 'snacks',
-        timeout = 3000,
-        top_down = false,
-        margin = { top = 0, right = 1, bottom = 1 },
         icons = {
           error = diag_icons.error,
           warn = diag_icons.warn,
@@ -81,6 +79,8 @@ return {
           debug = codicons.misc.bug_alt,
           trace = diag_icons.trace,
         },
+        style = 'fancy',
+        top_down = false,
       },
       profiler = {
         pick = { picker = 'telescope' },
