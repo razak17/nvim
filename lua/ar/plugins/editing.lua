@@ -341,8 +341,33 @@ return {
     lazy = not ar.plugins.overrides.ghost_text.enable,
   },
   {
+    'jake-stewart/multicursor.nvim',
+    event = 'VeryLazy',
+    config = function()
+      local mc = require('multicursor-nvim')
+      mc.setup()
+      map({ 'n', 'v' }, '<M-e>', function() mc.matchAddCursor(1) end)
+      map({ 'n', 'v' }, '<M-f>', function() mc.matchSkipCursor(1) end)
+      map('n', '<esc>', function()
+        if mc.cursorsEnabled() then mc.clearCursors() end
+      end)
+      ar.highlight.plugin('multicursor', {
+        theme = {
+          ['onedark'] = {
+            {
+              MultiCursorCursor = {
+                bg = { from = 'Special', attr = 'fg' },
+                fg = { from = 'Comment' },
+              },
+            },
+          },
+        },
+      })
+    end,
+  },
+  {
     'smoka7/multicursors.nvim',
-    cond = not minimal,
+    cond = not minimal and false,
     opts = {
       hint_config = { border = border },
     },
