@@ -30,11 +30,12 @@ local env = vim.env
 ---@alias ArPythonLsp 'pyright' | 'ruff' | 'jedi_language_server' | 'basedpyright'
 ---@alias ArCompletion 'cmp' | 'blink'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
+---@alias ArWhichDashboard 'alpha' | 'snacks'
 ---@alias ArWhichGx 'local' | 'plugin'
 ---@alias ArWhichLspProgress 'builtin' | 'noice' | 'snacks'
+---@alias ArWhichNotifier 'nvim-notify' | 'snacks'
 ---@alias ArWhichStatuscolumn 'local' | 'plugin'
 ---@alias ArWhichWinbar 'local' | 'plugin'
----@alias ArWhichNotifier 'nvim-notify' | 'snacks'
 
 ---@class ArAIModels
 ---@field claude boolean
@@ -175,8 +176,16 @@ local namespace = {
     current = true,
   },
   colorscheme = 'onedark',
-  ---@type ArWhichNotifier
-  notifier = 'snacks',
+  notifier = {
+    enable = true,
+    ---@type ArWhichNotifier
+    variant = 'snacks',
+  },
+  dashboard = {
+    enable = true,
+    ---@type ArWhichDashboard
+    variant = 'alpha',
+  },
   debug = { enable = false },
   ---@type ArExplorer
   explorer = {

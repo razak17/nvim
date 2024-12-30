@@ -4,7 +4,9 @@ local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 return {
   {
     'goolord/alpha-nvim',
-    cond = not minimal,
+    cond = not minimal
+      and ar.dashboard.enable
+      and ar.dashboard.variant == 'alpha',
     event = 'VimEnter',
     keys = { { '<leader>;', '<cmd>Alpha<CR>', desc = 'alpha' } },
     opts = function()

@@ -1,3 +1,4 @@
+local api, fn = vim.api, vim.fn
 local border = ar.ui.current.border
 local codicons = ar.ui.codicons
 local diag_icons = ar.ui.codicons.lsp
@@ -20,6 +21,7 @@ return {
       { '<leader>ps', function() Snacks.profiler.scratch() end, desc = 'snacks: profiler scratch buffer' },
       { '<leader>pu', function() Snacks.profiler.toggle() end, desc = 'snacks: toggle profiler' },
     },
+    ---@type snacks.Config
     opts = {
       styles = {
         git = { border = border },
@@ -32,7 +34,7 @@ return {
       quickfile = { enabled = true },
       notifier = {
         border = border,
-        enabled = ar.notifier == 'snacks',
+        enabled = ar.notifier.enable and ar.notifier.variant == 'snacks',
         icons = {
           error = diag_icons.error,
           warn = diag_icons.warn,
@@ -55,7 +57,7 @@ return {
       ar.add_to_menu('command_palette', {
         ['Neovim News'] = function()
           Snacks.win({
-            file = vim.api.nvim_get_runtime_file('doc/news.txt', false)[1],
+            file = api.nvim_get_runtime_file('doc/news.txt', false)[1],
             width = 0.6,
             height = 0.6,
             wo = {
@@ -91,7 +93,7 @@ return {
         ['Toggle Scratch'] = function() Snacks.scratch() end,
         ['Toggle Scratch Buffer'] = function() Snacks.scratch.select() end,
       })
-      vim.api.nvim_create_autocmd('User', {
+      api.nvim_create_autocmd('User', {
         pattern = 'VeryLazy',
         callback = function()
           -- Setup some globals for debugging (lazy-loaded)
@@ -101,7 +103,7 @@ return {
         end,
       })
       if ar.lsp.progress.enable and ar.lsp.progress.variant == 'snacks' then
-        vim.api.nvim_create_autocmd('LspProgress', {
+        api.nvim_create_autocmd('LspProgress', {
           ---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
           callback = function(ev)
             local spinner = {
@@ -128,6 +130,114 @@ return {
         })
       end
     end,
-    config = function(_, opts) Snacks.setup(opts) end,
+    config = function(_, opts)
+      opts.dashboard = {
+        enabled = ar.dashboard.enable and ar.dashboard.variant == 'snacks',
+        width = 60,
+        row = nil, -- dashboard position. nil for center
+        col = nil, -- dashboard position. nil for center
+        pane_gap = 4, -- empty columns between vertical panes
+        autokeys = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', -- autokey sequence
+        -- These settings are used by some built-in sections
+        preset = {
+          -- Defaults to a picker that supports `fzf-lua`, `telescope.nvim` and `mini.pick`
+          ---@type fun(cmd:string, opts:table)|nil
+          pick = 'fzf-lua',
+          -- Used by the `keys` section to show keymaps.
+          -- Set your custom keymaps here.
+          -- When using a function, the `items` argument are the default keymaps.
+          ---@type snacks.dashboard.Item[]
+          keys = {
+            {
+              icon = ' ',
+              key = 's',
+              desc = 'Restore Session',
+              section = 'session',
+            },
+            {
+              icon = '󰋇 ',
+              key = 'p',
+              desc = 'Pick Session',
+              action = '<Cmd>ListSessions<CR>',
+            },
+            {
+              icon = ' ',
+              key = 'r',
+              desc = 'Recent Files',
+              action = ":lua Snacks.dashboard.pick('oldfiles')",
+            },
+            {
+              icon = ' ',
+              key = 'f',
+              desc = 'Find File',
+              action = ":lua Snacks.dashboard.pick('files')",
+            },
+            {
+              icon = ' ',
+              key = 'w',
+              desc = 'Find Text',
+              action = ":lua Snacks.dashboard.pick('live_grep')",
+            },
+            -- {
+            --   icon = ' ',
+            --   key = 'n',
+            --   desc = 'New File',
+            --   action = ':ene | startinsert',
+            -- },
+            {
+              icon = ' ',
+              key = 'c',
+              desc = 'Config',
+              action = ":lua Snacks.dashboard.pick('files', {cwd = fn.stdpath('config')})",
+            },
+            {
+              icon = '󰒲 ',
+              key = 'l',
+              desc = 'Lazy',
+              action = ':Lazy',
+              enabled = package.loaded.lazy ~= nil,
+            },
+            { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
+          },
+          -- Used by the `header` section
+          header = [[
+███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
+████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
+██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
+██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
+██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
+╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝]],
+        },
+        formats = {
+          icon = function(item) return { item.icon, width = 2, hl = 'icon' } end,
+          footer = { '%s', align = 'center' },
+          header = { '%s', align = 'center' },
+          file = function(item, ctx)
+            local fname = fn.fnamemodify(item.file, ':~')
+            fname = ctx.width and #fname > ctx.width and fn.pathshorten(fname)
+              or fname
+            if #fname > ctx.width then
+              local dir = fn.fnamemodify(fname, ':h')
+              local file = fn.fnamemodify(fname, ':t')
+              if dir and file then
+                file = file:sub(-(ctx.width - #dir - 2))
+                fname = dir .. '/…' .. file
+              end
+            end
+            local dir, file = fname:match('^(.*)/(.+)$')
+            return dir and { { dir .. '/', hl = 'dir' }, { file, hl = 'file' } }
+              or { { fname, hl = 'file' } }
+          end,
+        },
+        -- item field formatters,
+        sections = {
+          { section = 'header' },
+          { section = 'keys', gap = 1, padding = 1 },
+          { section = 'startup' },
+        },
+      }
+
+      Snacks.setup(opts)
+    end,
   },
 }
