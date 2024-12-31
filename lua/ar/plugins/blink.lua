@@ -87,7 +87,10 @@ return {
           end
         end,
         providers = {
-          lsp = { name = '[LSP]' },
+          lsp = {
+            enabled = ar.lsp.enable,
+            name = '[LSP]',
+          },
           path = { name = '[PATH]' },
           snippets = { name = '[SNIP]' },
           buffer = { name = '[BUF]' },
