@@ -91,6 +91,7 @@ return {
           path = { name = '[PATH]' },
           snippets = { name = '[SNIP]' },
           buffer = { name = '[BUF]' },
+          cmdline = { name = '[CMD]' },
           copilot = {
             enabled = ar.ai.enable,
             name = '[CPL]',
@@ -124,6 +125,12 @@ return {
             name = '[PX2REM]',
           },
         },
+        cmdline = function()
+          local type = vim.fn.getcmdtype()
+          if type == '/' or type == '?' then return { 'buffer' } end
+          if type == ':' then return { 'cmdline' } end
+          return {}
+        end,
       },
       keymap = {
         preset = 'default',
