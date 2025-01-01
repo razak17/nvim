@@ -5,7 +5,6 @@ local enabled = ar.lsp.enable and not ar.plugin_disabled('rustaceanvim')
 return {
   {
     'mrcjkb/rustaceanvim',
-    version = '^3', -- Recommended
     ft = { 'rust' },
     cond = enabled,
     init = function()
@@ -77,12 +76,6 @@ return {
               checkOnSave = {
                 command = 'clippy',
                 allFeatures = true,
-              },
-              inlayHints = {
-                lifetimeElisionHints = {
-                  enable = true,
-                  useParameterNames = true,
-                },
               },
               lens = { enable = true },
             },
