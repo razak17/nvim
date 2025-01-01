@@ -35,19 +35,20 @@ return {
     popupmenu = { backend = 'nui' },
     lsp = {
       documentation = {
+        enabled = ar.completion.variant == 'cmp',
         opts = {
           border = { style = 'single' },
           position = { row = 2 },
         },
       },
       signature = {
-        enabled = true,
+        enabled = ar.completion.variant == 'cmp',
         opts = {
           position = { row = 2 },
         },
       },
       hover = {
-        enabled = true,
+        enabled = ar.completion.variant == 'cmp',
         silent = true,
       },
       progress = {
@@ -57,7 +58,7 @@ return {
       override = {
         ['vim.lsp.util.convert_input_to_markdown_lines'] = false,
         ['vim.lsp.util.stylize_markdown'] = false,
-        ['cmp.entry.get_documentation'] = true,
+        ['cmp.entry.get_documentation'] = ar.completion.variant == 'cmp',
       },
     },
     views = {
