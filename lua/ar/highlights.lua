@@ -67,7 +67,7 @@ local attrs = {
 local function get_hl_as_hex(opts, ns)
   ns, opts = ns or 0, opts or {}
   opts.link = opts.link ~= nil and opts.link or false
-  local hl = api.nvim_get_hl(ns, opts)
+  local hl = api.nvim_get_hl(ns, opts) --[[@as HLData]]
   hl.fg = hl.fg and ('#%06x'):format(hl.fg)
   hl.bg = hl.bg and ('#%06x'):format(hl.bg)
   return hl
@@ -81,9 +81,10 @@ local function tint(color, percent)
     color and percent,
     'cannot alter a color without specifying a color and percentage'
   )
-  local r = tonumber(color:sub(2, 3), 16)
-  local g = tonumber(color:sub(4, 5), 16)
-  local b = tonumber(color:sub(6), 16)
+  local r, g, b =
+    tonumber(color:sub(2, 3), 16),
+    tonumber(color:sub(4, 5), 16),
+    tonumber(color:sub(6), 16)
   if not r or not g or not b then return 'NONE' end
   local blend = function(component)
     component = math.floor(component * (1 + percent))
@@ -95,15 +96,13 @@ end
 local err_warn = vim.schedule_wrap(function(group, attribute)
   notify(
     fmt(
-      'failed to get attribute %s for highlight %s\n%s',
-      attribute,
+      'failed to get highlight %s for attribute %s\n%s',
       group,
+      attribute,
       debug.traceback()
     ),
-    'ERROR',
-    {
-      title = fmt('Highlight - get(%s)', group),
-    }
+    vim.log.levels.ERROR,
+    { title = fmt('Highlight - get(%s)', group) }
   ) -- stylua: ignore
 end)
 

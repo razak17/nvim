@@ -741,8 +741,7 @@ diagnostic.config({
   float = {
     max_width = max_width,
     max_height = max_height,
-    ---@diagnostic disable-next-line: assign-type-mismatch
-    border = border,
+    border = border, --[[@diagnostic disable-line: assign-type-mismatch]]
     title = {
       { '  ', 'DiagnosticFloatTitleIcon' },
       { 'Problems  ', 'DiagnosticFloatTitle' },
@@ -758,7 +757,7 @@ diagnostic.config({
   },
 })
 
-if not ar.is_available('noice.nvim') then
+if not ar.is_available('noice.nvim') or ar.completion.variant == 'blink' then
   -- require('ar.lsp_float').apply()
 
   lsp.handlers['textDocument/hover'] = function(...)
