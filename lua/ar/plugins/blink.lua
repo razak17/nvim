@@ -57,6 +57,12 @@ return {
         documentation = {
           auto_show = true,
           auto_show_delay_ms = 200,
+          window = { border = border },
+        },
+        list = {
+          selection = function(ctx)
+            return ctx.mode == 'cmdline' and 'auto_insert' or 'preselect'
+          end,
         },
       },
       sources = {
