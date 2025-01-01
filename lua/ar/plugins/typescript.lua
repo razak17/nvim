@@ -34,13 +34,23 @@ return {
     'pmizio/typescript-tools.nvim',
     ft = filetypes,
     cond = typescript_tools_cond(),
-    -- stylua: ignore
-    keys = {
-      { '<localleader>li', '<Cmd>TSToolsAddMissingImports<CR>', desc = 'add missing imports' },
-      { '<localleader>lx', '<Cmd>TSToolsRemoveUnusedImports<CR>', desc = 'remove unused missing imports' },
-    },
+    config = function(_, opts)
+      local api = require('typescript-tools.api')
+      opts.handlers = {
+        ['textDocument/publishDiagnostics'] = api.filter_diagnostics({
+          80001, -- Ignore this might be converted to a ES export
+        }),
+      }
+      require('typescript-tools').setup(opts)
+    end,
     opts = {
       settings = {
+        expose_as_code_action = 'all',
+        complete_function_calls = false,
+        jsx_close_tag = {
+          enable = true,
+          filetypes = { 'javascriptreact', 'typescriptreact' },
+        },
         tsserver_file_preferences = {
           includeInlayParameterNameHints = 'literal',
           includeInlayParameterNameHintsWhenArgumentMatchesName = false,
