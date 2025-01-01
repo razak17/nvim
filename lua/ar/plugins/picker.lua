@@ -7,15 +7,6 @@ local fzf_lua = reqcall('fzf-lua') ---@module 'fzf-lua'
 --------------------------------------------------------------------------------
 -- FZF-LUA HELPERS
 --------------------------------------------------------------------------------
-local function format_title(str, icon, icon_hl)
-  return {
-    { ' ', 'FloatTitle' },
-    { (icon and icon .. ' ' or ''), icon_hl or 'FloatTitle' },
-    { str, 'FloatTitle' },
-    { ' ', 'FloatTitle' },
-  }
-end
-
 local file_picker = function(cwd) fzf_lua.files({ cwd = cwd }) end
 
 local function dropdown(opts)
@@ -36,12 +27,7 @@ end
 
 local function cursor_dropdown(opts)
   return dropdown(vim.tbl_deep_extend('force', {
-    winopts = {
-      row = 1,
-      relative = 'cursor',
-      height = 0.33,
-      width = math.min(math.floor(vim.o.columns * 0.5), 100),
-    },
+    winopts = { row = 1, relative = 'cursor', height = 0.33, width = 0.25 },
   }, opts))
 end
 
@@ -132,6 +118,7 @@ return {
       local fzf = require('fzf-lua')
 
       fzf.setup({
+        prompt = prompt,
         fzf_opts = {
           ['--info'] = 'default', -- hidden OR inline:⏐
           ['--reverse'] = false,
@@ -167,6 +154,8 @@ return {
         winopts = { border = ui.current.border },
         keymap = {
           builtin = {
+            true,
+            ['<Esc>'] = 'hide',
             ['<c-/>'] = 'toggle-help',
             ['<c-e>'] = 'toggle-preview',
             ['<c-=>'] = 'toggle-fullscreen',
@@ -174,14 +163,12 @@ return {
             ['<c-u>'] = 'preview-page-up',
           },
           fzf = {
-            ['esc'] = 'abort',
             ['ctrl-q'] = 'select-all+accept',
           },
         },
-        highlights = {
-          prompt = prompt,
-          winopts = { title = ' Highlights ' },
-        },
+
+        highlights = { winopts = { title = ' Highlights ' } },
+        helptags = { winopts = { title = ' 󰋖 Help ' } },
         actions = {
           files = {
             ['default'] = fzf.actions.file_edit_or_qf,
@@ -199,15 +186,11 @@ return {
           -- rg_opts = "--color=never --files --hidden --follow -g '!.git' -g '!node_modules'",
           rg_opts = '--column --hidden --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
           -- fd_opts = "--color=never --type f --hidden --follow --exclude '.git' --exclude 'node_modules' --exclude '.obsidian'",
-          winopts = { title = format_title('Files', '') },
+          winopts = { title = '  Files ' },
           fzf_opts = {
             ['--tiebreak'] = 'end',
             ['--no-separator'] = false,
           },
-        },
-        helptags = {
-          prompt = prompt,
-          winopts = { title = format_title('Help', '󰋖') },
         },
         oldfiles = dropdown({
           cwd_only = true,
