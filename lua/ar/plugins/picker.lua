@@ -142,10 +142,7 @@ return {
           ['gutter'] = { 'bg', 'FzfLuaNormal' },
           ['separator'] = { 'fg', 'Comment' },
         },
-        previewers = {
-          builtin = { toggle_behavior = 'extend' },
-        },
-        border = ui.border.rectangle,
+        previewers = { builtin = { toggle_behavior = 'extend' } },
         hls = {
           title = 'FloatTitle',
           border = 'FloatBorder',
@@ -166,7 +163,6 @@ return {
             ['ctrl-q'] = 'select-all+accept',
           },
         },
-
         highlights = { winopts = { title = ' Highlights ' } },
         helptags = { winopts = { title = ' 󰋖 Help ' } },
         actions = {
