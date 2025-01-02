@@ -35,7 +35,12 @@ return {
     opts = {
       preferred_environment = 'local',
       types = true,
-      integrations = { lspsaga = false, lsp = false },
+      integrations = {
+        nvim_cmp = ar.completion.variant == 'cmp',
+        blink_cmp = ar.completion.variant == 'blink',
+        lspsaga = false,
+        lsp = false,
+      },
       shelter = {
         configuration = { partial_mode = true, mask_char = '*' },
         modules = {
