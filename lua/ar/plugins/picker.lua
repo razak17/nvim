@@ -152,7 +152,7 @@ return {
         keymap = {
           builtin = {
             true,
-            ['<Esc>'] = 'hide',
+            ['<Esc>'] = 'abort',
             ['<c-/>'] = 'toggle-help',
             ['<c-e>'] = 'toggle-preview',
             ['<c-=>'] = 'toggle-fullscreen',
