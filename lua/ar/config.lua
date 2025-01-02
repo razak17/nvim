@@ -34,6 +34,7 @@ local env = vim.env
 ---@alias ArWhichGx 'local' | 'plugin'
 ---@alias ArWhichLspProgress 'builtin' | 'noice' | 'snacks'
 ---@alias ArWhichNotifier 'nvim-notify' | 'snacks'
+---@alias ArWhichShelter 'cloak' | 'ecolog'
 ---@alias ArWhichStatuscolumn 'local' | 'plugin'
 ---@alias ArWhichWinbar 'local' | 'plugin'
 
@@ -180,6 +181,11 @@ local namespace = {
     enable = true,
     ---@type ArWhichNotifier
     variant = 'snacks',
+  },
+  shelter = {
+    enable = true,
+    ---@type ArWhichShelter
+    variant = 'ecolog',
   },
   dashboard = {
     enable = true,

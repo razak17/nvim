@@ -146,15 +146,6 @@ return {
     opts = {},
   },
   {
-    'laytan/cloak.nvim',
-    cond = not minimal and false,
-    event = 'VeryLazy',
-    init = function()
-      ar.add_to_menu('toggle', { ['Toggle Cloak'] = 'CloakToggle' })
-    end,
-    opts = {},
-  },
-  {
     'folke/twilight.nvim',
     cond = niceties,
     cmd = 'Twilight',
