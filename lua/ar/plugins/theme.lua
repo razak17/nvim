@@ -98,6 +98,12 @@ return {
     event = get_event('serene'),
   },
   {
+    'ficcdaf/ashen.nvim',
+    cond = ar.colorscheme == 'ashen',
+    priority = get_priority('ashen'),
+    event = get_event('ashen'),
+  },
+  {
     'slugbyte/lackluster.nvim',
     cond = ar.colorscheme == 'lackluster',
     priority = get_priority('lackluster'),
