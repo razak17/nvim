@@ -662,6 +662,8 @@ return {
               ['<C-l>'] = actions.results_scrolling_right,
               ['<A-h>'] = actions.preview_scrolling_left,
               ['<A-l>'] = actions.preview_scrolling_right,
+              ['<C-u>'] = actions.preview_scrolling_up,
+              ['<C-d>'] = actions.preview_scrolling_down,
               ['<A-u>'] = actions.results_scrolling_up,
               ['<A-d>'] = actions.results_scrolling_down,
               ['<A-j>'] = actions.cycle_history_next,

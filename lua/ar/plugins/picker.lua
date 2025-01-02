@@ -161,6 +161,9 @@ return {
           },
           fzf = {
             ['ctrl-q'] = 'select-all+accept',
+            ['ctrl-e'] = 'toggle-preview',
+            ['ctrl-d'] = 'preview-page-down',
+            ['ctrl-u'] = 'preview-page-up',
           },
         },
         highlights = { winopts = { title = ' Highlights ' } },
