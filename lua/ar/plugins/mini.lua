@@ -322,13 +322,49 @@ return {
     'echasnovski/mini.pick',
     cond = minimal,
     keys = {
-      { '<C-p>', '<Cmd>Pick files<CR>', desc = 'pick: open' },
+      { '<C-p>', '<Cmd>Pick all_files<CR>', desc = 'pick: open' },
       { '<leader>fb', '<Cmd>Pick buffers<CR>', desc = 'pick: buffers' },
       { '<leader>fw', '<Cmd>Pick grep<CR>', desc = 'pick: grep' },
       { '<leader>fs', '<Cmd>Pick grep_live<CR>', desc = 'pick: live grep' },
     },
     cmd = { 'Pick' },
-    opts = {},
+    opts = {
+      delay = {
+        async = 10,
+        busy = 30,
+      },
+    },
+    config = function(_, opts)
+      local picker = require('mini.pick')
+      local registry = picker.registry
+
+      vim.ui.select = picker.ui_select
+      registry.all_files = function()
+        picker.builtin.cli({
+          command = {
+            'rg',
+            '--files',
+            '--follow',
+            '--hidden',
+            '--no-ignore',
+            '--glob',
+            '!**/.git/**',
+            '--glob',
+            '!**/node_modules/**',
+            '--glob',
+            '!**/build/**',
+            '--glob',
+            '!**/tmp/**',
+            '--glob',
+            '!**/.mypy_cache/**',
+          },
+        }, {
+          source = { name = 'All Files' },
+        })
+      end
+
+      picker.setup(opts)
+    end,
   },
   {
     'echasnovski/mini.splitjoin',
