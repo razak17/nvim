@@ -269,25 +269,23 @@ return {
       vim.g.whichkey_add_spec({ '<leader><localleader>f', group = 'Genghis' })
     end,
     -- stylua: ignore
-    config = function()
-      local g = require('genghis')
-      map('n', '<leader><localleader>fp', g.copyFilepath, { desc = 'genghis: yank filepath' })
-      map('n', '<leader><localleader>ff', g.copyFilename, { desc = 'genghis: yank filename' })
-      map('n', '<leader><localleader>fr', g.renameFile, { desc = 'genghis: rename file' })
-      map('n', '<leader><localleader>fm', g.moveAndRenameFile, { desc = 'genghis: move and rename' })
-      map('n', '<leader><localleader>fn', g.createNewFile, { desc = 'genghis: create new file' })
-      map('n', '<leader><localleader>fD', g.duplicateFile, { desc = 'genghis: duplicate current file' })
-      map(
-        'n',
-        '<leader><localleader>fd',
+    keys = {
+      { '<localleader>fp', '<cmd>lua require("genghis").copyFilepath()<CR>', desc = 'genghis: yank filepath' },
+      { '<localleader>ff', '<cmd>lua require("genghis").copyFilename()<CR>', desc = 'genghis: yank filename' },
+      { '<localleader>fr', '<cmd>lua require("genghis").renameFile()<CR>', desc = 'genghis: rename file' },
+      { '<localleader>fm', '<cmd>lua require("genghis").moveAndRenameFile()<CR>', desc = 'genghis: move and rename' },
+      { '<localleader>fn', '<cmd>lua require("genghis").createNewFile()<CR>', desc = 'genghis: create new file' },
+      { '<localleader>fD', '<cmd>lua require("genghis").duplicateFile()<CR>', desc = 'genghis: duplicate current file' },
+      {
+        '<localleader>fd',
         function ()
           if vim.fn.confirm('Delete file?', '&Yes\n&No') == 1 then
             g.trashFile()
           end
         end,
-        { desc = 'genghis: move to trash' }
-      )
-    end,
+        desc = 'genghis: move to trash',
+      },
+    },
   },
   {
     'jpalardy/vim-slime',
