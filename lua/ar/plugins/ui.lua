@@ -26,7 +26,7 @@ return {
   },
   {
     'Aasim-A/scrollEOF.nvim',
-    cond = not minimal, -- stay-centered kinda makes this redundant, Keep for when it is toggled off
+    cond = not minimal and false, -- NOTE: stay-centered kinda makes this redundant, Keep for when it is toggled off
     event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
