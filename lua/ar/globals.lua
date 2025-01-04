@@ -141,7 +141,7 @@ function ar.project_config(file)
   io.close(file)
   if not status then
     cmd("echohl ErrorMsg | echo 'Error: Invalid json' | echohl None")
-    -- vim.notify('Invalid json found in .rvim.json', 'error')
+    vim.notify('Invalid json found in .rvim.json', 'error')
     return
   end
   ar.mergeTables(ar, table)

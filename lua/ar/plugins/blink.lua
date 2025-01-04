@@ -164,6 +164,7 @@ return {
           'hide_documentation',
           'fallback',
         },
+        ['<C-y>'] = { 'select_and_accept' },
         ['<A-1>'] = {
           function(cmp) cmp.accept({ index = 1 }) end,
         },
@@ -194,7 +195,6 @@ return {
         ['<A-0>'] = {
           function(cmp) cmp.accept({ index = 10 }) end,
         },
-        ['<C-y>'] = { 'select_and_accept' },
       },
     },
     config = function(_, opts)
