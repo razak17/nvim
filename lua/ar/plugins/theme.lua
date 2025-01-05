@@ -98,6 +98,14 @@ return {
     event = get_event('serene'),
   },
   {
+    'philosofonusus/morta.nvim',
+    name = 'morta',
+    cond = ar.colorscheme == 'morta',
+    priority = get_priority('morta'),
+    event = get_event('morta'),
+    opts = {},
+  },
+  {
     'ficcdaf/ashen.nvim',
     cond = ar.colorscheme == 'ashen',
     priority = get_priority('ashen'),
