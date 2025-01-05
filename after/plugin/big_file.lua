@@ -31,6 +31,9 @@ ar.bigfile = {
 }
 
 vim.filetype.add({
+  filename = {
+    ['.zsh_history'] = 'bigfile',
+  },
   pattern = {
     ['.*'] = {
       function(path, buf)
