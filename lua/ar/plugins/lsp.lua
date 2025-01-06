@@ -450,6 +450,18 @@ return {
       },
     },
   },
+  --------------------------------------------------------------------------------
+  -- Utils
+  {
+    'mhanberg/output-panel.nvim',
+    init = function()
+      ar.add_to_menu('lsp', { ['Output Panel'] = 'OutputPanel' })
+    end,
+    event = 'LspAttach',
+    cond = not minimal and ar.lsp.enable,
+    cmd = { 'OutputPanel' },
+    config = function() require('output_panel').setup() end,
+  },
   -- }}}
   --------------------------------------------------------------------------------
   -- Disabled
@@ -639,14 +651,6 @@ return {
         telescope = ar.telescope.vertical(),
       })
     end,
-  },
-  {
-    'mhanberg/output-panel.nvim',
-    event = 'VeryLazy',
-    cond = not minimal,
-    enabled = false,
-    cmd = 'OutputPanel',
-    config = function() require('output_panel').setup() end,
   },
   {
     'Wansmer/symbol-usage.nvim',
