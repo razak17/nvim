@@ -349,6 +349,7 @@ end
 
 ar.telescope = {
   extension_to_plugin = {
+    ['aerial'] = 'aerial.nvim',
     ['cmdline'] = 'telescope-cmdline.nvim',
     ['directory'] = 'telescope-directory.nvim',
     -- ['dir'] = 'dir-telescope.nvim',
@@ -523,7 +524,7 @@ return {
       { '<leader>fvo', b('vim_options'), desc = 'vim options' },
       { '<leader>fvr', b('registers'), desc = 'registers' },
       { '<leader>fvk', b('command_history'), desc = 'command history' },
-      { '<leader>fvK', b('colorscheme'), desc = 'colorscheme' },
+      { '<leader>fK', b('colorscheme'), desc = 'colorscheme' },
       { '<leader>fY', b('spell_suggest'), desc = 'spell suggest' },
       { '<leader>fy', '<Cmd>Telescope telescope-yaml<CR>', desc = 'yaml' },
       -- LSP
