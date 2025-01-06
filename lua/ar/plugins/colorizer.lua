@@ -17,6 +17,7 @@ return {
   {
     'brenoprata10/nvim-highlight-colors',
     cond = not minimal,
+    event = { 'LspAttach' },
     cmd = { 'HighlightColors' },
     init = function()
       ar.add_to_menu('toggle', { ['Toggle Colors'] = 'HighlightColors Toggle' })
@@ -24,6 +25,7 @@ return {
     opts = {
       render = 'virtual',
       enable_tailwind = true,
+      virtual_symbol = ar.ui.icons.misc.block_alt,
     },
   },
   {
