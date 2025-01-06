@@ -510,13 +510,6 @@ nnoremap(
   { desc = 'toggle concealcursor', silent = true }
 )
 --------------------------------------------------------------------------------
--- File Diff
-nnoremap(
-  '<leader>fd',
-  ":lua require'ar.menus.command_palette'.toggle_file_diff()<CR>",
-  { desc = 'toggle file diff' }
-)
---------------------------------------------------------------------------------
 -- Open in finder
 nnoremap('<leader><localleader>fo', function()
   local file_path = vim.fn.expand('%:p')
