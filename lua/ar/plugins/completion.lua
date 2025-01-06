@@ -15,7 +15,7 @@ ar.completion.config = {
     ['nerdfonts'] = { icon = '', hl = 'CmpItemKindNerdFont' },
     ['minuet'] = { icon = '󱗻', hl = 'CmpItemKindDynamic' },
     ['nvim_px_to_rem'] = { icon = '', hl = 'CmpItemKindNerdFont' },
-    ['Color'] = { icon = '' },
+    ['Color'] = { icon = ui.icons.misc.block_alt },
   },
   menu = {
     Color = '[COLOR]',
