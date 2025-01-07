@@ -316,7 +316,7 @@ return {
         desc = 'align CSV',
       },
       {
-        '<localleader>cA',
+        '<localleader>cx',
         "<Cmd>lua require('decisive').align_csv_clear({})<CR>",
         desc = 'align CSV clear',
       },
@@ -332,6 +332,11 @@ return {
         silent = true,
       },
     },
+  },
+  {
+    'hat0uma/csvview.nvim',
+    cmd = { 'CsvViewToggle', 'CsvViewEnable', 'CsvViewDisable' },
+    config = function() require('csvview').setup() end,
   },
   -- Regex
   --------------------------------------------------------------------------------
