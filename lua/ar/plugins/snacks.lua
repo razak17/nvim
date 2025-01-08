@@ -237,7 +237,7 @@ return {
         },
       }
 
-      Snacks.setup(opts)
+      require('snacks').setup(opts)
     end,
   },
 }
