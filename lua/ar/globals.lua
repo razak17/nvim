@@ -627,7 +627,8 @@ end
 
 --- open in centered popup
 ---@param bufnr integer
-function ar.open_buf_centered_popup(bufnr)
+---@param readonly? boolean
+function ar.open_buf_centered_popup(bufnr, readonly)
   local o = vim.o
   local width = math.ceil(o.columns * 0.8)
   local height = math.ceil(o.lines * 0.8)
@@ -645,6 +646,13 @@ function ar.open_buf_centered_popup(bufnr)
   }
   api.nvim_open_win(bufnr, true, opts)
   map('n', 'q', ar.smart_close, { buffer = bufnr, nowait = true })
+
+  if readonly then
+    api.nvim_set_option_value('readonly', true, { buf = bufnr })
+    api.nvim_set_option_value('bufhidden', 'delete', { buf = bufnr })
+    api.nvim_set_option_value('buftype', 'nofile', { buf = bufnr })
+    api.nvim_set_option_value('modifiable', false, { buf = bufnr })
+  end
 end
 
 --- Copy `text` to system clipboard

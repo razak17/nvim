@@ -278,6 +278,21 @@ local function multi_selection_open(prompt_bufnr)
   vim.cmd('cfdo ' .. open_cmd)
 end
 
+local function open_file_in_centered_popup(prompt_bufnr)
+  local actions = require('telescope.actions')
+  local action_state = require('telescope.actions.state')
+  local file_path = action_state.get_selected_entry().path
+  local lines = fn.readfile(file_path)
+  local bufnr = api.nvim_create_buf(false, true)
+  api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+  local filetype = fn.fnamemodify(file_path, ':e')
+  if filetype ~= '' then
+    api.nvim_set_option_value('filetype', filetype, { buf = bufnr })
+  end
+  actions.close(prompt_bufnr)
+  ar.open_buf_centered_popup(bufnr, true)
+end
+
 local function open_media_files()
   local action_state = require('telescope.actions.state')
   local file_path = action_state.get_selected_entry().path
@@ -657,6 +672,7 @@ return {
               ['<Tab>'] = toggle_selection_and_next,
               ['<CR>'] = stopinsert(actions.select_default),
               ['<C-o>'] = open_media_files,
+              ['<C-y>'] = open_file_in_centered_popup,
               ['<C-w>'] = open_with_window_picker,
               ['<A-q>'] = actions.send_to_loclist + actions.open_loclist,
               ['<C-h>'] = actions.results_scrolling_left,
