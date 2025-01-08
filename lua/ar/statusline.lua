@@ -371,6 +371,7 @@ function M.autocmds()
   -- Ref: https://github.com/NvChad/ui/blob/v3.0/lua/nvchad/stl/utils.lua?plain=1#L161
   ar.augroup('stl_lsp_progress', {
     event = { 'LspProgress' },
+    pattern = { 'begin', 'report', 'end' },
     command = function(args)
       local data = args.data.params.value
       local progress = ''
@@ -380,8 +381,10 @@ function M.autocmds()
         progress = spinners[idx] .. ' ' .. data.percentage .. '%% '
       end
 
-      local str = progress .. (data.message or '') .. ' ' .. (data.title or '')
-      M.lsp_progress = data.kind == 'end' and '' or str
+      local kind, msg, title = data.kind, data.message, data.title
+      local loaded_count = msg and string.match(msg, '^(%d+/%d+)') or ''
+      local str = progress .. (title or '') .. ' ' .. (loaded_count or '')
+      M.lsp_progress = kind == 'end' and '' or str
       vim.cmd.redrawstatus()
     end,
   })
