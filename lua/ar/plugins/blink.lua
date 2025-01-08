@@ -239,7 +239,7 @@ return {
       local symbols = require('lspkind').symbol_map
       opts.appearance = opts.appearance or {}
       opts.appearance.kind_icons = vim.tbl_extend('keep', {
-        Color = '██', -- Use block instead of icon for color items to make swatches more usable
+        Color = ui.icons.misc.block_alt, -- Use block instead of icon for color items to make swatches more usable
         Copilot = ui.codicons.misc.octoface,
       }, symbols)
       require('blink.cmp').setup(opts)
