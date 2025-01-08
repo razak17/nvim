@@ -5,6 +5,7 @@ local icons, codicons = ar.ui.icons, ar.ui.codicons
 local decor = ar.ui.decorations
 local falsy = ar.falsy
 local fmt = string.format
+local minimal = ar.plugins.minimal
 
 local buftypes = {
   'nofile',
@@ -54,7 +55,7 @@ return {
   {
     'rebelot/heirline.nvim',
     event = 'BufWinEnter',
-    cond = not ar.plugins.minimal,
+    cond = not minimal,
     opts = { colors = setup_colors },
     config = function(_, opts)
       local separator = sep.dotted_thin_block
@@ -510,9 +511,7 @@ return {
           -- Copilot Status
           {
             cond = function()
-              return not ar.plugins.minimal
-                and ar.ai.enable
-                and ar.ai.models.copilot
+              return not minimal and ar.ai.enable and ar.ai.models.copilot
             end,
             {
               init = function(self)
@@ -542,7 +541,7 @@ return {
         },
         -- CodeCompanion
         {
-          cond = function() return not ar.plugins.minimal and ar.ai.enable end,
+          cond = function() return not minimal and ar.ai.enable end,
           static = { processing = false },
           update = {
             'User',
@@ -584,7 +583,7 @@ return {
         -- Copilot Status
         {
           condition = function()
-            return not ar.plugins.minimal
+            return not minimal
               and ar.ai.enable
               and ar.lsp.null_ls.enable
               and ar.ai.models.copilot
