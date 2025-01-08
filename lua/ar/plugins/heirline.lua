@@ -488,10 +488,9 @@ return {
                   .. ' No Active LSP '
                   .. separator
               end
-              if #self.client_names > 2 then
+              if #self.client_names > 1 then
                 return ' '
-                  .. self.client_names[1]
-                  .. ' and 2 others'
+                  .. fmt('%s +%d', self.client_names[1], #self.client_names - 1)
                   .. separator
               end
               return ' ' .. self.servers

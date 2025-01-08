@@ -343,6 +343,9 @@ function M.get_linters()
     .iter(pairs(lint.linters_by_ft[ft]))
     :map(function(_, l) return l end)
     :totable()
+  if #linters > 1 then
+    return fmt('%s +%d', linters[1], #linters - 1) .. separator
+  end
   return table.concat(linters, ', ') .. separator
 end
 
@@ -356,6 +359,9 @@ function M.get_formatters(curbuf)
     .iter(ipairs(conform.list_formatters(curbuf)))
     :map(function(_, f) return f.name end)
     :totable()
+  if #formatters > 1 then
+    return fmt('%s +%d', formatters[1], #formatters - 1) .. separator
+  end
   return table.concat(formatters, ', ') .. separator
 end
 
