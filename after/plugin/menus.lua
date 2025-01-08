@@ -190,6 +190,13 @@ ar.add_to_menu('command_palette', {
   ['Restart Editor'] = 'cq',
 })
 
+map(
+  'n',
+  '<leader>ob',
+  '<Cmd>lua require"ar.menus.command_palette".open_file_in_centered_popup()<CR>',
+  { desc = 'open buffer in floating window' }
+)
+
 local command_palette_menu = function()
   ar.create_select_menu(
     ar.menu['command_palette'].title,
