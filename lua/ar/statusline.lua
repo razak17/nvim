@@ -1,7 +1,7 @@
 local fn, api, env, fmt = vim.fn, vim.api, vim.env, string.format
 local falsy, icons, codicons = ar.falsy, ar.ui.icons, ar.ui.codicons
 local separator = icons.separators.dotted_thin_block
-local spinners = ar.ui.spinners
+local spinners = ar.ui.spinners.common
 
 local conditions = require('heirline.conditions')
 local Job = require('plenary.job')
