@@ -118,6 +118,17 @@ return {
     -- config = function() require('lavish').apply() end,
   },
   {
+    'comfysage/evergarden',
+    -- cond = ar.colorscheme == 'evergarden',
+    priority = get_priority('evergarden'),
+    event = get_event('evergarden'),
+    opts = {
+      transparent_background = true,
+      variant = 'medium', -- 'hard'|'medium'|'soft'
+      overrides = {},
+    },
+  },
+  {
     'olivercederborg/poimandres.nvim',
     cond = ar.colorscheme == 'poimandres', -- NOTE: clears highlighting on init
     priority = get_priority('poimandres'),
