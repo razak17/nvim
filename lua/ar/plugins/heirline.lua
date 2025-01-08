@@ -496,6 +496,12 @@ return {
               return ' ' .. self.servers
             end,
             hl = { bold = true },
+            on_click = {
+              callback = function()
+                vim.defer_fn(function() vim.cmd('LspInfo') end, 100)
+              end,
+              name = 'lsp_clients',
+            },
           },
           {
             update = { 'LspAttach', 'LspDetach', 'WinEnter' },
