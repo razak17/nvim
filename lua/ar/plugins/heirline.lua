@@ -667,8 +667,8 @@ return {
         },
         -- Spell
         {
-          condition = function() return vim.wo.spell end,
-          provider = function() return '  ' .. icons.misc.spell_check end,
+          condition = function() return vim.wo.spell and false end,
+          provider = function() return ' ' .. icons.misc.spell_check end,
           hl = { fg = 'blue' },
         },
         -- Treesitter
@@ -727,7 +727,7 @@ return {
         -- Ruler
         {
           provider = function()
-            return '  %7(%l/%3L%):%2c ' .. statusline.progress()
+            return ' ' .. '%7(%l/%3L%):%2c ' .. statusline.progress()
           end,
         },
         -- Scroll Bar
