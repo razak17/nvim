@@ -68,13 +68,6 @@ return {
     opts = {},
   },
   {
-    'olivercederborg/poimandres.nvim',
-    -- cond = ar.colorscheme == 'poimandres',
-    priority = get_priority('poimandres'),
-    event = get_event('poimandres'),
-    opts = {},
-  },
-  {
     'kvrohit/rasmus.nvim',
     -- cond = ar.colorscheme == 'rasmus',
     priority = get_priority('rasmus'),
@@ -123,6 +116,13 @@ return {
     priority = get_priority('lavish'),
     event = get_event('lavish'),
     -- config = function() require('lavish').apply() end,
+  },
+  {
+    'olivercederborg/poimandres.nvim',
+    cond = ar.colorscheme == 'poimandres', -- NOTE: clears highlighting on init
+    priority = get_priority('poimandres'),
+    event = get_event('poimandres'),
+    opts = {},
   },
   ------------------------------------------------------------------------------
   -- Mild
