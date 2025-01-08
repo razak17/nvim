@@ -1,6 +1,7 @@
 local fn, api, env, fmt = vim.fn, vim.api, vim.env, string.format
 local falsy, icons, codicons = ar.falsy, ar.ui.icons, ar.ui.codicons
 local separator = icons.separators.dotted_thin_block
+local spinners = ar.ui.spinners
 
 local conditions = require('heirline.conditions')
 local Job = require('plenary.job')
@@ -363,6 +364,27 @@ function M.copilot_indicator()
   if client == nil then return 'inactive' end
   if vim.tbl_isempty(client.requests) then return 'idle' end
   return 'working'
+end
+
+M.lsp_progress = ''
+function M.autocmds()
+  -- Ref: https://github.com/NvChad/ui/blob/v3.0/lua/nvchad/stl/utils.lua?plain=1#L161
+  ar.augroup('stl_lsp_progress', {
+    event = { 'LspProgress' },
+    command = function(args)
+      local data = args.data.params.value
+      local progress = ''
+
+      if data.percentage then
+        local idx = math.max(1, math.floor(data.percentage / 10))
+        progress = spinners[idx] .. ' ' .. data.percentage .. '%% '
+      end
+
+      local str = progress .. (data.message or '') .. ' ' .. (data.title or '')
+      M.lsp_progress = data.kind == 'end' and '' or str
+      vim.cmd.redrawstatus()
+    end,
+  })
 end
 
 function M.word_count() return ' ' .. tostring(fn.wordcount().words) .. ' words' end

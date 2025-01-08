@@ -52,7 +52,9 @@ return {
         silent = true,
       },
       progress = {
-        enabled = ar.lsp.progress.enable and ar.lsp.progress.variant == 'noice',
+        enabled = ar.lsp.progress.enable
+          and ar.lsp.progress.variant == 'noice'
+          and false,
         throttle = 1000 / 1000,
       },
       override = {

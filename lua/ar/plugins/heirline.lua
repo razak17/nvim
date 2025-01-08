@@ -262,6 +262,14 @@ return {
           },
         },
         align,
+        -- LSP Progress
+        {
+          init = function() statusline.autocmds() end,
+          condition = function() return not minimal and ar.lsp.enable end,
+          provider = function() return statusline.lsp_progress end,
+          hl = { fg = 'comment' },
+        },
+        align,
         -- Search Matches
         {
           condition = function() return v.hlsearch ~= 0 end,

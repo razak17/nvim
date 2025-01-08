@@ -11,6 +11,19 @@ ar.ui.border = {
   },
 }
 
+ar.ui.spinners = {
+  '',
+  '󰪞',
+  '󰪟',
+  '󰪠',
+  '󰪡',
+  '󰪢',
+  '󰪣',
+  '󰪤',
+  '󰪥',
+  '',
+}
+
 ar.ui.icons = {
   scrollbars = {
     -- stylua: ignore
