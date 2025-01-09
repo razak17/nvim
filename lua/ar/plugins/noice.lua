@@ -33,6 +33,10 @@ return {
       view = 'mini', -- minimise pattern not found messages
     },
     popupmenu = { backend = 'nui' },
+    notify = {
+      enabled = ar.notifier.variant == 'nvim-notify',
+      view = 'notify',
+    },
     lsp = {
       documentation = {
         enabled = ar.completion.variant == 'cmp',
