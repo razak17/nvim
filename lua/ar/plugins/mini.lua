@@ -327,6 +327,7 @@ return {
       { '<leader>fw', '<Cmd>Pick grep<CR>', desc = 'pick: grep' },
       { '<leader>fs', '<Cmd>Pick grep_live<CR>', desc = 'pick: live grep' },
     },
+    event = 'VeryLazy',
     cmd = { 'Pick' },
     opts = {
       delay = {
