@@ -37,7 +37,17 @@ local function setup_colors()
     error_red = ar.highlight.get('DiagnosticError', 'bg'),
     pale_blue = ar.highlight.get('DiagnosticInfo', 'bg'),
     comment = ar.highlight.get('Comment', 'fg'),
+    forest_green = ar.highlight.get('DiffAdd', 'fg'),
   }
+  if ar.colorscheme == 'default' then
+    return vim.tbl_deep_extend('force', P, {
+      blue = ar.highlight.get('DiagnosticInfo', 'fg'),
+      dark_orange = ar.highlight.get('DiagnosticWarn', 'fg'),
+      error_red = ar.highlight.get('DiagnosticError', 'fg'),
+      pale_blue = ar.highlight.get('DiagnosticInfo', 'fg'),
+      forest_green = ar.highlight.get('DiffAdd', 'bg'),
+    })
+  end
   if ar.colorscheme == 'onedark' then P = require('onedark.palette') end
   return P
 end
