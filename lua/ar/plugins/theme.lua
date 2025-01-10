@@ -1,5 +1,9 @@
 local function is_colorscheme(name) return ar.colorscheme == name end
 
+local function get_cond(name)
+  return not ar.plugins.minimal and ar.colorscheme == name
+end
+
 local function get_priority(name) return is_colorscheme(name) and 1000 or 50 end
 
 local function get_event(name)
@@ -21,7 +25,7 @@ return {
   -- Monochrome
   {
     'slugbyte/lackluster.nvim',
-    -- cond = ar.colorscheme == 'lackluster',
+    cond = get_cond('lackluster'),
     priority = get_priority('lackluster'),
     event = get_event('lackluster'),
     opts = function()
@@ -48,78 +52,78 @@ return {
   },
   {
     'wnkz/monoglow.nvim',
-    -- cond = ar.colorscheme == 'monoglow',
+    cond = get_cond('monoglow'),
     priority = get_priority('monoglow'),
     event = get_event('monoglow'),
     opts = {},
   },
   {
     'aktersnurra/no-clown-fiesta.nvim',
-    -- cond = ar.colorscheme == 'no-clown-fiesta',
+    cond = get_cond('no-clown-fiesta'),
     priority = get_priority('no-clown-fiesta'),
     event = get_event('no-clown-fiesta'),
     opts = {},
   },
   {
     'dgox16/oldworld.nvim',
-    -- cond = ar.colorscheme == 'oldworld',
+    cond = get_cond('oldworld'),
     priority = get_priority('oldworld'),
     event = get_event('oldworld'),
     opts = {},
   },
   {
     'kvrohit/rasmus.nvim',
-    -- cond = ar.colorscheme == 'rasmus',
+    cond = get_cond('rasmus'),
     priority = get_priority('rasmus'),
     event = get_event('rasmus'),
   },
   {
     'samharju/serene.nvim',
-    -- cond = ar.colorscheme == 'serene',
+    cond = get_cond('serene'),
     priority = get_priority('serene'),
     event = get_event('serene'),
   },
   {
     'Wansmer/serenity.nvim',
-    -- cond = ar.colorscheme == 'serenity',
+    cond = get_cond('serenity'),
     priority = get_priority('serenity'),
     event = get_event('serenity'),
     opts = {},
   },
   {
     'ficcdaf/ashen.nvim',
-    -- cond = ar.colorscheme == 'ashen',
+    cond = get_cond('ashen'),
     priority = get_priority('ashen'),
     event = get_event('ashen'),
   },
   {
     'dotsilas/darcubox-nvim',
-    -- cond = ar.colorscheme == 'darcubox',
+    cond = get_cond('darcubox'),
     priority = get_priority('darcubox'),
     event = get_event('darcubox'),
   },
   {
     'https://git.sr.ht/~p00f/alabaster.nvim',
-    -- cond = ar.colorscheme == 'alabaster',
+    cond = get_cond('alabaster'),
     priority = get_priority('alabaster'),
     event = get_event('alabaster'),
   },
   {
     'masar3141/mono-jade',
-    -- cond = ar.colorscheme == 'mono-jade',
+    cond = get_cond('mono-jade'),
     priority = get_priority('mono-jade'),
     event = get_event('mono-jade'),
   },
   {
     'ferdinandrau/lavish.nvim',
-    -- cond = ar.colorscheme == 'lavish',
+    cond = get_cond('lavish'),
     priority = get_priority('lavish'),
     event = get_event('lavish'),
     -- config = function() require('lavish').apply() end,
   },
   {
     'comfysage/evergarden',
-    -- cond = ar.colorscheme == 'evergarden',
+    cond = get_cond('evergarden'),
     priority = get_priority('evergarden'),
     event = get_event('evergarden'),
     opts = {
@@ -130,7 +134,7 @@ return {
   },
   {
     'olivercederborg/poimandres.nvim',
-    cond = ar.colorscheme == 'poimandres', -- NOTE: clears highlighting on init
+    cond = get_cond('poimandres'), -- NOTE: clears highlighting on init
     priority = get_priority('poimandres'),
     event = get_event('poimandres'),
     opts = {},
@@ -139,7 +143,7 @@ return {
   -- Mild
   {
     'savq/melange-nvim',
-    cond = ar.colorscheme == 'melange',
+    cond = get_cond('melange'),
     priority = get_priority('melange'),
     event = get_event('melange'),
   },
@@ -147,23 +151,23 @@ return {
     'oxfist/night-owl.nvim',
     priority = get_priority('night-owl'),
     event = get_event('night-owl'),
-    cond = ar.colorscheme == 'night-owl',
+    cond = get_cond('night-owl'),
   },
   {
     'atmosuwiryo/vim-winteriscoming',
-    cond = ar.colorscheme == 'WinterIsComing-dark-color-theme',
+    cond = get_cond('WinterIsComing-dark-color-theme'),
     priority = get_priority('WinterIsComing-dark-color-theme'),
     event = get_event('WinterIsComing-dark-color-theme'),
   },
   {
     'projekt0n/github-nvim-theme',
-    cond = ar.colorscheme == 'github_dark',
+    cond = get_cond('github_dark'),
     priority = get_priority('github_dark'),
     event = get_event('github_dark'),
   },
   {
     'NTBBloodbath/doom-one.nvim',
-    cond = ar.colorscheme == 'doom-one',
+    cond = get_cond('doom-one'),
     priority = get_priority('doom-one'),
     event = get_event('doom-one'),
     config = function()
@@ -173,7 +177,7 @@ return {
   },
   {
     'neanias/everforest-nvim',
-    cond = ar.colorscheme == 'everforest',
+    cond = get_cond('everforest'),
     priority = get_priority('everforest'),
     event = get_event('everforest'),
     opts = {},
@@ -182,27 +186,27 @@ return {
   {
     'nuvic/flexoki-nvim',
     name = 'flexoki',
-    cond = ar.colorscheme == 'flexoki',
+    cond = get_cond('flexoki'),
     priority = get_priority('flexoki'),
     event = get_event('flexoki'),
     opts = {},
   },
   {
     'aliqyan-21/darkvoid.nvim',
-    cond = ar.colorscheme == 'darkvoid',
+    cond = get_cond('darkvoid'),
     priority = get_priority('darkvoid'),
     event = get_event('darkvoid'),
   },
   {
     'lunarvim/lunar.nvim',
-    cond = ar.colorscheme == 'lunar',
+    cond = get_cond('lunar'),
     priority = get_priority('lunar'),
     event = get_event('lunar'),
   },
   {
     'philosofonusus/morta.nvim',
     name = 'morta',
-    cond = ar.colorscheme == 'morta',
+    cond = get_cond('morta'),
     priority = get_priority('morta'),
     event = get_event('morta'),
   },
@@ -210,41 +214,41 @@ return {
   -- Clown show
   {
     'eldritch-theme/eldritch.nvim',
-    cond = ar.colorscheme == 'eldritch',
+    cond = get_cond('eldritch'),
     priority = get_priority('eldritch'),
     event = get_event('eldritch'),
     opts = {},
   },
   {
     'judaew/ronny.nvim',
-    cond = ar.colorscheme == 'ronny',
+    cond = get_cond('ronny'),
     priority = get_priority('ronny'),
     -- event = get_event('ronny'),
     opts = {},
   },
   {
     'LunarVim/horizon.nvim',
-    cond = ar.colorscheme == 'horizon',
+    cond = get_cond('horizon'),
     priority = get_priority('horizon'),
     event = get_event('horizon'),
   },
   {
     'scottmckendry/cyberdream.nvim',
-    cond = ar.colorscheme == 'cyberdream',
+    cond = get_cond('cyberdream'),
     priority = get_priority('cyberdream'),
     event = get_event('cyberdream'),
     opts = {},
   },
   {
     'folke/tokyonight.nvim',
-    cond = ar.colorscheme == 'tokyonight',
+    cond = get_cond('tokyonight'),
     priority = get_priority('tokyonight'),
     event = get_event('tokyonight'),
     opts = {},
   },
   {
     'wtfox/jellybeans.nvim',
-    -- cond = ar.colorscheme == 'jellybeans',
+    cond = get_cond('jellybeans'),
     priority = get_priority('jellybeans'),
     event = get_event('jellybeans'),
   },
@@ -255,7 +259,7 @@ return {
   {
     'sontungexpt/witch',
     enabled = false,
-    cond = ar.colorscheme == 'witch',
+    cond = get_cond('witch'),
     priority = get_priority('witch'),
     event = get_event('witch'),
     opts = { style = 'dark' },
@@ -264,7 +268,7 @@ return {
   {
     'cdmill/neomodern.nvim',
     enabled = false,
-    cond = ar.colorscheme == 'neomodern',
+    cond = get_cond('neomodern'),
     priority = get_priority('neomodern'),
     event = get_event('neomodern'),
     config = function()
