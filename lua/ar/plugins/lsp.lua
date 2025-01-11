@@ -172,9 +172,24 @@ return {
   {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
     -- 'ErichDonGubler/lsp_lines.nvim',
-    cond = ar.lsp.enable,
+    cond = ar.lsp.enable and ar.lsp.virtual_text.variant == 'lsp_lines',
     event = 'LspAttach',
     config = function() require('lsp_lines').setup() end,
+  },
+  {
+    'rachartier/tiny-inline-diagnostic.nvim',
+    cond = ar.lsp.enable and ar.lsp.virtual_text.variant == 'tiny-inline',
+    event = 'LspAttach',
+    priority = 1000,
+    opts = {
+      preset = 'modern', -- Can be: "modern", "classic", "minimal", "powerline", ghost", "simple", "nonerdfont", "amongus"
+      options = {
+        break_line = {
+          enabled = true,
+          after = 30,
+        },
+      },
+    },
   },
   {
     -- 'razak17/glance.nvim',

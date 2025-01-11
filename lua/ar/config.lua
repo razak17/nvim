@@ -33,6 +33,7 @@ local env = vim.env
 ---@alias ArWhichDashboard 'alpha' | 'snacks'
 ---@alias ArWhichGx 'local' | 'plugin'
 ---@alias ArWhichLspProgress 'builtin' | 'noice' | 'snacks'
+---@alias ArWhichLspVirtualText 'builtin' | 'lsp_lines' | 'tiny-inline'
 ---@alias ArWhichNotifier 'nvim-notify' | 'snacks'
 ---@alias ArWhichShelter 'cloak' | 'ecolog'
 ---@alias ArWhichStatuscolumn 'local' | 'plugin'
@@ -63,6 +64,10 @@ local env = vim.env
 ---@field enable boolean
 ---@field variant ArWhichWinbar
 
+---@class ArLspVirtualText
+---@field enable boolean
+---@field variant ArWhichLspVirtualText
+
 ---@class ArLsp
 ---@field disabled ArLspDisabled
 ---@field enable boolean
@@ -77,6 +82,7 @@ local env = vim.env
 ---@field progress ArLspProgress
 ---@field semantic_tokens ArCond
 ---@field signs ArCond
+---@field virtual_text ArLspVirtualText
 ---@field workspace_diagnostics ArCond
 
 ---@class ArPluginItem
@@ -253,6 +259,7 @@ local namespace = {
     progress = { enable = true, variant = 'noice' },
     semantic_tokens = { enable = false },
     signs = { enable = false },
+    virtual_text = { enable = false, variant = 'tiny-inline' },
     workspace_diagnostics = { enable = false },
   },
   menu = {
