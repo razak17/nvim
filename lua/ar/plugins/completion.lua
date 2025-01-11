@@ -438,7 +438,7 @@ return {
       },
       {
         'zbirenbaum/copilot-cmp',
-        cond = ar.ai.enable and not minimal,
+        cond = not minimal and ar.ai.enable and ar.ai.models.copilot,
         opts = {},
         config = function(_, opts)
           require('copilot_cmp').setup(opts)
