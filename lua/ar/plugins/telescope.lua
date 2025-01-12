@@ -751,6 +751,8 @@ return {
               '%.lock',
               '%-lock.yaml',
               '%-lock.json',
+              '/node_modules/',
+              '^node_modules/',
             },
             max_results = 2000,
             additional_args = { '--trim' },
