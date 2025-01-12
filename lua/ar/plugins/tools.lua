@@ -205,7 +205,7 @@ return {
         ['markdown'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
         ['markdown.mdx'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
         lua = { 'stylua' },
-        go = { 'goimports' },
+        go = { 'goimports', 'goimports-reviser' },
         sh = { 'shfmt' },
         python = ar.find_string(ar.lsp.lang.python, 'ruff') and {} or {
           'isort',

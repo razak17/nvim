@@ -449,6 +449,7 @@ return {
         },
         -- LSP Clients (conform,nvim-lint)
         {
+          update = { 'LspAttach', 'LspDetach', 'WinEnter' },
           condition = function()
             return conditions.lsp_attached and not ar.lsp.null_ls.enable
           end,
@@ -499,6 +500,7 @@ return {
                   .. separator
               end
               if #self.client_names > 1 then
+                -- return ' ' .. table.concat(self.client_names, ', ') .. separator
                 return ' '
                   .. fmt('%s +%d', self.client_names[1], #self.client_names - 1)
                   .. separator
