@@ -475,7 +475,8 @@ return {
     event = 'LspAttach',
     cond = not minimal and ar.lsp.enable,
     cmd = { 'OutputPanel' },
-    config = function() require('output_panel').setup() end,
+    opts = {},
+    config = function(_, opts) require('output_panel').setup(opts) end,
   },
   -- }}}
   --------------------------------------------------------------------------------
