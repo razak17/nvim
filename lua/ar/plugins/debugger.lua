@@ -58,18 +58,7 @@ return {
     end,
     -- stylua: ignore
     keys = {
-      {
-        '<localleader>da',
-        function()
-          if fn.filereadable('.vscode/launch.json') then
-            local dap_vscode = require('dap.ext.vscode')
-            dap_vscode.json_decode = require('overseer.json').decode
-            dap_vscode.load_launchjs(nil, ar.debugger.filetypes)
-          end
-          require('dap').continue({ before = get_args })
-        end,
-        desc = 'dap: run with args',
-      },
+      {'<localleader>da', function() require('dap').continue({before = get_args}) end, desc = 'dap: run with args' },
       { '<localleader>dbm', function() require('dap').set_breakpoint(nil, nil, input('Log point message: ')) end, desc = 'dap: log breakpoint', },
       { '<localleader>dc', function() require('dap').continue() end, desc = 'dap: continue or start debugging' },
       { '<localleader>dh', function() require('dap').step_back() end, desc = 'dap: step back' },
@@ -80,16 +69,16 @@ return {
       { '<localleader>drl', function() require('dap').run_last() end, desc = 'dap: run last' },
       { '<localleader>drr', function() require('dap').repl.toggle() end, desc = 'dap: toggle repl' },
       { '<localleader>drs', function() require('dap').restart() end, desc = 'dap: restart' },
+      { '<localleader>dx', function() require('dap').terminate() end, desc = 'dap: terminate' },
       {
         '<localleader>ds',
         function()
           local widgets = require('dap.ui.widgets')
           widgets.centered_float(widgets.scopes, { border = 'rounded' })
         end,
-        desc = 'DAP Scopes',
+        desc = 'dap-ui: scopes',
       },
       { '<localleader>dw', function() require('dap.ui.widgets').hover() end, desc = 'dap: hover' },
-      { '<localleader>dx', function() require('dap').terminate() end, desc = 'dap: terminate' },
     },
     config = function()
       local dap = require('dap')
@@ -106,15 +95,17 @@ return {
         })
       end
 
-      local vscode = require('dap.ext.vscode')
+      -- setup dap config by VsCode launch.json file
+      local dap_vscode = require('dap.ext.vscode')
+      local json = require('plenary.json')
+      ---@diagnostic disable-next-line: duplicate-set-field
+      dap_vscode.json_decode = function(str)
+        return vim.json.decode(json.json_strip_comments(str, {}))
+      end
       local _filetypes = require('mason-nvim-dap.mappings.filetypes')
       local filetypes =
         vim.tbl_deep_extend('force', _filetypes, ar.debugger.filetypes)
-
-      vim.schedule(function()
-        vscode.json_decode = require('overseer.json').decode
-        vscode.load_launchjs(nil, filetypes)
-      end)
+      dap_vscode.type_to_filetypes = filetypes
 
       -- Lua configurations.
       -- 1. Open a Neovim instance (instance A)
