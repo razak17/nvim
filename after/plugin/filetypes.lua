@@ -119,6 +119,8 @@ settings({
     bo = { textwidth = 100 },
     opt = { spell = true },
     function()
+      map('i', 't', require('ar.async_func').add, { buffer = true })
+
       if is_available('LuaSnip') and is_available('snips') then
         local ls = require('luasnip')
         local js = require('snips.javascript')
