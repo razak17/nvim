@@ -116,27 +116,59 @@ return {
         vscode.load_launchjs(nil, filetypes)
       end)
 
+      -- Lua configurations.
+      -- 1. Open a Neovim instance (instance A)
+      -- 2. Launch the DAP server with (A) >
+      --    :lua require"osv".launch({port=8086})
+      -- 3. Open another Neovim instance (instance B)
+      -- 4. Open `myscript.lua` (B)
+      -- 5. Place a breakpoint on line 2 using (B) >
+      --    :lua require"dap".toggle_breakpoint()
+      -- 6. Connect the DAP client using (B) >
+      --    :lua require"dap".continue()
+      -- 7. Run `myscript.lua` in the other instance (A) >
+      --    :luafile myscript.lua
+      -- 8. The breakpoint should hit and freeze the instance
+
+      --@param callback fun(adapter:table)
+      ---@param config table
       dap.adapters.nlua = function(callback, config)
-        callback({
+        local adapter = {
           type = 'server',
           host = config.host or '127.0.0.1',
           port = config.port or 8086,
-        })
+        }
+        if config.start_neovim then
+          local dap_run = dap.run
+          ---@diagnostic disable-next-line: duplicate-set-field
+          dap.run = function(c)
+            adapter.port = c.port
+            adapter.host = c.host
+          end
+          require('osv').run_this()
+          dap.run = dap_run
+        end
+        callback(adapter)
       end
 
       dap.configurations.lua = {
         {
           type = 'nlua',
           request = 'attach',
+          name = 'Run this file',
+          start_neovim = {},
+        },
+        {
+          type = 'nlua',
+          request = 'attach',
           name = 'Attach to running Neovim instance',
           host = function()
-            local value = fn.input('Host [127.0.0.1]: ')
+            local value = fn.input('Host (127.0.0.1): ')
             return value ~= '' and value or '127.0.0.1'
           end,
           port = function()
-            local val = tonumber(fn.input('Port: '))
-            assert(val, 'Please provide a port number')
-            return val
+            local val = tonumber(fn.input('Port (8086): '))
+            return val and val > 0 and val or 8086
           end,
         },
       }
@@ -328,6 +360,21 @@ return {
     end,
     dependencies = {
       'nvim-neotest/nvim-nio',
+      {
+        'jbyuki/one-small-step-for-vimkind',
+        keys = {
+          {
+            '<leader>dL',
+            function() require('osv').launch({ port = 8086 }) end,
+            desc = 'osv: launch adapter',
+          },
+          {
+            '<leader>dT',
+            function() require('osv').run_this() end,
+            desc = 'osv: lua adapter (run this)',
+          },
+        },
+      },
       {
         'rcarriga/nvim-dap-ui',
         -- stylua: ignore
