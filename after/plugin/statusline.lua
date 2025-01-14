@@ -3,7 +3,7 @@ local enabled = ar.plugins.minimal
 if not ar or ar.none or not enabled then return end
 
 --------------------------------------------------------------------------------
--- Statusline with no plugind
+-- Statusline with no plugin
 -- @see: https://github.com/shivambegin/Neovim/blob/main/lua/config/statusline.lua
 --------------------------------------------------------------------------------
 local statusline_augroup =
