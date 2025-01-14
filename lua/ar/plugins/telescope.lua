@@ -865,6 +865,40 @@ return {
       )
     end,
   },
+  {
+    'FabianWirth/search.nvim',
+    cond = min_enabled,
+    keys = {
+      { '<C-p>', function() require('search').open() end, desc = 'find files' },
+    },
+    opts = {
+      tabs = {
+        { 'Files', smart_open },
+        { 'Grep', live_grep },
+        { 'Find Word', b('grep_string') },
+        { 'Egrepify', egrepify },
+      },
+      collections = {
+        git = {
+          initial_tab = 1, -- Git branches
+          tabs = {
+            { name = 'Branches', tele_func = b('git_branches') },
+            { name = 'Commits', tele_func = b('git_commits') },
+            { name = 'Stashes', tele_func = b('git_stash') },
+            { name = 'File History', tele_func = git_file_history },
+          },
+        },
+        grep = {
+          initial_tab = 1,
+          tabs = {
+            { name = 'Grep', tele_func = b('git_branches') },
+            { name = 'Egrepify', tele_func = egrepify },
+            { name = 'Find Word', tele_func = b('grep_string') },
+          },
+        },
+      },
+    },
+  },
   { 'nvim-telescope/telescope-fzf-native.nvim', cond = min_enabled },
   { 'molecule-man/telescope-menufacture', cond = min_enabled },
   { 'biozz/whop.nvim', cond = min_enabled, opts = {} },
