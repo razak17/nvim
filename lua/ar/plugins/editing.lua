@@ -407,6 +407,8 @@ return {
     opts = {
       remove_default_keybinds = true,
       inverses = {
+        ['=='] = '~=',
+        ['==='] = '!==',
         ['vim'] = 'emacs',
         ['let'] = 'const',
         ['margin'] = 'padding',
