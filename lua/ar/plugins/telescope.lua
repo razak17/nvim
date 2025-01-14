@@ -745,6 +745,17 @@ return {
               },
             },
           }),
+          grep_string = {
+            file_ignore_patterns = {
+              '%.svg',
+              '%.lock',
+              '%-lock.yaml',
+              '%-lock.json',
+              '/node_modules/',
+              '^node_modules/',
+            },
+            max_results = 2000,
+          },
           live_grep = {
             file_ignore_patterns = {
               '%.svg',
