@@ -878,7 +878,7 @@ return {
   },
   {
     'FabianWirth/search.nvim',
-    cond = min_enabled,
+    cond = min_enabled and false,
     keys = {
       { '<C-p>', function() require('search').open() end, desc = 'find files' },
     },
@@ -905,6 +905,15 @@ return {
             { name = 'Grep', tele_func = b('git_branches') },
             { name = 'Egrepify', tele_func = egrepify },
             { name = 'Find Word', tele_func = b('grep_string') },
+          },
+        },
+        others = {
+          initial_tab = 1,
+          tabs = {
+            { name = 'Highlights', tele_func = b('highlights') },
+            { name = 'Keymaps', tele_func = b('keymaps') },
+            { name = 'Colorschemes', tele_func = b('colorscheme') },
+            { name = 'Helpgrep', tele_func = helpgrep },
           },
         },
       },
