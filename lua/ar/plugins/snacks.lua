@@ -10,6 +10,7 @@ return {
     lazy = false,
     -- stylua: ignore
     keys = {
+      { '<leader><leader>f', function() Snacks.picker.files() end, desc = 'snacks: find files' },
       { '<leader>nx', function() Snacks.notifier.hide() end, desc = 'snacks: dismiss all notifications' },
       { '<leader>nh', function() Snacks.notifier.show_history() end, desc = 'snacks: show notification history' },
       { '<leader>gbb', function() Snacks.git.blame_line() end, desc = 'snacks: git blame line' },
@@ -44,6 +45,12 @@ return {
         },
         style = 'fancy',
         top_down = false,
+      },
+      picker = {
+        prompt = codicons.misc.search_alt,
+        sources = {
+          files = { hidden = true, ignored = true },
+        },
       },
       profiler = {
         pick = { picker = 'telescope' },

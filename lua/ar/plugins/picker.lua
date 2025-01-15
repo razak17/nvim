@@ -295,9 +295,12 @@ return {
       ar.command('SessionList', list_sessions)
     end,
   },
+  --------------------------------------------------------------------------------
+  -- Disabled
+  --------------------------------------------------------------------------------
   {
     'camspiers/snap',
-    cond = not minimal,
+    cond = not minimal and false,
     init = function()
       vim.g.whichkey_add_spec({ '<leader><leader>f', group = 'Snap' })
     end,

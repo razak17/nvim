@@ -485,7 +485,7 @@ return {
     -- stylua: ignore
     keys = {
       -- { '<c-p>', find_files, desc = 'find files' },
-      { '<c-p>', smart_open, desc = 'find files' },
+      { '<C-p>', smart_open, desc = 'find files' },
       { '<leader>f,', file_browser, desc = 'file browser (root)' },
       { '<leader>f.', function() file_browser({ path = '%:p:h', select_buffer = 'true' }) end, desc = 'file browser (curr dir)', },
       { '<leader>f?', b('help_tags'), desc = 'help tags' },
