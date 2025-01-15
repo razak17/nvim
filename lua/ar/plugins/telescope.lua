@@ -700,7 +700,6 @@ return {
         pickers = {
           registers = cursor(),
           reloader = dropdown(),
-          git_branches = dropdown(),
           oldfiles = dropdown({ previewer = false }),
           spell_suggest = dropdown({ previewer = false }),
           find_files = {
