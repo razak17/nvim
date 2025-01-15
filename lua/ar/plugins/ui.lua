@@ -361,6 +361,24 @@ return {
       },
     },
   },
+  {
+    'GitMarkedDan/you-are-an-idiot.nvim',
+    cond = not minimal,
+    cmd = { 'ToggleIdiot' },
+    init = function()
+      ar.add_to_menu('toggle', { ['Toggle Idiot'] = 'ToggleIdiot' })
+    end,
+    config = function()
+      local idiot = require('you-are-an-idiot')
+      vim.api.nvim_create_user_command('ToggleIdiot', function()
+        if idiot.is_running() then
+          idiot.abort()
+        else
+          idiot.run()
+        end
+      end, { desc = 'Toggles YouAreAnIdiot' })
+    end,
+  },
   --------------------------------------------------------------------------------
   -- Disabled
   --------------------------------------------------------------------------------
