@@ -4,3 +4,4 @@ after/plugin/lspconfig.lua
 .rvim.json
 .nvim/config.json
 profile/
+typrstats
