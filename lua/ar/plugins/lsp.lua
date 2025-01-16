@@ -120,12 +120,10 @@ return {
               opts = {
                 library = {
                   'lazy.nvim',
-                  { path = 'luvit-meta/library', words = { 'vim%.uv' } },
+                  { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
                 },
               },
             },
-            -- Manage libuv types with lazy. Plugin will never be loaded
-            { 'Bilal2453/luvit-meta', lazy = true },
             {
               'folke/neoconf.nvim',
               cond = ar.lsp.enable,
