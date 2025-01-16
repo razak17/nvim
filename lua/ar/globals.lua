@@ -432,15 +432,15 @@ function ar.create_select_menu(prompt, options_table)
     local top_items = frecency.top_items(
       function(_, data) return data.prompt == prompt end
     )
-    for _, item in ipairs(top_items) do
-      table.insert(option_names, item.name)
-    end
+    option_names = vim
+      .iter(top_items)
+      :map(function(item) return item.name end)
+      :totable()
   else
-    local n = 0
-    for i, _ in pairs(options_table) do
-      n = n + 1
-      option_names[n] = i
-    end
+    option_names = vim
+      .iter(options_table)
+      :map(function(i, _) return i end)
+      :totable()
     table.sort(option_names)
   end
   -- Return the prompt function. These global function var will be used when assigning keybindings
