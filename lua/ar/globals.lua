@@ -420,7 +420,7 @@ end
 -- @arg options_table: Table of the form { [n. Display name] = lua-function/vim-cmd, ... }
 --                    The number is used for the sorting purpose and will be replaced by vim.ui.select() numbering
 --]]
--- Ref: https://github.com/theopn/theovim/blob/main/lua/util.lua#L12
+-- Ref: https://github.com/theopn/theovim/blob/d6b7debb00d5465b7165140db3699630a9f0e0d9/lua/tools/terminal.lua#L25
 ---@param prompt string
 ---@param options_table table
 ---@return function
