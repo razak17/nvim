@@ -96,7 +96,7 @@ return {
           end
         end,
         ['Toggle Zoom'] = function() Snacks.zen.zoom() end,
-        ['Toggle Zen'] = function() Snacks.zen.zen() end,
+        ['Toggle Zen'] = function() Snacks.zen() end,
         ['Toggle Scratch'] = function() Snacks.scratch() end,
         ['Toggle Scratch Buffer'] = function() Snacks.scratch.select() end,
       })
