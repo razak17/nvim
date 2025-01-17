@@ -72,6 +72,7 @@ return {
           require('neotest-vim-test')({
             ignore_file_types = { 'python', 'vim', 'lua' },
           }),
+          require('neotest-vitest'),
         },
         consumers = {
           overseer = require('neotest.consumers.overseer'),
@@ -89,6 +90,7 @@ return {
       'nvim-neotest/neotest-python',
       'nvim-neotest/neotest-vim-test',
       'rcarriga/neotest-plenary',
+      'marilari88/neotest-vitest',
     },
   },
   {
