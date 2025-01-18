@@ -411,7 +411,7 @@ return {
   {
     'lukas-reineke/virt-column.nvim',
     enabled = false,
-    cond = not minimal and false,
+    cond = not minimal,
     event = { 'BufRead', 'BufNewFile' },
     opts = {
       char = separators.right_thin_block,

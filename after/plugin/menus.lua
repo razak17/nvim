@@ -210,13 +210,3 @@ map(
   command_palette_menu,
   { desc = '[c]ommand [p]alette: open menu for command palette actions' }
 )
-
---------------------------------------------------------------------------------
--- Frecency Setup
---------------------------------------------------------------------------------
-local frecency = require('ar.frecency')
-for _, option in pairs(ar.menu) do
-  for key, _ in pairs(option.options) do
-    frecency.update_item(key, { prompt = option.title })
-  end
-end

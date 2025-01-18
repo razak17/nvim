@@ -426,16 +426,23 @@ end
 ---@return function
 function ar.create_select_menu(prompt, options_table)
   local frecency = require('ar.frecency')
-  -- Given the table of options, populate an array with option display names
-  local option_names = {}
+  local option_names = {} -- To capture the display names of options
   if ar.frecency.enable then
     local top_items = frecency.top_items(
       function(_, data) return data.prompt == prompt end
     )
-    option_names = vim
-      .iter(top_items)
-      :map(function(item) return item.name end)
-      :totable()
+    if #top_items == 0 then
+      vim.iter(options_table):each(function(key, _)
+        frecency.update_item(key, { prompt = prompt })
+        table.insert(option_names, key)
+      end)
+      table.sort(option_names)
+    else
+      option_names = vim
+        .iter(top_items)
+        :map(function(item) return item.name end)
+        :totable()
+    end
   else
     option_names = vim
       .iter(options_table)
