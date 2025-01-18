@@ -5,6 +5,15 @@ local cond = not minimal and ar.shelter.enable
 
 return {
   {
+    'ck-zhang/obfuscate.nvim',
+    init = function()
+      ar.add_to_menu(
+        'toggle',
+        { ['Toggle Obfuscate'] = 'lua require("obfuscate").toggle()' }
+      )
+    end,
+  },
+  {
     'laytan/cloak.nvim',
     cond = cond and variant == 'cloak',
     event = 'VeryLazy',
