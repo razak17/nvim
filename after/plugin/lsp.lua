@@ -385,13 +385,13 @@ local function setup_mappings(client, bufnr)
       desc = 'references',
       capability = M.textDocument_references,
     },
-    {
-      'n',
-      'gi',
-      lsp.buf.implementation,
-      desc = 'implementation',
-      capability = M.textDocument_references,
-    },
+    -- {
+    --   'n',
+    --   'gi',
+    --   lsp.buf.implementation,
+    --   desc = 'implementation',
+    --   capability = M.textDocument_references,
+    -- },
     {
       'n',
       'gI',
