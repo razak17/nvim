@@ -375,6 +375,7 @@ return {
         ['`'] = 'actions.tcd',
         ['~'] = '<cmd>edit $HOME<CR>',
         ['<leader>q'] = 'actions.close',
+        ['<Esc>'] = 'actions.close',
         ['<leader>t'] = 'actions.open_terminal',
         ['<C-g>'] = {
           desc = 'Grep in dir',
