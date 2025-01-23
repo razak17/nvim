@@ -35,6 +35,7 @@ local env = vim.env
 ---@alias ArWhichLspProgress 'builtin' | 'noice' | 'snacks'
 ---@alias ArWhichLspVirtualText 'builtin' | 'lsp_lines' | 'tiny-inline'
 ---@alias ArWhichNotifier 'nvim-notify' | 'snacks'
+---@alias ArWhichPicker 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick'
 ---@alias ArWhichShelter 'cloak' | 'ecolog'
 ---@alias ArWhichStatuscolumn 'local' | 'plugin'
 ---@alias ArWhichWinbar 'local' | 'plugin'
@@ -51,6 +52,10 @@ local env = vim.env
 ---@class ArGx
 ---@field enable boolean
 ---@field variant ArWhichGx
+
+---@class ArPicker
+---@field enable boolean
+---@field variant ArWhichPicker
 
 ---@class ArLspProgress
 ---@field enable boolean
@@ -301,6 +306,8 @@ local namespace = {
   ui_select = { enable = true },
   none = env.RVIM_NONE == '1',
   noplugin = false,
+  ---@type ArPicker
+  picker = { enable = true, variant = 'telescope' },
   ---@type ArPlugin
   plugin = {
     big_file = { enable = true },

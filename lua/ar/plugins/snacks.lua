@@ -9,19 +9,27 @@ return {
     priority = 1000,
     lazy = false,
     -- stylua: ignore
-    keys = {
-      { '<leader><leader>f', function() Snacks.picker.files() end, desc = 'snacks: find files' },
-      { '<leader>nx', function() Snacks.notifier.hide() end, desc = 'snacks: dismiss all notifications' },
-      { '<leader>nh', function() Snacks.notifier.show_history() end, desc = 'snacks: show notification history' },
-      { '<leader>gbb', function() Snacks.git.blame_line() end, desc = 'snacks: git blame line' },
-      { '<leader>goo', function() Snacks.gitbrowse() end, desc = 'snacks: open current line' },
-      { '<leader>gh', function() Snacks.lazygit.log_file() end, desc = 'snacks: log (file)' },
-      { '<leader>gH', function() Snacks.lazygit.log() end, desc = 'snacks: log (cwd)' },
-      { '<leader>or', function() Snacks.rename.rename_file() end, desc = 'Rename File' },
-      { '<leader>o/', function() Snacks.terminal() end, desc = 'snacks: toggle terminal' },
-      { '<leader>ps', function() Snacks.profiler.scratch() end, desc = 'snacks: profiler scratch buffer' },
-      { '<leader>pu', function() Snacks.profiler.toggle() end, desc = 'snacks: toggle profiler' },
-    },
+    keys = function ()
+      local mappings = {
+        { '<leader>nx', function() Snacks.notifier.hide() end, desc = 'snacks: dismiss all notifications' },
+        { '<leader>nh', function() Snacks.notifier.show_history() end, desc = 'snacks: show notification history' },
+        { '<leader>gbb', function() Snacks.git.blame_line() end, desc = 'snacks: git blame line' },
+        { '<leader>goo', function() Snacks.gitbrowse() end, desc = 'snacks: open current line' },
+        { '<leader>gh', function() Snacks.lazygit.log_file() end, desc = 'snacks: log (file)' },
+        { '<leader>gH', function() Snacks.lazygit.log() end, desc = 'snacks: log (cwd)' },
+        { '<leader>or', function() Snacks.rename.rename_file() end, desc = 'Rename File' },
+        { '<leader>o/', function() Snacks.terminal() end, desc = 'snacks: toggle terminal' },
+        { '<leader>ps', function() Snacks.profiler.scratch() end, desc = 'snacks: profiler scratch buffer' },
+        { '<leader>pu', function() Snacks.profiler.toggle() end, desc = 'snacks: toggle profiler' },
+      }
+
+      if ar.picker.variant == 'snacks' then
+        table.insert(mappings, { '<C-p>', function() Snacks.picker.files() end, desc = 'snacks: find files' })
+        table.insert(mappings, { '<M-space>', function() Snacks.picker.buffers() end, desc = 'snacks: grep' })
+      end
+
+      return mappings
+    end,
     ---@type snacks.Config
     opts = {
       styles = {
@@ -149,7 +157,7 @@ return {
         preset = {
           -- Defaults to a picker that supports `fzf-lua`, `telescope.nvim` and `mini.pick`
           ---@type fun(cmd:string, opts:table)|nil
-          pick = 'fzf-lua',
+          pick = nil,
           -- Used by the `keys` section to show keymaps.
           -- Set your custom keymaps here.
           -- When using a function, the `items` argument are the default keymaps.

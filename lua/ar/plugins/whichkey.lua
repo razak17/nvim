@@ -32,7 +32,7 @@ return {
         { '<leader>F', group = 'Picker (Current Dir)' },
         { '<leader>a', group = 'A.I.' },
         { '<leader>e', group = 'Explorer' },
-        { '<leader>f', group = 'Telescope' },
+        { '<leader>f', group = 'Picker' },
         { '<leader>fg', group = 'Git' },
         { '<leader>fv', group = 'Vim' },
         { '<leader>g', group = 'Git' },
@@ -77,6 +77,7 @@ return {
         { '<leader><leader>n', group = 'Sticky Note' },
         { '<leader><localleader>', group = 'Advanced' },
         { '<leader><localleader>r', group = 'Rustlings' },
+        { '<localleader><leader>', group = 'Advanced' },
       },
       {
         mode = { 'x' },
