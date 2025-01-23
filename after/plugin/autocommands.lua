@@ -303,7 +303,7 @@ if is_available('alpha-nvim') then
       opt.foldenable = false
       opt.colorcolumn = ''
       vim.o.laststatus = 0
-      map('n', 'q', '<Cmd>Alpha<CR>', { buffer = args.buf, nowait = true })
+      map('n', 'q', '<Cmd>q<CR>', { buffer = args.buf, nowait = true })
 
       api.nvim_create_autocmd('BufUnload', {
         buffer = args.buf,

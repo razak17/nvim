@@ -391,6 +391,7 @@ vim.api.nvim_create_autocmd(
       '*',
     },
     callback = function(args)
+      -- vim.opt_local.statusline = '%!v:lua.StatusLine.inactive()'
       local decs = ar.ui.decorations.get({
         ft = vim.bo[args.buf].ft,
         fname = vim.fn.bufname(args.buf),
@@ -398,11 +399,10 @@ vim.api.nvim_create_autocmd(
       })
       if not decs or ar.falsy(decs) then return end
       if decs.ft == false or decs.fname == false then
-        -- vim.opt_local.statusline = '%!v:lua.StatusLine.inactive()'
         vim.opt.foldenable = false
         vim.opt.colorcolumn = ''
         vim.o.laststatus = 0
-        map('n', 'q', '<Cmd>Alpha<CR>', { buffer = args.buf, nowait = true })
+        map('n', 'q', '<Cmd>q<CR>', { buffer = args.buf, nowait = true })
 
         vim.api.nvim_create_autocmd('BufUnload', {
           buffer = args.buf,
