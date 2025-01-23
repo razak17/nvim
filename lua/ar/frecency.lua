@@ -2,6 +2,8 @@
 
 local M = {}
 
+local fn = vim.fn
+
 --- @type table<string, { count: number, last_used: number, meta: table }>
 local usages = {}
 -- Default config values
@@ -10,7 +12,20 @@ local config = {
   recency_factor = 0.5,
   --- Multiply the frequency by a factor. Must be greater than zero.
   frequency_factor = 1,
+  filepath = fn.stdpath('data') .. '/frecency/frecency.json',
 }
+
+--- Initialize the frecency state from a file.
+function M.initialize()
+  -- Attempt to load the state from the specified file
+  local ok, err = pcall(M.load_state)
+  if not ok then
+    print(
+      'Warning: Could not load previous state. Starting fresh. Error: '
+        .. tostring(err)
+    )
+  end
+end
 
 --- Update an item for the frecency algorithm.
 --- @param item string
@@ -27,6 +42,9 @@ function M.update_item(item, meta)
     data.count = data.count + 1
     data.last_used = current_time
   end
+
+  -- Save the state to the specified file
+  M.save_state()
 end
 
 --- Get the frecency score of an item.
@@ -53,6 +71,7 @@ end
 --- @param n number?
 --- @return table<{ name: string, score: number, meta: table }>
 function M.top_items(filter, n)
+  M.initialize()
   local frecencies = {}
   local i = 1
   for name, data in pairs(usages) do
@@ -73,6 +92,34 @@ function M.top_items(filter, n)
   end
 
   return frecencies
+end
+
+--- Save the current frecency state to a file.
+function M.save_state()
+  local file, err = io.open(config.filepath, 'w')
+  if not file then
+    error('Error opening file for writing: ' .. tostring(err))
+  end
+
+  local serialized_data = fn.json_encode(usages)
+  file:write(serialized_data)
+  file:close()
+end
+
+--- Load the frecency state from a file.
+function M.load_state()
+  local file = io.open(config.filepath, 'r')
+  if not file then return end
+
+  local serialized_data = file:read('*a')
+  local data, decode_err = fn.json_decode(serialized_data)
+  file:close()
+
+  if decode_err then
+    error('Error decoding JSON data: ' .. tostring(decode_err))
+  end
+
+  usages = data or {}
 end
 
 return M
