@@ -701,7 +701,7 @@ return {
               ['<CR>'] = stopinsert(actions.select_default),
               ['<C-o>'] = open_media_files,
               ['<C-y>'] = open_file_in_centered_popup,
-              ['<C-w>'] = open_with_window_picker,
+              ['<C-\\>'] = open_with_window_picker,
               ['<C-z>'] = send_files_to_grapple,
               ['<A-q>'] = actions.send_to_loclist + actions.open_loclist,
               ['<C-h>'] = actions.results_scrolling_left,
@@ -720,6 +720,7 @@ return {
             n = {
               ['<C-n>'] = actions.move_selection_next,
               ['<C-p>'] = actions.move_selection_previous,
+              ['<C-\\>'] = open_with_window_picker,
             },
           },
           preview = {
