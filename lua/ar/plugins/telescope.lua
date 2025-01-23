@@ -148,12 +148,6 @@ local function plugins()
   })
 end
 
-local function git_files(opts) extensions('menufacture', 'git_files')(opts)() end
-
-local function project_files()
-  if not pcall(git_files, { show_untracked = true }) then find_files() end
-end
-
 local function file_browser(opts)
   opts = vim.tbl_extend('keep', opts or {}, {
     hidden = true,
@@ -532,7 +526,7 @@ return {
         { '<leader>fgf', directory_files, desc = 'directory for find files' },
         { '<leader>fgg', directory_search, desc = 'directory for live grep' },
         { '<leader>fgh', git_file_history, desc = 'git file history' },
-        { '<leader>ff', project_files, desc = 'project files' },
+        { '<leader>ff', find_files, desc = 'find files' },
         { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
         { '<leader>fH', helpgrep, desc = 'helpgrep' },
         { '<leader>fi', import, desc = 'import' },
