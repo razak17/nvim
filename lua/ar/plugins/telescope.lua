@@ -265,6 +265,7 @@ end
 -- @see: https://github.com/nvim-telescope/telescope.nvim/issues/1048
 -- @see: https://github.com/whatsthatsmell/dots/blob/master/public%20dots/vim-nvim/lua/joel/telescope/init.lua
 -- Open multiple files at once
+---@param prompt_bufnr number
 local function multi_selection_open(prompt_bufnr)
   local open_cmd = 'edit'
   local actions = require('telescope.actions')
@@ -278,6 +279,7 @@ local function multi_selection_open(prompt_bufnr)
   vim.cmd('cfdo ' .. open_cmd)
 end
 
+---@param prompt_bufnr number
 local function open_file_in_centered_popup(prompt_bufnr)
   local actions = require('telescope.actions')
   local action_state = require('telescope.actions.state')
@@ -308,6 +310,7 @@ local function open_media_files()
   end
 end
 
+---@param prompt_bufnr number
 local function open_with_window_picker(prompt_bufnr)
   local actions = require('telescope.actions')
   local action_state = require('telescope.actions.state')
@@ -336,6 +339,7 @@ local send_find_files_to_live_grep = function()
 end
 
 -- https://github.com/nvim-telescope/telescope.nvim/issues/2778#issuecomment-2202572413
+---@param prompt_bufnr number
 local focus_preview = function(prompt_bufnr)
   local action_state = require('telescope.actions.state')
   local picker = action_state.get_current_picker(prompt_bufnr)
@@ -360,6 +364,30 @@ local focus_preview = function(prompt_bufnr)
     string.format('noautocmd lua vim.api.nvim_set_current_win(%s)', winid)
   )
   -- api.nvim_set_current_win(winid)
+end
+
+---@param prompt_bufnr number
+local function send_files_to_grapple(prompt_bufnr)
+  if not ar.is_available('grapple.nvim') then
+    vim.notify('grapple.nvim is not available')
+    return
+  end
+  local actions = require('telescope.actions')
+  local action_state = require('telescope.actions.state')
+  local picker = action_state.get_current_picker(prompt_bufnr)
+  local multi = picker:get_multi_selection()
+  if not multi or vim.tbl_isempty(multi) then
+    local file_path = action_state.get_selected_entry().path
+    require('grapple').toggle({ path = file_path })
+  else
+    vim.iter(multi):each(function(selection)
+      local tag_exists = require('grapple').exists({ path = selection.path })
+      if selection.path and not tag_exists then
+        require('grapple').toggle({ path = selection.path })
+      end
+    end)
+  end
+  actions.close(prompt_bufnr)
 end
 
 ar.telescope = {
@@ -674,6 +702,7 @@ return {
               ['<C-o>'] = open_media_files,
               ['<C-y>'] = open_file_in_centered_popup,
               ['<C-w>'] = open_with_window_picker,
+              ['<C-z>'] = send_files_to_grapple,
               ['<A-q>'] = actions.send_to_loclist + actions.open_loclist,
               ['<C-h>'] = actions.results_scrolling_left,
               ['<C-l>'] = actions.results_scrolling_right,
