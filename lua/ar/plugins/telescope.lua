@@ -813,7 +813,7 @@ return {
           fzf = {},
           persisted = dropdown(),
           menufacture = {
-            mappings = { main_menu = { [{ 'i', 'n' }] = '<C-;>' } },
+            mappings = { main_menu = { [{ 'i', 'n' }] = '<A-m>' } },
           },
           helpgrep = {
             ignore_paths = { fn.stdpath('state') .. '/lazy/readme' },
