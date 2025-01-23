@@ -370,6 +370,7 @@ local namespace = {
         'slate.vim',
         'sorbet.vim',
         'torte.vim',
+        'unokai.vim',
         'wildcharm.vim',
         'zaibatsu.vim',
         'zellner.vim',
