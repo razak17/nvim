@@ -176,7 +176,11 @@ local function notifications() extensions('notify')({})() end
 local function undo() extensions('undo')({})() end
 local function projects() extensions('projects')(ar.telescope.minimal_ui())() end
 local function smart_open()
-  extensions('smart_open')({ cwd_only = true, no_ignore = true })()
+  extensions('smart_open')({
+    cwd_only = true,
+    no_ignore = true,
+    show_scores = false,
+  })()
 end
 local function directory_files()
   extensions('directory')({ feature = 'find_files' })()
