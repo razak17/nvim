@@ -216,13 +216,17 @@ function ar.ui.show_cursorline(buf)
     and show
 end
 
-augroup('Cursorline', {
-  event = { 'BufEnter', 'WinEnter', 'CursorHold', 'InsertLeave' },
-  command = function(args) vim.wo.cursorline = ar.ui.show_cursorline(args.buf) end,
-}, {
-  event = { 'BufLeave', 'InsertEnter' },
-  command = function() vim.wo.cursorline = false end,
-})
+if ar.plugins.minimal then
+  augroup('Cursorline', {
+    event = { 'BufEnter', 'WinEnter', 'CursorHold', 'InsertLeave' },
+    command = function(args)
+      vim.wo.cursorline = ar.ui.show_cursorline(args.buf)
+    end,
+  }, {
+    event = { 'BufLeave', 'InsertEnter' },
+    command = function() vim.wo.cursorline = false end,
+  })
+end
 
 augroup('Utilities', {
   ---@source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
