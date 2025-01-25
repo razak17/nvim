@@ -144,7 +144,7 @@ function ar.project_config(file)
     vim.notify('Invalid json found in .rvim.json', 'error')
     return
   end
-  ar.mergeTables(ar, table)
+  ar.mergeTables(ar_config, table)
 end
 
 --- Autosize horizontal split to match its minimum content
