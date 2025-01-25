@@ -438,7 +438,7 @@ return {
       },
       {
         'zbirenbaum/copilot-cmp',
-        cond = not minimal and ar_config.ai.enable and ar_config.ai.models.copilot,
+        cond = not minimal and ar.ai.enable and ar_config.ai.models.copilot,
         opts = {},
         config = function(_, opts)
           require('copilot_cmp').setup(opts)
@@ -534,7 +534,7 @@ return {
   {
     'Exafunction/codeium.nvim',
     enabled = false,
-    cond = ar_config.ai.enable and not minimal and false,
+    cond = ar.ai.enable and not minimal and false,
     opts = {},
   },
   {

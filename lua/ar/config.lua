@@ -46,12 +46,20 @@ local env = vim.env
 ---@field openai boolean
 ---@field copilot boolean
 
+---@class ArDashboard
+---@field enable boolean
+---@field variant ArWhichDashboard
+
 ---@class ArExplorer
 ---@field rename ArExplorerRename
 
 ---@class ArGx
 ---@field enable boolean
 ---@field variant ArWhichGx
+
+---@class ArNotifier
+---@field enable boolean
+---@field variant ArWhichNotifier
 
 ---@class ArPicker
 ---@field enable boolean
@@ -163,9 +171,7 @@ local env = vim.env
 ---@field rtp ArRTP
 
 local namespace = {
-  git = {},
-  ---@type ArGx
-  gx = { enable = true, variant = 'local' },
+  ai = { enable = env.RVIM_AI_ENABLED == '1' },
   ---@type ArMedia
   media = {
     audio = { 'mp3', 'm4a' },
@@ -261,7 +267,7 @@ local namespace = {
   none = env.RVIM_NONE == '1',
   noplugin = false,
   ---@type ArPicker
-  picker = { enable = true, variant = 'snacks' },
+  picker = { enable = true, variant = 'telescope' },
   ---@type ArPlugin
   plugin = {
     big_file = { enable = true },
@@ -373,7 +379,6 @@ local namespace = {
 
 local config = {
   ai = {
-    enable = env.RVIM_AI_ENABLED == '1',
     ---@type ArAIModels
     models = {
       claude = true,
@@ -400,11 +405,8 @@ local config = {
   ---@type ArExplorer
   explorer = { rename = 'snacks' },
   frecency = { enable = true },
-  notifier = {
-    enable = true,
-    ---@type ArWhichNotifier
-    variant = 'snacks',
-  },
+  ---@type ArNotifier
+  notifier = { enable = true, variant = 'snacks' },
   shelter = {
     enable = true,
     ---@type ArWhichShelter

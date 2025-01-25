@@ -537,7 +537,7 @@ return {
           {
             cond = function()
               return not minimal
-                and ar_config.ai.enable
+                and ar.ai.enable
                 and ar_config.ai.models.copilot
             end,
             {
@@ -568,7 +568,7 @@ return {
         },
         -- CodeCompanion
         {
-          cond = function() return not minimal and ar_config.ai.enable end,
+          cond = function() return not minimal and ar.ai.enable end,
           static = { processing = false },
           update = {
             'User',
@@ -611,7 +611,7 @@ return {
         {
           condition = function()
             return not minimal
-              and ar_config.ai.enable
+              and ar.ai.enable
               and ar.lsp.null_ls.enable
               and ar_config.ai.models.copilot
           end,

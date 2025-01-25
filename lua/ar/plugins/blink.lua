@@ -88,7 +88,7 @@ return {
           then
             return { 'buffer' }
           else
-            if ar_config.ai.enable then table.insert(providers, 2, 'copilot') end
+            if ar.ai.enable then table.insert(providers, 2, 'copilot') end
             return providers
           end
         end,
@@ -102,7 +102,7 @@ return {
           buffer = { name = '[BUF]' },
           cmdline = { name = '[CMD]' },
           copilot = {
-            enabled = ar_config.ai.enable,
+            enabled = ar.ai.enable,
             name = '[CPL]',
             module = 'blink-cmp-copilot',
             score_offset = 100,
@@ -250,7 +250,7 @@ return {
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',
       'jsongerber/nvim-px-to-rem',
-      { 'giuxtaposition/blink-cmp-copilot', cond = ar_config.ai.enable },
+      { 'giuxtaposition/blink-cmp-copilot', cond = ar.ai.enable },
       {
         'saghen/blink.compat',
         version = '*',

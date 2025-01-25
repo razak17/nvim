@@ -23,7 +23,7 @@ return {
   {
     'CopilotC-Nvim/CopilotChat.nvim',
     cond = not ar.plugins.minimal
-      and ar_config.ai.enable
+      and ar.ai.enable
       and ar.completion.enable
       and ar_config.ai.models.copilot,
     cmd = {
