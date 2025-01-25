@@ -68,7 +68,7 @@ return {
           'fugitive',
         },
         highlight = {
-          bg = ar.ui.transparent.enable and 'NONE'
+          bg = ar_config.ui.transparent.enable and 'NONE'
             or ar.highlight.get('Normal', 'bg'),
           fg = P.cursor,
         },

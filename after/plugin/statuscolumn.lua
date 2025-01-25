@@ -3,8 +3,8 @@ if
   or ar.none
   or not ar.plugins.enable
   or ar.plugins.minimal
-  or not ar.ui.statuscolumn.enable
-  or ar.ui.statuscolumn.variant ~= 'local'
+  or not ar_config.ui.statuscolumn.enable
+  or ar_config.ui.statuscolumn.variant ~= 'local'
 then
   return
 end
@@ -17,6 +17,8 @@ local separators = ui.icons.separators
 local left_thin_block = separators.left_thin_block
 
 local sep = { text = left_thin_block, texthl = 'IndentBlanklineChar' }
+
+ar.ui.statuscolumn = {}
 
 function ar.ui.statuscolumn.render()
   local win = vim.g.statusline_winid

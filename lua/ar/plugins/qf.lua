@@ -13,7 +13,7 @@ return {
     opts = {
       preview = {
         border = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
-        winblend = ar.ui.transparent.enable and 0 or 12,
+        winblend = ar_config.ui.transparent.enable and 0 or 12,
       },
     },
     config = function(_, opts)

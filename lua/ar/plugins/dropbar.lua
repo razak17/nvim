@@ -10,8 +10,8 @@ return {
     'Bekaboo/dropbar.nvim',
     event = { 'BufRead', 'BufNewFile' },
     cond = not ar.plugins.minimal
-      and ar.ui.winbar.enable
-      and ar.ui.winbar.variant == 'plugin',
+      and ar_config.ui.winbar.enable
+      and ar_config.ui.winbar.variant == 'plugin',
     keys = {
       {
         '<leader>wo',

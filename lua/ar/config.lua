@@ -124,33 +124,6 @@ local env = vim.env
 ---@class ArRTP
 ---@field disabled table
 
----@class ArConfig
----@field ai table
----@field animation table
----@field apps ArApps
----@field autosave table
----@field colorscheme string
----@field debug table
----@field frecency table
----@field git table
----@field gx ArGx
----@field media ArMedia
----@field lsp ArLsp
----@field autocommands ArCond
----@field colors ArCond
----@field filetypes ArCond
----@field mappings ArCond
----@field notifier string
----@field numbers ArCond
----@field rooter ArCond
----@field ui_select ArCond
----@field none boolean
----@field plugins ArPlugins
----@field completion table
----@field treesitter table
----@field ui ArUI
----@field rtp ArRTP
-
 local namespace = {
   ai = { enable = env.RVIM_AI_ENABLED == '1' },
   ---@type ArMedia
@@ -229,11 +202,6 @@ local namespace = {
   completion = { enable = env.RVIM_COMPLETION_ENABLED == '1' },
   treesitter = { enable = env.RVIM_TREESITTER_ENABLED == '1' },
   ui = {
-    ---@type ArStatuscolumn
-    statuscolumn = { enable = true, variant = 'local' },
-    ---@type ArWinbar
-    winbar = { enable = true, variant = 'plugin' },
-    transparent = { enable = true },
     colorscheme = {
       disabled = {
         'blue.vim',
@@ -400,6 +368,13 @@ local config = {
     enable = true,
     ---@type ArWhichShelter
     variant = 'ecolog',
+  },
+  ui = {
+    ---@type ArStatuscolumn
+    statuscolumn = { enable = true, variant = 'local' },
+    ---@type ArWinbar
+    winbar = { enable = true, variant = 'plugin' },
+    transparent = { enable = true },
   },
 }
 

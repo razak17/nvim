@@ -6,7 +6,9 @@ local utils = require('ar.utils.fs')
 ---@param from string
 ---@param to string
 local function on_rename(from, to)
-  if ar_config.explorer.rename == 'local' then utils.on_rename_file(from, to) end
+  if ar_config.explorer.rename == 'local' then
+    utils.on_rename_file(from, to)
+  end
   if ar_config.explorer.rename == 'snacks' then
     local snacks_ok, snacks = pcall(require, 'snacks')
     if not snacks_ok then return end
@@ -276,7 +278,8 @@ return {
             { NeoTreeStatusLine = { link = 'PanelBackground' } },
             {
               NeoTreeTabActive = {
-                bg = ar.ui.transparent and 'NONE' or { from = 'FloatTitle' },
+                bg = ar_config.ui.transparent and 'NONE'
+                  or { from = 'FloatTitle' },
               },
             },
           },

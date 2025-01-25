@@ -1,8 +1,8 @@
 if
   not ar
   or ar.none
-  or not ar.ui.winbar.enable
-  or ar.ui.winbar.variant ~= 'local'
+  or not ar_config.ui.winbar.enable
+  or ar_config.ui.winbar.variant ~= 'local'
 then
   return
 end
@@ -13,6 +13,8 @@ local config = {
   show_hostname = false,
   show_buffer_count = false,
 }
+
+ar.ui.winbar = {}
 
 local fn, bo = vim.fn, vim.bo
 local decor = ar.ui.decorations

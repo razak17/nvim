@@ -770,8 +770,8 @@ return {
       opts.statuscolumn = {
         condition = function()
           if
-            not ar.ui.statuscolumn.enable
-            or ar.ui.statuscolumn.variant ~= 'plugin'
+            not ar_config.ui.statuscolumn.enable
+            or ar_config.ui.statuscolumn.variant ~= 'plugin'
           then
             return false
           end

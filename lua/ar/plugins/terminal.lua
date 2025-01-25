@@ -18,7 +18,7 @@ return {
         NormalFloat = { link = 'NormalFloat' },
       },
       float_opts = {
-        winblend = ui.transparent.enable and 0 or 3,
+        winblend = ar_config.ui.transparent.enable and 0 or 3,
         border = border,
       },
       size = function(term)

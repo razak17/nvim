@@ -18,7 +18,7 @@ return {
       height = { min = 10, max = 25 },
       border = ar.ui.current.border,
       wo = {
-        winblend = ar.ui.transparent.enable and 0 or 12, -- value between 0-100 0 for fully opaque and 100 for fully transparent
+        winblend = ar_config.ui.transparent.enable and 0 or 12, -- value between 0-100 0 for fully opaque and 100 for fully transparent
       },
     },
     preset = 'classic',
