@@ -418,6 +418,7 @@ local config = {
       openai = true,
     },
   },
+  animation = { enable = false },
 }
 
 _G.ar = ar or namespace
