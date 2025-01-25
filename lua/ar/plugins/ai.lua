@@ -16,19 +16,19 @@
 --
 -- vim.g.openai_api_key = get_openai_key()
 local minimal = ar.plugins.minimal
-local models = ar.ai.models
+local models = ar_config.ai.models
 
 return {
   {
     'napisani/context-nvim',
-    cond = not minimal and ar.ai.enable and false,
+    cond = not minimal and ar_config.ai.enable and false,
     cmd = { 'ContextNvim' },
     opts = {},
     config = function(_, opts) require('context_nvim').setup(opts) end,
   },
   {
     'yetone/avante.nvim',
-    cond = not minimal and ar.ai.enable and false,
+    cond = not minimal and ar_config.ai.enable and false,
     init = function()
       vim.g.whichkey_add_spec({ '<leader>av', group = 'Avante' })
 
@@ -102,7 +102,7 @@ return {
   },
   {
     'olimorris/codecompanion.nvim',
-    cond = not minimal and ar.ai.enable,
+    cond = not minimal and ar_config.ai.enable,
     init = function()
       vim.g.whichkey_add_spec({ '<leader>ak', group = 'Codecompanion' })
       ar.add_to_menu('ai', {
@@ -192,7 +192,7 @@ return {
   },
   {
     'zbirenbaum/copilot.lua',
-    cond = not minimal and ar.ai.enable and models.copilot,
+    cond = not minimal and ar_config.ai.enable and models.copilot,
     cmd = 'Copilot',
     event = 'InsertEnter',
     init = function()
@@ -239,7 +239,7 @@ return {
   },
   {
     'piersolenski/wtf.nvim',
-    cond = not minimal and ar.lsp.enable and ar.ai.enable,
+    cond = not minimal and ar.lsp.enable and ar_config.ai.enable,
     init = function() vim.g.whichkey_add_spec({ '<leader>aw', group = 'wtf' }) end,
     -- stylua: ignore
     keys = {
@@ -255,7 +255,7 @@ return {
   },
   {
     'razak17/backseat.nvim',
-    cond = not minimal and ar.ai.enable and models.copilot,
+    cond = not minimal and ar_config.ai.enable and models.copilot,
     cmd = { 'Backseat', 'BackseatAsk', 'BackseatClear', 'BackseatClearLine' },
     opts = {
       highlight = { icon = '', group = 'DiagnosticVirtualTextInfo' },
@@ -268,7 +268,7 @@ return {
   --------------------------------------------------------------------------------
   {
     'moozd/aidoc.nvim',
-    cond = not minimal and ar.ai.enable and false,
+    cond = not minimal and ar_config.ai.enable and false,
     keys = {
       {
         mode = 'x',
@@ -282,7 +282,7 @@ return {
   {
     'David-Kunz/gen.nvim',
     enabled = false,
-    cond = not minimal and ar.ai.enable and false,
+    cond = not minimal and ar_config.ai.enable and false,
     cmd = { 'Gen' },
   },
 }

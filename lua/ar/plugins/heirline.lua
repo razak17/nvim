@@ -536,7 +536,7 @@ return {
           -- Copilot Status
           {
             cond = function()
-              return not minimal and ar.ai.enable and ar.ai.models.copilot
+              return not minimal and ar_config.ai.enable and ar_config.ai.models.copilot
             end,
             {
               init = function(self)
@@ -566,7 +566,7 @@ return {
         },
         -- CodeCompanion
         {
-          cond = function() return not minimal and ar.ai.enable end,
+          cond = function() return not minimal and ar_config.ai.enable end,
           static = { processing = false },
           update = {
             'User',
@@ -609,9 +609,9 @@ return {
         {
           condition = function()
             return not minimal
-              and ar.ai.enable
+              and ar_config.ai.enable
               and ar.lsp.null_ls.enable
-              and ar.ai.models.copilot
+              and ar_config.ai.models.copilot
           end,
           init = function(self)
             self.processing = false

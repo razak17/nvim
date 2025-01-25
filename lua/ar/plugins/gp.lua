@@ -14,7 +14,7 @@ local templates = {
 
 return {
   'robitx/gp.nvim',
-  cond = not ar.plugins.minimal and ar.ai.enable,
+  cond = not ar.plugins.minimal and ar_config.ai.enable,
   -- stylua: ignore
   keys = {
     -- Chat commands
@@ -279,7 +279,7 @@ return {
       })
     end
 
-    local models = ar.ai.models
+    local models = ar_config.ai.models
     if models.openai then setup_model('openai', 'gpt-4o') end
     if models.copilot then setup_model('copilot', 'ChatCopilot') end
     if models.claude then setup_model('anthropic', 'ChatClaude-3-5-Sonnet') end

@@ -163,16 +163,6 @@ local env = vim.env
 ---@field rtp ArRTP
 
 local namespace = {
-  ai = {
-    enable = env.RVIM_AI_ENABLED == '1',
-    ---@type ArAIModels
-    models = {
-      claude = true,
-      copilot = true,
-      gemini = true,
-      openai = true,
-    },
-  },
   animation = { enable = false },
   ---@type ArApps
   apps = {
@@ -307,7 +297,7 @@ local namespace = {
   none = env.RVIM_NONE == '1',
   noplugin = false,
   ---@type ArPicker
-  picker = { enable = true, variant = 'telescope' },
+  picker = { enable = true, variant = 'snacks' },
   ---@type ArPlugin
   plugin = {
     big_file = { enable = true },
@@ -417,5 +407,19 @@ local namespace = {
   },
 }
 
+local config = {
+  ai = {
+    enable = env.RVIM_AI_ENABLED == '1',
+    ---@type ArAIModels
+    models = {
+      claude = true,
+      copilot = true,
+      gemini = true,
+      openai = true,
+    },
+  },
+}
+
 _G.ar = ar or namespace
+_G.ar_config = config
 _G.map = vim.keymap.set
