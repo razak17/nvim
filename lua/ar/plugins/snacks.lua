@@ -25,7 +25,14 @@ return {
 
       if ar.picker.variant == 'snacks' then
         table.insert(mappings, { '<C-p>', function() Snacks.picker.files() end, desc = 'snacks: find files' })
-        table.insert(mappings, { '<M-space>', function() Snacks.picker.buffers() end, desc = 'snacks: grep' })
+        table.insert(mappings, {
+          '<M-space>',
+          function()
+            Snacks.picker.buffers({ current = true, layout = { preview = false, preset = 'select' } })
+            vim.cmd.stopinsert()
+          end,
+          desc = 'snacks: buffers',
+        })
       end
 
       return mappings
