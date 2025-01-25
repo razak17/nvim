@@ -426,28 +426,18 @@ end
 ---@return function
 function ar.create_select_menu(prompt, options_table)
   local frecency = require('ar.frecency')
-  local option_names = {} -- To capture the display names of options
+  local option_names = vim
+    .iter(options_table)
+    :map(function(i, _) return i end)
+    :totable()
   if ar_config.frecency.enable then
-    local top_items = frecency.top_items(
-      function(_, data) return data.prompt == prompt end
-    )
-    if #top_items == 0 then
-      vim.iter(options_table):each(function(key, _)
-        frecency.update_item(key, { prompt = prompt })
-        table.insert(option_names, key)
-      end)
-      table.sort(option_names)
-    else
-      option_names = vim
-        .iter(top_items)
-        :map(function(item) return item.name end)
-        :totable()
-    end
+    frecency.initialize()
+    table.sort(option_names, function(a, b)
+      local a_score = frecency.calc_frecency(a)
+      local b_score = frecency.calc_frecency(b)
+      return a_score > b_score
+    end)
   else
-    option_names = vim
-      .iter(options_table)
-      :map(function(i, _) return i end)
-      :totable()
     table.sort(option_names)
   end
   -- Return the prompt function. These global function var will be used when assigning keybindings
