@@ -18,10 +18,8 @@ return {
     end,
     opts = { wait_ms = '300' },
   },
-  -- NOTE::use fork until PR is merged: https://github.com/tummetott/reticle.nvim/pull/13
   {
-    -- 'tummetott/reticle.nvim',
-    'razak17/reticle.nvim',
+    'tummetott/reticle.nvim',
     cond = not minimal and not niceties, -- auto-cursorline kinda does this already
     event = { 'BufRead', 'BufNewFile' },
     init = function()
