@@ -23,7 +23,7 @@ return {
         { '<leader>pu', function() Snacks.profiler.toggle() end, desc = 'snacks: toggle profiler' },
       }
 
-      if ar.picker.variant == 'snacks' then
+      if ar_config.picker.variant == 'snacks' then
         table.insert(mappings, { '<C-p>', function() Snacks.picker.files() end, desc = 'snacks: find files' })
         table.insert(mappings, {
           '<M-space>',

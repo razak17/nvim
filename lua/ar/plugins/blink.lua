@@ -5,7 +5,7 @@ local border, lsp_hls = ui.current.border, ui.lsp.highlights
 return {
   {
     'saghen/blink.cmp',
-    cond = ar.completion.enable and ar.completion.variant == 'blink',
+    cond = ar.completion.enable and ar_config.completion.variant == 'blink',
     event = 'InsertEnter',
     version = '*', -- REQUIRED `version` needed to download pre-built binary
     opts_extend = {

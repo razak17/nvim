@@ -761,7 +761,9 @@ diagnostic.config({
   },
 })
 
-if not ar.is_available('noice.nvim') or ar.completion.variant == 'blink' then
+if
+  not ar.is_available('noice.nvim') or ar_config.completion.variant == 'blink'
+then
   -- require('ar.lsp_float').apply()
 
   lsp.handlers['textDocument/hover'] = function(...)

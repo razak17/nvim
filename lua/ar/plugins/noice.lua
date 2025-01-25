@@ -39,20 +39,20 @@ return {
     },
     lsp = {
       documentation = {
-        enabled = ar.completion.variant == 'cmp',
+        enabled = ar_config.completion.variant == 'cmp',
         opts = {
           border = { style = 'single' },
           position = { row = 2 },
         },
       },
       signature = {
-        enabled = ar.completion.variant == 'cmp',
+        enabled = ar_config.completion.variant == 'cmp',
         opts = {
           position = { row = 2 },
         },
       },
       hover = {
-        enabled = ar.completion.variant == 'cmp',
+        enabled = ar_config.completion.variant == 'cmp',
         silent = true,
       },
       progress = {
@@ -64,7 +64,7 @@ return {
       override = {
         ['vim.lsp.util.convert_input_to_markdown_lines'] = false,
         ['vim.lsp.util.stylize_markdown'] = false,
-        ['cmp.entry.get_documentation'] = ar.completion.variant == 'cmp',
+        ['cmp.entry.get_documentation'] = ar_config.completion.variant == 'cmp',
       },
     },
     views = {

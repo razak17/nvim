@@ -45,8 +45,8 @@ return {
       preferred_environment = 'local',
       types = true,
       integrations = {
-        nvim_cmp = ar.completion.variant == 'cmp',
-        blink_cmp = ar.completion.variant == 'blink',
+        nvim_cmp = ar_config.completion.variant == 'cmp',
+        blink_cmp = ar_config.completion.variant == 'blink',
         lspsaga = false,
         lsp = false,
       },

@@ -114,7 +114,7 @@ return {
         { '<localleader>fP', function() file_picker(fn.stdpath('data') .. '/lazy') end, desc = 'plugins' },
       }
 
-      if ar.picker.variant == 'fzf-lua' then
+      if ar_config.picker.variant == 'fzf-lua' then
         table.insert(mappings, { '<C-p>', fzf_lua.git_files, desc = 'find files' })
       end
 

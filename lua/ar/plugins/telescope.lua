@@ -579,7 +579,7 @@ return {
         { '<leader>fX', spell_errors, desc = 'spell errors' },
       }
 
-      if ar.picker.variant == 'telescope' then
+      if ar_config.picker.variant == 'telescope' then
         table.insert(mappings, { '<C-p>', smart_open, desc = 'find files' })
         table.insert(mappings, { '<M-space>', b('buffers'), desc = 'buffers' })
       end

@@ -161,7 +161,6 @@ local namespace = {
     video = { 'mp4', 'mkv' },
   },
   kitty_scrollback = { enable = env.KITTY_SCROLLBACK_NVIM == 'true' },
-  ---@type ArLsp
   lsp = {
     enable = env.RVIM_LSP_ENABLED == '1',
     prettier = {
@@ -217,8 +216,6 @@ local namespace = {
     },
   },
   none = env.RVIM_NONE == '1',
-  ---@type ArPicker
-  picker = { enable = true, variant = 'telescope' },
   ---@type ArPlugins
   plugins = {
     enable = env.RVIM_PLUGINS_ENABLED == '1',
@@ -229,16 +226,8 @@ local namespace = {
       ghost_text = { enable = env.RVIM_GHOST_ENABLED == '1' },
     },
   },
-  completion = {
-    enable = env.RVIM_COMPLETION_ENABLED == '1',
-    ---@type ArCompletionIcons
-    icons = 'lspkind',
-    ---@type ArCompletion
-    variant = 'cmp',
-  },
-  treesitter = {
-    enable = env.RVIM_TREESITTER_ENABLED == '1',
-  },
+  completion = { enable = env.RVIM_COMPLETION_ENABLED == '1' },
+  treesitter = { enable = env.RVIM_TREESITTER_ENABLED == '1' },
   ui = {
     ---@type ArStatuscolumn
     statuscolumn = { enable = true, variant = 'local' },
@@ -328,6 +317,12 @@ local config = {
     explorer = 'thunar',
   },
   autosave = { enable = true, current = true },
+  completion = {
+    ---@type ArCompletionIcons
+    icons = 'lspkind',
+    ---@type ArCompletion
+    variant = 'cmp',
+  },
   colorscheme = 'onedark',
   ---@type ArDashboard
   dashboard = { enable = true, variant = 'alpha' },
@@ -364,6 +359,8 @@ local config = {
   },
   ---@type ArNotifier
   notifier = { enable = true, variant = 'snacks' },
+  ---@type ArPicker
+  picker = { enable = true, variant = 'telescope' },
   plugin = {
     custom = {
       big_file = { enable = true },

@@ -88,7 +88,7 @@ return {
     event = { 'InsertEnter' },
     cond = not minimal
       and ar.completion.enable
-      and ar.completion.variant == 'cmp',
+      and ar_config.completion.variant == 'cmp',
     keys = {
       { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
       { '<leader>rq', ':Lab code stop<CR>', desc = 'lab: stop' },

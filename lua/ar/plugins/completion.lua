@@ -54,7 +54,7 @@ return {
     -- 'hrsh7th/nvim-cmp',
     'iguanacucumber/magazine.nvim',
     name = 'nvim-cmp',
-    cond = ar.completion.enable and ar.completion.variant == 'cmp',
+    cond = ar.completion.enable and ar_config.completion.variant == 'cmp',
     event = 'InsertEnter',
     opts = function()
       local snippet = vim.snippet
@@ -265,11 +265,11 @@ return {
               not ar.find_string(custom_sources, entry.source.name)
               and item.kind ~= 'Color'
             then
-              if ar.completion.icons == 'mini.icons' then
+              if ar_config.completion.icons == 'mini.icons' then
                 local icon, hl = MiniIcons.get('lsp', item.kind)
                 item.kind = icon
                 item.kind_hl_group = hl
-              elseif ar.completion.icons == 'lspkind' then
+              elseif ar_config.completion.icons == 'lspkind' then
                 item.kind = format_icon(symbols[item.kind])
               end
             end
