@@ -320,13 +320,24 @@ return {
   },
   {
     'echasnovski/mini.pick',
-    cond = minimal,
-    keys = {
-      { '<C-p>', '<Cmd>Pick all_files<CR>', desc = 'pick: open' },
-      { '<leader>fb', '<Cmd>Pick buffers<CR>', desc = 'pick: buffers' },
-      { '<leader>fw', '<Cmd>Pick grep<CR>', desc = 'pick: grep' },
-      { '<leader>fs', '<Cmd>Pick grep_live<CR>', desc = 'pick: live grep' },
-    },
+    keys = function()
+      if ar.plugins.minimal then
+        return {
+          { '<C-p>', '<Cmd>Pick all_files<CR>', desc = 'pick: open' },
+          { '<leader>fb', '<Cmd>Pick buffers<CR>', desc = 'pick: buffers' },
+          { '<leader>fw', '<Cmd>Pick grep<CR>', desc = 'pick: grep' },
+          { '<leader>fs', '<Cmd>Pick grep_live<CR>', desc = 'pick: live grep' },
+        }
+      end
+      local mappings = {}
+      if ar_config.picker.files == 'mini.pick' then
+        table.insert(
+          mappings,
+          { '<C-p>', '<Cmd>Pick all_files<CR>', desc = 'pick: open' }
+        )
+      end
+      return mappings
+    end,
     event = 'VeryLazy',
     cmd = { 'Pick' },
     opts = {

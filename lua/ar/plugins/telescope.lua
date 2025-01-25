@@ -579,8 +579,13 @@ return {
         { '<leader>fX', spell_errors, desc = 'spell errors' },
       }
 
-      if ar_config.picker.variant == 'telescope' then
+      if ar_config.picker.files == 'smart-open' then
         table.insert(mappings, { '<C-p>', smart_open, desc = 'find files' })
+      end
+      if ar_config.picker.files == 'telescope' then
+        table.insert(mappings, { '<C-p>', find_files, desc = 'find files' })
+      end
+      if ar_config.picker.variant == 'telescope' then
         table.insert(mappings, { '<M-space>', b('buffers'), desc = 'buffers' })
       end
 

@@ -36,6 +36,7 @@ local env = vim.env
 ---@alias ArWhichLspVirtualText 'builtin' | 'lsp_lines' | 'tiny-inline'
 ---@alias ArWhichNotifier 'nvim-notify' | 'snacks'
 ---@alias ArWhichPicker 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick'
+---@alias ArWhichFilesPicker 'smart-open' | 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick'
 ---@alias ArWhichShelter 'cloak' | 'ecolog'
 ---@alias ArWhichStatuscolumn 'local' | 'plugin'
 ---@alias ArWhichWinbar 'local' | 'plugin'
@@ -63,6 +64,7 @@ local env = vim.env
 
 ---@class ArPicker
 ---@field enable boolean
+---@field files ArWhichFilesPicker
 ---@field variant ArWhichPicker
 
 ---@class ArLspProgress
@@ -328,7 +330,7 @@ local config = {
   ---@type ArNotifier
   notifier = { enable = true, variant = 'snacks' },
   ---@type ArPicker
-  picker = { enable = true, variant = 'telescope' },
+  picker = { enable = true, files = 'smart-open', variant = 'telescope' },
   plugin = {
     custom = {
       big_file = { enable = true },
