@@ -263,7 +263,7 @@ local buftypes = {
 --- again but check if there is matching lua pattern. This is useful for filetypes for
 --- plugins like Neogit which have a filetype of Neogit<something>.
 local filetypes = ar.p_table({
-  ['^Neogit.*'] = presets.tool_panel,
+  ['^Neogit.*'] = presets.tool_panel:with({ cursorline = true }),
   ['^copilot.*'] = presets.tool_panel,
   ['aerial'] = presets.tool_panel,
   ['agitator'] = presets.tool_panel,
@@ -284,7 +284,7 @@ local filetypes = ar.p_table({
   ['DiffviewFileHistory'] = presets.tool_panel,
   ['DiffviewFiles'] = presets.tool_panel,
   ['DressingInput'] = presets.tool_panel,
-  ['fugitive'] = presets.statusline_only,
+  ['fugitive'] = presets.statusline_only:with({ cursorline = true }),
   ['fzf'] = presets.tool_panel,
   ['gitcommit'] = commit_buffer,
   ['grug-far'] = presets.tool_panel,
