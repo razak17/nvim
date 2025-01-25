@@ -103,7 +103,6 @@ local env = vim.env
 ---@class ArPluginsOverride
 ---@field dict ArCond
 ---@field ghost_text ArCond
----@field garbage_day ArCond
 
 ---@class ArPlugins
 ---@field enable boolean
@@ -223,16 +222,11 @@ local namespace = {
   ---@type ArPlugins
   plugins = {
     enable = env.RVIM_PLUGINS_ENABLED == '1',
-    disabled = {},
     minimal = env.RVIM_PLUGINS_MINIMAL == '1',
-    modules = {
-      disabled = {},
-    },
     niceties = env.RVIM_NICETIES_ENABLED == '1',
     overrides = {
       dict = { enable = env.RVIM_DICT_ENABLED == '1' },
       ghost_text = { enable = env.RVIM_GHOST_ENABLED == '1' },
-      garbage_day = { enable = false },
     },
   },
   completion = {
@@ -394,6 +388,15 @@ local config = {
       menus = { enable = true },
       numbers = { enable = true },
       rooter = { enable = true },
+    },
+  },
+  plugins = {
+    disabled = {},
+    modules = {
+      disabled = {},
+    },
+    overrides = {
+      garbage_day = { enable = false },
     },
   },
   shelter = {

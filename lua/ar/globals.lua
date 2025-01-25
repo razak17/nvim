@@ -238,14 +238,14 @@ end
 ---@param plugin string The plugin to search for.
 ---@return boolean disabled # Whether the plugin is disabled.
 function ar.plugin_disabled(plugin)
-  return ar.find_string(ar.plugins.disabled, plugin)
+  return ar.find_string(ar_config.plugins.disabled, plugin)
 end
 
 -- Check if a module is disabled
 ---@param module string The module to search for.
 ---@return boolean disabled # Whether the module is disabled.
 function ar.module_disabled(module)
-  return ar.find_string(ar.plugins.modules.disabled, module)
+  return ar.find_string(ar_config.plugins.modules.disabled, module)
 end
 
 --- Check if a plugin is defined in lazy. Useful with lazy loading
