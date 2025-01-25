@@ -129,12 +129,12 @@ local function get(group, attribute, fallback)
         pattern = 'LazyDone',
         once = true,
         callback = function()
-          if ar.debug.enable then err_warn(group, attribute) end
+          if ar_config.debug.enable then err_warn(group, attribute) end
         end,
       })
     else
       vim.schedule(function()
-        if ar.debug.enable then err_warn(group, attribute) end
+        if ar_config.debug.enable then err_warn(group, attribute) end
       end)
     end
     return 'NONE'

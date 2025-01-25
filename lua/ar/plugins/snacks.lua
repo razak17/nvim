@@ -50,7 +50,8 @@ return {
       quickfile = { enabled = true },
       notifier = {
         border = border,
-        enabled = ar.notifier.enable and ar.notifier.variant == 'snacks',
+        enabled = ar_config.notifier.enable
+          and ar_config.notifier.variant == 'snacks',
         icons = {
           error = diag_icons.error,
           warn = diag_icons.warn,
@@ -154,7 +155,8 @@ return {
     end,
     config = function(_, opts)
       opts.dashboard = {
-        enabled = ar.dashboard.enable and ar.dashboard.variant == 'snacks',
+        enabled = ar_config.dashboard.enable
+          and ar_config.dashboard.variant == 'snacks',
         width = 60,
         row = nil, -- dashboard position. nil for center
         col = nil, -- dashboard position. nil for center

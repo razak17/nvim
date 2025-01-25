@@ -1,7 +1,7 @@
-local function is_colorscheme(name) return ar.colorscheme == name end
+local function is_colorscheme(name) return ar_config.colorscheme == name end
 
 local function get_cond(name)
-  return not ar.plugins.minimal and ar.colorscheme == name
+  return not ar.plugins.minimal and ar_config.colorscheme == name
 end
 
 local function get_priority(name) return is_colorscheme(name) and 1000 or 50 end
@@ -16,7 +16,7 @@ return {
   ------------------------------------------------------------------------------
   {
     'razak17/onedark.nvim',
-    cond = ar.colorscheme == 'onedark',
+    cond = ar_config.colorscheme == 'onedark',
     priority = get_priority('onedark'),
     event = get_event('onedark'),
     opts = { variant = 'fill' },

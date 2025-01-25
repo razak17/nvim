@@ -39,7 +39,7 @@ local function setup_colors()
     comment = ar.highlight.get('Comment', 'fg'),
     forest_green = ar.highlight.get('DiffAdd', 'fg'),
   }
-  if ar.colorscheme == 'default' then
+  if ar_config.colorscheme == 'default' then
     return vim.tbl_deep_extend('force', P, {
       blue = ar.highlight.get('DiagnosticInfo', 'fg'),
       dark_orange = ar.highlight.get('DiagnosticWarn', 'fg'),
@@ -48,7 +48,7 @@ local function setup_colors()
       forest_green = ar.highlight.get('DiffAdd', 'bg'),
     })
   end
-  if ar.colorscheme == 'onedark' then P = require('onedark.palette') end
+  if ar_config.colorscheme == 'onedark' then P = require('onedark.palette') end
   return P
 end
 
@@ -536,7 +536,9 @@ return {
           -- Copilot Status
           {
             cond = function()
-              return not minimal and ar_config.ai.enable and ar_config.ai.models.copilot
+              return not minimal
+                and ar_config.ai.enable
+                and ar_config.ai.models.copilot
             end,
             {
               init = function(self)

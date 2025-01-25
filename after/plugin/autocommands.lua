@@ -157,7 +157,7 @@ local function can_save()
     and vim.bo.modifiable
     and not vim.bo.readonly
     and not vim.tbl_contains(save_excluded, vim.bo.filetype)
-    and ar.autosave.enable
+    and ar_config.autosave.enable
     -- and ar.kitty_scrollback.enable
 end
 

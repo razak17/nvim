@@ -34,7 +34,7 @@ return {
     },
     popupmenu = { backend = 'nui' },
     notify = {
-      enabled = ar.notifier.variant == 'nvim-notify',
+      enabled = ar_config.notifier.variant == 'nvim-notify',
       view = 'notify',
     },
     lsp = {

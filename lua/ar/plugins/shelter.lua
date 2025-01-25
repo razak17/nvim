@@ -1,7 +1,7 @@
 local minimal = ar.plugins.minimal
-local variant = ar.shelter.variant
+local variant = ar_config.shelter.variant
 
-local cond = not minimal and ar.shelter.enable
+local cond = not minimal and ar_config.shelter.enable
 
 return {
   {

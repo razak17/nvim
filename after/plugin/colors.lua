@@ -184,4 +184,4 @@ ar.augroup('UserHighlights', {
   end,
 })
 
-ar.load_colorscheme(ar.colorscheme)
+ar.load_colorscheme(ar_config.colorscheme)

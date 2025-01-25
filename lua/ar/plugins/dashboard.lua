@@ -5,8 +5,8 @@ return {
   {
     'goolord/alpha-nvim',
     cond = not minimal
-      and ar.dashboard.enable
-      and ar.dashboard.variant == 'alpha',
+      and ar_config.dashboard.enable
+      and ar_config.dashboard.variant == 'alpha',
     event = 'VimEnter',
     keys = { { '<leader>;', '<cmd>Alpha<CR>', desc = 'alpha' } },
     opts = function()
@@ -247,7 +247,6 @@ return {
         statistics = {
           type = 'text',
           content = function()
-            local fmt = string.format
             local v = vim.version()
             local version = fmt(
               'Neovim v%d.%d.%d %s',

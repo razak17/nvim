@@ -6,8 +6,8 @@ local utils = require('ar.utils.fs')
 ---@param from string
 ---@param to string
 local function on_rename(from, to)
-  if ar.explorer.rename == 'local' then utils.on_rename_file(from, to) end
-  if ar.explorer.rename == 'snacks' then
+  if ar_config.explorer.rename == 'local' then utils.on_rename_file(from, to) end
+  if ar_config.explorer.rename == 'snacks' then
     local snacks_ok, snacks = pcall(require, 'snacks')
     if not snacks_ok then return end
     snacks.rename.on_rename_file(from, to)
@@ -44,8 +44,8 @@ return {
       local function on_move(data) on_rename(data.source, data.destination) end
 
       local function disable_autosave()
-        ar.autosave.current = ar.autosave.enable
-        if ar.autosave.current then ar.autosave.enable = false end
+        ar_config.autosave.current = ar_config.autosave.enable
+        if ar_config.autosave.current then ar_config.autosave.enable = false end
       end
 
       return {
@@ -108,7 +108,9 @@ return {
           },
           {
             event = events.FILE_RENAMED,
-            handler = function() ar.autosave.enable = ar.autosave.current end,
+            handler = function()
+              ar_config.autosave.enable = ar_config.autosave.current
+            end,
           },
           {
             event = 'before_file_delete',

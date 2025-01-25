@@ -98,7 +98,7 @@ return {
           end,
         },
       })
-      null_ls.setup({ debug = ar.debug.enable })
+      null_ls.setup({ debug = ar_config.debug.enable })
     end,
   },
   {

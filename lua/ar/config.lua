@@ -163,32 +163,6 @@ local env = vim.env
 ---@field rtp ArRTP
 
 local namespace = {
-  autosave = {
-    enable = true,
-    current = true,
-  },
-  colorscheme = 'onedark',
-  notifier = {
-    enable = true,
-    ---@type ArWhichNotifier
-    variant = 'snacks',
-  },
-  shelter = {
-    enable = true,
-    ---@type ArWhichShelter
-    variant = 'ecolog',
-  },
-  dashboard = {
-    enable = true,
-    ---@type ArWhichDashboard
-    variant = 'alpha',
-  },
-  debug = { enable = false },
-  ---@type ArExplorer
-  explorer = {
-    rename = 'snacks',
-  },
-  frecency = { enable = true },
   git = {},
   ---@type ArGx
   gx = { enable = true, variant = 'local' },
@@ -417,6 +391,24 @@ local config = {
     video = 'mpv',
     web = 'firefox',
     explorer = 'thunar',
+  },
+  autosave = { enable = true, current = true },
+  colorscheme = 'onedark',
+  ---@type ArDashboard
+  dashboard = { enable = true, variant = 'alpha' },
+  debug = { enable = false },
+  ---@type ArExplorer
+  explorer = { rename = 'snacks' },
+  frecency = { enable = true },
+  notifier = {
+    enable = true,
+    ---@type ArWhichNotifier
+    variant = 'snacks',
+  },
+  shelter = {
+    enable = true,
+    ---@type ArWhichShelter
+    variant = 'ecolog',
   },
 }
 

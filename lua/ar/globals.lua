@@ -174,7 +174,7 @@ function ar.pcall(msg, func, ...)
     args, func, msg = { arg, unpack(args) }, msg, nil
   end
   return xpcall(func, function(err)
-    if ar.debug.enable then
+    if ar_config.debug.enable then
       msg = debug.traceback(
         msg and fmt('%s:\n%s\n%s', msg, vim.inspect(args), err) or err
       )
@@ -427,7 +427,7 @@ end
 function ar.create_select_menu(prompt, options_table)
   local frecency = require('ar.frecency')
   local option_names = {} -- To capture the display names of options
-  if ar.frecency.enable then
+  if ar_config.frecency.enable then
     local top_items = frecency.top_items(
       function(_, data) return data.prompt == prompt end
     )
@@ -458,7 +458,7 @@ function ar.create_select_menu(prompt, options_table)
     }, function(choice, item)
       local action = options_table[choice]
       if action ~= nil then
-        if ar.frecency.enable then
+        if ar_config.frecency.enable then
           frecency.update_item(option_names[item], { prompt = prompt })
         end
         if type(action) == 'string' then
