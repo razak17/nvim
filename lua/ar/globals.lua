@@ -590,7 +590,7 @@ function ar.open_in_file_manager(file_path)
     print('File path is empty!')
     return
   end
-  local exe = ar.apps.explorer
+  local exe = ar_config.apps.explorer
   if exe and fn.executable(exe) then
     vim.system({ exe, file_path }, { detach = true })
   end
@@ -601,7 +601,7 @@ end
 ---@param notify? boolean
 function ar.open_media(path, notify)
   local file_extension = path:match('^.+%.(.+)$')
-  local apps, media = ar.apps, ar.media
+  local apps, media = ar_config.apps, ar.media
   local is_audio = vim.list_contains(media.audio, file_extension)
   local is_video = vim.list_contains(media.video, file_extension)
   local is_doc = vim.list_contains(media.doc, file_extension)

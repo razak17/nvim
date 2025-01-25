@@ -163,16 +163,6 @@ local env = vim.env
 ---@field rtp ArRTP
 
 local namespace = {
-  animation = { enable = false },
-  ---@type ArApps
-  apps = {
-    image = 'sxiv',
-    pdf = 'zathura',
-    audio = 'mpv',
-    video = 'mpv',
-    web = 'firefox',
-    explorer = 'thunar',
-  },
   autosave = {
     enable = true,
     current = true,
@@ -419,6 +409,15 @@ local config = {
     },
   },
   animation = { enable = false },
+  ---@type ArApps
+  apps = {
+    image = 'sxiv',
+    pdf = 'zathura',
+    audio = 'mpv',
+    video = 'mpv',
+    web = 'firefox',
+    explorer = 'thunar',
+  },
 }
 
 _G.ar = ar or namespace
