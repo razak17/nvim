@@ -217,7 +217,7 @@ function ar.ui.show_cursorline(buf)
 end
 
 augroup('Cursorline', {
-  event = { 'BufEnter', 'InsertLeave' },
+  event = { 'BufEnter', 'WinEnter', 'CursorHold', 'InsertLeave' },
   command = function(args) vim.wo.cursorline = ar.ui.show_cursorline(args.buf) end,
 }, {
   event = { 'BufLeave', 'InsertEnter' },

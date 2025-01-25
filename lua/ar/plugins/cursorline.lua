@@ -27,6 +27,7 @@ return {
         event = {
           'BufRead',
           'BufEnter',
+          'CursorHold',
           -- 'FocusGained',
           -- 'CmdlineLeave',
           -- 'InsertLeave',
