@@ -1,4 +1,4 @@
-local enabled = ar.ui_select.enable
+local enabled = ar_config.plugin.main.menus.enable
 
 if not ar or ar.none or not ar.plugins.enable or not enabled then return end
 
@@ -107,7 +107,7 @@ end
 --------------------------------------------------------------------------------
 -- A.I.
 --------------------------------------------------------------------------------
-if ar.ai.enable then
+if ar_config.ai.enable then
   -- local function execute_if_available(plugin, command, visual)
   --   if not ar.plugin_available(plugin) then return end
   --   if visual then
