@@ -33,7 +33,7 @@ has_parser = ar.memoize(has_parser)
 return {
   {
     'nvimtools/none-ls.nvim',
-    cond = ar.lsp.enable and ar.lsp.null_ls.enable,
+    cond = ar.lsp.enable and ar_config.lsp.null_ls.enable,
     keys = {
       {
         '<leader>ln',
@@ -49,7 +49,7 @@ return {
   },
   {
     'jay-babu/mason-null-ls.nvim',
-    cond = ar.lsp.enable and ar.lsp.null_ls.enable,
+    cond = ar.lsp.enable and ar_config.lsp.null_ls.enable,
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
       local null_ls = require('null-ls')
@@ -115,7 +115,7 @@ return {
         return acc
       end)
       -- Add linters (from nvim-lint)
-      if not ar.lsp.null_ls.enable then
+      if not ar_config.lsp.null_ls.enable then
         local lint_ok, lint = pcall(require, 'lint')
         if lint_ok then
           vim
@@ -157,7 +157,7 @@ return {
   },
   {
     'stevearc/conform.nvim',
-    cond = ar.lsp.enable and not ar.lsp.null_ls.enable,
+    cond = ar.lsp.enable and not ar_config.lsp.null_ls.enable,
     event = { 'BufReadPre', 'BufNewFile' },
     cmd = 'ConformInfo',
     keys = {
@@ -207,7 +207,7 @@ return {
         lua = { 'stylua' },
         go = { 'goimports', 'goimports-reviser' },
         sh = { 'shfmt' },
-        python = ar.find_string(ar.lsp.lang.python, 'ruff') and {} or {
+        python = ar.find_string(ar_config.lsp.lang.python, 'ruff') and {} or {
           'isort',
           'black',
           --[[ 'yapf' ]]
@@ -231,7 +231,7 @@ return {
   },
   {
     'mfussenegger/nvim-lint',
-    cond = ar.lsp.enable and not ar.lsp.null_ls.enable,
+    cond = ar.lsp.enable and not ar_config.lsp.null_ls.enable,
     -- stylua: ignore
     ft = {
       'javascript', 'javascript.jsx', 'javascriptreact', 'lua', 'python', 'rst',
@@ -243,7 +243,7 @@ return {
         vim = { 'vint' },
         yaml = { 'yamllint' },
         go = { 'golangcilint' },
-        python = ar.find_string(ar.lsp.lang.python, 'ruff') and {}
+        python = ar.find_string(ar_config.lsp.lang.python, 'ruff') and {}
           or { 'mypy' },
       },
       linters = {},

@@ -125,7 +125,10 @@ return {
           vim.print = _G.dd -- Override print to use snacks for `:=` command
         end,
       })
-      if ar.lsp.progress.enable and ar.lsp.progress.variant == 'snacks' then
+      if
+        ar_config.lsp.progress.enable
+        and ar_config.lsp.progress.variant == 'snacks'
+      then
         api.nvim_create_autocmd('LspProgress', {
           ---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
           callback = function(ev)

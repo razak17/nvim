@@ -435,7 +435,7 @@ return {
         -- LSP Clients (null-ls)
         {
           condition = function()
-            return conditions.lsp_attached and ar.lsp.null_ls.enable
+            return conditions.lsp_attached and ar_config.lsp.null_ls.enable
           end,
           update = { 'LspAttach', 'LspDetach', 'WinEnter' },
           provider = function() return ' ' .. statusline.lsp_client_names() end,
@@ -451,7 +451,7 @@ return {
         {
           update = { 'LspAttach', 'LspDetach', 'WinEnter' },
           condition = function()
-            return conditions.lsp_attached and not ar.lsp.null_ls.enable
+            return conditions.lsp_attached and not ar_config.lsp.null_ls.enable
           end,
           init = function(self)
             local curwin = api.nvim_get_current_win()
@@ -612,7 +612,7 @@ return {
           condition = function()
             return not minimal
               and ar.ai.enable
-              and ar.lsp.null_ls.enable
+              and ar_config.lsp.null_ls.enable
               and ar_config.ai.models.copilot
           end,
           init = function(self)

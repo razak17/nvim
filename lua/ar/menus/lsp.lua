@@ -236,7 +236,7 @@ function M.toggle_signs()
   else
     config = vim.tbl_extend('force', config, { signs = false })
   end
-  ar.lsp.signs.enable = not ar.lsp.signs.enable
+  ar_config.lsp.signs.enable = not ar_config.lsp.signs.enable
   diagnostic.config(config)
   vim.cmd('edit | silent! wall') -- Redraw
   lsp_notify(
@@ -248,29 +248,29 @@ function M.toggle_signs()
 end
 
 function M.toggle_hover_diagnostics()
-  ar.lsp.hover_diagnostics.enable = not ar.lsp.hover_diagnostics.enable
+  ar_config.lsp.hover_diagnostics.enable = not ar_config.lsp.hover_diagnostics.enable
   lsp_notify(
     string.format(
       'hover diagnostics %s',
-      bool2str(ar.lsp.hover_diagnostics.enable)
+      bool2str(ar_config.lsp.hover_diagnostics.enable)
     )
   )
 end
 
 function M.toggle_hover_diagnostics_go_to()
-  ar.lsp.hover_diagnostics.go_to = not ar.lsp.hover_diagnostics.go_to
+  ar_config.lsp.hover_diagnostics.go_to = not ar_config.lsp.hover_diagnostics.go_to
   lsp_notify(
     string.format(
       'hover diagnostics (go_to) %s',
-      bool2str(ar.lsp.hover_diagnostics.go_to)
+      bool2str(ar_config.lsp.hover_diagnostics.go_to)
     )
   )
 end
 
 function M.toggle_format_on_save()
-  ar.lsp.format_on_save.enable = not ar.lsp.format_on_save.enable
+  ar_config.lsp.format_on_save.enable = not ar_config.lsp.format_on_save.enable
   lsp_notify(
-    string.format('format on save %s', bool2str(ar.lsp.format_on_save.enable))
+    string.format('format on save %s', bool2str(ar_config.lsp.format_on_save.enable))
   )
 end
 
@@ -409,7 +409,7 @@ function M.organize_imports()
     vim.cmd('TSToolsOrganizeImports')
   elseif ar.is_available('nvim-vtsls') then
     vim.cmd('VtsExec organize_imports')
-  elseif ar.lsp.lang.typescript == 'ts_ls' then
+  elseif ar_config.lsp.lang.typescript == 'ts_ls' then
     vim.cmd('OrganizeImports')
   end
 end

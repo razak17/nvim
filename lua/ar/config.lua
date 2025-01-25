@@ -83,7 +83,6 @@ local env = vim.env
 
 ---@class ArLsp
 ---@field disabled ArLspDisabled
----@field enable boolean
 ---@field format_on_save ArCond
 ---@field hover_diagnostics table
 ---@field inlay_hint ArCond
@@ -91,7 +90,6 @@ local env = vim.env
 ---@field null_ls ArCond
 ---@field omnifunc ArCond
 ---@field override table
----@field prettier table
 ---@field progress ArLspProgress
 ---@field semantic_tokens ArCond
 ---@field signs ArCond
@@ -182,24 +180,7 @@ local namespace = {
   kitty_scrollback = { enable = env.KITTY_SCROLLBACK_NVIM == 'true' },
   ---@type ArLsp
   lsp = {
-    disabled = {
-      filetypes = {},
-      directories = { vim.fn.stdpath('data') },
-      servers = { 'denols', 'emmet_ls' },
-    },
     enable = env.RVIM_LSP_ENABLED == '1',
-    format_on_save = { enable = true },
-    hover_diagnostics = { enable = false, go_to = false, scope = 'cursor' },
-    inlay_hint = { enable = false },
-    lang = {
-      ---@type table<ArPythonLsp>
-      python = { 'basedpyright', 'ruff' },
-      ---@type ArTypescriptLsp
-      typescript = 'typescript-tools',
-    },
-    null_ls = { enable = false },
-    omnifunc = { enable = true },
-    override = {},
     prettier = {
       needs_config = false,
       supported = {
@@ -221,11 +202,6 @@ local namespace = {
         'yaml',
       },
     },
-    progress = { enable = true, variant = 'noice' },
-    semantic_tokens = { enable = false },
-    signs = { enable = false },
-    virtual_text = { enable = false, variant = 'tiny-inline' },
-    workspace_diagnostics = { enable = false },
   },
   menu = {
     command_palette = {
@@ -405,6 +381,33 @@ local config = {
   ---@type ArExplorer
   explorer = { rename = 'snacks' },
   frecency = { enable = true },
+  ---@type ArGx
+  gx = { enable = true, variant = 'local' },
+  ---@type ArLsp
+  lsp = {
+    disabled = {
+      filetypes = {},
+      directories = { vim.fn.stdpath('data') },
+      servers = { 'denols', 'emmet_ls' },
+    },
+    format_on_save = { enable = true },
+    hover_diagnostics = { enable = false, go_to = false, scope = 'cursor' },
+    inlay_hint = { enable = false },
+    lang = {
+      ---@type table<ArPythonLsp>
+      python = { 'basedpyright', 'ruff' },
+      ---@type ArTypescriptLsp
+      typescript = 'typescript-tools',
+    },
+    null_ls = { enable = false },
+    omnifunc = { enable = true },
+    override = {},
+    progress = { enable = true, variant = 'noice' },
+    semantic_tokens = { enable = false },
+    signs = { enable = false },
+    virtual_text = { enable = false, variant = 'tiny-inline' },
+    workspace_diagnostics = { enable = false },
+  },
   ---@type ArNotifier
   notifier = { enable = true, variant = 'snacks' },
   shelter = {

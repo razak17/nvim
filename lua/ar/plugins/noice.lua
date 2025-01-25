@@ -56,8 +56,8 @@ return {
         silent = true,
       },
       progress = {
-        enabled = ar.lsp.progress.enable
-          and ar.lsp.progress.variant == 'noice'
+        enabled = ar_config.lsp.progress.enable
+          and ar_config.lsp.progress.variant == 'noice'
           and false,
         throttle = 1000 / 1000,
       },

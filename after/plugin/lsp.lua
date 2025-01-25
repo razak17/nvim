@@ -5,7 +5,7 @@ local cwd = vim.fn.getcwd()
 local disabled = not ar.lsp.enable
   or not ar.plugins.enable
   or ar.plugins.minimal
-  or (cwd and ar.dirs_match(ar.lsp.disabled.directories, cwd))
+  or (cwd and ar.dirs_match(ar_config.lsp.disabled.directories, cwd))
 
 if disabled then return end
 
@@ -282,8 +282,8 @@ local function setup_mappings(client, bufnr)
   ---@return function
   local diagnostic_goto = function(next, severity)
     severity = severity and vim.diagnostic.severity[severity] or nil
-    local float = ar.lsp.hover_diagnostics.go_to
-      and not ar.lsp.hover_diagnostics.enable
+    local float = ar_config.lsp.hover_diagnostics.go_to
+      and not ar_config.lsp.hover_diagnostics.enable
     return ar.demicolon_jump(function(opts)
       local count = opts.forward and 1 or -1
       count = count * vim.v.count1
@@ -457,7 +457,7 @@ end
 --------------------------------------------------------------------------------
 local ts_overrides = {
   semantic_tokens = function(bufnr, client, token)
-    if not ar.lsp.semantic_tokens.enable then return end
+    if not ar_config.lsp.semantic_tokens.enable then return end
 
     if
       token.type == 'variable'
@@ -520,19 +520,21 @@ local function setup_autocommands(client, buf)
       buffer = buf,
       desc = 'LSP: Show diagnostics',
       command = function()
-        if not ar.lsp.hover_diagnostics.enable then return end
+        if not ar_config.lsp.hover_diagnostics.enable then return end
         if
           vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win)
         then
           return
         end
-        vim.diagnostic.open_float({ scope = ar.lsp.hover_diagnostics.scope })
+        vim.diagnostic.open_float({
+          scope = ar_config.lsp.hover_diagnostics.scope,
+        })
       end,
     })
   end
 
   if client.supports_method(M.textDocument_inlayHint, { bufnr = buf }) then
-    lsp.inlay_hint.enable(ar.lsp.inlay_hint.enable, { bufnr = buf })
+    lsp.inlay_hint.enable(ar_config.lsp.inlay_hint.enable, { bufnr = buf })
   end
 
   if client.supports_method(M.textDocument_formatting) then
@@ -544,7 +546,7 @@ local function setup_autocommands(client, buf)
         if
           not vim.g.formatting_disabled
           and not vim.b[buf].formatting_disabled
-          and ar.lsp.format_on_save.enable
+          and ar_config.lsp.format_on_save.enable
         then
           local clients = vim.tbl_filter(
             function(c) return c.supports_method(M.textDocument_formatting) end,
@@ -630,7 +632,9 @@ local function on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
   setup_mappings(client, bufnr)
   setup_lsp_stop_detached()
-  if ar.lsp.semantic_tokens.enable then setup_semantic_tokens(client, bufnr) end
+  if ar_config.lsp.semantic_tokens.enable then
+    setup_semantic_tokens(client, bufnr)
+  end
   if not ar.completion.enable then require('ar.compl')(client, bufnr) end
   if is_available('workspace-diagnostics.nvim') then
     require('workspace-diagnostics').populate_workspace_diagnostics(
@@ -664,7 +668,7 @@ augroup('LspSetupAutoCommands', {
   event = 'DiagnosticChanged',
   desc = 'Update the diagnostic locations',
   command = function(args)
-    if not ar.lsp.omnifunc.enable then
+    if not ar_config.lsp.omnifunc.enable then
       diagnostic.setloclist({ open = false })
     end
     if #args.data.diagnostics == 0 then vim.cmd('silent! lclose') end
@@ -732,7 +736,7 @@ function ar.get_lsp_signs()
 end
 
 diagnostic.config({
-  signs = ar.lsp.signs.enable and ar.get_lsp_signs() or false,
+  signs = ar_config.lsp.signs.enable and ar.get_lsp_signs() or false,
   underline = true,
   update_in_insert = false,
   severity_sort = true,
@@ -790,7 +794,9 @@ end
 --------------------------------------------------------------------------------
 -- LSP Progress
 --------------------------------------------------------------------------------
-if ar.lsp.progress.enable and ar.lsp.progress.variant == 'local' then
+if
+  ar_config.lsp.progress.enable and ar_config.lsp.progress.variant == 'local'
+then
   require('ar.lsp_progress')
 end
 --------------------------------------------------------------------------------

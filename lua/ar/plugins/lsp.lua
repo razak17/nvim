@@ -60,14 +60,14 @@ return {
         automatic_installation = true,
         handlers = {
           function(name)
-            local is_override = not falsy(ar.lsp.override)
-              and not find_string(ar.lsp.override, name)
+            local is_override = not falsy(ar_config.lsp.override)
+              and not find_string(ar_config.lsp.override, name)
             local directory_disabled =
-              ar.dirs_match(ar.lsp.disabled.directories, fmt('%s', cwd))
+              ar.dirs_match(ar_config.lsp.disabled.directories, fmt('%s', cwd))
             local server_disabled = ar.lsp_disabled(name)
 
-            local ts_lang = ar.lsp.lang.typescript
-            local py_lang = ar.lsp.lang.python
+            local ts_lang = ar_config.lsp.lang.typescript
+            local py_lang = ar_config.lsp.lang.python
 
             local ts_ls = ts_lang == 'ts_ls'
             local vtsls = ts_lang == 'vtsls'
@@ -102,7 +102,7 @@ return {
           cond = ar.lsp.enable,
           config = function()
             require('lspconfig.ui.windows').default_options.border = border
-            if ar.lsp.semantic_tokens.enable then
+            if ar_config.lsp.semantic_tokens.enable then
               local lspconfig = require('lspconfig')
               lspconfig.util.default_config =
                 vim.tbl_extend('force', lspconfig.util.default_config, {
@@ -170,13 +170,15 @@ return {
   {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
     -- 'ErichDonGubler/lsp_lines.nvim',
-    cond = ar.lsp.enable and ar.lsp.virtual_text.variant == 'lsp_lines',
+    cond = ar_config.lsp.enable
+      and ar_config.lsp.virtual_text.variant == 'lsp_lines',
     event = 'LspAttach',
     config = function() require('lsp_lines').setup() end,
   },
   {
     'rachartier/tiny-inline-diagnostic.nvim',
-    cond = ar.lsp.enable and ar.lsp.virtual_text.variant == 'tiny-inline',
+    cond = ar.lsp.enable
+      and ar_config.lsp.virtual_text.variant == 'tiny-inline',
     event = 'LspAttach',
     priority = 1000,
     opts = {
@@ -436,7 +438,7 @@ return {
   },
   {
     'artemave/workspace-diagnostics.nvim',
-    cond = ar.lsp.enable and ar.lsp.workspace_diagnostics.enable,
+    cond = ar.lsp.enable and ar_config.lsp.workspace_diagnostics.enable,
     opts = {},
   },
   --------------------------------------------------------------------------------
@@ -448,7 +450,7 @@ return {
     opts = {
       icons = { type = '󰜁 ', parameter = '󰏪 ' },
       label = { padding = 1, marginLeft = 0 },
-      autoEnableHints = ar.lsp.inlay_hint.enable,
+      autoEnableHints = ar_config.lsp.inlay_hint.enable,
     },
   },
   {

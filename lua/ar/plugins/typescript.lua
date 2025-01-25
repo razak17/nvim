@@ -11,22 +11,22 @@ local filetypes = {
 
 local function typescript_tools_cond()
   if
-    not ar.falsy(ar.lsp.override)
-    and not ar.find_string(ar.lsp.override, 'typescript-tools')
+    not ar.falsy(ar_config.lsp.override)
+    and not ar.find_string(ar_config.lsp.override, 'typescript-tools')
   then
     return false
   end
   if ar.plugin_disabled('typescript-tools.nvim') or not ar.lsp.enable then
     return false
   end
-  return ar.lsp.lang.typescript == 'typescript-tools'
+  return ar_config.lsp.lang.typescript == 'typescript-tools'
 end
 
 return {
   'dmmulroy/ts-error-translator.nvim',
   {
     'yioneko/nvim-vtsls',
-    cond = ar.lsp.lang.typescript == 'vtsls',
+    cond = ar_config.lsp.lang.typescript == 'vtsls',
     ft = filetypes,
   },
   {

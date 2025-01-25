@@ -285,7 +285,7 @@ end
 ---@param lsp string The lsp to search for.
 ---@return boolean disabled # Whether the lsp is disabled.
 function ar.lsp_disabled(lsp)
-  return ar.find_string(ar.lsp.disabled.servers, lsp)
+  return ar.find_string(ar_config.lsp.disabled.servers, lsp)
 end
 
 ---Get whether using nightly version of neovim
