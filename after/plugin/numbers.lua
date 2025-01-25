@@ -1,4 +1,4 @@
-local enabled = ar.numbers.enable
+local enabled = ar_config.plugin.main.numbers.enable
 
 if not ar or ar.none or not enabled then return end
 

@@ -1,4 +1,4 @@
-local enabled = not ar.noplugin and ar.plugin.remote_sync.enable
+local enabled = ar_config.plugin.custom.remote_sync.enable
 
 if not ar or ar.none or not enabled then return end
 

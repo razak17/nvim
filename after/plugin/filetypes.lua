@@ -1,4 +1,4 @@
-local enabled = ar.filetypes.enable
+local enabled = ar_config.plugin.main.filetypes.enable
 
 if not ar or ar.none or not enabled then return end
 

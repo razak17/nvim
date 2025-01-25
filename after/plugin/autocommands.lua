@@ -1,4 +1,6 @@
-if not ar or ar.none then return end
+local enabled = ar_config.plugin.main.autocommands.enable
+
+if not ar or ar.none or not enabled then return end
 
 local augroup, is_available = ar.augroup, ar.is_available
 
@@ -158,7 +160,7 @@ local function can_save()
     and not vim.bo.readonly
     and not vim.tbl_contains(save_excluded, vim.bo.filetype)
     and ar_config.autosave.enable
-    -- and ar.kitty_scrollback.enable
+  -- and ar.kitty_scrollback.enable
 end
 
 augroup('UpdateVim', {

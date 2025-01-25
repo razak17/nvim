@@ -1,4 +1,4 @@
-local enabled = not ar.noplugin and ar.plugin.sticky_note.enable
+local enabled = ar_config.plugin.custom.sticky_note.enable
 
 if not ar or ar.none or not enabled then return end
 

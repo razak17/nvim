@@ -100,20 +100,6 @@ local env = vim.env
 ---@field enable boolean
 ---@field config? table
 
----@class ArPlugin
----@field env ArPluginItem
----@field interceptor ArPluginItem
----@field last_place ArPluginItem
----@field large_file ArPluginItem
----@field big_file ArPluginItem
----@field notepad ArPluginItem
----@field remote_sync ArPluginItem
----@field smart_splits ArPluginItem
----@field smart_tilde ArPluginItem
----@field sticky_note ArPluginItem
----@field tmux ArPluginItem
----@field whitespace ArPluginItem
-
 ---@class ArPluginsOverride
 ---@field dict ArCond
 ---@field ghost_text ArCond
@@ -160,8 +146,6 @@ local env = vim.env
 ---@field rooter ArCond
 ---@field ui_select ArCond
 ---@field none boolean
----@field noplugin boolean
----@field plugin ArPlugin
 ---@field plugins ArPlugins
 ---@field completion table
 ---@field treesitter table
@@ -233,33 +217,9 @@ local namespace = {
       options = {},
     },
   },
-  autocommands = { enable = true },
-  colors = { enable = true },
-  filetypes = { enable = true },
-  mappings = { enable = true },
-  numbers = { enable = true },
-  rooter = { enable = true },
-  ui_select = { enable = true },
   none = env.RVIM_NONE == '1',
-  noplugin = false,
   ---@type ArPicker
   picker = { enable = true, variant = 'telescope' },
-  ---@type ArPlugin
-  plugin = {
-    big_file = { enable = true },
-    env = { enable = true },
-    interceptor = { enable = true },
-    last_place = { enable = true },
-    large_file = { enable = true },
-    notepad = { enable = true },
-    reload_plugin = { enable = true },
-    remote_sync = { enable = true },
-    smart_splits = { enable = true },
-    smart_tilde = { enable = true },
-    sticky_note = { enable = false },
-    tmux = { enable = true },
-    whitespace = { enable = true },
-  },
   ---@type ArPlugins
   plugins = {
     enable = env.RVIM_PLUGINS_ENABLED == '1',
@@ -410,6 +370,32 @@ local config = {
   },
   ---@type ArNotifier
   notifier = { enable = true, variant = 'snacks' },
+  plugin = {
+    custom = {
+      big_file = { enable = true },
+      env = { enable = true },
+      interceptor = { enable = true },
+      last_place = { enable = true },
+      large_file = { enable = true },
+      notepad = { enable = true },
+      reload_plugin = { enable = true },
+      remote_sync = { enable = true },
+      smart_splits = { enable = true },
+      smart_tilde = { enable = true },
+      sticky_note = { enable = false },
+      tmux = { enable = true },
+      whitespace = { enable = true },
+    },
+    main = {
+      autocommands = { enable = true },
+      colors = { enable = true },
+      filetypes = { enable = true },
+      mappings = { enable = true },
+      menus = { enable = true },
+      numbers = { enable = true },
+      rooter = { enable = true },
+    },
+  },
   shelter = {
     enable = true,
     ---@type ArWhichShelter

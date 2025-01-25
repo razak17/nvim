@@ -1,4 +1,4 @@
-local enabled = not ar.noplugin and ar.plugin.last_place.enable
+local enabled = ar_config.plugin.custom.last_place.enable
 
 if not ar or ar.none or not enabled then return end
 

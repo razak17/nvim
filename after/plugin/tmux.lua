@@ -1,4 +1,4 @@
-local enabled = not ar.noplugin and ar.plugin.tmux.enable
+local enabled = ar_config.plugin.custom.tmux.enable
 
 if not ar or ar.none or not enabled or vim.env.TMUX == nil then return end
 

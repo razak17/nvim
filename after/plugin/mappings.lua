@@ -1,4 +1,4 @@
-local enabled = ar.mappings.enable
+local enabled = ar_config.plugin.main.mappings.enable
 
 if not ar or ar.none or not enabled then return end
 
@@ -20,6 +20,8 @@ local vnoremap = function(...) map('v', ...) end
 local inoremap = function(...) map('i', ...) end
 -- local onoremap = function(...) map('o', ...) end
 local cnoremap = function(...) map('c', ...) end
+
+ar.mappings = {}
 
 --------------------------------------------------------------------------------
 -- MACROS {{{

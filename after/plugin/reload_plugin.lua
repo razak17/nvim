@@ -1,5 +1,5 @@
 local is_available = ar.is_available
-local enabled = not ar.noplugin and ar.plugin.reload_plugin.enable
+local enabled = ar_config.plugin.custom.reload_plugin.enable
 local has_lazy_and_telescope = is_available('lazy.nvim')
   and is_available('telescope.nvim')
 

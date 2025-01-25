@@ -1,4 +1,4 @@
-local enabled = not ar.noplugin and ar.plugin.whitespace.enable
+local enabled = ar_config.plugin.custom.whitespace.enable
 
 if not ar or ar.none or not enabled then return end
 
@@ -12,13 +12,11 @@ if not ar then return end
 
 local fn = vim.fn
 
-ar.plugin.whitespace.config = {
+local config = {
   excluded_fts = {
     'w3m',
   },
 }
-
-local config = ar.plugin.whitespace.config
 
 if not config then return end
 

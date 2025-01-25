@@ -1,12 +1,10 @@
-local enabled = not ar.noplugin and ar.plugin.interceptor.enable
+local enabled = ar_config.plugin.custom.interceptor.enable
 
 if not ar or ar.none or not enabled then return end
 
 local api, fn = vim.api, vim.fn
 
-ar.plugin.interceptor.config = { enable = true }
-
-local config = ar.plugin.interceptor.config
+local config = { enable = true }
 
 if not config then return end
 

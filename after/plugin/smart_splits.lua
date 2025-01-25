@@ -1,4 +1,4 @@
-local enabled = not ar.noplugin and ar.plugin.smart_splits.enable
+local enabled = ar_config.plugin.custom.smart_splits.enable
 
 if not ar or ar.none or not enabled then return end
 
