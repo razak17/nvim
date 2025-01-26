@@ -161,12 +161,16 @@ local namespace = {
     },
   },
   menu = {
+    ai = {
+      title = 'A.I. actions',
+      options = {},
+    },
     command_palette = {
       title = 'Command Palette actions',
       options = {},
     },
-    toggle = {
-      title = 'Toggle actions',
+    copilot_chat = {
+      title = 'CopilotChat actions',
       options = {},
     },
     git = {
@@ -177,12 +181,8 @@ local namespace = {
       title = 'Code/LSP actions',
       options = {},
     },
-    ai = {
-      title = 'A.I. actions',
-      options = {},
-    },
-    copilot_chat = {
-      title = 'CopilotChat actions',
+    toggle = {
+      title = 'Toggle actions',
       options = {},
     },
     w3m = {

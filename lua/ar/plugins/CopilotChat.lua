@@ -19,13 +19,17 @@ local prompts = {
   Concise = 'Please rewrite the following text to make it more concise.',
 }
 
+local get_cond = function()
+  return not ar.plugins.minimal
+    and ar.ai.enable
+    and ar.completion.enable
+    and ar_config.ai.models.copilot
+end
+
 return {
   {
     'CopilotC-Nvim/CopilotChat.nvim',
-    cond = not ar.plugins.minimal
-      and ar.ai.enable
-      and ar.completion.enable
-      and ar_config.ai.models.copilot,
+    cond = get_cond,
     cmd = {
       'CopilotChat',
       'CopilotChatInline',
@@ -120,9 +124,9 @@ return {
         -- Show the diff
         show_diff = { normal = 'gmd' },
         -- Show the prompt
-        show_system_prompt = { normal = 'gmp' },
+        show_info = { normal = 'gmp' },
         -- Show the user selection
-        show_user_selection = { normal = 'gms' },
+        show_context = { normal = 'gms' },
       },
     },
     config = function(_, opts)
@@ -143,8 +147,6 @@ return {
       }
 
       chat.setup(opts)
-      -- Setup the CMP integration
-      require('CopilotChat.integrations.cmp').setup()
 
       vim.api.nvim_create_user_command(
         'CopilotChatVisual',
