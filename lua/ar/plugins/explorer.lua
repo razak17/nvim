@@ -50,6 +50,12 @@ return {
         if ar_config.autosave.current then ar_config.autosave.enable = false end
       end
 
+      local function image_preview(state)
+        local width = state.window.width + 1
+        local node = state.tree:get_node()
+        ar.show_image(node:get_id(), { col = width })
+      end
+
       return {
         close_if_last_window = true,
         sources = { 'filesystem', 'git_status', 'document_symbols' },
@@ -264,6 +270,7 @@ return {
             ['v'] = 'vsplit_with_window_picker',
             ['O'] = 'expand_all_nodes',
             ['Z'] = 'close_all_nodes',
+            ['K'] = image_preview,
           },
         },
       }

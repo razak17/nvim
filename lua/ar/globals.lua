@@ -653,6 +653,60 @@ function ar.open_buf_centered_popup(bufnr, readonly)
   end
 end
 
+-- https://github.com/Wansmer/nvim-config/blob/main/lua/utils.lua?plain=1#L283
+---Show image in float window
+---@param path string Path to image
+---@param win_opts? table Options for float window
+---@param image_opts? table Options for image render (see image.nvim ImageGeometry)
+function ar.show_image(path, win_opts, image_opts)
+  local buf = api.nvim_create_buf(false, true)
+
+  local ok, img_api = pcall(require, 'image')
+  if not ok then
+    vim.noify('image.nvim is required')
+    return
+  end
+
+  local ok_image, image = pcall(img_api.from_file, path, { buffer = buf })
+  if not (ok_image and image) then return end
+
+  local term = require('image.utils.term')
+  local term_size = term.get_size()
+  local image_rows = math.floor(image.image_height / term_size.cell_height)
+  local image_columns = math.floor(image.image_width / term_size.cell_width)
+
+  win_opts = vim.tbl_deep_extend('force', {
+    relative = 'cursor',
+    col = 0,
+    row = 0,
+    width = image_columns,
+    height = image_rows + 1,
+    style = 'minimal',
+  }, win_opts or {})
+
+  local win = api.nvim_open_win(buf, false, win_opts)
+
+  image.window = win
+  -- Needed to correct render if window is moved
+  vim.schedule(function() image:render(image_opts or {}) end)
+
+  local group = api.nvim_create_augroup('__image__', { clear = true })
+  local cursor = api.nvim_win_get_cursor(0)
+
+  api.nvim_create_autocmd('CursorMoved', {
+    group = group,
+    callback = function()
+      local c = api.nvim_win_get_cursor(0)
+      if c[1] ~= cursor[1] then
+        image:clear()
+        api.nvim_win_close(win, true)
+        api.nvim_buf_delete(buf, { force = true })
+        api.nvim_del_augroup_by_name('__image__')
+      end
+    end,
+  })
+end
+
 --- Copy `text` to system clipboard
 ---@param text string
 function ar.copy(text)
