@@ -281,13 +281,13 @@ local function setup_mappings(client, bufnr)
   ---@param severity string
   ---@return function
   local diagnostic_goto = function(next, severity)
+    local go = diagnostic.jump
     severity = severity and vim.diagnostic.severity[severity] or nil
     local float = ar_config.lsp.hover_diagnostics.go_to
       and not ar_config.lsp.hover_diagnostics.enable
     return ar.demicolon_jump(function(opts)
       local count = opts.forward and 1 or -1
       count = count * vim.v.count1
-      local go = opts.forward and diagnostic.goto_next or diagnostic.goto_prev
       go({ count = count, severity = severity, float = float })
     end, { forward = next })
   end
