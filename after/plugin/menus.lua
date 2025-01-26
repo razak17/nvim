@@ -107,7 +107,7 @@ end
 --------------------------------------------------------------------------------
 -- A.I.
 --------------------------------------------------------------------------------
-if ar_config.ai.enable then
+if ar.ai.enable then
   -- local function execute_if_available(plugin, command, visual)
   --   if not ar.plugin_available(plugin) then return end
   --   if visual then
@@ -116,8 +116,6 @@ if ar_config.ai.enable then
   --     vim.cmd(command)
   --   end
   -- end
-
-  -- ar.add_to_menu('ai', {})
 
   local ai_menu = function()
     ar.create_select_menu(ar.menu['ai'].title, ar.menu['ai'].options)()
@@ -128,25 +126,6 @@ if ar_config.ai.enable then
     '<leader>oa',
     ai_menu,
     { desc = '[A.I]. [a]ctions: open menu for A.I. actions' }
-  )
-end
-
---------------------------------------------------------------------------------
--- CopilotChat
---------------------------------------------------------------------------------
-if ar.is_available('CopilotChat.nvim') then
-  local copilot_chat_menu = function()
-    ar.create_select_menu(
-      ar.menu['copilot_chat'].title,
-      ar.menu['copilot_chat'].options
-    )()
-  end
-
-  map(
-    'n',
-    '<leader>acc',
-    copilot_chat_menu,
-    { desc = '[c]opilotChat [a]ctions: open menu for copilotChat actions' }
   )
 end
 

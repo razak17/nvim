@@ -348,7 +348,7 @@ function ar.visual_cmd(command)
   cmd(full_cmd)
 end
 
----@alias MenuOptions 'ai' | 'command_palette' | 'copilot_chat' | 'git' | 'lsp' | 'toggle'
+---@alias MenuOptions 'ai' | 'command_palette' | 'git' | 'lsp' | 'toggle'
 
 --- Add options to menu
 ---@param name MenuOptions

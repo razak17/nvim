@@ -33,8 +33,14 @@ return {
       vim.g.whichkey_add_spec({ '<leader>av', group = 'Avante' })
 
       ar.add_to_menu('ai', {
-        ['Toggle Avante Chat'] = 'AvanteToggle',
-        ['Clear Avante Chat'] = 'AvanteClear',
+        ['Avante'] = function()
+          ar.create_select_menu('Avante', {
+            ['Toggle Chat'] = 'AvanteToggle',
+            ['Clear Chat'] = 'AvanteClear',
+            ['Switch Provider'] = 'AvanteSwitchProvider',
+            ['Refresh Chat'] = 'AvanteRefresh',
+          })()
+        end,
       })
     end,
     keys = { '<leader>ava', '<leader>avr', '<leader>avs' },
@@ -106,10 +112,12 @@ return {
     init = function()
       vim.g.whichkey_add_spec({ '<leader>ak', group = 'Codecompanion' })
       ar.add_to_menu('ai', {
-        ['Toggle Codecompanion Chat'] = 'CodeCompanionChat',
-        ['Codecompanion Actions'] = 'CodeCompanionActions',
-        ['Codecompanion Add Selection'] = function()
-          ar.visual_cmd('CodeCompanionAdd')
+        ['Codecompanion'] = function()
+          ar.create_select_menu('Codecompanion', {
+            ['Toggle Chat'] = 'CodeCompanionChat',
+            ['Actions'] = 'CodeCompanionActions',
+            ['Add Selection'] = function() ar.visual_cmd('CodeCompanionAdd') end,
+          })()
         end,
       })
     end,
@@ -199,7 +207,11 @@ return {
       vim.g.whichkey_add_spec({ '<leader>ap', group = 'Copilot' })
 
       ar.add_to_menu('ai', {
-        ['Toggle Copilot Auto Trigger'] = 'lua require("copilot.suggestion").toggle_auto_trigger()',
+        ['Copilot'] = function()
+          ar.create_select_menu('Copilot', {
+            ['Toggle Copilot Auto Trigger'] = 'lua require("copilot.suggestion").toggle_auto_trigger()',
+          })()
+        end,
       })
     end,
     keys = {

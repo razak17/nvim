@@ -21,7 +21,7 @@ return {
     { '<c-g>n', '<Cmd>GpChatNew<CR>', desc = 'gp: new chat', mode = { 'n', 'i', 'v' }, },
     { '<c-g>f', '<Cmd>GpChatFinder<CR>', desc = 'gp: find chat', mode = { 'n', 'i' }, },
     { '<c-g><c-g>', '<Cmd>GpChatRespond<CR>', desc = 'gp: respond', mode = { 'n', 'i' }, },
-    { '<c-g>d', '<Cmd>GpChatDeleteCR>', desc = 'gp: delete chat', mode = { 'n', 'i' }, },
+    { '<c-g>d', '<Cmd>GpChatDelete<CR>', desc = 'gp: delete chat', mode = { 'n', 'i' }, },
     { '<c-g>s', '<Cmd>GpChatToggle split<CR>', desc = 'gp: toggle chat in horizontal split' },
     { '<c-g>v', '<Cmd>GpChatToggle vsplit<CR>', desc = 'gp: toggle chat in vertical split' },
     -- Prompt commands
@@ -49,11 +49,20 @@ return {
   },
   init = function()
     ar.add_to_menu('ai', {
-      ['Toggle Gp Chat'] = 'GpChatToggle vsplit',
-      ['Clear Gp Chat'] = 'GpChatToggle vsplit',
-      ['New Gp Chat'] = 'GpChatNew',
-      ['New Gp Buffer Chat'] = 'GpBufferChatNew',
-      ['Gp Act As'] = 'GpActAs',
+      ['Gp'] = function()
+        ar.create_select_menu('Gp', {
+          ['Generate Tests'] = 'GpUnitTests',
+          ['Explain Code Code'] = 'GpExplain',
+          ['Review Code'] = 'GpCodeReview',
+          ['New Buffer Chat'] = 'GpBufferChatNew',
+          ['Act As'] = 'GpActAs',
+          ['Input Role'] = 'GpInputRole',
+          ['New Chat'] = 'GpChatNew',
+          ['Toggle Vsplit'] = 'GpChatToggle vsplit',
+          ['Find Chat'] = 'GpChatFinder',
+          ['Delete Chat'] = 'GpChatDelete',
+        })()
+      end,
     })
   end,
   opts = function()

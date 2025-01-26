@@ -67,29 +67,30 @@ return {
         if input ~= '' then vim.cmd('CopilotChat ' .. input) end
       end
 
-      ar.add_to_menu('copilot_chat', {
-        ['Clear Buffer and Chat History'] = 'CopilotChatReset',
-        ['Toggle Copilot Chat Vsplit'] = 'CopilotChatToggle',
-        ['Help Actions'] = help_actions,
-        ['Prompt Actions'] = prompt_actions,
-        ['Save Chat'] = save_chat,
-        ['Explain Code'] = 'CopilotChatExplain',
-        ['Generate Tests'] = 'CopilotChatTests',
-        ['Review Code'] = 'CopilotChatReview',
-        ['Refactor Code'] = 'CopilotChatRefactor',
-        ['Better Naming'] = 'CopilotChatBetterNamings',
-        ['Quick Chat'] = quick_chat,
-        ['Ask Input'] = ask_input,
-        ['Generate Commit Message'] = 'CopilotChatCommit',
-        ['Generate Commit Message For Staged Changes'] = 'CopilotChatCommitStaged',
-        ['Debug Info'] = 'CopilotChatDebugInfo',
-        ['Fix Diagnostic'] = 'CopilotChatFixDiagnostic',
-      })
-
       ar.add_to_menu('ai', {
-        ['Toggle Copilot Chat'] = 'CopilotChatToggle',
-        ['Clear Copilot Chat'] = 'CopilotChatReset',
-        ['Copilot Chat Inline'] = function() ar.visual_cmd('CopilotChatInline') end,
+        ['CopilotChat'] = function()
+          ar.create_select_menu('CopilotChat', {
+            ['Toggle Chat'] = 'CopilotChatToggle',
+            ['Clear Chat'] = 'CopilotChatReset',
+            ['Inline Chat'] = function() ar.visual_cmd('CopilotChatInline') end,
+            ['Clear Buffer and Chat History'] = 'CopilotChatReset',
+            ['Toggle Vsplit'] = 'CopilotChatToggle',
+            ['Explain Code'] = function() ar.visual_cmd('CopilotChatExplain') end,
+            ['Generate Tests'] = 'CopilotChatTests',
+            ['Review Code'] = 'CopilotChatReview',
+            ['Refactor Code'] = 'CopilotChatRefactor',
+            ['Better Naming'] = 'CopilotChatBetterNamings',
+            ['Generate Commit Message'] = 'CopilotChatCommit',
+            ['Generate Commit Message For Staged Changes'] = 'CopilotChatCommitStaged',
+            ['Debug Info'] = 'CopilotChatDebugInfo',
+            ['Fix Diagnostic'] = 'CopilotChatFixDiagnostic',
+            ['Help Actions'] = help_actions,
+            ['Prompt Actions'] = prompt_actions,
+            ['Save Chat'] = save_chat,
+            ['Quick Chat'] = quick_chat,
+            ['Ask Input'] = ask_input,
+          })()
+        end,
       })
     end,
     build = function()

@@ -14,10 +14,22 @@ return {
       vim.g.whichkey_add_spec({ '<leader>ag', group = 'chatGPT' })
 
       ar.add_to_menu('ai', {
-        ['ChatGPT Prompt'] = 'ChatGPT',
-        ['ChatGPT Fix Bugs'] = 'ChatGPTRun fix_bugs',
-        ['ChatGPT Explain Code'] = 'ChatGPTRun explain_code',
-        ['ChatGPT Optimize Code'] = 'ChatGPTRun optimize_code',
+        ['chatGPT'] = function()
+          ar.create_select_menu('chatGPT', {
+            ['Open Prompt'] = 'ChatGPT',
+            ['Fix Bugs'] = 'ChatGPTRun fix_bugs',
+            ['Explain Code'] = 'ChatGPTRun explain_code',
+            ['Optimize Code'] = 'ChatGPTRun optimize_code',
+            ['Act As'] = 'ChatGPTActAs',
+            ['Add Tests'] = 'ChatGPTRun add_tests',
+            ['Complete Code'] = 'ChatGPTRun complete_code',
+            ['Docstring'] = 'ChatGPTRun docstring',
+            ['Grammar Correction'] = 'ChatGPTRun grammar_correction',
+            ['Keywords'] = 'ChatGPTRun keywords',
+            ['Code Readability Analysis'] = 'ChatGPTRun code_readability_analysis',
+            ['Translate'] = 'ChatGPTRun translate',
+          })()
+        end,
       })
     end,
     -- stylua: ignore

@@ -169,10 +169,6 @@ local namespace = {
       title = 'Command Palette actions',
       options = {},
     },
-    copilot_chat = {
-      title = 'CopilotChat actions',
-      options = {},
-    },
     git = {
       title = 'Git commands',
       options = {},
