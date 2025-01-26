@@ -521,7 +521,7 @@ nnoremap('<leader><localleader>fo', function()
   ar.open_in_file_manager(file_path)
 end, { desc = 'open in file manager' })
 --------------------------------------------------------------------------------
--- Ruslings
+-- Rustlings
 nnoremap('<leader><localleader>rd', function()
   vim.cmd([[%s/\n\n\/\/ I AM NOT DONE//]])
   vim.cmd.w()

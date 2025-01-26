@@ -11,7 +11,6 @@ return {
   'kkharji/sqlite.lua',
   'tpope/vim-rhubarb',
   { 'tyru/capture.vim', cmd = { 'Capture' } },
-  { 'jghauser/mkdir.nvim', lazy = false },
   { 'Rasukarusan/nvim-block-paste', cmd = { 'Block' } },
   {
     'ryoppippi/nvim-reset',
@@ -370,5 +369,9 @@ return {
       },
     },
   },
+  --------------------------------------------------------------------------------
+  -- Disabled
+  --------------------------------------------------------------------------------
+  { 'jghauser/mkdir.nvim', enabled = false, lazy = false },
   -- }}}
 }

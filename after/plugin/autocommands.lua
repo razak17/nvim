@@ -297,6 +297,16 @@ augroup('Utilities', {
       vim.schedule(function() pcall(vim.api.nvim_buf_delete, event.buf, {}) end)
     end
   end,
+}, {
+  -- Auto create dir when saving a file, in case some intermediate directory does not exist
+  -- https://github.com/LazyVim/LazyVim/blob/83bf6360a1f28a3fc1afe31ae300247fc01c7a90/lua/lazyvim/config/autocmds.lua#L116C1-L116C90
+  event = { 'BufWritePre' },
+  desc = 'Create intermediate dirs',
+  command = function(event)
+    if event.match:match('^%w%w+:[\\/][\\/]') then return end
+    local file = vim.uv.fs_realpath(event.match) or event.match
+    vim.fn.mkdir(vim.fn.fnamemodify(file, ':p:h'), 'p')
+  end,
 })
 --------------------------------------------------------------------------------
 -- Plugin specific
