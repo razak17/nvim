@@ -36,19 +36,46 @@ return {
     init = function()
       vim.g.whichkey_add_spec({ '<leader>ac', group = 'CopilotChat' })
 
+      local function help_actions()
+        local actions = require('CopilotChat.actions')
+        local integrations = require('CopilotChat.integrations.telescope')
+        integrations.pick(actions.help_actions())
+      end
+
+      local function prompt_actions()
+        local actions = require('CopilotChat.actions')
+        local integrations = require('CopilotChat.integrations.telescope')
+        integrations.pick(actions.prompt_actions())
+      end
+
+      local function save_chat()
+        local date = os.date('%Y-%m-%d_%H-%M-%S')
+        vim.cmd('CopilotChatSave ' .. date)
+      end
+
+      local function quick_chat()
+        local input = vim.fn.input('Quick Chat: ')
+        if input ~= '' then vim.cmd('CopilotChatBuffer ' .. input) end
+      end
+
+      local function ask_input()
+        local input = vim.fn.input('Ask Copilot: ')
+        if input ~= '' then vim.cmd('CopilotChat ' .. input) end
+      end
+
       ar.add_to_menu('copilot_chat', {
         ['Clear Buffer and Chat History'] = 'CopilotChatReset',
         ['Toggle Copilot Chat Vsplit'] = 'CopilotChatToggle',
-        ['Help Actions'] = "lua require'ar.menus.ai'.help_actions()",
-        ['Prompt Actions'] = "lua require'ar.menus.ai'.prompt_actions()",
-        ['Save Chat'] = "lua require'ar.menus.ai'.save_chat()",
+        ['Help Actions'] = help_actions,
+        ['Prompt Actions'] = prompt_actions,
+        ['Save Chat'] = save_chat,
         ['Explain Code'] = 'CopilotChatExplain',
         ['Generate Tests'] = 'CopilotChatTests',
         ['Review Code'] = 'CopilotChatReview',
         ['Refactor Code'] = 'CopilotChatRefactor',
         ['Better Naming'] = 'CopilotChatBetterNamings',
-        ['Quick Chat'] = "lua require'ar.menus.ai'.quick_chat()",
-        ['Ask Input'] = "lua require'ar.menus.ai'.ask_input()",
+        ['Quick Chat'] = quick_chat,
+        ['Ask Input'] = ask_input,
         ['Generate Commit Message'] = 'CopilotChatCommit',
         ['Generate Commit Message For Staged Changes'] = 'CopilotChatCommitStaged',
         ['Debug Info'] = 'CopilotChatDebugInfo',
