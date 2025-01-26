@@ -188,6 +188,7 @@ ar.add_to_menu('command_palette', {
   ['Clear Messages'] = function() vim.cmd('messages clear') end,
   ['Yank Last Ex Command'] = 'let @+=@:',
   ['Restart Editor'] = 'cq',
+  ['Lazy UI'] = 'Lazy',
 })
 
 map(
