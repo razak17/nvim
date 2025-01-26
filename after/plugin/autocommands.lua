@@ -216,17 +216,33 @@ function ar.ui.show_cursorline(buf)
     and show
 end
 
-if ar.plugins.minimal then
-  augroup('Cursorline', {
-    event = { 'BufEnter', 'WinEnter', 'CursorHold', 'InsertLeave' },
-    command = function(args)
-      vim.wo.cursorline = ar.ui.show_cursorline(args.buf)
-    end,
-  }, {
-    event = { 'BufLeave', 'InsertEnter' },
-    command = function() vim.wo.cursorline = false end,
-  })
-end
+augroup('ShowCursorline', {
+  event = { 'BufEnter', 'WinEnter', 'CursorHold', 'InsertLeave' },
+  command = function(args) vim.wo.cursorline = ar.ui.show_cursorline(args.buf) end,
+}, {
+  event = { 'BufLeave', 'InsertEnter' },
+  command = function() vim.wo.cursorline = false end,
+})
+
+-- https://github.com/folke/dot/blob/cb1d6f956e0ef1848e57a57c1678d8635980d6c5/nvim/lua/config/autocmds.lua#L1C1-L17C3
+-- show cursor line only in active window
+augroup('AutoCursorline', {
+  event = { 'InsertLeave', 'WinEnter' },
+  command = function()
+    if vim.w.auto_cursorline then
+      vim.wo.cursorline = true
+      vim.w.auto_cursorline = nil
+    end
+  end,
+}, {
+  event = { 'InsertEnter', 'WinLeave' },
+  command = function()
+    if vim.wo.cursorline then
+      vim.w.auto_cursorline = true
+      vim.wo.cursorline = false
+    end
+  end,
+})
 
 augroup('Utilities', {
   ---@source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL

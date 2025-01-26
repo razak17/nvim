@@ -4,7 +4,7 @@ local augroup, ui = ar.augroup, ar.ui
 return {
   {
     'delphinus/auto-cursorline.nvim',
-    cond = not minimal and niceties,
+    cond = not minimal and niceties and false,
     event = { 'BufRead', 'CursorMoved', 'CursorMovedI', 'WinEnter', 'WinLeave' },
     init = function()
       augroup('auto_cursorline', {
@@ -20,7 +20,7 @@ return {
   },
   {
     'tummetott/reticle.nvim',
-    cond = not minimal and not niceties, -- auto-cursorline kinda does this already
+    cond = not minimal and not niceties and false, -- auto-cursorline kinda does this already
     event = { 'BufRead', 'BufNewFile' },
     init = function()
       augroup('reticle', {
