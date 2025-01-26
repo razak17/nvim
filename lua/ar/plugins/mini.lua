@@ -350,7 +350,8 @@ return {
       local picker = require('mini.pick')
       local registry = picker.registry
 
-      vim.ui.select = picker.ui_select
+      if ar.plugins.minimal then vim.ui.select = picker.ui_select end
+
       registry.all_files = function()
         picker.builtin.cli({
           command = {
