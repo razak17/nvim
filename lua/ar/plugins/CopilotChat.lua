@@ -32,7 +32,7 @@ return {
       'CopilotChatToggle',
       'CopilotChatReset',
     },
-    branch = 'canary',
+    branch = 'main',
     init = function()
       vim.g.whichkey_add_spec({ '<leader>ac', group = 'CopilotChat' })
 
