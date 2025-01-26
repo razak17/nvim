@@ -1,5 +1,10 @@
 local minimal = ar.plugins.minimal
 
+ar.menu.testing = {
+  title = 'Testing actions',
+  options = {},
+}
+
 local function neotest() return require('neotest') end
 local function open() neotest().output.open({ enter = true, short = false }) end
 local function run_file() neotest().run.run(vim.fn.expand('%')) end
@@ -22,6 +27,22 @@ return {
       vim.g.whichkey_add_spec({
         { '<leader>t', group = 'Testing' },
         { '<leader>tn', group = 'Neotest' },
+      })
+      ar.add_to_menu('testing', {
+        ['Neotest'] = function()
+          ar.create_select_menu('Neotest', {
+            ['Toggle summary'] = function() toggle_summary() end,
+            ['Open output'] = open,
+            ['Run nearest'] = nearest,
+            ['Run last'] = run_last,
+            ['Debug nearest'] = debug_nearest,
+            ['Run file'] = run_file,
+            ['Run file synchronously'] = run_file_sync,
+            ['Cancel'] = cancel,
+            ['Jump to next failed test'] = next_failed,
+            ['Jump to previous failed test'] = prev_failed,
+          })()
+        end,
       })
     end,
     keys = {
@@ -58,7 +79,7 @@ return {
         discovery = { enabled = true },
         diagnostic = { enabled = true },
         icons = { running = ar.ui.codicons.misc.clock },
-        floating = { border = ar.ui.current.border },
+        floating = { border = 'single' },
         quickfix = { enabled = false, open = true },
         adapters = {
           require('neotest-plenary'),
@@ -99,6 +120,19 @@ return {
     init = function()
       vim.g.whichkey_add_spec({
         { '<leader>tv', group = 'Vim-test' },
+      })
+
+      ar.add_to_menu('testing', {
+        ['Vim-test'] = function()
+          ar.create_select_menu('Vim-test', {
+            ['Class'] = 'TestClass',
+            ['File'] = 'TestFile',
+            ['Last'] = 'TestLast',
+            ['Nearest'] = 'TestNearest',
+            ['Suite'] = 'TestSuite',
+            ['Visit'] = 'TestVisit',
+          })()
+        end,
       })
     end,
     keys = {
@@ -192,6 +226,23 @@ return {
       vim.g.whichkey_add_spec({
         { '<leader>tc', group = 'Coverage' },
       })
+
+      ar.add_to_menu('testing', {
+        ['Coverage'] = function()
+          ar.create_select_menu('Coverage', {
+            ['Load'] = function() require('coverage').load(true) end,
+            ['Clear'] = function() require('coverage').clear() end,
+            ['Toggle'] = function() require('coverage').toggle() end,
+            ['Summary'] = function() require('coverage').summary() end,
+            ['Jump next'] = function()
+              require('coverage').jump_next('uncovered')
+            end,
+            ['Jump previous'] = function()
+              require('coverage').jump_prev('uncovered')
+            end,
+          })()
+        end,
+      })
     end,
     keys = {
       {
@@ -246,6 +297,28 @@ return {
     init = function()
       vim.g.whichkey_add_spec({
         { '<leader>tq', group = 'Quicktest' },
+      })
+
+      ar.add_to_menu('testing', {
+        ['Quicktest'] = function()
+          ar.create_select_menu('Quicktest', {
+            ['Run line'] = function()
+              require('quicktest').run_line('auto', 'auto', {
+                additional_args = { '-count=5' },
+              })
+            end,
+            ['Run file'] = function() require('quicktest').run_file() end,
+            ['Run dir'] = function() require('quicktest').run_dir() end,
+            ['Run all'] = function() require('quicktest').run_all() end,
+            ['Run previous'] = function() require('quicktest').run_previous() end,
+            ['Toggle window'] = function()
+              require('quicktest').toggle_win('split')
+            end,
+            ['Cancel run'] = function()
+              require('quicktest').cancel_current_run()
+            end,
+          })()
+        end,
       })
     end,
     keys = {
