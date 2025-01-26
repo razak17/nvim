@@ -294,6 +294,11 @@ return {
       })
       require('neo-tree').setup(opts)
     end,
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'nvim-lua/plenary.nvim',
+      'razak17/lspkind.nvim',
+    },
   },
   {
     'echasnovski/mini.files',
