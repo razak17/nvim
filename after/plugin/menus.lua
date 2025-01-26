@@ -108,15 +108,6 @@ end
 -- A.I.
 --------------------------------------------------------------------------------
 if ar.ai.enable then
-  -- local function execute_if_available(plugin, command, visual)
-  --   if not ar.plugin_available(plugin) then return end
-  --   if visual then
-  --     ar.visual_cmd(command)
-  --   else
-  --     vim.cmd(command)
-  --   end
-  -- end
-
   local ai_menu = function()
     ar.create_select_menu(ar.menu['ai'].title, ar.menu['ai'].options)()
   end
