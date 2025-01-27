@@ -56,6 +56,34 @@ augroup('VimrcIncSearchHighlight', {
   command = function() vim.o.hlsearch = true end,
 })
 
+-- https://github.com/ruicsh/nvim-config/blob/4b09396a06ed46145252803dfdc7a33fdd8a4bd7/plugin/autocmds/yank-keep-cursor-position.lua#L1
+local cursor_pre_yank
+
+local function sticky_yank(key)
+  cursor_pre_yank = api.nvim_win_get_cursor(0)
+  return key or 'y'
+end
+
+map(
+  { 'n', 'x' },
+  'y',
+  sticky_yank,
+  { expr = true, silent = true, unique = true }
+)
+
+-- don't include whitespaces at the end
+map('n', 'Y', function() sticky_yank('yg_') end, { expr = true, silent = true })
+
+-- Keep cursor position on yank.
+augroup('StickyYank', {
+  event = { 'TextYankPost' },
+  command = function()
+    if vim.v.event.operator == 'y' and cursor_pre_yank then
+      vim.api.nvim_win_set_cursor(0, cursor_pre_yank)
+    end
+  end,
+})
+
 local smart_close_filetypes = ar.p_table({
   ['qf'] = true,
   ['log'] = true,

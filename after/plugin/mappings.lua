@@ -56,7 +56,7 @@ vnoremap('<leader>p', '"_dP', { desc = 'greatest remap' })
 --   api.nvim_win_set_cursor(0, { row + 1, col })
 -- end)
 -- Next greatest remap ever : asbjornHaland
-map({ 'n', 'x' }, '<leader>y', '"+y', { desc = 'yank' })
+-- map({ 'n', 'x' }, '<leader>y', '"+y', { desc = 'yank' })
 map({ 'n', 'x' }, '<leader>Y', '"_Y', { desc = 'yank' })
 map({ 'n', 'x' }, '<leader>d', '"_d', { desc = 'delete' })
 map({ 'n', 'x' }, '<leader>D', '"_D', { desc = 'Delete' })
