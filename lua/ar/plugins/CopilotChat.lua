@@ -42,6 +42,8 @@ return {
       'CopilotChatToggle',
       'CopilotChatInline',
       'CopilotChatReset',
+      'CopilotChatAgents',
+      'CopilotChatModels',
       'CopilotChatTests',
       'CopilotChatRefactor',
       'CopilotChatCommit',
@@ -82,7 +84,7 @@ return {
       ar.add_to_menu('ai', {
         ['CopilotChat'] = function()
           ar.create_select_menu('CopilotChat', {
-            ['Explain Code'] = function() ar.visual_cmd('CopilotChatExplain') end,
+            ['Explain Code'] = 'CopilotChatExplain',
             ['Review Code'] = 'CopilotChatReview',
             ['Fix Code'] = 'CopilotFixCode',
             ['Fix Error'] = 'CopilotFixEError',
@@ -98,6 +100,8 @@ return {
             ['Toggle Chat'] = 'CopilotChatToggle',
             ['Inline Chat'] = function() ar.visual_cmd('CopilotChatInline') end,
             ['Clear Buffer and Chat History'] = 'CopilotChatReset',
+            ['Agents'] = 'CopilotChatAgents',
+            ['Models'] = 'CopilotChatModels',
             ['Generate Tests'] = 'CopilotChatTests',
             ['Refactor Code'] = 'CopilotChatRefactor',
             ['Generate Commit Message'] = 'CopilotChatCommit',
