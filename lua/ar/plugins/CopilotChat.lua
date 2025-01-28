@@ -155,24 +155,29 @@ return {
     },
     config = function(_, opts)
       local chat = require('CopilotChat')
-      local select = require('CopilotChat.select')
 
-      -- Use unnamed register for the selection
-      opts.selection = select.unnamed
+      local models = ar_config.ai.models
 
-      -- Override the git prompts message
-      opts.prompts.Commit = {
-        prompt = 'Write commit message for the change with commitizen convention',
-        selection = select.gitdiff,
-      }
-      opts.prompts.CommitStaged = {
-        prompt = 'Write commit message for the change with commitizen convention',
-        selection = function(source) return select.gitdiff(source, true) end,
-      }
+      local function get_model()
+        local model
+        if models.claude then
+          model = 'claude-3.5-sonnet'
+        elseif models.openai then
+          model = 'gpt-4o'
+        end
+        return model
+      end
+
+      local fmt = string.format
+      local model = get_model()
+      if model then opts.model = model end
+      opts.answer_header = fmt('## %s', model and model or 'Copilot')
 
       chat.setup(opts)
 
-      vim.api.nvim_create_user_command(
+      local select = require('CopilotChat.select')
+
+      ar.command(
         'CopilotChatVisual',
         function(args) chat.ask(args.args, { selection = select.visual }) end,
         { nargs = '*', range = true }
