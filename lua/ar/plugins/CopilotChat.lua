@@ -19,17 +19,12 @@ local prompts = {
   Concise = 'Please rewrite the following text to make it more concise.',
 }
 
-local get_cond = function()
-  return not ar.plugins.minimal
-    and ar.ai.enable
-    and ar.completion.enable
-    and ar_config.ai.models.copilot
-end
+local minimal = ar.plugins.minimal
 
 return {
   {
     'CopilotC-Nvim/CopilotChat.nvim',
-    cond = get_cond,
+    cond = not minimal and ar.ai.enable and ar.completion.enable,
     cmd = {
       'CopilotChatExplain',
       'CopilotChatReview',
