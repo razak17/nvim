@@ -50,7 +50,6 @@ return {
       'CopilotChatTests',
       'CopilotChatRefactor',
       'CopilotChatCommit',
-      'CopilotChatCommitStaged',
       'CopilotChatDebugInfo',
       'CopilotChatFixDiagnostic',
     },
@@ -107,7 +106,6 @@ return {
             ['Generate Tests'] = 'CopilotChatTests',
             ['Refactor Code'] = 'CopilotChatRefactor',
             ['Generate Commit Message'] = 'CopilotChatCommit',
-            ['Generate Commit Message For Staged Changes'] = 'CopilotChatCommitStaged',
             ['Debug Info'] = 'CopilotChatDebugInfo',
             ['Fix Diagnostic'] = 'CopilotChatFixDiagnostic',
             ['Help Actions'] = help_actions,
@@ -273,7 +271,6 @@ return {
       },
       -- Generate commit message based on the git diff
       { '<leader>acm', '<Cmd>CopilotChatCommit<CR>', desc = 'CopilotChat: generate commit message for all changes' },
-      { '<leader>acM', '<Cmd>CopilotChatCommitStaged<CR>', desc = 'CopilotChat: generate commit message for staged changes' },
       -- Quick chat with Copilot
       {
         '<leader>acq',
