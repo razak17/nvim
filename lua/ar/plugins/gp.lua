@@ -59,16 +59,22 @@ return {
     ar.add_to_menu('ai', {
       ['Gp'] = function()
         ar.create_select_menu('Gp', {
+          ['New Chat'] = 'GpChatNew',
+          ['Find Chat'] = 'GpChatFinder',
+          ['Respond'] = 'GpChatRespond',
+          ['Delete Chat'] = 'GpChatDelete',
+          ['Toggle'] = 'GpChatToggle',
+          ['Rewrite'] = 'GpRewrite',
+          ['Append'] = 'GpAppend',
+          ['GpPrepend'] = 'GpPrepend',
+          ['Input Role'] = 'GpInputRole',
+          ['Popup'] = 'GpPopup',
           ['Generate Tests'] = 'GpUnitTests',
           ['Explain Code Code'] = 'GpExplain',
           ['Review Code'] = 'GpCodeReview',
           ['New Buffer Chat'] = 'GpBufferChatNew',
           ['Act As'] = 'GpActAs',
-          ['Input Role'] = 'GpInputRole',
-          ['New Chat'] = 'GpChatNew',
           ['Toggle Vsplit'] = 'GpChatToggle vsplit',
-          ['Find Chat'] = 'GpChatFinder',
-          ['Delete Chat'] = 'GpChatDelete',
         })()
       end,
     })
