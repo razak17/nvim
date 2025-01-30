@@ -12,6 +12,8 @@ ar.completion.config = {
     ['natdat'] = { icon = codicons.misc.calendar, hl = 'CmpItemKindDynamic' },
     ['crates'] = { icon = codicons.misc.package, hl = 'CmpItemKindDynamic' },
     ['copilot'] = { icon = codicons.misc.octoface, hl = 'CmpItemKindCopilot' },
+    ['codecompanion_tools'] = { icon = codicons.misc.robot_alt },
+    ['codecompanion_slash_commands'] = { icon = codicons.misc.robot_alt },
     ['nerdfonts'] = { icon = '', hl = 'CmpItemKindNerdFont' },
     ['minuet'] = { icon = '󱗻', hl = 'CmpItemKindDynamic' },
     ['nvim_px_to_rem'] = { icon = '', hl = 'CmpItemKindNerdFont' },
@@ -46,6 +48,8 @@ ar.completion.config = {
     ['vim-dadbod-completion'] = '[DB]',
     dotenv = '[DOTENV]',
     ecolog = '[ECOLOG]',
+    codecompanion_tools = '[CC]',
+    codecompanion_slash_commands = '[CC]',
   },
 }
 
@@ -278,8 +282,8 @@ return {
             local config = format[entry.source.name]
 
             if config then
-              item.kind = format_icon(config.icon)
-              item.kind_hl_group = config.hl
+              if config.icon then item.kind = format_icon(config.icon) end
+              if config.hl then item.kind_hl_group = config.hl end
             end
 
             local function get_color(color_item, color_entry)
