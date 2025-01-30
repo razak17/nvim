@@ -116,6 +116,7 @@ return {
       { 'ga', '<Cmd>CodeCompanionAdd<CR>', desc = 'codecompanion: add' },
     },
     init = function()
+      local visual_cmd = ar.visual_cmd
       vim.g.whichkey_add_spec({ '<leader>ak', group = 'Codecompanion' })
       ar.add_to_menu('ai', {
         ['Codecompanion'] = function()
@@ -123,6 +124,13 @@ return {
             ['Toggle Chat'] = 'CodeCompanionChat Toggle',
             ['Actions'] = 'CodeCompanionActions',
             ['Add Selection'] = 'CodeCompanionChat Add',
+            ['Explain'] = function() visual_cmd('CodeCompanion /explain') end,
+            ['Fix'] = function() visual_cmd('CodeCompanion /fix') end,
+            ['Lsp'] = function() visual_cmd('CodeCompanion /lsp') end,
+            ['Tests'] = function() visual_cmd('CodeCompanion /tests') end,
+            ['Commit'] = function() visual_cmd('CodeCompanion /commit') end,
+            ['Buffer'] = function() visual_cmd('CodeCompanion /buffer') end,
+            ['Workflow'] = function() visual_cmd('CodeCompanion /workflow') end,
           })()
         end,
       })
