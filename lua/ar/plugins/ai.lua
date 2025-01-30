@@ -109,23 +109,29 @@ return {
   {
     'olimorris/codecompanion.nvim',
     cond = not minimal and ar.ai.enable,
+    -- stylua: ignore
+    keys = {
+      { '<leader>akk', '<Cmd>CodeCompanionChat<CR>', desc = 'codecompanion: toggle' },
+      { '<leader>aka', '<Cmd>CodeCompanionActions<CR>', desc = 'codecompanion: actions' },
+      { 'ga', '<Cmd>CodeCompanionAdd<CR>', desc = 'codecompanion: add' },
+    },
     init = function()
       vim.g.whichkey_add_spec({ '<leader>ak', group = 'Codecompanion' })
       ar.add_to_menu('ai', {
         ['Codecompanion'] = function()
           ar.create_select_menu('Codecompanion', {
-            ['Toggle Chat'] = 'CodeCompanionChat',
+            ['Toggle Chat'] = 'CodeCompanionChat Toggle',
             ['Actions'] = 'CodeCompanionActions',
-            ['Add Selection'] = function() ar.visual_cmd('CodeCompanionAdd') end,
+            ['Add Selection'] = 'CodeCompanionChat Add',
           })()
         end,
       })
     end,
     cmd = {
       'CodeCompanion',
-      'CodeCompanionAdd',
       'CodeCompanionActions',
       'CodeCompanionChat',
+      'CodeCompanionCmd',
     },
     opts = function()
       local opts = {
