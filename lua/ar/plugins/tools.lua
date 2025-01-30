@@ -64,6 +64,7 @@ return {
           'zsh',
           'flake8',
           'black',
+          'autopep8',
         },
         handlers = {
           black = function()
@@ -207,11 +208,14 @@ return {
         lua = { 'stylua' },
         go = { 'goimports', 'goimports-reviser' },
         sh = { 'shfmt' },
-        python = ar.find_string(ar_config.lsp.lang.python, 'ruff') and {} or {
-          'isort',
-          'black',
-          --[[ 'yapf' ]]
-        },
+        python = ar.lsp_disabled('ruff')
+            and {
+              'isort',
+              -- 'black',
+              'autopep8',
+              --[[ 'yapf' ]]
+            }
+          or {},
         http = { 'kulala' },
       },
       log_level = vim.log.levels.DEBUG,
@@ -243,8 +247,7 @@ return {
         vim = { 'vint' },
         yaml = { 'yamllint' },
         go = { 'golangcilint' },
-        python = ar.find_string(ar_config.lsp.lang.python, 'ruff') and {}
-          or { 'mypy' },
+        python = ar.lsp_disabled('ruff') and { 'mypy' } or {},
       },
       linters = {},
     },

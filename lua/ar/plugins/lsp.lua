@@ -67,17 +67,11 @@ return {
             local server_disabled = ar.lsp_disabled(name)
 
             local ts_lang = ar_config.lsp.lang.typescript
-            local py_lang = ar_config.lsp.lang.python
 
             local ts_ls = ts_lang == 'ts_ls'
             local vtsls = ts_lang == 'vtsls'
             local ts_tools = (name == 'ts_ls' or name == 'vtsls')
               and ts_lang == 'typescript-tools'
-
-            local pyright = find_string(py_lang, 'pyright')
-            local basedpyright = find_string(py_lang, 'basedpyright')
-            local jedi = find_string(py_lang, 'jedi_language_server')
-            local ruff = find_string(py_lang, 'ruff')
 
             local should_skip = is_override
               or directory_disabled
@@ -85,10 +79,6 @@ return {
               or ts_tools
               or (name == 'vtsls' and not vtsls)
               or (name == 'ts_ls' and not ts_ls)
-              or (name == 'pyright' and not pyright)
-              or (name == 'basedpyright' and not basedpyright)
-              or (name == 'jedi_language_server' and not jedi)
-              or (name == 'ruff' and not ruff)
 
             if should_skip then return end
             local config = require('ar.servers').get(name)

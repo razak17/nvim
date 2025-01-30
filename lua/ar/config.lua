@@ -303,14 +303,12 @@ local config = {
     disabled = {
       filetypes = {},
       directories = { vim.fn.stdpath('data') },
-      servers = { 'denols', 'emmet_ls' },
+      servers = { 'denols', 'emmet_ls', 'pyright', 'jedi_language_server' },
     },
     format_on_save = { enable = true },
     hover_diagnostics = { enable = false, go_to = false, scope = 'cursor' },
     inlay_hint = { enable = false },
     lang = {
-      ---@type table<ArPythonLsp>
-      python = { 'basedpyright', 'ruff' },
       ---@type ArTypescriptLsp
       typescript = 'typescript-tools',
     },
