@@ -75,6 +75,10 @@ return {
       },
       dim = {},
       statuscolumn = { enabled = false },
+      terminal = {
+        enabled = true,
+        win = { wo = { winbar = '' } },
+      },
       words = { enabled = true },
       zen = {},
     },
