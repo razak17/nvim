@@ -175,6 +175,7 @@ return {
         opts.strategies.chat.adapter = model_name
         opts.strategies.chat.inline = model_name
         opts.strategies.chat.agent = model_name
+        opts.strategies.chat.roles.llm = '  CodeCompanion - ' .. model_name
       end
 
       opts.adapters = {}
