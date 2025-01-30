@@ -39,14 +39,10 @@ if not ar.plugins.enable then return end
 local lazy_path = join_paths(data, 'lazy', 'lazy.nvim')
 local plugins_enabled = ar.plugins.enable
 if not vim.uv.fs_stat(lazy_path) then
-  local out = fn.system({
-    'git',
-    'clone',
-    '--filter=blob:none',
-    '--single-branch',
-    'https://github.com/folke/lazy.nvim.git',
-    lazy_path,
-  })
+  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
+  -- stylua: ignore start
+  local out = fn.system({ 'git', 'clone', '--filter=blob:none', '--single-branch', lazyrepo, lazy_path })
+  -- stylua: ignore end
   if vim.v.shell_error ~= 0 then
     api.nvim_echo({
       { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
@@ -64,6 +60,7 @@ require('lazy').setup({
   defaults = { lazy = true },
   change_detection = { notify = false },
   git = { timeout = 720 },
+  --- @type table
   dev = {
     path = join_paths(vim.g.projects_dir, 'plugins'),
     patterns = { 'razak17' },
