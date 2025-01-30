@@ -198,12 +198,28 @@ return {
 
       return opts
     end,
-    -- stylua: ignore
-    keys = {
-      { '<leader>akk', '<Cmd>CodeCompanionChat<CR>', desc = 'codecompanion: toggle' },
-      { '<leader>aka', '<Cmd>CodeCompanionActions<CR>', desc = 'codecompanion: actions' },
-      { 'ga', '<Cmd>CodeCompanionAdd<CR>', desc = 'codecompanion: add' },
-    },
+    config = function(_, opts)
+      ar.highlight.plugin('CodeCompanion', {
+        theme = {
+          ['onedark'] = {
+            {
+              CodeCompanionChatAgent = {
+                bg = { from = 'Debug', attr = 'fg', alter = -0.1 },
+                fg = { from = 'StatusLine', attr = 'bg', bold = true },
+              },
+            },
+            {
+              CodeCompanionChatTool = {
+                bg = { from = 'Special', attr = 'fg', alter = -0.1 },
+                fg = { from = 'StatusLine', attr = 'bg', bold = true },
+              },
+            },
+          },
+        },
+      })
+
+      require('codecompanion').setup(opts)
+    end,
   },
   {
     'zbirenbaum/copilot.lua',
