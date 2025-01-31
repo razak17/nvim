@@ -79,7 +79,20 @@ augroup('StickyYank', {
   event = { 'TextYankPost' },
   command = function()
     if v.event.operator == 'y' and cursor_pre_yank then
+      -- Get buffer line count
+      local line_count = api.nvim_buf_line_count(0)
+      -- Check if cursor position is valid
+      if cursor_pre_yank[1] <= line_count then
+        local line_length = #api.nvim_buf_get_lines(
+          0,
+          cursor_pre_yank[1] - 1,
+          cursor_pre_yank[1],
+          true
+        )[1]
+        if cursor_pre_yank[2] <= line_length then
       api.nvim_win_set_cursor(0, cursor_pre_yank)
+    end
+      end
     end
   end,
 })
