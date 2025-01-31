@@ -913,6 +913,14 @@ return {
         'User',
         { pattern = 'TelescopeConfigComplete', modeline = false }
       )
+
+      ar.augroup('MiniFilesClose', {
+        event = 'User',
+        pattern = 'TelescopeFindPre',
+        command = function()
+          if _G.MiniFiles then _G.MiniFiles.close() end
+        end,
+      })
     end,
   },
   {
