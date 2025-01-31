@@ -74,6 +74,17 @@ map('n', 'Y', function()
   return 'yg_'
 end, { expr = true, silent = true })
 
+map(
+  'n',
+  '<localleader>Y',
+  -- ':%y+<CR>',
+  function()
+    store_cursor_position()
+    return ':%y+<CR>'
+  end,
+  { desc = 'yank all' }
+)
+
 -- Keep cursor position on yank.
 augroup('StickyYank', {
   event = { 'TextYankPost' },
@@ -90,8 +101,8 @@ augroup('StickyYank', {
           true
         )[1]
         if cursor_pre_yank[2] <= line_length then
-      api.nvim_win_set_cursor(0, cursor_pre_yank)
-    end
+          api.nvim_win_set_cursor(0, cursor_pre_yank)
+        end
       end
     end
   end,
