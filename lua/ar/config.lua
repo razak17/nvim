@@ -328,7 +328,6 @@ local config = {
   plugin = {
     custom = {
       big_file = { enable = true },
-      env = { enable = true },
       interceptor = { enable = true },
       last_place = { enable = true },
       large_file = { enable = true },
@@ -338,17 +337,18 @@ local config = {
       smart_splits = { enable = true },
       smart_tilde = { enable = true },
       sticky_note = { enable = false },
-      tmux = { enable = true },
-      whitespace = { enable = true },
     },
     main = {
       autocommands = { enable = true },
       colors = { enable = true },
+      env = { enable = true },
       filetypes = { enable = true },
       mappings = { enable = true },
       menus = { enable = true },
       numbers = { enable = true },
       rooter = { enable = true },
+      tmux = { enable = true },
+      whitespace = { enable = true },
     },
   },
   plugins = {
