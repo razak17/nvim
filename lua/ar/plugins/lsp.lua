@@ -9,6 +9,7 @@ local lsp_icons = codicons.lsp
 local detour = ar.reqidx('detour')
 local features = ar.reqidx('detour.features')
 local minimal = ar.plugins.minimal
+local virtual_lines_variant = ar_config.lsp.virtual_lines.variant
 
 return {
   ------------------------------------------------------------------------------
@@ -160,15 +161,13 @@ return {
   {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
     -- 'ErichDonGubler/lsp_lines.nvim',
-    cond = ar_config.lsp.enable
-      and ar_config.lsp.virtual_text.variant == 'lsp_lines',
+    cond = ar.lsp.enable and virtual_lines_variant == 'lsp_lines',
     event = 'LspAttach',
     config = function() require('lsp_lines').setup() end,
   },
   {
     'rachartier/tiny-inline-diagnostic.nvim',
-    cond = ar.lsp.enable
-      and ar_config.lsp.virtual_text.variant == 'tiny-inline',
+    cond = ar.lsp.enable and virtual_lines_variant == 'tiny-inline',
     event = 'LspAttach',
     priority = 1000,
     opts = {

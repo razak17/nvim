@@ -735,12 +735,14 @@ function ar.get_lsp_signs()
   }
 end
 
+local virtual_lines_variant = ar_config.lsp.virtual_lines.variant
+
 diagnostic.config({
   signs = ar_config.lsp.signs.enable and ar.get_lsp_signs() or false,
   underline = true,
   update_in_insert = false,
   severity_sort = true,
-  virtual_lines = false,
+  virtual_lines = virtual_lines_variant == 'builtin',
   virtual_text = false,
   float = {
     max_width = max_width,
