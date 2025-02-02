@@ -177,6 +177,14 @@ return {
         local merge_ctx = view.merge_ctx
         if merge_ctx then show_commit(merge_ctx[which].hash) end
       end
+
+      local function diffview_conflict_choose(which)
+        return function()
+          local actions = require('diffview.actions')
+          actions.conflict_choose_all(which)()
+        end
+      end
+
       local function project_history()
         local project_root = vim.fs.root(0, '.git')
         if ar.falsy(project_root) then return end
@@ -204,7 +212,11 @@ return {
       end
 
       ar.add_to_menu('git', {
-        ['Browse File Commit History'] = 'DiffviewFileHistory %',
+        ['Conflict Choose Base'] = diffview_conflict_choose('base'),
+        ['Conflict Choose Ours'] = diffview_conflict_choose('ours'),
+        ['Conflict Choose Theirs'] = diffview_conflict_choose('theirs'),
+        ['Conflict Choose None'] = diffview_conflict_choose('none'),
+        ['Conflict Choose Both'] = diffview_conflict_choose('all'),
         ['Conflict Show Base'] = function() diffview_conflict('base') end,
         ['Conflict Show Ours'] = function() diffview_conflict('ours') end,
         ['Conflict Show Theirs'] = function() diffview_conflict('theirs') end,
@@ -212,6 +224,8 @@ return {
         ['Browse Project History'] = function() project_history() end,
         ['Show Commit From Hash'] = function() display_commit_from_hash() end,
         ['Cherry Pick From Hash'] = function() cherry_pick_from_hash() end,
+        ['Open Diffview'] = 'DiffviewOpen',
+        ['Browse File Commit History'] = 'DiffviewFileHistory %',
       })
     end,
     opts = {
@@ -595,22 +609,8 @@ return {
   },
   {
     'akinsho/git-conflict.nvim',
-    cond = enabled,
+    cond = enabled and false,
     event = 'BufReadPre',
-    cmd = {
-      'GitConflictChooseOurs',
-      'GitConflictChooseTheirs',
-      'GitConflictChooseNone',
-      'GitConflictChooseBoth',
-    },
-    init = function()
-      ar.add_to_menu('git', {
-        ['Conflict Choose Ours'] = 'GitConflictChooseOurs',
-        ['Conflict Choose Theirs'] = 'GitConflictChooseTheirs',
-        ['Conflict Choose None'] = 'GitConflictChooseNone',
-        ['Conflict Choose Both'] = 'GitConflictChooseBoth',
-      })
-    end,
     opts = {
       disable_diagnostics = true,
       default_mappings = {
