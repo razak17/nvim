@@ -11,7 +11,7 @@ return {
     cond = not minimal,
     init = function()
       vim.g.whichkey_add_spec({ '<leader>wm', group = 'Maximizer' })
-      ar.add_to_menu('command_palette', {
+      ar.add_to_select_menu('command_palette', {
         ['Maximize Window'] = 'lua require("windows.commands").maximize()',
       })
     end,

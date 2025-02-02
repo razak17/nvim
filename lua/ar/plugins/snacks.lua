@@ -83,7 +83,7 @@ return {
       zen = {},
     },
     init = function()
-      ar.add_to_menu('command_palette', {
+      ar.add_to_select_menu('command_palette', {
         ['Neovim News'] = function()
           Snacks.win({
             file = api.nvim_get_runtime_file('doc/news.txt', false)[1],
@@ -99,7 +99,7 @@ return {
           })
         end,
       })
-      ar.add_to_menu('toggle', {
+      ar.add_to_select_menu('toggle', {
         ['Toggle Light/Dark Background'] = function()
           Snacks.toggle.option(
             'background',

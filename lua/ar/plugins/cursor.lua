@@ -6,7 +6,7 @@ return {
     cond = not minimal,
     event = 'BufReadPost',
     init = function()
-      ar.add_to_menu('toggle', {
+      ar.add_to_select_menu('toggle', {
         ['Toggle Stay Centered'] = 'lua require("stay-centered").toggle()',
       })
     end,
@@ -23,7 +23,7 @@ return {
       'ToggleCursorLeft',
     },
     init = function()
-      ar.add_to_menu('toggle', {
+      ar.add_to_select_menu('toggle', {
         ['Toggle Cursor Top'] = 'ToggleCursorTop',
         ['Toggle Cursor Bottom'] = 'ToggleCursorBot 2',
         ['Toggle Cursor Middle'] = 'ToggleCursorMid',

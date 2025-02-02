@@ -57,7 +57,7 @@ return {
       'typescriptreact',
     },
     init = function()
-      ar.add_to_menu('command_palette', {
+      ar.add_to_select_menu('command_palette', {
         ['Generate Types From JSON'] = function()
           if not ar.plugin_available('nvim-quicktype') then return end
           vim.cmd('QuickType')
@@ -91,7 +91,7 @@ return {
     'razak17/template-string.nvim',
     cmd = { 'TemplateString' },
     init = function()
-      ar.add_to_menu('toggle', {
+      ar.add_to_select_menu('toggle', {
         ['Toggle Template String'] = 'TemplateString toggle',
       })
     end,
@@ -143,7 +143,7 @@ return {
       'CronExplainedToggle',
     },
     init = function()
-      ar.add_to_menu(
+      ar.add_to_select_menu(
         'command_palette',
         { ['Toggle Cronex'] = 'CronExplainedToggle' }
       )
@@ -176,7 +176,7 @@ return {
   {
     'razak17/tailwind-fold.nvim',
     init = function()
-      ar.add_to_menu('toggle', {
+      ar.add_to_select_menu('toggle', {
         ['Toggle Tailwind Fold'] = 'TailwindFoldToggle',
       })
     end,
@@ -442,7 +442,7 @@ return {
       'TailwindSortSelection',
     },
     init = function()
-      ar.add_to_menu('lsp', {
+      ar.add_to_select_menu('lsp', {
         ['Toggle Tailwind Conceal'] = 'TailwindConcealEnable',
         ['Toggle Tailwind Colors'] = 'TailwindColorToggle',
         ['Sort Tailwind Classes'] = 'TailwindSort',

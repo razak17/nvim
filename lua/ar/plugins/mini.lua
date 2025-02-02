@@ -149,7 +149,7 @@ return {
     'echasnovski/mini.misc',
     cond = false,
     init = function()
-      ar.add_to_menu(
+      ar.add_to_select_menu(
         'toggle',
         { ['Toggle Zoom'] = 'lua require("mini.misc").zoom()' }
       )
@@ -306,7 +306,7 @@ return {
         vim.schedule(function() vim.cmd('normal gsat') end)
       end, { desc = 'add surround HTML tag' })
 
-      ar.add_to_menu(
+      ar.add_to_select_menu(
         'command_palette',
         { ['Add surround HTML tag'] = 'AddSurroundingTag' }
       )
@@ -440,7 +440,7 @@ return {
         end
       end
 
-      ar.add_to_menu(
+      ar.add_to_select_menu(
         'command_palette',
         { ['Toggle Minipairs'] = toggle_minipairs }
       )

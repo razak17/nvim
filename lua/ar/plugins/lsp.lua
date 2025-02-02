@@ -21,7 +21,7 @@ return {
       keys = { { '<leader>lm', '<cmd>Mason<CR>', desc = 'mason info' } },
       build = ':MasonUpdate',
       init = function()
-        ar.add_to_menu('command_palette', {
+        ar.add_to_select_menu('command_palette', {
           ['Update All Mason Packages'] = 'MasonUpdateAll',
         })
       end,
@@ -244,7 +244,7 @@ return {
     cmd = { 'AerialToggle' },
     cond = not ar.plugins.minimal and ar.treesitter.enable,
     init = function()
-      ar.add_to_menu('toggle', { ['Toggle Aerial'] = 'AerialToggle' })
+      ar.add_to_select_menu('toggle', { ['Toggle Aerial'] = 'AerialToggle' })
     end,
     opts = {
       lazy_load = false,
@@ -391,7 +391,7 @@ return {
     'folke/trouble.nvim',
     init = function()
       vim.g.whichkey_add_spec({ '<localleader>x', group = 'Trouble' })
-      ar.add_to_menu('command_palette', {
+      ar.add_to_select_menu('command_palette', {
         ['Trouble Diagnostics'] = 'TroubleToggle',
       })
     end,
@@ -459,7 +459,7 @@ return {
   {
     'mhanberg/output-panel.nvim',
     init = function()
-      ar.add_to_menu('lsp', { ['Output Panel'] = 'OutputPanel' })
+      ar.add_to_select_menu('lsp', { ['Output Panel'] = 'OutputPanel' })
     end,
     event = 'LspAttach',
     cond = not minimal and ar.lsp.enable,
@@ -647,7 +647,7 @@ return {
       { '<leader>lA', function() require('actions-preview').code_actions() end, desc = 'code action preview' },
     },
     init = function()
-      ar.add_to_menu('lsp', {
+      ar.add_to_select_menu('lsp', {
         ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
       })
     end,

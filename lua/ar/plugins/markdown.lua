@@ -217,7 +217,7 @@ return {
         },
       })
 
-      ar.add_to_menu('command_palette', {
+      ar.add_to_select_menu('command_palette', {
         ['RenderMarkdown Toggle'] = 'RenderMarkdown toggle',
       })
     end,
@@ -286,7 +286,7 @@ return {
     ft = { 'markdown' },
     opts = {},
     init = function()
-      ar.add_to_menu('command_palette', { ['Toggle Markview'] = 'Markview' })
+      ar.add_to_select_menu('command_palette', { ['Toggle Markview'] = 'Markview' })
     end,
   },
 }

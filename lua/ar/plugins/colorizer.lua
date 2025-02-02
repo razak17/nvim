@@ -11,7 +11,7 @@ return {
       'ColorizerToggle',
     },
     init = function()
-      ar.add_to_menu('toggle', { ['Toggle Colorizer'] = 'ColorizerToggle' })
+      ar.add_to_select_menu('toggle', { ['Toggle Colorizer'] = 'ColorizerToggle' })
     end,
   },
   {
@@ -20,7 +20,7 @@ return {
     event = { 'LspAttach' },
     cmd = { 'HighlightColors' },
     init = function()
-      ar.add_to_menu('toggle', { ['Toggle Colors'] = 'HighlightColors Toggle' })
+      ar.add_to_select_menu('toggle', { ['Toggle Colors'] = 'HighlightColors Toggle' })
     end,
     opts = {
       render = 'virtual',
@@ -33,7 +33,7 @@ return {
     cond = not minimal,
     cmd = { 'CccHighlighterToggle', 'CccHighlighterEnable', 'CccPick' },
     init = function()
-      ar.add_to_menu('toggle', {
+      ar.add_to_select_menu('toggle', {
         ['Toggle Ccc'] = 'CccHighlighterToggle',
         ['Toggle Pick'] = 'CccPick',
       })
@@ -75,7 +75,7 @@ return {
   {
     'eero-lehtinen/oklch-color-picker.nvim',
     init = function()
-      ar.add_to_menu('toggle', {
+      ar.add_to_select_menu('toggle', {
         ['Toggle Color Picker'] = "lua require('oklch-color-picker').pick_under_cursor()",
       })
     end,

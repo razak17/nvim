@@ -348,15 +348,15 @@ function ar.visual_cmd(command)
   cmd(full_cmd)
 end
 
----@alias MenuOptions 'ai' | 'command_palette' | 'git' | 'lsp' | 'toggle'
+---@alias SelectMenuOptions 'ai' | 'command_palette' | 'git' | 'lsp' | 'toggle'
 
---- Add options to menu
----@param name MenuOptions
+--- Add options to select menu
+---@param name SelectMenuOptions
 ---@param options table
-function ar.add_to_menu(name, options)
-  ar.menu[name].options = ar.menu[name].options or {}
-  ar.menu[name].options =
-    vim.tbl_extend('force', ar.menu[name].options, options)
+function ar.add_to_select_menu(name, options)
+  ar.select_menu[name].options = ar.select_menu[name].options or {}
+  ar.select_menu[name].options =
+    vim.tbl_extend('force', ar.select_menu[name].options, options)
 end
 
 function ar.escape_pattern(text) return text:gsub('([^%w])', '%%%1') end

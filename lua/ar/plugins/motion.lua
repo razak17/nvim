@@ -56,7 +56,7 @@ return {
     cmd = { 'Precognition' },
     event = { 'BufRead', 'BufNewFile' },
     init = function()
-      ar.add_to_menu(
+      ar.add_to_select_menu(
         'toggle',
         { ['Toggle Precognition'] = 'Precognition toggle' }
       )

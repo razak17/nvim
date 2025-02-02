@@ -62,7 +62,7 @@ ar.command('ToggleRelativeNumber', function()
     disable_relative_number()
   end
 end)
-ar.add_to_menu('toggle', { ['Toggle Relative Number'] = 'ToggleRelativeNumber' })
+ar.add_to_select_menu('toggle', { ['Toggle Relative Number'] = 'ToggleRelativeNumber' })
 
 ar.augroup('ToggleRelativeLineNumbers', {
   event = { 'BufEnter', 'FileType', 'FocusGained', 'InsertLeave' },

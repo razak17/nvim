@@ -43,7 +43,7 @@ ar.command('InterceptToggle', function()
   if not config.enable then state = '`Disabled`' end
   notify('Intercept file open set to ' .. state, 'Intercept File Open')
 end, { desc = 'Toggles intercepting BufNew to open files in custom programs' })
-ar.add_to_menu(
+ar.add_to_select_menu(
   'command_palette',
   { ['Toggle Interceptor'] = 'InterceptToggle' }
 )

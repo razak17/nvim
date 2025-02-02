@@ -13,7 +13,7 @@ return {
     init = function()
       vim.g.whichkey_add_spec({ '<leader>ag', group = 'chatGPT' })
 
-      ar.add_to_menu('ai', {
+      ar.add_to_select_menu('ai', {
         ['chatGPT'] = function()
           ar.create_select_menu('chatGPT', {
             ['Open Prompt'] = 'ChatGPT',

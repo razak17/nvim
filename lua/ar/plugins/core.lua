@@ -73,7 +73,7 @@ return {
         )
       end
 
-      ar.add_to_menu('w3m', {
+      ar.add_to_select_menu('w3m', {
         ['Search in vsplit'] = function() w3m_input('W3mVSplit') end,
         ['Search in split'] = function() w3m_input('W3mVSplit') end,
         ['DuckDuckGo Search'] = function() w3m_input('W3m duck') end,
@@ -128,7 +128,7 @@ return {
           prof.start('*')
         end
       end
-      ar.add_to_menu('command_palette', { ['Toggle Profile'] = toggle_profile })
+      ar.add_to_select_menu('command_palette', { ['Toggle Profile'] = toggle_profile })
     end,
   },
   {
@@ -225,7 +225,7 @@ return {
     'lambdalisue/suda.vim',
     lazy = false,
     init = function()
-      ar.add_to_menu('command_palette', {
+      ar.add_to_select_menu('command_palette', {
         ['Re-open File With Sudo Permissions'] = 'SudaRead',
         ['Write File With Sudo Permissions'] = 'SudaWrite',
       })
@@ -239,7 +239,7 @@ return {
     cmd = 'Nerdy',
     cond = not minimal,
     init = function()
-      ar.add_to_menu('command_palette', { ['Nerdy'] = 'Nerdy' })
+      ar.add_to_select_menu('command_palette', { ['Nerdy'] = 'Nerdy' })
     end,
   },
   {

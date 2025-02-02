@@ -7,7 +7,7 @@ return {
   {
     'ck-zhang/obfuscate.nvim',
     init = function()
-      ar.add_to_menu(
+      ar.add_to_select_menu(
         'toggle',
         { ['Toggle Obfuscate'] = 'lua require("obfuscate").toggle()' }
       )
@@ -18,7 +18,7 @@ return {
     cond = cond and variant == 'cloak',
     event = 'VeryLazy',
     init = function()
-      ar.add_to_menu('toggle', { ['Toggle Cloak'] = 'CloakToggle' })
+      ar.add_to_select_menu('toggle', { ['Toggle Cloak'] = 'CloakToggle' })
     end,
     opts = {},
   },
@@ -31,10 +31,10 @@ return {
       { '<leader>el', '<Cmd>EcologShelterLinePeek<cr>', desc = 'ecolog: peek line' },
     },
     init = function()
-      ar.add_to_menu('toggle', {
+      ar.add_to_select_menu('toggle', {
         ['Toggle Ecolog Shelter'] = 'EcologShelterToggle',
       })
-      ar.add_to_menu('command_palette', {
+      ar.add_to_select_menu('command_palette', {
         ['Ecolog Select'] = 'EcologSelect',
         ['Ecolog Goto'] = 'EcologGoto',
         ['Ecolog Goto Var'] = 'EcologGotoVar',

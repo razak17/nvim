@@ -32,7 +32,7 @@ return {
     init = function()
       vim.g.whichkey_add_spec({ '<leader>av', group = 'Avante' })
 
-      ar.add_to_menu('ai', {
+      ar.add_to_select_menu('ai', {
         ['Avante'] = function()
           ar.create_select_menu('Avante', {
             ['Toggle Chat'] = 'AvanteToggle',
@@ -118,7 +118,7 @@ return {
     init = function()
       local visual_cmd = ar.visual_cmd
       vim.g.whichkey_add_spec({ '<leader>ak', group = 'Codecompanion' })
-      ar.add_to_menu('ai', {
+      ar.add_to_select_menu('ai', {
         ['Codecompanion'] = function()
           ar.create_select_menu('Codecompanion', {
             ['Toggle Chat'] = 'CodeCompanionChat Toggle',
@@ -237,7 +237,7 @@ return {
     init = function()
       vim.g.whichkey_add_spec({ '<leader>ap', group = 'Copilot' })
 
-      ar.add_to_menu('ai', {
+      ar.add_to_select_menu('ai', {
         ['Copilot'] = function()
           ar.create_select_menu('Copilot', {
             ['Toggle Copilot Auto Trigger'] = 'lua require("copilot.suggestion").toggle_auto_trigger()',

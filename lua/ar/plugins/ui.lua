@@ -14,7 +14,7 @@ return {
     cond = not minimal and niceties and ar.treesitter.enable,
     lazy = false,
     init = function()
-      ar.add_to_menu('toggle', { ['Toggle Helpview'] = 'Helpview toggleAll' })
+      ar.add_to_select_menu('toggle', { ['Toggle Helpview'] = 'Helpview toggleAll' })
     end,
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
@@ -150,7 +150,7 @@ return {
     cond = niceties,
     cmd = 'Twilight',
     init = function()
-      ar.add_to_menu('toggle', { ['Toggle Twilight'] = 'Twilight' })
+      ar.add_to_select_menu('toggle', { ['Toggle Twilight'] = 'Twilight' })
     end,
     opts = {
       context = 40,
@@ -162,7 +162,7 @@ return {
     'folke/zen-mode.nvim',
     init = function()
       vim.g.whichkey_add_spec({ '<localleader>z', group = 'Zen' })
-      ar.add_to_menu('toggle', { ['Toggle ZenMode'] = 'ZenMode' })
+      ar.add_to_select_menu('toggle', { ['Toggle ZenMode'] = 'ZenMode' })
     end,
     cmd = 'ZenMode',
     opts = {
@@ -177,7 +177,7 @@ return {
     'tjdevries/sPoNGe-BoB.NvIm',
     cmd = { 'SpOnGeBoBiFy' },
     init = function()
-      ar.add_to_menu('toggle', { ['Toggle SpOnGeBoB'] = 'SpOnGeBoBiFy' })
+      ar.add_to_select_menu('toggle', { ['Toggle SpOnGeBoB'] = 'SpOnGeBoBiFy' })
     end,
     -- stylua: ignore
     keys = {
@@ -366,7 +366,7 @@ return {
     cond = not minimal,
     cmd = { 'ToggleIdiot' },
     init = function()
-      ar.add_to_menu('toggle', { ['Toggle Idiot'] = 'ToggleIdiot' })
+      ar.add_to_select_menu('toggle', { ['Toggle Idiot'] = 'ToggleIdiot' })
     end,
     config = function()
       local idiot = require('you-are-an-idiot')
@@ -472,7 +472,7 @@ return {
         vim.cmd('SunglassesOff')
       end
 
-      ar.add_to_menu('toggle', { ['Toggle Sunglasses'] = toggle_sunglasses })
+      ar.add_to_select_menu('toggle', { ['Toggle Sunglasses'] = toggle_sunglasses })
     end,
     config = function(_, opts)
       require('sunglasses').setup(opts)

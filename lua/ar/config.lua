@@ -166,31 +166,13 @@ local namespace = {
       },
     },
   },
-  menu = {
-    ai = {
-      title = 'A.I. actions',
-      options = {},
-    },
-    command_palette = {
-      title = 'Command Palette actions',
-      options = {},
-    },
-    git = {
-      title = 'Git commands',
-      options = {},
-    },
-    lsp = {
-      title = 'Code/LSP actions',
-      options = {},
-    },
-    toggle = {
-      title = 'Toggle actions',
-      options = {},
-    },
-    w3m = {
-      title = 'W3M actions',
-      options = {},
-    },
+  select_menu = {
+    ai = { title = 'A.I. actions', options = {} },
+    command_palette = { title = 'Command Palette actions', options = {} },
+    git = { title = 'Git commands', options = {} },
+    lsp = { title = 'Code/LSP actions', options = {} },
+    toggle = { title = 'Toggle actions', options = {} },
+    w3m = { title = 'W3M actions', options = {} },
   },
   none = env.RVIM_NONE == '1',
   ---@type ArPlugins
@@ -351,9 +333,9 @@ local config = {
       env = { enable = true },
       filetypes = { enable = true },
       mappings = { enable = true },
-      menus = { enable = true },
       numbers = { enable = true },
       rooter = { enable = true },
+      select_menu = { enable = true },
       tmux = { enable = true },
       whitespace = { enable = true },
     },

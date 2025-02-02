@@ -6,7 +6,7 @@ return {
     cond = not minimal and niceties,
     cmd = { 'ToggleTruncate', 'TemporaryToggle' },
     init = function()
-      ar.add_to_menu('toggle', {
+      ar.add_to_select_menu('toggle', {
         ['Toggle Truncate'] = 'ToggleTruncate',
         ['Temporary Truncate'] = 'TemporaryToggle',
       })

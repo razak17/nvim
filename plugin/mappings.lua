@@ -506,12 +506,12 @@ nnoremap(
 -- Conceal Level & Cursor
 nnoremap(
   '<localleader>cl',
-  ':lua require"ar.menus.toggle".toggle_conceal_level()<CR>',
+  ':lua require"ar.select_menus.toggle".toggle_conceal_level()<CR>',
   { desc = 'toggle conceallevel', silent = true }
 )
 nnoremap(
   '<localleader>cc',
-  ':lua require"ar.menus.toggle".toggle_conceal_cursor()<CR>',
+  ':lua require"ar.select_menus.toggle".toggle_conceal_cursor()<CR>',
   { desc = 'toggle concealcursor', silent = true }
 )
 --------------------------------------------------------------------------------
@@ -604,7 +604,7 @@ ar.command('Redir', function()
   api.nvim_buf_set_lines(buf, 0, -1, false, output)
   ar.open_buf_centered_popup(buf)
 end)
-ar.add_to_menu('command_palette', { ['Open Messages'] = 'Redir' })
+ar.add_to_select_menu('command_palette', { ['Open Messages'] = 'Redir' })
 --------------------------------------------------------------------------------
 -- Reorder numbered list
 -- Works for the list where the numbers are followed by ". ", "). ", or "]. "
@@ -648,7 +648,7 @@ xnoremap(
   { desc = 'share code url' }
 )
 command('NullPointer', ar.null_pointer)
-ar.add_to_menu('command_palette', { ['Share Code URL'] = 'NullPointer' })
+ar.add_to_select_menu('command_palette', { ['Share Code URL'] = 'NullPointer' })
 --------------------------------------------------------------------------------
 -- Abbreviations
 --------------------------------------------------------------------------------

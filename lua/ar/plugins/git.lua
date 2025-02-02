@@ -45,7 +45,7 @@ return {
     cond = not minimal,
     cmd = { 'Gitignore', 'Licenses' },
     init = function()
-      ar.add_to_menu('command_palette', {
+      ar.add_to_select_menu('command_palette', {
         ['Generate Gitignore'] = 'Gitignore',
         ['Generate License'] = 'Licenses',
       })
@@ -211,7 +211,7 @@ return {
         )
       end
 
-      ar.add_to_menu('git', {
+      ar.add_to_select_menu('git', {
         ['Conflict Choose Base'] = diffview_conflict_choose('base'),
         ['Conflict Choose Ours'] = diffview_conflict_choose('ours'),
         ['Conflict Choose Theirs'] = diffview_conflict_choose('theirs'),
@@ -307,7 +307,7 @@ return {
     cond = not minimal and is_git,
     event = { 'BufRead', 'BufNewFile' },
     init = function()
-      ar.add_to_menu('git', {
+      ar.add_to_select_menu('git', {
         ['Toggle Current Line Blame'] = 'Gitsigns toggle_current_line_blame',
         ['Reset Buffer'] = 'Gitsigns reset_buffer',
       })
@@ -373,7 +373,7 @@ return {
     cond = enabled,
     cmd = { 'OpenInGHFile', 'OpenInGHRepo', 'OpenInGHFileLines' },
     init = function()
-      ar.add_to_menu('git', {
+      ar.add_to_select_menu('git', {
         ['Open File In GitHub'] = 'OpenInGHFile',
         ['Open Line In GitHub'] = 'OpenInGHFileLines',
         ['Open Repo In GitHub'] = 'OpenInGHRepo',
@@ -564,7 +564,7 @@ return {
         require('agitator').search_git_branch()
       end
 
-      ar.add_to_menu('git', {
+      ar.add_to_select_menu('git', {
         ['Time Machine'] = function() time_machine() end,
         ['Search In Another Branch'] = function() search_in_another_branch() end,
         ['Open File From Branch'] = function() open_file_from_branch() end,
@@ -583,7 +583,7 @@ return {
     cond = enabled,
     cmd = { 'BlameToggle' },
     init = function()
-      ar.add_to_menu('git', { ['Toggle Blame'] = 'BlameToggle' })
+      ar.add_to_select_menu('git', { ['Toggle Blame'] = 'BlameToggle' })
     end,
     config = function() require('blame').setup() end,
   },
@@ -601,7 +601,7 @@ return {
     cmd = { 'AdvancedGitSearch' },
     cond = enabled,
     init = function()
-      ar.add_to_menu('git', { ['Git Search'] = 'AdvancedGitSearch' })
+      ar.add_to_select_menu('git', { ['Git Search'] = 'AdvancedGitSearch' })
     end,
     config = function()
       require('telescope').load_extension('advanced_git_search')
@@ -644,7 +644,7 @@ return {
     '2kabhishek/co-author.nvim',
     cond = enabled,
     cmd = 'CoAuthor',
-    init = function() ar.add_to_menu('git', { ['List Authors'] = 'CoAuthor' }) end,
+    init = function() ar.add_to_select_menu('git', { ['List Authors'] = 'CoAuthor' }) end,
   },
   {
     'niuiic/git-log.nvim',
@@ -658,7 +658,7 @@ return {
   {
     'rbong/vim-flog',
     cond = enabled,
-    init = function() ar.add_to_menu('git', { ['View Branch Graph'] = 'Flog' }) end,
+    init = function() ar.add_to_select_menu('git', { ['View Branch Graph'] = 'Flog' }) end,
     cmd = { 'Flog', 'Flogsplit', 'Floggit' },
   },
   {

@@ -191,7 +191,7 @@ return {
     event = { 'BufRead', 'BufNewFile' },
     cmd = { 'TSContextEnable', 'TSContextDisable', 'TSContextToggle' },
     init = function()
-      ar.add_to_menu('toggle', { ['Toggle TS Context'] = 'TSContextToggle' })
+      ar.add_to_select_menu('toggle', { ['Toggle TS Context'] = 'TSContextToggle' })
     end,
     config = function()
       highlight.plugin('treesitter-context', {
@@ -278,7 +278,7 @@ return {
       highlight = 'Comment',
     },
     init = function()
-      ar.add_to_menu(
+      ar.add_to_select_menu(
         'command_palette',
         { ['Toggle Context Visualizer'] = 'NvimContextVtToggle' }
       )

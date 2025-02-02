@@ -150,7 +150,7 @@ return {
         open_db_common(db_name)
       end
 
-      ar.add_to_menu('command_palette', {
+      ar.add_to_select_menu('command_palette', {
         ['Open Local Postgres DB'] = pick_local_pg_db,
         ['Open Saved Query'] = open_saved_query,
         ['Open Json'] = open_json,

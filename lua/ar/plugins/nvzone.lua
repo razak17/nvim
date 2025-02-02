@@ -7,7 +7,7 @@ return {
     cond = not minimal,
     cmd = 'TimerlyToggle',
     init = function()
-      ar.add_to_menu('command_palette', {
+      ar.add_to_select_menu('command_palette', {
         ['Toggle Timer'] = 'TimerlyToggle',
       })
     end,
@@ -16,7 +16,7 @@ return {
     'nvzone/showkeys',
     cond = not minimal,
     init = function()
-      ar.add_to_menu(
+      ar.add_to_select_menu(
         'command_palette',
         { ['Toggle Screencaster'] = 'ShowkeysToggle' }
       )
@@ -33,7 +33,7 @@ return {
     cond = not minimal,
     cmd = { 'Shades', 'Huefy' },
     init = function()
-      ar.add_to_menu('toggle', {
+      ar.add_to_select_menu('toggle', {
         ['Toggle Color Picker'] = 'Huefy',
       })
     end,

@@ -81,7 +81,7 @@ return {
         if input ~= '' then vim.cmd('CopilotChat ' .. input) end
       end
 
-      ar.add_to_menu('ai', {
+      ar.add_to_select_menu('ai', {
         ['CopilotChat'] = function()
           ar.create_select_menu('CopilotChat', {
             ['Explain Code'] = 'CopilotChatExplain',
