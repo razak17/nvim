@@ -1,4 +1,4 @@
-local enabled = ar_config.plugin.custom.env.enable
+local enabled = ar_config.plugin.main.env.enable
 
 if not ar or ar.none or not enabled then return end
 
