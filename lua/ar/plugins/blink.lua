@@ -74,8 +74,8 @@ return {
           selection = {
             preselect = function(ctx) return ctx.mode ~= 'cmdline' end,
             auto_insert = function(ctx) return ctx.mode == 'cmdline' end,
+          },
         },
-      },
       },
       snippets = {
         preset = 'luasnip',
@@ -96,7 +96,6 @@ return {
             'path',
             'snippets',
             'buffer',
-            'luasnip',
             'ripgrep',
             'dadbod',
             'nvim-px-to-rem',
