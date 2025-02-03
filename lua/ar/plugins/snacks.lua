@@ -1,15 +1,47 @@
 local api, fn = vim.api, vim.fn
+local fmt = string.format
 local border = ar.ui.current.border
 local codicons = ar.ui.codicons
 local diag_icons = ar.ui.codicons.lsp
+
+local function find_files()
+  Snacks.picker.files({
+    finder = 'files',
+    format = 'file',
+    show_empty = true,
+    supports_live = true,
+    layout = 'telescope',
+  })
+end
+
+local function buffers()
+  Snacks.picker.buffers({
+    on_show = function() vim.cmd.stopinsert() end,
+    current = true,
+    finder = 'buffers',
+    format = 'buffer',
+    hidden = false,
+    unloaded = true,
+    sort_lastused = true,
+    layout = { preview = false, preset = 'select' },
+    win = {
+      input = {
+        keys = {
+          ['d'] = 'bufdelete',
+        },
+      },
+      list = { keys = { ['d'] = 'bufdelete' } },
+    },
+  })
+end
 
 return {
   {
     'folke/snacks.nvim',
     priority = 1000,
     lazy = false,
-    -- stylua: ignore
-    keys = function ()
+    keys = function()
+    -- stylua: ignore start
       local mappings = {
         { '<leader>nx', function() Snacks.notifier.hide() end, desc = 'snacks: dismiss all notifications' },
         { '<leader>nh', function() Snacks.notifier.show_history() end, desc = 'snacks: show notification history' },
@@ -22,19 +54,19 @@ return {
         { '<leader>ps', function() Snacks.profiler.scratch() end, desc = 'snacks: profiler scratch buffer' },
         { '<leader>pu', function() Snacks.profiler.toggle() end, desc = 'snacks: toggle profiler' },
       }
+      -- stylua: ignore end
 
       if ar_config.picker.files == 'snacks' then
-        table.insert(mappings, { '<C-p>', function() Snacks.picker.files() end, desc = 'snacks: find files' })
+        table.insert(
+          mappings,
+          { '<C-p>', find_files, desc = 'snacks: find files' }
+        )
       end
       if ar_config.picker.variant == 'snacks' then
-        table.insert(mappings, {
-          '<M-space>',
-          function()
-            Snacks.picker.buffers({ current = true, layout = { preview = false, preset = 'select' } })
-            vim.cmd.stopinsert()
-          end,
-          desc = 'snacks: buffers',
-        })
+        table.insert(
+          mappings,
+          { '<M-space>', buffers, desc = 'snacks: buffers' }
+        )
       end
 
       return mappings
@@ -65,9 +97,22 @@ return {
         top_down = false,
       },
       picker = {
-        prompt = codicons.misc.search_alt,
+        prompt = fmt(' %s ', ar.ui.icons.misc.chevron_right),
         sources = {
-          files = { hidden = true, ignored = true },
+          files = { hidden = true, ignored = false },
+        },
+        debug = { scores = true },
+        matcher = { frecency = true },
+        win = {
+          input = {
+            keys = {
+              ['<Esc>'] = { 'close', mode = { 'n', 'i' } },
+              ['<A-d>'] = { 'preview_scroll_down', mode = { 'i', 'n' } },
+              ['<A-u>'] = { 'preview_scroll_up', mode = { 'i', 'n' } },
+              ['<A-h>'] = { 'preview_scroll_left', mode = { 'i', 'n' } },
+              ['<A-l>'] = { 'preview_scroll_right', mode = { 'i', 'n' } },
+            },
+          },
         },
       },
       profiler = {
@@ -268,6 +313,19 @@ return {
           { section = 'keys', gap = 1, padding = 1 },
           { section = 'startup' },
         },
+      }
+
+      local layouts = require('snacks.picker.config.layouts')
+
+      local telescope_layout = layouts.telescope
+      telescope_layout.reverse = false
+      telescope_layout.layout[2] =
+        vim.tbl_extend('force', telescope_layout.layout[2], {
+          width = 0.60,
+        })
+
+      opts.picker.layouts = {
+        telescope = telescope_layout,
       }
 
       require('snacks').setup(opts)

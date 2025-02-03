@@ -314,6 +314,7 @@ local filetypes = ar.p_table({
   ['qf'] = presets.tool_panel,
   ['query'] = presets.tool_panel,
   ['slide'] = presets.tool_panel:with({ winbar = 'ignore' }),
+  ['snacks_picker_input'] = presets.tool_panel:with({ statuscolumn = true }),
   ['starter'] = presets.tool_panel:with({ statusline = false }),
   ['startify'] = presets.statusline_only,
   ['startup'] = presets.tool_panel:with({ statusline = false }),
