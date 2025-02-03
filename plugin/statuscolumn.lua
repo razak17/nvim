@@ -60,8 +60,6 @@ ar.augroup('StatusCol', {
       setting = 'statuscolumn',
     })
     if not d or ar.falsy(d) then return end
-    if d.ft == false or d.bt == false or d.fname == false then
-      vim.opt_local.statuscolumn = ''
-    end
+    if d.ft == false then vim.opt_local.statuscolumn = '' end
   end,
 })
