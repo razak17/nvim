@@ -100,6 +100,7 @@ return {
             'ripgrep',
             'dadbod',
             'nvim-px-to-rem',
+            'emoji',
           }
 
           if
@@ -162,6 +163,13 @@ return {
             opts = { prefix_min_len = 5 },
           },
           dadbod = { name = '[DB]', module = 'vim_dadbod_completion.blink' },
+          emoji = {
+            module = 'blink-emoji',
+            name = 'Emoji',
+            score_offset = 15,
+            min_keyword_length = 2,
+            opts = { insert = true },
+          },
           ['nvim-px-to-rem'] = {
             module = 'nvim-px-to-rem.integrations.blink',
             name = '[PX2REM]',
@@ -272,6 +280,7 @@ return {
       'mikavilpas/blink-ripgrep.nvim',
       'L3MON4D3/LuaSnip',
       'jsongerber/nvim-px-to-rem',
+      'moyiz/blink-emoji.nvim',
       { 'giuxtaposition/blink-cmp-copilot', cond = ar.ai.enable },
       {
         'saghen/blink.compat',
