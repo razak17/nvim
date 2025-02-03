@@ -71,9 +71,9 @@ return {
           window = { border = border },
         },
         list = {
-          selection = function(ctx)
-            return ctx.mode == 'cmdline' and 'auto_insert' or 'preselect'
-          end,
+          selection = {
+            preselect = function(ctx) return ctx.mode ~= 'cmdline' end,
+            auto_insert = function(ctx) return ctx.mode == 'cmdline' end,
         },
       },
       sources = {
@@ -259,7 +259,6 @@ return {
       'rafamadriz/friendly-snippets',
       'mikavilpas/blink-ripgrep.nvim',
       'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
       'jsongerber/nvim-px-to-rem',
       { 'giuxtaposition/blink-cmp-copilot', cond = ar.ai.enable },
       {
