@@ -76,6 +76,18 @@ return {
             auto_insert = function(ctx) return ctx.mode == 'cmdline' end,
         },
       },
+      },
+      snippets = {
+        preset = 'luasnip',
+        expand = function(snippet) require('luasnip').lsp_expand(snippet) end,
+        active = function(filter)
+          if filter and filter.direction then
+            return require('luasnip').jumpable(filter.direction)
+          end
+          return require('luasnip').in_snippet()
+        end,
+        jump = function(direction) require('luasnip').jump(direction) end,
+      },
       sources = {
         default = function()
           local node = vim.treesitter.get_node()
@@ -107,9 +119,10 @@ return {
           lsp = {
             enabled = ar.lsp.enable,
             name = '[LSP]',
+            min_keyword_length = 2,
+            score_offset = 90,
           },
           path = { name = '[PATH]' },
-          snippets = { name = '[SNIP]' },
           buffer = { name = '[BUF]' },
           cmdline = { name = '[CMD]' },
           copilot = {
@@ -129,14 +142,13 @@ return {
               return items
             end,
           },
-          luasnip = {
+          snippets = {
+            enabled = true,
             name = '[SNIP]',
-            module = 'blink.compat.source',
-            score_offset = -3,
-            opts = {
-              use_show_condition = false,
-              show_autosnippets = true,
-            },
+            max_items = 15,
+            min_keyword_length = 2,
+            module = 'blink.cmp.sources.snippets',
+            score_offset = 85,
           },
           ripgrep = {
             module = 'blink-ripgrep',
