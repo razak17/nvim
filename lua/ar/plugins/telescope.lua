@@ -447,7 +447,7 @@ ar.telescope = {
 return {
   {
     'nvim-telescope/telescope-frecency.nvim',
-    cond = min_enabled,
+    cond = min_enabled and ar_config.picker.variant == 'telescope',
     lazy = false,
   },
   {
@@ -508,76 +508,8 @@ return {
         ['Find Word In Dir'] = fuzzy_in_cur_dir('word', true),
       })
     end,
-    -- stylua: ignore
-    keys = function ()
-      local mappings = {
-        -- { '<c-p>', find_files, desc = 'find files' },
-        { '<leader>f,', file_browser, desc = 'file browser (root)' },
-        { '<leader>f.', function() file_browser({ path = '%:p:h', select_buffer = 'true' }) end, desc = 'file browser (curr dir)', },
-        { '<leader>f?', b('help_tags'), desc = 'help tags' },
-        -- { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer', },
-        { '<leader>fc', nvim_config, desc = 'nvim config' },
-        { '<leader>fd', aerial, desc = 'aerial' },
-        { '<leader>fe', egrepify, desc = 'egrepify' },
-        { '<leader>f;', ecolog, desc = 'ecolog' },
-        { '<leader>fga', live_grep_args, desc = 'live-grep-args: grep' },
-        { '<leader>fgw', live_grep_args_word, desc = 'live-grep-args: word' },
-        { '<leader>fgs', live_grep_args_selection, desc = 'live-grep-args: selection', mode = { 'x' } },
-        { '<leader>fgf', directory_files, desc = 'directory for find files' },
-        { '<leader>fgg', directory_search, desc = 'directory for live grep' },
-        { '<leader>fgh', git_file_history, desc = 'git file history' },
-        { '<leader>ff', find_files, desc = 'find files' },
-        { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
-        { '<leader>fH', helpgrep, desc = 'helpgrep' },
-        { '<leader>fi', import, desc = 'import' },
-        { '<leader>fI', b('builtin'), desc = 'builtins', },
-        { '<leader>fJ', b('jumplist'), desc = 'jumplist', },
-        { '<leader>fk', b('keymaps'), desc = 'keymaps' },
-        { '<leader>fl', lazy, desc = 'surf plugins' },
-        { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
-        { '<leader>fn', notifications, desc = 'notify: notifications' },
-        { '<leader>fN', node_modules, desc = 'node_modules' },
-        { '<leader>fo', b('pickers'), desc = 'pickers' },
-        { '<leader>fO', notes, desc = 'notes' },
-        -- { '<leader>fO', b('oldfiles'), desc = 'oldfiles' },
-        { '<leader>fp', projects, desc = 'projects' },
-        { '<leader>fP', plugins, desc = 'plugins' },
-        {
-          '<leader>fq',
-          function()
-            b('quickfix')()
-            vim.cmd(':cclose')
-          end,
-          desc = 'quickfix list',
-        },
-        { '<leader>fr', b('resume'), desc = 'resume last picker' },
-        { '<leader>fs', live_grep, desc = 'find string' },
-        { '<leader>fs', visual_grep_string, desc = 'find word', mode = 'x' },
-        { '<leader>fu', undo, desc = 'undo' },
-        { '<leader>fm', harpoon, desc = 'harpoon' },
-        { '<leader>ft', textcase, desc = 'textcase', mode = { 'n', 'v' } },
-        { '<leader>fw', b('grep_string'), desc = 'find word' },
-        { '<leader>fW', whop, desc = 'whop' },
-        { '<leader>fva', b('autocommands'), desc = 'autocommands' },
-        { '<leader>fvc', b('commands'), desc = 'commands' },
-        { '<leader>fvh', b('highlights'), desc = 'highlights' },
-        { '<leader>fvo', b('vim_options'), desc = 'vim options' },
-        { '<leader>fvr', b('registers'), desc = 'registers' },
-        { '<leader>fvk', b('command_history'), desc = 'command history' },
-        { '<leader>fK', b('colorscheme'), desc = 'colorscheme' },
-        { '<leader>fY', b('spell_suggest'), desc = 'spell suggest' },
-        { '<leader>fy', '<Cmd>Telescope telescope-yaml<CR>', desc = 'yaml' },
-        -- LSP
-        { '<leader>ld', b('lsp_document_symbols'), desc = 'telescope: document symbols', },
-        { '<leader>lI', b('lsp_implementations'), desc = 'telescope: search implementation', },
-        { '<leader>lR', b('lsp_references'), desc = 'telescope: show references', },
-        { '<leader>ls', b('lsp_dynamic_workspace_symbols'), desc = 'telescope: workspace symbols', },
-        { '<leader>le', b('diagnostics', { bufnr = 0 }), desc = 'telescope: document diagnostics', },
-        { '<leader>lw', b('diagnostics'), desc = 'telescope: workspace diagnostics', },
-        { '<localleader>ro', monorepo, desc = 'monorepo' },
-        { '<leader>fL', software_licenses, desc = 'software licenses' },
-        { '<leader>fX', spell_errors, desc = 'spell errors' },
-      }
+    keys = function()
+      local mappings = {}
 
       if ar_config.picker.files == 'smart-open' then
         table.insert(mappings, { '<C-p>', smart_open, desc = 'find files' })
@@ -586,7 +518,80 @@ return {
         table.insert(mappings, { '<C-p>', find_files, desc = 'find files' })
       end
       if ar_config.picker.variant == 'telescope' then
-        table.insert(mappings, { '<M-space>', b('buffers'), desc = 'buffers' })
+        local telescope_mappings = {
+          -- stylua: ignore start
+          { '<M-space>', b('buffers'), desc = 'buffers' },
+          { '<leader>f,', file_browser, desc = 'file browser (root)' },
+          { '<leader>f.', function() file_browser({ path = '%:p:h', select_buffer = 'true' }) end, desc = 'file browser (curr dir)', },
+          { '<leader>f?', b('help_tags'), desc = 'help tags' },
+          -- { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer', },
+          { '<leader>fc', nvim_config, desc = 'nvim config' },
+          { '<leader>fd', aerial, desc = 'aerial' },
+          { '<leader>fe', egrepify, desc = 'egrepify' },
+          { '<leader>f;', ecolog, desc = 'ecolog' },
+          { '<leader>fga', live_grep_args, desc = 'live-grep-args: grep' },
+          { '<leader>fgw', live_grep_args_word, desc = 'live-grep-args: word' },
+          { '<leader>fgs', live_grep_args_selection, desc = 'live-grep-args: selection', mode = { 'x' } },
+          { '<leader>fgf', directory_files, desc = 'directory for find files' },
+          { '<leader>fgg', directory_search, desc = 'directory for live grep' },
+          { '<leader>fgh', git_file_history, desc = 'git file history' },
+          { '<leader>ff', find_files, desc = 'find files' },
+          { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
+          { '<leader>fH', helpgrep, desc = 'helpgrep' },
+          { '<leader>fi', import, desc = 'import' },
+          { '<leader>fI', b('builtin'), desc = 'builtins', },
+          { '<leader>fJ', b('jumplist'), desc = 'jumplist', },
+          { '<leader>fk', b('keymaps'), desc = 'keymaps' },
+          { '<leader>fl', lazy, desc = 'surf plugins' },
+          { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
+          { '<leader>fn', notifications, desc = 'notify: notifications' },
+          { '<leader>fN', node_modules, desc = 'node_modules' },
+          { '<leader>fo', b('pickers'), desc = 'pickers' },
+          { '<leader>fO', notes, desc = 'notes' },
+          -- { '<leader>fO', b('oldfiles'), desc = 'oldfiles' },
+          { '<leader>fp', projects, desc = 'projects' },
+          { '<leader>fP', plugins, desc = 'plugins' },
+          {
+            '<leader>fq',
+            function()
+              b('quickfix')()
+              vim.cmd(':cclose')
+            end,
+            desc = 'quickfix list',
+          },
+          { '<leader>fr', b('resume'), desc = 'resume last picker' },
+          { '<leader>fs', live_grep, desc = 'find string' },
+          { '<leader>fs', visual_grep_string, desc = 'find word', mode = 'x' },
+          { '<leader>fu', undo, desc = 'undo' },
+          { '<leader>fm', harpoon, desc = 'harpoon' },
+          { '<leader>ft', textcase, desc = 'textcase', mode = { 'n', 'v' } },
+          { '<leader>fw', b('grep_string'), desc = 'find word' },
+          { '<leader>fW', whop, desc = 'whop' },
+          { '<leader>fva', b('autocommands'), desc = 'autocommands' },
+          { '<leader>fvc', b('commands'), desc = 'commands' },
+          { '<leader>fvh', b('highlights'), desc = 'highlights' },
+          { '<leader>fvo', b('vim_options'), desc = 'vim options' },
+          { '<leader>fvr', b('registers'), desc = 'registers' },
+          { '<leader>fvk', b('command_history'), desc = 'command history' },
+          { '<leader>fK', b('colorscheme'), desc = 'colorscheme' },
+          { '<leader>fY', b('spell_suggest'), desc = 'spell suggest' },
+          { '<leader>fy', '<Cmd>Telescope telescope-yaml<CR>', desc = 'yaml' },
+          -- LSP
+          { '<leader>ld', b('lsp_document_symbols'), desc = 'telescope: document symbols', },
+          { '<leader>lI', b('lsp_implementations'), desc = 'telescope: search implementation', },
+          { '<leader>lR', b('lsp_references'), desc = 'telescope: show references', },
+          { '<leader>ls', b('lsp_dynamic_workspace_symbols'), desc = 'telescope: workspace symbols', },
+          { '<leader>le', b('diagnostics', { bufnr = 0 }), desc = 'telescope: document diagnostics', },
+          { '<leader>lw', b('diagnostics'), desc = 'telescope: workspace diagnostics', },
+          { '<localleader>ro', monorepo, desc = 'monorepo' },
+          { '<leader>fL', software_licenses, desc = 'software licenses' },
+          { '<leader>fX', spell_errors, desc = 'spell errors' },
+          -- stylua: ignore end
+        }
+
+        vim
+          .iter(telescope_mappings)
+          :each(function(m) table.insert(mappings, m) end)
       end
 
       return mappings
@@ -985,8 +990,8 @@ return {
   { 'isak102/telescope-git-file-history.nvim', cond = min_enabled },
   { 'matkrin/telescope-spell-errors.nvim', cond = min_enabled },
   {
-    'danielfalk/smart-open.nvim', -- use fork to get show_scores working
-    cond = min_enabled,
+    'danielfalk/smart-open.nvim',
+    cond = min_enabled and ar_config.picker.files == 'smart-open',
     dependencies = { 'nvim-telescope/telescope-fzy-native.nvim' },
   },
   {
@@ -1004,7 +1009,7 @@ return {
   },
   {
     'Myzel394/jsonfly.nvim',
-    cond = min_enabled,
+    cond = min_enabled and ar_config.picker.variant == 'telescope',
     ft = { 'json' },
     keys = {
       { '<leader>fj', '<Cmd>Telescope jsonfly<cr>', desc = 'Open json(fly)' },

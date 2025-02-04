@@ -35,7 +35,7 @@ end
 return {
   {
     'd00h/telescope-any',
-    cond = not ar.plugins.minimal,
+    cond = not ar.plugins.minimal and ar_config.picker.variant == 'telescope',
     init = function()
       local instance
       vim.keymap.set('n', '<leader>fa', function()

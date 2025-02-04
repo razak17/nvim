@@ -272,7 +272,9 @@ return {
     end,
     -- stylua: ignore
     keys = {
-      { '<localleader>tt', '<cmd>TodoDots<CR>', desc = 'todo: dotfiles todos' },
+      -- { '<localleader>tt', '<cmd>TodoDots<CR>', desc = 'todo: dotfiles todos' },
+      { '<localleader>tt', function() Snacks.picker.todo_comments() end, desc = 'Todo' },
+      { '<leader>sT', function () Snacks.picker.todo_comments({ keywords = { 'TODO', 'FIX', 'FIXME' } }) end, desc = 'Todo/Fix/Fixme' },
       { '<localleader>tj', function() require('todo-comments').jump_next() end, desc = 'todo-comments: next todo', },
       { '<localleader>tk', function() require('todo-comments').jump_prev() end, desc = 'todo-comments: prev todo', },
     },

@@ -313,7 +313,7 @@ local config = {
   ---@type ArNotifier
   notifier = { enable = true, variant = 'snacks' },
   ---@type ArPicker
-  picker = { enable = true, files = 'smart-open', variant = 'telescope' },
+  picker = { enable = true, files = 'snacks', variant = 'snacks' },
   plugin = {
     custom = {
       big_file = { enable = true },

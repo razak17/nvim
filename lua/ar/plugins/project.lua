@@ -1,7 +1,7 @@
 return {
   {
     'Rics-Dev/project-explorer.nvim',
-    cond = not ar.plugins.minimal,
+    cond = not ar.plugins.minimal and ar_config.picker.variant == 'telescope',
     -- stylua: ignore
     keys = {
       { '<leader>fF', '<Cmd>ProjectExplorer<CR>', desc = 'project-explorer: open' },
