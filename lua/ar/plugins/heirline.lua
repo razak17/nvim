@@ -458,14 +458,6 @@ return {
             local curbuf = api.nvim_win_get_buf(curwin)
             self.active = true
             self.clients = vim.lsp.get_clients({ bufnr = curbuf })
-            local copilot = vim.tbl_filter(
-              function(client) return client.name == 'copilot' end,
-              self.clients
-            )
-            self.copilot = copilot[1]
-            if self.copilot ~= nil then
-              self.copilot.requests = copilot[1].requests
-            end
             self.clients = vim.tbl_filter(
               function(client) return client.name ~= 'copilot' end,
               self.clients
@@ -533,38 +525,33 @@ return {
               name = 'formatters',
             },
           },
-          -- Copilot Status
+        },
+        -- Copilot Status
+        {
+          condition = function()
+            return not minimal and ar.ai.enable and ar_config.ai.models.copilot
+          end,
+          init = function(self)
+            self.processing = false
+            local status = statusline.copilot_indicator()
+            if status == 'working' then self.processing = true end
+          end,
           {
-            cond = function()
-              return not minimal
-                and ar.ai.enable
-                and ar_config.ai.models.copilot
+            provider = ' ' .. codicons.misc.copilot,
+            hl = function(self)
+              if self.processing then
+                return { fg = 'forest_green', bold = true }
+              end
+              return { fg = 'comment', bold = true }
             end,
-            {
-              init = function(self)
-                self.processing = false
-                if self.copilot ~= nil then
-                  if not vim.tbl_isempty(self.copilot.requests) then
-                    self.processing = true
-                  end
-                end
+            on_click = {
+              callback = function()
+                vim.defer_fn(function() cmd('copilot panel') end, 100)
               end,
-              provider = ' ' .. codicons.misc.copilot,
-              hl = function(self)
-                if self.processing then
-                  return { fg = 'forest_green', bold = true }
-                end
-                return { fg = 'comment', bold = true }
-              end,
-              on_click = {
-                callback = function()
-                  vim.defer_fn(function() vim.cmd('copilot status') end, 100)
-                end,
-                name = 'copilot_attached',
-              },
+              name = 'copilot_status',
             },
-            { provider = ' ' .. separator, hl = { bold = true } },
           },
+          { provider = ' ' .. separator, hl = { bold = true } },
         },
         -- CodeCompanion
         {
@@ -606,36 +593,6 @@ return {
             provider = ' ' .. separator,
             hl = { bold = true },
           },
-        },
-        -- Copilot Status
-        {
-          condition = function()
-            return not minimal
-              and ar.ai.enable
-              and ar_config.lsp.null_ls.enable
-              and ar_config.ai.models.copilot
-          end,
-          init = function(self)
-            self.processing = false
-            local status = statusline.copilot_indicator()
-            if status == 'working' then self.processing = true end
-          end,
-          {
-            provider = ' ' .. codicons.misc.copilot,
-            hl = function(self)
-              if self.processing then
-                return { fg = 'forest_green', bold = true }
-              end
-              return { fg = 'comment', bold = true }
-            end,
-            on_click = {
-              callback = function()
-                vim.defer_fn(function() cmd('copilot panel') end, 100)
-              end,
-              name = 'copilot_status',
-            },
-          },
-          { provider = ' ' .. separator, hl = { bold = true } },
         },
         -- File Type
         utils.insert(file_block, statusline.file_icon, statusline.file_type),
