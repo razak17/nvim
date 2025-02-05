@@ -450,7 +450,7 @@ return {
     end,
     opts = {
       document_color = { enabled = true, inline_symbol = '󰝤 ' },
-      conceal = { enabled = true, symbol = '󱏿' },
+      conceal = { enabled = true, symbol = '󱏿', min_length = 5 },
       custom_filetypes = {},
     },
   },
