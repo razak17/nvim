@@ -25,8 +25,8 @@ return {
     init = function()
       vim.g.bullets_set_mappings = 0
       vim.g.bullets_custom_mappings = {
-        { 'imap', '<cr>', '<Plug>(bullets-newline)' },
-        { 'inoremap', '<C-cr>', '<cr>' },
+        -- { 'imap', '<cr>', '<Plug>(bullets-newline)' },
+        -- { 'inoremap', '<C-cr>', '<cr>' },
         { 'nmap', 'o', '<Plug>(bullets-newline)' },
         { 'vmap', 'gN', '<Plug>(bullets-renumber)' },
         { 'nmap', 'gN', '<Plug>(bullets-renumber)' },
@@ -38,6 +38,15 @@ return {
         { 'nmap', '<<', '<Plug>(bullets-promote)' },
         { 'vmap', '<', '<Plug>(bullets-promote)' },
       }
+
+      ar.augroup('BulletsMappings', {
+        event = 'FileType',
+        pattern = { 'markdown' },
+        command = function(args)
+          map('i', '<cr>', '<Plug>(bullets-newline)', { buffer = args.buf })
+          map('i', '<C-cr>', '<cr>', { buffer = args.buf })
+        end,
+      })
     end,
   },
   {
@@ -286,7 +295,10 @@ return {
     ft = { 'markdown' },
     opts = {},
     init = function()
-      ar.add_to_select_menu('command_palette', { ['Toggle Markview'] = 'Markview' })
+      ar.add_to_select_menu(
+        'command_palette',
+        { ['Toggle Markview'] = 'Markview' }
+      )
     end,
   },
 }
