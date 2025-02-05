@@ -509,7 +509,10 @@ return {
       })
     end,
     keys = function()
-      local mappings = {}
+      local mappings = {
+        -- NOTE: Remove this once snacks.picker lazy source works properly
+        { '<leader>fl', lazy, desc = 'surf plugins' },
+      }
 
       if ar_config.picker.files == 'smart-open' then
         table.insert(mappings, { '<C-p>', smart_open, desc = 'find files' })
@@ -542,7 +545,6 @@ return {
           { '<leader>fI', b('builtin'), desc = 'builtins', },
           { '<leader>fJ', b('jumplist'), desc = 'jumplist', },
           { '<leader>fk', b('keymaps'), desc = 'keymaps' },
-          { '<leader>fl', lazy, desc = 'surf plugins' },
           { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
           { '<leader>fn', notifications, desc = 'notify: notifications' },
           { '<leader>fN', node_modules, desc = 'node_modules' },
