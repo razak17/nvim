@@ -357,6 +357,13 @@ nnoremap(
 --------------------------------------------------------------------------------
 -- Core navigation
 --------------------------------------------------------------------------------
+-- Better up/down
+if not ar.is_available('accelerated-jk.nvim') then
+  -- stylua: ignore start
+  map({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { desc = 'down', expr = true, silent = true })
+  map({ 'n', 'x' }, 'k', "v:count == 0 ? 'gk' : 'k'", { desc = 'up', expr = true, silent = true })
+  -- stylua: ignore end
+end
 -- Zero should go to the first non-blank character not to the first column (which could be blank)
 -- but if already at the first character then jump to the beginning
 --@see: https://github.com/yuki-yano/zero.nvim/blob/main/lua/zero.lua
