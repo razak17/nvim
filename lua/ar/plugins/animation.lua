@@ -103,6 +103,7 @@ return {
   },
   {
     'razak17/flirt.nvim',
+    enabled = false,
     cond = not minimal and niceties and ar_config.animation.enable,
     event = 'VeryLazy',
     opts = { speed = 100 },
