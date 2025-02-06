@@ -321,14 +321,6 @@ return {
   {
     'echasnovski/mini.pick',
     keys = function()
-      if ar.plugins.minimal then
-        return {
-          { '<C-p>', '<Cmd>Pick all_files<CR>', desc = 'pick: open' },
-          { '<leader>fb', '<Cmd>Pick buffers<CR>', desc = 'pick: buffers' },
-          { '<leader>fw', '<Cmd>Pick grep<CR>', desc = 'pick: grep' },
-          { '<leader>fs', '<Cmd>Pick grep_live<CR>', desc = 'pick: live grep' },
-        }
-      end
       local mappings = {}
       if ar_config.picker.files == 'mini.pick' then
         table.insert(
@@ -336,21 +328,31 @@ return {
           { '<C-p>', '<Cmd>Pick all_files<CR>', desc = 'pick: open' }
         )
       end
+      if ar_config.picker.variant == 'mini.pick' then
+        local picker_mappings = {
+          { '<C-p>', '<Cmd>Pick all_files<CR>', desc = 'pick: files' },
+          { '<M-space>', '<Cmd>Pick buffers<CR>', desc = 'pick: buffers' },
+          { '<leader>fw', '<Cmd>Pick grep<CR>', desc = 'pick: grep' },
+          { '<leader>fs', '<Cmd>Pick grep_live<CR>', desc = 'pick: live grep' },
+        }
+        vim
+          .iter(picker_mappings)
+          :each(function(m) table.insert(mappings, m) end)
+      end
       return mappings
     end,
     event = 'VeryLazy',
     cmd = { 'Pick' },
     opts = {
-      delay = {
-        async = 10,
-        busy = 30,
-      },
+      delay = { async = 10, busy = 30 },
     },
     config = function(_, opts)
       local picker = require('mini.pick')
       local registry = picker.registry
 
-      if ar.plugins.minimal then vim.ui.select = picker.ui_select end
+      if ar_config.picker.variant == 'mini.pick' then
+        vim.ui.select = picker.ui_select
+      end
 
       registry.all_files = function()
         picker.builtin.cli({
