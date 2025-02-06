@@ -481,8 +481,7 @@ return {
   --------------------------------------------------------------------------------
   {
     'echasnovski/mini.animate',
-    enabled = false,
-    cond = not ar.plugins.minimal and false,
+    cond = not minimal and ar_config.animation.enable,
     event = 'VeryLazy',
     init = function()
       ar.add_to_select_menu('toggle', {
