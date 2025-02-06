@@ -484,7 +484,54 @@ return {
     enabled = false,
     cond = not ar.plugins.minimal and false,
     event = 'VeryLazy',
-    opts = {},
+    init = function()
+      ar.add_to_select_menu('toggle', {
+        ['Toggle Mini Animate'] = function()
+          vim.g.minianimate_disable = not vim.g.minianimate_disable
+          vim.notify(
+            'Mini Animate '
+              .. (vim.g.minianimate_disable and 'disabled' or 'enabled'),
+            'info',
+            { title = 'Toggle' }
+          )
+        end,
+      })
+    end,
+    opts = function(_, opts)
+      -- don't use animate when scrolling with the mouse
+      local mouse_scrolled = false
+      for _, scroll in ipairs({ 'Up', 'Down' }) do
+        local key = '<ScrollWheel' .. scroll .. '>'
+        vim.keymap.set({ '', 'i' }, key, function()
+          mouse_scrolled = true
+          return key
+        end, { expr = true })
+      end
+
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'grug-far',
+        callback = function() vim.b.minianimate_disable = true end,
+      })
+
+      local animate = require('mini.animate')
+      return vim.tbl_deep_extend('force', opts, {
+        resize = {
+          timing = animate.gen_timing.linear({ duration = 50, unit = 'total' }),
+        },
+        scroll = {
+          timing = animate.gen_timing.linear({ duration = 150, unit = 'total' }),
+          subscroll = animate.gen_subscroll.equal({
+            predicate = function(total_scroll)
+              if mouse_scrolled then
+                mouse_scrolled = false
+                return false
+              end
+              return total_scroll > 1
+            end,
+          }),
+        },
+      })
+    end,
   },
   {
     'echasnovski/mini.move',
