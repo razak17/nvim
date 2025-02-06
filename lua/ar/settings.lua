@@ -138,7 +138,7 @@ o.pumblend = 0 -- Make popup window translucent,
 --------------------------------------------------------------------------------
 -- Display {{{1
 --------------------------------------------------------------------------------
-o.showcmd = false
+-- o.showcmd = false
 o.showfulltag = true -- Show tag and tidy search in completion
 o.sidescrolloff = 5
 o.scrolloff = 7
