@@ -86,6 +86,7 @@ return {
           { '<leader>fgl', p('git_log'), desc = 'git log' },
           { '<leader>fgL', p('git_log_line'), desc = 'git log line' },
           { '<leader>fgs', p('git_status'), desc = 'git status' },
+          { '<leader>fgS', p('git_stash'), desc = 'git stash' },
           { '<leader>fh', p('help'), desc = 'help pages' },
           { '<leader>fk', p('keymaps'), desc = 'keymaps' },
           { '<leader>fK', p('colorschemes'), desc = 'colorschemes' },
