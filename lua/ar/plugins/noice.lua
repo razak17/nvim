@@ -6,6 +6,19 @@ return {
   'folke/noice.nvim',
   cond = not ar.plugins.minimal and not noice_disabled,
   event = 'VeryLazy',
+  init = function()
+    vim.g.whichkey_add_spec({ '<leader><leader>n', group = 'Noice' })
+  end,
+    -- stylua: ignore
+  keys = {
+    { '<S-Enter>', function() require('noice').redirect(vim.fn.getcmdline()) end, mode = 'c', desc = 'Redirect Cmdline' },
+    { '<leader><leader>nl', function() require('noice').cmd('last') end, desc = 'noice last message' },
+    { '<leader><leader>nh', function() require('noice').cmd('history') end, desc = 'noice history' },
+    { '<leader><leader>na', function() require('noice').cmd('all') end, desc = 'noice all' },
+    { '<leader><leader>nd', function() require('noice').cmd('dismiss') end, desc = 'dismiss all' },
+    { '<c-f>', function() if not require('noice.lsp').scroll(4) then return '<c-f>' end end, silent = true, expr = true, desc = 'scroll forward', mode = {'i', 'n', 's'} },
+    { '<c-b>', function() if not require('noice.lsp').scroll(-4) then return '<c-b>' end end, silent = true, expr = true, desc = 'scroll backward', mode = {'i', 'n', 's'}},
+  },
   opts = {
     cmdline = {
       format = {
@@ -295,15 +308,13 @@ return {
     },
   },
   config = function(_, opts)
+    -- https://github.com/LazyVim/LazyVim/blob/eb8ddea8c9438c34e71db097eb77a44185dd1093/lua/lazyvim/plugins/ui.lua?plain=1#L233
+    -- HACK: noice shows messages from before it was enabled,
+    -- but this is not ideal when Lazy is installing plugins,
+    -- so clear the messages in this case.
+    if vim.o.filetype == 'lazy' then vim.cmd([[messages clear]]) end
+
     require('noice').setup(opts)
-
-    map({ 'n', 'i', 's' }, '<c-f>', function()
-      if not require('noice.lsp').scroll(4) then return '<c-f>' end
-    end, { silent = true, expr = true })
-
-    map({ 'n', 'i', 's' }, '<c-b>', function()
-      if not require('noice.lsp').scroll(-4) then return '<c-b>' end
-    end, { silent = true, expr = true })
 
     map(
       'c',
