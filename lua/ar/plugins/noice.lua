@@ -1,10 +1,10 @@
 local fn, L = vim.fn, vim.log.levels
 
-local noice_enabled = not ar.plugin_disabled('noice.nvim')
+local noice_disabled = ar.plugin_disabled('noice.nvim')
 
 return {
   'folke/noice.nvim',
-  cond = not ar.plugins.minimal and noice_enabled,
+  cond = not ar.plugins.minimal and not noice_disabled,
   event = 'VeryLazy',
   opts = {
     cmdline = {
@@ -309,7 +309,7 @@ return {
       'c',
       '<M-CR>',
       function() require('noice').redirect(fn.getcmdline()) end,
-      { desc = 'redirect Cmdline' }
+      { desc = 'redirect cmdline' }
     )
   end,
 }
