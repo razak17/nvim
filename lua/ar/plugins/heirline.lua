@@ -363,7 +363,7 @@ return {
         {
           condition = function()
             return ar.is_available('noice.nvim')
-            and require('noice').api.status.command.has()
+              and require('noice').api.status.command.has()
           end,
           provider = function()
             local noice_cmd = require('noice').api.status.command.get()
