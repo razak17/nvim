@@ -90,7 +90,7 @@ return {
           { '<leader>fh', p('help'), desc = 'help pages' },
           { '<leader>fk', p('keymaps'), desc = 'keymaps' },
           { '<leader>fK', p('colorschemes'), desc = 'colorschemes' },
-          -- { '<leader>fl', p('lazy'), desc = 'search for plugin spec' },
+          { '<leader>fl', p('lazy'), desc = 'search for plugin spec' },
           { '<leader>fL', p('lines'), desc = 'buffer lines' },
           { '<leader>fm', p('man'), desc = 'man pages' },
           { '<leader>fn', p('notifications'), desc = 'notification history' },
