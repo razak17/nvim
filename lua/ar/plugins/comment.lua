@@ -3,7 +3,7 @@ local minimal = ar.plugins.minimal
 return {
   {
     'numToStr/Comment.nvim',
-    cond = not minimal and not ar.treesitter.enable,
+    cond = false and not minimal and not ar.treesitter.enable,
     keys = { 'gcc', { 'gc', mode = { 'x', 'n', 'o' } } },
     opts = function(_, opts)
       local ok, integration =
@@ -16,6 +16,14 @@ return {
     cond = not minimal and ar.treesitter.enable,
     event = 'VeryLazy',
     opts = {},
+  },
+  {
+    'JoosepAlviste/nvim-ts-context-commentstring',
+    opts = { enable_autocmd = false },
+    config = function(_, opts)
+      vim.g.skip_ts_context_commentstring_module = true
+      require('ts_context_commentstring').setup(opts)
+    end,
   },
   {
     's1n7ax/nvim-comment-frame',
