@@ -718,7 +718,7 @@ return {
               ['<CR>'] = stopinsert(actions.select_default),
               ['<C-o>'] = open_media_files,
               ['<C-y>'] = open_file_in_centered_popup,
-              ['<M-CR>'] = open_with_window_picker,
+              ['<A-CR>'] = open_with_window_picker,
               ['<C-z>'] = send_files_to_grapple,
               ['<A-q>'] = actions.send_to_loclist + actions.open_loclist,
               ['<C-h>'] = actions.results_scrolling_left,

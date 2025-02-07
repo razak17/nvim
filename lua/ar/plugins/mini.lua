@@ -481,7 +481,9 @@ return {
   --------------------------------------------------------------------------------
   {
     'echasnovski/mini.animate',
-    cond = not minimal and ar_config.animation.enable,
+    cond = function()
+      return not minimal and ar_config.animation.enable and vim.g.neovide == nil
+    end,
     event = 'VeryLazy',
     init = function()
       ar.add_to_select_menu('toggle', {
