@@ -7,6 +7,15 @@ return {
     'nvim-treesitter/nvim-treesitter',
     event = 'BufReadPost',
     build = ':TSUpdate',
+    init = function(plugin)
+      -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
+      -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
+      -- no longer trigger the **nvim-treesitter** module to be loaded in time.
+      -- Luckily, the only things that those plugins need are the custom queries, which we make available
+      -- during startup.
+      require('lazy.core.loader').add_to_rtp(plugin)
+      require('nvim-treesitter.query_predicates')
+    end,
     keys = {
       {
         '<localleader>R',
@@ -135,26 +144,6 @@ return {
             end
           end
         end,
-        init = function()
-          -- PERF: no need to load the plugin, if we only need its queries for mini.ai
-          local plugin =
-            require('lazy.core.config').spec.plugins['nvim-treesitter']
-          local opts = require('lazy.core.plugin').values(plugin, 'opts', false)
-          local enabled = false
-          if opts.textobjects then
-            for _, mod in ipairs({ 'move', 'select', 'swap', 'lsp_interop' }) do
-              if opts.textobjects[mod] and opts.textobjects[mod].enable then
-                enabled = true
-                break
-              end
-            end
-          end
-          if not enabled then
-            require('lazy.core.loader').disable_rtp_plugin(
-              'nvim-treesitter-textobjects'
-            )
-          end
-        end,
       },
     },
   },
@@ -182,7 +171,10 @@ return {
     event = { 'BufRead', 'BufNewFile' },
     cmd = { 'TSContextEnable', 'TSContextDisable', 'TSContextToggle' },
     init = function()
-      ar.add_to_select_menu('toggle', { ['Toggle TS Context'] = 'TSContextToggle' })
+      ar.add_to_select_menu(
+        'toggle',
+        { ['Toggle TS Context'] = 'TSContextToggle' }
+      )
     end,
     config = function()
       highlight.plugin('treesitter-context', {
