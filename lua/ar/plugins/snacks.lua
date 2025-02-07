@@ -47,6 +47,13 @@ local function buffers()
   })()
 end
 
+local function lazy()
+  p('files', {
+    args = { '--ignore-case', 'readme.md' },
+    cwd = fn.stdpath('data') .. '/lazy',
+  })()
+end
+
 return {
   {
     'folke/snacks.nvim',
@@ -78,7 +85,7 @@ return {
         local picker_mappings = {
           -- stylua: ignore start
           { '<M-space>', buffers, desc = 'snacks: buffers' },
-          { '<leader>fc', p('files', { cwd = vim.fn.stdpath('config') }), desc = 'find config file' },
+          { '<leader>fc', p('files', { cwd = fn.stdpath('config') }), desc = 'find config file' },
           { '<leader>ff', p('files'), desc = 'Find Files' },
           { '<leader>fgd', p('git_diff'), desc = 'git diff (hunks)' },
           { '<leader>fgf', p('git_log_file'), desc = 'git log file' },
@@ -91,12 +98,13 @@ return {
           { '<leader>fh', p('help'), desc = 'help pages' },
           { '<leader>fk', p('keymaps'), desc = 'keymaps' },
           { '<leader>fK', p('colorschemes'), desc = 'colorschemes' },
-          { '<leader>fl', p('lazy'), desc = 'search for plugin spec' },
+          { '<leader>fl', lazy, desc = 'surf plugins' },
           { '<leader>fL', p('lines'), desc = 'buffer lines' },
           { '<leader>fm', p('man'), desc = 'man pages' },
           { '<leader>fn', p('notifications'), desc = 'notification history' },
           { '<leader>fo', p('recent'), desc = 'recent' },
           { '<leader>fp', p('projects'), desc = 'projects' },
+          { '<leader>fP', p('lazy'), desc = 'search for plugin spec' },
           { '<leader>fr', p('resume'), desc = 'resume' },
           { '<leader>fs', p('grep'), desc = 'grep' },
           { '<leader>fS', p('grep_buffers'), desc = 'grep open buffers' },
