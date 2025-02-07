@@ -82,6 +82,7 @@ return {
           { '<leader>ff', p('files'), desc = 'Find Files' },
           { '<leader>fgd', p('git_diff'), desc = 'git diff (hunks)' },
           { '<leader>fgf', p('git_log_file'), desc = 'git log file' },
+          { '<leader>fgF', p('git_grep'), desc = 'git grep' },
           { '<leader>fgg', p('git_files'), desc = 'find git files' },
           { '<leader>fgl', p('git_log'), desc = 'git log' },
           { '<leader>fgL', p('git_log_line'), desc = 'git log line' },
