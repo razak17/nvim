@@ -356,23 +356,20 @@ return {
 
       registry.all_files = function()
         picker.builtin.cli({
+          -- stylua: ignore start
           command = {
             'rg',
             '--files',
             '--follow',
             '--hidden',
             '--no-ignore',
-            '--glob',
-            '!**/.git/**',
-            '--glob',
-            '!**/node_modules/**',
-            '--glob',
-            '!**/build/**',
-            '--glob',
-            '!**/tmp/**',
-            '--glob',
-            '!**/.mypy_cache/**',
+            '--glob', '!**/.git/**',
+            '--glob', '!**/node_modules/**',
+            '--glob', '!**/build/**',
+            '--glob', '!**/tmp/**',
+            '--glob', '!**/.mypy_cache/**',
           },
+          -- stylua: ignore end
         }, {
           source = { name = 'All Files' },
         })
