@@ -23,6 +23,18 @@ local function find_files()
     show_empty = true,
     supports_live = true,
     layout = 'telescope',
+      -- stylua: ignore start
+    args = {
+      '--exclude', '**/.git/**',
+      '--exclude', '**/node_modules/**',
+      '--exclude', '**/build/**',
+      '--exclude', '**/tmp/**',
+      '--exclude', '**/env/**',
+      '--exclude', '**/__pycache__/**',
+      '--exclude', '**/.mypy_cache/**',
+      '--exclude', '**/.pytest_cache/**',
+    },
+    -- stylua: ignore end
   })()
 end
 
