@@ -200,11 +200,34 @@ return {
             Info = diag_icons.info,
           },
         },
+        actions = {
+          open_with_window_picker = function(picker, _, action)
+            local items = picker:selected({ fallback = true })
+            if not items then
+              vim.notify('No items selected')
+              return
+            end
+            picker:close()
+            local selected = items[1]
+            if selected then
+              vim.defer_fn(function()
+                local picked_window_id = require('window-picker').pick_window({
+                  include_current_win = true,
+                }) or api.nvim_get_current_win()
+                api.nvim_set_current_win(picked_window_id)
+                if picked_window_id then
+                  Snacks.picker.actions.jump(picker, _, action)
+                end
+              end, 100)
+            end
+          end,
+        },
         win = {
           input = {
             keys = {
               ['<Esc>'] = { 'close', mode = { 'n', 'i' } },
               ['<C-h>'] = { 'toggle_ignored', mode = { 'i', 'n' } },
+              ['<A-CR>'] = { 'open_with_window_picker', mode = { 'n', 'i' } },
               ['<A-d>'] = { 'preview_scroll_down', mode = { 'i', 'n' } },
               ['<A-u>'] = { 'preview_scroll_up', mode = { 'i', 'n' } },
               ['<A-h>'] = { 'preview_scroll_left', mode = { 'i', 'n' } },
