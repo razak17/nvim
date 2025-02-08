@@ -150,6 +150,7 @@ return {
       },
       bigfile = { enabled = false },
       bufdelete = { enabled = false },
+      dim = {},
       quickfile = { enabled = true },
       notifier = {
         border = border,
@@ -170,8 +171,16 @@ return {
         sources = {
           files = { hidden = true, ignored = true },
         },
-        debug = { scores = true },
+        debug = { scores = false },
         matcher = { frecency = true },
+        icons = {
+          diagnostics = {
+            Error = diag_icons.error,
+            Warn = diag_icons.warn,
+            Hint = diag_icons.hint,
+            Info = diag_icons.info,
+          },
+        },
         win = {
           input = {
             keys = {
@@ -188,7 +197,6 @@ return {
       profiler = {
         pick = { picker = 'telescope' },
       },
-      dim = {},
       statuscolumn = { enabled = false },
       terminal = {
         enabled = true,
