@@ -280,6 +280,18 @@ return {
           hl = { fg = 'comment' },
         },
         align,
+        -- Noice Status
+        {
+          condition = function()
+            return ar.is_available('noice.nvim')
+              and require('noice').api.status.command.has()
+          end,
+          provider = function()
+            local noice_cmd = require('noice').api.status.command.get()
+            return noice_cmd or ''
+          end,
+          hl = { fg = 'blue' },
+        },
         -- Search Matches
         {
           condition = function() return v.hlsearch ~= 0 end,
@@ -359,18 +371,6 @@ return {
         --   },
         --   --       ﰇ  
         -- },
-        -- Noice Status
-        {
-          condition = function()
-            return ar.is_available('noice.nvim')
-              and require('noice').api.status.command.has()
-          end,
-          provider = function()
-            local noice_cmd = require('noice').api.status.command.get()
-            return noice_cmd or ''
-          end,
-          hl = { fg = 'blue' },
-        },
         -- Package Info
         {
           condition = function() return fn.expand('%') == 'package.json' end,
