@@ -61,7 +61,8 @@ end
 
 local function lazy()
   p('files', {
-    args = { '--ignore-case', 'readme.md' },
+    matcher = { frecency = true },
+    args = { '--exact-depth', '2', '--ignore-case', 'readme.md' },
     cwd = fn.stdpath('data') .. '/lazy',
   })()
 end
