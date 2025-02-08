@@ -108,7 +108,8 @@ return {
     end,
   },
   {
-    'chrisgrieser/nvim-tinygit',
+    -- 'chrisgrieser/nvim-tinygit',
+    'razak17/nvim-tinygit', -- use vim.ui.input instead on dressing directly
     cond = enabled,
     -- stylua: ignore
     keys = {
@@ -644,7 +645,9 @@ return {
     '2kabhishek/co-author.nvim',
     cond = enabled,
     cmd = 'CoAuthor',
-    init = function() ar.add_to_select_menu('git', { ['List Authors'] = 'CoAuthor' }) end,
+    init = function()
+      ar.add_to_select_menu('git', { ['List Authors'] = 'CoAuthor' })
+    end,
   },
   {
     'niuiic/git-log.nvim',
@@ -658,7 +661,9 @@ return {
   {
     'rbong/vim-flog',
     cond = enabled,
-    init = function() ar.add_to_select_menu('git', { ['View Branch Graph'] = 'Flog' }) end,
+    init = function()
+      ar.add_to_select_menu('git', { ['View Branch Graph'] = 'Flog' })
+    end,
     cmd = { 'Flog', 'Flogsplit', 'Floggit' },
   },
   {
