@@ -532,9 +532,11 @@ function ar.filetype_settings(map)
           end
           if key == 'plugins' then return ar.ftplugin_conf(value) end
           if type(key) == 'function' then ar.pcall(key, args) end
-          vim
-            .iter(value)
-            :each(function(option, setting) vim[key][option] = setting end)
+          if not ar.falsy(value) then
+            vim
+              .iter(value)
+              :each(function(option, setting) vim[key][option] = setting end)
+          end
         end)
       end,
     }
