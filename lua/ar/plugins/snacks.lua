@@ -184,6 +184,12 @@ return {
           files = { hidden = true, ignored = true },
         },
         debug = { scores = false },
+        layout = {
+          cycle = true,
+          preset = function()
+            return vim.o.columns >= 120 and 'telescope' or 'vertical'
+          end,
+        },
         matcher = { frecency = true },
         icons = {
           diagnostics = {
@@ -446,7 +452,7 @@ return {
             {
               win = 'input',
               height = 1,
-              border = 'rounded',
+              border = 'single',
               title = '{title} {live} {flags}',
               title_pos = 'center',
             },
