@@ -3,10 +3,8 @@ local minimal = ar.plugins.minimal
 
 return {
   'stevearc/dressing.nvim',
-  event = 'BufRead',
-  cond = function()
-    return not minimal and ar_config.picker.variant == 'telescope'
-  end,
+  event = 'VeryLazy',
+  cond = not minimal,
   init = function()
     ---@diagnostic disable-next-line: duplicate-set-field
     vim.ui.select = function(...)
@@ -22,6 +20,7 @@ return {
   opts = {
     input = { insert_only = false, border = border },
     select = {
+      enabled = not ar_config.picker.variant == 'snacks',
       builtin = {
         border = border,
         min_height = 10,
