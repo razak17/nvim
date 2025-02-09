@@ -153,7 +153,7 @@ return {
             },
             {
               provider = function()
-                if GitStatus == nil then return 'behind' end
+                if GitStatus == nil then return 'behind1' end
                 return ' ' .. GitStatus.behind .. icons.misc.arrow_down
               end,
               hl = function()
