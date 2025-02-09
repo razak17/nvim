@@ -70,9 +70,12 @@ end
 return {
   {
     'echasnovski/mini.hipatterns',
-    cond = (
-      io.open(fn.expand('%:p:h') .. '/.lazy.lua', 'r') ~= nil and not minimal
-    ) or minimal,
+    cond = function()
+      if ar.plugin_disabled('mini.hipatterns') then return false end
+      return (
+        io.open(fn.expand('%:p:h') .. '/.lazy.lua', 'r') ~= nil and not minimal
+      ) or minimal
+    end,
     event = { 'BufRead', 'BufNewFile' },
     opts = function()
       local hipatterns = require('mini.hipatterns')
@@ -229,7 +232,10 @@ return {
           ret[#ret + 1] = { prefix .. obj[1], desc = obj.desc }
         end
       end
-      require('which-key').add(ret, { notify = false })
+
+      if ar.is_available('which-key.nvim') then
+        require('which-key').add(ret, { notify = false })
+      end
 
       local ai = require('mini.ai')
 
@@ -320,6 +326,7 @@ return {
   },
   {
     'echasnovski/mini.pick',
+    cond = not ar.plugin_disabled('mini.pick'),
     keys = function()
       local mappings = {}
       if ar_config.picker.files == 'mini.pick' then
@@ -426,7 +433,7 @@ return {
   },
   {
     'echasnovski/mini.pairs',
-    cond = minimal,
+    cond = minimal and not ar.plugin_disabled('mini.pairs'),
     event = 'VeryLazy',
     init = function()
       local function toggle_minipairs()
@@ -462,6 +469,7 @@ return {
   },
   {
     'echasnovski/mini.comment',
+    cond = not ar.plugin_disabled('mini.comment'),
     event = 'VeryLazy',
     opts = {
       options = {

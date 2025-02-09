@@ -1,12 +1,14 @@
 ---Set up plugin-specific groups cleanly with the plugin config.
 ---@param spec wk.Spec
 vim.g.whichkey_add_spec = function(spec)
+  if not ar.is_available('which-key.nvim') then return end
   -- Deferred to ensure spec is loaded after whichkey itself
   vim.defer_fn(function() require('which-key').add(spec) end, 1500)
 end
 
 return {
   'folke/which-key.nvim',
+  cond = not ar.plugin_disabled('which-key.nvim'),
   event = 'VeryLazy',
   opts = {
     icons = {

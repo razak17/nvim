@@ -86,6 +86,7 @@ return {
   },
   {
     'andrewferrier/debugprint.nvim',
+    cond = not ar.plugin_disabled('debugprint.nvim'),
     event = 'VeryLazy',
     opts = {
       keymaps = {

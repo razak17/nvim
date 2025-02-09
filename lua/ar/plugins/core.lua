@@ -128,7 +128,10 @@ return {
           prof.start('*')
         end
       end
-      ar.add_to_select_menu('command_palette', { ['Toggle Profile'] = toggle_profile })
+      ar.add_to_select_menu(
+        'command_palette',
+        { ['Toggle Profile'] = toggle_profile }
+      )
     end,
   },
   {
@@ -223,6 +226,7 @@ return {
   },
   {
     'lambdalisue/suda.vim',
+    cond = not ar.plugin_disabled('suda.vim'),
     lazy = false,
     init = function()
       ar.add_to_select_menu('command_palette', {

@@ -8,6 +8,7 @@ return {
   },
   {
     'razak17/accelerated-jk.nvim',
+    cond = not ar.plugin_disabled('accelerated-jk.nvim'),
     event = 'VeryLazy',
     -- stylua: ignore
     keys = {
