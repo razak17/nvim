@@ -151,39 +151,42 @@ return {
               condition = function() return GitStatus.status == 'pending' end,
               provider = ' ' .. codicons.git.pending,
             },
-          --   {
-          --     provider = function()
-          --       return ' ' .. GitStatus.behind .. icons.misc.arrow_down
-          --     end,
-          --     hl = function()
-          --       return {
-          --         fg = GitStatus.behind == 0 and fg or 'pale_red',
-          --       }
-          --     end,
-          --     on_click = {
-          --       callback = function()
-          --         if GitStatus.behind > 0 then statusline.git_pull() end
-          --       end,
-          --       name = 'git_pull',
-          --     },
-          --   },
-          --   {
-          --     provider = function()
-          --       return ' ' .. GitStatus.ahead .. icons.misc.arrow_up
-          --     end,
-          --     hl = function()
-          --       return {
-          --         fg = GitStatus.ahead == 0 and fg or 'yellowgreen',
-          --       }
-          --     end,
-          --     on_click = {
-          --       callback = function()
-          --         if _G.GitStatus.ahead > 0 then statusline.git_push() end
-          --       end,
-          --       name = 'git_push',
-          --     },
-          --   },
-          -- },
+            {
+              provider = function()
+                if GitStatus == nil then return 'here' end
+                return ' ' .. GitStatus.behind .. icons.misc.arrow_down
+              end,
+              hl = function()
+                if GitStatus == nil then return 'pale_red' end
+                return {
+                  fg = GitStatus.behind == 0 and fg or 'pale_red',
+                }
+              end,
+              on_click = {
+                callback = function()
+                if GitStatus == nil then return end
+                  if GitStatus.behind > 0 then statusline.git_pull() end
+                end,
+                name = 'git_pull',
+              },
+            },
+            -- {
+            --   provider = function()
+            --     return ' ' .. GitStatus.ahead .. icons.misc.arrow_up
+            --   end,
+            --   hl = function()
+            --     return {
+            --       fg = GitStatus.ahead == 0 and fg or 'yellowgreen',
+            --     }
+            --   end,
+            --   on_click = {
+            --     callback = function()
+            --       if _G.GitStatus.ahead > 0 then statusline.git_push() end
+            --     end,
+            --     name = 'git_push',
+            --   },
+            -- },
+          },
         },
         -- Filename
         utils.insert(
