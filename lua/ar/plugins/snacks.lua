@@ -67,6 +67,13 @@ local function lazy()
   })()
 end
 
+local function notes()
+  p('files', {
+    matcher = { frecency = true },
+    cwd = ar.sync_dir('obsidian'),
+  })()
+end
+
 return {
   {
     'folke/snacks.nvim',
@@ -116,6 +123,7 @@ return {
           { '<leader>fm', p('man'), desc = 'man pages' },
           { '<leader>fn', p('notifications'), desc = 'notification history' },
           { '<leader>fo', p('recent'), desc = 'recent' },
+          { '<leader>fO', notes, desc = 'notes' },
           { '<leader>fp', p('projects'), desc = 'projects' },
           { '<leader>fP', p('lazy'), desc = 'search for plugin spec' },
           { '<leader>fr', p('resume'), desc = 'resume' },
