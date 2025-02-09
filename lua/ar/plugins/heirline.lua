@@ -144,13 +144,13 @@ return {
             },
             hl = { fg = 'yellowgreen' },
           },
-          -- {
-          --   condition = function() return GitStatus ~= nil end,
-          --   update = { 'User', pattern = 'GitStatusChanged' },
-          --   {
-          --     condition = function() return GitStatus.status == 'pending' end,
-          --     provider = ' ' .. codicons.git.pending,
-          --   },
+          {
+            condition = function() return GitStatus ~= nil end,
+            update = { 'User', pattern = 'GitStatusChanged' },
+            {
+              condition = function() return GitStatus.status == 'pending' end,
+              provider = ' ' .. codicons.git.pending,
+            },
           --   {
           --     provider = function()
           --       return ' ' .. GitStatus.behind .. icons.misc.arrow_down
