@@ -1,16 +1,36 @@
 local is_available = ar.is_available
 local enabled = ar_config.plugin.custom.reload_plugin.enable
-local has_lazy_and_telescope = is_available('lazy.nvim')
-  and is_available('telescope.nvim')
+local has_lazy = is_available('lazy.nvim')
+local has_telescope = is_available('telescope.nvim')
+local ar_picker = ar_config.picker.variant
 
 if
   not ar
   or ar.none
   or not ar.plugins.enable
-  or not enabled and not has_lazy_and_telescope
+  or not enabled and not has_lazy
 then
   return
 end
+
+if ar_picker ~= 'telescope' then
+  map('n', '<leader>oL', function()
+    local plugins = require('lazy').plugins()
+    local plugin_names = {}
+    for _, plugin in ipairs(plugins) do
+      table.insert(plugin_names, plugin.name)
+    end
+
+    vim.ui.select(
+      plugin_names,
+      { title = 'Reload plugin' },
+      function(selected) require('lazy').reload({ plugins = { selected } }) end
+    )
+  end, { desc = 'lazy: reload plugins' })
+  return
+end
+
+if not has_telescope and ar_picker ~= 'telescope' then return end
 
 ---@class Plugin
 ---@field path string
@@ -21,56 +41,6 @@ end
 ---@field dev boolean
 ---@field icon string
 
-local fmt = string.format
-
---------------------------------------------------------------------------------
--- These function arre adapted from telescope-lazy.nvim
--- @see: https://github.com/razak17/telescope-lazy.nvim
---------------------------------------------------------------------------------
-
---- Finds the length of the longest plugin name.
----@param plugins table<Plugin>: A table with all the plugins.
----@return number: The length of the longest plugin name.
-local function max_plugin_name_length(plugins)
-  local max_length = 0
-  for _, plugin in ipairs(plugins) do
-    max_length = math.max(max_length, #plugin.name)
-  end
-  return max_length
-end
-
---- Creates an internal representation of a LazyPlugin.
----@param lazy_plugin any: An instance of a LazyPlugin.
----@return Plugin: An internal representation of the LazyPlugin as a Plugin.
-local function create_plugin_from_lazy(lazy_plugin)
-  ---@type Plugin
-  ---@diagnostic disable-next-line: missing-fields
-  local plugin = {}
-
-  plugin.name = lazy_plugin.name
-  plugin.lazy = lazy_plugin.lazy
-  plugin.icon = ''
-
-  -- Use LazyPluginState `_` for determining whether the plugin is `dev` or not, instead of the `dev` field.
-  -- This also accounts for plugins that use the `dir` option in their plugin specification.
-  plugin.dev = lazy_plugin._.is_local
-
-  return plugin
-end
-
-local function get_plugins()
-  ---@type table<Plugin>
-  local plugins = {}
-
-  local lazy_config = require('lazy.core.config')
-  for _, lazy_plugin in pairs(lazy_config.plugins) do
-    local plugin = create_plugin_from_lazy(lazy_plugin)
-    table.insert(plugins, plugin)
-  end
-
-  return plugins
-end
-
 map('n', '<leader>oL', function()
   local config = require('telescope.config').values
   local entry_display = require('telescope.pickers.entry_display')
@@ -79,6 +49,54 @@ map('n', '<leader>oL', function()
   local previewers = require('telescope.previewers')
   local actions = require('telescope.actions')
   local actions_state = require('telescope.actions.state')
+
+  --------------------------------------------------------------------------------
+  -- These function arre adapted from telescope-lazy.nvim
+  -- @see: https://github.com/razak17/telescope-lazy.nvim
+  --------------------------------------------------------------------------------
+
+  --- Finds the length of the longest plugin name.
+  ---@param plugins table<Plugin>: A table with all the plugins.
+  ---@return number: The length of the longest plugin name.
+  local function max_plugin_name_length(plugins)
+    local max_length = 0
+    for _, plugin in ipairs(plugins) do
+      max_length = math.max(max_length, #plugin.name)
+    end
+    return max_length
+  end
+
+  --- Creates an internal representation of a LazyPlugin.
+  ---@param lazy_plugin any: An instance of a LazyPlugin.
+  ---@return Plugin: An internal representation of the LazyPlugin as a Plugin.
+  local function create_plugin_from_lazy(lazy_plugin)
+    ---@type Plugin
+    ---@diagnostic disable-next-line: missing-fields
+    local plugin = {}
+
+    plugin.name = lazy_plugin.name
+    plugin.lazy = lazy_plugin.lazy
+    plugin.icon = ''
+
+    -- Use LazyPluginState `_` for determining whether the plugin is `dev` or not, instead of the `dev` field.
+    -- This also accounts for plugins that use the `dir` option in their plugin specification.
+    plugin.dev = lazy_plugin._.is_local
+
+    return plugin
+  end
+
+  local function get_plugins()
+    ---@type table<Plugin>
+    local plugins = {}
+
+    local lazy_config = require('lazy.core.config')
+    for _, lazy_plugin in pairs(lazy_config.plugins) do
+      local plugin = create_plugin_from_lazy(lazy_plugin)
+      table.insert(plugins, plugin)
+    end
+
+    return plugins
+  end
 
   local telescope_lazy_plugins = get_plugins()
   local opts = {
