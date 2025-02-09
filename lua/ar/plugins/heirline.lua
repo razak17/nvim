@@ -153,11 +153,9 @@ return {
             },
             {
               provider = function()
-                if GitStatus == nil then return 'behind2' end
                 return ' ' .. GitStatus.behind .. icons.misc.arrow_down
               end,
               hl = function()
-                if GitStatus == nil then return 'pale_red' end
                 return {
                   fg = GitStatus.behind == 0 and fg or 'pale_red',
                 }
@@ -172,11 +170,9 @@ return {
             },
             {
               provider = function()
-                if GitStatus == nil then return 'ahead1' end
                 return ' ' .. GitStatus.ahead .. icons.misc.arrow_up
               end,
               hl = function()
-                if GitStatus == nil then return 'yellowgreen' end
                 return {
                   fg = GitStatus.ahead == 0 and fg or 'yellowgreen',
                 }
