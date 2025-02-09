@@ -164,7 +164,7 @@ map('n', '<leader>oL', function()
 
       if selected_entry.name then
         actions.close(prompt_bufnr)
-        vim.cmd(fmt('Lazy reload %s', selected_entry.name))
+        require('lazy').reload({ plugins = { selected_entry.name } })
       end
     end)
   end
