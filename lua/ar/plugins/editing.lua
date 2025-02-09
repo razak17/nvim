@@ -273,12 +273,9 @@ return {
   {
     'ThePrimeagen/refactoring.nvim',
     cond = not minimal,
+    -- stylua: ignore
     init = function()
-      require('which-key').add({ '<leader><leader>r', group = 'Refactoring' })
-      require('which-key').add({
-        mode = { 'x' },
-        { '<leader><leader>r', group = 'Refactoring' },
-      })
+      vim.g.whichkey_add_spec({ '<leader><leader>r', desc = 'Refactoring', mode = { 'n', 'x' } })
     end,
     keys = {
       {
