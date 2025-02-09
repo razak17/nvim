@@ -172,7 +172,7 @@ return {
             },
             {
               provider = function()
-                if GitStatus == nil then return 'ahead' end
+                if GitStatus == nil then return 'ahead1' end
                 return ' ' .. GitStatus.ahead .. icons.misc.arrow_up
               end,
               hl = function()
