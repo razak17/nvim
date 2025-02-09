@@ -170,25 +170,25 @@ return {
                 name = 'git_pull',
               },
             },
-            -- {
-            --   provider = function()
-            --     if GitStatus == nil then return 'ahead' end
-            --     return ' ' .. GitStatus.ahead .. icons.misc.arrow_up
-            --   end,
-            --   hl = function()
-            --     if GitStatus == nil then return 'yellowgreen' end
-            --     return {
-            --       fg = GitStatus.ahead == 0 and fg or 'yellowgreen',
-            --     }
-            --   end,
-            --   on_click = {
-            --     callback = function()
-            --     if GitStatus == nil then return end
-            --       if _G.GitStatus.ahead > 0 then statusline.git_push() end
-            --     end,
-            --     name = 'git_push',
-            --   },
-            -- },
+            {
+              provider = function()
+                if GitStatus == nil then return 'ahead' end
+                return ' ' .. GitStatus.ahead .. icons.misc.arrow_up
+              end,
+              hl = function()
+                if GitStatus == nil then return 'yellowgreen' end
+                return {
+                  fg = GitStatus.ahead == 0 and fg or 'yellowgreen',
+                }
+              end,
+              -- on_click = {
+              --   callback = function()
+              --   if GitStatus == nil then return end
+              --     if _G.GitStatus.ahead > 0 then statusline.git_push() end
+              --   end,
+              --   name = 'git_push',
+              -- },
+            },
           },
         },
         -- Filename
