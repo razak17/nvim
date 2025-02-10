@@ -13,6 +13,13 @@ return {
   { 'tyru/capture.vim', cmd = { 'Capture' } },
   { 'Rasukarusan/nvim-block-paste', cmd = { 'Block' } },
   {
+    'ariel-frischer/bmessages.nvim',
+    cond = not minimal,
+    cmd = { 'Bmessages', 'Bmessagesvs', 'Bmessagessp', 'BmessagesEdit' },
+    event = 'CmdlineEnter',
+    opts = {},
+  },
+  {
     'ryoppippi/nvim-reset',
     cond = false,
     opts = {
