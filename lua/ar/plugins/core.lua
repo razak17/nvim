@@ -20,14 +20,6 @@ return {
     opts = {},
   },
   {
-    'ryoppippi/nvim-reset',
-    cond = false,
-    opts = {
-      create_plugin_keymap = false,
-      ignore_maps = {},
-    },
-  },
-  {
     'smjonas/live-command.nvim',
     cond = not minimal,
     event = 'VeryLazy',
@@ -58,8 +50,6 @@ return {
       'Wall',
     },
   },
-  -- { 'lewis6991/fileline.nvim', lazy = false },
-  -- { 'axlebedev/vim-footprints', lazy = false },
   {
     'altermo/nwm',
     branch = 'x11',
@@ -101,7 +91,6 @@ return {
     event = { 'BufReadPost', 'BufNewFile' },
     opts = {},
   },
-  { 'nvim-tree/nvim-web-devicons', cond = false },
   {
     'stevearc/profile.nvim',
     cond = not minimal,
@@ -142,12 +131,6 @@ return {
     end,
   },
   {
-    'romainl/vim-cool',
-    cond = false,
-    event = 'BufReadPre',
-    config = function() vim.g.CoolTotalMatches = 1 end,
-  },
-  {
     'neuromaancer/readup.nvim',
     cmd = { 'Readup', 'ReadupBrowser' },
     opts = { float = true },
@@ -167,49 +150,11 @@ return {
       { '<C-u>', function() require('readline').backward_kill_line() end, mode = '!' },
     },
   },
-  {
-    'pogyomo/submode.nvim',
-    cond = false,
-    event = 'VeryLazy',
-    config = function()
-      local submode = require('submode')
-
-      submode.create('WinMove', {
-        mode = 'n',
-        enter = '<C-w>',
-        leave = { 'q', '<ESC>' },
-        default = function(register)
-          register('h', '<C-w>h')
-          register('j', '<C-w>j')
-          register('k', '<C-w>k')
-          register('l', '<C-w>l')
-        end,
-      })
-
-      submode.create('LspOperator', {
-        mode = 'n',
-        enter = '<Space>lo',
-        leave = { 'q', '<ESC>' },
-        default = function(register)
-          register('d', vim.lsp.buf.definition)
-          register('D', vim.lsp.buf.declaration)
-          register('H', vim.lsp.buf.hover)
-          register('i', vim.lsp.buf.implementation)
-          register('r', vim.lsp.buf.references)
-        end,
-      })
-    end,
-  },
   -- }}}
   ------------------------------------------------------------------------------
   -- Utilities {{{2
   ------------------------------------------------------------------------------
   { 'meznaric/key-analyzer.nvim', cmd = { 'KeyAnalyzer' }, opts = {} },
-  {
-    'gcanoxl/cloc.nvim',
-    cond = false,
-    opts = {},
-  },
   {
     'mikesmithgh/kitty-scrollback.nvim',
     cmd = { 'KittyScrollbackGenerateKittens', 'KittyScrollbackCheckHealth' },
@@ -338,6 +283,42 @@ return {
     },
   },
   {
+    'razak17/readonly.nvim',
+    cond = not minimal and niceties,
+    lazy = false,
+    opts = {
+      secured_files = {
+        '~/%.aws/config',
+        '~/%.aws/credentials',
+        '~/%.ssh/.',
+        '~/%.secrets.yaml',
+        '~/%.vault-crypt-files/.',
+      },
+    },
+  },
+  --------------------------------------------------------------------------------
+  -- Disabled
+  --------------------------------------------------------------------------------
+  -- { 'lewis6991/fileline.nvim', lazy = false },
+  -- { 'axlebedev/vim-footprints', lazy = false },
+  { 'nvim-tree/nvim-web-devicons', cond = false },
+  { 'jghauser/mkdir.nvim', enabled = false, lazy = false },
+  { 'gcanoxl/cloc.nvim', cond = false, opts = {} },
+  {
+    'romainl/vim-cool',
+    cond = false,
+    event = 'BufReadPre',
+    config = function() vim.g.CoolTotalMatches = 1 end,
+  },
+  {
+    'ryoppippi/nvim-reset',
+    cond = false,
+    opts = {
+      create_plugin_keymap = false,
+      ignore_maps = {},
+    },
+  },
+  {
     'willothy/flatten.nvim',
     lazy = false,
     cond = false,
@@ -367,22 +348,37 @@ return {
     },
   },
   {
-    'razak17/readonly.nvim',
-    cond = not minimal and niceties,
-    lazy = false,
-    opts = {
-      secured_files = {
-        '~/%.aws/config',
-        '~/%.aws/credentials',
-        '~/%.ssh/.',
-        '~/%.secrets.yaml',
-        '~/%.vault-crypt-files/.',
-      },
-    },
+    'pogyomo/submode.nvim',
+    cond = false,
+    event = 'VeryLazy',
+    config = function()
+      local submode = require('submode')
+
+      submode.create('WinMove', {
+        mode = 'n',
+        enter = '<C-w>',
+        leave = { 'q', '<ESC>' },
+        default = function(register)
+          register('h', '<C-w>h')
+          register('j', '<C-w>j')
+          register('k', '<C-w>k')
+          register('l', '<C-w>l')
+        end,
+      })
+
+      submode.create('LspOperator', {
+        mode = 'n',
+        enter = '<Space>lo',
+        leave = { 'q', '<ESC>' },
+        default = function(register)
+          register('d', vim.lsp.buf.definition)
+          register('D', vim.lsp.buf.declaration)
+          register('H', vim.lsp.buf.hover)
+          register('i', vim.lsp.buf.implementation)
+          register('r', vim.lsp.buf.references)
+        end,
+      })
+    end,
   },
-  --------------------------------------------------------------------------------
-  -- Disabled
-  --------------------------------------------------------------------------------
-  { 'jghauser/mkdir.nvim', enabled = false, lazy = false },
   -- }}}
 }
