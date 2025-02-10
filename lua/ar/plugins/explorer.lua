@@ -325,6 +325,7 @@ return {
         desc = 'open mini.files (cwd)',
       },
     },
+    lazy = vim.fn.argc(-1) == 0, -- load early when opening a dir from the cmdline
     opts = {
       windows = {
         preview = true,
