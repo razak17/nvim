@@ -200,18 +200,22 @@ if is_available('neo-tree.nvim') then
 end
 
 if is_available('mini.indentscope') then
-  augroup('IndentscopeDisable', {
+  augroup('MiniIndentscopeDisable', {
     event = { 'FileType' },
     desc = 'Disable indentscope for certain files',
     command = function()
       -- stylua: ignore
-      local ignore_filetypes = {
+      local ignored_filetypes = {
         'aerial', 'dashboard', 'help', 'lazy', 'leetcode.nvim', 'mason', 'neo-tree',
         'NvimTree', 'neogitstatus', 'notify', 'startify', 'toggleterm', 'Trouble',
         'fzf', 'alpha', 'starter', 'dbout', 'neo-tree-popup', 'log', 'gitcommit', 'txt', 'git',
         'flutterToolsOutline', 'undotree', 'markdown', 'norg', 'org', 'orgagenda',
       }
-      if vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
+      local ignored_buftypes = { 'nofile', 'terminal' }
+      if
+        vim.tbl_contains(ignored_filetypes, vim.bo.filetype)
+        or vim.tbl_contains(ignored_buftypes, vim.bo.buftype)
+      then
         vim.b.miniindentscope_disable = true
       end
     end,
@@ -312,15 +316,6 @@ end
 if is_available('glow.nvim') then
   float_resize_autocmd('GlowResize', 'glowpreview', 'Glow')
 end
-
--- disable mini.indentscope for certain filetype|buftype
-augroup('MiniIndentscopeDisable', {
-  event = { 'FileType', 'BufEnter' },
-  pattern = '*',
-  command = "if index(['fzf', 'help'], &ft) >= 0 "
-    .. "|| index(['nofile', 'terminal'], &bt) >= 0 "
-    .. '| let b:miniindentscope_disable=v:true | endif',
-})
 
 -- auto-delete fugitive buffers
 augroup('Fugitive', {
