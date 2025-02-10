@@ -138,22 +138,6 @@ augroup('Utilities', {
   event = 'FileType',
   command = 'setlocal formatoptions-=cro',
 }, {
-  event = { 'BufEnter' },
-  command = function(args)
-    if vim.bo[args.buf].filetype == 'DiffviewFiles' then
-      map(
-        'n',
-        'Q',
-        function()
-          cmd(
-            'lua require("neogit.integrations.diffview").diffview_mappings["close"]()'
-          )
-        end,
-        { buffer = args.buf }
-      )
-    end
-  end,
-}, {
   event = { 'BufHidden' },
   desc = 'Delete [No Name] buffers',
   command = function(event)

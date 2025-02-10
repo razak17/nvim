@@ -104,6 +104,25 @@ return {
           },
         },
       })
+
+      ar.augroup('NeogitCloseDiff', {
+        event = { 'BufEnter' },
+        command = function(args)
+          if vim.bo[args.buf].filetype == 'DiffviewFiles' then
+            map(
+              'n',
+              'Q',
+              function()
+                vim.cmd(
+                  'lua require("neogit.integrations.diffview").diffview_mappings["close"]()'
+                )
+              end,
+              { buffer = args.buf }
+            )
+          end
+        end,
+      })
+
       require('neogit').setup(opts)
     end,
   },
