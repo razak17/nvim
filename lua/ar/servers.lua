@@ -81,6 +81,7 @@ local servers = {
   prismals = {},
   prosemd_lsp = {},
   svelte = {},
+  taplo = {},
   yamlls = {},
   vimls = {},
   volar = {},
