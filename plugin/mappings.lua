@@ -72,7 +72,9 @@ map({ 'n', 'x' }, '<leader>C', '"_C', { desc = 'cut' })
 -- Credit: JGunn Choi ?il | inner line
 ----------------------------------------------------------------------------
 -- Yank all
-nnoremap('<localleader>Y', ':%y+<CR>', { desc = 'yank all' })
+if not ar_config.plugin.custom.sticky_yank.enable then
+  nnoremap('<localleader>Y', ':%y+<CR>', { desc = 'yank all' })
+end
 -- Select all
 nnoremap('<localleader>A', 'gg"+VG', { desc = 'select all' })
 -- Delete All

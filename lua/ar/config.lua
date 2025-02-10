@@ -323,9 +323,12 @@ local config = {
       notepad = { enable = true },
       reload_plugin = { enable = true },
       remote_sync = { enable = false },
+      smart_close = { enable = true },
+      smart_hl_search = { enable = true },
       smart_splits = { enable = true },
       smart_tilde = { enable = true },
       sticky_note = { enable = false },
+      sticky_yank = { enable = true },
     },
     main = {
       autocommands = { enable = true },
