@@ -432,19 +432,6 @@ return {
     },
   },
   {
-    '9seconds/repolink.nvim',
-    cmd = { 'RepoLink' },
-    keys = {
-      {
-        '<leader>gog',
-        '<Cmd>RepoLink<CR>',
-        desc = 'repolink: generate link',
-        mode = { 'n', 'x' },
-      },
-    },
-    opts = {},
-  },
-  {
     'https://git.sr.ht/~tomleb/repo-url.nvim',
     cond = not minimal,
     -- stylua: ignore
