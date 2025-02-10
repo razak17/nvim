@@ -31,9 +31,15 @@ return {
     cond = not minimal,
     init = function()
       ar.add_to_select_menu('command_palette', {
-        ['Upload Current File To 0x0.st'] = require('nvim-0x0').upload_current_file,
-        ['Upload Selection To 0x0.st'] = require('nvim-0x0').upload_selection,
-        ['Upload Yank To 0x0.st'] = require('nvim-0x0').upload_yank,
+        ['Upload Current File To 0x0.st'] = function()
+          require('nvim-0x0').upload_current_file()
+        end,
+        ['Upload Selection To 0x0.st'] = function()
+          require('nvim-0x0').upload_selection()
+        end,
+        ['Upload Yank To 0x0.st'] = function()
+          require('nvim-0x0').upload_yank()
+        end,
       })
     end,
     opts = { use_default_keymaps = false },
