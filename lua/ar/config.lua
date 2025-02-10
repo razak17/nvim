@@ -316,6 +316,7 @@ local config = {
   picker = { enable = true, files = 'snacks', variant = 'snacks' },
   plugin = {
     custom = {
+      auto_cursorline = { enable = true },
       big_file = { enable = true },
       interceptor = { enable = true },
       large_file = { enable = true },
