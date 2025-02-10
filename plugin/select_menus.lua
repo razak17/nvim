@@ -191,7 +191,7 @@ local command_palette_menu = function()
 end
 
 map(
-  'n',
+  { 'n', 'x' },
   '<leader>op',
   command_palette_menu,
   { desc = '[c]ommand [p]alette: open menu for command palette actions' }
