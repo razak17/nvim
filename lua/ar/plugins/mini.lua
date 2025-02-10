@@ -123,7 +123,7 @@ return {
         and ar_config.ui.indentline.enable
         and ar_config.ui.indentline.variant == 'mini.indentscope'
     end,
-    event = 'BufRead',
+    event = 'UIEnter',
     opts = {
       symbol = separators.left_thin_block,
       draw = {
