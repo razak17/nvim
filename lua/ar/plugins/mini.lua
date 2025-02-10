@@ -118,7 +118,11 @@ return {
   },
   {
     'echasnovski/mini.indentscope',
-    cond = not ar.plugins.minimal and ar.plugins.niceties,
+    cond = function()
+      return not minimal
+        and ar_config.ui.indentline.enable
+        and ar_config.ui.indentline.variant == 'mini.indentscope'
+    end,
     event = 'BufRead',
     opts = {
       symbol = separators.left_thin_block,

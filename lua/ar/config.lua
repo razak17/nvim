@@ -32,6 +32,7 @@ local env = vim.env
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
 ---@alias ArWhichDashboard 'alpha' | 'snacks'
 ---@alias ArWhichGx 'local' | 'plugin'
+---@alias ArWhichIndentline 'mini.indentscope' | 'ibl'
 ---@alias ArWhichLspProgress 'builtin' | 'noice' | 'snacks'
 ---@alias ArWhichLspVirtualLines 'builtin' | 'lsp_lines' | 'tiny-inline'
 ---@alias ArWhichLspVirtualText 'builtin' | 'lsp_lines' | 'tiny-inline'
@@ -71,6 +72,10 @@ local env = vim.env
 ---@class ArLspProgress
 ---@field enable boolean
 ---@field variant ArWhichLspProgress
+
+---@class ArIndentline
+---@field enable boolean
+---@field variant ArWhichIndentline
 
 ---@class ArStatuscolumn
 ---@field enable boolean
@@ -359,6 +364,8 @@ local config = {
     variant = 'ecolog',
   },
   ui = {
+    ---@type ArIndentline
+    indentline = { enable = true, variant = 'mini.indentscope' },
     ---@type ArStatuscolumn
     statuscolumn = { enable = true, variant = 'local' },
     ---@type ArWinbar

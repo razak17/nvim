@@ -1,10 +1,15 @@
+local minimal = ar.plugins.minimal
 local ui, highlight = ar.ui, ar.highlight
 local left_thin_block = ui.icons.separators.left_thin_block
 
 return {
   {
     'lukas-reineke/indent-blankline.nvim',
-    cond = false,
+    cond = function()
+      return not minimal
+        and ar_config.ui.indentline.enable
+        and ar_config.ui.indentline.variant == 'ibl'
+    end,
     event = 'UIEnter',
     main = 'ibl',
     opts = {
