@@ -1,11 +1,12 @@
 local fmt = string.format
 local ui, highlight = ar.ui, ar.highlight
 local border, lsp_hls = ui.current.border, ui.lsp.highlights
+local is_blink = ar_config.completion.variant == 'blink'
 
 return {
   {
     'saghen/blink.cmp',
-    cond = ar.completion.enable and ar_config.completion.variant == 'blink',
+    cond = ar.completion.enable and is_blink,
     event = 'InsertEnter',
     version = '*', -- REQUIRED `version` needed to download pre-built binary
     opts_extend = {
@@ -145,7 +146,7 @@ return {
           dadbod = { name = '[DB]', module = 'vim_dadbod_completion.blink' },
           emoji = {
             module = 'blink-emoji',
-            name = 'Emoji',
+            name = '[EMOJI]',
             score_offset = 15,
             min_keyword_length = 2,
             opts = { insert = true },

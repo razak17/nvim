@@ -529,7 +529,7 @@ return {
   },
   {
     'jsongerber/nvim-px-to-rem',
-    cond = ar.completion.enable and not minimal and is_cmp,
+    cond = ar.completion.enable and not minimal,
     ft = { 'css', 'scss' },
     opts = { show_virtual_text = true },
   },
