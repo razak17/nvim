@@ -146,10 +146,7 @@ return {
           },
           {
             condition = function() return GitStatus ~= nil end,
-            update = {
-              'User',
-              pattern = { 'GitStatusChanged', 'GitPushComplete' },
-            },
+            update = { 'User', pattern = 'GitStatusChanged' },
             {
               condition = function() return GitStatus.status == 'pending' end,
               provider = ' ' .. codicons.git.pending,

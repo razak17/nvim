@@ -232,12 +232,7 @@ function M.git_pull()
   ar.run_command('git', { 'pull', '--rebase', '--autostash' }, ar.reload_all)
 end
 
-function M.git_push()
-  ar.run_command('git', { 'push' }, function()
-    vim.api.nvim_exec_autocmds('User', { pattern = 'GitPushComplete' })
-    ar.reload_all()
-  end)
-end
+function M.git_push() ar.run_command('git', { 'push' }, ar.reload_all) end
 
 function M.fetch_origin() ar.run_command('git', { 'fetch', 'origin' }) end
 
