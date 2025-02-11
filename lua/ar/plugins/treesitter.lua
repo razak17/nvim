@@ -1,6 +1,6 @@
 local highlight = ar.highlight
 local minimal = ar.plugins.minimal
-local ts_enabled = ar.treesitter.enable and ar.is_available('nvim-treesitter')
+local ts_enabled = ar.treesitter.enable
 
 return {
   {

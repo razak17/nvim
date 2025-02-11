@@ -6,12 +6,12 @@ local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 return {
   {
     'ton/vim-bufsurf',
-    cond = not minimal,
+    cond = not minimal and not ar.plugin_disabled('vim-bufsurf'),
     keys = { '[b', ']b' },
   },
   {
     'razak17/cybu.nvim',
-    cond = not minimal,
+    cond = not minimal and not ar.plugin_disabled('cybu.nvim'),
     event = { 'BufRead', 'BufNewFile' },
     opts = {
       position = { relative_to = 'win', anchor = 'topright' },
@@ -22,7 +22,7 @@ return {
   },
   {
     'rachartier/tiny-buffers-switcher.nvim',
-    cond = not minimal,
+    cond = not minimal and not ar.plugin_disabled('tiny-buffers-switcher.nvim'),
     -- stylua: ignore
     keys = {
       { '<localleader>bb', ':lua require("tiny-buffers-switcher").switcher()<CR>', desc = 'buffer switch' },
@@ -31,7 +31,7 @@ return {
   },
   {
     'jlanzarotta/bufexplorer',
-    cond = not minimal,
+    cond = not minimal and not ar.plugin_disabled('bufexplorer'),
     config = function() vim.g.bufExplorerShowRelativePath = 1 end,
     keys = {
       { '<localleader>be', '<cmd>BufExplorer<cr>', desc = 'bufexplorer: open' },
@@ -39,6 +39,7 @@ return {
   },
   {
     'kazhala/close-buffers.nvim',
+    cond = ar.plugin_disabled('close-buffers.nvim'),
     cmd = { 'BDelete', 'BWipeout' },
     keys = {
       { '<leader>qb', '<Cmd>BDelete this<CR>', desc = 'buffer delete' },
@@ -47,7 +48,9 @@ return {
   },
   {
     'sathishmanohar/quick-buffer-jump',
-    cond = not minimal and niceties,
+    cond = not minimal and niceties and not ar.plugin_disabled(
+      'quick-buffer-jump'
+    ),
     cmd = { 'QuickBufferJump' },
     -- stylua: ignore
     keys = { { '<M-u>', '<Cmd>QuickBufferJump<CR>', desc = 'quick buffer jump' } },
@@ -55,7 +58,7 @@ return {
   },
   {
     'razak17/arena.nvim',
-    cond = false,
+    cond = not ar.plugin_disabled('arena.nvim') and false,
     cmd = { 'ArenaToggle', 'ArenaOpen', 'ArenaClose' },
     keys = { { '<M-space>', '<Cmd>ArenaToggle<CR>', desc = 'arena: toggle' } },
     opts = {
@@ -74,6 +77,7 @@ return {
   },
   {
     'Pheon-Dev/buffalo-nvim',
+    cond = not ar.plugin_disabled('buffalo-nvim'),
     -- stylua: ignore
     keys = {
       { '<M-y>', '<Cmd>lua require("buffalo.ui").toggle_buf_menu()<CR>', desc = 'buffalo: toggle' },
@@ -113,7 +117,9 @@ return {
   },
   {
     'stevearc/stickybuf.nvim',
-    cond = not minimal and niceties,
+    cond = not minimal and niceties and not ar.plugin_disabled(
+      'stickybuf.nvim'
+    ),
     cmd = { 'PinBuffer', 'PinBuftype', 'PinFiletype', 'Unpin' },
     config = function()
       require('stickybuf').setup({
@@ -129,35 +135,6 @@ return {
           return require('stickybuf').should_auto_pin(bufnr)
         end,
       })
-    end,
-  },
-  {
-    'razak17/buffer_manager.nvim',
-    cond = false,
-    -- stylua: ignore
-    keys = {
-      { '<M-Space>', '<Cmd>lua require("buffer_manager.ui").toggle_quick_menu()<CR>', desc = 'buffer manager: toggle' },
-    },
-    config = function()
-      require('buffer_manager').setup({
-        highlight = 'Normal',
-        select_menu_item_commands = {
-          v = { key = '<C-v>', command = 'vsplit' },
-          h = { key = '<C-h>', command = 'split' },
-        },
-        borderchars = ui.border.common,
-      })
-      local bmui = require('buffer_manager.ui')
-      local keys = '1234'
-      for i = 1, #keys do
-        local key = keys:sub(i, i)
-        map(
-          'n',
-          fmt('<leader>%s', key),
-          function() bmui.nav_file(i) end,
-          { noremap = true, desc = 'buffer ' .. key }
-        )
-      end
     end,
   },
   --------------------------------------------------------------------------------
@@ -207,6 +184,35 @@ return {
           },
         },
       })
+    end,
+  },
+  {
+    'razak17/buffer_manager.nvim',
+    cond = false,
+    -- stylua: ignore
+    keys = {
+      { '<M-Space>', '<Cmd>lua require("buffer_manager.ui").toggle_quick_menu()<CR>', desc = 'buffer manager: toggle' },
+    },
+    config = function()
+      require('buffer_manager').setup({
+        highlight = 'Normal',
+        select_menu_item_commands = {
+          v = { key = '<C-v>', command = 'vsplit' },
+          h = { key = '<C-h>', command = 'split' },
+        },
+        borderchars = ui.border.common,
+      })
+      local bmui = require('buffer_manager.ui')
+      local keys = '1234'
+      for i = 1, #keys do
+        local key = keys:sub(i, i)
+        map(
+          'n',
+          fmt('<leader>%s', key),
+          function() bmui.nav_file(i) end,
+          { noremap = true, desc = 'buffer ' .. key }
+        )
+      end
     end,
   },
 }
