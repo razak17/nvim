@@ -295,6 +295,7 @@ function ar.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
 function ar.reload_all()
   cmd('checktime')
   cmd('Gitsigns refresh')
+  cmd('redrawstatus')
 end
 
 --- Run a command
