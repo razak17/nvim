@@ -2,11 +2,6 @@ local minimal = ar.plugins.minimal
 
 return {
   {
-    'yutkat/wb-only-current-line.nvim',
-    cond = not minimal,
-    event = 'VeryLazy',
-  },
-  {
     'razak17/accelerated-jk.nvim',
     cond = not ar.plugin_disabled('accelerated-jk.nvim'),
     event = 'VeryLazy',

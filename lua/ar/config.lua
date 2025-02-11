@@ -336,6 +336,7 @@ local config = {
       smart_tilde = { enable = true },
       sticky_note = { enable = false },
       sticky_yank = { enable = true },
+      wb_current_line = { enable = true },
     },
     main = {
       autocommands = { enable = true },
