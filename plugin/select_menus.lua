@@ -34,6 +34,7 @@ map(
 if ar.is_git_repo() or ar.is_git_env() then
   ar.add_to_select_menu('git', {
     ['Stash Changes'] = "lua require'ar.select_menus.git'.do_stash()",
+    ['Push Commits'] = "lua require'ar.select_menus.git'.git_push()",
     ['Pull Latest Changes'] = "lua require'ar.select_menus.git'.git_pull()",
     ['Fetch Orign'] = "lua require'ar.select_menus.git'.fetch_origin()",
     ['Abort Merge'] = "lua require'ar.select_menus.git'.abort_merge()",
