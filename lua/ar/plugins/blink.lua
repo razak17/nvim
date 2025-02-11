@@ -19,6 +19,7 @@ return {
           'TelescopePrompt',
           'minifiles',
           'snacks_picker_input',
+          'neo-tree-popup',
         }
         local filetype = vim.bo[0].filetype
         return not vim.tbl_contains(ignored_filetypes, filetype)
