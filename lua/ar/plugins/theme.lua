@@ -252,6 +252,12 @@ return {
     priority = get_priority('jellybeans'),
     event = get_event('jellybeans'),
   },
+  {
+    'rjshkhr/shadow.nvim',
+    cond = get_cond('shadow'),
+    priority = get_priority('shadow'),
+    event = get_event('shadow'),
+  },
   -- }}}
   --------------------------------------------------------------------------------
   -- Disabled
