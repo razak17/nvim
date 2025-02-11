@@ -216,6 +216,7 @@ local namespace = {
         'sorbet.vim',
         'torte.vim',
         'unokai.vim',
+        'vim.vim',
         'wildcharm.vim',
         'zaibatsu.vim',
         'zellner.vim',
@@ -280,7 +281,7 @@ local config = {
     ---@type ArCompletionIcons
     icons = 'lspkind',
     ---@type ArCompletion
-    variant = 'cmp',
+    variant = 'blink',
   },
   colorscheme = 'onedark',
   ---@type ArDashboard

@@ -15,15 +15,13 @@ return {
     },
     opts = {
       enabled = function()
+        local ignored_filetypes = {
+          'TelescopePrompt',
+          'minifiles',
+          'snacks_picker_input',
+        }
         local filetype = vim.bo[0].filetype
-        if
-          filetype == 'TelescopePrompt'
-          or filetype == 'minifiles'
-          or filetype == 'snacks_picker_input'
-        then
-          return false
-        end
-        return true
+        return not vim.tbl_contains(ignored_filetypes, filetype)
       end,
       appearance = {
         use_nvim_cmp_as_default = true,
@@ -33,9 +31,7 @@ return {
       completion = {
         accept = {
           -- experimental auto-brackets support
-          auto_brackets = {
-            enabled = true,
-          },
+          auto_brackets = { enabled = true },
         },
         menu = {
           border = border,
@@ -70,6 +66,7 @@ return {
           auto_show_delay_ms = 200,
           window = { border = border },
         },
+        ghost_text = { enabled = false },
         list = {
           selection = {
             preselect = function(ctx) return ctx.mode ~= 'cmdline' end,
@@ -125,23 +122,6 @@ return {
           path = { name = '[PATH]' },
           buffer = { name = '[BUF]' },
           cmdline = { name = '[CMD]' },
-          copilot = {
-            enabled = ar.ai.enable,
-            name = '[CPL]',
-            module = 'blink-cmp-copilot',
-            score_offset = 100,
-            async = true,
-            transform_items = function(_, items)
-              local CompletionItemKind =
-                require('blink.cmp.types').CompletionItemKind
-              local kind_idx = #CompletionItemKind + 1
-              CompletionItemKind[kind_idx] = 'Copilot'
-              for _, item in ipairs(items) do
-                item.kind = kind_idx
-              end
-              return items
-            end,
-          },
           snippets = {
             enabled = true,
             name = '[SNIP]',
@@ -183,18 +163,17 @@ return {
       },
       keymap = {
         preset = 'default',
-        ['<C-l>'] = { 'snippet_forward', 'fallback' },
-        ['<C-h>'] = { 'snippet_backward', 'fallback' },
         ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
         ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
         ['<CR>'] = { 'accept', 'fallback' },
+        ['<C-l>'] = { 'accept', 'fallback' },
+        ['<C-y>'] = { 'select_and_accept' },
         ['<C-space>'] = {
           'show',
           'show_documentation',
           'hide_documentation',
           'fallback',
         },
-        ['<C-y>'] = { 'select_and_accept' },
         ['<A-1>'] = {
           function(cmp) cmp.accept({ index = 1 }) end,
         },
@@ -272,6 +251,26 @@ return {
         Color = ui.icons.misc.block_alt, -- Use block instead of icon for color items to make swatches more usable
         Copilot = ui.codicons.misc.octoface,
       }, symbols)
+
+      if ar.ai.enable then
+        opts.sources.providers.copilot = {
+          name = '[CPL]',
+          module = 'blink-cmp-copilot',
+          score_offset = 100,
+          async = true,
+          transform_items = function(_, items)
+            local CompletionItemKind =
+              require('blink.cmp.types').CompletionItemKind
+            local kind_idx = #CompletionItemKind + 1
+            CompletionItemKind[kind_idx] = 'Copilot'
+            for _, item in ipairs(items) do
+              item.kind = kind_idx
+            end
+            return items
+          end,
+        }
+      end
+
       require('blink.cmp').setup(opts)
     end,
     dependencies = {
