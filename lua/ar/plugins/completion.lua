@@ -4,6 +4,7 @@ local border, lsp_hls, ellipsis =
   ui.current.border, ui.lsp.highlights, ui.icons.misc.ellipsis
 local minimal = ar.plugins.minimal
 local codicons = ui.codicons
+local is_cmp = ar_config.completion.variant == 'cmp'
 
 ar.completion.config = {
   format = {
@@ -58,7 +59,7 @@ return {
     -- 'hrsh7th/nvim-cmp',
     'iguanacucumber/magazine.nvim',
     name = 'nvim-cmp',
-    cond = ar.completion.enable and ar_config.completion.variant == 'cmp',
+    cond = ar.completion.enable and is_cmp,
     event = 'InsertEnter',
     opts = function()
       local snippet = vim.snippet
@@ -513,22 +514,22 @@ return {
   },
   {
     'f3fora/cmp-spell',
-    cond = ar.completion.enable and not minimal,
+    cond = ar.completion.enable and not minimal and is_cmp,
     ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' },
   },
   {
     'rcarriga/cmp-dap',
-    cond = ar.completion.enable and not minimal,
+    cond = ar.completion.enable and not minimal and is_cmp,
     ft = { 'dap-repl', 'dapui_watches' },
   },
   {
     'amarakon/nvim-cmp-buffer-lines',
-    cond = ar.completion.enable,
+    cond = ar.completion.enable and not minimal and is_cmp,
     ft = { 'c', 'cpp' },
   },
   {
     'jsongerber/nvim-px-to-rem',
-    cond = ar.completion.enable and not minimal,
+    cond = ar.completion.enable and not minimal and is_cmp,
     ft = { 'css', 'scss' },
     opts = { show_virtual_text = true },
   },
