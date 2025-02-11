@@ -160,13 +160,12 @@ return {
                   fg = GitStatus.behind == 0 and fg or 'pale_red',
                 }
               end,
-              -- on_click = {
-              --   callback = function()
-              --   if GitStatus == nil then return end
-              --     if GitStatus.behind > 0 then statusline.git_pull() end
-              --   end,
-              --   name = 'git_pull',
-              -- },
+              on_click = {
+                callback = function()
+                  if GitStatus.behind > 0 then statusline.git_pull() end
+                end,
+                name = 'git_pull',
+              },
             },
             {
               provider = function()
@@ -177,13 +176,12 @@ return {
                   fg = GitStatus.ahead == 0 and fg or 'yellowgreen',
                 }
               end,
-              -- on_click = {
-              --   callback = function()
-              --   if GitStatus == nil then return end
-              --     if _G.GitStatus.ahead > 0 then statusline.git_push() end
-              --   end,
-              --   name = 'git_push',
-              -- },
+              on_click = {
+                callback = function()
+                  if _G.GitStatus.ahead > 0 then statusline.git_push() end
+                end,
+                name = 'git_push',
+              },
             },
           },
         },
