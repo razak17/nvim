@@ -32,6 +32,7 @@ local force_inactive_filetypes = {
 local function setup_colors()
   local P = {
     bg_dark = ar.highlight.get('Pmenu', 'bg'),
+    fg = ar.highlight.get('Normal', 'fg'),
     blue = ar.highlight.get('DiagnosticInfo', 'bg'),
     dark_orange = ar.highlight.get('DiagnosticWarn', 'bg'),
     error_red = ar.highlight.get('DiagnosticError', 'bg'),
