@@ -210,6 +210,12 @@ return {
     priority = get_priority('morta'),
     event = get_event('morta'),
   },
+  {
+    'rjshkhr/shadow.nvim',
+    cond = get_cond('shadow'),
+    priority = get_priority('shadow'),
+    event = get_event('shadow'),
+  },
   ------------------------------------------------------------------------------
   -- Clown show
   {
@@ -251,12 +257,6 @@ return {
     cond = get_cond('jellybeans'),
     priority = get_priority('jellybeans'),
     event = get_event('jellybeans'),
-  },
-  {
-    'rjshkhr/shadow.nvim',
-    cond = get_cond('shadow'),
-    priority = get_priority('shadow'),
-    event = get_event('shadow'),
   },
   -- }}}
   --------------------------------------------------------------------------------

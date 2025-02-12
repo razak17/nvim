@@ -66,46 +66,6 @@ return {
     config = function() require('quick_buffer_jump') end,
   },
   {
-    'Pheon-Dev/buffalo-nvim',
-    cond = not ar.plugin_disabled('buffalo-nvim'),
-    -- stylua: ignore
-    keys = {
-      { '<M-y>', '<Cmd>lua require("buffalo.ui").toggle_buf_menu()<CR>', desc = 'buffalo: toggle' },
-    },
-    opts = {
-      borderchars = ui.border.common,
-      buffer_commands = {
-        edit = { key = '<CR>', command = 'edit' },
-        pick = {
-          key = 'w',
-          command = function()
-            local idx = vim.fn.line('.')
-            ar.open_with_window_picker(idx + 1)
-          end,
-        },
-        split = { key = 's', command = 'split' },
-        vsplit = { key = 'v', command = 'vsplit' },
-      },
-      go_to = { enabled = false },
-      filter = {
-        enabled = true,
-        filter_tabs = '<M-t>',
-        filter_buffers = '<M-z>',
-      },
-      ui = {
-        width = 100,
-      },
-    },
-    config = function(_, _opts)
-      require('buffalo').setup(_opts)
-      local opts = { noremap = true }
-      local bui = require('buffalo.ui')
-      map('n', '<s-l>', bui.nav_buf_next, opts)
-      map('n', '<s-h>', bui.nav_buf_prev, opts)
-      map({ 't', 'n' }, '<M-\\>', bui.toggle_tab_menu, opts)
-    end,
-  },
-  {
     'stevearc/stickybuf.nvim',
     cond = not minimal and niceties and not ar.plugin_disabled(
       'stickybuf.nvim'
@@ -130,16 +90,6 @@ return {
   --------------------------------------------------------------------------------
   -- Disabled
   --------------------------------------------------------------------------------
-  {
-    'chrisgrieser/nvim-early-retirement',
-    enabled = false,
-    cond = not minimal and false,
-    event = 'VeryLazy',
-    opts = {
-      minimumBufferNum = 4,
-      notificationOnAutoClose = true,
-    },
-  },
   {
     'leath-dub/snipe.nvim',
     cond = not minimal and false,
