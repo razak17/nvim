@@ -57,25 +57,6 @@ return {
     config = function() require('quick_buffer_jump') end,
   },
   {
-    'razak17/arena.nvim',
-    cond = not ar.plugin_disabled('arena.nvim') and false,
-    cmd = { 'ArenaToggle', 'ArenaOpen', 'ArenaClose' },
-    keys = { { '<M-space>', '<Cmd>ArenaToggle<CR>', desc = 'arena: toggle' } },
-    opts = {
-      per_project = true,
-      max_items = 50,
-      window = { border = 'single' },
-      keybinds = {
-        ['w'] = function(win)
-          local current = win:current()
-          local info = vim.fn.getbufinfo(current.bufnr)[1]
-          ar.open_with_window_picker(current.bufnr)
-          fn.cursor(info.lnum, 0)
-        end,
-      },
-    },
-  },
-  {
     'Pheon-Dev/buffalo-nvim',
     cond = not ar.plugin_disabled('buffalo-nvim'),
     -- stylua: ignore
@@ -213,6 +194,65 @@ return {
           { noremap = true, desc = 'buffer ' .. key }
         )
       end
+    end,
+  },
+  {
+    'razak17/arena.nvim',
+    cond = not ar.plugin_disabled('arena.nvim') and false,
+    cmd = { 'ArenaToggle', 'ArenaOpen', 'ArenaClose' },
+    keys = { { '<M-space>', '<Cmd>ArenaToggle<CR>', desc = 'arena: toggle' } },
+    opts = {
+      per_project = true,
+      max_items = 50,
+      window = { border = 'single' },
+      keybinds = {
+        ['w'] = function(win)
+          local current = win:current()
+          local info = vim.fn.getbufinfo(current.bufnr)[1]
+          ar.open_with_window_picker(current.bufnr)
+          fn.cursor(info.lnum, 0)
+        end,
+      },
+    },
+  },
+  {
+    'Pheon-Dev/buffalo-nvim',
+    cond = not ar.plugin_disabled('buffalo-nvim') and false,
+    -- stylua: ignore
+    keys = {
+      { '<M-y>', '<Cmd>lua require("buffalo.ui").toggle_buf_menu()<CR>', desc = 'buffalo: toggle' },
+    },
+    opts = {
+      borderchars = ui.border.common,
+      buffer_commands = {
+        edit = { key = '<CR>', command = 'edit' },
+        pick = {
+          key = 'w',
+          command = function()
+            local idx = vim.fn.line('.')
+            ar.open_with_window_picker(idx + 1)
+          end,
+        },
+        split = { key = 's', command = 'split' },
+        vsplit = { key = 'v', command = 'vsplit' },
+      },
+      go_to = { enabled = false },
+      filter = {
+        enabled = true,
+        filter_tabs = '<M-t>',
+        filter_buffers = '<M-z>',
+      },
+      ui = {
+        width = 100,
+      },
+    },
+    config = function(_, _opts)
+      require('buffalo').setup(_opts)
+      local opts = { noremap = true }
+      local bui = require('buffalo.ui')
+      map('n', '<s-l>', bui.nav_buf_next, opts)
+      map('n', '<s-h>', bui.nav_buf_prev, opts)
+      map({ 't', 'n' }, '<M-\\>', bui.toggle_tab_menu, opts)
     end,
   },
 }
