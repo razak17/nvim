@@ -10,6 +10,15 @@ return {
     keys = { '[b', ']b' },
   },
   {
+    'chrisgrieser/nvim-early-retirement',
+    cond = not minimal,
+    event = 'VeryLazy',
+    opts = {
+      minimumBufferNum = 4,
+      notificationOnAutoClose = true,
+    },
+  },
+  {
     'razak17/cybu.nvim',
     cond = not minimal and not ar.plugin_disabled('cybu.nvim'),
     event = { 'BufRead', 'BufNewFile' },
