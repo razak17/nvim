@@ -4,7 +4,6 @@ if not ar or ar.none or not enabled then return end
 
 -- https://github.com/hoofcushion/hc-nvim/blob/master/lua/hc-nvim/config/init.lua?plain=1#L85
 ar.bigfile = {
-  enable = true,
   size_kb = 1024,
   size_bytes = 1024 ^ 2,
   lines = 1024 * 10,
@@ -37,28 +36,27 @@ vim.filetype.add({
   pattern = {
     ['.*'] = {
       function(path, buf)
-        return vim.bo[buf]
-            and vim.bo[buf].filetype ~= 'bigfile'
-            and path
-            and vim.fn.getfsize(path) > ar.bigfile:as('B')
-            and 'bigfile'
-          or nil
+        local cond = vim.bo[buf] and vim.bo[buf].filetype ~= 'bigfile' and path
+        local lines = vim.api.nvim_buf_line_count(buf)
+        local size = vim.fn.getfsize(path)
+        if cond and lines > ar.bigfile:as('l') then return 'bigfile' end
+        if cond and size > ar.bigfile:as('B') then return 'bigfile' end
+        return nil
       end,
     },
   },
 })
 
 vim.api.nvim_create_autocmd({ 'FileType' }, {
-  group = vim.api.nvim_create_augroup('snacks_bigfile', { clear = true }),
+  group = vim.api.nvim_create_augroup('big_file', { clear = true }),
   pattern = 'bigfile',
   callback = function(ev)
-    if not ar.bigfile.enable then return end
-    local wo = vim.wo
+    if not enabled then return end
     vim.api.nvim_buf_call(ev.buf, function()
       vim.cmd([[NoMatchParen]])
-      wo.foldmethod = 'manual'
-      wo.statuscolumn = ''
-      wo.conceallevel = 0
+      vim.wo.foldmethod = 'manual'
+      vim.wo.statuscolumn = ''
+      vim.wo.conceallevel = 0
       vim.schedule(
         function()
           vim.bo[ev.buf].syntax = vim.filetype.match({ buf = ev.buf }) or ''
