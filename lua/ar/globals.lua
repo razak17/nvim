@@ -207,20 +207,6 @@ function ar.memoize(f)
   end
 end
 
---- Get plugins spec
-function ar.plugins_spec()
-  local plugins_path = fn.stdpath('config') .. '/lua/ar/plugins'
-  local plugins_list = vim.fs.find(function(name, _)
-    local filename = name:match('(.+)%.lua$')
-    return name:match('.*.lua$') and not ar.module_disabled(filename)
-  end, { path = plugins_path, limit = math.huge, type = 'file' })
-  return vim.iter(plugins_list):fold({}, function(acc, path)
-    local _, pos = path:find(plugins_path)
-    acc[#acc + 1] = { import = 'ar.plugins.' .. path:sub(pos + 2, #path - 4) }
-    return acc
-  end)
-end
-
 ---@param name string
 function ar.get_plugin(name)
   return require('lazy.core.config').spec.plugins[name]
