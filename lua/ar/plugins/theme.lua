@@ -258,6 +258,12 @@ return {
     priority = get_priority('jellybeans'),
     event = get_event('jellybeans'),
   },
+  {
+    'Skardyy/makurai-nvim',
+    cond = get_cond('makurai'),
+    priority = get_priority('makurai'),
+    event = get_event('makurai'),
+  },
   -- }}}
   --------------------------------------------------------------------------------
   -- Disabled
