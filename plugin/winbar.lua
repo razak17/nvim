@@ -11,7 +11,7 @@ end
 
 local config = {
   show_hostname = false,
-  show_buffer_count = false,
+  show_buffer_count = true,
 }
 
 ar.ui.winbar = {}
@@ -52,11 +52,13 @@ function ar.ui.winbar.render()
   }, '')
 end
 
--- opt.winbar = ar.ui.winbar.render()
+-- vim.opt.winbar = [[%!v:lua.ar.ui.winbar.render()]]
 
 ar.augroup('Winbar', {
   event = { 'BufEnter', 'WinEnter', 'FileType' },
   command = function(args)
+    local ft = bo[args.buf].ft
+    if not ft or ft == '' then return end
     local d = decor.get({
       ft = bo[args.buf].ft,
       bt = bo[args.buf].bt,
