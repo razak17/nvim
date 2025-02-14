@@ -191,6 +191,13 @@ return {
         prompt = fmt(' %s ', ar.ui.icons.misc.chevron_right),
         sources = {
           files = { hidden = true, ignored = true },
+          registers = {
+            confirm = {
+              action = { 'yank', 'close' },
+              source = 'registers',
+              notify = false,
+            },
+          },
         },
         debug = { scores = false },
         layout = {
