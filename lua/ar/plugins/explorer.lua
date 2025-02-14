@@ -18,16 +18,28 @@ end
 
 local function find_or_search_in_dir(cwd, find_or_search)
   if not ar.plugin_available('telescope.nvim') then return end
+  local snacks_ok, snacks = pcall(require, 'snacks')
+  local telescope_ok, telescope = pcall(require, 'telesope')
   if find_or_search == 'find' then
-    require('telescope.builtin').find_files({
-      cwd = cwd,
-      hidden = true,
-    })
+    if snacks_ok and ar_config.picker.variant == 'snacks' then
+      snacks.picker.files({ cwd = cwd })
+    else
+      if not telescope_ok then return end
+      require('telescope.builtin').find_files({
+        cwd = cwd,
+        hidden = true,
+      })
+    end
   elseif find_or_search == 'search' then
-    require('telescope.builtin').live_grep({
-      cwd = cwd,
-      hidden = true,
-    })
+    if snacks_ok and ar_config.picker.variant == 'snacks' then
+      snacks.picker.grep({ cwd = cwd })
+    else
+      if not telescope_ok then return end
+      require('telescope.builtin').live_grep({
+        cwd = cwd,
+        hidden = true,
+      })
+    end
   end
 end
 
