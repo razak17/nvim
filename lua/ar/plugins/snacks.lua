@@ -4,6 +4,7 @@ local border = ar.ui.current.border
 local codicons = ar.ui.codicons
 local diag_icons = ar.ui.codicons.lsp
 
+---@param source string
 ---@param opts? table
 ---@return function
 local function p(source, opts)

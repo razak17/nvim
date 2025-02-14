@@ -13,6 +13,7 @@ vim.filetype.add({
     ['.env'] = 'config',
   },
   pattern = {
+    -- ['.*%.blade%.php'] = 'php',
     ['.*%.theme'] = 'conf',
     ['.*%.service'] = 'systemd',
     ['.*%.gradle'] = 'groovy',
