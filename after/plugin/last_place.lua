@@ -4,8 +4,9 @@ if not ar or ar.none or not enabled then return end
 
 local fn = vim.fn
 -- adapted from https://github.com/ethanholz/nvim-lastplace/blob/main/lua/nvim-lastplace/init.lua
-local ignore_buftype = { 'quickfix', 'nofile', 'help', 'terminal' }
-local ignore_filetype = { 'gitcommit', 'gitrebase', 'svn', 'hgcommit' }
+local ignore_buftype = { 'quickfix', 'nofile', 'help', 'terminal', 'prompt' }
+local ignore_filetype =
+  { 'gitcommit', 'gitrebase', 'svn', 'hgcommit', 'snacks_input' }
 
 ar.augroup('LastPlace', {
   event = { 'BufWinEnter', 'FileType' },
