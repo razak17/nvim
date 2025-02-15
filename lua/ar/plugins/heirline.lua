@@ -450,7 +450,7 @@ return {
           condition = function()
             return conditions.lsp_attached and ar_config.lsp.null_ls.enable
           end,
-          update = { 'LspAttach', 'LspDetach', 'WinEnter' },
+          update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
           provider = function() return ' ' .. statusline.lsp_client_names() end,
           hl = { bold = true },
           on_click = {
@@ -462,7 +462,7 @@ return {
         },
         -- LSP Clients (conform,nvim-lint)
         {
-          update = { 'LspAttach', 'LspDetach', 'WinEnter' },
+          update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
           condition = function()
             return conditions.lsp_attached and not ar_config.lsp.null_ls.enable
           end,
@@ -480,7 +480,7 @@ return {
             self.formatters = statusline.get_formatters(curbuf)
           end,
           {
-            update = { 'LspAttach', 'LspDetach', 'WinEnter' },
+            update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
             init = function(self)
               if self.active then
                 local lsp_servers = vim.tbl_map(
@@ -521,13 +521,13 @@ return {
             },
           },
           {
-            update = { 'LspAttach', 'LspDetach', 'WinEnter' },
+            update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
             condition = function(self) return not ar.falsy(self.linters) end,
             provider = function(self) return ' ' .. self.linters end,
             hl = { bold = true },
           },
           {
-            update = { 'LspAttach', 'LspDetach', 'WinEnter' },
+            update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
             condition = function(self) return not ar.falsy(self.formatters) end,
             provider = function(self) return ' ' .. self.formatters end,
             hl = { bold = true },
