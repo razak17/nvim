@@ -30,6 +30,15 @@ return {
         nerd_font_variant = 'mono',
       },
       signature = { window = { border = border } },
+      cmdline = {
+        enabled = true,
+        sources = function()
+          local type = vim.fn.getcmdtype()
+          if type == '/' or type == '?' then return { 'buffer' } end
+          if type == ':' then return { 'cmdline' } end
+          return {}
+        end,
+      },
       completion = {
         accept = {
           -- experimental auto-brackets support
@@ -156,12 +165,6 @@ return {
             name = '[PX2REM]',
           },
         },
-        cmdline = function()
-          local type = vim.fn.getcmdtype()
-          if type == '/' or type == '?' then return { 'buffer' } end
-          if type == ':' then return { 'cmdline' } end
-          return {}
-        end,
       },
       keymap = {
         preset = 'default',
