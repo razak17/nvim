@@ -2,7 +2,7 @@ return {
   { 'jsborjesson/vim-uppercase-sql', ft = { 'sql' } },
   {
     'kristijanhusak/vim-dadbod-ui',
-    init = function()
+    config = function()
       vim.g.whichkey_add_spec({ '<leader><leader>d', group = 'Dadbod' })
 
       local function open_db_common(db_name)
@@ -158,7 +158,6 @@ return {
     end,
     dependencies = {
       'tpope/vim-dadbod',
-      'kristijanhusak/vim-dadbod-completion',
       {
         'kristijanhusak/vim-dadbod-completion',
         ft = { 'sql', 'mysql', 'psql' },
