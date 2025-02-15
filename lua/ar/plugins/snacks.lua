@@ -168,6 +168,7 @@ return {
     opts = {
       styles = {
         git = { border = border },
+        input = { border = 'single' },
         lazygit = { border = border },
         notification = { border = 'single' },
         ['notification.history'] = { border = border },

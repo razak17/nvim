@@ -4,7 +4,7 @@ local minimal = ar.plugins.minimal
 return {
   'stevearc/dressing.nvim',
   event = 'VeryLazy',
-  cond = not minimal,
+  cond = not minimal and false,
   init = function()
     ---@diagnostic disable-next-line: duplicate-set-field
     vim.ui.select = function(...)
