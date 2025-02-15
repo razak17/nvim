@@ -1,6 +1,7 @@
 local fn, L = vim.fn, vim.log.levels
 
 local noice_disabled = ar.plugin_disabled('noice.nvim')
+local is_cmp = ar_config.completion.variant == 'cmp'
 
 return {
   'folke/noice.nvim',
@@ -52,22 +53,19 @@ return {
     },
     lsp = {
       documentation = {
-        enabled = ar_config.completion.variant == 'cmp',
+        enabled = is_cmp,
         opts = {
           border = { style = 'single' },
           position = { row = 2 },
         },
       },
       signature = {
-        enabled = ar_config.completion.variant == 'cmp',
+        enabled = true,
         opts = {
           position = { row = 2 },
         },
       },
-      hover = {
-        enabled = ar_config.completion.variant == 'cmp',
-        silent = true,
-      },
+      hover = { enabled = true, silent = true },
       progress = {
         enabled = ar_config.lsp.progress.enable
           and ar_config.lsp.progress.variant == 'noice'
@@ -77,7 +75,7 @@ return {
       override = {
         ['vim.lsp.util.convert_input_to_markdown_lines'] = false,
         ['vim.lsp.util.stylize_markdown'] = false,
-        ['cmp.entry.get_documentation'] = ar_config.completion.variant == 'cmp',
+        ['cmp.entry.get_documentation'] = is_cmp,
       },
     },
     views = {
