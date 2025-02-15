@@ -173,6 +173,7 @@ return {
       bigfile = { enabled = false },
       bufdelete = { enabled = false },
       dim = {},
+      image = {},
       quickfile = { enabled = true },
       notifier = {
         border = border,
