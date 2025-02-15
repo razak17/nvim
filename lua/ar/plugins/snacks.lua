@@ -3,6 +3,7 @@ local fmt = string.format
 local border = ar.ui.current.border
 local codicons = ar.ui.codicons
 local diag_icons = ar.ui.codicons.lsp
+local separators = ar.ui.icons.separators
 
 ---@param source string
 ---@param opts? table
@@ -171,11 +172,21 @@ return {
         notification = { border = 'single' },
         ['notification.history'] = { border = border },
       },
+      animate = { enabled = false },
       bigfile = { enabled = false },
       bufdelete = { enabled = true },
-      dim = {},
-      image = {},
-      quickfile = { enabled = true },
+      debug = { enabled = true },
+      dim = { enabled = true },
+      explorer = { enabled = true },
+      git = { enabled = true },
+      gitbrowse = { enabled = true },
+      image = { enabled = true },
+      indent = {
+        enabled = ar_config.ui.indentline.enable
+          and ar_config.ui.indentline.variant == 'snacks',
+        char = separators.left_thin_block,
+      },
+      input = {},
       notifier = {
         border = border,
         enabled = ar_config.notifier.enable
@@ -257,6 +268,7 @@ return {
       profiler = {
         pick = { picker = 'telescope' },
       },
+      quickfile = { enabled = true },
       statuscolumn = { enabled = false },
       terminal = {
         enabled = true,

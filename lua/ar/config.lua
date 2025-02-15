@@ -32,7 +32,7 @@ local env = vim.env
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
 ---@alias ArWhichDashboard 'alpha' | 'snacks'
 ---@alias ArWhichGx 'local' | 'plugin'
----@alias ArWhichIndentline 'mini.indentscope' | 'ibl'
+---@alias ArWhichIndentline 'mini.indentscope' | 'ibl' | 'snacks'
 ---@alias ArWhichLspProgress 'builtin' | 'noice' | 'snacks'
 ---@alias ArWhichLspVirtualLines 'builtin' | 'lsp_lines' | 'tiny-inline'
 ---@alias ArWhichLspVirtualText 'builtin' | 'lsp_lines' | 'tiny-inline'
