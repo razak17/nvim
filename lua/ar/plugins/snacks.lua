@@ -93,6 +93,7 @@ return {
         { '<leader>o/', function() Snacks.terminal() end, desc = 'snacks: toggle terminal' },
         { '<leader>ps', function() Snacks.profiler.scratch() end, desc = 'snacks: profiler scratch buffer' },
         { '<leader>pu', function() Snacks.profiler.toggle() end, desc = 'snacks: toggle profiler' },
+        { '<leader>qb', function() Snacks.bufdelete.delete() end, desc = 'snacks: delete buffer' },
         -- stylua: ignore end
       }
 
@@ -171,7 +172,7 @@ return {
         ['notification.history'] = { border = border },
       },
       bigfile = { enabled = false },
-      bufdelete = { enabled = false },
+      bufdelete = { enabled = true },
       dim = {},
       image = {},
       quickfile = { enabled = true },

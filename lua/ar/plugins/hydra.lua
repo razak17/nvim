@@ -73,7 +73,7 @@ return {
     local hint_opts = { position = 'bottom', border = border, type = 'window' }
 
     local splits = ar.reqcall('smart-splits')
-    local close_buffers = ar.reqcall('close_buffers')
+    local bufdelete = Snacks.bufdelete
     local textcase = ar.reqcall('textcase')
 
     local base_config = function(opts)
@@ -114,19 +114,8 @@ return {
         hint = { position = 'top' },
       }),
       heads = {
-        {
-          'a',
-          function()
-            close_buffers.delete({ type = 'all' })
-            vim.cmd([[redraw!]])
-          end,
-          { desc = 'close all' },
-        },
-        {
-          'd',
-          function() close_buffers.delete({ type = 'this' }) end,
-          { desc = 'delete buffer' },
-        },
+        { 'a', function() bufdelete.all() end, { desc = 'close all' } },
+        { 'd', function() bufdelete.delete() end, { desc = 'delete buffer' } },
         { 'H', '<Cmd>tabprev<CR>', { desc = 'prev tab' } },
         { 'l', '<Cmd>e #<CR>', { desc = 'last buffer' } },
         { 'L', '<Cmd>tabnext<CR>', { desc = 'next tab' } },
@@ -136,14 +125,7 @@ return {
           '<Plug>(buf-surf-forward)',
           { desc = 'next buffer (in history)' },
         },
-        {
-          'o',
-          function()
-            close_buffers.delete({ type = 'other' })
-            vim.cmd([[redraw!]])
-          end,
-          { desc = 'delete others' },
-        },
+        { 'o', function() bufdelete.other() end, { desc = 'delete others' } },
         { 'p', '<Plug>(CybuPrev)', { desc = 'prev buffer' } },
         { 'P', '<Plug>(buf-surf-back)', { desc = 'prev buffer (in history)' } },
         {

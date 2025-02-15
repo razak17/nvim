@@ -47,15 +47,6 @@ return {
     },
   },
   {
-    'kazhala/close-buffers.nvim',
-    cond = ar.plugin_disabled('close-buffers.nvim'),
-    cmd = { 'BDelete', 'BWipeout' },
-    keys = {
-      { '<leader>qb', '<Cmd>BDelete this<CR>', desc = 'buffer delete' },
-      -- { '<leader>x', '<Cmd>BDelete this<CR><Cmd>q<CR>', desc = 'close & exit' },
-    },
-  },
-  {
     'sathishmanohar/quick-buffer-jump',
     cond = not minimal and niceties and not ar.plugin_disabled(
       'quick-buffer-jump'
@@ -90,6 +81,15 @@ return {
   --------------------------------------------------------------------------------
   -- Disabled
   --------------------------------------------------------------------------------
+  {
+    'kazhala/close-buffers.nvim',
+    cond = false and ar.plugin_disabled('close-buffers.nvim'),
+    cmd = { 'BDelete', 'BWipeout' },
+    keys = {
+      { '<leader>qb', '<Cmd>BDelete this<CR>', desc = 'buffer delete' },
+      -- { '<leader>x', '<Cmd>BDelete this<CR><Cmd>q<CR>', desc = 'close & exit' },
+    },
+  },
   {
     'leath-dub/snipe.nvim',
     cond = not minimal and false,

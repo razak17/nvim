@@ -300,7 +300,7 @@ if not is_available('cybu.nvim') then
   nnoremap('gB', '<cmd>bprevious<CR>', { desc = 'previous buffer' })
   nnoremap('gP', '<cmd>bnext<CR>', { desc = 'next buffer' })
 end
-if not is_available('close-buffers.nvim') then
+if not is_available('snacks.nvim') then
   nnoremap('<leader>qb', ':bdel<CR>', { desc = 'delete buffer' })
 end
 if not is_available('neo-tree.nvim') then
