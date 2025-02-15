@@ -5,6 +5,174 @@ local codicons = ar.ui.codicons
 local diag_icons = ar.ui.codicons.lsp
 local separators = ar.ui.icons.separators
 
+local default_layout = {
+  layout = {
+    box = 'horizontal',
+    width = 0.8,
+    min_width = 120,
+    height = 0.8,
+    {
+      box = 'vertical',
+      border = 'single',
+      title = '{title} {live} {flags}',
+      { win = 'input', height = 1, border = 'bottom' },
+      { win = 'list', border = 'none' },
+    },
+    {
+      win = 'preview',
+      title = '{preview}',
+      border = 'single',
+      width = 0.6,
+    },
+  },
+}
+
+local telescope_layout = {
+  reverse = false,
+  layout = {
+    box = 'horizontal',
+    backdrop = false,
+    width = 0.8,
+    height = 0.9,
+    border = 'none',
+    {
+      box = 'vertical',
+      {
+        win = 'list',
+        title = ' Results ',
+        title_pos = 'center',
+        border = 'single',
+      },
+      {
+        win = 'input',
+        height = 1,
+        border = 'single',
+        title = '{title} {live} {flags}',
+        title_pos = 'center',
+      },
+    },
+    {
+      win = 'preview',
+      title = '{preview:Preview}',
+      width = 0.6,
+      border = 'single',
+      title_pos = 'center',
+    },
+  },
+}
+
+local picker_layouts = {
+  telescope = telescope_layout,
+  default = default_layout,
+}
+
+local dashboard = {
+  enabled = ar_config.dashboard.enable
+    and ar_config.dashboard.variant == 'snacks',
+  width = 60,
+  row = nil, -- dashboard position. nil for center
+  col = nil, -- dashboard position. nil for center
+  pane_gap = 4, -- empty columns between vertical panes
+  autokeys = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', -- autokey sequence
+  -- These settings are used by some built-in sections
+  preset = {
+    -- Defaults to a picker that supports `fzf-lua`, `telescope.nvim` and `mini.pick`
+    ---@type fun(cmd:string, opts:table)|nil
+    pick = nil,
+    -- Used by the `keys` section to show keymaps.
+    -- Set your custom keymaps here.
+    -- When using a function, the `items` argument are the default keymaps.
+    ---@type snacks.dashboard.Item[]
+    keys = {
+      {
+        icon = ' ',
+        key = 's',
+        desc = 'Restore Session',
+        section = 'session',
+      },
+      {
+        icon = '󰋇 ',
+        key = 'p',
+        desc = 'Pick Session',
+        action = '<Cmd>ListSessions<CR>',
+      },
+      {
+        icon = ' ',
+        key = 'r',
+        desc = 'Recent Files',
+        action = ":lua Snacks.dashboard.pick('oldfiles')",
+      },
+      {
+        icon = ' ',
+        key = 'f',
+        desc = 'Find File',
+        action = ":lua Snacks.dashboard.pick('files')",
+      },
+      {
+        icon = ' ',
+        key = 'w',
+        desc = 'Find Text',
+        action = ":lua Snacks.dashboard.pick('live_grep')",
+      },
+      -- {
+      --   icon = ' ',
+      --   key = 'n',
+      --   desc = 'New File',
+      --   action = ':ene | startinsert',
+      -- },
+      {
+        icon = ' ',
+        key = 'c',
+        desc = 'Config',
+        action = ":lua Snacks.dashboard.pick('files', {cwd = fn.stdpath('config')})",
+      },
+      {
+        icon = '󰒲 ',
+        key = 'l',
+        desc = 'Lazy',
+        action = ':Lazy',
+        enabled = package.loaded.lazy ~= nil,
+      },
+      { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
+    },
+    -- Used by the `header` section
+    header = [[
+███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
+████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
+██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
+██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
+██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
+╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝]],
+  },
+  formats = {
+    icon = function(item) return { item.icon, width = 2, hl = 'icon' } end,
+    footer = { '%s', align = 'center' },
+    header = { '%s', align = 'center' },
+    file = function(item, ctx)
+      local fname = fn.fnamemodify(item.file, ':~')
+      fname = ctx.width and #fname > ctx.width and fn.pathshorten(fname)
+        or fname
+      if #fname > ctx.width then
+        local dir = fn.fnamemodify(fname, ':h')
+        local file = fn.fnamemodify(fname, ':t')
+        if dir and file then
+          file = file:sub(-(ctx.width - #dir - 2))
+          fname = dir .. '/…' .. file
+        end
+      end
+      local dir, file = fname:match('^(.*)/(.+)$')
+      return dir and { { dir .. '/', hl = 'dir' }, { file, hl = 'file' } }
+        or { { fname, hl = 'file' } }
+    end,
+  },
+  -- item field formatters,
+  sections = {
+    { section = 'header' },
+    { section = 'keys', gap = 1, padding = 1 },
+    { section = 'startup' },
+  },
+}
+
 ---@param source string
 ---@param opts? table
 ---@return function
@@ -359,173 +527,8 @@ return {
       end
     end,
     config = function(_, opts)
-      opts.dashboard = {
-        enabled = ar_config.dashboard.enable
-          and ar_config.dashboard.variant == 'snacks',
-        width = 60,
-        row = nil, -- dashboard position. nil for center
-        col = nil, -- dashboard position. nil for center
-        pane_gap = 4, -- empty columns between vertical panes
-        autokeys = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', -- autokey sequence
-        -- These settings are used by some built-in sections
-        preset = {
-          -- Defaults to a picker that supports `fzf-lua`, `telescope.nvim` and `mini.pick`
-          ---@type fun(cmd:string, opts:table)|nil
-          pick = nil,
-          -- Used by the `keys` section to show keymaps.
-          -- Set your custom keymaps here.
-          -- When using a function, the `items` argument are the default keymaps.
-          ---@type snacks.dashboard.Item[]
-          keys = {
-            {
-              icon = ' ',
-              key = 's',
-              desc = 'Restore Session',
-              section = 'session',
-            },
-            {
-              icon = '󰋇 ',
-              key = 'p',
-              desc = 'Pick Session',
-              action = '<Cmd>ListSessions<CR>',
-            },
-            {
-              icon = ' ',
-              key = 'r',
-              desc = 'Recent Files',
-              action = ":lua Snacks.dashboard.pick('oldfiles')",
-            },
-            {
-              icon = ' ',
-              key = 'f',
-              desc = 'Find File',
-              action = ":lua Snacks.dashboard.pick('files')",
-            },
-            {
-              icon = ' ',
-              key = 'w',
-              desc = 'Find Text',
-              action = ":lua Snacks.dashboard.pick('live_grep')",
-            },
-            -- {
-            --   icon = ' ',
-            --   key = 'n',
-            --   desc = 'New File',
-            --   action = ':ene | startinsert',
-            -- },
-            {
-              icon = ' ',
-              key = 'c',
-              desc = 'Config',
-              action = ":lua Snacks.dashboard.pick('files', {cwd = fn.stdpath('config')})",
-            },
-            {
-              icon = '󰒲 ',
-              key = 'l',
-              desc = 'Lazy',
-              action = ':Lazy',
-              enabled = package.loaded.lazy ~= nil,
-            },
-            { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
-          },
-          -- Used by the `header` section
-          header = [[
-███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
-████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
-██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
-██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
-██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
-╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝]],
-        },
-        formats = {
-          icon = function(item) return { item.icon, width = 2, hl = 'icon' } end,
-          footer = { '%s', align = 'center' },
-          header = { '%s', align = 'center' },
-          file = function(item, ctx)
-            local fname = fn.fnamemodify(item.file, ':~')
-            fname = ctx.width and #fname > ctx.width and fn.pathshorten(fname)
-              or fname
-            if #fname > ctx.width then
-              local dir = fn.fnamemodify(fname, ':h')
-              local file = fn.fnamemodify(fname, ':t')
-              if dir and file then
-                file = file:sub(-(ctx.width - #dir - 2))
-                fname = dir .. '/…' .. file
-              end
-            end
-            local dir, file = fname:match('^(.*)/(.+)$')
-            return dir and { { dir .. '/', hl = 'dir' }, { file, hl = 'file' } }
-              or { { fname, hl = 'file' } }
-          end,
-        },
-        -- item field formatters,
-        sections = {
-          { section = 'header' },
-          { section = 'keys', gap = 1, padding = 1 },
-          { section = 'startup' },
-        },
-      }
-
-      local default_layout = {
-        layout = {
-          box = 'horizontal',
-          width = 0.8,
-          min_width = 120,
-          height = 0.8,
-          {
-            box = 'vertical',
-            border = 'single',
-            title = '{title} {live} {flags}',
-            { win = 'input', height = 1, border = 'bottom' },
-            { win = 'list', border = 'none' },
-          },
-          {
-            win = 'preview',
-            title = '{preview}',
-            border = 'single',
-            width = 0.6,
-          },
-        },
-      }
-
-      local telescope_layout = {
-        reverse = false,
-        layout = {
-          box = 'horizontal',
-          backdrop = false,
-          width = 0.8,
-          height = 0.9,
-          border = 'none',
-          {
-            box = 'vertical',
-            {
-              win = 'list',
-              title = ' Results ',
-              title_pos = 'center',
-              border = 'single',
-            },
-            {
-              win = 'input',
-              height = 1,
-              border = 'single',
-              title = '{title} {live} {flags}',
-              title_pos = 'center',
-            },
-          },
-          {
-            win = 'preview',
-            title = '{preview:Preview}',
-            width = 0.6,
-            border = 'single',
-            title_pos = 'center',
-          },
-        },
-      }
-
-      opts.picker.layouts = {
-        telescope = telescope_layout,
-        default = default_layout,
-      }
+      opts.dashboard = dashboard
+      opts.picker.layouts = picker_layouts
 
       local notify = vim.notify
       require('snacks').setup(opts)
