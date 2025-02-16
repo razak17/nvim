@@ -339,7 +339,12 @@ return {
         input = { border = 'single' },
         lazygit = { border = border },
         notification = { border = 'single' },
-        ['notification.history'] = { border = border },
+        notification_history = {
+          border = border,
+          wo = {
+            wrap = true,
+          },
+        },
       },
       animate = { enabled = false },
       bigfile = { enabled = false },
