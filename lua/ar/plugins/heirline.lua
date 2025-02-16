@@ -930,9 +930,7 @@ return {
         end,
       }, {
         event = { 'User' },
-        pattern = {
-          'Neogit*',
-        },
+        pattern = { 'Neogit*' },
         command = function()
           local timer = vim.loop.new_timer()
           timer:start(0, 120000, function() statusline.git_remote_sync() end)
