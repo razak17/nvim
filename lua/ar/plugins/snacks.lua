@@ -342,6 +342,7 @@ return {
         notification_history = {
           border = border,
           wo = {
+            winblend = ar_config.ui.transparent.enable and 0 or 5,
             wrap = true,
           },
         },
