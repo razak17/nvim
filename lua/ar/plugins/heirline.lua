@@ -147,7 +147,7 @@ return {
           },
           {
             condition = function() return GitStatus ~= nil end,
-            update = { 'User', pattern = 'GitStatusChanged' },
+            update = { 'WinEnter', 'BufEnter', 'TextChanged' },
             {
               condition = function() return GitStatus.status == 'pending' end,
               provider = ' ' .. codicons.git.pending,
