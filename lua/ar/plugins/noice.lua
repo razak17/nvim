@@ -47,10 +47,7 @@ return {
       view = 'mini', -- minimise pattern not found messages
     },
     popupmenu = { backend = 'nui' },
-    notify = {
-      enabled = ar_config.notifier.variant == 'nvim-notify',
-      view = 'notify',
-    },
+    notify = { enabled = true, view = 'notify' },
     lsp = {
       documentation = {
         enabled = is_cmp,
