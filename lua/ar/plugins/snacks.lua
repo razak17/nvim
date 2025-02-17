@@ -355,7 +355,16 @@ return {
       explorer = { enabled = true },
       git = { enabled = true },
       gitbrowse = { enabled = true },
-      image = { enabled = true },
+      image = {
+        enabled = true,
+        doc = {
+          inline = false,
+          float = true,
+          -- max_width = 60,
+          max_width = 60,
+          max_height = 30,
+        },
+      },
       indent = {
         enabled = ar_config.ui.indentline.enable
           and ar_config.ui.indentline.variant == 'snacks',
