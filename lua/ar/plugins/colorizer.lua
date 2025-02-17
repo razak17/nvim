@@ -74,6 +74,7 @@ return {
   },
   {
     'eero-lehtinen/oklch-color-picker.nvim',
+    cond = not minimal,
     init = function()
       ar.add_to_select_menu('toggle', {
         ['Toggle Color Picker'] = "lua require('oklch-color-picker').pick_under_cursor()",
