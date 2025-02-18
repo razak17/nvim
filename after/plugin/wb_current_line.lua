@@ -37,7 +37,7 @@ local function set_keymap(mode, key, back_key, bufnr)
   )
 end
 
-ar.augroup('SmartClose', {
+ar.augroup('wbCurrentLine', {
   event = { 'FileType' },
   command = function(args)
     if vim.tbl_contains(ignored_filetypes, vim.bo.filetype) then return end
