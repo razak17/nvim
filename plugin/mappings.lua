@@ -506,11 +506,10 @@ nnoremap('<leader>ui', vim.show_pos, { desc = 'inspect pos' })
 nnoremap('<leader>uI', '<cmd>Inspect<CR>', { desc = 'inspect tree' })
 --------------------------------------------------------------------------------
 -- Inspect treesitter tree
-nnoremap(
-  '<leader>ut',
-  function() vim.treesitter.inspect_tree({ command = 'botright 60vnew' }) end,
-  { desc = 'inspect tree' }
-)
+nnoremap('<leader>ut', function()
+  vim.treesitter.inspect_tree({ command = 'botright 60vnew' })
+  vim.api.nvim_input('I')
+end, { desc = 'inspect tree' })
 --------------------------------------------------------------------------------
 -- Conceal Level & Cursor
 nnoremap(
