@@ -364,6 +364,7 @@ return {
             wrap = true,
           },
         },
+        snacks_image = { relative = 'editor', col = -1 },
       },
       animate = { enabled = false },
       bigfile = { enabled = false },
