@@ -121,7 +121,8 @@ return {
           'Directory',
           'r',
           '  Restore session',
-          '<Cmd>SessionLoad<CR>'
+          -- '<Cmd>SessionLoad<CR>'
+          "<Cmd>lua require('persistence').load({ last = true })<CR>"
         ),
         button('Todo', 's', '󰋇  Pick a session', '<Cmd>ListSessions<CR>'),
         button(

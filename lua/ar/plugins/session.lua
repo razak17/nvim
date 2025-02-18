@@ -1,19 +1,19 @@
 return {
   {
     'folke/persistence.nvim',
-    cond = false,
     event = 'BufReadPre',
     opts = {},
     -- stylua: ignore
     keys = {
-      { "<leader>qs", function() require("persistence").load() end, desc = "Restore Session" },
-      { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
-      { "<leader>qL", function() require("persistence").select() end,desc = "Select Session" },
-      { "<leader>qd", function() require("persistence").stop() end, desc = "Don't Save Current Session" },
+      { '<leader>qs', function() require('persistence').load() end, desc = 'restore session' },
+      { '<leader>ql', function() require('persistence').load({ last = true }) end, desc = 'restore last session' },
+      { '<leader>qL', function() require('persistence').select() end,desc = 'select session' },
+      { '<leader>qd', function() require('persistence').stop() end, desc = "don't save current session" },
     },
   },
   {
     'olimorris/persisted.nvim',
+    cond = false,
     init = function() ar.command('ListSessions', 'Telescope persisted') end,
     cmd = { 'SessionLoad', 'SessionLoadLast', 'ListSessions', 'SessionStop' },
     -- stylua: ignore
