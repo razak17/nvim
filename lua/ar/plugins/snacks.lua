@@ -27,6 +27,23 @@ local default_layout = {
   },
 }
 
+local select_layout = {
+  layout = {
+    backdrop = false,
+    width = 0.5,
+    min_width = 80,
+    height = 0.4,
+    min_height = 3,
+    box = 'vertical',
+    border = 'single',
+    title = '{title}',
+    title_pos = 'center',
+    { win = 'input', height = 1, border = 'bottom' },
+    { win = 'list', border = 'none' },
+    { win = 'preview', title = '{preview}', height = 0.4, border = 'top' },
+  },
+}
+
 local telescope_layout = {
   reverse = false,
   layout = {
@@ -64,6 +81,7 @@ local telescope_layout = {
 local picker_layouts = {
   telescope = telescope_layout,
   default = default_layout,
+  select = select_layout,
 }
 
 local dashboard = {
