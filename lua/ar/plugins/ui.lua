@@ -14,7 +14,10 @@ return {
     cond = not minimal and niceties and ar.treesitter.enable,
     lazy = false,
     init = function()
-      ar.add_to_select_menu('toggle', { ['Toggle Helpview'] = 'Helpview toggleAll' })
+      ar.add_to_select_menu(
+        'toggle',
+        { ['Toggle Helpview'] = 'Helpview toggleAll' }
+      )
     end,
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
@@ -156,21 +159,6 @@ return {
       context = 40,
       dimming = { alpha = 0.45, inactive = true },
       exclude = { 'alpha', 'git' },
-    },
-  },
-  {
-    'folke/zen-mode.nvim',
-    init = function()
-      vim.g.whichkey_add_spec({ '<localleader>z', group = 'Zen' })
-      ar.add_to_select_menu('toggle', { ['Toggle ZenMode'] = 'ZenMode' })
-    end,
-    cmd = 'ZenMode',
-    opts = {
-      window = { width = 90 },
-      plugins = {
-        kitty = { enabled = true, font = '+0' },
-        tmux = { enabled = true },
-      },
     },
   },
   {
@@ -385,6 +373,22 @@ return {
   -- Disabled
   --------------------------------------------------------------------------------
   {
+    'folke/zen-mode.nvim',
+    enabled = false,
+    init = function()
+      vim.g.whichkey_add_spec({ '<localleader>z', group = 'Zen' })
+      ar.add_to_select_menu('toggle', { ['Toggle ZenMode'] = 'ZenMode' })
+    end,
+    cmd = 'ZenMode',
+    opts = {
+      window = { width = 90 },
+      plugins = {
+        kitty = { enabled = true, font = '+0' },
+        tmux = { enabled = true },
+      },
+    },
+  },
+  {
     'tomiis4/BufferTabs.nvim',
     enabled = false,
     cond = not minimal and false,
@@ -474,7 +478,10 @@ return {
         vim.cmd('SunglassesOff')
       end
 
-      ar.add_to_select_menu('toggle', { ['Toggle Sunglasses'] = toggle_sunglasses })
+      ar.add_to_select_menu(
+        'toggle',
+        { ['Toggle Sunglasses'] = toggle_sunglasses }
+      )
     end,
     config = function(_, opts)
       require('sunglasses').setup(opts)
