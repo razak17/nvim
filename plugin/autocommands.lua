@@ -97,6 +97,11 @@ augroup('WinBehavior', {
 })
 
 augroup('Utilities', {
+  -- Auto open grep quickfix window
+  event = { 'QuickFixCmdPost' },
+  pattern = { '*grep*' },
+  command = 'cwindow',
+}, {
   ---@source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
   event = { 'BufReadCmd' },
   pattern = { 'file:///*' },

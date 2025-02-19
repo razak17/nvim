@@ -36,11 +36,6 @@ function ar.smart_close()
 end
 
 ar.augroup('SmartClose', {
-  -- Auto open grep quickfix window
-  event = { 'QuickFixCmdPost' },
-  pattern = { '*grep*' },
-  command = 'cwindow',
-}, {
   -- Close certain filetypes by pressing q.
   event = { 'FileType' },
   command = function(args)
