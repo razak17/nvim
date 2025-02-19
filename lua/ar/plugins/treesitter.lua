@@ -29,9 +29,7 @@ return {
       highlight = {
         enable = true,
         disable = function(_, buf)
-          local enable = ar.treesitter.enable
-          if not enable and vim.bo.ft ~= 'lua' then return true end
-
+          if not ts_enabled and vim.bo.ft ~= 'lua' then return true end
           local max_filesize = 100 * 1024 -- 100 KB
           local ok, stats =
             pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
@@ -120,6 +118,7 @@ return {
       local parser_config =
         require('nvim-treesitter.parsers').get_parser_configs()
 
+      ---@diagnostic disable-next-line: inject-field
       parser_config.blade = {
         install_info = {
           url = 'https://github.com/EmranMR/tree-sitter-blade',
