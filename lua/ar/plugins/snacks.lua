@@ -214,6 +214,7 @@ local function find_files()
       -- stylua: ignore start
     args = {
       '--exclude', '**/.git/**',
+      '--exclude', '**/.next/**',
       '--exclude', '**/node_modules/**',
       '--exclude', '**/build/**',
       '--exclude', '**/tmp/**',
