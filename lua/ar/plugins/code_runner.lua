@@ -270,7 +270,7 @@ return {
         dart = 'dart',
         cs = function(...)
           local root_dir =
-            require('null-ls.utils').root_pattern('*.csproj')(vim.loop.cwd())
+            require('null-ls.utils').root_pattern('*.csproj')(vim.uv.cwd())
           return 'cd ' .. root_dir .. ' && dotnet run$end'
         end,
       },

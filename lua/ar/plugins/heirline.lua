@@ -925,14 +925,14 @@ return {
       ar.augroup('HeirlineGitRemote', {
         event = { 'VimEnter' },
         command = function()
-          local timer = vim.loop.new_timer()
+          local timer = vim.uv.new_timer()
           timer:start(0, 120000, function() statusline.git_remote_sync() end)
         end,
       }, {
         event = { 'User' },
         pattern = { 'Neogit*' },
         command = function()
-          local timer = vim.loop.new_timer()
+          local timer = vim.uv.new_timer()
           timer:start(0, 120000, function() statusline.git_remote_sync() end)
         end,
       })
