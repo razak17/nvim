@@ -368,8 +368,8 @@ return {
             if fs_entry ~= nil and fs_entry.fs_type == 'file' then
               vim.defer_fn(function()
                 ar.open_with_window_picker(function(picked_window_id)
-              MiniFiles.set_target_window(picked_window_id)
-            MiniFiles.go_in({ close_on_file = true })
+                  MiniFiles.set_target_window(picked_window_id)
+                  MiniFiles.go_in({ close_on_file = true })
                 end, false)
               end, 100)
             end
