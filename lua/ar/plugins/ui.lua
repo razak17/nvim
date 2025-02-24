@@ -139,7 +139,7 @@ return {
     'tzachar/local-highlight.nvim',
     cond = not minimal and niceties and not ar.lsp.enable,
     event = { 'BufRead', 'BufNewFile' },
-    opts = { hlgroup = 'Search' },
+    opts = { hlgroup = 'CursorLine' },
   },
   {
     'razak17/range-highlight.nvim',
