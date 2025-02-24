@@ -228,7 +228,11 @@ local function new_file_in_current_dir()
     completion = 'file',
   }, function(file)
     if not file or file == '' then return end
-    vim.cmd('e ' .. fn.expand('%:p:h') .. '/' .. file)
+    vim.defer_fn(function()
+      ar.open_with_window_picker(
+        function() vim.cmd('e ' .. fn.expand('%:p:h') .. '/' .. file) end
+      )
+    end, 100)
   end)
 end
 nnoremap('<leader>nf', new_file_in_current_dir, { desc = 'create new file' })
