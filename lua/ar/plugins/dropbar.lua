@@ -83,6 +83,7 @@ return {
           ['onedark'] = {
             { DropBarIconUISeparator = { fg = { from = 'Label' } } },
             { DropBarIconUIIndicator = { link = 'Label' } },
+            { DropBarHover = { link = 'CursorLine' } },
             { DropBarMenuHoverEntry = { bg = 'NONE' } },
             { DropBarMenuCurrentContext = { link = 'CursorLine' } },
           },
