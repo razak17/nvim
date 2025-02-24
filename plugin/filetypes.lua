@@ -191,6 +191,20 @@ settings({
       )
     end,
   },
+  [{ 'typescript', 'typescriptreact' }] = {
+    function()
+      local interface_to_type =
+        require('ar.interface_to_type').interface_to_type
+      map('i', 't', require('ar.async_func').add, { buffer = true })
+      map('n', '<leader><leader>ti', interface_to_type, { buffer = true })
+
+      api.nvim_create_user_command('InterfaceToType', interface_to_type, {})
+
+      ar.add_to_select_menu('command_palette', {
+        ['Interface to Type'] = interface_to_type,
+      })
+    end,
+  },
   jsonc = {
     function()
       local extension = fn.expand('%:e')
