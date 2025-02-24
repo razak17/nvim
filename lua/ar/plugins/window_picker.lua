@@ -10,7 +10,7 @@ return {
         function()
           local picked_window_id = require('window-picker').pick_window({
             include_current_win = true,
-          }) or api.nvim_get_current_win()
+          })
           api.nvim_set_current_win(picked_window_id)
         end,
         desc = 'pick window',

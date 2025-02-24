@@ -366,10 +366,13 @@ return {
           local open_with_window_picker = function()
             local fs_entry = MiniFiles.get_fs_entry()
             if fs_entry ~= nil and fs_entry.fs_type == 'file' then
-              local picked_window_id = require('window-picker').pick_window()
+              vim.defer_fn(function()
+                ar.open_with_window_picker(function(picked_window_id)
               MiniFiles.set_target_window(picked_window_id)
-            end
             MiniFiles.go_in({ close_on_file = true })
+                end, false)
+              end, 100)
+            end
           end
           map('n', 'W', open_with_window_picker, { buffer = buf_id })
         end,

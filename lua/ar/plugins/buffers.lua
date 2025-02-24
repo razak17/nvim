@@ -168,7 +168,9 @@ return {
         ['w'] = function(win)
           local current = win:current()
           local info = vim.fn.getbufinfo(current.bufnr)[1]
-          ar.open_with_window_picker(current.bufnr)
+          ar.open_with_window_picker(
+            function() api.nvim_set_current_buf(current.bufnr) end
+          )
           fn.cursor(info.lnum, 0)
         end,
       },
@@ -189,7 +191,9 @@ return {
           key = 'w',
           command = function()
             local idx = vim.fn.line('.')
-            ar.open_with_window_picker(idx + 1)
+            ar.open_with_window_picker(
+              function() api.nvim_set_current_buf(idx + 1) end
+            )
           end,
         },
         split = { key = 's', command = 'split' },

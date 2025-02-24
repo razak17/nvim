@@ -444,13 +444,9 @@ return {
             local selected = items[1]
             if selected then
               vim.defer_fn(function()
-                local picked_window_id = require('window-picker').pick_window({
-                  include_current_win = true,
-                }) or api.nvim_get_current_win()
-                api.nvim_set_current_win(picked_window_id)
-                if picked_window_id then
-                  Snacks.picker.actions.jump(picker, _, action)
-                end
+                ar.open_with_window_picker(
+                  function() Snacks.picker.actions.jump(picker, _, action) end
+                )
               end, 100)
             end
           end,

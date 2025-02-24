@@ -318,11 +318,9 @@ local function open_with_window_picker(prompt_bufnr)
     return
   end
   actions.close(prompt_bufnr)
-  local picked_window_id = require('window-picker').pick_window({
-    include_current_win = true,
-  }) or api.nvim_get_current_win()
-  api.nvim_set_current_win(picked_window_id)
-  if picked_window_id then vim.cmd('e ' .. file_path) end
+  vim.defer_fn(function()
+    ar.open_with_window_picker(function() vim.cmd('e ' .. file_path) end)
+  end, 100)
 end
 
 -- Ref; https://www.reddit.com/r/neovim/comments/1dajad0/find_files_live_grep_in_telescope/

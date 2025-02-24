@@ -597,17 +597,20 @@ function ar.open_media(path, notify)
   ar.open(path, notify)
 end
 
---- open file in window picker
----@param buf? integer
-function ar.open_with_window_picker(buf)
-  if not ar.is_available('nvim-window-picker') then
-    vim.notify('window-picker is not installed', vim.log.levels.ERROR)
-    return
+--- open file in window picker if available
+---@param callback fun(picked_window_id: number)
+---@param set_current_win? boolean
+function ar.open_with_window_picker(callback, set_current_win)
+  if set_current_win == nil then set_current_win = true end
+  local picked_window_id = api.nvim_get_current_win()
+  if ar.is_available('nvim-window-picker') then
+    picked_window_id = require('window-picker').pick_window({
+      include_current_win = true,
+    })
   end
-  local picked_window_id = require('window-picker').pick_window()
   if picked_window_id then
-    api.nvim_set_current_win(picked_window_id)
-    if buf then api.nvim_set_current_buf(buf) end
+    if set_current_win then api.nvim_set_current_win(picked_window_id) end
+    callback(picked_window_id)
   end
 end
 
