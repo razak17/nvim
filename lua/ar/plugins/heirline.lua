@@ -62,6 +62,28 @@ ar.augroup('Heirline', {
   end,
 })
 
+--- An `init` function to build multiple update events which is not supported yet by Heirline's update field.
+---@param opts any[] an array like table of autocmd events as either just a string or a table with custom patterns and callbacks.
+---@return function # The Heirline init function.
+-- @usage local heirline_component = { init = require("base.utils.status").init.update_events { "BufEnter", { "User", pattern = "LspProgressUpdate" } } }
+local function update_events(opts)
+  return function(self)
+    if not rawget(self, 'once') then
+      local clear_cache = function() self._win_cache = nil end
+      for _, event in ipairs(opts) do
+        local event_opts = { callback = clear_cache }
+        if type(event) == 'table' then
+          event_opts.pattern = event.pattern
+          event_opts.callback = event.callback or clear_cache
+          event.pattern, event.callback = nil, nil
+        end
+        api.nvim_create_autocmd(event, event_opts)
+      end
+      self.once = true
+    end
+  end
+end
+
 return {
   {
     'rebelot/heirline.nvim',
