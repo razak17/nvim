@@ -34,29 +34,43 @@ function M.list_branches()
 end
 
 function M.git_remote_sync()
-  if not _G.GitStatus then
-    _G.GitStatus = { ahead = 0, behind = 0, status = nil }
+  local cmd = 'git'
+  local fetch_args = { 'fetch' }
+  local upstream_args =
+    { 'rev-list', '--left-right', '--count', 'HEAD...@{upstream}' }
+
+  if is_dots_repo then
+    local git_command =
+      fmt('git --git-dir=%s --work-tree=$HOME', vim.g.dotfiles)
+    cmd = 'sh'
+    fetch_args = { '-c', git_command .. ' fetch' }
+    upstream_args =
+      { '-c', git_command .. ' ' .. table.concat(upstream_args, ' ') }
   end
 
   -- Fetch the remote repository
   local git_fetch = Job:new({
-    command = 'git',
-    args = { 'fetch' },
-    on_start = function() _G.GitStatus.status = 'pending' end,
-    on_exit = function() _G.GitStatus.status = 'done' end,
+    command = cmd,
+    args = fetch_args,
+    on_start = function() GitStatus.status = 'pending' end,
+    on_exit = function() GitStatus.status = 'done' end,
   })
 
-  -- Compare local repository to upstream
-  local git_upstream = Job:new({
-    command = 'git',
-    args = { 'rev-list', '--left-right', '--count', 'HEAD...@{upstream}' },
-    on_start = function()
-      GitStatus.status = 'pending'
+  local function on_status_change()
       vim.schedule(
         function()
           api.nvim_exec_autocmds('User', { pattern = 'GitStatusChanged' })
         end
       )
+  end
+
+  -- Compare local repository to upstream
+  local git_upstream = Job:new({
+    command = cmd,
+    args = upstream_args,
+    on_start = function()
+      GitStatus.status = 'pending'
+      on_status_change()
     end,
     on_exit = function(job, _)
       local res = job:result()[1]
@@ -68,11 +82,7 @@ function M.git_remote_sync()
 
       GitStatus =
         { ahead = tonumber(ahead), behind = tonumber(behind), status = 'done' }
-      vim.schedule(
-        function()
-          api.nvim_exec_autocmds('User', { pattern = 'GitStatusChanged' })
-        end
-      )
+      on_status_change()
     end,
   })
 
