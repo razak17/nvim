@@ -51,6 +51,9 @@ local function set_root(args)
   if root == fn.getcwd() then return end
 
   fn.chdir(root)
+  -- reset worktree and gitdir (if set, re: baredot.nvim)
+  vim.env.GIT_WORK_TREE = nil
+  vim.env.GIT_DIR = nil
 end
 
 ar.augroup('FindProjectRoot', { event = 'BufEnter', command = set_root })
