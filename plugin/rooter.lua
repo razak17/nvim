@@ -36,7 +36,6 @@ local function set_root(args)
   path = fs.dirname(path)
 
   -- Try cache and resort to searching upward for root directory
-  local ll = get_lsp_root(args.buf)
   local root = root_cache[path]
   if not root then
     -- Currently this prefers marker files over the lsp root but swapping the order will change that
