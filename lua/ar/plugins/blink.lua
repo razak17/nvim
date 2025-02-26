@@ -11,7 +11,7 @@ return {
     version = '*', -- REQUIRED `version` needed to download pre-built binary
     opts_extend = {
       'sources.completion.enabled_providers',
-      'sources.compat',
+      -- 'sources.compat',
       'sources.default',
     },
     opts = {
@@ -292,6 +292,7 @@ return {
       { 'giuxtaposition/blink-cmp-copilot', cond = ar.ai.enable },
       {
         'saghen/blink.compat',
+        cond = false,
         version = '*',
         opts = { impersonate_nvim_cmp = true },
       },
