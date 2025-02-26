@@ -85,17 +85,6 @@ return {
           },
         },
       },
-      snippets = {
-        preset = 'luasnip',
-        expand = function(snippet) require('luasnip').lsp_expand(snippet) end,
-        active = function(filter)
-          if filter and filter.direction then
-            return require('luasnip').jumpable(filter.direction)
-          end
-          return require('luasnip').in_snippet()
-        end,
-        jump = function(direction) require('luasnip').jump(direction) end,
-      },
       sources = {
         default = function()
           local node = vim.treesitter.get_node()
@@ -106,7 +95,6 @@ return {
             'buffer',
             'ripgrep',
             'dadbod',
-            'nvim-px-to-rem',
             'emoji',
           }
 
@@ -119,7 +107,10 @@ return {
           then
             return { 'buffer' }
           else
-            if ar.ai.enable then table.insert(providers, 2, 'copilot') end
+            if ar.ai.enable then table.insert(providers, 'copilot') end
+            if not ar.plugins.minimal then
+              table.insert(providers, 'nvim-px-to-rem')
+            end
             return providers
           end
         end,
@@ -159,10 +150,6 @@ return {
             score_offset = 15,
             min_keyword_length = 2,
             opts = { insert = true },
-          },
-          ['nvim-px-to-rem'] = {
-            module = 'nvim-px-to-rem.integrations.blink',
-            name = '[PX2REM]',
           },
         },
       },
@@ -256,6 +243,24 @@ return {
         Color = ui.icons.misc.block_alt, -- Use block instead of icon for color items to make swatches more usable
         Copilot = ui.codicons.misc.octoface,
       }, symbols)
+
+      if not ar.plugins.minimal then
+        opts.snippets = {
+          preset = 'luasnip',
+          expand = function(snippet) require('luasnip').lsp_expand(snippet) end,
+          active = function(filter)
+            if filter and filter.direction then
+              return require('luasnip').jumpable(filter.direction)
+            end
+            return require('luasnip').in_snippet()
+          end,
+          jump = function(direction) require('luasnip').jump(direction) end,
+        }
+        opts.sources.providers['nvim-px-to-rem'] = {
+          module = 'nvim-px-to-rem.integrations.blink',
+          name = '[PX2REM]',
+        }
+      end
 
       if ar.ai.enable then
         opts.sources.providers.copilot = {
