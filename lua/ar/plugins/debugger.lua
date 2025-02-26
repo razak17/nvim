@@ -168,18 +168,30 @@ return {
       local debug_server_path = js_debug:get_install_path()
         .. '/js-debug/src/dapDebugServer.js'
 
-      require('dap').adapters['pwa-node'] = {
-        type = 'server',
-        host = 'localhost',
-        port = '${port}',
-        executable = {
-          command = 'node',
-          args = { debug_server_path, '${port}' },
-        },
-      }
+      for _, adapter in pairs({ 'node', 'chrome' }) do
+        local pwa_adapter = 'pwa-' .. adapter
+        -- Handle launch.json configurations
+        -- which specify type as "node" or "chrome"
+        -- Inspired by https://github.com/StevanFreeborn/nvim-config/blob/main/lua/plugins/debugging.lua#L111-L123
+        dap.adapters[pwa_adapter] = {
+          type = 'server',
+          host = 'localhost',
+          port = '${port}',
+          executable = {
+            command = 'node',
+            args = { debug_server_path, '${port}' },
+          },
+          enrich_config = function(config, on_config)
+            -- Under the hood, always use the main adapter
+            config.type = pwa_adapter
+            on_config(config)
+          end,
+        }
+        dap.adapters[adapter] = dap.adapters[pwa_adapter]
+      end
 
       for _, language in ipairs(js_based_languages) do
-        require('dap').configurations[language] = {
+        dap.configurations[language] = {
           {
             type = 'pwa-node',
             request = 'launch',
