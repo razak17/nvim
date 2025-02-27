@@ -148,6 +148,40 @@ lsp.handlers[M.textDocument_publishDiagnostics] = function(err, result, ctx)
 
   publish_handler(err, result, ctx)
 end
+--------------------------------------------------------------------------------
+--  Code Actions
+--------------------------------------------------------------------------------
+-- NOTE: WIP
+-- ---@param client vim.lsp.Client
+-- ---@param result table
+-- ---@param ctx table
+-- local function better_code_actions(client, result, ctx)
+--   if not result or vim.tbl_isempty(result) then
+--     local _ = lsp.log.info()
+--       and lsp.log.info(ctx.method, 'No code actions found')
+--     return
+--   end
+--
+--   local function hasEditKey(item) return item.edit ~= nil end
+--
+--   local function sortByEditKey(a, b)
+--     local aHasEdit = hasEditKey(a)
+--     local bHasEdit = hasEditKey(b)
+--
+--     if aHasEdit and not bHasEdit then
+--       return true
+--     elseif not aHasEdit and bHasEdit then
+--       return false
+--     else
+--       -- If both have or don't have 'edit', maintain original order
+--       return false
+--     end
+--   end
+--   if type(result) == 'table' then
+--     table.sort(result, sortByEditKey)
+--     -- print('DEBUGPRINT[421]: lsp.lua:162: result=' .. vim.inspect(result))
+--   end
+-- end
 
 --------------------------------------------------------------------------------
 --  Smart Definitions
@@ -336,6 +370,19 @@ local function setup_mappings(client, bufnr)
         vim.lsp.buf.code_action({
           context = { diagnostics = ar.lsp.get_diagnostic_at_cursor() },
         })
+        -- local params = lsp.util.make_range_params(0, client.offset_encoding)
+        -- params.context = {
+        --   triggerKind = lsp.protocol.CodeActionTriggerKind.Invoked,
+        --   diagnostics = lsp.diagnostic.get_line_diagnostics(),
+        -- }
+        -- lsp.buf_request(
+        --   bufnr,
+        --   M.textDocument_codeAction,
+        --   params,
+        --   function(error, result, ctx, config)
+        --     if client then better_code_actions(client, result, ctx) end
+        --   end
+        -- )
       end,
       desc = 'code action',
       capability = M.textDocument_codeAction,
