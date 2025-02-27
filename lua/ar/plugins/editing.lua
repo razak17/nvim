@@ -178,6 +178,15 @@ return {
     },
   },
   {
+    'AgusDOLARD/backout.nvim',
+    opts = {},
+    keys = {
+      -- stylua: ignore
+      { '<M-b>', "<Cmd>lua require('backout').back()<CR>", mode = { 'i', 'c' } },
+      { '<M-n>', "<Cmd>lua require('backout').out()<CR>", mode = { 'i', 'c' } },
+    },
+  },
+  {
     'windwp/nvim-autopairs',
     cond = false,
     event = 'InsertEnter',
