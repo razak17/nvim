@@ -4,6 +4,7 @@ local border, lsp_hls, ellipsis =
   ui.current.border, ui.lsp.highlights, ui.icons.misc.ellipsis
 local minimal = ar.plugins.minimal
 local codicons = ui.codicons
+local ai_icons = codicons.ai
 local is_cmp = ar_config.completion.variant == 'cmp'
 local ai_models = ar_config.ai.models
 local ai_cmp = ar_config.ai.completion.variant
@@ -11,17 +12,26 @@ local is_minuet = ai_models.gemini and ai_cmp == 'minuet'
 
 ar.completion.config = {
   format = {
-    ['emoji'] = { icon = codicons.misc.smiley, hl = 'CmpItemKindEmoji' },
+    emoji = { icon = codicons.misc.smiley, hl = 'CmpItemKindEmoji' },
     ['lab.quick_data'] = { icon = ui.icons.misc.beaker, hl = 'CmpItemKindLab' },
-    ['natdat'] = { icon = codicons.misc.calendar, hl = 'CmpItemKindDynamic' },
-    ['crates'] = { icon = codicons.misc.package, hl = 'CmpItemKindDynamic' },
-    ['copilot'] = { icon = codicons.misc.octoface, hl = 'CmpItemKindCopilot' },
-    ['codecompanion_tools'] = { icon = codicons.misc.robot_alt },
-    ['codecompanion_slash_commands'] = { icon = codicons.misc.robot_alt },
-    ['nerdfonts'] = { icon = '', hl = 'CmpItemKindNerdFont' },
-    ['minuet'] = { icon = '󱗻', hl = 'CmpItemKindDynamic' },
-    ['nvim_px_to_rem'] = { icon = '', hl = 'CmpItemKindNerdFont' },
-    ['Color'] = { icon = ui.icons.misc.block_alt },
+    natdat = { icon = codicons.misc.calendar, hl = 'CmpItemKindDynamic' },
+    crates = { icon = codicons.misc.package, hl = 'CmpItemKindDynamic' },
+    copilot = { icon = codicons.misc.octoface, hl = 'CmpItemKindCopilot' },
+    codecompanion_tools = { icon = codicons.misc.robot_alt },
+    codecompanion_slash_commands = { icon = codicons.misc.robot_alt },
+    nerdfonts = { icon = codicons.misc.nerd_font, hl = 'CmpItemKindNerdFont' },
+    minuet = { icon = ai_icons.minuet, hl = 'CmpItemKindDynamic' },
+    nvim_px_to_rem = { icon = codicons.misc.hash, hl = 'CmpItemKindNerdFont' },
+    Color = { icon = ui.icons.misc.block_alt },
+    claude = { icon = ai_icons.claude },
+    codestral = { icon = ai_icons.codestral },
+    gemini = { icon = ai_icons.gemini },
+    openai = { icon = ai_icons.openai },
+    Groq = { icon = ai_icons.groq },
+    Openrouter = { icon = ai_icons.open_router },
+    Ollama = { icon = ai_icons.ollama },
+    ['Llama.cpp'] = { icon = ai_icons.llama },
+    Deepseek = { icon = ai_icons.deepseek },
   },
   menu = {
     Color = '[COLOR]',

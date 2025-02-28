@@ -46,7 +46,10 @@ return {
           menu = {
             auto_show = function(ctx)
               local type = vim.fn.getcmdtype()
-              return type == ':' or type == '@'
+              if ctx.mode == 'cmdline' then
+                return type == ':' or type == '@'
+              end
+              return false
             end,
           },
         },
@@ -272,10 +275,20 @@ return {
       })
 
       local symbols = require('lspkind').symbol_map
+      local ai_icons = ar.ui.codicons.ai
       opts.appearance = opts.appearance or {}
       opts.appearance.kind_icons = vim.tbl_extend('keep', {
         Color = ui.icons.misc.block_alt, -- Use block instead of icon for color items to make swatches more usable
         Copilot = ui.codicons.misc.octoface,
+        claude = ai_icons.claude,
+        codestral = ai_icons.codestral,
+        gemini = ai_icons.gemini,
+        openai = ai_icons.openai,
+        Groq = ai_icons.groq,
+        Openrouter = ai_icons.open_router,
+        Ollama = ai_icons.ollama,
+        ['Llama.cpp'] = ai_icons.llama,
+        Deepseek = ai_icons.deepseek,
       }, symbols)
 
       if not ar.plugins.minimal then
@@ -298,23 +311,23 @@ return {
 
       if ar.ai.enable then
         if is_copilot then
-        opts.sources.providers.copilot = {
-          name = '[CPL]',
-          module = 'blink-cmp-copilot',
-          score_offset = 100,
-          async = true,
-          transform_items = function(_, items)
-            local CompletionItemKind =
-              require('blink.cmp.types').CompletionItemKind
-            local kind_idx = #CompletionItemKind + 1
-            CompletionItemKind[kind_idx] = 'Copilot'
-            for _, item in ipairs(items) do
-              item.kind = kind_idx
-            end
-            return items
-          end,
-        }
-      end
+          opts.sources.providers.copilot = {
+            name = '[CPL]',
+            module = 'blink-cmp-copilot',
+            score_offset = 100,
+            async = true,
+            transform_items = function(_, items)
+              local CompletionItemKind =
+                require('blink.cmp.types').CompletionItemKind
+              local kind_idx = #CompletionItemKind + 1
+              CompletionItemKind[kind_idx] = 'Copilot'
+              for _, item in ipairs(items) do
+                item.kind = kind_idx
+              end
+              return items
+            end,
+          }
+        end
         if is_minuet then
           opts.sources.providers.minuet = {
             name = '[MINUET]',

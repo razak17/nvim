@@ -75,6 +75,18 @@ ar.ui.icons = {
 }
 
 ar.ui.codicons = {
+  ai = {
+    deepseek = '',
+    groq = '',
+    ollama = '󰳆',
+    open_router = '󱂇',
+    llama = '󰳆',
+    claude = '󰋦',
+    codestral = '󱎥',
+    gemini = '',
+    minuet = '󱗻',
+    openai = '󱢆',
+  },
   documents = {
     new_file = '',
     default_file = '',
@@ -133,8 +145,10 @@ ar.ui.codicons = {
     copilot = '',
     disconnect = '',
     gpt = '🤖',
+    hash = '',
     lightbulb = '󰌵',
     model = '󰒡',
+    nerd_font = '',
     null_ls = '␀ ',
     null = '',
     octoface = '',
