@@ -5,6 +5,9 @@ local border, lsp_hls, ellipsis =
 local minimal = ar.plugins.minimal
 local codicons = ui.codicons
 local is_cmp = ar_config.completion.variant == 'cmp'
+local ai_models = ar_config.ai.models
+local ai_cmp = ar_config.ai.completion.variant
+local is_minuet = ai_models.gemini and ai_cmp == 'minuet'
 
 ar.completion.config = {
   format = {
@@ -235,8 +238,14 @@ return {
             c = cmp.mapping.close(),
           }),
           ['<C-u>'] = cmp.mapping.complete(),
-          ['<CR>'] = cmp.mapping.confirm({ select = false }), -- If nothing is selected don't complete
-          -- ['<A-y>'] = require('minuet').make_cmp_map(),
+          ['<CR>'] = cmp.mapping(function(fallback)
+            -- use the internal non-blocking call to check if cmp is visible
+            if cmp.core.view:visible() then
+              cmp.confirm({ select = true })
+            else
+              fallback()
+            end
+          end),
         },
         formatting = {
           expandable_indicator = true,
@@ -281,6 +290,9 @@ return {
 
             local format = ar.completion.config.format
             local config = format[entry.source.name]
+            if entry.source.name == 'minuet' then
+              config = format[entry.completion_item.cmp.kind_text]
+            end
 
             if config then
               if config.icon then item.kind = format_icon(config.icon) end
@@ -368,6 +380,9 @@ return {
     end,
     config = function(_, opts)
       local cmp = require('cmp')
+      if is_minuet then
+        opts.mapping['<A-y>'] = require('minuet').make_cmp_map()
+      end
 
       cmp.setup(opts)
 
@@ -456,57 +471,6 @@ return {
                 },
               })
             end,
-          })
-        end,
-      },
-      {
-        'milanglacier/minuet-ai.nvim',
-        cond = false,
-        cmd = { 'MinuetChangeProvider' },
-        config = function()
-          require('minuet').setup({
-            provider = 'claude',
-            request_timeout = 4,
-            throttle = 2000,
-            notify = 'error',
-            provider_options = {
-              gemini = {
-                optional = {
-                  generationConfig = {
-                    maxOutputTokens = 256,
-                    topP = 0.9,
-                  },
-                  safetySettings = {
-                    {
-                      category = 'HARM_CATEGORY_DANGEROUS_CONTENT',
-                      threshold = 'BLOCK_NONE',
-                    },
-                    {
-                      category = 'HARM_CATEGORY_HATE_SPEECH',
-                      threshold = 'BLOCK_NONE',
-                    },
-                    {
-                      category = 'HARM_CATEGORY_HARASSMENT',
-                      threshold = 'BLOCK_NONE',
-                    },
-                    {
-                      category = 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
-                      threshold = 'BLOCK_NONE',
-                    },
-                  },
-                },
-              },
-              claude = {
-                max_tokens = 512,
-                model = 'claude-3-5-haiku-20241022',
-              },
-              openai = {
-                optional = {
-                  max_tokens = 256,
-                  top_p = 0.9,
-                },
-              },
-            },
           })
         end,
       },

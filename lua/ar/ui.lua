@@ -134,6 +134,7 @@ ar.ui.codicons = {
     disconnect = '',
     gpt = '🤖',
     lightbulb = '󰌵',
+    model = '󰒡',
     null_ls = '␀ ',
     null = '',
     octoface = '',

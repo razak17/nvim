@@ -17,6 +17,9 @@
 -- vim.g.openai_api_key = get_openai_key()
 local minimal = ar.plugins.minimal
 local models = ar_config.ai.models
+local cmp = ar_config.completion.variant
+local ai_cmp = ar_config.ai.completion.variant
+local is_ai_cmp = ar_config.ai.completion.enable
 
 return {
   {
@@ -230,8 +233,114 @@ return {
     end,
   },
   {
+    'milanglacier/minuet-ai.nvim',
+    cond = function()
+      local is_minuet = models.gemini and ai_cmp == 'minuet'
+      return not minimal and ar.ai.enable and is_minuet
+    end,
+    cmd = { 'Minuet' },
+    event = 'InsertEnter',
+    init = function()
+      ar.add_to_select_menu('ai', {
+        ['Minuet'] = function()
+          ar.create_select_menu('Copilot', {
+            ['Toggle Minuet Completion'] = function()
+              if cmp == 'blink' then vim.cmd('Minuet blink toggle') end
+              if cmp == 'cmp' then vim.cmd('Minuet cmp toggle') end
+            end,
+            ['Toggle Minuet Virtual Text'] = function()
+              vim.cmd('Minuet virtualtext toggle')
+            end,
+          })()
+        end,
+      })
+    end,
+    opts = {
+      request_timeout = 4,
+      throttle = 2000,
+      notify = 'error',
+      cmp = { enable_auto_complete = is_ai_cmp and cmp == 'cmp' },
+      blink = { enable_auto_complete = is_ai_cmp and cmp == 'blink' },
+      provider_options = {
+        gemini = {
+          optional = {
+            generationConfig = {
+              maxOutputTokens = 256,
+              topP = 0.9,
+            },
+            safetySettings = {
+              {
+                category = 'HARM_CATEGORY_DANGEROUS_CONTENT',
+                threshold = 'BLOCK_NONE',
+              },
+              {
+                category = 'HARM_CATEGORY_HATE_SPEECH',
+                threshold = 'BLOCK_NONE',
+              },
+              {
+                category = 'HARM_CATEGORY_HARASSMENT',
+                threshold = 'BLOCK_NONE',
+              },
+              {
+                category = 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+                threshold = 'BLOCK_NONE',
+              },
+            },
+          },
+        },
+        claude = {
+          max_tokens = 512,
+          model = 'claude-3-5-sonnet-20241022',
+        },
+        openai = {
+          optional = {
+            max_tokens = 256,
+            top_p = 0.9,
+          },
+        },
+      },
+      virtualtext = {
+        auto_trigger_ft = { '*' },
+        auto_trigger_ignore_ft = {
+          'markdown',
+          'gitcommit',
+          'NeogitCommitMessage',
+          'DressingInput',
+          'TelescopePrompt',
+          'neo-tree-popup',
+          'dap-repl',
+        },
+        keymap = {
+          accept = '<A-u>',
+          accept_line = '<A-l>',
+          -- accept n lines (prompts for number)
+          -- e.g. "A-z 2 CR" will accept 2 lines
+          accept_n_lines = '<A-n>',
+          prev = '<A-[>',
+          next = '<A-]>',
+          dismiss = '<A-\\>',
+        },
+        show_on_completion_menu = true,
+      },
+    },
+    config = function(_, opts)
+      if models.gemini then
+        opts.provider = 'gemini'
+      elseif models.claude then
+        opts.provider = 'claude'
+      elseif models.openai then
+        opts.provider = 'openai'
+      end
+      require('minuet').setup(opts)
+    end,
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
+  {
     'zbirenbaum/copilot.lua',
-    cond = not minimal and ar.ai.enable and models.copilot,
+    cond = function()
+      local is_copilot = models.copilot and ai_cmp == 'copilot'
+      return not minimal and ar.ai.enable and is_copilot
+    end,
     cmd = 'Copilot',
     event = 'InsertEnter',
     init = function()
@@ -251,10 +360,9 @@ return {
     },
     opts = {
       -- If copilot-cmp is enabled, set panel & suggestions to false
-      -- require("copilot.suggestion").toggle_auto_trigger()
-      panel = { enabled = false },
+      panel = { enabled = not is_ai_cmp },
       suggestion = {
-        enabled = true,
+        enabled = not is_ai_cmp,
         auto_trigger = true,
         keymap = {
           accept_word = '<M-w>',

@@ -2,6 +2,10 @@ local fmt = string.format
 local ui, highlight = ar.ui, ar.highlight
 local border, lsp_hls = ui.current.border, ui.lsp.highlights
 local is_blink = ar_config.completion.variant == 'blink'
+local ai_models = ar_config.ai.models
+local ai_cmp = ar_config.ai.completion.variant
+local is_copilot = ai_models.copilot and ai_cmp == 'copilot'
+local is_minuet = ai_models.gemini and ai_cmp == 'minuet'
 
 return {
   {
@@ -44,6 +48,8 @@ return {
           -- experimental auto-brackets support
           auto_brackets = { enabled = true },
         },
+        -- Recommended to avoid unnecessary request
+        trigger = { prefetch_on_insert = false },
         menu = {
           border = border,
           winblend = 0,
@@ -107,7 +113,10 @@ return {
           then
             return { 'buffer' }
           else
-            if ar.ai.enable then table.insert(providers, 'copilot') end
+            if ar.ai.enable then
+              if is_copilot then table.insert(providers, 'copilot') end
+              if is_minuet then table.insert(providers, 'minuet') end
+            end
             if not ar.plugins.minimal then
               table.insert(providers, 'nvim-px-to-rem')
             end
@@ -263,6 +272,7 @@ return {
       end
 
       if ar.ai.enable then
+        if is_copilot then
         opts.sources.providers.copilot = {
           name = '[CPL]',
           module = 'blink-cmp-copilot',
@@ -280,6 +290,26 @@ return {
           end,
         }
       end
+        if is_minuet then
+          opts.sources.providers.minuet = {
+            name = '[MINUET]',
+            module = 'minuet.blink',
+            score_offset = 100,
+            transform_items = function(_, items)
+              local CompletionItemKind =
+                require('blink.cmp.types').CompletionItemKind
+              local kind_idx = #CompletionItemKind + 1
+              CompletionItemKind[kind_idx] = 'Minuet'
+              for _, item in ipairs(items) do
+                item.kind = kind_idx
+              end
+              return items
+            end,
+          }
+          opts.keymap['<A-y>'] = require('minuet').make_blink_map()
+        end
+      end
+      --
 
       require('blink.cmp').setup(opts)
     end,
@@ -289,7 +319,7 @@ return {
       'L3MON4D3/LuaSnip',
       'jsongerber/nvim-px-to-rem',
       'moyiz/blink-emoji.nvim',
-      { 'giuxtaposition/blink-cmp-copilot', cond = ar.ai.enable },
+      { 'giuxtaposition/blink-cmp-copilot', cond = is_copilot },
       {
         'saghen/blink.compat',
         cond = false,

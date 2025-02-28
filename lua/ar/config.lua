@@ -25,6 +25,7 @@ local env = vim.env
 ---@field servers table
 
 ---@alias ArAIModel 'claude' | 'gemini' | 'openai' | 'copilot'
+---@alias ArAICompletion 'copilot' | 'minuet'
 ---@alias ArExplorerRename 'local' | 'snacks'
 ---@alias ArTypescriptLsp 'ts_ls' | 'typescript-tools' | 'vtsls'
 ---@alias ArPythonLsp 'pyright' | 'ruff' | 'jedi_language_server' | 'basedpyright'
@@ -263,7 +264,12 @@ local config = {
       claude = true,
       copilot = true,
       gemini = true,
-      openai = true,
+      openai = false,
+    },
+    completion = {
+      enable = true,
+      ---@type ArAICompletion
+      variant = 'minuet',
     },
   },
   animation = { enable = false },
