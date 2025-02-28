@@ -35,7 +35,21 @@ return {
       },
       signature = { window = { border = border } },
       cmdline = {
+        keymap = {
+          -- recommended, as the default keymap will only show and select the next item
+          ['<Tab>'] = { 'show', 'accept' },
+          ['<CR>'] = { 'accept_and_enter', 'fallback' },
+        },
         enabled = true,
+        completion = {
+          ghost_text = { enabled = false },
+          menu = {
+            auto_show = function(ctx)
+              local type = vim.fn.getcmdtype()
+              return type == ':' or type == '@'
+            end,
+          },
+        },
         sources = function()
           local type = vim.fn.getcmdtype()
           if type == '/' or type == '?' then return { 'buffer' } end
@@ -86,8 +100,8 @@ return {
         ghost_text = { enabled = false },
         list = {
           selection = {
-            preselect = function(ctx) return ctx.mode ~= 'cmdline' end,
-            auto_insert = function(ctx) return ctx.mode == 'cmdline' end,
+            preselect = false,
+            auto_insert = true,
           },
         },
       },
@@ -132,7 +146,18 @@ return {
           },
           path = { name = '[PATH]' },
           buffer = { name = '[BUF]' },
-          cmdline = { name = '[CMD]' },
+          cmdline = {
+            name = '[CMD]',
+            min_keyword_length = function(ctx)
+              -- when typing a command, only show when the keyword is 3 characters or longer
+              if
+                ctx.mode == 'cmdline' and string.find(ctx.line, ' ') == nil
+              then
+                return 3
+              end
+              return 0
+            end,
+          },
           snippets = {
             enabled = true,
             name = '[SNIP]',
