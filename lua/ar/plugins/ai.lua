@@ -21,6 +21,22 @@ local cmp = ar_config.completion.variant
 local ai_cmp = ar_config.ai.completion.variant
 local is_ai_cmp = ar_config.ai.completion.enable
 
+local ignored_filetypes = {
+  'DressingInput',
+  'NeogitCommitMessage',
+  'TelescopePrompt',
+  'TelescopePrompt',
+  'dap-repl',
+  'fzf',
+  'gitcommit',
+  'markdown',
+  'minifiles',
+  'neo-tree-popup',
+  'neo-tree-popup',
+  'noice',
+  'snacks_picker_input',
+}
+
 return {
   {
     'napisani/context-nvim',
@@ -259,8 +275,12 @@ return {
       request_timeout = 4,
       throttle = 2000,
       notify = 'error',
-      cmp = { enable_auto_complete = is_ai_cmp and cmp == 'cmp' },
-      blink = { enable_auto_complete = is_ai_cmp and cmp == 'blink' },
+      cmp = {
+        enable_auto_complete = function() return is_ai_cmp and cmp == 'cmp' end,
+      },
+      blink = {
+        enable_auto_complete = function() return is_ai_cmp and cmp == 'blink' end,
+      },
       provider_options = {
         gemini = {
           optional = {
@@ -301,15 +321,7 @@ return {
       },
       virtualtext = {
         auto_trigger_ft = { '*' },
-        auto_trigger_ignore_ft = {
-          'markdown',
-          'gitcommit',
-          'NeogitCommitMessage',
-          'DressingInput',
-          'TelescopePrompt',
-          'neo-tree-popup',
-          'dap-repl',
-        },
+        auto_trigger_ignore_ft = ignored_filetypes,
         keymap = {
           accept = '<A-u>',
           accept_line = '<A-l>',
