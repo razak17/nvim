@@ -330,6 +330,12 @@ return {
         end
         if is_minuet then
           opts.sources.providers.minuet = {
+            enabled = function()
+              return not ar.find_string(
+                ar_config.ai.ignored_filetypes,
+                vim.bo.ft
+              )
+            end,
             name = '[MINUET]',
             module = 'minuet.blink',
             score_offset = 100,

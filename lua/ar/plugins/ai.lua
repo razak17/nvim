@@ -21,22 +21,6 @@ local cmp = ar_config.completion.variant
 local ai_cmp = ar_config.ai.completion.variant
 local is_ai_cmp = ar_config.ai.completion.enable
 
-local ignored_filetypes = {
-  'DressingInput',
-  'NeogitCommitMessage',
-  'TelescopePrompt',
-  'TelescopePrompt',
-  'dap-repl',
-  'fzf',
-  'gitcommit',
-  'markdown',
-  'minifiles',
-  'neo-tree-popup',
-  'neo-tree-popup',
-  'noice',
-  'snacks_picker_input',
-}
-
 return {
   {
     'napisani/context-nvim',
@@ -321,7 +305,7 @@ return {
       },
       virtualtext = {
         auto_trigger_ft = { '*' },
-        auto_trigger_ignore_ft = ignored_filetypes,
+        auto_trigger_ignore_ft = ar_config.ai.ignored_filetypes,
         keymap = {
           accept = '<A-u>',
           accept_line = '<A-l>',

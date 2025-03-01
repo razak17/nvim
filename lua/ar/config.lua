@@ -271,6 +271,20 @@ local config = {
       ---@type ArAICompletion
       variant = 'minuet',
     },
+    ignored_filetypes = {
+      'DressingInput',
+      'NeogitCommitMessage',
+      'TelescopePrompt',
+      'TelescopePrompt',
+      'dap-repl',
+      'fzf',
+      'gitcommit',
+      'markdown',
+      'minifiles',
+      'neo-tree-popup',
+      'noice',
+      'snacks_picker_input',
+    },
   },
   animation = { enable = false },
   ---@type ArApps
