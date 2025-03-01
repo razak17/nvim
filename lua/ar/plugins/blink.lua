@@ -7,6 +7,8 @@ local ai_cmp = ar_config.ai.completion.variant
 local is_copilot = ai_models.copilot and ai_cmp == 'copilot'
 local is_minuet = ai_models.gemini and ai_cmp == 'minuet'
 
+local show_index = false
+
 return {
   {
     'saghen/blink.cmp',
@@ -73,24 +75,8 @@ return {
           winhighlight = 'NormalFloat:NormalFloat,CursorLine:PmenuSel,NormalFloat:NormalFloat',
           draw = {
             columns = {
-              { 'item_idx' },
-              { 'seperator' },
               { 'label', gap = 1 },
               { 'kind_icon', gap = 2, 'source_name' },
-            },
-            components = {
-              item_idx = {
-                text = function(ctx)
-                  return ctx.idx == 10 and '0'
-                    or ctx.idx >= 10 and ' '
-                    or tostring(ctx.idx)
-                end,
-                highlight = 'comment',
-              },
-              seperator = {
-                text = function() return '│' end,
-                highlight = 'comment',
-              },
             },
             treesitter = { 'lsp' },
           },
@@ -353,7 +339,25 @@ return {
           opts.keymap['<A-y>'] = require('minuet').make_blink_map()
         end
       end
-      --
+
+      if show_index then
+        table.insert(opts.completion.menu.draw.columns, 1, { 'item_idx' })
+        table.insert(opts.completion.menu.draw.columns, 2, { 'seperator' })
+        opts.completion.menu.draw.components = {
+          item_idx = {
+            text = function(ctx)
+              return ctx.idx == 10 and '0'
+                or ctx.idx >= 10 and ' '
+                or tostring(ctx.idx)
+            end,
+            highlight = 'comment',
+          },
+          seperator = {
+            text = function() return '│' end,
+            highlight = 'comment',
+          },
+        }
+      end
 
       require('blink.cmp').setup(opts)
     end,
