@@ -138,6 +138,22 @@ return {
             hl = function(self) return { fg = self.mode_color } end,
           },
         },
+        -- Git Branch
+        {
+          init = update_events({
+            'BufEnter',
+            'BufWritePost',
+            'FocusGained',
+          }),
+          provider = function()
+            return codicons.git.branch .. ' ' .. statusline.git_branch()
+          end,
+          on_click = {
+            callback = statusline.list_branches,
+            name = 'git_change_branch',
+          },
+          hl = { fg = 'yellowgreen' },
+        },
         -- Git
         {
           -- condition = conditions.is_git_repo,
@@ -149,23 +165,6 @@ return {
             'User',
             pattern = { 'GitSignsUpdate', 'GitSignsChanged' },
             callback = function() vim.schedule(vim.cmd.redrawstatus) end,
-          },
-          {
-            provider = function(self)
-              if self.status_dict then
-                return codicons.git.branch
-                  .. ' '
-                  .. (
-                    self.status_dict.head == '' and 'main'
-                    or self.status_dict.head
-                  )
-              end
-            end,
-            on_click = {
-              callback = function() statusline.list_branches() end,
-              name = 'git_change_branch',
-            },
-            hl = { fg = 'yellowgreen' },
           },
           {
             condition = function() return GitStatus ~= nil end,
@@ -307,9 +306,11 @@ return {
         {
           condition = function()
             return ar.is_available('noice.nvim')
+              ---@diagnostic disable-next-line: undefined-field
               and require('noice').api.status.command.has()
           end,
           provider = function()
+            ---@diagnostic disable-next-line: undefined-field
             local noice_cmd = require('noice').api.status.command.get()
             return noice_cmd or ''
           end,
@@ -948,6 +949,7 @@ return {
         event = { 'VimEnter' },
         command = function()
           local timer = vim.uv.new_timer()
+          ---@diagnostic disable-next-line: need-check-nil
           timer:start(0, 120000, function() statusline.git_remote_sync() end)
         end,
       }, {
@@ -955,6 +957,7 @@ return {
         pattern = { 'Neogit*' },
         command = function()
           local timer = vim.uv.new_timer()
+          ---@diagnostic disable-next-line: need-check-nil
           timer:start(0, 120000, function() statusline.git_remote_sync() end)
         end,
       })

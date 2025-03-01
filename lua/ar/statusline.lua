@@ -7,6 +7,8 @@ local conditions = require('heirline.conditions')
 local Job = require('plenary.job')
 
 local M = {}
+_G.IsDotsRepo = false
+_G.GitStatus = { ahead = 0, behind = 0, status = nil }
 
 function M.block() return icons.separators.bar end
 
@@ -39,7 +41,7 @@ function M.git_remote_sync()
   local upstream_args =
     { 'rev-list', '--left-right', '--count', 'HEAD...@{upstream}' }
 
-  if is_dots_repo then
+  if IsDotsRepo then
     local git_command =
       fmt('git --git-dir=%s --work-tree=$HOME', vim.g.dotfiles)
     cmd = 'sh'
@@ -57,11 +59,11 @@ function M.git_remote_sync()
   })
 
   local function on_status_change()
-      vim.schedule(
-        function()
-          api.nvim_exec_autocmds('User', { pattern = 'GitStatusChanged' })
-        end
-      )
+    vim.schedule(
+      function()
+        api.nvim_exec_autocmds('User', { pattern = 'GitStatusChanged' })
+      end
+    )
   end
 
   -- Compare local repository to upstream
@@ -90,6 +92,66 @@ function M.git_remote_sync()
   git_upstream:start()
 end
 ar.command('GitRemoteSync', M.git_remote_sync)
+
+local buffer_repo_cache = {}
+local repo_branch_cache = {}
+
+local function git_branch_from_path(git_path)
+  local head_path =
+    fmt('%s/HEAD', IsDotsRepo and git_path or git_path .. '/.git')
+  local f_head = io.open(head_path)
+  if f_head == nil then return '' end
+  local head = f_head:read()
+  local branch = head:match('ref: refs/heads/(.+)$')
+  if not branch then branch = head:sub(1, 6) end
+  f_head:close()
+  return branch
+end
+
+local function git_branch_changed(git_path)
+  local prev_watcher = repo_branch_cache[git_path]
+    and repo_branch_cache[git_path][2]
+  if prev_watcher then prev_watcher:close() end
+
+  local branch = git_branch_from_path(git_path)
+  local watcher = vim.uv.new_fs_event()
+  repo_branch_cache[git_path] = { branch, watcher }
+
+  ---@diagnostic disable-next-line: need-check-nil
+  watcher:start(
+    git_path .. fmt('%s', IsDotsRepo and '/HEAD' or '/.git/HEAD'),
+    {},
+    vim.schedule_wrap(function(_, _, evts)
+      if evts.change then git_branch_changed(git_path) end
+    end)
+  )
+
+  return branch
+end
+
+-- Ref: https://github.com/emmanueltouzery/nvim_config/blob/907a491617f2506963dc5158def46e597a5e1d45/lua/plugins/lualine.lua?plain=1#L170
+-- made my own git_branch lualine component as the official one didn't properly
+-- update for non-focused buffers on branch change for me.
+function M.git_branch()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local cached_repo = buffer_repo_cache[bufnr]
+  if cached_repo then return repo_branch_cache[cached_repo][1] end
+  local path = vim.fn.expand('%:p')
+  local dir = vim.fs.dirname(path)
+  local git_path = vim.fs.root(dir, '.git')
+  if git_path == nil then
+    local dots_repo = fmt('%s/dotfiles', vim.g.dotfiles)
+    if fn.isdirectory(dots_repo) then
+      git_path = dots_repo
+      IsDotsRepo = true
+    else
+      return ''
+    end
+  end
+  buffer_repo_cache[bufnr] = git_path
+  if repo_branch_cache[git_path] then return repo_branch_cache[git_path][1] end
+  return git_branch_changed(git_path)
+end
 
 local function git_push_pull(action, _)
   local branch = vim.fn.systemlist('git rev-parse --abbrev-ref HEAD')[1]
