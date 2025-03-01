@@ -324,7 +324,7 @@ return {
     end,
   },
   {
-    'lafarr/hierarchy.nvim',
+    'razak17/hierarchy.nvim',
     init = function()
       ar.add_to_select_menu('lsp', {
         ['Function References'] = 'FuncReferences',
