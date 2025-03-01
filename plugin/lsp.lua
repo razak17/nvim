@@ -689,6 +689,18 @@ local function on_attach(client, bufnr)
       bufnr
     )
   end
+  if is_available('hierarchy.nvim') then
+    ar.command(
+      'FuncReferences',
+      function()
+        require('hierarchy').find_recursive_calls(3, client.offset_encoding)
+      end,
+      {
+        nargs = '?',
+        desc = 'Find function references recursively. Usage: FunctionReferences [depth]',
+      }
+    )
+  end
 end
 
 augroup('LspSetupAutoCommands', {

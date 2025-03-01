@@ -242,7 +242,7 @@ return {
   {
     'stevearc/aerial.nvim',
     cmd = { 'AerialToggle' },
-    cond = not ar.plugins.minimal and ar.treesitter.enable,
+    cond = not minimal and ar.treesitter.enable,
     init = function()
       ar.add_to_select_menu('toggle', { ['Toggle Aerial'] = 'AerialToggle' })
     end,
@@ -322,6 +322,16 @@ return {
       require('aerial').setup(opts)
       require('telescope').load_extension('aerial')
     end,
+  },
+  {
+    'lafarr/hierarchy.nvim',
+    init = function()
+      ar.add_to_select_menu('lsp', {
+        ['Function References'] = 'FuncReferences',
+      })
+    end,
+    cond = ar.lsp.enable,
+    opts = {},
   },
   {
     'rmagatti/goto-preview',
