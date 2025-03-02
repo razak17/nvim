@@ -275,7 +275,21 @@ return {
           width = 35,
           mappings = {
             ['<esc>'] = 'revert_preview',
-            ['<CR>'] = 'open_with_window_picker',
+            ['<CR>'] = function(state)
+              local visible_bufs = {}
+              vim.iter(api.nvim_list_wins()):each(function(w)
+                local buf = api.nvim_win_get_buf(w)
+                if vim.bo[buf].ft ~= 'neo-tree' then
+                  table.insert(visible_bufs, buf)
+                end
+              end)
+              local commands = require('neo-tree.sources.common.commands')
+              if #visible_bufs == 1 then
+                commands.open(state)
+              else
+                commands.split_with_window_picker(state)
+              end
+            end,
             ['l'] = 'open',
             ['o'] = 'toggle_node',
             ['P'] = { 'toggle_preview', config = { use_float = false } },
