@@ -143,8 +143,8 @@ inoremap(
 nnoremap('<leader>uu', 'gUiw', { desc = 'capitalize word' })
 --------------------------------------------------------------------------------
 -- Moving lines/visual block
-xnoremap('K', ":m '<-2<CR>gv=gv")
-xnoremap('J', ":m '>+1<CR>gv=gv")
+xnoremap('K', ":m '<-2<CR>gv=gv", { silent = true })
+xnoremap('J', ":m '>+1<CR>gv=gv", { silent = true })
 --------------------------------------------------------------------------------
 -- Windows
 --------------------------------------------------------------------------------
