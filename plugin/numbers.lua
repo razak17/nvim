@@ -45,8 +45,8 @@ local function enable_relative_number()
     return
   end
   if is_ignored() and is_blocked() then return end
-  local enabled = not is_blocked()
-  vim.wo.number, vim.wo.relativenumber = enabled, enabled
+  local enable = not is_blocked()
+  vim.wo.number, vim.wo.relativenumber = enable, enable
 end
 
 local function disable_relative_number()
@@ -62,7 +62,10 @@ ar.command('ToggleRelativeNumber', function()
     disable_relative_number()
   end
 end)
-ar.add_to_select_menu('toggle', { ['Toggle Relative Number'] = 'ToggleRelativeNumber' })
+ar.add_to_select_menu(
+  'toggle',
+  { ['Toggle Relative Number'] = 'ToggleRelativeNumber' }
+)
 
 ar.augroup('ToggleRelativeLineNumbers', {
   event = { 'BufEnter', 'FileType', 'FocusGained', 'InsertLeave' },
