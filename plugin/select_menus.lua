@@ -12,6 +12,7 @@ ar.add_to_select_menu('toggle', {
   ['Toggle Conceal Level'] = 'lua require"ar.select_menus.toggle".toggle_conceal_level()',
   ['Toggle Conceal Cursor'] = 'lua require"ar.select_menus.toggle".toggle_conceal_cursor()',
   ['Toggle Statusline'] = 'lua require"ar.select_menus.toggle".toggle_statusline()',
+  ['Toggle Color Pencils'] = 'lua require"ar.select_menus.toggle".color_my_pencils()',
 })
 
 local toggle_menu = function()

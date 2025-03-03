@@ -54,4 +54,34 @@ function M.toggle_conceal_cursor()
   )
 end
 
+function M.color_my_pencils()
+  local enabled = config.color_my_pencils.enabled
+  config.color_my_pencils.enabled = not enabled
+  if not enabled then
+    local get_hl = ar.highlight.get
+    config.color_my_pencils.highlights = {
+      ColorColumn = { bg = get_hl('ColorColumn', 'bg') },
+      CursorLine = {
+        bg = get_hl('CursorLine', 'bg'),
+        fg = get_hl('CursorLine', 'fg'),
+      },
+      CursorLineNr = { fg = get_hl('CursorLineNr', 'fg') },
+      LineNr = { fg = get_hl('LineNr', 'fg') },
+      Normal = { bg = get_hl('Normal', 'bg') },
+      netrwDir = { fg = get_hl('netrwDir', 'fg') },
+      qfFileName = { fg = get_hl('qfFileName', 'fg') },
+    }
+  end
+  local highlights = enabled and config.color_my_pencils.highlights
+    or config.color_my_pencils.default_highlights
+  for key, value in pairs(highlights) do
+    if value.fg then
+      vim.cmd(string.format('highlight %s guifg=%s', key, value.fg))
+    end
+    if value.bg then
+      vim.cmd(string.format('highlight %s guibg=%s', key, value.bg))
+    end
+  end
+end
+
 return M
