@@ -540,6 +540,10 @@ function ar.truncate(str, max_len)
     or str
 end
 
+---------------------------------------------------------------------------------
+-- Open media files
+---------------------------------------------------------------------------------
+
 function ar.get_media()
   local media = ar.media
   return vim
@@ -597,11 +601,14 @@ function ar.open_media(path, notify)
   ar.open(path, notify)
 end
 
---- open file in window picker if available
+---------------------------------------------------------------------------------
+-- Open with window picker
+---------------------------------------------------------------------------------
+
 ---@param callback fun(picked_window_id: number)
----@param set_current_win? boolean
-function ar.open_with_window_picker(callback, set_current_win)
-  if set_current_win == nil then set_current_win = true end
+---@param set_current_win boolean
+---@param command? 'split' | 'vsplit'
+local function use_window_picker(callback, set_current_win, command)
   local picked_window_id = api.nvim_get_current_win()
   if ar.is_available('nvim-window-picker') then
     picked_window_id = require('window-picker').pick_window({
@@ -610,8 +617,31 @@ function ar.open_with_window_picker(callback, set_current_win)
   end
   if picked_window_id then
     if set_current_win then api.nvim_set_current_win(picked_window_id) end
+    if command then vim.cmd(command) end
     callback(picked_window_id)
   end
+end
+
+--- open file in window picker if available
+---@param callback fun(picked_window_id: number)
+---@param set_current_win? boolean
+function ar.open_with_window_picker(callback, set_current_win)
+  if set_current_win == nil then set_current_win = true end
+  use_window_picker(callback, set_current_win)
+end
+
+---@param callback fun(picked_window_id: number)
+---@param set_current_win? boolean
+function ar.split_with_window_picker(callback, set_current_win)
+  if set_current_win == nil then set_current_win = true end
+  use_window_picker(callback, set_current_win, 'split')
+end
+
+---@param callback fun(picked_window_id: number)
+---@param set_current_win? boolean
+function ar.vsplit_with_window_picker(callback, set_current_win)
+  if set_current_win == nil then set_current_win = true end
+  use_window_picker(callback, set_current_win, 'split')
 end
 
 --- open in centered popup
