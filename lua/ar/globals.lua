@@ -641,7 +641,7 @@ end
 ---@param set_current_win? boolean
 function ar.vsplit_with_window_picker(callback, set_current_win)
   if set_current_win == nil then set_current_win = true end
-  use_window_picker(callback, set_current_win, 'split')
+  use_window_picker(callback, set_current_win, 'vsplit')
 end
 
 --- open in centered popup
