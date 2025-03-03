@@ -1,7 +1,24 @@
 ---@diagnostic disable: undefined-field
-local opt_l = vim.opt_local
+local api, opt_l = vim.api, vim.opt_local
 local l = vim.log.levels
 local M = {}
+
+local config = {
+  color_my_pencils = {
+    enabled = false,
+    highlights = {},
+    default_highlights = {
+      ColorColumn = { bg = 'cyan' },
+      CursorLine = { bg = '#1d7c78', fg = 'black' },
+      CursorLineNr = { fg = '#aed75f' },
+      LineNr = { fg = '#4dd2dc' },
+      Normal = { bg = 'none' },
+      netrwDir = { fg = '#aeacec' },
+      qfFileName = { fg = '#aed75f' },
+    },
+  },
+  toggle_guides = { enabled = true },
+}
 
 local function mappings_notify(msg, type)
   type = type or l.INFO
@@ -81,6 +98,18 @@ function M.color_my_pencils()
     if value.bg then
       vim.cmd(string.format('highlight %s guibg=%s', key, value.bg))
     end
+  end
+end
+
+function M.toggle_guides()
+  local enabled = config.toggle_guides.enabled
+  config.toggle_guides.enabled = not enabled
+  ar_config.plugin.main.numbers.enable = not enabled
+  local wins = api.nvim_list_wins()
+  for _, win in ipairs(wins) do
+    vim.wo[win].number, vim.wo.relativenumber = not enabled, not enabled
+    vim.wo[win].signcolumn = enabled and 'no' or 'yes'
+    vim.wo[win].colorcolumn = enabled and '800' or '80'
   end
 end
 
