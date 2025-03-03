@@ -451,6 +451,7 @@ return {
   },
   {
     'rolv-apneseth/tfm.nvim',
+    cond = false,
     opts = { file_manager = 'yazi' },
     keys = {
       { '<leader>ej', function() require('tfm').open() end, desc = 'TFM' },
