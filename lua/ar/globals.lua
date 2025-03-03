@@ -617,7 +617,17 @@ local function use_window_picker(callback, set_current_win, command)
   end
   if picked_window_id then
     if set_current_win then api.nvim_set_current_win(picked_window_id) end
-    if command then vim.cmd(command) end
+    local ignored_filetypes = { 'neo-tree', 'quickfix' }
+    local visible_bufs = {}
+    vim.iter(api.nvim_list_wins()):each(function(w)
+      local buf = api.nvim_win_get_buf(w)
+      if not ar.find_string(ignored_filetypes, vim.bo[buf].ft) then
+        table.insert(visible_bufs, buf)
+      end
+    end)
+    if #visible_bufs > 1 then
+      if command then vim.cmd(command) end
+    end
     callback(picked_window_id)
   end
 end
