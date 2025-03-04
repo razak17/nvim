@@ -87,7 +87,15 @@ return {
   {
     'andrewferrier/debugprint.nvim',
     cond = not ar.plugin_disabled('debugprint.nvim'),
-    event = 'VeryLazy',
+    -- stylua: ignore
+    keys = {
+      'g?a', 'g?A',
+      'g?o', 'g?O',
+      'g?p', 'g?P',
+      'g?u', 'g?U',
+      'g?v', 'g?V',
+      'g?x',
+    },
     opts = {
       keymaps = {
         normal = {
