@@ -325,6 +325,6 @@ return {
     'letieu/btw.nvim',
     cond = minimal and not niceties,
     lazy = false,
-    config = function() require('btw').setup() end,
+    opts = {},
   },
 }
