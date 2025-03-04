@@ -17,13 +17,6 @@ return {
       require('lazy.core.loader').add_to_rtp(plugin)
       require('nvim-treesitter.query_predicates')
     end,
-    keys = {
-      {
-        '<localleader>R',
-        '<cmd>edit | TSBufEnable highlight<CR>',
-        desc = 'treesitter: enable highlight',
-      },
-    },
     opts = {
       auto_install = true,
       highlight = {
@@ -129,6 +122,12 @@ return {
       }
 
       require('nvim-treesitter.configs').setup(opts)
+      ar.add_to_select_menu('command_palette', {
+        ['Toggle TS Highlight'] = function() vim.cmd.TSBufToggle('highlight') end,
+        ['Enable TS Highlight'] = function()
+          vim.cmd('edit | TSBufEnable highlight')
+        end,
+      })
     end,
     dependencies = {
       {
