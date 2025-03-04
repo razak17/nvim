@@ -311,7 +311,7 @@ local config = {
   explorer = { rename = 'snacks' },
   frecency = { enable = true },
   ---@type ArGx
-  gx = { enable = true, variant = 'local' },
+  gx = { enable = true, variant = 'plugin' },
   ---@type ArLsp
   lsp = {
     disabled = {
