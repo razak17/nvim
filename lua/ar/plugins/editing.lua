@@ -138,10 +138,23 @@ return {
     'altermo/ultimate-autopair.nvim',
     cond = not minimal,
     event = { 'InsertEnter', 'CmdlineEnter' },
+    -- stylua: ignore
+    keys = {
+      -- Open new scope (`remap` to trigger auto-pairing)
+      { '<localleader>os', 'a{<CR>', desc = 'ultimate-autopair: open new scope', remap = true },
+      { '<localleader>os', '{<CR>', mode = 'i', desc = 'ultimate-autopair: open new scope', remap = true },
+    },
     opts = {
       bs = {
         space = 'balance',
         cmap = false, -- keep my `<BS>` mapping for the cmdline
+      },
+      fastwarp = {
+        map = '<M-f>',
+        rmap = '<M-F>', -- backwards
+        hopout = true,
+        nocursormove = true,
+        multiline = false,
       },
       cr = { autoclose = true },
       space = { enable = true },

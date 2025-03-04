@@ -67,6 +67,7 @@ return {
         { '<localleader>lr', group = 'Rulebook' },
         { '<localleader>m', group = 'Markdown' },
         { '<localleader>n', group = 'Neogen/Notifications' },
+        { '<localleader>o', group = 'Open' },
         { '<leader><leader>', group = 'Advanced' },
         { '<leader><leader>a', desc = 'Actions' },
         { '<leader><leader>g', group = 'Git' },
