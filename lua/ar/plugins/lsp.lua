@@ -352,10 +352,32 @@ return {
   {
     'chrisgrieser/nvim-rulebook',
     cond = ar.lsp.enable,
+    init = function()
+      vim.g.whichkey_add_spec({ '<leader>l?', group = 'Rulebook' })
+    end,
     -- stylua: ignore
     keys = {
-      { '<localleader>lri', function() require('rulebook').ignoreRule() end, desc = 'rulebook: ignore rule', },
-      { '<localleader>lrl', function() require('rulebook').lookupRule() end, desc = 'rulebook: lookup rule', },
+      { '<leader>l?f', function() require('rulebook').suppressFormatter() end, mode = { 'n', 'x' }, desc = 'rulebook: formatter suppress' },
+      { '<leader>l?i', function() require('rulebook').ignoreRule() end, desc = 'rulebook: ignore rule' },
+      { '<leader>l?l', function() require('rulebook').lookupRule() end, desc = 'rulebook: lookup rule' },
+      { '<leader>l?y', function() require('rulebook').yankDiagnosticCode() end, desc = 'rulebook: yank diagnostic code' },
+    },
+    opts = {
+      suppressFormatter = {
+        -- use `biome` instead of `prettier`
+        javascript = {
+          location = 'prevLine',
+          ignoreBlock = '// biome-ignore format: expl',
+        },
+        typescript = {
+          location = 'prevLine',
+          ignoreBlock = '// biome-ignore format: expl',
+        },
+        css = {
+          location = 'prevLine',
+          ignoreBlock = '/* biome-ignore format: expl */',
+        },
+      },
     },
   },
   {
