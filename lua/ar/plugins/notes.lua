@@ -82,6 +82,7 @@ return {
   },
   {
     'atiladefreitas/dooing',
+    cond = false,
     cmd = { 'Dooing' },
     init = function()
       vim.g.whichkey_add_spec({ '<leader><localleader>d', group = 'Dooing' })

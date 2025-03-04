@@ -1031,7 +1031,7 @@ return {
   },
   {
     'dimaportenko/project-cli-commands.nvim',
-    cond = min_enabled,
+    cond = min_enabled and false,
     init = function()
       vim.g.whichkey_add_spec({
         '<leader><localleader>P',
