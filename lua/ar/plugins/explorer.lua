@@ -258,9 +258,7 @@ return {
               conflict = icons.git.branch,
             },
           },
-          file_size = {
-            required_width = 50,
-          },
+          file_size = { required_width = 50 },
           diagnostics = {
             highlights = {
               hint = 'DiagnosticHint',
@@ -287,7 +285,7 @@ return {
               if #visible_bufs == 1 then
                 commands.open(state)
               else
-                commands.split_with_window_picker(state)
+                commands.open_with_window_picker(state)
               end
             end,
             ['l'] = 'open',
