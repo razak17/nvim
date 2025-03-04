@@ -290,6 +290,7 @@ return {
           mappings = {
             ['<esc>'] = 'revert_preview',
             ['<CR>'] = custom_open_with_window_picker,
+            ['<A-CR>'] = 'split_with_window_picker',
             ['l'] = 'open',
             ['o'] = 'toggle_node',
             ['P'] = { 'toggle_preview', config = { use_float = false } },
