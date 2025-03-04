@@ -2,7 +2,7 @@ return {
   { 'jsborjesson/vim-uppercase-sql', ft = { 'sql' } },
   {
     'kristijanhusak/vim-dadbod-ui',
-    config = function()
+    init = function()
       vim.g.whichkey_add_spec({ '<leader><leader>d', group = 'Dadbod' })
 
       local function open_db_common(db_name)
