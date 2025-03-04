@@ -534,21 +534,23 @@ nnoremap('<leader><localleader>fo', function()
 end, { desc = 'open in file manager' })
 --------------------------------------------------------------------------------
 -- Rustlings
-nnoremap('<leader><localleader>rd', function()
-  vim.cmd([[%s/\n\n\/\/ I AM NOT DONE//]])
-  vim.cmd.w()
-end, { desc = 'rustlings: done' })
-nnoremap('<leader><localleader>rn', function()
-  local cur = fn.expand('%')
-  local num = cur:sub(-4, -4)
-  local next = cur:sub(1, -5) .. (num + 1) .. '.rs'
-  if fn.filereadable(next) == 1 then
-    vim.cmd('bd')
-    vim.cmd('edit ' .. next)
-  else
-    print('All problems solved for this topic.')
-  end
-end, { desc = 'rustlings: next' })
+ar.add_to_select_menu('command_palette', {
+  ['Rustlings Done'] = function()
+    vim.cmd([[%s/\n\n\/\/ I AM NOT DONE//]])
+    vim.cmd.w()
+  end,
+  ['Rustlings Next'] = function()
+    local cur = fn.expand('%')
+    local num = cur:sub(-4, -4)
+    local next = cur:sub(1, -5) .. (num + 1) .. '.rs'
+    if fn.filereadable(next) == 1 then
+      vim.cmd('bd')
+      vim.cmd('edit ' .. next)
+    else
+      print('All problems solved for this topic.')
+    end
+  end,
+})
 --------------------------------------------------------------------------------
 -- Dump messages in buffer
 -- https://www.reddit.com/r/neovim/comments/1dyngff/a_lua_script_to_dump_messages_to_a_buffer_for/

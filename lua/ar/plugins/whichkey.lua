@@ -79,7 +79,6 @@ return {
         { '<leader><leader>m', desc = 'Markdown' },
         { '<leader><leader>n', group = 'Sticky Note' },
         { '<leader><localleader>', group = 'Advanced' },
-        { '<leader><localleader>r', group = 'Rustlings' },
         { '<localleader><leader>', group = 'Advanced' },
       },
       {
