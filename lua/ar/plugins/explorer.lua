@@ -19,7 +19,7 @@ end
 local function find_or_search_in_dir(cwd, find_or_search)
   if not ar.plugin_available('telescope.nvim') then return end
   local snacks_ok, snacks = pcall(require, 'snacks')
-  local telescope_ok, telescope = pcall(require, 'telesope')
+  local telescope_ok, _ = pcall(require, 'telesope')
   if find_or_search == 'find' then
     if snacks_ok and ar_config.picker.variant == 'snacks' then
       snacks.picker.files({ cwd = cwd })
@@ -60,6 +60,22 @@ return {
       local function disable_autosave()
         ar_config.autosave.current = ar_config.autosave.enable
         if ar_config.autosave.current then ar_config.autosave.enable = false end
+      end
+
+      local function custom_open_with_window_picker(state)
+        local visible_bufs = {}
+        vim.iter(api.nvim_list_wins()):each(function(w)
+          local buf = api.nvim_win_get_buf(w)
+          if vim.bo[buf].ft ~= 'neo-tree' then
+            table.insert(visible_bufs, buf)
+          end
+        end)
+        local commands = require('neo-tree.sources.common.commands')
+        if #visible_bufs == 1 then
+          commands.open(state)
+        else
+          commands.open_with_window_picker(state)
+        end
       end
 
       local function image_preview(state)
@@ -273,21 +289,7 @@ return {
           width = 35,
           mappings = {
             ['<esc>'] = 'revert_preview',
-            ['<CR>'] = function(state)
-              local visible_bufs = {}
-              vim.iter(api.nvim_list_wins()):each(function(w)
-                local buf = api.nvim_win_get_buf(w)
-                if vim.bo[buf].ft ~= 'neo-tree' then
-                  table.insert(visible_bufs, buf)
-                end
-              end)
-              local commands = require('neo-tree.sources.common.commands')
-              if #visible_bufs == 1 then
-                commands.open(state)
-              else
-                commands.open_with_window_picker(state)
-              end
-            end,
+            ['<CR>'] = custom_open_with_window_picker,
             ['l'] = 'open',
             ['o'] = 'toggle_node',
             ['P'] = { 'toggle_preview', config = { use_float = false } },
