@@ -386,15 +386,29 @@ return {
   {
     'pechorin/any-jump.vim',
     cond = ar.lsp.enable,
-    cmd = { 'AnyJump', 'AnyJumpArg', 'AnyJumpLastResults' },
+    cmd = { 'AnyJump', 'AnyJumpArg', 'AnyJumpBack', 'AnyJumpLastResults' },
     init = function()
-      vim.g.whichkey_add_spec({ '<leader><localleader>j', group = 'Any Jump' })
+      vim.g.any_jump_disable_default_keybindings = 1
+      vim.g.whichkey_add_spec({ '<leader>j', group = 'Any Jump' })
+      ar.add_to_select_menu('lsp', {
+        ['Jump To Keyword'] = function()
+          vim.ui.input({
+            prompt = 'Keyword: ',
+            default = '',
+            completion = 'keyword',
+          }, function(keyword)
+            if not keyword or keyword == '' then return end
+            vim.cmd(fmt('AnyJumpArg %s', keyword))
+          end)
+        end,
+      })
     end,
     -- stylua: ignore
     keys = {
-      { '<leader><localleader>jj', '<Cmd>AnyJump<CR>', desc = 'any-jump: jump' },
-      { '<leader><localleader>ja', '<Cmd>AnyJumpArg<CR>', desc = 'any-jump: arg' },
-      { '<leader><localleader>jp', '<Cmd>AnyJumpLastResults<CR>', desc = 'any-jump: resume' },
+      { '<leader>jj', '<Cmd>AnyJump<CR>', desc = 'any-jump: jump' },
+      { mode = { 'x' }, '<leader>jj', '<Cmd>AnyJumpVisual<CR>', desc = 'any-jump: jump' },
+      { '<leader>jb', '<Cmd>AnyJumpBack<CR>', desc = 'any-jump: back' },
+      { '<leader>jl', '<Cmd>AnyJumpLastResults<CR>', desc = 'any-jump: resume' },
     },
   },
   {
