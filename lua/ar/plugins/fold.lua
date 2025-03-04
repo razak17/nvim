@@ -4,9 +4,19 @@ return {
     cond = not ar.plugins.minimal,
     -- stylua: ignore
     keys = {
-      { 'zR', '<Cmd>lua require("ufo").openAllFolds()<CR>', 'ufo: open all folds' },
-      { 'zM', '<Cmd>lua require("ufo").closeAllFolds()<CR>', 'ufo: close all folds' },
-      { 'zK', '<Cmd>lua require("ufo").peekFoldedLinesUnderCursor()<CR>', 'ufo: preview fold' },
+		  { '<leader>uf', vim.cmd.UfoInspect, desc = 'ufo: fold info' },
+      {
+        'zr',
+        function() require('ufo').openFoldsExceptKinds { 'comment', 'imports' } end,
+        desc = 'ufo: open regular folds',
+      },
+      { 'zR', '<Cmd>lua require("ufo").openAllFolds()<CR>', desc = 'ufo: open all folds' },
+      { 'zM', '<Cmd>lua require("ufo").closeAllFolds()<CR>', desc = 'ufo: close all folds' },
+      { 'zK', '<Cmd>lua require("ufo").peekFoldedLinesUnderCursor()<CR>', desc = 'ufo: preview fold' },
+      { 'z1', '<Cmd>lua require("ufo").closeFoldsWith(1)<CR>', desc = 'ufo: close L1 folds' },
+      { 'z2', '<Cmd>lua require("ufo").closeFoldsWith(2)<CR>', desc = 'ufo: close L2 folds' },
+      { 'z3', '<Cmd>lua require("ufo").closeFoldsWith(3)<CR>', desc = 'ufo: close L3 folds' },
+      { 'z4', '<Cmd>lua require("ufo").closeFoldsWith(4)<CR>', desc = 'ufo: close L4 folds' },
     },
     opts = function()
       local ft_map = { rust = 'lsp' }
