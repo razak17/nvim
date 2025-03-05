@@ -18,6 +18,7 @@ return {
   {
     {
       'williamboman/mason.nvim',
+      event = { 'BufReadPre', 'BufNewFile' },
       keys = { { '<leader>lm', '<cmd>Mason<CR>', desc = 'mason info' } },
       build = ':MasonUpdate',
       init = function()

@@ -158,18 +158,28 @@ return {
   },
   {
     'stevearc/conform.nvim',
-    cond = ar.lsp.enable and not ar_config.lsp.null_ls.enable,
+    cond = not ar_config.lsp.null_ls.enable,
     event = { 'BufReadPre', 'BufNewFile' },
     cmd = 'ConformInfo',
-    keys = {
-      { '<localleader>lC', '<Cmd>ConformInfo<CR>', desc = 'conform info' },
-      {
-        '<localleader>lF',
-        function() require('conform').format({ formatters = { 'injected' } }) end,
-        mode = { 'n', 'v' },
-        desc = 'Format Injected Langs',
-      },
-    },
+    keys = function()
+      local mappings = {
+        { '<localleader>lC', '<Cmd>ConformInfo<CR>', desc = 'conform info' },
+        {
+          '<localleader>lF',
+          function() require('conform').format({ formatters = { 'injected' } }) end,
+          mode = { 'n', 'v' },
+          desc = 'conform: format injected langs',
+        },
+      }
+      if not ar.lsp.enable then
+        table.insert(mappings, {
+          '<leader>lf',
+          function() require('conform').format() end,
+          desc = 'conform: format',
+        })
+      end
+      return mappings
+    end,
     init = function() vim.o.formatexpr = "v:lua.require'conform'.formatexpr()" end,
     opts = {
       formatters = {
