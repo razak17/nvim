@@ -354,6 +354,7 @@ return {
     ---@type snacks.Config
     opts = {
       styles = {
+        blame_line = { border = border },
         git = { border = border },
         input = { border = 'single' },
         lazygit = { border = border },
