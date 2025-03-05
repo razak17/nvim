@@ -12,6 +12,9 @@ return {
   -- Lazy nvim
   {
     '2kabhishek/octohub.nvim',
+    init = function()
+      vim.g.whichkey_add_spec({ '<leader><leader>o', group = 'Octohub' })
+    end,
     cmd = {
       'OctoRepos',
       'OctoRepo',

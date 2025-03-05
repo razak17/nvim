@@ -69,6 +69,7 @@ return {
         { '<localleader>n', group = 'Neogen/Notifications' },
         { '<localleader>o', group = 'Open' },
         { '<leader><leader>', group = 'Advanced' },
+        { '<leader><leader>f', group = 'File' },
         { '<leader><leader>g', group = 'Git' },
         { '<leader><leader>gh', group = 'History' },
         { '<leader><leader>gi', group = 'Issues' },
