@@ -124,9 +124,7 @@ return {
       require('nvim-treesitter.configs').setup(opts)
       ar.add_to_select_menu('command_palette', {
         ['Toggle TS Highlight'] = function() vim.cmd.TSBufToggle('highlight') end,
-        ['Enable TS Highlight'] = function()
-          vim.cmd('edit | TSBufEnable highlight')
-        end,
+        ['Enable TS Highlight'] = 'edit | TSBufEnable highlight',
       })
     end,
     dependencies = {
