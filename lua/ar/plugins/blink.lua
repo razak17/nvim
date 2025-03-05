@@ -39,7 +39,8 @@ return {
       cmdline = {
         keymap = {
           -- recommended, as the default keymap will only show and select the next item
-          ['<Tab>'] = { 'show', 'accept' },
+          ['<Tab>'] = { 'show', 'select_next' },
+          ['<S-Tab>'] = { 'show', 'select_prev' },
           ['<CR>'] = { 'accept_and_enter', 'fallback' },
         },
         enabled = true,
