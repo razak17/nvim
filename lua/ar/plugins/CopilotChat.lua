@@ -54,17 +54,7 @@ return {
     init = function()
       vim.g.whichkey_add_spec({ '<leader>ac', group = 'CopilotChat' })
 
-      local function help_actions()
-        local actions = require('CopilotChat.actions')
-        local integrations = require('CopilotChat.integrations.telescope')
-        integrations.pick(actions.help_actions())
-      end
-
-      local function prompt_actions()
-        local actions = require('CopilotChat.actions')
-        local integrations = require('CopilotChat.integrations.telescope')
-        integrations.pick(actions.prompt_actions())
-      end
+      local function prompt_actions() require('CopilotChat').select_prompt() end
 
       local function save_chat()
         local date = os.date('%Y-%m-%d_%H-%M-%S')
@@ -107,7 +97,6 @@ return {
             ['Generate Commit Message'] = 'CopilotChatCommit',
             ['Debug Info'] = 'CopilotChatDebugInfo',
             ['Fix Diagnostic'] = 'CopilotChatFixDiagnostic',
-            ['Help Actions'] = help_actions,
             ['Prompt Actions'] = prompt_actions,
             ['Save Chat'] = save_chat,
             ['Quick Chat'] = quick_chat,
@@ -130,27 +119,15 @@ return {
       show_help = true, -- Show help in virtual text, set to true if that's 1st time using Copilot Chat
       allow_insecure = false, -- Allow insecure server connections
       mappings = {
-        -- Use tab for completion
         complete = {
           detail = 'Use @<Tab> or /<Tab> for options.',
           insert = '<Tab>',
         },
-        -- Close the chat
         close = { normal = 'q', insert = '<C-c>' },
-        -- Reset the chat buffer
         reset = { normal = '<C-x>', insert = '<C-x>' },
-        -- Submit the prompt to Copilot
         submit_prompt = { normal = '<CR>', insert = '<C-s>' },
-        -- Accept the diff
         accept_diff = { normal = '<C-y>', insert = '<C-y>' },
-        -- Yank the diff in the response to register
-        yank_diff = { normal = 'gmy' },
-        -- Show the diff
-        show_diff = { normal = 'gmd' },
-        -- Show the prompt
-        show_info = { normal = 'gmp' },
-        -- Show the user selection
-        show_context = { normal = 'gms' },
+        show_help = { normal = 'g?' },
       },
     },
     config = function(_, opts)
@@ -161,7 +138,7 @@ return {
       local function get_model()
         local model
         if models.claude then
-          model = 'claude-3.5-sonnet'
+          model = 'claude-3.7-sonnet'
         elseif models.openai then
           model = 'gpt-4o'
         end
@@ -227,32 +204,11 @@ return {
       -- Toggle Copilot Chat Vsplit
       { '<leader>acv', '<Cmd>CopilotChatToggle<CR>', desc = 'CopilotChat: toggle' },
       -- Show help actions with telescope
-      {
-        '<leader>ach',
-        function()
-          local actions = require('CopilotChat.actions')
-          local integrations = require('CopilotChat.integrations.telescope')
-          integrations.pick(actions.help_actions())
-        end,
-        desc = 'CopilotChat: help actions',
-      },
       -- Show prompts actions with telescope
       {
         '<leader>acp',
-        function()
-          local actions = require('CopilotChat.actions')
-          local integrations = require('CopilotChat.integrations.telescope')
-          integrations.pick(actions.prompt_actions())
-        end,
+        function() require('CopilotChat').select_prompt() end,
         desc = 'CopilotChat: prompt actions',
-      },
-      {
-        '<leader>acs',
-        function()
-          local date = os.date('%Y-%m-%d_%H-%M-%S')
-          vim.cmd('CopilotChatSave ' .. date)
-        end,
-        desc = 'CopilotChat: save prompt',
       },
       { mode = 'x', '<leader>acp', ":lua require('CopilotChat.integrations.telescope').pick(require('CopilotChat.actions').prompt_actions({selection = require('CopilotChat.select').visual}))<CR>", desc = 'CopilotChat: prompt actions' },
       -- Code related commands
