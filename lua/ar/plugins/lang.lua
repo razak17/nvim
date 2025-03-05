@@ -233,18 +233,17 @@ return {
   },
   {
     'linux-cultist/venv-selector.nvim',
+    branch = 'regexp', -- This is the regexp branch, use this for the new version
     init = function()
-      vim.g.whichkey_add_spec({ '<localleader>lv', group = 'Venv Selector' })
+      ar.add_to_select_menu('command_palette', {
+        ['Venv Selector: select env'] = 'VenvSelect',
+        ['Venv Selector: select cached env'] = 'VenvSelectCached',
+      })
     end,
     cond = ar.lsp.enable,
     cmd = 'VenvSelect',
     opts = {
       name = { 'venv', '.venv', 'env', '.env' },
-    },
-    -- stylua: ignore
-    keys = {
-      { '<localleader>lvo', '<Cmd>VenvSelect<cr>', desc = 'venv-selector: select env' },
-      { '<localleader>lvc', '<Cmd>VenvSelectCached<cr>', desc = 'venv-selector: select cached env' },
     },
   },
   {
