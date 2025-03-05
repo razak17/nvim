@@ -254,7 +254,7 @@ return {
     opts = {
       resolve_import_under_cursor = {
         desc = 'resolve import under cursor',
-        keys = '<leader><leader>li',
+        keys = '<localleader>li',
       },
       python = {
         root_markers = { 'pyproject.toml', 'setup.py', '.git', 'manage.py' },
@@ -263,7 +263,7 @@ return {
       keymaps = {
         resolve_import_under_cursor = {
           desc = 'resolve import under cursor',
-          keys = '<leader><leader>li',
+          keys = '<localleader>li',
         },
       },
     },
