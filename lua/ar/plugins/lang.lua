@@ -198,6 +198,7 @@ return {
       'eruby',
       'htmldjango',
       'templ',
+      'cshtml',
     },
   },
   {
