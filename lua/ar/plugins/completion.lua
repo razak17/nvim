@@ -390,7 +390,7 @@ return {
     end,
     config = function(_, opts)
       local cmp = require('cmp')
-      if is_minuet then
+      if ar.ai.enable and is_minuet then
         opts.mapping['<A-y>'] = require('minuet').make_cmp_map()
       end
 
