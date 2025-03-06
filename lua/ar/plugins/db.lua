@@ -120,7 +120,7 @@ return {
             local Path = require('plenary.path')
             actions.close(prompt_bufnr)
             -- copy to the clipboard
-            vim.fn.setreg('+', Path.new(filename):read())
+            ar.copy_to_clipboard(Path.new(filename):read())
           end)
           map('i', '<C-o>', function()
             local filename = actions_state.get_selected_entry().value

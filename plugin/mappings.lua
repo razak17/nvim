@@ -647,7 +647,7 @@ function ar.null_pointer()
   fn.jobstart({ 'curl', '-sF', 'file=@' .. file .. '', 'https://0x0.st' }, {
     stdout_buffered = true,
     on_stdout = function(_, data)
-      fn.setreg('+', data[1])
+      ar.copy_to_clipboard(data[1])
       vim.notify('Copied ' .. data[1] .. ' to clipboard!')
     end,
     on_stderr = function(_, data)

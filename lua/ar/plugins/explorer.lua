@@ -1,4 +1,5 @@
-local icons, codicons, copy = ar.ui.icons, ar.ui.codicons, ar.copy
+local icons, codicons = ar.ui.icons, ar.ui.codicons
+local copy = ar.copy_to_clipboard
 local highlight, lsp_hls = ar.highlight, ar.ui.lsp.highlights
 local api, fn = vim.api, vim.fn
 local utils = require('ar.utils.fs')

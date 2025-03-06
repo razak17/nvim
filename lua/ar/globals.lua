@@ -349,7 +349,12 @@ function ar.escape_pattern(text) return text:gsub('([^%w])', '%%%1') end
 
 --- copy some text to clipboard
 ---@param to_copy string
-function ar.copy_to_clipboard(to_copy) fn.setreg('+', to_copy) end
+---@param msg? string
+function ar.copy_to_clipboard(to_copy, msg)
+  fn.setreg('+', to_copy)
+  msg = msg or 'Copied to clipboard'
+  vim.notify(msg, vim.log.levels.INFO)
+end
 
 function ar.load_colorscheme(name)
   ar.pcall('theme failed to load because', cmd.colorscheme, name)
@@ -736,13 +741,6 @@ function ar.show_image(path, win_opts, image_opts)
       end
     end,
   })
-end
-
---- Copy `text` to system clipboard
----@param text string
-function ar.copy(text)
-  fn.setreg('+', text)
-  vim.notify('Copied to clipboard', vim.log.levels.INFO)
 end
 
 --- search current word in website. see usage below
