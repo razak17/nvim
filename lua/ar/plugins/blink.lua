@@ -38,6 +38,7 @@ return {
       signature = { window = { border = border } },
       cmdline = {
         keymap = {
+          preset = 'cmdline',
           -- recommended, as the default keymap will only show and select the next item
           ['<Tab>'] = { 'show', 'select_next' },
           ['<S-Tab>'] = { 'show', 'select_prev' },
@@ -46,6 +47,7 @@ return {
         enabled = true,
         completion = {
           ghost_text = { enabled = false },
+          list = { selection = { preselect = false, auto_insert = true } },
           menu = {
             auto_show = function(ctx)
               local type = vim.fn.getcmdtype()
@@ -88,12 +90,7 @@ return {
           window = { border = border },
         },
         ghost_text = { enabled = false },
-        list = {
-          selection = {
-            preselect = false,
-            auto_insert = true,
-          },
-        },
+        list = { selection = { preselect = false, auto_insert = true } },
       },
       sources = {
         default = function()
