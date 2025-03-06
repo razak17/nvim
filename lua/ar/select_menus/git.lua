@@ -152,6 +152,27 @@ local function telescope_commits_mappings(prompt_bufnr, map)
       end,
       desc = 'cherry-pick commit',
     },
+    {
+      'i',
+      '<C-r>r',
+      function()
+        local commit = action_state.get_selected_entry().value
+        vim.cmd(':term! git revert ' .. commit)
+      end,
+      desc = 'revert commit',
+    },
+    {
+      'i',
+      '<C-y>',
+      function()
+        local commit = action_state.get_selected_entry().value
+        ar.copy_to_clipboard(
+          commit,
+          "Copied the commit GUID '" .. commit .. "' to the clipboard"
+        )
+      end,
+      desc = 'copy commit GUID',
+    },
   }
 
   create_mappings(mappings, map)
