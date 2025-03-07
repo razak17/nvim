@@ -30,6 +30,7 @@ require('lazy').setup({
     patterns = { 'razak17' },
     fallback = true,
   },
+  install = { colorscheme = { 'onedark', 'habamax' } },
   -- ui = { border = ar.ui.current.border },
   checker = {
     enabled = true,
