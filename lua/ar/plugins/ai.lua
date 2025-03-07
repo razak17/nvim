@@ -151,18 +151,13 @@ return {
             roles = { llm = '  CodeCompanion', user = 'razak17' },
             keymaps = {
               close = {
-                modes = {
-                  n = 'q',
-                  i = '<C-c>',
-                },
+                modes = { n = 'q', i = '<C-c>' },
                 index = 2,
                 callback = 'keymaps.close',
                 description = 'Close Chat',
               },
               stop = {
-                modes = {
-                  n = '<C-c>',
-                },
+                modes = { n = '<C-c>' },
                 index = 3,
                 callback = 'keymaps.stop',
                 description = 'Stop Request',
@@ -177,11 +172,7 @@ return {
             },
           },
           inline = {
-            diff = {
-              hl_groups = {
-                added = 'DiffAdd',
-              },
-            },
+            diff = { hl_groups = { added = 'DiffAdd' } },
           },
         },
         opts = { log_level = 'DEBUG' },
