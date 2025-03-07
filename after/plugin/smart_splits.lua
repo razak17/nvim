@@ -21,7 +21,8 @@ ar.smart_splits = {
     'trouble',
     'AvanteInput',
     'TelescopePrompt',
-    'noice'
+    'noice',
+    'snacks_dashboard',
   },
 }
 
