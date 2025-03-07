@@ -6,7 +6,7 @@ if not ar or ar.none or not enabled then return end
 ar.bigfile = {
   size_kb = 1024,
   size_bytes = 1024 ^ 2,
-  lines = 1024 * 10,
+  lines = 1024 * 5,
   bytes = 1024 ^ 2,
   ---@param self any
   ---@param format
