@@ -399,7 +399,7 @@ vim.api.nvim_create_autocmd(
       })
       if not decs or ar.falsy(decs) then return end
       if decs.ft == false or decs.fname == false then
-        vim.opt.foldenable = false
+        -- vim.opt.foldenable = false
         vim.opt.colorcolumn = ''
         vim.o.laststatus = 0
         map('n', 'q', '<Cmd>q<CR>', { buffer = args.buf, nowait = true })

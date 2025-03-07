@@ -173,7 +173,7 @@ if is_available('alpha-nvim') then
     event = { 'User' },
     pattern = { 'AlphaReady' },
     command = function(args)
-      opt.foldenable = false
+      -- opt.foldenable = false
       opt.colorcolumn = ''
       vim.o.laststatus = 0
       map('n', 'q', '<Cmd>q<CR>', { buffer = args.buf, nowait = true })
