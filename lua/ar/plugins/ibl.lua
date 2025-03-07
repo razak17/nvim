@@ -1,14 +1,45 @@
 local minimal = ar.plugins.minimal
 local ui, highlight = ar.ui, ar.highlight
+local separators = ui.icons.separators
 local left_thin_block = ui.icons.separators.left_thin_block
+local indentline_enable = ar_config.ui.indentline.enable
+local indentline_variant = ar_config.ui.indentline.variant
 
 return {
   {
-    'lukas-reineke/indent-blankline.nvim',
+    'nvimdev/indentmini.nvim',
     cond = function()
       return not minimal
-        and ar_config.ui.indentline.enable
-        and ar_config.ui.indentline.variant == 'ibl'
+        and indentline_enable
+        and indentline_variant == 'indentmini'
+    end,
+    event = 'UIEnter',
+    opts = {
+      char = separators.left_thin_block,
+      only_current = true,
+      -- stylua: ignore
+      exclude = {
+        'aerial', 'alpha', 'dbout', 'flutterToolsOutline', 'git', 'gitcommit', 'help',
+        'lazy', 'log', 'markdown', 'neogitstatus', 'neo-tree', 'neo-tree-popup', 'norg',
+        'org', 'orgagenda', 'snacks_dashboard', 'startify', 'txt', 'Trouble', 'undotree',
+      },
+    },
+    config = function(_, opts)
+      ar.highlight.plugin('indentmini', {
+        theme = {
+          ['onedark'] = {
+            { IndentLineCurrent = { link = 'IndentBlanklineContextChar' } },
+            { IndentLine = { link = 'IndentBlanklineChar' } },
+          },
+        },
+      })
+      require('indentmini').setup(opts)
+    end,
+  },
+  {
+    'lukas-reineke/indent-blankline.nvim',
+    cond = function()
+      return not minimal and indentline_enable and indentline_variant == 'ibl'
     end,
     event = 'UIEnter',
     main = 'ibl',
@@ -31,27 +62,11 @@ return {
       },
       exclude = {
         buftypes = { 'nofile', 'terminal' },
+        -- stylua: ignore
         filetypes = {
-          'aerial',
-          'alpha',
-          'dbout',
-          'flutterToolsOutline',
-          'git',
-          'gitcommit',
-          'help',
-          'lazy',
-          'log',
-          'markdown',
-          'neogitstatus',
-          'neo-tree',
-          'neo-tree-popup',
-          'norg',
-          'org',
-          'orgagenda',
-          'startify',
-          'txt',
-          'Trouble',
-          'undotree',
+          'aerial', 'alpha', 'dbout', 'flutterToolsOutline', 'git', 'gitcommit', 'help',
+          'lazy', 'log', 'markdown', 'neogitstatus', 'neo-tree', 'neo-tree-popup', 'norg',
+          'org', 'orgagenda', 'snacks_dashboard', 'startify', 'txt', 'Trouble', 'undotree',
         },
       },
     },
@@ -59,7 +74,7 @@ return {
   {
     'shellRaining/hlchunk.nvim',
     enabled = false,
-    cond = not ar.plugins.minimal and false,
+    cond = not minimal and false,
     event = 'BufRead',
     config = function()
       require('hlchunk').setup({

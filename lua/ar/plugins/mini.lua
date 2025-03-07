@@ -151,9 +151,11 @@ return {
   {
     'echasnovski/mini.indentscope',
     cond = function()
+      local indentline_enable = ar_config.ui.indentline.enable
+      local indentline_variant = ar_config.ui.indentline.variant
       return not minimal
-        and ar_config.ui.indentline.enable
-        and ar_config.ui.indentline.variant == 'mini.indentscope'
+        and indentline_enable
+        and indentline_variant == 'mini.indentscope'
     end,
     event = 'UIEnter',
     opts = {
