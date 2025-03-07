@@ -199,6 +199,7 @@ return {
       'htmldjango',
       'templ',
       'cshtml',
+      'razor'
     },
   },
   {

@@ -14,6 +14,7 @@ vim.filetype.add({
   },
   pattern = {
     -- ['.*%.blade%.php'] = 'php',
+    ['.*%.razor'] = 'razor',
     ['.*%.theme'] = 'conf',
     ['.*%.service'] = 'systemd',
     ['.*%.gradle'] = 'groovy',
