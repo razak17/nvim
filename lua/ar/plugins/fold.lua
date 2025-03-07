@@ -2,6 +2,7 @@ return {
   {
     'kevinhwang91/nvim-ufo',
     cond = not ar.plugins.minimal,
+    event = 'UIEnter', -- needed for folds to load in time and comments being closed
     -- stylua: ignore
     keys = {
 		  { '<leader>uf', vim.cmd.UfoInspect, desc = 'ufo: fold info' },
