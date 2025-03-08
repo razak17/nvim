@@ -139,6 +139,12 @@ return {
     event = get_event('poimandres'),
     opts = {},
   },
+  {
+    'Yazeed1s/oh-lucy.nvim',
+    cond = get_cond('oh-lucy-evening'),
+    priority = get_priority('oh-lucy-evening'),
+    event = get_event('oh-lucy-evening'),
+  },
   ------------------------------------------------------------------------------
   -- Mild
   {
