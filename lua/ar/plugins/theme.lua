@@ -1,13 +1,28 @@
 local function is_colorscheme(name) return ar_config.colorscheme == name end
 
-local function get_cond(name)
-  return not ar.plugins.minimal and ar_config.colorscheme == name
+--- Get colorscheme cond
+---@param names table
+---@return boolean
+local function get_cond(names)
+  return not ar.plugins.minimal and ar.find_string(names, ar_config.colorscheme)
 end
 
-local function get_priority(name) return is_colorscheme(name) and 1000 or 50 end
+---@param names table
+---@return number
+local function get_priority(names)
+  for _, theme in ipairs(names) do
+    if is_colorscheme(theme) then return 1000 end
+  end
+  return 50
+end
 
-local function get_event(name)
-  return is_colorscheme(name) and { 'UiEnter' } or { 'VeryLazy' }
+---@param names table
+---@return table
+local function get_event(names)
+  for _, theme in ipairs(names) do
+    if is_colorscheme(theme) then return { 'UiEnter' } end
+  end
+  return { 'VeryLazy' }
 end
 
 return {
@@ -17,17 +32,17 @@ return {
   {
     'razak17/onedark.nvim',
     cond = ar_config.colorscheme == 'onedark',
-    priority = get_priority('onedark'),
-    event = get_event('onedark'),
+    priority = get_priority({ 'onedark' }),
+    event = get_event({ 'onedark' }),
     opts = { variant = 'fill' },
   },
   ------------------------------------------------------------------------------
   -- Monochrome
   {
     'slugbyte/lackluster.nvim',
-    cond = get_cond('lackluster'),
-    priority = get_priority('lackluster'),
-    event = get_event('lackluster'),
+    cond = get_cond({ 'lackluster' }),
+    priority = get_priority({ 'lackluster' }),
+    event = get_event({ 'lackluster' }),
     opts = function()
       local lackluster = require('lackluster')
       local color = lackluster.color
@@ -52,80 +67,80 @@ return {
   },
   {
     'wnkz/monoglow.nvim',
-    cond = get_cond('monoglow'),
-    priority = get_priority('monoglow'),
-    event = get_event('monoglow'),
+    cond = get_cond({ 'monoglow' }),
+    priority = get_priority({ 'monoglow' }),
+    event = get_event({ 'monoglow' }),
     opts = {},
   },
   {
     'aktersnurra/no-clown-fiesta.nvim',
-    cond = get_cond('no-clown-fiesta'),
-    priority = get_priority('no-clown-fiesta'),
-    event = get_event('no-clown-fiesta'),
+    cond = get_cond({ 'no-clown-fiesta' }),
+    priority = get_priority({ 'no-clown-fiesta' }),
+    event = get_event({ 'no-clown-fiesta' }),
     opts = {},
   },
   {
     'dgox16/oldworld.nvim',
-    cond = get_cond('oldworld'),
-    priority = get_priority('oldworld'),
-    event = get_event('oldworld'),
+    cond = get_cond({ 'oldworld' }),
+    priority = get_priority({ 'oldworld' }),
+    event = get_event({ 'oldworld' }),
     opts = {},
   },
   {
     'kvrohit/rasmus.nvim',
-    cond = get_cond('rasmus'),
-    priority = get_priority('rasmus'),
-    event = get_event('rasmus'),
+    cond = get_cond({ 'rasmus' }),
+    priority = get_priority({ 'rasmus' }),
+    event = get_event({ 'rasmus' }),
   },
   {
     'samharju/serene.nvim',
-    cond = get_cond('serene'),
-    priority = get_priority('serene'),
-    event = get_event('serene'),
+    cond = get_cond({ 'serene' }),
+    priority = get_priority({ 'serene' }),
+    event = get_event({ 'serene' }),
   },
   {
     'Wansmer/serenity.nvim',
-    cond = get_cond('serenity'),
-    priority = get_priority('serenity'),
-    event = get_event('serenity'),
+    cond = get_cond({ 'serenity' }),
+    priority = get_priority({ 'serenity' }),
+    event = get_event({ 'serenity' }),
     opts = {},
   },
   {
     'ficcdaf/ashen.nvim',
-    cond = get_cond('ashen'),
-    priority = get_priority('ashen'),
-    event = get_event('ashen'),
+    cond = get_cond({ 'ashen' }),
+    priority = get_priority({ 'ashen' }),
+    event = get_event({ 'ashen' }),
   },
   {
     'dotsilas/darcubox-nvim',
-    cond = get_cond('darcubox'),
-    priority = get_priority('darcubox'),
-    event = get_event('darcubox'),
+    cond = get_cond({ 'darcubox' }),
+    priority = get_priority({ 'darcubox' }),
+    event = get_event({ 'darcubox' }),
   },
   {
     'https://git.sr.ht/~p00f/alabaster.nvim',
-    cond = get_cond('alabaster'),
-    priority = get_priority('alabaster'),
-    event = get_event('alabaster'),
+    cond = get_cond({ 'alabaster' }),
+    priority = get_priority({ 'alabaster' }),
+    event = get_event({ 'alabaster' }),
   },
   {
     'masar3141/mono-jade',
-    cond = get_cond('mono-jade'),
-    priority = get_priority('mono-jade'),
-    event = get_event('mono-jade'),
+    cond = get_cond({ 'mono-jade' }),
+    priority = get_priority({ 'mono-jade' }),
+    event = get_event({ 'mono-jade' }),
   },
   {
     'ferdinandrau/lavish.nvim',
-    cond = get_cond('lavish'),
-    priority = get_priority('lavish'),
-    event = get_event('lavish'),
+    cond = get_cond({ 'lavish' }),
+    priority = get_priority({ 'lavish' }),
+    event = get_event({ 'lavish' }),
     -- config = function() require('lavish').apply() end,
   },
   {
     'comfysage/evergarden',
-    cond = get_cond('evergarden'),
-    priority = get_priority('evergarden'),
-    event = get_event('evergarden'),
+    cond = get_cond({ 'evergarden' }),
+    priority = get_priority({ 'evergarden' }),
+    event = get_event({ 'evergarden' }),
     opts = {
       transparent_background = true,
       variant = 'medium', -- 'hard'|'medium'|'soft'
@@ -134,48 +149,48 @@ return {
   },
   {
     'olivercederborg/poimandres.nvim',
-    cond = get_cond('poimandres'), -- NOTE: clears highlighting on init
-    priority = get_priority('poimandres'),
-    event = get_event('poimandres'),
+    cond = get_cond({ 'poimandres' }), -- NOTE: clears highlighting on init
+    priority = get_priority({ 'poimandres' }),
+    event = get_event({ 'poimandres' }),
     opts = {},
   },
   {
     'Yazeed1s/oh-lucy.nvim',
-    cond = get_cond('oh-lucy-evening'),
-    priority = get_priority('oh-lucy-evening'),
-    event = get_event('oh-lucy-evening'),
+    cond = get_cond({ 'oh-lucy', 'oh-lucy-evening' }),
+    priority = get_priority({ 'oh-lucy', 'oh-lucy-evening' }),
+    event = get_event({ 'oh-lucy', 'oh-lucy-evening' }),
   },
   ------------------------------------------------------------------------------
   -- Mild
   {
     'savq/melange-nvim',
-    cond = get_cond('melange'),
-    priority = get_priority('melange'),
-    event = get_event('melange'),
+    cond = get_cond({ 'melange' }),
+    priority = get_priority({ 'melange' }),
+    event = get_event({ 'melange' }),
   },
   {
     'oxfist/night-owl.nvim',
-    priority = get_priority('night-owl'),
-    event = get_event('night-owl'),
-    cond = get_cond('night-owl'),
+    priority = get_priority({ 'night-owl' }),
+    event = get_event({ 'night-owl' }),
+    cond = get_cond({ 'night-owl' }),
   },
   {
     'atmosuwiryo/vim-winteriscoming',
-    cond = get_cond('WinterIsComing-dark-color-theme'),
-    priority = get_priority('WinterIsComing-dark-color-theme'),
-    event = get_event('WinterIsComing-dark-color-theme'),
+    cond = get_cond({ 'WinterIsComing-dark-color-theme' }),
+    priority = get_priority({ 'WinterIsComing-dark-color-theme' }),
+    event = get_event({ 'WinterIsComing-dark-color-theme' }),
   },
   {
     'projekt0n/github-nvim-theme',
-    cond = get_cond('github_dark'),
-    priority = get_priority('github_dark'),
-    event = get_event('github_dark'),
+    cond = get_cond({ 'github_dark' }),
+    priority = get_priority({ 'github_dark' }),
+    event = get_event({ 'github_dark' }),
   },
   {
     'NTBBloodbath/doom-one.nvim',
-    cond = get_cond('doom-one'),
-    priority = get_priority('doom-one'),
-    event = get_event('doom-one'),
+    cond = get_cond({ 'doom-one' }),
+    priority = get_priority({ 'doom-one' }),
+    event = get_event({ 'doom-one' }),
     config = function()
       vim.g.doom_one_pumblend_enable = true
       vim.g.doom_one_pumblend_transparency = 3
@@ -183,92 +198,92 @@ return {
   },
   {
     'neanias/everforest-nvim',
-    cond = get_cond('everforest'),
-    priority = get_priority('everforest'),
-    event = get_event('everforest'),
+    cond = get_cond({ 'everforest' }),
+    priority = get_priority({ 'everforest' }),
+    event = get_event({ 'everforest' }),
     opts = {},
     config = function(_, opts) require('everforest').setup(opts) end,
   },
   {
     'nuvic/flexoki-nvim',
     name = 'flexoki',
-    cond = get_cond('flexoki'),
-    priority = get_priority('flexoki'),
-    event = get_event('flexoki'),
+    cond = get_cond({ 'flexoki' }),
+    priority = get_priority({ 'flexoki' }),
+    event = get_event({ 'flexoki' }),
     opts = {},
   },
   {
     'aliqyan-21/darkvoid.nvim',
-    cond = get_cond('darkvoid'),
-    priority = get_priority('darkvoid'),
-    event = get_event('darkvoid'),
+    cond = get_cond({ 'darkvoid' }),
+    priority = get_priority({ 'darkvoid' }),
+    event = get_event({ 'darkvoid' }),
   },
   {
     'lunarvim/lunar.nvim',
-    cond = get_cond('lunar'),
-    priority = get_priority('lunar'),
-    event = get_event('lunar'),
+    cond = get_cond({ 'lunar' }),
+    priority = get_priority({ 'lunar' }),
+    event = get_event({ 'lunar' }),
   },
   {
     'philosofonusus/morta.nvim',
     name = 'morta',
-    cond = get_cond('morta'),
-    priority = get_priority('morta'),
-    event = get_event('morta'),
+    cond = get_cond({ 'morta' }),
+    priority = get_priority({ 'morta' }),
+    event = get_event({ 'morta' }),
   },
   {
     'rjshkhr/shadow.nvim',
-    cond = get_cond('shadow'),
-    priority = get_priority('shadow'),
-    event = get_event('shadow'),
+    cond = get_cond({ 'shadow' }),
+    priority = get_priority({ 'shadow' }),
+    event = get_event({ 'shadow' }),
   },
   ------------------------------------------------------------------------------
   -- Clown show
   {
     'eldritch-theme/eldritch.nvim',
-    cond = get_cond('eldritch'),
-    priority = get_priority('eldritch'),
-    event = get_event('eldritch'),
+    cond = get_cond({ 'eldritch' }),
+    priority = get_priority({ 'eldritch' }),
+    event = get_event({ 'eldritch' }),
     opts = {},
   },
   {
     'judaew/ronny.nvim',
-    cond = get_cond('ronny'),
-    priority = get_priority('ronny'),
-    -- event = get_event('ronny'),
+    cond = get_cond({ 'ronny' }),
+    priority = get_priority({ 'ronny' }),
+    -- event = get_event({'ronny'}),
     opts = {},
   },
   {
     'LunarVim/horizon.nvim',
-    cond = get_cond('horizon'),
-    priority = get_priority('horizon'),
-    event = get_event('horizon'),
+    cond = get_cond({ 'horizon' }),
+    priority = get_priority({ 'horizon' }),
+    event = get_event({ 'horizon' }),
   },
   {
     'scottmckendry/cyberdream.nvim',
-    cond = get_cond('cyberdream'),
-    priority = get_priority('cyberdream'),
-    event = get_event('cyberdream'),
+    cond = get_cond({ 'cyberdream' }),
+    priority = get_priority({ 'cyberdream' }),
+    event = get_event({ 'cyberdream' }),
     opts = {},
   },
   {
     'folke/tokyonight.nvim',
-    cond = get_cond('tokyonight'),
-    priority = get_priority('tokyonight'),
-    event = get_event('tokyonight'),
+    cond = get_cond({ 'tokyonight' }),
+    priority = get_priority({ 'tokyonight' }),
+    event = get_event({ 'tokyonight' }),
     opts = {},
   },
   {
     'wtfox/jellybeans.nvim',
-    cond = get_cond('jellybeans'),
-    priority = get_priority('jellybeans'),
-    event = get_event('jellybeans'),
+    cond = get_cond({ 'jellybeans' }),
+    priority = get_priority({ 'jellybeans' }),
+    event = get_event({ 'jellybeans' }),
   },
   {
     'Skardyy/makurai-nvim',
-    cond = get_cond('makurai'),
-    priority = get_priority('makurai'),
-    event = get_event('makurai'),
+    cond = get_cond({ 'makurai' }),
+    priority = get_priority({ 'makurai' }),
+    event = get_event({ 'makurai' }),
   },
   -- }}}
   --------------------------------------------------------------------------------
@@ -277,18 +292,18 @@ return {
   {
     'sontungexpt/witch',
     enabled = false,
-    cond = get_cond('witch'),
-    priority = get_priority('witch'),
-    event = get_event('witch'),
+    cond = get_cond({ 'witch' }),
+    priority = get_priority({ 'witch' }),
+    event = get_event({ 'witch' }),
     opts = { style = 'dark' },
     config = function(_, opts) require('witch').setup(opts) end,
   },
   {
     'cdmill/neomodern.nvim',
     enabled = false,
-    cond = get_cond('neomodern'),
-    priority = get_priority('neomodern'),
-    event = get_event('neomodern'),
+    cond = get_cond({ 'neomodern' }),
+    priority = get_priority({ 'neomodern' }),
+    event = get_event({ 'neomodern' }),
     config = function()
       require('neomodern').setup({
         highlights = {
