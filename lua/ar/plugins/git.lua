@@ -130,8 +130,7 @@ return {
     end,
   },
   {
-    -- 'chrisgrieser/nvim-tinygit',
-    'razak17/nvim-tinygit', -- use vim.ui.input instead on dressing directly
+    'chrisgrieser/nvim-tinygit',
     cond = enabled,
     -- stylua: ignore
     keys = {
