@@ -181,6 +181,10 @@ return {
             { MiniIndentscopeSymbol = { link = 'IndentBlanklineContextChar' } },
             { MiniIndentscopeSymbolOff = { link = 'IndentBlanklineChar' } },
           },
+          ['default'] = {
+            { MiniIndentscopeSymbol = { link = 'NonText' } },
+            { MiniIndentscopeSymbolOff = { link = 'NonText' } },
+          },
         },
       })
       require('mini.indentscope').setup(opts)

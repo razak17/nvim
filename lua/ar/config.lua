@@ -256,6 +256,7 @@ local namespace = {
     },
   },
 }
+_G.ar = ar or namespace
 
 local config = {
   ai = {
@@ -303,7 +304,7 @@ local config = {
     ---@type ArCompletion
     variant = 'blink',
   },
-  colorscheme = 'onedark',
+  colorscheme = ar.plugins.minimal and 'default' or 'onedark',
   ---@type ArDashboard
   dashboard = { enable = true, variant = 'alpha' },
   debug = { enable = false },
@@ -395,7 +396,6 @@ local config = {
     transparent = { enable = true },
   },
 }
-
-_G.ar = ar or namespace
 _G.ar_config = config
+
 _G.map = vim.keymap.set

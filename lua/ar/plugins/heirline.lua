@@ -30,21 +30,37 @@ local force_inactive_filetypes = {
 }
 
 local function setup_colors()
+  local hl = ar.highlight
+  -- TODO: Overriding statusline highlight twice (also in colors overrides)
+  hl.plugin('heirline', {
+    theme = {
+      ['default'] = {
+        {
+          StatusLine = {
+            bg = { from = 'StatusLine', alter = -0.85 },
+            fg = { from = 'Normal' },
+          },
+        },
+      },
+    },
+  })
   local P = {
-    bg_dark = ar.highlight.get('Pmenu', 'bg'),
-    fg = ar.highlight.get('Normal', 'fg'),
-    blue = ar.highlight.get('DiagnosticInfo', 'bg'),
-    dark_orange = ar.highlight.get('DiagnosticWarn', 'bg'),
-    error_red = ar.highlight.get('DiagnosticError', 'bg'),
-    pale_blue = ar.highlight.get('DiagnosticInfo', 'bg'),
-    comment = ar.highlight.get('Comment', 'fg'),
-    forest_green = ar.highlight.get('DiffAdd', 'fg'),
+    bg_dark = hl.get('StatusLine', 'bg'),
+    fg = hl.get('Normal', 'fg'),
+    blue = hl.get('DiagnosticInfo', 'bg'),
+    dark_orange = hl.get('DiagnosticWarn', 'bg'),
+    error_red = hl.get('NvimInternalError', 'bg'),
+    pale_red = ar.highlight.get('Error', 'fg'),
+    pale_blue = hl.get('DiagnosticInfo', 'bg'),
+    comment = hl.get('Comment', 'fg'),
+    forest_green = hl.get('DiffAdd', 'fg'),
   }
   if ar_config.colorscheme == 'default' then
     return vim.tbl_deep_extend('force', P, {
       blue = ar.highlight.get('DiagnosticInfo', 'fg'),
       dark_orange = ar.highlight.get('DiagnosticWarn', 'fg'),
-      error_red = ar.highlight.get('DiagnosticError', 'fg'),
+      error_red = ar.highlight.get('ExtraWhitespace', 'fg'),
+      pale_red = ar.highlight.get('DiagnosticError', 'fg'),
       pale_blue = ar.highlight.get('DiagnosticInfo', 'fg'),
       forest_green = ar.highlight.get('DiffAdd', 'bg'),
     })

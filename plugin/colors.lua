@@ -147,6 +147,35 @@ end
 
 local function colorscheme_overrides()
   local overrides = {
+    ['default'] = {
+      { Comment = { fg = { from = 'Comment', alter = -0.2 } } },
+      { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.3 } } },
+      {
+        StatusLine = {
+          bg = { from = 'StatusLine', alter = -0.85 },
+          fg = { from = 'Normal' },
+        },
+      },
+      { FloatTitle = { bg = { from = 'Cursorline', alter = 0.05 } } },
+      { IndentBlanklineContextChar = { link = 'Comment' } },
+      { Pmenu = { bg = { from = 'Pmenu', alter = -0.2 } } },
+      { PmenuExtra = { link = 'Pmenu' } },
+      {
+        PmenuSel = {
+          bg = { from = 'Search' },
+          reverse = false,
+        },
+      },
+      { PmenuExtraSel = { link = 'PmenuSel' } },
+      { PmenuThumb = { link = 'CurSearch' } },
+      { VertSplit = { fg = { from = 'NonText', alter = -0.2 } } },
+      { WinSeparator = { link = 'VertSplit' } },
+      { FloatBorder = { link = 'VertSplit' } },
+      { IndentBlanklineChar = { link = 'VertSplit' } },
+      { Winbar = { link = 'Variable' } },
+      { WinbarNC = { link = 'LineNr' } },
+      { Folded = { bg = { from = 'CursorLine', alter = -0.2 } } },
+    },
     ['onedark'] = {
       { Dim = { inherit = 'VertSplit' } },
       { NeorgContext = { inherit = 'Normal' } },
