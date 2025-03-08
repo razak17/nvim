@@ -514,6 +514,25 @@ return {
     opts = {},
     config = function(_, opts) require('output_panel').setup(opts) end,
   },
+  {
+    'bassamsdata/namu.nvim',
+    cond = not minimal and ar.lsp.enable,
+    keys = {
+      {
+        '<leader>ls',
+        function() require('namu.namu_symbols').show() end,
+        mode = { 'n', 'x', 'o' },
+        desc = 'namu: show',
+      },
+    },
+    opts = {
+      namu_symbols = {
+        enable = true,
+        options = {}, -- here you can configure namu
+      },
+      ui_select = { enable = false }, -- vim.ui.select() wrapper
+    },
+  },
   -- }}}
   ------------------------------------------------------------------------------
   -- Disabled {{{1
