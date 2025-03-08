@@ -419,6 +419,9 @@ return {
           },
         },
         debug = { scores = false },
+        formatters = {
+          file = { filename_first = true, truncate = 80 },
+        },
         layout = {
           cycle = true,
           preset = function()
