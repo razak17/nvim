@@ -12,5 +12,4 @@ local spec = vim.iter(plugins_list):fold({}, function(acc, path)
   return acc
 end)
 
--- print('DEBUGPRINT[367]: init.lua:17: spec=' .. vim.inspect(spec))
 return spec
