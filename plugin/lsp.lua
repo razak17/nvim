@@ -722,6 +722,7 @@ augroup('LspSetupAutoCommands', {
     api.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc', {
       buf = args.buf,
     })
+    vim.opt.foldexpr = 'v:lua.vim.lsp.foldexpr()'
   end,
 }, {
   event = 'DiagnosticChanged',
