@@ -268,9 +268,9 @@ local config = {
       openai = false,
     },
     completion = {
-      enable = true,
+      enable = false,
       ---@type ArAICompletion
-      variant = 'minuet',
+      variant = 'copilot',
     },
     ignored_filetypes = {
       'DressingInput',
