@@ -24,7 +24,12 @@ local minimal = ar.plugins.minimal
 return {
   {
     'CopilotC-Nvim/CopilotChat.nvim',
-    cond = not minimal and ar.ai.enable and ar.completion.enable,
+    cond = function()
+      return not minimal
+        and ar.ai.enable
+        and ar.completion.enable
+        and ar_config.ai.models.copilot
+    end,
     cmd = {
       'CopilotChatExplain',
       'CopilotChatReview',
