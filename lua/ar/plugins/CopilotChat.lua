@@ -114,6 +114,7 @@ return {
       end, 3000)
     end,
     opts = {
+      model = 'claude-3.7-sonnet',
       prompts = prompts,
       auto_follow_cursor = false, -- Don't follow the cursor after getting response
       show_help = true, -- Show help in virtual text, set to true if that's 1st time using Copilot Chat
@@ -132,23 +133,6 @@ return {
     },
     config = function(_, opts)
       local chat = require('CopilotChat')
-
-      local models = ar_config.ai.models
-
-      local function get_model()
-        local model
-        if models.claude then
-          model = 'claude-3.7-sonnet'
-        elseif models.openai then
-          model = 'gpt-4o'
-        end
-        return model
-      end
-
-      local fmt = string.format
-      local model = get_model()
-      if model then opts.model = model end
-      opts.answer_header = fmt('## %s', model and model or 'Copilot')
 
       chat.setup(opts)
 
