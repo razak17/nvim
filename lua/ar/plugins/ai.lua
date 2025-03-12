@@ -126,7 +126,7 @@ return {
           ar.create_select_menu('Codecompanion', {
             ['Toggle Chat'] = 'CodeCompanionChat Toggle',
             ['Actions'] = 'CodeCompanionActions',
-            ['Add Selection'] = 'CodeCompanionChat Add',
+            ['Add Selection'] = function() visual_cmd('CodeCompanionChat Add') end,
             ['Explain'] = function() visual_cmd('CodeCompanion /explain') end,
             ['Fix'] = function() visual_cmd('CodeCompanion /fix') end,
             ['Lsp'] = function() visual_cmd('CodeCompanion /lsp') end,
@@ -148,7 +148,7 @@ return {
       local opts = {
         strategies = {
           chat = {
-            roles = { llm = '  CodeCompanion', user = 'razak17' },
+            roles = { llm = '  CodeCompanion', user = 'me' },
             keymaps = {
               close = {
                 modes = { n = 'q', i = '<C-c>' },
@@ -164,6 +164,7 @@ return {
               },
             },
           },
+          inline = {},
         },
         display = {
           chat = {
@@ -181,9 +182,7 @@ return {
       local function set_adapter_and_strategy(model_name)
         opts.adapters[model_name] = model_name
         opts.strategies.chat.adapter = model_name
-        opts.strategies.chat.inline = model_name
-        opts.strategies.chat.agent = model_name
-        opts.strategies.chat.roles.llm = '  CodeCompanion - ' .. model_name
+        opts.strategies.inline.adapter = model_name
       end
 
       opts.adapters = {}
