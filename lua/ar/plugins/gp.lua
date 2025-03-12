@@ -1,4 +1,9 @@
 local api, fn = vim.api, vim.fn
+local fmt = string.format
+
+local models = ar_config.ai.models
+
+vim.env.GOOGLEAI_API_KEY = vim.env.GEMINI_API_KEY or ''
 
 local templates = {
   unit_tests = 'I have the following code from {{filename}}:\n\n'
@@ -11,6 +16,20 @@ local templates = {
     .. '```{{filetype}}\n{{selection}}\n```\n\n'
     .. 'Please analyze for code smells and suggest improvements.',
 }
+
+local function gp_agent()
+  local buf = api.nvim_get_current_buf()
+  local file_name = api.nvim_buf_get_name(buf)
+  local is_chat = require('gp').not_chat(buf, file_name) == nil
+  local agents = is_chat and require('gp')._chat_agents
+    or require('gp')._command_agents
+  local prompt_title = is_chat and 'Chat Models' or 'Completion Models'
+  vim.ui.select(agents, { prompt = prompt_title }, function(selected)
+    if selected ~= nil then require('gp').cmd.Agent({ args = selected }) end
+  end)
+end
+
+ar.command('GpSelectAgent', gp_agent)
 
 return {
   'robitx/gp.nvim',
@@ -268,44 +287,76 @@ return {
             :find()
         end,
       },
-      providers = {},
-      agents = {},
+      providers = {
+        openai = { disable = not models.openai },
+        copilot = { disable = not models.copilot },
+        googleai = { disable = not models.gemini },
+        anthropic = { disable = not models.claude },
+      },
+      agents = {
+        { name = 'ChatClaude-3-Haiku', disable = true },
+      },
+      default_chat_agent = 'ChatGemini',
     }
 
-    local gp_config = require('gp.config')
-    local providers = gp_config.providers
-    local default_system_prompt = require('gp.defaults').chat_system_prompt
-
-    --- Setup a model with given provider and agent.
-    --- Adds configuration to opts.providers and opts.agents.
-    ---@param model_name string: The name of the model from gp_config
-    ---@param agent string: The agent name to be configured
-    local function setup_model(model_name, agent)
-      if not providers[model_name] then return end
-
-      opts.providers[model_name] = {
-        endpoint = providers[model_name].endpoint,
-        secret = providers[model_name].secret,
-      }
-
-      vim.tbl_extend('force', opts.agents, {
-        {
-          {
-            name = agent,
-            provider = model_name,
-            chat = true,
-            command = true,
-            model = { model = agent },
-            system_prompt = default_system_prompt,
-          },
-        },
+    local function setup_model(model)
+      table.insert(opts.agents, {
+        provider = model.provider,
+        name = model.name,
+        model = model.model,
+        chat = model.chat,
+        command = model.command,
+        system_prompt = require('gp.defaults').chat_system_prompt,
       })
     end
 
-    local models = ar_config.ai.models
-    if models.openai then setup_model('openai', 'gpt-4o') end
-    if models.copilot then setup_model('copilot', 'ChatCopilot') end
-    if models.claude then setup_model('anthropic', 'ChatClaude-3-5-Sonnet') end
+    if models.copilot then
+      local copilot_models = {
+        'claude-3.5-sonnet',
+        'claude-3.7-sonnet',
+        'gemini-2.0-flash-001',
+      }
+      for _, model in ipairs(copilot_models) do
+        setup_model({
+          provider = 'copilot',
+          name = fmt('ChatCopilot (%s)', model),
+          model = { model = model, temperature = 1.1, top_p = 1 },
+          chat = true,
+          command = false,
+        })
+      end
+    end
+    if models.gemini then
+      setup_model({
+        provider = 'googleai',
+        name = 'ChatGemini',
+        model = { model = 'gemini-2.0-flash-001', temperature = 1.1, top_p = 1 },
+        chat = true,
+        command = false,
+      })
+    end
+    if models.claude then
+      setup_model({
+        provider = 'anthropic',
+        name = 'ChatClaude-3-5-Sonnet',
+        model = {
+          model = 'claude-3-5-sonnet-20240620',
+          temperature = 0.8,
+          top_p = 1,
+        },
+        chat = true,
+        command = false,
+      })
+    end
+    if models.openai then
+      setup_model({
+        provider = 'openai',
+        name = 'ChatGPT4o',
+        model = { model = 'gpt-4o', temperature = 1.1, top_p = 1 },
+        chat = true,
+        command = false,
+      })
+    end
 
     return opts
   end,
