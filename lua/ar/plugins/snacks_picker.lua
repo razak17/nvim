@@ -2,83 +2,77 @@ local fn = vim.fn
 local fmt = string.format
 local diag_icons = ar.ui.codicons.lsp
 
-local default_layout = {
-  layout = {
-    box = 'horizontal',
-    width = 0.8,
-    min_width = 120,
-    height = 0.8,
-    {
-      box = 'vertical',
-      border = 'single',
-      title = '{title} {live} {flags}',
-      { win = 'input', height = 1, border = 'bottom' },
-      { win = 'list', border = 'none' },
-    },
-    {
-      win = 'preview',
-      title = '{preview}',
-      border = 'single',
-      width = 0.6,
-    },
-  },
-}
-
-local select_layout = {
-  layout = {
-    backdrop = false,
-    width = 0.5,
-    min_width = 80,
-    height = 0.4,
-    min_height = 3,
-    box = 'vertical',
-    border = 'single',
-    title = '{title}',
-    title_pos = 'center',
-    { win = 'input', height = 1, border = 'bottom' },
-    { win = 'list', border = 'none' },
-    { win = 'preview', title = '{preview}', height = 0.4, border = 'top' },
-  },
-}
-
-local telescope_layout = {
-  reverse = false,
-  layout = {
-    box = 'horizontal',
-    backdrop = false,
-    width = 0.8,
-    height = 0.9,
-    border = 'none',
-    {
-      box = 'vertical',
+local picker_layouts = {
+  telescope = {
+    reverse = false,
+    layout = {
+      box = 'horizontal',
+      backdrop = false,
+      width = 0.8,
+      height = 0.9,
+      border = 'none',
       {
-        win = 'list',
-        title = ' Results ',
-        title_pos = 'center',
-        border = 'single',
+        box = 'vertical',
+        {
+          win = 'list',
+          title = ' Results ',
+          title_pos = 'center',
+          border = 'single',
+        },
+        {
+          win = 'input',
+          height = 1,
+          border = 'single',
+          title = '{title} {live} {flags}',
+          title_pos = 'center',
+        },
       },
       {
-        win = 'input',
-        height = 1,
+        win = 'preview',
+        title = '{preview:Preview}',
+        width = 0.6,
+        border = 'single',
+        title_pos = 'center',
+      },
+    },
+  },
+  default = {
+    layout = {
+      box = 'horizontal',
+      width = 0.8,
+      min_width = 120,
+      height = 0.8,
+      {
+        box = 'vertical',
         border = 'single',
         title = '{title} {live} {flags}',
-        title_pos = 'center',
+        { win = 'input', height = 1, border = 'bottom' },
+        { win = 'list', border = 'none' },
+      },
+      {
+        win = 'preview',
+        title = '{preview}',
+        border = 'single',
+        width = 0.6,
       },
     },
-    {
-      win = 'preview',
-      title = '{preview:Preview}',
-      width = 0.6,
+  },
+  select = {
+    layout = {
+      backdrop = false,
+      width = 0.5,
+      min_width = 80,
+      height = 0.4,
+      min_height = 3,
+      box = 'vertical',
       border = 'single',
+      title = '{title}',
       title_pos = 'center',
+      { win = 'input', height = 1, border = 'bottom' },
+      { win = 'list', border = 'none' },
+      { win = 'preview', title = '{preview}', height = 0.4, border = 'top' },
     },
   },
-}
-
-local picker_layouts = {
-  telescope = telescope_layout,
-  default = default_layout,
-  select = select_layout,
 }
 
 ---@param source string
