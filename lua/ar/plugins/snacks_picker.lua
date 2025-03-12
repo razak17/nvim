@@ -245,6 +245,21 @@ return {
           },
         },
         actions = {
+          trash_file = function(picker, _, _)
+            local items = picker:selected({ fallback = true })
+            if not items then
+              vim.notify('No items selected')
+              return
+            end
+            picker:close()
+            local selected = items[1]
+            if fn.confirm('Delete file?', '&Yes\n&No') == 1 then
+              if selected then
+                local file = selected._path
+                ar.trash_file(file, true)
+              end
+            end
+          end,
           open_with_window_picker = function(picker, _, action)
             local items = picker:selected({ fallback = true })
             if not items then

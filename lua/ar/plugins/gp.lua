@@ -29,6 +29,25 @@ local function gp_choose_agent()
   end)
 end
 
+local function gp_finder()
+  Snacks.picker.files({
+    debug = { files = true },
+    show_empty = true,
+    cwd = fn.stdpath('data') .. '/gp/chats',
+    matcher = { cwd_bonus = true, frecency = true, sort_empty = true },
+    on_show = function() vim.cmd.stopinsert() end,
+    -- TODO: Find a way to get newest files first
+    transform = function(item) return item end,
+    win = {
+      input = {
+        keys = {
+          ['<C-d>'] = 'trash_file',
+        },
+      },
+    },
+  })
+end
+
 return {
   'robitx/gp.nvim',
   cond = not ar.plugins.minimal and ar.ai.enable,
@@ -37,7 +56,7 @@ return {
     { '<c-g><c-a>', gp_choose_agent, desc = 'gp: choose model' },
     -- Chat commands
     { '<c-g>n', '<Cmd>GpChatNew<CR>', desc = 'gp: new chat', mode = { 'n', 'i', 'v' }, },
-    { '<c-g>f', '<Cmd>GpChatFinder<CR>', desc = 'gp: find chat', mode = { 'n', 'i' }, },
+    { '<c-g>f', gp_finder, desc = 'gp: find chat', mode = { 'n', 'i' }, },
     { '<c-g><c-g>', '<Cmd>GpChatRespond<CR>', desc = 'gp: respond', mode = { 'n', 'i' }, },
     { '<c-g>d', '<Cmd>GpChatDelete<CR>', desc = 'gp: delete chat', mode = { 'n', 'i' }, },
     { '<c-g>s', '<Cmd>GpChatToggle split<CR>', desc = 'gp: toggle chat in horizontal split' },
