@@ -31,12 +31,11 @@ end
 
 local function gp_finder()
   Snacks.picker.files({
-    debug = { files = true },
     show_empty = true,
     cwd = fn.stdpath('data') .. '/gp/chats',
-    matcher = { cwd_bonus = true, frecency = true, sort_empty = true },
     on_show = function() vim.cmd.stopinsert() end,
     -- TODO: Find a way to get newest files first
+    -- matcher = { cwd_bonus = true, frecency = true, sort_empty = true },
     transform = function(item) return item end,
     win = {
       input = {
