@@ -312,6 +312,7 @@ return {
       },
       agents = {
         { name = 'ChatClaude-3-Haiku', disable = true },
+        { name = 'ChatCopilot', disable = true },
       },
       default_chat_agent = 'ChatGemini',
     }
@@ -329,15 +330,24 @@ return {
 
     if models.copilot then
       local copilot_models = {
-        'claude-3.5-sonnet',
-        'claude-3.7-sonnet',
-        'gemini-2.0-flash-001',
+        ['claude-3.5-sonnet'] = {},
+        ['claude-3.7-sonnet'] = {},
+        ['claude-3.7-sonnet-thought'] = { max_tokens = 8192 },
+        ['gemini-2.0-flash-001'] = {},
+        ['gpt-4o'] = {},
+        ['gpt-4o-mini'] = {},
+        ['o3-mini'] = {},
       }
-      for _, model in ipairs(copilot_models) do
+      for model, config in pairs(copilot_models) do
         setup_model({
           provider = 'copilot',
           name = fmt('ChatCopilot (%s)', model),
-          model = { model = model, temperature = 1.1, top_p = 1 },
+          model = {
+            model = model,
+            temperature = config.temp or 1.1,
+            top_p = config.top_p or 1,
+            max_tokens = config.max_tokens or 4096,
+          },
           chat = true,
           command = false,
         })
