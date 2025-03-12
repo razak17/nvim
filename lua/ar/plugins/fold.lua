@@ -21,8 +21,8 @@ return {
     },
     opts = function()
       local ft_map = { rust = 'lsp' }
-      require('ufo').setup({
-        open_fold_hl_timeout = 0,
+      return {
+        open_fold_hl_timeout = 800,
         preview = {
           win_config = {
             border = ar.ui.current.border,
@@ -32,12 +32,12 @@ return {
         enable_get_fold_virt_text = true,
         close_fold_kinds_for_ft = {
           default = { 'imports', 'comment' },
-          json = { 'array' },
           c = { 'comment', 'region' },
+          json = { 'array' },
+          markdown = {}, -- avoid everything becoming folded
         },
-        provider_selector = function(_, ft)
-          -- lsp better?
-          return ft_map[ft] or { 'treesitter', 'indent' }
+        provider_selector = function(_, ft, _)
+          return ft_map[ft] or { 'treesitter' }
         end,
       })
     end,
