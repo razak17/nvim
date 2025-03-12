@@ -17,7 +17,7 @@ local templates = {
     .. 'Please analyze for code smells and suggest improvements.',
 }
 
-local function gp_agent()
+local function gp_choose_agent()
   local buf = api.nvim_get_current_buf()
   local file_name = api.nvim_buf_get_name(buf)
   local is_chat = require('gp').not_chat(buf, file_name) == nil
@@ -29,13 +29,12 @@ local function gp_agent()
   end)
 end
 
-ar.command('GpSelectAgent', gp_agent)
-
 return {
   'robitx/gp.nvim',
   cond = not ar.plugins.minimal and ar.ai.enable,
   -- stylua: ignore
   keys = {
+    { '<c-g><c-a>', gp_choose_agent, desc = 'gp: choose model' },
     -- Chat commands
     { '<c-g>n', '<Cmd>GpChatNew<CR>', desc = 'gp: new chat', mode = { 'n', 'i', 'v' }, },
     { '<c-g>f', '<Cmd>GpChatFinder<CR>', desc = 'gp: find chat', mode = { 'n', 'i' }, },
