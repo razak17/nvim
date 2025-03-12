@@ -41,7 +41,7 @@ local function gp_finder()
     win = {
       input = {
         keys = {
-          ['<C-d>'] = 'trash_file',
+          ['<C-d>'] = 'trash_files',
         },
       },
     },

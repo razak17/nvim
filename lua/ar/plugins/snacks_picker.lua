@@ -252,11 +252,9 @@ return {
               return
             end
             picker:close()
-            local selected = items[1]
-            if fn.confirm('Delete file?', '&Yes\n&No') == 1 then
-              if selected then
-                local file = selected._path
-                ar.trash_file(file, true)
+            if fn.confirm('Delete files?', '&Yes\n&No') == 1 then
+              for _, item in ipairs(items) do
+                ar.trash_file(item._path, true)
               end
             end
           end,
