@@ -101,6 +101,18 @@ return {
         { '<leader><leader>ml', desc = 'Link' },
       },
     },
+  end,
+  keys = {
+    {
+      '<leader>?',
+      function() require('which-key').show({ global = false }) end,
+      desc = 'which-key: buffer keymaps',
+    },
+    {
+      '<c-w><space>',
+      function() require('which-key').show({ keys = '<c-w>', loop = true }) end,
+      desc = 'which-key: window hydra mode',
+    },
   },
   init = function()
     ar.augroup('WhichKeyMode', {
