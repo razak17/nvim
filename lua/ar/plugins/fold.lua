@@ -39,9 +39,46 @@ return {
         provider_selector = function(_, ft, _)
           return ft_map[ft] or { 'treesitter' }
         end,
-      })
+        -- Ref: https://github.com/chrisgrieser/.config/blob/e33627772b472e28e852a00f0339d1d0d9787c73/nvim/lua/plugin-specs/ufo.lua?plain=1#L44
+        -- show folds with number of folded lines instead of just the icon
+        fold_virt_text_handler = function(
+          virtText,
+          lnum,
+          endLnum,
+          width,
+          truncate
+        )
+          local hlgroup = 'NonText'
+          local icon = ''
+          local new_virt_text = {}
+          local suffix = ('  %s %d'):format(icon, endLnum - lnum)
+          local suf_width = vim.fn.strdisplaywidth(suffix)
+          local target_width = width - suf_width
+          local cur_width = 0
+          for _, chunk in ipairs(virtText) do
+            local chunk_text = chunk[1]
+            local chunk_width = vim.fn.strdisplaywidth(chunk_text)
+            if target_width > cur_width + chunk_width then
+              table.insert(new_virt_text, chunk)
+            else
+              chunk_text = truncate(chunk_text, target_width - cur_width)
+              local hl_group = chunk[2]
+              table.insert(new_virt_text, { chunk_text, hl_group })
+              chunk_width = vim.fn.strdisplaywidth(chunk_text)
+              if cur_width + chunk_width < target_width then
+                suffix = suffix
+                  .. (' '):rep(target_width - cur_width - chunk_width)
+              end
+              break
+            end
+            cur_width = cur_width + chunk_width
+          end
+          table.insert(new_virt_text, { suffix, hlgroup })
+          return new_virt_text
+        end,
+      }
     end,
-    config = function()
+    config = function(_, opts)
       ar.highlight.plugin('ufo', {
         theme = {
           ['onedark'] = {
@@ -49,6 +86,7 @@ return {
           },
         },
       })
+      require('ufo').setup(opts)
     end,
   },
   {
