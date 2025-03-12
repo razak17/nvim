@@ -245,7 +245,7 @@ return {
           },
         },
         actions = {
-          trash_file = function(picker, _, _)
+          trash_files = function(picker, _, _)
             local items = picker:selected({ fallback = true })
             if not items then
               vim.notify('No items selected')
