@@ -128,7 +128,6 @@ return {
           lsp = {
             enabled = ar.lsp.enable,
             name = '[LSP]',
-            min_keyword_length = 2,
             score_offset = 90,
           },
           path = { name = '[PATH]' },
@@ -149,7 +148,6 @@ return {
             enabled = true,
             name = '[SNIP]',
             max_items = 15,
-            min_keyword_length = 2,
             module = 'blink.cmp.sources.snippets',
             score_offset = 85,
           },
