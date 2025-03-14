@@ -68,6 +68,28 @@ local pyright_analysis = {
     reportShadowedImports = 'error',
   },
 }
+
+local ts_code_action_sources = {
+  add_missing_imports = 'source.addMissingImports.ts',
+  organize_imports = 'source.organizeImports',
+  remove_unused = 'source.removeUnused',
+}
+
+local function create_ts_action(source, description)
+  return {
+    function()
+      vim.lsp.buf.code_action({
+        apply = true,
+        context = {
+          only = { source },
+          diagnostics = {},
+        },
+      })
+    end,
+    description = description,
+  }
+end
+
 ---@type lspconfig.options
 local servers = {
   astro = {},
@@ -236,36 +258,20 @@ local servers = {
     end,
   },
   ts_ls = {
-    init_options = {
-      documentFormatting = false,
-      hostInfo = 'neovim',
-    },
+    init_options = { documentFormatting = false, hostInfo = 'neovim' },
     commands = {
-      OrganizeImports = {
-        function()
-          vim.lsp.buf.code_action({
-            apply = true,
-            context = {
-              only = { 'source.organizeImports' },
-              diagnostics = {},
-            },
-          })
-        end,
-        description = 'Organize Imports',
-      },
-      RemoveUnusedImports = {
-        function()
-          vim.lsp.buf.code_action({
-            apply = true,
-            context = {
-              ---@diagnostic disable-next-line: assign-type-mismatch
-              only = { 'source.removeUnused' },
-              diagnostics = {},
-            },
-          })
-        end,
-        description = 'organize imports',
-      },
+      AddMissingImports = create_ts_action(
+        ts_code_action_sources.add_missing_imports,
+        'Add Missing Imports'
+      ),
+      OrganizeImports = create_ts_action(
+        ts_code_action_sources.organize_imports,
+        'Organize Imports'
+      ),
+      RemoveUnused = create_ts_action(
+        ts_code_action_sources.remove_unused,
+        'Remove Unused Imports'
+      ),
     },
     settings = {
       completions = {

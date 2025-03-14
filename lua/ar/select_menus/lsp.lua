@@ -4,6 +4,8 @@ local pickers = require('telescope.pickers')
 local entry_display = require('telescope.pickers.entry_display')
 local finders = require('telescope.finders')
 local conf = require('telescope.config').values
+local is_avail = ar.is_available
+local ts_lsp = ar_config.lsp.lang.typescript
 
 local bool2str = ar.bool2str
 local icons = ar.ui.codicons
@@ -248,7 +250,8 @@ function M.toggle_signs()
 end
 
 function M.toggle_hover_diagnostics()
-  ar_config.lsp.hover_diagnostics.enable = not ar_config.lsp.hover_diagnostics.enable
+  ar_config.lsp.hover_diagnostics.enable =
+    not ar_config.lsp.hover_diagnostics.enable
   lsp_notify(
     string.format(
       'hover diagnostics %s',
@@ -258,7 +261,8 @@ function M.toggle_hover_diagnostics()
 end
 
 function M.toggle_hover_diagnostics_go_to()
-  ar_config.lsp.hover_diagnostics.go_to = not ar_config.lsp.hover_diagnostics.go_to
+  ar_config.lsp.hover_diagnostics.go_to =
+    not ar_config.lsp.hover_diagnostics.go_to
   lsp_notify(
     string.format(
       'hover diagnostics (go_to) %s',
@@ -270,7 +274,10 @@ end
 function M.toggle_format_on_save()
   ar_config.lsp.format_on_save.enable = not ar_config.lsp.format_on_save.enable
   lsp_notify(
-    string.format('format on save %s', bool2str(ar_config.lsp.format_on_save.enable))
+    string.format(
+      'format on save %s',
+      bool2str(ar_config.lsp.format_on_save.enable)
+    )
   )
 end
 
@@ -405,43 +412,47 @@ function M.ws_symbol_under_cursor()
 end
 
 function M.organize_imports()
-  if ar.is_available('typescript-tools.nvim') then
+  if is_avail('typescript-tools.nvim') and ts_lsp == 'typescript-tools' then
     vim.cmd('TSToolsOrganizeImports')
-  elseif ar.is_available('nvim-vtsls') then
+  elseif is_avail('nvim-vtsls') and ts_lsp == 'vtsls' then
     vim.cmd('VtsExec organize_imports')
-  elseif ar_config.lsp.lang.typescript == 'ts_ls' then
+  elseif ts_lsp == 'ts_ls' then
     vim.cmd('OrganizeImports')
   end
 end
 
 function M.add_missing_imports()
-  if ar.is_available('typescript-tools.nvim') then
+  if is_avail('typescript-tools.nvim') and ts_lsp == 'typescript-tools' then
     vim.cmd('TSToolsAddMissingImports')
-  elseif ar.is_available('nvim-vtsls') then
+  elseif is_avail('nvim-vtsls') and ts_lsp == 'vtsls' then
     vim.cmd('VtsExec add_missing_imports')
-  end
-end
-
-function M.remove_unused_imports()
-  if ar.is_available('typescript-tools.nvim') then
-    vim.cmd('TSToolsRemoveUnusedImports')
-  elseif ar.is_available('nvim-vtsls') then
-    vim.cmd('VtsExec remove_unused_imports')
+  elseif ts_lsp == 'ts_ls' then
+    vim.cmd('AddMissingImports')
   end
 end
 
 function M.remove_unused()
-  if ar.is_available('typescript-tools.nvim') then
+  if is_avail('typescript-tools.nvim') and ts_lsp == 'typescript-tools' then
     vim.cmd('TSToolsRemoveUnused')
-  elseif ar.is_available('nvim-vtsls') then
+  elseif is_avail('nvim-vtsls') and ts_lsp == 'vtsls' then
     vim.cmd('VtsExec remove_unused')
+  elseif ts_lsp == 'ts_ls' then
+    vim.cmd('RemoveUnused')
+  end
+end
+
+function M.remove_unused_imports()
+  if is_avail('typescript-tools.nvim') then
+    vim.cmd('TSToolsRemoveUnusedImports')
+  elseif is_avail('nvim-vtsls') and ts_lsp == 'vtsls' then
+    vim.cmd('VtsExec remove_unused_imports')
   end
 end
 
 function M.fix_all()
-  if ar.is_available('typescript-tools.nvim') then
+  if is_avail('typescript-tools.nvim') and ts_lsp == 'typescript-tools' then
     vim.cmd('TSToolsFixAll')
-  elseif ar.is_available('nvim-vtsls') then
+  elseif is_avail('nvim-vtsls') and ts_lsp == 'vtsls' then
     vim.cmd('VtsExec fix_all')
   end
 end
