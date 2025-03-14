@@ -106,6 +106,15 @@ return {
     opts = { remove_template_string = true },
   },
   {
+    'mawkler/jsx-element.nvim',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-treesitter/nvim-treesitter-textobjects',
+    },
+    ft = { 'typescriptreact', 'javascriptreact', 'javascript' },
+    opts = {},
+  },
+  {
     'joeldotdias/jsdoc-switch.nvim',
     cond = not minimal,
     -- ft = { 'javascript', 'javascriptreact' },
@@ -199,7 +208,7 @@ return {
       'htmldjango',
       'templ',
       'cshtml',
-      'razor'
+      'razor',
     },
   },
   {
