@@ -35,4 +35,12 @@ return {
     ft = 'qf',
     opts = { timeout = 4000, autoclose = true },
   },
+  {
+    'brunobmello25/persist-quickfix.nvim',
+    -- stylua: ignore
+    keys = { '<leader>oq', '<Cmd>lua require("persist-quickfix").choose()<CR>', 'persist-quickfix: choose' },
+    ft = 'qf',
+    --- @type PersistQuickfix.Config
+    opts = {},
+  },
 }
