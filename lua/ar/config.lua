@@ -39,6 +39,7 @@ local env = vim.env
 ---@alias ArWhichLspVirtualText 'builtin' | 'lsp_lines' | 'tiny-inline'
 ---@alias ArWhichNotifier 'nvim-notify' | 'snacks'
 ---@alias ArWhichPicker 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick'
+---@alias ArWhichSession 'persisted' | 'persistence'
 ---@alias ArWhichFilesPicker 'smart-open' | 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick'
 ---@alias ArWhichShelter 'cloak' | 'ecolog'
 ---@alias ArWhichStatuscolumn 'local' | 'plugin'
@@ -69,6 +70,10 @@ local env = vim.env
 ---@field enable boolean
 ---@field files ArWhichFilesPicker
 ---@field variant ArWhichPicker
+
+---@class ArSession
+---@field enable boolean
+---@field variant ArWhichSession
 
 ---@class ArLspProgress
 ---@field enable boolean
@@ -381,6 +386,8 @@ local config = {
       garbage_day = { enable = false },
     },
   },
+  ---@type ArSession
+  session = { enable = true, variant = 'persisted' },
   shelter = {
     enable = true,
     ---@type ArWhichShelter

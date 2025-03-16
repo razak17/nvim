@@ -38,6 +38,33 @@ function ar.dashboard.picker(command)
   vim.notify('Invalid command or picker variant', 'error')
 end
 
+local session_commands = {
+  persisted = {
+    load_last = 'SessionLoadLast',
+    select = 'SessionSelect',
+  },
+  persistence = {
+    load_last = 'lua require("persistence").load({ last = true })',
+    select = 'lua require("persistence").select()',
+  },
+}
+
+---@param command 'load_last' | 'select'
+function ar.dashboard.session(command)
+  local variant = ar_config.session.variant
+  local cmd = session_commands[variant] and session_commands[variant][command]
+
+  if cmd then
+    if type(cmd) == 'function' then
+      return cmd()
+    else
+      return vim.cmd(cmd)
+    end
+  end
+
+  vim.notify('Invalid command or session variant', 'error')
+end
+
 return {
   {
     'goolord/alpha-nvim',
@@ -158,13 +185,13 @@ return {
           'Directory',
           'r',
           '  Restore session',
-          "<Cmd>lua require('persistence').load({ last = true })<CR>"
+          '<Cmd>lua ar.dashboard.session("load_last")<CR>'
         ),
         button(
           'Todo',
           's',
           '󰋇  Pick a session',
-          "<Cmd>lua require('persistence').select()<CR>"
+          '<Cmd>lua ar.dashboard.session("select")<CR>'
         ),
         button(
           'Directory',
