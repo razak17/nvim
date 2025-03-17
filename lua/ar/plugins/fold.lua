@@ -27,6 +27,7 @@ return {
           win_config = {
             border = ar.ui.current.border,
             winhighlight = 'NormalFloat:FloatBorder,FloatBorder:FloatBorder',
+            winblend = ar_config.ui.transparent.enable and 0 or 12,
           },
         },
         enable_get_fold_virt_text = true,
