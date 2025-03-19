@@ -130,7 +130,11 @@ return {
             name = '[LSP]',
             score_offset = 90,
           },
-          path = { name = '[PATH]' },
+          path = {
+            name = '[PATH]',
+            score_offset = 25,
+            opts = { show_hidden_files_by_default = true },
+          },
           buffer = { name = '[BUF]' },
           cmdline = {
             name = '[CMD]',
