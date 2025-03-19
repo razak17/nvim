@@ -13,7 +13,7 @@ return {
   {
     'saghen/blink.cmp',
     cond = ar.completion.enable and is_blink,
-    event = 'InsertEnter',
+    event = { 'InsertEnter', 'CmdlineEnter' },
     version = '*', -- REQUIRED `version` needed to download pre-built binary
     opts_extend = {
       'sources.completion.enabled_providers',
@@ -128,7 +128,7 @@ return {
           lsp = {
             enabled = ar.lsp.enable,
             name = '[LSP]',
-            score_offset = 90,
+            score_offset = 35,
           },
           path = {
             name = '[PATH]',
@@ -153,7 +153,7 @@ return {
             name = '[SNIP]',
             max_items = 15,
             module = 'blink.cmp.sources.snippets',
-            score_offset = 85,
+            score_offset = 20,
           },
           ripgrep = {
             module = 'blink-ripgrep',
