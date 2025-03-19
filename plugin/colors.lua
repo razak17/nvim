@@ -160,12 +160,7 @@ local function colorscheme_overrides()
       { IndentBlanklineContextChar = { link = 'Comment' } },
       { Pmenu = { bg = { from = 'Pmenu', alter = -0.2 } } },
       { PmenuExtra = { link = 'Pmenu' } },
-      {
-        PmenuSel = {
-          bg = { from = 'Search' },
-          reverse = false,
-        },
-      },
+      { PmenuSel = { bg = { from = 'Search' }, reverse = false } },
       { PmenuExtraSel = { link = 'PmenuSel' } },
       { PmenuThumb = { link = 'CurSearch' } },
       { VertSplit = { fg = { from = 'NonText', alter = -0.2 } } },
@@ -175,6 +170,14 @@ local function colorscheme_overrides()
       { Winbar = { link = 'Variable' } },
       { WinbarNC = { link = 'LineNr' } },
       { Folded = { bg = { from = 'CursorLine', alter = -0.2 } } },
+      {
+        SnacksPickerToggleHidden = {
+          bg = { from = 'FloatTitle' },
+          fg = { from = 'Directory' },
+          italic = true,
+        },
+      },
+      { SnacksPickerToggleIgnored = { link = 'SnacksPickerToggleHidden' } },
     },
     ['onedark'] = {
       { Dim = { inherit = 'VertSplit' } },
