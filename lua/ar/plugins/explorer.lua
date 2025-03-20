@@ -355,16 +355,9 @@ return {
     },
     lazy = vim.fn.argc(-1) == 0, -- load early when opening a dir from the cmdline
     opts = {
-      windows = {
-        preview = true,
-        width_focus = 30,
-        width_preview = 50,
-      },
+      windows = { preview = true, width_focus = 30, width_preview = 50 },
       mappings = { reset = ',', reveal_cwd = '.' },
-      options = {
-        use_as_default_explorer = true,
-        permanent_delete = false,
-      },
+      options = { use_as_default_explorer = true, permanent_delete = false },
     },
     config = function(_, opts)
       require('mini.files').setup(opts)
