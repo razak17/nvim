@@ -27,6 +27,7 @@ return {
           'minifiles',
           'snacks_picker_input',
           'neo-tree-popup',
+          'dropbar_menu_fzf',
         }
         local filetype = vim.bo[0].filetype
         return not vim.tbl_contains(ignored_filetypes, filetype)
