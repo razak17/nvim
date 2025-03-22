@@ -50,20 +50,20 @@ return {
         -- Ref: https://github.com/chrisgrieser/.config/blob/e33627772b472e28e852a00f0339d1d0d9787c73/nvim/lua/plugin-specs/ufo.lua?plain=1#L44
         -- show folds with number of folded lines instead of just the icon
         fold_virt_text_handler = function(
-          virtText,
+          virt_text,
           lnum,
-          endLnum,
+          end_lnum,
           width,
           truncate
         )
           local hlgroup = 'NonText'
           local icon = ''
           local new_virt_text = {}
-          local suffix = ('  %s %d'):format(icon, endLnum - lnum)
+          local suffix = ('  %s %d'):format(icon, end_lnum - lnum)
           local suf_width = vim.fn.strdisplaywidth(suffix)
           local target_width = width - suf_width
           local cur_width = 0
-          for _, chunk in ipairs(virtText) do
+          for _, chunk in ipairs(virt_text) do
             local chunk_text = chunk[1]
             local chunk_width = vim.fn.strdisplaywidth(chunk_text)
             if target_width > cur_width + chunk_width then
