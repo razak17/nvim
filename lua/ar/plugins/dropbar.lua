@@ -5,7 +5,6 @@ local border = ui.current.border
 local decor = ui.decorations
 
 return {
-  { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
   {
     'Bekaboo/dropbar.nvim',
     event = { 'BufRead', 'BufNewFile' },
@@ -90,5 +89,6 @@ return {
         },
       })
     end,
+    dependencies = { 'nvim-telescope/telescope-fzf-native.nvim' },
   },
 }
