@@ -1,7 +1,10 @@
 return {
   {
     'folke/persistence.nvim',
-    cond = false,
+    cond = function()
+      return ar_config.session.enable
+        and ar_config.session.variant == 'persistence'
+    end,
     event = 'BufReadPre',
     opts = {},
     -- stylua: ignore
@@ -14,6 +17,10 @@ return {
   },
   {
     'olimorris/persisted.nvim',
+    cond = function()
+      return ar_config.session.enable
+        and ar_config.session.variant == 'persisted'
+    end,
     event = 'VeryLazy',
     cmd = { 'SessionLoad', 'SessionLoadLast', 'SessionSelect', 'SessionStop' },
     -- stylua: ignore
