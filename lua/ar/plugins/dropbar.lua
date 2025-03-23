@@ -83,7 +83,7 @@ return {
             { DropBarIconUISeparator = { fg = { from = 'Label' } } },
             { DropBarIconUIIndicator = { link = 'Label' } },
             { DropBarHover = { link = 'CursorLine' } },
-            { DropBarMenuHoverEntry = { bg = 'NONE' } },
+            { DropBarMenuHoverEntry = { link = 'CursorLine' } },
             { DropBarMenuCurrentContext = { link = 'CursorLine' } },
           },
         },
