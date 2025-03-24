@@ -969,7 +969,11 @@ return {
       },
     },
   },
-  { 'nvim-telescope/telescope-fzf-native.nvim', cond = min_enabled },
+  {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    build = 'make',
+    cond = min_enabled,
+  },
   { 'molecule-man/telescope-menufacture', cond = min_enabled },
   { 'biozz/whop.nvim', cond = min_enabled, opts = {} },
   { 'nvim-telescope/telescope-node-modules.nvim', cond = min_enabled },
