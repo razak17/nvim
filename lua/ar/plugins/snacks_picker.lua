@@ -144,6 +144,21 @@ local function notes()
   p('files', { matcher = { frecency = true }, cwd = ar.sync_dir('obsidian') })()
 end
 
+local function window_picker_action(picker, _, action)
+  local items = picker:selected({ fallback = true })
+  if not items then
+    vim.notify('No items selected')
+    return
+  end
+  if items[1] then
+    vim.defer_fn(function()
+      ar.open_with_window_picker(
+        function() Snacks.picker.actions.jump(picker, _, action) end
+      )
+    end, 100)
+  end
+end
+
 return {
   desc = 'snacks picker',
   recommended = true,
@@ -224,6 +239,21 @@ return {
               notify = false,
             },
           },
+          explorer = {
+            hidden = true,
+            auto_close = false,
+            actions = {
+              window_picker = window_picker_action,
+            },
+            win = {
+              list = {
+                keys = {
+                  ['O'] = { { 'pick_win', 'jump' }, mode = { 'n', 'i' } },
+                  ['W'] = 'window_picker',
+                },
+              },
+            },
+          },
         },
         debug = { scores = false },
         formatters = {
@@ -259,20 +289,8 @@ return {
             end
           end,
           open_with_window_picker = function(picker, _, action)
-            local items = picker:selected({ fallback = true })
-            if not items then
-              vim.notify('No items selected')
-              return
-            end
             picker:close()
-            local selected = items[1]
-            if selected then
-              vim.defer_fn(function()
-                ar.open_with_window_picker(
-                  function() Snacks.picker.actions.jump(picker, _, action) end
-                )
-              end, 100)
-            end
+            window_picker_action(picker, _, action)
           end,
         },
         win = {
