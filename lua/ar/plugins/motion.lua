@@ -12,6 +12,23 @@ return {
     },
   },
   {
+    'aaronik/treewalker.nvim',
+    event = 'VeryLazy',
+    cmd = { 'Treewalker' },
+    cond = not minimal,
+    keys = {
+      { mode = { 'n', 'v' }, '<C-k>', '<Cmd>Treewalker Up<cr>' },
+      { mode = { 'n', 'v' }, '<C-j>', '<Cmd>Treewalker Down<cr>' },
+      { mode = { 'n', 'v' }, '<C-h>', '<Cmd>Treewalker Left<cr>' },
+      { mode = { 'n', 'v' }, '<C-l>', '<Cmd>Treewalker Right<cr>' },
+      { mode = { 'n', 'v' }, '<A-S-k>', '<Cmd>Treewalker SwapUp<cr>' },
+      { mode = { 'n', 'v' }, '<A-S-j>', '<Cmd>Treewalker SwapDown<cr>' },
+      { mode = { 'n', 'v' }, '<A-S-h>', '<Cmd>Treewalker SwapLeft<cr>' },
+      { mode = { 'n', 'v' }, '<A-S-l>', '<Cmd>Treewalker SwapRight<cr>' },
+    },
+    opts = {},
+  },
+  {
     'razak17/demicolon.nvim',
     cond = not minimal,
     keys = { ';', ']', '[' },
