@@ -68,6 +68,24 @@ return {
         border = border,
         enabled = ar_config.notifier.enable
           and ar_config.notifier.variant == 'snacks',
+        filter = function(n)
+          local ignored_messages = {
+            'Neo-tree',
+            'No information available',
+            'Toggling hidden files',
+            'Failed to attach to',
+            'No items, skipping',
+            'Config Change Detected',
+            'Executing query',
+            'Done after',
+          }
+
+          for _, banned in ipairs(ignored_messages) do
+            if string.find(n.msg, banned, 1, true) then return false end
+          end
+
+          return true
+        end,
         icons = {
           error = diag_icons.error,
           warn = diag_icons.warn,
