@@ -1,7 +1,5 @@
 local api = vim.api
 local border = ar.ui.current.border
-local codicons = ar.ui.codicons
-local diag_icons = codicons.lsp
 local separators = ar.ui.icons.separators
 
 return {
@@ -11,8 +9,6 @@ return {
     lazy = false,
     keys = {
       -- stylua: ignore start
-      { '<leader>nx', function() Snacks.notifier.hide() end, desc = 'snacks: dismiss all notifications' },
-      { '<leader>nh', function() Snacks.notifier.show_history() end, desc = 'snacks: show notification history' },
       { '<leader>gbb', function() Snacks.git.blame_line() end, desc = 'snacks: git blame line' },
       { '<leader>goo', function() Snacks.gitbrowse() end, desc = 'snacks: open current line' },
       { '<leader>gh', function() Snacks.lazygit.log_file() end, desc = 'snacks: log (file)' },
@@ -31,14 +27,6 @@ return {
         git = { border = border },
         input = { border = 'single' },
         lazygit = { border = border },
-        notification = { border = 'single' },
-        notification_history = {
-          border = border,
-          wo = {
-            winblend = ar_config.ui.transparent.enable and 0 or 5,
-            wrap = true,
-          },
-        },
         snacks_image = { relative = 'editor', col = -1 },
       },
       animate = { enabled = false },
@@ -64,38 +52,6 @@ return {
         char = separators.left_thin_block,
       },
       input = {},
-      notifier = {
-        border = border,
-        enabled = ar_config.notifier.enable
-          and ar_config.notifier.variant == 'snacks',
-        filter = function(n)
-          local ignored_messages = {
-            'Neo-tree',
-            'No information available',
-            'Toggling hidden files',
-            'Failed to attach to',
-            'No items, skipping',
-            'Config Change Detected',
-            'Executing query',
-            'Done after',
-          }
-
-          for _, banned in ipairs(ignored_messages) do
-            if string.find(n.msg, banned, 1, true) then return false end
-          end
-
-          return true
-        end,
-        icons = {
-          error = diag_icons.error,
-          warn = diag_icons.warn,
-          info = diag_icons.info,
-          debug = codicons.misc.bug_alt,
-          trace = diag_icons.trace,
-        },
-        style = 'fancy',
-        top_down = false,
-      },
       profiler = {
         pick = { picker = 'telescope' },
       },

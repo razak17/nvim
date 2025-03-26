@@ -226,7 +226,7 @@ return {
     return keys
   end,
   opts = function(_, opts)
-    local snack_opts = vim.tbl_deep_extend('force', opts or {}, {
+    return vim.tbl_deep_extend('force', opts or {}, {
       picker = {
         layouts = picker_layouts,
         prompt = fmt(' %s ', ar.ui.icons.misc.chevron_right),
@@ -308,6 +308,5 @@ return {
         },
       },
     })
-    return snack_opts
   end,
 }
