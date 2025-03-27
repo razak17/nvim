@@ -19,6 +19,8 @@ return {
       'sources.completion.enabled_providers',
       -- 'sources.compat',
       'sources.default',
+      'cmdline.sources',
+      'term.sources',
     },
     opts = {
       enabled = function()
