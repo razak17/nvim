@@ -1,3 +1,4 @@
+local api = vim.api
 local fmt = string.format
 local ui, highlight = ar.ui, ar.highlight
 local border, lsp_hls = ui.current.border, ui.lsp.highlights
