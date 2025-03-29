@@ -10,6 +10,16 @@ local is_minuet = ai_models.gemini and ai_cmp == 'minuet'
 
 local show_index = false
 
+local function has_words_before()
+  local line, col = (unpack or table.unpack)(api.nvim_win_get_cursor(0))
+  return col ~= 0
+    and api
+        .nvim_buf_get_lines(0, line - 1, line, true)[1]
+        :sub(col, col)
+        :match('%s')
+      == nil
+end
+
 return {
   {
     'saghen/blink.cmp',
@@ -182,47 +192,46 @@ return {
       },
       keymap = {
         preset = 'default',
-        ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
-        ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
         ['<CR>'] = { 'accept', 'fallback' },
         ['<C-l>'] = { 'accept', 'fallback' },
-        ['<C-y>'] = { 'select_and_accept' },
+        ['<C-n>'] = { 'select_next', 'show' },
+        ['<C-p>'] = { 'select_prev', 'show' },
+        ['<C-j>'] = { 'select_next', 'fallback' },
+        ['<C-k>'] = { 'select_prev', 'fallback' },
         ['<C-space>'] = {
           'show',
           'show_documentation',
           'hide_documentation',
           'fallback',
         },
-        ['<A-1>'] = {
-          function(cmp) cmp.accept({ index = 1 }) end,
+        ['<Tab>'] = {
+          'select_next',
+          'snippet_forward',
+          function(cmp)
+            if has_words_before() or api.nvim_get_mode().mode == 'c' then
+              return cmp.show()
+            end
+          end,
+          'fallback',
         },
-        ['<A-2>'] = {
-          function(cmp) cmp.accept({ index = 2 }) end,
+        ['<S-Tab>'] = {
+          'select_prev',
+          'snippet_backward',
+          function(cmp)
+            if api.nvim_get_mode().mode == 'c' then return cmp.show() end
+          end,
+          'fallback',
         },
-        ['<A-3>'] = {
-          function(cmp) cmp.accept({ index = 3 }) end,
-        },
-        ['<A-4>'] = {
-          function(cmp) cmp.accept({ index = 4 }) end,
-        },
-        ['<A-5>'] = {
-          function(cmp) cmp.accept({ index = 5 }) end,
-        },
-        ['<A-6>'] = {
-          function(cmp) cmp.accept({ index = 6 }) end,
-        },
-        ['<A-7>'] = {
-          function(cmp) cmp.accept({ index = 7 }) end,
-        },
-        ['<A-8>'] = {
-          function(cmp) cmp.accept({ index = 8 }) end,
-        },
-        ['<A-9>'] = {
-          function(cmp) cmp.accept({ index = 9 }) end,
-        },
-        ['<A-0>'] = {
-          function(cmp) cmp.accept({ index = 10 }) end,
-        },
+        ['<A-1>'] = { function(cmp) cmp.accept({ index = 1 }) end },
+        ['<A-2>'] = { function(cmp) cmp.accept({ index = 2 }) end },
+        ['<A-3>'] = { function(cmp) cmp.accept({ index = 3 }) end },
+        ['<A-4>'] = { function(cmp) cmp.accept({ index = 4 }) end },
+        ['<A-5>'] = { function(cmp) cmp.accept({ index = 5 }) end },
+        ['<A-6>'] = { function(cmp) cmp.accept({ index = 6 }) end },
+        ['<A-7>'] = { function(cmp) cmp.accept({ index = 7 }) end },
+        ['<A-8>'] = { function(cmp) cmp.accept({ index = 8 }) end },
+        ['<A-9>'] = { function(cmp) cmp.accept({ index = 9 }) end },
+        ['<A-0>'] = { function(cmp) cmp.accept({ index = 10 }) end },
       },
     },
     config = function(_, opts)
