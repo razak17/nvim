@@ -822,10 +822,26 @@ diagnostic.config({
   },
 })
 
-if
-  not ar.is_available('noice.nvim') or ar_config.completion.variant == 'blink'
-then
-  -- require('ar.lsp_float').apply()
+if not ar.is_available('noice.nvim') then
+  local hover = vim.lsp.buf.hover
+  ---@diagnostic disable-next-line: duplicate-set-field
+  vim.lsp.buf.hover = function()
+    return hover({
+      border = border,
+      max_width = max_width,
+      max_height = max_height,
+    })
+  end
+
+  local signature_help = vim.lsp.buf.signature_help
+  ---@diagnostic disable-next-line: duplicate-set-field
+  vim.lsp.buf.signature_help = function()
+    return signature_help({
+      border = border,
+      max_width = max_width,
+      max_height = max_height,
+    })
+  end
 
   lsp.handlers['window/showMessage'] = function(_, result, ctx)
     local client = lsp.get_client_by_id(ctx.client_id)
