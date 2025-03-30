@@ -795,7 +795,14 @@ diagnostic.config({
   update_in_insert = false,
   severity_sort = true,
   virtual_lines = virtual_lines_variant == 'builtin',
-  virtual_text = false,
+  virtual_text = ar_config.lsp.virtual_text.enable and {
+    spacing = 1,
+    current_line = true,
+    prefix = function(d)
+      local level = diagnostic.severity[d.severity]
+      return diag_icons[level:lower()]
+    end,
+  } or false,
   float = {
     max_width = max_width,
     max_height = max_height,
