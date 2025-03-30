@@ -707,7 +707,15 @@ augroup('LspSetupAutoCommands', {
       buf = args.buf,
     })
     vim.opt.foldexpr = 'v:lua.vim.lsp.foldexpr()'
+    if client:supports_method(M.textDocument_foldingRange) then
+      local win = api.nvim_get_current_win()
+      vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+    end
   end,
+}, {
+  event = { 'LspDetach' },
+  desc = 'cleanup the language server autocommands',
+  command = 'setl foldexpr<',
 }, {
   event = 'DiagnosticChanged',
   desc = 'Update the diagnostic locations',

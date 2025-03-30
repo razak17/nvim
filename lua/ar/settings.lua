@@ -82,11 +82,13 @@ opt.iskeyword:append('-')
 --------------------------------------------------------------------------------
 -- Folds {{{1
 --------------------------------------------------------------------------------
+o.foldenable = true
 o.foldlevelstart = 99
 o.foldlevel = 99
 opt.foldmethod = 'expr'
 opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 opt.foldtext = ''
+opt.foldcolumn = '0'
 opt.foldnestmax = 10
 --------------------------------------------------------------------------------
 -- Grepprg {{{1
