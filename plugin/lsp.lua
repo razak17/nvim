@@ -248,11 +248,19 @@ local function references_handler()
       end, list)
     end
   end
-  require('telescope.builtin').lsp_references(params)
+
+  if is_snacks then return Snacks.picker.lsp_references(params) end
+  if is_fzf_lua then return require('fzf_lua').lsp_references(params) end
+  if is_telescope then
+    return require('telescope.builtin').lsp_references(params)
+  end
 end
 
--- References handler
-lsp.handlers[M.textDocument_references] = function(_, _, _) references_handler() end
+local references = vim.lsp.buf.references
+---@diagnostic disable-next-line: duplicate-set-field
+vim.lsp.buf.references = function()
+  return references(nil, { on_list = function() references_handler() end })
+end
 
 --------------------------------------------------------------------------------
 --  Truncate typescript inlay hints
