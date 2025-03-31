@@ -685,7 +685,6 @@ local function on_attach(client, bufnr)
   if ar_config.lsp.semantic_tokens.enable then
     setup_semantic_tokens(client, bufnr)
   end
-  if not ar.completion.enable then require('ar.compl')(client, bufnr) end
   if is_available('workspace-diagnostics.nvim') then
     require('workspace-diagnostics').populate_workspace_diagnostics(
       client,
