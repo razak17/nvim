@@ -673,22 +673,9 @@ local function setup_lsp_stop_detached()
   })
 end
 
--- Add buffer local mappings, autocommands etc for attaching servers
--- this runs for each client because they have different capabilities so each time one
--- attaches it might enable autocommands or mappings that the previous client did not support
----@param client vim.lsp.Client the lsp client
+---@param client vim.lsp.Client
 ---@param bufnr number
-local function on_attach(client, bufnr)
-  setup_autocommands(client, bufnr)
-  setup_mappings(client, bufnr)
-  setup_lsp_stop_detached()
-  if client:supports_method(M.textDocument_foldingRange) then
-    local win = api.nvim_get_current_win()
-    vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
-  end
-  if ar_config.lsp.semantic_tokens.enable then
-    setup_semantic_tokens(client, bufnr)
-  end
+local function setup_lsp_plugins(client, bufnr)
   if is_available('workspace-diagnostics.nvim') then
     require('workspace-diagnostics').populate_workspace_diagnostics(
       client,
@@ -707,6 +694,25 @@ local function on_attach(client, bufnr)
       }
     )
   end
+end
+
+-- Add buffer local mappings, autocommands etc for attaching servers
+-- this runs for each client because they have different capabilities so each time one
+-- attaches it might enable autocommands or mappings that the previous client did not support
+---@param client vim.lsp.Client the lsp client
+---@param bufnr number
+local function on_attach(client, bufnr)
+  setup_autocommands(client, bufnr)
+  setup_mappings(client, bufnr)
+  setup_lsp_stop_detached()
+  if client:supports_method(M.textDocument_foldingRange) then
+    local win = api.nvim_get_current_win()
+    vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+  end
+  if ar_config.lsp.semantic_tokens.enable then
+    setup_semantic_tokens(client, bufnr)
+  end
+  setup_lsp_plugins(client, bufnr)
 end
 
 augroup('LspSetupAutoCommands', {
