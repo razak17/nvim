@@ -682,6 +682,10 @@ local function on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
   setup_mappings(client, bufnr)
   setup_lsp_stop_detached()
+  if client:supports_method(M.textDocument_foldingRange) then
+    local win = api.nvim_get_current_win()
+    vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+  end
   if ar_config.lsp.semantic_tokens.enable then
     setup_semantic_tokens(client, bufnr)
   end
@@ -724,11 +728,6 @@ augroup('LspSetupAutoCommands', {
     api.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc', {
       buf = args.buf,
     })
-    vim.opt.foldexpr = 'v:lua.vim.lsp.foldexpr()'
-    if client:supports_method(M.textDocument_foldingRange) then
-      local win = api.nvim_get_current_win()
-      vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
-    end
   end,
 }, {
   event = { 'LspDetach' },
