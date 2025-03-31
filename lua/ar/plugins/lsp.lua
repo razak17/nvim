@@ -173,6 +173,7 @@ return {
     priority = 1000,
     opts = {
       preset = 'modern', -- Can be: "modern", "classic", "minimal", "powerline", ghost", "simple", "nonerdfont", "amongus"
+      transparent_bg = ar_config.ui.transparent.enable,
       options = {
         break_line = {
           enabled = true,
