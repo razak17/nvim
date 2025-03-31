@@ -229,7 +229,7 @@ return {
     return vim.tbl_deep_extend('force', opts or {}, {
       picker = {
         layouts = picker_layouts,
-        prompt = fmt(' %s ', ar.ui.icons.misc.chevron_right),
+        prompt = fmt('%s ', ar.ui.icons.misc.chevron_right),
         sources = {
           files = { hidden = true, ignored = true },
           registers = {

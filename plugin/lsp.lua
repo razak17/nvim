@@ -21,6 +21,11 @@ local utils = require('ar.utils.lsp')
 local augroup, diag_icons, border =
   ar.augroup, ar.ui.codicons.lsp, ar.ui.current.border
 
+local picker = ar_config.picker.variant
+local is_snacks = picker == 'snacks' and is_available('snacks.nvim')
+local is_telescope = picker == 'telescope' and is_available('telescope.nvim')
+local is_fzf_lua = picker == 'fzf-lua' and is_available('fzf-lua')
+
 local format_exclusions = {
   format_on_save = { 'zsh' },
   servers = {
@@ -154,7 +159,7 @@ end
 -- from https://github.com/seblj/dotfiles/blob/014fd736413945c888d7258b298a37c93d5e97da/nvim/lua/config/lspconfig/handlers.lua
 
 -- jump to the first definition automatically if the multiple defs are on the same line
--- otherwise show a telescope selector or qf list
+-- otherwise show a selector based on ar_config.picker or qf list
 ---@param result table # A list of Location
 ---@param client vim.lsp.Client
 local function jump_to_first_definition(result, client)
@@ -166,8 +171,8 @@ local function jump_to_first_definition(result, client)
     return
   end
 
-  if not is_available('telescope.nvim') then
-    -- show in qf if telescope is not available
+  if not is_snacks and not is_telescope and not is_fzf_lua then
+    -- show in qf if picker is not available
     fn.setqflist({}, ' ', {
       title = 'LSP locations',
       items = lsp.util.locations_to_items(result, client.offset_encoding),
@@ -180,7 +185,13 @@ local function jump_to_first_definition(result, client)
 
   for _, val in pairs(results) do
     if val.lnum ~= lnum or val.filename ~= filename then
-      return require('telescope.builtin').lsp_definitions()
+      if is_snacks then
+        return Snacks.picker.lsp_definitions()
+      elseif is_fzf_lua then
+        return require('fzf-lua').lsp_definitions()
+      elseif is_telescope then
+        return require('telescope.builtin').lsp_definitions()
+      end
     end
   end
 end
