@@ -84,38 +84,45 @@ return {
     end,
     -- stylua: ignore
     keys = function()
-      local mappings = {
-        { '<localleader>f?', fzf_lua.help_tags, desc = 'help' },
-        { '<localleader>fa', '<Cmd>FzfLua<CR>', desc = 'builtins' },
-        { '<localleader>fb', fzf_lua.grep_curbuf, desc = 'current buffer fuzzy find' },
-        { '<localleader>ff', file_picker, desc = 'find files' },
-        { '<localleader>fh', fzf_lua.oldfiles, desc = 'Most (f)recently used files' },
-        { '<localleader>fm', fzf_lua.changes, desc = 'changes' },
-        { '<localleader>fo', fzf_lua.buffers, desc = 'buffers' },
-        { '<localleader>fr', fzf_lua.resume, desc = 'resume picker' },
-        { '<localleader>fs', fzf_lua.live_grep, desc = 'live grep' },
-        { '<localleader>fw', fzf_lua.grep_cword, desc = 'grep cword' },
-        { '<localleader>fva', fzf_lua.autocmds, desc = 'autocommands' },
-        { '<localleader>fvh', fzf_lua.highlights, desc = 'highlights' },
-        { '<localleader>fvk', fzf_lua.keymaps, desc = 'keymaps' },
-        { '<localleader>fvr', fzf_lua.registers, desc = 'Registers' },
-        { '<localleader>fvc', fzf_lua.commands, desc = 'Commands' },
-        { '<localleader>fgb', fzf_lua.git_branches, desc = 'branches' },
-        { '<localleader>fgB', fzf_lua.git_bcommits, desc = 'buffer commits' },
-        { '<localleader>fgc', fzf_lua.git_commits, desc = 'commits' },
-        { '<localleader>ld', fzf_lua.lsp_document_symbols, desc = 'document symbols' },
-        { '<localleader>lI', fzf_lua.lsp_implementations, desc = 'search implementation' },
-        { '<localleader>lR', fzf_lua.lsp_references, desc = 'show references' },
-        { '<localleader>ls', fzf_lua.lsp_live_workspace_symbols, desc = 'workspace symbols' },
-        { '<localleader>le', fzf_lua.diagnostics_document, desc = 'document diagnostics' },
-        { '<localleader>lw', fzf_lua.diagnostics_workspace, desc = 'workspace diagnostics' },
-        { '<localleader>fc', function() file_picker(fn.stdpath('config')) end, desc = 'nvim config' },
-        { '<localleader>fO', obsidian_open, desc = 'find notes' },
-        { '<localleader>fP', function() file_picker(fn.stdpath('data') .. '/lazy') end, desc = 'plugins' },
-      }
+      local mappings = {}
 
       if ar_config.picker.files == 'fzf-lua' then
         table.insert(mappings, { '<C-p>', fzf_lua.git_files, desc = 'find files' })
+      end
+      if ar_config.picker.variant == 'fzf-lua' then
+        local fzf_mappings = {
+          { '<leader>f?', fzf_lua.help_tags, desc = 'help' },
+          { '<leader>fa', '<Cmd>FzfLua<CR>', desc = 'builtins' },
+          { '<leader>fb', fzf_lua.grep_curbuf, desc = 'current buffer fuzzy find' },
+          { '<leader>ff', file_picker, desc = 'find files' },
+          { '<leader>fh', fzf_lua.oldfiles, desc = 'Most (f)recently used files' },
+          { '<leader>fm', fzf_lua.changes, desc = 'changes' },
+          { '<leader>fo', fzf_lua.buffers, desc = 'buffers' },
+          { '<leader>fr', fzf_lua.resume, desc = 'resume picker' },
+          { '<leader>fs', fzf_lua.live_grep, desc = 'live grep' },
+          { '<leader>fw', fzf_lua.grep_cword, desc = 'grep cword' },
+          { '<leader>fva', fzf_lua.autocmds, desc = 'autocommands' },
+          { '<leader>fvh', fzf_lua.highlights, desc = 'highlights' },
+          { '<leader>fvk', fzf_lua.keymaps, desc = 'keymaps' },
+          { '<leader>fvr', fzf_lua.registers, desc = 'Registers' },
+          { '<leader>fvc', fzf_lua.commands, desc = 'Commands' },
+          { '<leader>fgb', fzf_lua.git_branches, desc = 'branches' },
+          { '<leader>fgB', fzf_lua.git_bcommits, desc = 'buffer commits' },
+          { '<leader>fgc', fzf_lua.git_commits, desc = 'commits' },
+          { '<leader>ld', fzf_lua.lsp_document_symbols, desc = 'document symbols' },
+          { '<leader>lI', fzf_lua.lsp_implementations, desc = 'search implementation' },
+          { '<leader>lR', fzf_lua.lsp_references, desc = 'show references' },
+          { '<leader>ls', fzf_lua.lsp_live_workspace_symbols, desc = 'workspace symbols' },
+          { '<leader>le', fzf_lua.diagnostics_document, desc = 'document diagnostics' },
+          { '<leader>lw', fzf_lua.diagnostics_workspace, desc = 'workspace diagnostics' },
+          { '<leader>fc', function() file_picker(fn.stdpath('config')) end, desc = 'nvim config' },
+          { '<leader>fO', obsidian_open, desc = 'find notes' },
+          { '<leader>fP', function() file_picker(fn.stdpath('data') .. '/lazy') end, desc = 'plugins' },
+        }
+
+        vim
+          .iter(fzf_mappings)
+          :each(function(m) table.insert(mappings, m) end)
       end
 
       return mappings
