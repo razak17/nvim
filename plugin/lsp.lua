@@ -428,13 +428,13 @@ local function setup_mappings(client, bufnr)
     },
     { 'n', 'gl', diagnostic_float(), desc = 'cursor diagnostics' },
     { 'n', 'gL', diagnostic_float(true), desc = 'line diagnostics' },
-    {
-      'n',
-      'gr',
-      references_handler,
-      desc = 'references',
-      capability = M.textDocument_references,
-    },
+    -- {
+    --   'n',
+    --   'gr',
+    --   references_handler,
+    --   desc = 'references',
+    --   capability = M.textDocument_references,
+    -- },
     -- {
     --   'n',
     --   'gi',
