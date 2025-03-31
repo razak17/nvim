@@ -475,7 +475,7 @@ local function setup_mappings(client, bufnr)
         m.exclude_ft,
         vim.bo[bufnr].ft
       ))
-      and (not m.capability or client.supports_method(m.capability))
+      and (not m.capability or client:supports_method(m.capability))
       and not m.disabled
     then
       map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('lsp: %s', m.desc) })
@@ -545,7 +545,7 @@ end
 ---@param client vim.lsp.Client
 ---@param buf integer
 local function setup_autocommands(client, buf)
-  if client.supports_method(M.textDocument_hover) then
+  if client:supports_method(M.textDocument_hover) then
     augroup(('LspHoverDiagnostics%d'):format(buf), {
       event = { 'CursorHold' },
       buffer = buf,
@@ -564,11 +564,11 @@ local function setup_autocommands(client, buf)
     })
   end
 
-  if client.supports_method(M.textDocument_inlayHint, { bufnr = buf }) then
+  if client:supports_method(M.textDocument_inlayHint, { bufnr = buf }) then
     lsp.inlay_hint.enable(ar_config.lsp.inlay_hint.enable, { bufnr = buf })
   end
 
-  if client.supports_method(M.textDocument_formatting) then
+  if client:supports_method(M.textDocument_formatting) then
     augroup(('LspFormatting%d'):format(buf), {
       event = 'BufWritePre',
       buffer = buf,
@@ -580,7 +580,7 @@ local function setup_autocommands(client, buf)
           and ar_config.lsp.format_on_save.enable
         then
           local clients = vim.tbl_filter(
-            function(c) return c.supports_method(M.textDocument_formatting) end,
+            function(c) return c:supports_method(M.textDocument_formatting) end,
             lsp.get_clients({ buffer = buf })
           )
           if #clients >= 1 then
@@ -591,7 +591,7 @@ local function setup_autocommands(client, buf)
     })
   end
 
-  if client.supports_method(M.textDocument_codeLens) then
+  if client:supports_method(M.textDocument_codeLens) then
     augroup(('LspCodeLens%d'):format(buf), {
       event = { 'BufEnter', 'InsertLeave', 'BufWritePost' },
       desc = 'LSP: Code Lens',
@@ -600,7 +600,7 @@ local function setup_autocommands(client, buf)
       -- command = 'silent! lua vim.lsp.codelens.refresh()',
       command = function(args)
         if not args or not args.data then return end
-        if client.supports_method(M.textDocument_codeLens) then
+        if client:supports_method(M.textDocument_codeLens) then
           lsp.codelens.refresh({
             bufnr = args.buf,
             client_id = client.id,
@@ -610,7 +610,7 @@ local function setup_autocommands(client, buf)
     })
   end
 
-  if client.supports_method(M.textDocument_documentHighlight) then
+  if client:supports_method(M.textDocument_documentHighlight) then
     augroup(('LspReferences%d'):format(buf), {
       event = { 'CursorHold', 'CursorHoldI' },
       buffer = buf,
