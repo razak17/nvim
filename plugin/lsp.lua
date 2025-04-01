@@ -884,6 +884,21 @@ diagnostic.config({
   },
 })
 
+-- Override the virtual text diagnostic handler so that the most severe diagnostic is shown first.
+local show_handler = diagnostic.handlers.virtual_text.show
+assert(show_handler)
+local hide_handler = diagnostic.handlers.virtual_text.hide
+diagnostic.handlers.virtual_text = {
+  show = function(ns, bufnr, diagnostics, opts)
+    table.sort(
+      diagnostics,
+      function(diag1, diag2) return diag1.severity > diag2.severity end
+    )
+    return show_handler(ns, bufnr, diagnostics, opts)
+  end,
+  hide = hide_handler,
+}
+
 if not ar.is_available('noice.nvim') then
   local hover = lsp.buf.hover
   ---@diagnostic disable-next-line: duplicate-set-field
