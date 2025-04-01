@@ -839,14 +839,32 @@ diagnostic.config({
   update_in_insert = false,
   severity_sort = true,
   virtual_lines = virtual_lines_variant == 'builtin',
-  virtual_text = ar_config.lsp.virtual_text.enable and {
+  virtual_text = ar_config.lsp.virtual_text.enable
+      and {
     spacing = 1,
-    current_line = true,
-    prefix = function(d)
+        -- BUG: when set to true, virtual text override does not work (severe diagnostics are not shown first)
+        current_line = false,
+        prefix = '',
+        format = function(d)
+          -- Use shorter, nicer names for some sources:
+          local special_sources = {
+            ['Lua Diagnostics.'] = 'lua',
+            ['Lua Syntax Check.'] = 'lua',
+          }
       local level = diagnostic.severity[d.severity]
-      return diag_icons[level:lower()]
+          local message = diag_icons[level:lower()]
+          if d.source then
+            message = string.format(
+              '%s %s',
+              message,
+              special_sources[d.source] or d.source
+            )
+          end
+          if d.code then message = string.format('%s[%s]', message, d.code) end
+          return message
     end,
-  } or false,
+      }
+    or false,
   float = {
     max_width = max_width,
     max_height = max_height,
