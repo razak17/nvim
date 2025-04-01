@@ -160,7 +160,7 @@ end
 -- jump to the first definition automatically if the multiple defs are on the same line
 -- otherwise show a selector based on ar_config.picker or qf list
 ---@param result table # A list of Location
----@param client lsp.Client
+---@param client vim.lsp.Client
 local function jump_to_first_definition(result, client)
   local results = lsp.util.locations_to_items(result, client.offset_encoding)
   if
@@ -204,7 +204,7 @@ local function jump_to_first_definition(result, client)
   end
 end
 
----@param client lsp.Client
+---@param client vim.lsp.Client
 ---@param result table
 ---@param method string
 local function goto_definition_handler(client, result, method)
@@ -322,7 +322,7 @@ end
 -- Mappings
 --------------------------------------------------------------------------------
 ---Setup mapping when an lsp attaches to a buffer
----@param client lsp.Client
+---@param client vim.lsp.Client
 ---@param bufnr integer
 local function setup_mappings(client, bufnr)
   --- Diagnostic go_to
@@ -549,7 +549,7 @@ local ts_overrides = {
   end,
 }
 
----@alias ClientOverrides {on_attach: fun(client: lsp.Client, bufnr: number), semantic_tokens: fun(bufnr: number, client: lsp.Client, token: table)}
+---@alias ClientOverrides {on_attach: fun(client: vim.lsp.Client, bufnr: number), semantic_tokens: fun(bufnr: number, client: vim.lsp.Client, token: table)}
 
 --- A set of custom overrides for specific lsp clients
 --- This is a way of adding functionality for specific lsps
@@ -567,7 +567,7 @@ local client_overrides = {
   },
 }
 
----@param client lsp.Client
+---@param client vim.lsp.Client
 ---@param bufnr number
 local function setup_semantic_tokens(client, bufnr)
   local overrides = client_overrides[client.name]
@@ -582,7 +582,7 @@ local function setup_semantic_tokens(client, bufnr)
   })
 end
 
----@param client lsp.Client
+---@param client vim.lsp.Client
 ---@param buf integer
 local function setup_autocommands(client, buf)
   if client:supports_method(M.textDocument_hover) then
@@ -694,7 +694,7 @@ local function setup_lsp_stop_detached()
   })
 end
 
----@param client lsp.Client
+---@param client vim.lsp.Client
 ---@param bufnr number
 local function setup_lsp_plugins(client, bufnr)
   if is_available('workspace-diagnostics.nvim') then
@@ -720,7 +720,7 @@ end
 -- Add buffer local mappings, autocommands etc for attaching servers
 -- this runs for each client because they have different capabilities so each time one
 -- attaches it might enable autocommands or mappings that the previous client did not support
----@param client lsp.Client the lsp client
+---@param client vim.lsp.Client the lsp client
 ---@param bufnr number
 local function on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
