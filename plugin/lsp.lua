@@ -10,8 +10,7 @@ local disabled = not ar.lsp.enable
 if disabled then return end
 
 local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
--- local L = vim.lsp.log_levels
-local L, S = vim.lsp.log_levels, vim.diagnostic.severity
+local L, S = lsp.log_levels, vim.diagnostic.severity
 local M = vim.lsp.protocol.Methods
 local is_available = ar.is_available
 local conform = is_available('conform.nvim')
@@ -59,7 +58,7 @@ local function format(opts)
   if conform then
     local client_names = vim.tbl_map(
       function(client) return client.name end,
-      vim.lsp.get_clients({ bufnr = opts.bufnr })
+      lsp.get_clients({ bufnr = opts.bufnr })
     )
     local lsp_fallback
     local lsp_fallback_inclusions = { 'eslint' }
@@ -161,7 +160,7 @@ end
 -- jump to the first definition automatically if the multiple defs are on the same line
 -- otherwise show a selector based on ar_config.picker or qf list
 ---@param result table # A list of Location
----@param client vim.lsp.Client
+---@param client lsp.Client
 local function jump_to_first_definition(result, client)
   local results = lsp.util.locations_to_items(result, client.offset_encoding)
   if
@@ -177,7 +176,7 @@ local function jump_to_first_definition(result, client)
       title = 'LSP locations',
       items = lsp.util.locations_to_items(result, client.offset_encoding),
     })
-    api.nvim_command('botright copen')
+    vim.cmd('botright copen')
     return
   end
 
@@ -196,7 +195,7 @@ local function jump_to_first_definition(result, client)
   end
 end
 
----@param client vim.lsp.Client
+---@param client lsp.Client
 ---@param result table
 ---@param ctx table
 local function goto_definition_handler(client, result, ctx)
@@ -256,9 +255,9 @@ local function references_handler()
   end
 end
 
-local references = vim.lsp.buf.references
+local references = lsp.buf.references
 ---@diagnostic disable-next-line: duplicate-set-field
-vim.lsp.buf.references = function()
+lsp.buf.references = function()
   return references(nil, { on_list = function() references_handler() end })
 end
 
@@ -291,7 +290,7 @@ end
 -- Mappings
 --------------------------------------------------------------------------------
 ---Setup mapping when an lsp attaches to a buffer
----@param client vim.lsp.Client
+---@param client lsp.Client
 ---@param bufnr integer
 local function setup_mappings(client, bufnr)
   --- Diagnostic go_to
@@ -394,7 +393,7 @@ local function setup_mappings(client, bufnr)
       { 'n', 'x' },
       '<leader>lA',
       function()
-        vim.lsp.buf.code_action({
+        lsp.buf.code_action({
           apply = true,
           context = { only = { 'source' }, diagnostics = {} },
         })
@@ -412,17 +411,7 @@ local function setup_mappings(client, bufnr)
     {
       'n',
       'gd',
-      function()
-        local params = lsp.util.make_position_params(0, client.offset_encoding)
-        lsp.buf_request(
-          bufnr,
-          M.textDocument_definition,
-          params,
-          function(_, result, ctx)
-            if client then goto_definition_handler(client, result, ctx) end
-          end
-        )
-      end,
+      lsp.buf.definition,
       desc = 'definition',
       capability = M.textDocument_definition,
     },
@@ -528,7 +517,7 @@ local ts_overrides = {
   end,
 }
 
----@alias ClientOverrides {on_attach: fun(client: vim.lsp.Client, bufnr: number), semantic_tokens: fun(bufnr: number, client: vim.lsp.Client, token: table)}
+---@alias ClientOverrides {on_attach: fun(client: lsp.Client, bufnr: number), semantic_tokens: fun(bufnr: number, client: lsp.Client, token: table)}
 
 --- A set of custom overrides for specific lsp clients
 --- This is a way of adding functionality for specific lsps
@@ -546,7 +535,7 @@ local client_overrides = {
   },
 }
 
----@param client vim.lsp.Client
+---@param client lsp.Client
 ---@param bufnr number
 local function setup_semantic_tokens(client, bufnr)
   local overrides = client_overrides[client.name]
@@ -561,7 +550,7 @@ local function setup_semantic_tokens(client, bufnr)
   })
 end
 
----@param client vim.lsp.Client
+---@param client lsp.Client
 ---@param buf integer
 local function setup_autocommands(client, buf)
   if client:supports_method(M.textDocument_hover) then
@@ -663,7 +652,7 @@ local function setup_lsp_stop_detached()
       lsp_autostop_pending = true
       vim.defer_fn(function()
         lsp_autostop_pending = nil
-        for _, client in ipairs(vim.lsp.get_clients()) do
+        for _, client in ipairs(lsp.get_clients()) do
           if vim.tbl_isempty(client.attached_buffers) then
             utils.soft_stop(client)
           end
@@ -673,7 +662,7 @@ local function setup_lsp_stop_detached()
   })
 end
 
----@param client vim.lsp.Client
+---@param client lsp.Client
 ---@param bufnr number
 local function setup_lsp_plugins(client, bufnr)
   if is_available('workspace-diagnostics.nvim') then
@@ -699,7 +688,7 @@ end
 -- Add buffer local mappings, autocommands etc for attaching servers
 -- this runs for each client because they have different capabilities so each time one
 -- attaches it might enable autocommands or mappings that the previous client did not support
----@param client vim.lsp.Client the lsp client
+---@param client lsp.Client the lsp client
 ---@param bufnr number
 local function on_attach(client, bufnr)
   setup_autocommands(client, bufnr)
@@ -846,9 +835,9 @@ diagnostic.config({
 })
 
 if not ar.is_available('noice.nvim') then
-  local hover = vim.lsp.buf.hover
+  local hover = lsp.buf.hover
   ---@diagnostic disable-next-line: duplicate-set-field
-  vim.lsp.buf.hover = function()
+  lsp.buf.hover = function()
     return hover({
       border = border,
       max_width = max_width,
@@ -856,9 +845,9 @@ if not ar.is_available('noice.nvim') then
     })
   end
 
-  local signature_help = vim.lsp.buf.signature_help
+  local signature_help = lsp.buf.signature_help
   ---@diagnostic disable-next-line: duplicate-set-field
-  vim.lsp.buf.signature_help = function()
+  lsp.buf.signature_help = function()
     return signature_help({
       border = border,
       max_width = max_width,
@@ -881,7 +870,8 @@ end
 -- LSP Progress
 --------------------------------------------------------------------------------
 if
-  ar_config.lsp.progress.enable and ar_config.lsp.progress.variant == 'local'
+  ar_config.lsp.progress.enable
+  and ar_config.lsp.progress.variant == 'builtin'
 then
   require('ar.lsp_progress')
 end
