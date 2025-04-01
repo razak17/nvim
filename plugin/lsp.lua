@@ -166,8 +166,17 @@ local function jump_to_first_definition(result, client)
   if
     #results == 1 or (#results == 2 and results[1].lnum == results[2].lnum)
   then
-    lsp.util.show_document(result[1], client.offset_encoding)
-    return
+    return lsp.util.show_document(result[1], client.offset_encoding)
+  end
+
+  local bufnr = api.nvim_get_current_buf()
+  local path = api.nvim_buf_get_name(bufnr)
+
+  -- goto definition of local variable if it is in the same file
+  for i, val in pairs(results) do
+    if path == val.filename then
+      return lsp.util.show_document(result[i], client.offset_encoding)
+    end
   end
 
   if not is_snacks and not is_telescope and not is_fzf_lua then
@@ -197,11 +206,11 @@ end
 
 ---@param client lsp.Client
 ---@param result table
----@param ctx table
-local function goto_definition_handler(client, result, ctx)
+---@param method string
+local function goto_definition_handler(client, result, method)
   if not result or vim.tbl_isempty(result) then
-    local _ = lsp.log.info() and lsp.log.info(ctx.method, 'No location found')
-    return nil
+    local _ = lsp.log.info() and lsp.log.info(method, 'No location found')
+    return
   end
 
   if vim.islist(result) then
@@ -215,9 +224,32 @@ local function goto_definition_handler(client, result, ctx)
   vim.cmd([[norm! zz]])
 end
 
-lsp.handlers[M.textDocument_definition] = function(_, result, ctx)
-  local client = vim.lsp.get_client_by_id(ctx.client_id)
-  if client then goto_definition_handler(client, result, ctx) end
+local definition = lsp.buf.definition
+---@diagnostic disable-next-line: duplicate-set-field
+lsp.buf.definition = function()
+  return definition({
+    on_list = function(options)
+      local method = options.context.method
+      local clients = lsp.get_clients({
+        method = method,
+        bufnr = options.context.bufnr,
+      })
+      if not next(clients) then
+        vim.notify(lsp._unsupported_method(method), L.WARN)
+        return
+      end
+      local win = api.nvim_get_current_win()
+      for _, client in ipairs(clients) do
+        local params =
+          lsp.util.make_position_params(win, client.offset_encoding)
+        client:request(
+          method,
+          params,
+          function(_, result) goto_definition_handler(client, result, method) end
+        )
+      end
+    end,
+  })
 end
 
 local function references_handler()
