@@ -197,6 +197,7 @@ return {
     opts = { min_chars = 5, symbol = '󱏿' },
     ft = {
       'html',
+      'clojure',
       'svelte',
       'astro',
       'vue',
@@ -205,6 +206,7 @@ return {
       'php',
       'blade',
       'eruby',
+      'htmlangular',
       'htmldjango',
       'templ',
       'cshtml',
@@ -441,6 +443,7 @@ return {
       'vue',
       'typescriptreact',
       'javascriptreact',
+      'htmlangular',
       'php',
       'blade',
     },
