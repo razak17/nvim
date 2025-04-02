@@ -30,6 +30,7 @@ return {
         end,
         additional_vim_regex_highlighting = { 'org', 'sql' },
       },
+      ignore_install = { 'tmux' }, -- BUG: tmux parser is broken. @see: https://github.com/Freed-Wu/tree-sitter-tmux/issues/26
       incremental_selection = {
         enable = false,
         disable = { 'help' },
