@@ -771,38 +771,6 @@ augroup('LspSetupAutoCommands', {
   end,
 })
 --------------------------------------------------------------------------------
--- Handler Overrides
---------------------------------------------------------------------------------
--- This section overrides the default diagnostic handlers for signs and virtual text so that only
--- the most severe diagnostic is shown per line
-
---- The custom namespace is so that ALL diagnostics across all namespaces can be aggregated
---- including diagnostics from plugins
-local ns = api.nvim_create_namespace('severe-diagnostics')
-
---- Restricts nvim's diagnostic signs to only the single most severe one per line
---- see `:help vim.diagnostic`
----@param callback fun(namespace: integer, bufnr: integer, diagnostics: table, opts: table)
----@return fun(namespace: integer, bufnr: integer, diagnostics: table, opts: table)
-local function max_diagnostic(callback)
-  return function(_, bufnr, diagnostics, opts)
-    local max_severity_per_line = vim
-      .iter(diagnostics)
-      :fold({}, function(diag_map, d)
-        local m = diag_map[d.lnum]
-        if not m or d.severity < m.severity then diag_map[d.lnum] = d end
-        return diag_map
-      end)
-    callback(ns, bufnr, vim.tbl_values(max_severity_per_line), opts)
-  end
-end
-
-local signs_handler = diagnostic.handlers.signs
-diagnostic.handlers.signs = vim.tbl_extend('force', signs_handler, {
-  show = max_diagnostic(signs_handler.show),
-  hide = function(_, bufnr) signs_handler.hide(ns, bufnr) end,
-})
---------------------------------------------------------------------------------
 -- Diagnostic Configuration
 --------------------------------------------------------------------------------
 local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
@@ -841,7 +809,7 @@ diagnostic.config({
   virtual_lines = virtual_lines_variant == 'builtin',
   virtual_text = ar_config.lsp.virtual_text.enable
       and {
-    spacing = 1,
+        spacing = 1,
         -- BUG: when set to true, virtual text override does not work (severe diagnostics are not shown first)
         current_line = false,
         prefix = '',
@@ -851,7 +819,7 @@ diagnostic.config({
             ['Lua Diagnostics.'] = 'lua',
             ['Lua Syntax Check.'] = 'lua',
           }
-      local level = diagnostic.severity[d.severity]
+          local level = diagnostic.severity[d.severity]
           local message = diag_icons[level:lower()]
           if d.source then
             message = string.format(
@@ -862,7 +830,7 @@ diagnostic.config({
           end
           if d.code then message = string.format('%s[%s]', message, d.code) end
           return message
-    end,
+        end,
       }
     or false,
   float = {
@@ -898,6 +866,24 @@ diagnostic.handlers.virtual_text = {
   end,
   hide = hide_handler,
 }
+
+-- local show_signs_handler = diagnostic.handlers.signs.show
+-- assert(show_signs_handler)
+-- local hide_signs_handler = diagnostic.handlers.signs.hide
+-- diagnostic.handlers.signs = {
+--   show = function(ns, bufnr, diagnostics, opts)
+--     if not ar_config.lsp.signs.enable then return end
+--     local max_severity_per_line = vim
+--       .iter(diagnostics)
+--       :fold({}, function(diag_map, d)
+--         local m = diag_map[d.lnum]
+--         if not m or d.severity < m.severity then diag_map[d.lnum] = d end
+--         return diag_map
+--       end)
+--     return show_signs_handler(ns, bufnr, vim.tbl_values(max_severity_per_line), opts)
+--   end,
+--   hide = hide_signs_handler,
+-- }
 
 if not ar.is_available('noice.nvim') then
   local hover = lsp.buf.hover
