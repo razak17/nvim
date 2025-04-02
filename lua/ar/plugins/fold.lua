@@ -1,7 +1,10 @@
 return {
   {
     'kevinhwang91/nvim-ufo',
-    cond = not ar.plugins.minimal,
+    cond = function()
+      return not ar_config.plugin.custom.custom_fold.enable
+        and not ar.plugins.minimal
+    end,
     event = 'UIEnter', -- needed for folds to load in time and comments being closed
     init = function() vim.opt.foldexpr = '0' end,
     -- stylua: ignore

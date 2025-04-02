@@ -350,6 +350,7 @@ local config = {
     custom = {
       auto_cursorline = { enable = true },
       big_file = { enable = true },
+      custom_fold = { enable = false },
       interceptor = { enable = true },
       large_file = { enable = true },
       last_place = { enable = true },
