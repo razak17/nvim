@@ -217,7 +217,9 @@ M.file_name = {
     return ' ' .. filename
   end,
   on_click = {
-    callback = function() vim.cmd('Telescope find_files') end,
+    callback = function()
+      vim.defer_fn(function() ar.pick('files')() end, 100)
+    end,
     name = 'find_files',
   },
 }
@@ -230,7 +232,9 @@ M.pretty_path = {
     return ' ' .. pretty_path.pretty_path()
   end,
   on_click = {
-    callback = function() vim.cmd('Telescope find_files') end,
+    callback = function()
+      vim.defer_fn(function() ar.pick('files')() end, 100)
+    end,
     name = 'find_files',
   },
 }

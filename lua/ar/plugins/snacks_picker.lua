@@ -1,3 +1,20 @@
+---@module 'snacks'
+
+---@type ArPick
+local picker_config = {
+  name = 'snacks',
+  commands = {
+    files = 'files',
+    live_grep = 'grep',
+    oldfiles = 'recent',
+  },
+
+  ---@param source string
+  ---@param opts? snacks.picker.Config
+  open = function(source, opts) return Snacks.picker.pick(source, opts) end,
+}
+if ar_config.picker.variant == 'snacks' then ar.pick.register(picker_config) end
+
 local fn = vim.fn
 local fmt = string.format
 local diag_icons = ar.ui.codicons.lsp

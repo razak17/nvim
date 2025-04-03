@@ -1,3 +1,22 @@
+---@type ArPick
+local picker_config = {
+  name = 'snacks',
+  commands = {
+    files = 'files',
+    live_grep = 'grep_live',
+  },
+
+  ---@param builtin string
+  ---@param opts? ArPickOpts
+  open = function(builtin, opts)
+    opts = opts or {}
+    return require('mini.pick').builtin[builtin](opts)
+  end,
+}
+if ar_config.picker.variant == 'mini.pick' then
+  ar.pick.register(picker_config)
+end
+
 return {
   'echasnovski/mini.pick',
   cond = not ar.plugin_disabled('mini.pick')

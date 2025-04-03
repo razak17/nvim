@@ -1,3 +1,27 @@
+---@class FzfLuaOpts: ArPickOpts
+---@field cmd string?
+
+---@type ArPick
+local picker_config = {
+  name = 'fzf',
+  commands = {
+    files = 'files',
+  },
+
+  ---@param command string
+  ---@param opts? FzfLuaOpts
+  open = function(command, opts)
+    opts = opts or {}
+    if opts.cmd == nil and command == 'git_files' and opts.show_untracked then
+      opts.cmd = 'git ls-files --exclude-standard --cached --others'
+    end
+    return require('fzf-lua')[command](opts)
+  end,
+}
+if ar_config.picker.variant == 'fzf-lua' then
+  ar.pick.register(picker_config)
+end
+
 local fn, ui, reqcall = vim.fn, ar.ui, ar.reqcall
 local codicons, lsp_hls = ui.codicons, ui.lsp.highlights
 local prompt = ' ' .. codicons.misc.search_alt .. '  '

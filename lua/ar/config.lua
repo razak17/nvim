@@ -407,3 +407,4 @@ local config = {
 _G.ar_config = config
 
 _G.map = vim.keymap.set
+_G.ar.pick = require('ar.pick')
