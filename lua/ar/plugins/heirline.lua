@@ -310,12 +310,21 @@ return {
           },
         },
         align,
-        -- LSP Progress
+        -- LSP
         {
           init = function() statusline.autocmds() end,
           condition = function() return not minimal and ar.lsp.enable end,
-          provider = function() return statusline.lsp_progress end,
-          hl = { fg = 'comment' },
+          -- LSP Progress
+          {
+            provider = function() return statusline.lsp_progress end,
+            hl = { fg = 'comment' },
+          },
+          -- LSP Pending Requests
+          {
+            condition = function() return statusline.lsp_progress == '' end,
+            provider = function() return statusline.lsp_pending end,
+            hl = { fg = 'comment' },
+          },
         },
         align,
         -- Noice Status

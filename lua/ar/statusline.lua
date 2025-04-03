@@ -445,10 +445,13 @@ function M.copilot_indicator()
 end
 
 M.lsp_progress = ''
+M.lsp_pending = ''
 function M.autocmds()
   -- Ref: https://github.com/NvChad/ui/blob/v3.0/lua/nvchad/stl/utils.lua?plain=1#L161
-  ar.augroup('stl_lsp_progress', {
+  ar.augroup('stl_lsp_autocmds', {
     event = { 'LspProgress' },
+    once = true,
+    desc = 'LSP Progress',
     pattern = { 'begin', 'report', 'end' },
     command = function(args)
       local data = args.data.params.value
@@ -463,6 +466,32 @@ function M.autocmds()
       local loaded_count = msg and string.match(msg, '^(%d+/%d+)') or ''
       local str = progress .. (title or '') .. ' ' .. (loaded_count or '')
       M.lsp_progress = kind == 'end' and '' or str
+      vim.cmd.redrawstatus()
+    end,
+  }, {
+    -- Ref: https://github.com/emmanueltouzery/nvim_config/blame/5c3d184b2ab62aa0cd3e8861ecc23c5f51931d33/lua/plugins/lualine.lua#L240
+    event = { 'LspRequest' },
+    once = true,
+    desc = 'LSP Pendingg Request',
+    command = function(args)
+      local active_lsp_requests = {}
+      local request = args.data.request
+      local request_id = args.data.request_id
+      if request.type == 'pending' then
+        active_lsp_requests[request_id] = true
+      elseif request.type == 'cancel' then
+        active_lsp_requests[request_id] = nil
+      elseif request.type == 'complete' then
+        active_lsp_requests[request_id] = nil
+      else
+        vim.notify({ 'Unknown LSP request type: ' .. request.type })
+      end
+      local active_requests_count = vim.tbl_count(active_lsp_requests)
+      if active_requests_count > 0 then
+        M.lsp_pending = '󰘦 Pending LSP requests: ' .. active_requests_count
+      else
+        M.lsp_pending = ''
+      end
       vim.cmd.redrawstatus()
     end,
   })
