@@ -21,7 +21,7 @@ return {
       return ar_config.session.enable
         and ar_config.session.variant == 'persisted'
     end,
-    event = 'VeryLazy',
+    event = 'BufReadPre',
     cmd = { 'SessionLoad', 'SessionLoadLast', 'SessionSelect', 'SessionStop' },
     -- stylua: ignore
     keys = {
