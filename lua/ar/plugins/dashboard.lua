@@ -3,41 +3,6 @@ local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 ar.dashboard = {}
 
----@alias ArDashboardPickerCommands 'files' | 'projects' | 'grep'
-
-local picker_commands = {
-  snacks = {
-    files = 'lua Snacks.picker.files()',
-    projects = 'lua Snacks.picker.projects()',
-    grep = 'lua Snacks.picker.grep()',
-  },
-  telescope = {
-    files = 'Telescope find_files',
-    projects = 'Telescope projects',
-    grep = 'Telescope live_grep',
-  },
-  ['fzf-lua'] = {
-    files = 'FzfLua files',
-    grep = 'FzfLua live_grep',
-  },
-}
-
----@param command ArDashboardPickerCommands
-function ar.dashboard.picker(command)
-  local variant = ar_config.picker.variant
-  local cmd = picker_commands[variant] and picker_commands[variant][command]
-
-  if cmd then
-    if type(cmd) == 'function' then
-      return cmd()
-    else
-      return vim.cmd(cmd)
-    end
-  end
-
-  vim.notify('Invalid command or picker variant', 'error')
-end
-
 local session_commands = {
   persisted = {
     load_last = 'SessionLoadLast',
@@ -197,19 +162,19 @@ return {
           'Directory',
           'p',
           '  Recent projects',
-          '<Cmd>lua ar.dashboard.picker("projects")<CR>'
+          '<Cmd>lua ar.pick("projects", { extension = "projects" })()<CR>'
         ),
         button(
           'String',
           'f',
           '  Find file',
-          '<Cmd>lua ar.dashboard.picker("files")<CR>'
+          '<Cmd>lua ar.pick("files")()<CR>'
         ),
         button(
           'Define',
           'w',
           '󰈭  Find text',
-          '<Cmd>lua ar.dashboard.picker("grep")<CR>'
+          '<Cmd>lua ar.pick("live_grep")()<CR>'
         ),
         -- button('Keyword', 'n', '  New file', ':ene | startinsert<CR>'),
         button('Ignore', 'l', '󰒲  Lazy', '<Cmd>Lazy<CR>'),

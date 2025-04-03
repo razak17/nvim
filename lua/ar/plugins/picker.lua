@@ -6,6 +6,7 @@ local picker_config = {
   name = 'fzf',
   commands = {
     files = 'files',
+    projects = 'files',
   },
 
   ---@param command string

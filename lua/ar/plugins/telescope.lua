@@ -7,9 +7,9 @@ local picker_config = {
   -- this will return a function that calls telescope.
   -- cwd will default to lazyvim.util.get_root
   -- for `files`, git_files or find_files will be chosen depending on .git
-  ---@param builtin string
+  ---@param command string
   ---@param opts? ArPickOpts
-  open = function(builtin, opts)
+  open = function(command, opts)
     opts = opts or {}
     opts.follow = opts.follow ~= false
     if opts.cwd and opts.cwd ~= vim.uv.cwd() then
@@ -17,7 +17,7 @@ local picker_config = {
         local action_state = require('telescope.actions.state')
         local line = action_state.get_current_line()
         ar.pick.open(
-          builtin,
+          command,
           vim.tbl_deep_extend('force', {}, opts or {}, {
             root = false,
             default_text = line,
@@ -32,7 +32,12 @@ local picker_config = {
       end
     end
 
-    require('telescope.builtin')[builtin](opts)
+    if opts.extension then
+      local extension = opts.extension
+      require('telescope').extensions[extension][command](opts)
+    else
+      require('telescope.builtin')[command](opts)
+    end
   end,
 }
 if ar_config.picker.variant == 'telescope' then
