@@ -165,7 +165,9 @@ return {
             return codicons.git.branch .. ' ' .. statusline.git_branch()
           end,
           on_click = {
-            callback = statusline.list_branches,
+            callback = function()
+              vim.defer_fn(function() statusline.list_branches() end, 100)
+            end,
             name = 'git_change_branch',
           },
           hl = { fg = 'yellowgreen' },
