@@ -1,7 +1,12 @@
 local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
-  { 'tpope/vim-rsi', cond = not minimal, event = { 'InsertEnter' } },
+  {
+    desc = 'readline style keybindings in insert mode',
+    'tpope/vim-rsi',
+    cond = not minimal,
+    event = { 'InsertEnter' },
+  },
   {
     'johmsalas/text-case.nvim',
     cond = not minimal,
