@@ -1,6 +1,6 @@
 if not ar or ar.none then return end
 
-local opt = vim.opt
+local api, opt = vim.api, vim.opt
 
 opt.conceallevel = 3
 opt.concealcursor = 'n'
@@ -13,22 +13,24 @@ if not ar.is_available('oil.nvim') then return end
 local oil = require('oil')
 local function find_files()
   local dir = oil.get_current_dir()
-  if vim.api.nvim_win_get_config(0).relative ~= '' then
-    vim.api.nvim_win_close(0, true)
+  if api.nvim_win_get_config(0).relative ~= '' then
+    api.nvim_win_close(0, true)
   end
-  require('fzf-lua').files({ cwd = dir, hidden = true })
+  ar.pick('files', { cwd = dir })()
 end
 
 local function livegrep()
   local dir = oil.get_current_dir()
-  if vim.api.nvim_win_get_config(0).relative ~= '' then
-    vim.api.nvim_win_close(0, true)
+  if api.nvim_win_get_config(0).relative ~= '' then
+    api.nvim_win_close(0, true)
   end
-  require('telescope.builtin').live_grep({ cwd = dir })
+  ar.pick('live_grep', { cwd = dir })()
 end
-map('n', '<leader>ff', find_files, { desc = '[F]ind [F]iles in dir' })
-map('n', '<leader>fg', livegrep, { desc = '[F]ind by [G]rep in dir' })
-vim.api.nvim_buf_create_user_command(
+
+map('n', '<leader>ff', find_files, { desc = 'find [F]iles in dir', buffer = 0 })
+map('n', '<leader>fs', livegrep, { desc = 'find by [G]rep in dir', buffer = 0 })
+
+api.nvim_buf_create_user_command(
   0,
   'Save',
   function(params) oil.save({ confirm = not params.bang }) end,
@@ -37,13 +39,13 @@ vim.api.nvim_buf_create_user_command(
     bang = true,
   }
 )
-vim.api.nvim_buf_create_user_command(
+api.nvim_buf_create_user_command(
   0,
   'EmptyTrash',
   function(params) oil.empty_trash() end,
   { desc = 'Empty the trash directory' }
 )
-vim.api.nvim_buf_create_user_command(
+api.nvim_buf_create_user_command(
   0,
   'OpenTerminal',
   function(params) require('oil.adapters.ssh').open_terminal() end,

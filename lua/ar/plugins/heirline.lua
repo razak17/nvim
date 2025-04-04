@@ -303,10 +303,7 @@ return {
           },
           on_click = {
             callback = function()
-              require('telescope.builtin').diagnostics({
-                layout_strategy = 'center',
-                bufnr = 0,
-              })
+              vim.defer_fn(ar.pick('diagnostics_buffer'), 100)
             end,
             name = 'lsp_diagnostics',
           },

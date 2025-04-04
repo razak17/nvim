@@ -3,6 +3,7 @@ local picker_config = {
   name = 'telescope',
   commands = {
     files = 'find_files',
+    diagnostics_buffer = 'diagnostics',
   },
   -- this will return a function that calls telescope.
   -- cwd will default to lazyvim.util.get_root
@@ -30,6 +31,18 @@ local picker_config = {
         map('i', '<a-c>', open_cwd_dir, { desc = 'open cwd directory' })
         return true
       end
+    end
+
+    if command == 'diagnostics' then
+      opts = vim.tbl_deep_extend('force', {}, opts or {}, {
+        bufnr = 0,
+        ignore_filename = true,
+        layout_strategy = 'center',
+      })
+    end
+
+    if command == 'files' or command == 'live_grep' then
+      opts = vim.tbl_deep_extend('force', {}, opts or {}, { hidden = true })
     end
 
     if opts.extension then

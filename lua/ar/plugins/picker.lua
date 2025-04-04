@@ -16,6 +16,9 @@ local picker_config = {
     if opts.cmd == nil and command == 'git_files' and opts.show_untracked then
       opts.cmd = 'git ls-files --exclude-standard --cached --others'
     end
+    if command == 'files' or command == 'live_grep' then
+      opts = vim.tbl_deep_extend('force', {}, opts or {}, { hidden = true })
+    end
     return require('fzf-lua')[command](opts)
   end,
 }
