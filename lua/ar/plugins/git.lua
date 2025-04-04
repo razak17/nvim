@@ -165,7 +165,7 @@ return {
     -- stylua: ignore
     keys = {
       { '<localleader>gd', '<Cmd>DiffviewOpen<CR>', desc = 'diffview: open' },
-      { 'gh', [[:'<'>DiffviewFileHistory<CR>]], desc = 'diffview: file history', mode = 'v', },
+      {  mode = 'v', '<localleader>gh', [[:'<'>DiffviewFileHistory<CR>]], desc = 'diffview: file history' },
       { '<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', desc = 'diffview: file history', },
       { '<localleader>gx', '<cmd>set hidden<cr><cmd>DiffviewClose<cr><cmd>set nohidden<cr>', desc = 'diffview: close all buffers', },
     },
@@ -190,14 +190,16 @@ return {
       end
 
       local function diffview_conflict(which)
-        local view = require('diffview.lib').get_current_view()
-        if view == nil then
-          vim.notify('No diffview found', vim.log.levels.ERROR)
-          return
+        return function()
+          local view = require('diffview.lib').get_current_view()
+          if view == nil then
+            vim.notify('No diffview found', vim.log.levels.ERROR)
+            return
+          end
+          ---@diagnostic disable-next-line: undefined-field
+          local merge_ctx = view.merge_ctx
+          if merge_ctx then show_commit(merge_ctx[which].hash) end
         end
-        ---@diagnostic disable-next-line: undefined-field
-        local merge_ctx = view.merge_ctx
-        if merge_ctx then show_commit(merge_ctx[which].hash) end
       end
 
       local function diffview_conflict_choose(which)
@@ -239,13 +241,13 @@ return {
         ['Conflict Choose Theirs'] = diffview_conflict_choose('theirs'),
         ['Conflict Choose None'] = diffview_conflict_choose('none'),
         ['Conflict Choose Both'] = diffview_conflict_choose('all'),
-        ['Conflict Show Base'] = function() diffview_conflict('base') end,
-        ['Conflict Show Ours'] = function() diffview_conflict('ours') end,
-        ['Conflict Show Theirs'] = function() diffview_conflict('theirs') end,
-        ['Show Commit At Line'] = function() show_commit_at_line() end,
-        ['Browse Project History'] = function() project_history() end,
-        ['Show Commit From Hash'] = function() display_commit_from_hash() end,
-        ['Cherry Pick From Hash'] = function() cherry_pick_from_hash() end,
+        ['Conflict Show Base'] = diffview_conflict('base'),
+        ['Conflict Show Ours'] = diffview_conflict('ours'),
+        ['Conflict Show Theirs'] = diffview_conflict('theirs'),
+        ['Show Commit At Line'] = show_commit_at_line,
+        ['Browse Project History'] = project_history,
+        ['Show Commit From Hash'] = display_commit_from_hash,
+        ['Cherry Pick From Hash'] = cherry_pick_from_hash,
         ['Open Diffview'] = 'DiffviewOpen',
         ['Browse File Commit History'] = 'DiffviewFileHistory %',
       })
