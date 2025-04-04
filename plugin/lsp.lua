@@ -20,11 +20,6 @@ local utils = require('ar.utils.lsp')
 local augroup, diag_icons, border =
   ar.augroup, ar.ui.codicons.lsp, ar.ui.current.border
 
-local picker = ar_config.picker.variant
-local is_snacks = picker == 'snacks' and is_available('snacks.nvim')
-local is_telescope = picker == 'telescope' and is_available('telescope.nvim')
-local is_fzf_lua = picker == 'fzf-lua' and is_available('fzf-lua')
-
 local format_exclusions = {
   format_on_save = { 'zsh' },
   servers = {
@@ -179,7 +174,7 @@ local function jump_to_first_definition(result, client)
     end
   end
 
-  if not is_snacks and not is_telescope and not is_fzf_lua then
+  if not ar.pick.picker then
     -- show in qf if picker is not available
     fn.setqflist({}, ' ', {
       title = 'LSP locations',
@@ -193,13 +188,7 @@ local function jump_to_first_definition(result, client)
 
   for _, val in pairs(results) do
     if val.lnum ~= lnum or val.filename ~= filename then
-      if is_snacks then
-        return Snacks.picker.lsp_definitions()
-      elseif is_fzf_lua then
-        return require('fzf-lua').lsp_definitions()
-      elseif is_telescope then
-        return require('telescope.builtin').lsp_definitions()
-      end
+      return ar.pick('lsp_definitions')()
     end
   end
 end
@@ -280,17 +269,22 @@ local function references_handler()
     end
   end
 
-  if is_snacks then return Snacks.picker.lsp_references(params) end
-  if is_fzf_lua then return require('fzf_lua').lsp_references(params) end
-  if is_telescope then
-    return require('telescope.builtin').lsp_references(params)
-  end
+  ar.pick('lsp_references', params)()
 end
 
 local references = lsp.buf.references
 ---@diagnostic disable-next-line: duplicate-set-field
 lsp.buf.references = function()
-  return references(nil, { on_list = function() references_handler() end })
+  return references(nil, {
+    on_list = function(options)
+      if not ar.pick.picker then
+        fn.setqflist({}, ' ', options)
+        vim.cmd('botright copen')
+        return
+      end
+      references_handler()
+    end,
+  })
 end
 
 --------------------------------------------------------------------------------
