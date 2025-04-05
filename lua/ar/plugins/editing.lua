@@ -36,8 +36,10 @@ return {
     opts = { ring = { storage = 'sqlite' } },
   },
   {
+    desc = 'Duplicate visual selection, lines, and textobjects',
     'hinell/duplicate.nvim',
     cond = not minimal,
+    cmd = { 'LineDuplicate', 'VisualDuplicate' },
     -- stylua: ignore
     keys = {
       { '<leader><leader>j', '<Cmd>LineDuplicate -1<CR>', desc = 'duplicate: line up' },
