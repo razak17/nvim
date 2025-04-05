@@ -193,7 +193,6 @@ return {
       keymap = {
         preset = 'default',
         ['<CR>'] = { 'accept', 'fallback' },
-        ['<C-l>'] = { 'accept', 'fallback' },
         ['<C-n>'] = { 'select_next', 'show' },
         ['<C-p>'] = { 'select_prev', 'show' },
         ['<C-j>'] = { 'select_next', 'fallback' },
