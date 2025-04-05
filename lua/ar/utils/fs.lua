@@ -6,7 +6,7 @@ local M = {}
 function M.on_rename_file(from, to)
   local clients = vim.lsp.get_clients()
   for _, client in ipairs(clients) do
-    if client.supports_method('workspace/willRenameFiles') then
+    if client:supports_method('workspace/willRenameFiles') then
       local resp = client.request_sync('workspace/willRenameFiles', {
         files = {
           {
