@@ -152,6 +152,7 @@ o.signcolumn = 'yes:1'
 o.ruler = false
 o.cmdheight = 1
 o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→', '↴'
+-- o.winborder = 'single' -- Single border for windows
 --------------------------------------------------------------------------------
 -- List chars {{{1
 --------------------------------------------------------------------------------
