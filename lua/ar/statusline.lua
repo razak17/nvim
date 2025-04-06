@@ -442,10 +442,20 @@ function M.get_formatters(curbuf)
 end
 
 function M.copilot_indicator()
-  local client = vim.lsp.get_clients({ name = 'copilot' })[1]
+  local client = vim.lsp.get_clients({ name = 'copilot', bufnr = 0 })[1]
   if client == nil then return 'inactive' end
-  if vim.tbl_isempty(client.requests) then return 'idle' end
-  return 'working'
+  return vim.tbl_isempty(client.requests) and 'idle' or 'pending'
+end
+
+function M.copilot_status()
+  local clients = vim.lsp.get_clients({ name = 'copilot', bufnr = 0 })
+  if clients and #clients > 0 then
+    local status = require('copilot.status').data.status
+    return (status == 'InProgress' and 'pending')
+      or (status == 'Warning' and 'error')
+      or 'ok'
+  end
+  return ''
 end
 
 M.lsp_progress = ''

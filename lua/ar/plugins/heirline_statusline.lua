@@ -504,16 +504,15 @@ return {
           end,
           init = function(self)
             self.processing = false
-            local status = statusline.copilot_indicator()
-            if status == 'working' then self.processing = true end
+            local status = statusline.copilot_status()
+            -- local status = statusline.copilot_indicator()
+            if status == 'pending' then self.processing = true end
           end,
           {
             provider = ' ' .. codicons.misc.copilot,
             hl = function(self)
-              if self.processing then
-                return { fg = 'forest_green', bold = true }
-              end
-              return { fg = 'comment', bold = true }
+              return self.processing and { fg = 'yellow', bold = true }
+                or { fg = 'comment', bold = true }
             end,
             on_click = {
               callback = function()
