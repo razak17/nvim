@@ -13,7 +13,7 @@ _G.GitStatus = { ahead = 0, behind = 0, status = nil }
 function M.block() return icons.separators.bar end
 
 function M.list_branches()
-  local branches = vim.fn.systemlist([[git branch 2>/dev/null]])
+  local branches = fn.systemlist([[git branch 2>/dev/null]])
   local new_branch_prompt = 'Create new branch'
   ---@diagnostic disable-next-line: param-type-mismatch
   table.insert(branches, 1, new_branch_prompt)
@@ -25,12 +25,10 @@ function M.list_branches()
 
     if choice == new_branch_prompt then
       vim.ui.input({ prompt = 'New branch name:' }, function(branch)
-        if branch ~= nil then
-          vim.fn.systemlist('git checkout -b ' .. branch)
-        end
+        if branch ~= nil then fn.systemlist('git checkout -b ' .. branch) end
       end)
     else
-      vim.fn.systemlist('git checkout ' .. choice)
+      fn.systemlist('git checkout ' .. choice)
     end
   end)
 end
@@ -133,10 +131,10 @@ end
 -- made my own git_branch lualine component as the official one didn't properly
 -- update for non-focused buffers on branch change for me.
 function M.git_branch()
-  local bufnr = vim.api.nvim_get_current_buf()
+  local bufnr = api.nvim_get_current_buf()
   local cached_repo = buffer_repo_cache[bufnr]
   if cached_repo then return repo_branch_cache[cached_repo][1] end
-  local path = vim.fn.expand('%:p')
+  local path = fn.expand('%:p')
   local dir = vim.fs.dirname(path)
   local git_path = vim.fs.root(dir, '.git')
   if git_path == nil then
@@ -154,7 +152,7 @@ function M.git_branch()
 end
 
 local function git_push_pull(action, _)
-  local branch = vim.fn.systemlist('git rev-parse --abbrev-ref HEAD')[1]
+  local branch = fn.systemlist('git rev-parse --abbrev-ref HEAD')[1]
 
   vim.ui.select({ 'Yes', 'No' }, {
     prompt = action:gsub('^%l', string.upper)
@@ -202,7 +200,7 @@ M.mode_colors = {
 
 ---Return the filename of the current buffer
 M.file_block = {
-  init = function(self) self.filename = vim.api.nvim_buf_get_name(0) end,
+  init = function(self) self.filename = api.nvim_buf_get_name(0) end,
   condition = function(self)
     return not conditions.buffer_matches({
       filetype = self.filetypes,
@@ -212,7 +210,7 @@ M.file_block = {
 
 M.file_name = {
   provider = function(self)
-    local filename = vim.fn.fnamemodify(self.filename, ':t')
+    local filename = fn.fnamemodify(self.filename, ':t')
     if filename == '' then return '[No Name]' end
     return ' ' .. filename
   end,
@@ -226,7 +224,7 @@ M.file_name = {
 
 M.pretty_path = {
   provider = function(self)
-    local filename = vim.fn.fnamemodify(self.filename, ':p:h')
+    local filename = fn.fnamemodify(self.filename, ':p:h')
     if filename == '' then return '[No Name]' end
     local pretty_path = require('ar.pretty_path')
     return ' ' .. pretty_path.pretty_path()
@@ -247,7 +245,7 @@ M.file_size = {
     if string.len(buf) == 0 then return '' end
 
     local suffix = { 'b', 'k', 'M', 'G', 'T', 'P', 'E' }
-    local fsize = vim.fn.getfsize(buf)
+    local fsize = fn.getfsize(buf)
     fsize = (fsize < 0 and 0) or fsize
     if fsize < 1024 then return ' ' .. fsize .. suffix[1] end
     local i = math.floor((math.log(fsize) / math.log(1024)))
@@ -295,8 +293,8 @@ M.file_type = {
 }
 
 function M.progress()
-  local cur = vim.fn.line('.')
-  local total = vim.fn.line('$')
+  local cur = fn.line('.')
+  local total = fn.line('$')
   if cur == 1 then
     return 'Top'
   elseif cur == total then
