@@ -61,7 +61,7 @@ return {
         enabled = true,
         win = { wo = { winbar = '' } },
       },
-      words = { enabled = true },
+      words = { enabled = ar.lsp.enable },
       zen = {},
     },
     init = function()
