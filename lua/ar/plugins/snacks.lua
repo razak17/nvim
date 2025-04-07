@@ -88,10 +88,6 @@ return {
             { off = 'light', on = 'dark', name = 'Dark Background' }
           )
         end,
-        ['Toggle Relative Number'] = function()
-          Snacks.toggle.option('relativenumber', { name = 'Relative Number' })
-        end,
-        ['Toggle Terminal'] = function() Snacks.terminal() end,
         ['Toggle Dim'] = function()
           if Snacks.dim.enabled then
             Snacks.dim.disable()
@@ -99,6 +95,10 @@ return {
             Snacks.dim.enable({ enabled = true })
           end
         end,
+        ['Toggle Relative Number'] = function()
+          Snacks.toggle.option('relativenumber', { name = 'Relative Number' })
+        end,
+        ['Toggle Terminal'] = function() Snacks.terminal() end,
         ['Toggle Zoom'] = function() Snacks.zen.zoom() end,
         ['Toggle Zen'] = function() Snacks.zen() end,
         ['Toggle Scratch'] = function() Snacks.scratch() end,
