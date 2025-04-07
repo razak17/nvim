@@ -141,8 +141,9 @@ end
 -- https://github.com/delphinus/dotfiles/blob/master/.config/nvim/lua/core/telescope/init.lua#L15
 ---@param name string
 ---@param prop string?
----@return fun(opts: table?): function
+---@return nil | fun(opts: table?): function
 local function extensions(name, prop)
+  if not picker_enabled then return end
   return function(opts)
     return function(more_opts)
       local o = vim.tbl_extend('force', opts or {}, more_opts or {})
