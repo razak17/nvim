@@ -576,9 +576,9 @@ return {
       end
 
       ar.add_to_select_menu('git', {
-        ['Time Machine'] = function() time_machine() end,
-        ['Search In Another Branch'] = function() search_in_another_branch() end,
-        ['Open File From Branch'] = function() open_file_from_branch() end,
+        ['Time Machine'] = time_machine,
+        ['Search In Another Branch'] = search_in_another_branch,
+        ['Open File From Branch'] = open_file_from_branch,
       })
     end,
     keys = {
