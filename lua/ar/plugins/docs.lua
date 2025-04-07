@@ -1,4 +1,4 @@
-local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
+local minimal = ar.plugins.minimal
 
 return {
   {
