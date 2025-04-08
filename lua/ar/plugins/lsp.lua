@@ -363,6 +363,7 @@ return {
     },
     event = 'LspAttach',
     opts = {},
+    dependencies = { 'rmagatti/logger.nvim' },
   },
   {
     'chrisgrieser/nvim-rulebook',
