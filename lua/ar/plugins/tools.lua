@@ -218,13 +218,8 @@ return {
         lua = { 'stylua' },
         go = { 'goimports', 'goimports-reviser' },
         sh = { 'shfmt' },
-        python = ar.lsp_disabled('ruff')
-            and {
-              'isort',
-              -- 'black',
-              'autopep8',
-              --[[ 'yapf' ]]
-            }
+        python = ar.lsp_disabled('ruff') and { 'isort', 'autopep8' }
+          or not ar.lsp.enable and { 'black', 'yapf' }
           or {},
         http = { 'kulala' },
       },
