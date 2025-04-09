@@ -111,7 +111,7 @@ local function find_files()
     format = 'file',
     show_empty = true,
     supports_live = true,
-    layout = 'telescope',
+    -- layout = 'telescope',
       -- stylua: ignore start
     args = {
       '--exclude', '**/.git/**',
@@ -245,7 +245,11 @@ return {
   opts = function(_, opts)
     return vim.tbl_deep_extend('force', opts or {}, {
       picker = {
-        layouts = picker_layouts,
+        layouts = vim.tbl_deep_extend('force', picker_layouts or {}, {
+          sidebar = {
+            layout = { layout = { position = 'right' } },
+          },
+        }),
         prompt = fmt('%s ', ar.ui.icons.misc.chevron_right),
         sources = {
           files = { hidden = true, ignored = true },
@@ -259,9 +263,8 @@ return {
           explorer = {
             hidden = true,
             auto_close = false,
-            actions = {
-              window_picker = window_picker_action,
-            },
+            layout = { layout = { position = 'right' } },
+            actions = { window_picker = window_picker_action },
             win = {
               list = {
                 keys = {
