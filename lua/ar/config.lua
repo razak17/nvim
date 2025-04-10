@@ -366,6 +366,7 @@ local config = {
       sticky_note = { enable = false },
       sticky_yank = { enable = true },
       wb_current_line = { enable = true },
+      yank_ring = { enable = true },
     },
     main = {
       autocommands = { enable = true },

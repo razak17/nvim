@@ -5,6 +5,7 @@ if not ar or ar.none or not enabled then return end
 local api, v = vim.api, vim.v
 
 -- https://github.com/ruicsh/nvim-config/blob/4b09396a06ed46145252803dfdc7a33fdd8a4bd7/plugin/autocmds/yank-keep-cursor-position.lua#L1
+
 local cursor_pre_yank
 
 local function store_cursor_position()
