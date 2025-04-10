@@ -294,8 +294,12 @@ return {
             win = {
               list = {
                 keys = {
+                  ['z'] = 'explorer_close_all',
                   ['O'] = { { 'pick_win', 'jump' }, mode = { 'n', 'i' } },
                   ['W'] = 'window_picker',
+                  [']c'] = 'explorer_git_next',
+                  ['[c'] = 'explorer_git_prev',
+                  ['<C-b>'] = 'close',
                   ['<C-g>'] = 'grep_files_in_dir',
                   ['<C-p>'] = 'find_files_in_dir',
                 },
