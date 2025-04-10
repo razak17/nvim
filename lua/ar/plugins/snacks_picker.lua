@@ -295,10 +295,10 @@ return {
         matcher = { frecency = true },
         icons = {
           diagnostics = {
-            Error = diag_icons.error,
-            Warn = diag_icons.warn,
-            Hint = diag_icons.hint,
-            Info = diag_icons.info,
+            Error = diag_icons.error .. ' ',
+            Warn = diag_icons.warn .. ' ',
+            Hint = diag_icons.hint .. ' ',
+            Info = diag_icons.info .. ' ',
           },
         },
         actions = {
