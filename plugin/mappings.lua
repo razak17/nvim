@@ -307,7 +307,7 @@ end
 if not is_available('snacks.nvim') then
   nnoremap('<leader>qb', ':bdel<CR>', { desc = 'delete buffer' })
 end
-if not is_available('neo-tree.nvim') then
+if not ar.plugins.enable then
   nnoremap('<C-n>', ':Ex<CR>', { desc = 'explorer' })
 end
 nnoremap('<localleader>bo', function()

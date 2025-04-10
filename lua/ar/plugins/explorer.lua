@@ -28,6 +28,7 @@ end
 return {
   {
     'nvim-neo-tree/neo-tree.nvim',
+    cond = ar_config.explorer.variant == 'neo-tree',
     branch = 'v3.x',
     cmd = { 'Neotree' },
     keys = {
@@ -311,6 +312,7 @@ return {
   },
   {
     'echasnovski/mini.files',
+    cond = ar_config.explorer.variant == 'mini.files',
     keys = {
       {
         '<leader>ee',
@@ -318,7 +320,7 @@ return {
         desc = 'open mini.files (directory of current file)',
       },
       {
-        '<leader>e.',
+        '<C-n>',
         function()
           local mf = require('mini.files')
           if not mf.close() then
@@ -371,7 +373,13 @@ return {
   },
   {
     'stevearc/oil.nvim',
+    cond = ar_config.explorer.variant == 'oil',
     keys = {
+      {
+        '<C-n>',
+        "<Cmd>lua require('oil').open()<CR>",
+        desc = 'oil: open parent directory',
+      },
       {
         '-',
         "<Cmd>lua require('oil').open()<CR>",

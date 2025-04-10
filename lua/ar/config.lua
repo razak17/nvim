@@ -32,6 +32,7 @@ local env = vim.env
 ---@alias ArCompletion 'cmp' | 'blink'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
 ---@alias ArWhichDashboard 'alpha' | 'snacks'
+---@alias ArWhichExplorer 'neo-tree' | 'snacks' | 'mini.files' | 'oil'
 ---@alias ArWhichGx 'local' | 'plugin'
 ---@alias ArWhichIndentline 'mini.indentscope' | 'ibl' | 'snacks' | 'indentmini'
 ---@alias ArWhichLspProgress 'builtin' | 'noice' | 'snacks'
@@ -57,6 +58,7 @@ local env = vim.env
 
 ---@class ArExplorer
 ---@field rename ArExplorerRename
+---@field variant ArWhichExplorer
 
 ---@class ArGx
 ---@field enable boolean
@@ -314,7 +316,7 @@ local config = {
   dashboard = { enable = true, variant = 'alpha' },
   debug = { enable = false },
   ---@type ArExplorer
-  explorer = { rename = 'snacks' },
+  explorer = { rename = 'snacks', variant = 'snacks' },
   frecency = { enable = true },
   ---@type ArGx
   gx = { enable = true, variant = 'plugin' },

@@ -238,6 +238,13 @@ return {
           { "<leader>fe", function() Snacks.explorer() end, desc = "explorer" },
         -- stylua: ignore end
       }
+      if ar_config.explorer.variant == 'snacks' then
+        table.insert(picker_mappings, {
+          '<C-n>',
+          function() Snacks.explorer() end,
+          desc = 'explorer',
+        })
+      end
       vim.iter(picker_mappings):each(function(m) table.insert(keys, m) end)
     end
     return keys
