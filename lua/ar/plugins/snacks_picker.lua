@@ -272,6 +272,15 @@ return {
             auto_close = false,
             layout = { layout = { position = 'right' } },
             actions = {
+              find_files_in_dir = function(_, item, _)
+                vim.defer_fn(ar.pick('files', { cwd = item.parent._path }), 200)
+              end,
+              grep_files_in_dir = function(_, item, _)
+                vim.defer_fn(
+                  ar.pick('live_grep', { cwd = item.parent._path }),
+                  200
+                )
+              end,
               window_picker = function(picker, item, action)
                 if item.dir then return end
                 vim.defer_fn(function()
@@ -287,6 +296,8 @@ return {
                 keys = {
                   ['O'] = { { 'pick_win', 'jump' }, mode = { 'n', 'i' } },
                   ['W'] = 'window_picker',
+                  ['<C-g>'] = 'grep_files_in_dir',
+                  ['<C-p>'] = 'find_files_in_dir',
                 },
               },
             },

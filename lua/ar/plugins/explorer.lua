@@ -17,14 +17,6 @@ local function on_rename(from, to)
   end
 end
 
-local function find_or_search_in_dir(cwd, find_or_search)
-  if find_or_search == 'find' then
-    ar.pick('files', { cwd = cwd })()
-  elseif find_or_search == 'search' then
-    ar.pick('live_grep', { cwd = cwd })()
-  end
-end
-
 return {
   {
     'nvim-neo-tree/neo-tree.nvim',
@@ -194,15 +186,13 @@ return {
                 local node = state.tree:get_node()
                 local cwd = node.path
                 if node.type == 'file' then cwd = node._parent_id end
-
-                find_or_search_in_dir(cwd, 'find')
+                ar.pick('files', { cwd = cwd })()
               end,
               ['<C-g>'] = function(state)
                 local node = state.tree:get_node()
                 local cwd = node.path
                 if node.type == 'file' then cwd = node._parent_id end
-
-                find_or_search_in_dir(cwd, 'search')
+                ar.pick('live_grep', { cwd = cwd })()
               end,
               ['oi'] = function(state)
                 api.nvim_input(': ' .. state.tree:get_node().path .. '<Home>')
