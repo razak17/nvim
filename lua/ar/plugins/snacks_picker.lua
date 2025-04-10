@@ -271,7 +271,17 @@ return {
             hidden = true,
             auto_close = false,
             layout = { layout = { position = 'right' } },
-            actions = { window_picker = window_picker_action },
+            actions = {
+              window_picker = function(picker, item, action)
+                if item.dir then return end
+                vim.defer_fn(function()
+                  ar.open_with_window_picker(function(picked_window_id)
+                    picker.main = picked_window_id
+                    Snacks.picker.actions.jump(picker, item, action)
+                  end)
+                end, 100)
+              end,
+            },
             win = {
               list = {
                 keys = {
