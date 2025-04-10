@@ -34,7 +34,7 @@ return {
       bufdelete = { enabled = true },
       debug = { enabled = true },
       dim = { enabled = true },
-      explorer = { enabled = true },
+      explorer = {},
       git = { enabled = true },
       gitbrowse = { enabled = true },
       image = {
