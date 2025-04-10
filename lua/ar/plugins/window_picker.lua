@@ -36,6 +36,15 @@ return {
         bo = {
           filetype = { 'neo-tree-popup', 'quickfix' },
           buftype = { 'terminal', 'quickfix', 'nofile' },
+        -- stylua: ignore
+        bo = {
+          filetype = {
+            'neo-tree-popup', 'snacks_picker_input', 'snacks_picker_list',
+            'NvimTree', 'neo-tree', 'notify', 'snacks_notif',
+          },
+          buftype = {
+            'terminal', 'nofile', 'quickfix', 'help', 'prompt', 'notify', 'float',
+          },
         },
       },
     },
