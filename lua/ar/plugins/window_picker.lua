@@ -30,12 +30,13 @@ return {
     },
     opts = {
       hint = 'floating-big-letter',
+      show_prompt = false,
       selection_chars = 'HJKLUIOPNMYTGBVCREWQSZAFD',
       filter_rules = {
         autoselect_one = true,
-        bo = {
-          filetype = { 'neo-tree-popup', 'quickfix' },
-          buftype = { 'terminal', 'quickfix', 'nofile' },
+        include_current_win = false,
+        include_unfocusable_windows = false,
+        buftype = { 'terminal', 'quickfix', 'nofile' },
         -- stylua: ignore
         bo = {
           filetype = {
