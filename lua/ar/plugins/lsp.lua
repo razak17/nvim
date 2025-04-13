@@ -59,7 +59,6 @@ return {
       cond = ar.lsp.enable,
       event = { 'BufReadPre', 'BufNewFile' },
       opts = {
-        automatic_installation = true,
         handlers = {
           function(name)
             local is_override = not falsy(ar_config.lsp.override)
