@@ -1,6 +1,44 @@
 local api, fn, uv = vim.api, vim.fn, vim.uv
 local border = ar.ui.current.border
 
+local function get_lsp_servers()
+  local servers = require('ar.servers').list
+  return vim.iter(servers):fold({}, function(acc, key)
+    local server_mapping = require('mason-lspconfig.mappings.server')
+    local pkg_name = server_mapping.lspconfig_to_package[key]
+    table.insert(acc, pkg_name)
+    return acc
+  end)
+end
+
+local function get_linters()
+  local linters = {}
+  local lint_ok, lint = pcall(require, 'lint')
+  if lint_ok then
+    vim
+      .iter(pairs(lint.linters_by_ft))
+      :map(function(_, l)
+        if type(l) == 'table' and not ar.falsy(l) then
+          if vim.tbl_contains(l, 'golangcilint') then
+            table.insert(linters, 'golangci-lint')
+            local others = vim.tbl_filter(
+              function(v) return v ~= 'golangcilint' end,
+              l
+            )
+            if #others > 0 then
+              table.insert(linters, table.concat(others, ','))
+            end
+          else
+            table.insert(linters, table.concat(l, ','))
+          end
+        end
+        if type(l) == 'string' and l ~= '' then table.insert(linters, l) end
+      end)
+      :totable()
+  end
+  return linters
+end
+
 ---@alias ConformCtx {buf: number, filename: string, dirname: string}
 
 local supported = ar.lsp.prettier.supported
@@ -107,46 +145,17 @@ return {
     cond = ar.lsp.enable,
     cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
     config = function()
-      -- Add LSP servers
-      local servers = require('ar.servers').list
-      local packages = vim.iter(servers):fold({}, function(acc, key)
-        local server_mapping = require('mason-lspconfig.mappings.server')
-        local pkg_name = server_mapping.lspconfig_to_package[key]
-        table.insert(acc, pkg_name)
-        return acc
-      end)
-      -- Add linters (from nvim-lint)
+      local packages = get_lsp_servers()
       if not ar_config.lsp.null_ls.enable then
-        local lint_ok, lint = pcall(require, 'lint')
-        if lint_ok then
-          vim
-            .iter(pairs(lint.linters_by_ft))
-            :map(function(_, l)
-              if type(l) == 'table' then
-                if vim.tbl_contains(l, 'golangcilint') then
-                  table.insert(packages, 'golangci-lint')
-                  local others = vim.tbl_filter(
-                    function(v) return v ~= 'golangcilint' end,
-                    l
-                  )
-                  if #others > 0 then
-                    table.insert(packages, table.concat(others, ','))
-                  end
-                else
-                  table.insert(packages, table.concat(l, ','))
-                end
-              end
-              if type(l) == 'string' then table.insert(packages, l) end
-            end)
-            :totable()
-        end
-        -- Add formatters (from conform.nvim)
+        local linters = get_linters()
+        vim.list_extend(packages, linters)
         local conform_ok, conform = pcall(require, 'conform')
         if conform_ok then
-          vim
+          local formatters = vim
             .iter(pairs(conform.list_all_formatters()))
-            :map(function(_, f) table.insert(packages, f.name) end)
+            :map(function(_, f) return f.name end)
             :totable()
+          vim.list_extend(packages, formatters)
         end
       end
 
