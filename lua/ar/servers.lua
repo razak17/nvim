@@ -308,13 +308,28 @@ local servers = {
     settings = {
       -- NOTE: only works with vtsls
       -- TODO: figure out how to do this with typescript-tools
+      complete_function_calls = true,
       ['js/ts'] = {
         implicitProjectConfig = { checkJs = true },
       },
-      typescript = {
-        suggest = {
-          completionFunctionCalls = true,
+      javascript = {
+        updateImportsOnFileMove = { enabled = 'always' },
+        suggest = { completeFunctionCalls = true },
+        inlayHints = {
+          parameterNames = {
+            enabled = 'literals', -- 'none' | 'literals' | 'all'
+            suppressWhenArgumentMatchesName = true,
+          },
+          parameterTypes = { enabled = false },
+          variableTypes = { enabled = false },
+          propertyDeclarationTypes = { enabled = true },
+          functionLikeReturnTypes = { enabled = false },
+          enumMemberValues = { enabled = true },
         },
+      },
+      typescript = {
+        updateImportsOnFileMove = { enabled = 'always' },
+        suggest = { completeFunctionCalls = true },
         inlayHints = {
           parameterNames = {
             enabled = 'literals', -- 'none' | 'literals' | 'all'
@@ -336,17 +351,13 @@ local servers = {
           },
         },
       },
-      javascript = {
-        inlayHints = {
-          parameterNames = {
-            enabled = 'literals', -- 'none' | 'literals' | 'all'
-            suppressWhenArgumentMatchesName = true,
+      vtsls = {
+        enableMoveToFileCodeAction = true,
+        autoUseWorkspaceTsdk = true,
+        experimental = {
+          completion = {
+            enableServerSideFuzzyMatch = true,
           },
-          parameterTypes = { enabled = false },
-          variableTypes = { enabled = false },
-          propertyDeclarationTypes = { enabled = true },
-          functionLikeReturnTypes = { enabled = false },
-          enumMemberValues = { enabled = true },
         },
       },
     },
