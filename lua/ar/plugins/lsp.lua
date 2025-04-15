@@ -83,7 +83,10 @@ return {
 
             if should_skip then return end
             local config = require('ar.servers').get(name)
-            if config then require('lspconfig')[name].setup(config) end
+            if config then
+              vim.lsp.config(name, config)
+              vim.lsp.enable(name)
+            end
           end,
         },
       },
