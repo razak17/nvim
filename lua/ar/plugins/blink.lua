@@ -33,6 +33,7 @@ return {
       'cmdline.sources',
       'term.sources',
     },
+    --- @type blink.cmp.Config
     opts = {
       enabled = function()
         local ignored_filetypes = {
@@ -72,12 +73,6 @@ return {
             end,
           },
         },
-        sources = function()
-          local type = vim.fn.getcmdtype()
-          if type == '/' or type == '?' then return { 'buffer' } end
-          if type == ':' then return { 'cmdline' } end
-          return {}
-        end,
       },
       completion = {
         accept = {
