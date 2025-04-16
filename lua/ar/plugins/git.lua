@@ -321,6 +321,40 @@ return {
             end,
             { desc = 'toggle expansion of file panel to fit' },
           },
+          {
+            'n',
+            'X',
+            function()
+              local rel_path = require('diffview.lib')
+                .get_current_view().panel
+                :get_item_at_cursor().path
+              local git_root = vim.fs.root(vim.fn.getcwd(), '.git')
+              local absolute_file_path = git_root .. '/' .. rel_path
+              local stat = vim.uv.fs_stat(absolute_file_path)
+              if stat and stat.type == 'directory' then
+                vim.ui.select({ 'Yes', 'No' }, {
+                  prompt = 'Discard changes in the whole git folder '
+                    .. rel_path
+                    .. '?',
+                }, function(choice)
+                  if choice == 'Yes' then
+                    vim.system(
+                      { 'git', 'checkout', '--', rel_path .. '/' },
+                      { text = true, cwd = git_root },
+                      vim.schedule_wrap(function(res)
+                        if #res.stderr + #res.stdout > 0 then
+                          vim.notify(res.stderr .. ' ' .. res.stdout)
+                        end
+                      end)
+                    )
+                  end
+                end)
+              else
+                require('diffview.config').actions.restore_entry()
+              end
+            end,
+            { desc = 'restore entry to the state on the left side' },
+          },
         },
         file_history_panel = { q = '<Cmd>DiffviewClose<CR>' },
       },
