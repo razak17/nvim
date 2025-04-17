@@ -284,21 +284,6 @@ if is_available('smartcolumn.nvim') then
       )
     end,
   })
-elseif is_available('virt-column.nvim') then
-  augroup('VirtCol', {
-    event = { 'VimEnter', 'BufEnter', 'WinEnter' },
-    command = function(args)
-      decor.set_colorcolumn(
-        args.buf,
-        function(colorcolumn)
-          require('virt-column').setup_buffer(
-            args.buf,
-            { virtcolumn = colorcolumn }
-          )
-        end
-      )
-    end,
-  })
 end
 
 local function float_resize_autocmd(autocmd_name, ft, command)
