@@ -265,11 +265,11 @@ return {
       keymaps = {
         view = {
           q = '<Cmd>DiffviewClose<CR>',
-          ['cp'] = function()
+          [']x'] = function()
             require('diffview.config').actions.prev_conflict()
             vim.cmd('norm! zz') -- center on screen
           end,
-          ['cn'] = function()
+          ['[x'] = function()
             require('diffview.config').actions.next_conflict()
             vim.cmd('norm! zz') -- center on screen
           end,
@@ -278,19 +278,19 @@ return {
           q = '<Cmd>DiffviewClose<CR>',
           {
             'n',
-            'cp',
+            ']x',
             function() require('diffview.config').actions.prev_conflict() end,
             { desc = 'go to previous conflict' },
           },
           {
             'n',
-            'cn',
+            '[x',
             function() require('diffview.config').actions.next_conflict() end,
             { desc = 'go to next conflict' },
           },
           {
             'n',
-            'F',
+            '[[',
             function() -- jump to first file in the diff
               local view = require('diffview.lib').get_current_view()
               if view then
