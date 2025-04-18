@@ -122,6 +122,19 @@ return {
         filetype = 'blade',
       }
 
+      -- if no compiler or git available, disable installation
+      if
+        vim.fn.executable('git') == 0
+        or not vim.tbl_contains(
+          require('nvim-treesitter.install').compilers,
+          function(c) return c ~= vim.NIL and vim.fn.executable(c) == 1 end,
+          { predicate = true }
+        )
+      then
+        opts.auto_install = false
+        opts.ensure_installed = nil
+      end
+
       require('nvim-treesitter.configs').setup(opts)
       ar.add_to_select_menu('command_palette', {
         ['Toggle TS Highlight'] = function() vim.cmd.TSBufToggle('highlight') end,
