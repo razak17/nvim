@@ -42,9 +42,7 @@ return {
   end,
   event = 'VeryLazy',
   cmd = { 'Pick' },
-  opts = {
-    delay = { async = 10, busy = 30 },
-  },
+  opts = { delay = { async = 10, busy = 30 } },
   config = function(_, opts)
     local picker = require('mini.pick')
     local registry = picker.registry
@@ -111,4 +109,5 @@ return {
     }
     picker.setup(opts)
   end,
+  dependencies = { 'echasnovski/mini.extra' },
 }
