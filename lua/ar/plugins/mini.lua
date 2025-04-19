@@ -69,6 +69,10 @@ end
 
 return {
   {
+    'echasnovski/mini.extra',
+    config = function() require('mini.extra').setup() end,
+  },
+  {
     'echasnovski/mini.hipatterns',
     cond = function()
       if ar.plugin_disabled('mini.hipatterns') then return false end

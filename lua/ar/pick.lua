@@ -15,6 +15,7 @@ local L = vim.log.levels
 ---@field show_untracked? boolean
 ---@field follow? boolean
 ---@field extension? string
+---@field scope? table
 
 ---@class ArPick
 ---@field name string
