@@ -284,10 +284,16 @@ return {
       end
 
       local ai = require('mini.ai')
+      local gen_ai_spec = require('mini.extra').gen_ai_spec
 
       require('mini.ai').setup({
         n_lines = 500,
         custom_textobjects = {
+          B = gen_ai_spec.buffer(),
+          D = gen_ai_spec.diagnostic(),
+          I = gen_ai_spec.indent(),
+          L = gen_ai_spec.line(),
+          N = gen_ai_spec.number(),
           o = ai.gen_spec.treesitter({ -- code block
             a = { '@block.outer', '@conditional.outer', '@loop.outer' },
             i = { '@block.inner', '@conditional.inner', '@loop.inner' },
@@ -316,6 +322,7 @@ return {
         mappings = { around_last = '', inside_last = '' },
       })
     end,
+    dependencies = { 'echasnovski/mini.extra' },
   },
   {
     'echasnovski/mini.surround',
