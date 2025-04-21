@@ -364,10 +364,20 @@ nnoremap(
 -- Core navigation
 --------------------------------------------------------------------------------
 -- Better up/down
+-- https://www.reddit.com/r/neovim/comments/1k3lhac/tiny_quality_of_life_rebind_make_j_and_k/
 if not ar.is_available('accelerated-jk.nvim') then
-  -- stylua: ignore start
-  map({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { desc = 'down', expr = true, silent = true })
-  map({ 'n', 'x' }, 'k', "v:count == 0 ? 'gk' : 'k'", { desc = 'up', expr = true, silent = true })
+  map(
+    { 'n', 'x' },
+    'j',
+    function() return vim.v.count > 0 and "m'" .. vim.v.count .. 'j' or 'gj' end,
+    { desc = 'down', expr = true, silent = true }
+  )
+  map(
+    { 'n', 'x' },
+    'k',
+    function() return vim.v.count > 0 and "m'" .. vim.v.count .. 'k' or 'gk' end,
+    { desc = 'up', expr = true, silent = true }
+  )
   -- stylua: ignore end
 end
 -- Zero should go to the first non-blank character not to the first column (which could be blank)
