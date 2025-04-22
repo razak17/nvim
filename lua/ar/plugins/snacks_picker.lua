@@ -191,6 +191,8 @@ return {
           { '<M-space>', buffers, desc = 'snacks: buffers' },
           { '<leader>fc', p('files', { cwd = fn.stdpath('config') }), desc = 'find config file' },
           { '<leader>ff', p('files'), desc = 'Find Files' },
+          { '<leader>fgb', p('git_branches'), desc = 'find git branches' },
+          { '<leader>fgc', p('git_commits'), desc = 'find git commits' },
           { '<leader>fgd', p('git_diff'), desc = 'git diff (hunks)' },
           { '<leader>fgf', p('git_log_file'), desc = 'git log file' },
           { '<leader>fgF', p('git_grep'), desc = 'git grep' },
