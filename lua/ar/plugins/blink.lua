@@ -110,7 +110,6 @@ return {
             'snippets',
             'buffer',
             'ripgrep',
-            'dadbod',
             'emoji',
           }
 
@@ -129,6 +128,7 @@ return {
             end
             if not ar.plugins.minimal then
               table.insert(providers, 'nvim-px-to-rem')
+              table.insert(providers, 'dadbod')
             end
             return providers
           end
