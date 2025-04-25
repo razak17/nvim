@@ -4,7 +4,6 @@ local cwd = vim.fn.getcwd()
 
 local disabled = not ar.lsp.enable
   or not ar.plugins.enable
-  or ar.plugins.minimal
   or (cwd and ar.dirs_match(ar_config.lsp.disabled.directories, cwd))
 
 if disabled then return end
