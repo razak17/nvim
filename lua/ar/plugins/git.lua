@@ -303,6 +303,34 @@ return {
           },
           {
             'n',
+            'c',
+            function()
+              -- cc should commit from diffview same as from neogit
+              vim.cmd('DiffviewClose')
+              api.nvim_set_current_tabpage(1) -- in case i had a dadbod in the second tab, where i could have jumped after closing the diffview tab
+              -- check whether we already have a neogit tab
+              local tps = api.nvim_list_tabpages()
+              for _, tp in ipairs(tps) do
+                local wins = api.nvim_tabpage_list_wins(tp)
+                if #wins == 1 then
+                  local buf = api.nvim_win_get_buf(wins[1])
+                  local ft = api.nvim_get_option_value('ft', { buf = buf })
+                  if ft == 'NeogitStatus' then
+                    -- switch to that tabpage
+                    api.nvim_set_current_tabpage(tp)
+                    require('neogit').open({ 'commit' })
+                    return
+                  end
+                end
+              end
+              -- neogit is not open, open it
+              vim.cmd('Neogit')
+              require('neogit').open({ 'commit' })
+            end,
+            { desc = 'invoke diffview' },
+          },
+          {
+            'n',
             '<leader>x',
             function()
               if vim.w.orig_width == nil then
