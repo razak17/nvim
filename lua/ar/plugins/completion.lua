@@ -1,4 +1,5 @@
 local api, fn, fmt, k = vim.api, vim.fn, string.format, vim.keycode
+local cmp_utils = require('ar.utils.cmp')
 local ui, highlight = ar.ui, ar.highlight
 local border, lsp_hls, ellipsis =
   ui.current.border, ui.lsp.highlights, ui.icons.misc.ellipsis
@@ -122,20 +123,9 @@ return {
         },
       })
 
-      -- https://github.com/simifalaye/dotfiles/blob/main/roles/neovim/dots/.config/nvim/lua/plugins/cmp.lua#L35
-      local function has_words_before()
-        local line, col = (unpack or table.unpack)(api.nvim_win_get_cursor(0))
-        return col ~= 0
-          and api
-              .nvim_buf_get_lines(0, line - 1, line, true)[1]
-              :sub(col, col)
-              :match('%s')
-            == nil
-      end
-
       local function tab(fallback)
         if snippet.active({ direction = 1 }) then return snippet.jump(1) end
-        if has_words_before() and not cmp.visible() then
+        if cmp_utils.has_words_before() and not cmp.visible() then
           return cmp.complete()
         end
         if not cmp.visible() then return fallback() end
@@ -148,7 +138,7 @@ return {
 
       local function shift_tab(fallback)
         if snippet.active({ direction = -1 }) then return snippet.jump(-1) end
-        if has_words_before() and not cmp.visible() then
+        if cmp_utils.has_words_before() and not cmp.visible() then
           return cmp.complete()
         end
         if not cmp.visible() then return fallback() end

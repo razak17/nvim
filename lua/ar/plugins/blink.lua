@@ -1,6 +1,7 @@
 local api = vim.api
 local fmt = string.format
-local ui, highlight = ar.ui, ar.highlight
+local cmp_utils = require('ar.utils.cmp')
+local ui = ar.ui
 local border, lsp_hls = ui.current.border, ui.lsp.highlights
 local is_blink = ar_config.completion.variant == 'blink'
 local ai_models = ar_config.ai.models
@@ -9,16 +10,6 @@ local is_copilot = ai_models.copilot and ai_cmp == 'copilot'
 local is_minuet = ai_models.gemini and ai_cmp == 'minuet'
 
 local show_index = false
-
-local function has_words_before()
-  local line, col = (unpack or table.unpack)(api.nvim_win_get_cursor(0))
-  return col ~= 0
-    and api
-        .nvim_buf_get_lines(0, line - 1, line, true)[1]
-        :sub(col, col)
-        :match('%s')
-      == nil
-end
 
 return {
   {
@@ -202,7 +193,9 @@ return {
           'select_next',
           'snippet_forward',
           function(cmp)
-            if has_words_before() or api.nvim_get_mode().mode == 'c' then
+            if
+              cmp_utils.has_words_before() or api.nvim_get_mode().mode == 'c'
+            then
               return cmp.show()
             end
           end,
@@ -240,7 +233,7 @@ return {
         )
         :totable()
 
-      highlight.plugin('BlinkCmp', {
+      ar.highlight.plugin('BlinkCmp', {
         theme = {
           ['onedark'] = vim.tbl_extend('force', hl_defs, {
             { BlinkCmpDocBorder = { link = 'FloatBorder' } },
