@@ -23,7 +23,7 @@ ar.completion.config = {
     nerdfonts = { icon = codicons.misc.nerd_font, hl = 'CmpItemKindNerdFont' },
     minuet = { icon = ai_icons.minuet, hl = 'CmpItemKindDynamic' },
     nvim_px_to_rem = { icon = codicons.misc.hash, hl = 'CmpItemKindNerdFont' },
-    Color = { icon = ui.icons.misc.block_alt },
+    Color = { icon = ui.icons.misc.block_medium },
     claude = { icon = ai_icons.claude },
     codestral = { icon = ai_icons.codestral },
     gemini = { icon = ai_icons.gemini },
@@ -299,30 +299,17 @@ return {
               if config.hl then item.kind_hl_group = config.hl end
             end
 
-            local function get_color(color_item, color_entry)
-              local entry_item = color_entry:get_completion_item()
-              local color = entry_item.documentation
-              if
-                color
-                and type(color) == 'string'
-                and color:match('^#%x%x%x%x%x%x$')
-              then
-                local hl = 'hex-' .. color:sub(2)
-                if #api.nvim_get_hl(0, { name = hl }) == 0 then
-                  api.nvim_set_hl(0, hl, { fg = color })
-                end
-                color_item.kind = format['Color'].icon
-                color_item.kind_hl_group = hl
-              else
-                color_item.kind = format_icon(symbols[item.kind])
-              end
-              return color_item
-            end
-
             if item.kind == 'Color' then
               vim.o.pumblend = 3
               item.menu = '[COLOR]'
-              if item.kind == 'Color' then item = get_color(item, entry) end
+              if item.kind == 'Color' then
+                local entry_cmp = entry.completion_item
+                if type(entry_cmp.documentation) == 'string' then
+                  item = cmp_utils.get_color(entry, item)
+                else
+                  item.kind = format_icon(symbols[item.kind])
+                end
+              end
             end
             return item
           end,

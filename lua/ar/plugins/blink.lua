@@ -81,6 +81,28 @@ return {
               { 'label', gap = 1 },
               { 'kind_icon', gap = 2, 'source_name' },
             },
+            components = {
+              kind_icon = {
+                text = function(ctx)
+                  local icon = ctx.kind_icon
+                  if ctx.kind == 'Color' then
+                    icon = fmt('%s ', ui.icons.misc.block_medium)
+                  end
+                  return icon .. ctx.icon_gap
+                end,
+                highlight = function(ctx)
+                  local hl = 'BlinkCmpKind' .. ctx.kind
+                  local color_item = cmp_utils.get_color(
+                    ctx.item.documentation,
+                    { kind = ctx.kind }
+                  )
+                  if color_item and color_item.kind_hl_group then
+                    hl = color_item.kind_hl_group
+                  end
+                  return hl
+                end,
+              },
+            },
             treesitter = { 'lsp' },
           },
         },
