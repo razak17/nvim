@@ -81,11 +81,17 @@ return {
               or (name == 'vtsls' and not vtsls)
               or (name == 'ts_ls' and not ts_ls)
 
+            local use_legacy_config = { 'graphql' }
+
             if should_skip then return end
             local config = require('ar.servers').get(name)
             if config then
-              vim.lsp.config(name, config)
-              vim.lsp.enable(name)
+              if vim.tbl_contains(use_legacy_config, name) then
+                require('lspconfig')[name].setup(config)
+              else
+                vim.lsp.config(name, config)
+                vim.lsp.enable(name)
+              end
             end
           end,
         },
