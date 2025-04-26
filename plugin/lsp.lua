@@ -371,6 +371,16 @@ local function setup_mappings(client, bufnr)
       capability = M.textDocument_inlayHint,
     },
     {
+      'n',
+      '<leader>lK',
+      function()
+        local enabled = lsp.document_color.is_enabled(bufnr)
+        lsp.document_color.enable(not enabled, bufnr)
+      end,
+      desc = 'toggle colors',
+      capability = M.textDocument_documentColor,
+    },
+    {
       { 'n', 'x' },
       '<leader>la',
       -- lsp.buf.code_action,
@@ -710,6 +720,14 @@ local function setup_lsp_plugins(client, bufnr)
   end
 end
 
+---@param client vim.lsp.Client
+---@param bufnr number
+local function setup_colors(client, bufnr)
+  if client:supports_method(M.textDocument_documentColor) then
+    lsp.document_color.enable(true, bufnr, { style = 'virtual' })
+  end
+end
+
 -- Add buffer local mappings, autocommands etc for attaching servers
 -- this runs for each client because they have different capabilities so each time one
 -- attaches it might enable autocommands or mappings that the previous client did not support
@@ -726,6 +744,7 @@ local function on_attach(client, bufnr)
   if ar_config.lsp.semantic_tokens.enable then
     setup_semantic_tokens(client, bufnr)
   end
+  setup_colors(client, bufnr)
   setup_lsp_plugins(client, bufnr)
 end
 
