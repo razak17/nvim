@@ -16,7 +16,7 @@ return {
   },
   {
     'brenoprata10/nvim-highlight-colors',
-    cond = not minimal,
+    cond = not minimal and false,
     event = { 'LspAttach' },
     cmd = { 'HighlightColors' },
     init = function()
