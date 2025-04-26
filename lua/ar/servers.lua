@@ -248,15 +248,7 @@ local servers = {
       },
     },
   },
-  tailwindcss = {
-    root_dir = function(fname)
-      return require('lspconfig/util').root_pattern(
-        'tailwind.config.js',
-        'tailwind.config.ts',
-        'tailwind.config.cjs'
-      )(fname)
-    end,
-  },
+  tailwindcss = {},
   ts_ls = {
     init_options = { documentFormatting = false, hostInfo = 'neovim' },
     commands = {
