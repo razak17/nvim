@@ -31,20 +31,14 @@ return {
   {
     'razak17/demicolon.nvim',
     cond = not minimal,
+    init = function()
+      map({ 'n', 'x', 'o' }, ';n', require('demicolon.repeat_jump').forward)
+      map({ 'n', 'x', 'o' }, ';p', require('demicolon.repeat_jump').backward)
+    end,
     keys = { ';', ']', '[' },
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
-    },
+    dependencies = 'nvim-treesitter/nvim-treesitter-textobjects',
     opts = {
-      keymaps = {
-        horizontal_motions = false,
-        diagnostic_motions = false,
-        list_motions = true,
-        repeat_motions = true,
-      },
-      integrations = {
-        gitsigns = { enabled = false },
-      },
+      keymaps = { horizontal_motions = false, repeat_motions = false },
     },
   },
   {
