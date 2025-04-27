@@ -29,7 +29,7 @@ return {
     opts = {},
   },
   {
-    'razak17/demicolon.nvim',
+    'mawkler/demicolon.nvim',
     cond = not minimal,
     init = function()
       map({ 'n', 'x', 'o' }, ';n', require('demicolon.repeat_jump').forward)
