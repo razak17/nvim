@@ -359,7 +359,7 @@ local config = {
       notepad = { enable = true },
       reload_plugin = { enable = true },
       remote_sync = { enable = false },
-      search_return = { enable = false },
+      search_return = { enable = true },
       smart_close = { enable = true },
       smart_hl_search = { enable = true },
       smart_splits = { enable = true },
