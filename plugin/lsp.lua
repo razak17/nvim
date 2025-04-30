@@ -509,6 +509,24 @@ local function setup_mappings(client, bufnr)
       desc = 'server capabilities',
       disabled = is_available('lspsaga.nvim'),
     },
+    {
+      'n',
+      '<localleader>lwa',
+      lsp.buf.add_workspace_folder,
+      desc = 'add workspace folder',
+    },
+    {
+      'n',
+      '<localleader>lwr',
+      lsp.buf.remove_workspace_folder,
+      desc = 'remove workspace folder',
+    },
+    {
+      'n',
+      '<localleader>lwl',
+      function() vim.print(vim.lsp.buf.list_workspace_folders()) end,
+      desc = 'list workspace folders',
+    },
   }
 
   vim.iter(mappings):each(function(m)
