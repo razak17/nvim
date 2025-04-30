@@ -1,6 +1,6 @@
 if not ar or ar.none then return end
 
-local opt = vim.opt_local
+local fn, opt = vim.fn, vim.opt_local
 
 opt.textwidth = 80
 opt.spell = true
@@ -8,11 +8,13 @@ opt.spell = true
 if not ar.plugins.enable or ar.plugins.minimal then return end
 
 opt.spellfile:prepend(
-  join_paths(vim.fn.stdpath('config'), 'spell', 'lua.utf-8.add')
+  join_paths(fn.stdpath('config'), 'spell', 'lua.utf-8.add')
 )
 opt.spelllang = { 'en_gb', 'programming' }
 
 local is_available = ar.is_available
+
+if is_available('dial.nvim') then require('ar.lsp_dial') end
 
 if
   is_available('LuaSnip')

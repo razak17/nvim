@@ -53,25 +53,21 @@ return {
     cond = not minimal,
     keys = {
       {
-        mode = { 'n' },
         '<C-a>',
         function() require('dial.map').manipulate('increment', 'normal') end,
         desc = 'dial: increment',
       },
       {
-        mode = { 'n' },
         '<C-x>',
         function() require('dial.map').manipulate('decrement', 'normal') end,
         desc = 'dial: decrement',
       },
       {
-        mode = { 'n' },
         'g<C-a>',
         function() require('dial.map').manipulate('increment', 'gnormal') end,
         desc = 'dial: gincrement',
       },
       {
-        mode = { 'n' },
         'g<C-x>',
         function() require('dial.map').manipulate('decrement', 'gnormal') end,
         desc = 'dial: gdecrement',
