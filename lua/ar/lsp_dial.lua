@@ -1,5 +1,3 @@
-if not ar.is_available('dial.nvim') then return end
-
 -- Ref: https://github.com/neo451/dot/blob/6b108a76e97b02df7012e5b518ad56513d23ab4c/nvim/.config/nvim/plugin/lsp_dial.lua#L1
 
 local function num2bool(num)
