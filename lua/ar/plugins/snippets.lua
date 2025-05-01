@@ -1,5 +1,35 @@
 local minimal = ar.plugins.minimal
 
+local function expand_or_jump()
+  local ls = require('luasnip')
+  if ls.expand_or_locally_jumpable() then
+    vim.schedule(function() ls.expand_or_jump(1) end)
+    return true
+  else
+    vim.api.nvim_feedkeys(
+      vim.api.nvim_replace_termcodes('<c-i>', true, false, true),
+      'n',
+      false
+    )
+  end
+end
+
+local function jump_prev()
+  local ls = require('luasnip')
+  if ls.jumpable(-1) then
+    vim.schedule(function() ls.jump(-1) end)
+    return true
+  end
+end
+
+local function change_choice()
+  local ls = require('luasnip')
+  if ls.choice_active() then
+    vim.schedule(function() ls.change_choice(1) end)
+    return true
+  end
+end
+
 return {
   's1n7ax/nvim-ts-utils',
   { 'rafamadriz/friendly-snippets', cond = not minimal },
@@ -9,8 +39,12 @@ return {
     cond = not minimal,
     event = 'InsertEnter',
     build = 'make install_jsregexp',
+    -- stylua: ignore
     keys = {
-      { '<leader>S', '<cmd>LuaSnipEdit<CR>', desc = 'LuaSnip: edit snippet' },
+      { '<leader>S', '<Cmd>LuaSnipEdit<CR>', desc = 'LuaSnip: edit snippet' },
+      { '<C-l>', expand_or_jump, desc = 'LuaSnip: expand or jump', mode = { 'i', 's' } },
+			{ '<C-b>', jump_prev, desc = 'LuaSnip: jump prev', mode = { 's' } },
+			{ '<C-m>', change_choice, desc = 'LuaSnip: change choice', mode = { 'i', 's' } },
     },
     config = function()
       local ls = require('luasnip')
@@ -54,20 +88,6 @@ return {
         'LuaSnipEdit',
         function() require('luasnip.loaders').edit_snippet_files() end
       )
-
-      -- <c-l> is selecting within a list of options.
-      -- vim.keymap.set({ 's', 'i' }, '<c-l>', function()
-      --   if ls.choice_active() then ls.change_choice(1) end
-      -- end)
-
-      vim.keymap.set({ 's', 'i' }, '<c-l>', function()
-        if ls.expand_or_jumpable() then ls.expand_or_jump() end
-      end)
-
-      vim.keymap.set({ 's', 'i' }, '<c-b>', function()
-        if not ls.jumpable(-1) then return '<S-Tab>' end
-        ls.jump(-1)
-      end)
 
       require('luasnip').config.setup({ store_selection_keys = '<C-x>' })
 
