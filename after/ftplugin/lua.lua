@@ -19,7 +19,7 @@ if is_available('dial.nvim') and ar.lsp.enable then require('ar.lsp_dial') end
 if
   is_available('LuaSnip')
   and is_available('nvim-treesitter')
-  and is_available('snips.lua')
+  and is_available('snips')
 then
   -- https://github.com/s1n7ax/lazyvim-dotnvim/blob/main/lua/plugins/luasnip/snippets/lua.lua
   local ls = require('luasnip')
