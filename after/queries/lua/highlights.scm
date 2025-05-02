@@ -1,5 +1,5 @@
-;; extends
-;; source: https://github.com/ziontee113/yt-tutorials/tree/treesitter_conceal
+; extends
+; source: https://github.com/ziontee113/yt-tutorials/tree/treesitter_conceal
 
 ; (("return"   @keyword) (#set! conceal "")) ;;󰜴
 ;

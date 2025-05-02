@@ -1,4 +1,4 @@
-;; extends
+; extends
 
 ;; Keywords
 (("import"   @keyword) (#set! conceal "󰋺"))

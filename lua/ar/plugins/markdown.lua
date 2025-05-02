@@ -57,7 +57,10 @@ return {
   },
   {
     '3rd/image.nvim',
-    cond = false and not minimal and not vim.g.neovide and not ar.kitty_scrollback.enable,
+    cond = false
+      and not minimal
+      and not vim.g.neovide
+      and not ar.kitty_scrollback.enable,
     ft = { 'markdown' },
     opts = {
       backend = 'kitty',
@@ -238,8 +241,8 @@ return {
       },
       file_types = { 'markdown', 'Avante' },
       heading = {
-        sign = false, --  { '󰫎 ' }
         enabled = not ar.treesitter.enable,
+        sign = false, --  { '󰫎 ' }
         icons = { '󰎤 ', '󰎧 ', '󰎪 ', '󰎭 ', '󰎱 ', '󰎳 ' },
       },
       checkbox = {
@@ -261,8 +264,11 @@ return {
       },
       code = {
         enabled = true,
-        style = 'normal',
-        highlight = 'ColorColumn',
+        sign = false,
+        style = 'normal', -- 'normal' | 'full' | 'language' | 'thick'
+        highlight = 'NormalFloat',
+        language_icon = true,
+        language_name = true,
       },
     },
   },
