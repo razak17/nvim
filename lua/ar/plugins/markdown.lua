@@ -192,7 +192,7 @@ return {
   {
     'MeanderingProgrammer/render-markdown.nvim',
     cond = not minimal,
-    cmd = { 'RenderMarkdownToggle' },
+    cmd = { 'RenderMarkdown' },
     ft = { 'markdown', 'Avante' },
     init = function()
       local color1_bg = '#f265b5'
