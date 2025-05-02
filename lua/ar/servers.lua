@@ -297,6 +297,9 @@ local servers = {
   },
   vtsls = {
     single_file_support = false,
+    experimental = {
+      completion = { enableServerSideFuzzyMatch = true, entriesLimit = 50 },
+    },
     settings = {
       -- NOTE: only works with vtsls
       -- TODO: figure out how to do this with typescript-tools
