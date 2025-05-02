@@ -66,7 +66,7 @@ function M.toggle_conceal_cursor()
   mappings_notify(
     string.format(
       'conceal cursor %s',
-      ar.bool2str(opt_l.concealcursor:get() == '')
+      ar.bool2str(ar.falsy(opt_l.concealcursor:get()))
     )
   )
 end
