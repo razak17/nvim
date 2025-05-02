@@ -204,24 +204,25 @@ return {
       local color_fg = '#323449'
 
       highlight.plugin('render-markdown', {
+        -- stylua: ignore
         theme = {
           ['onedark'] = {
             { MarkdownCodeBlock = { link = 'CodeBlock' } },
             -- Heading colors (when not hovered over), extends through the entire line
-            { Headline1Bg = { fg = color_fg, bg = color1_bg } },
-            { Headline2Bg = { fg = color_fg, bg = color2_bg } },
-            { Headline3Bg = { fg = color_fg, bg = color3_bg } },
-            { Headline4Bg = { fg = color_fg, bg = color4_bg } },
-            { Headline5Bg = { fg = color_fg, bg = color5_bg } },
-            { Headline6Bg = { fg = color_fg, bg = color6_bg } },
+            { RenderMarkdownH1Bg = { fg = color_fg, bg = color1_bg } },
+            { RenderMarkdownH2Bg = { fg = color_fg, bg = color2_bg } },
+            { RenderMarkdownH3Bg = { fg = color_fg, bg = color3_bg } },
+            { RenderMarkdownH4Bg = { fg = color_fg, bg = color4_bg } },
+            { RenderMarkdownH5Bg = { fg = color_fg, bg = color5_bg } },
+            { RenderMarkdownH6Bg = { fg = color_fg, bg = color6_bg } },
             -- Highlight for the heading and sign icons (symbol on the left)
             -- I have the sign disabled for now, so this makes no effect
-            { Headline1Fg = { fg = color1_bg, cterm = 'bold', gui = 'bold' } },
-            { Headline2Fg = { fg = color2_bg, cterm = 'bold', gui = 'bold' } },
-            { Headline3Fg = { fg = color3_bg, cterm = 'bold', gui = 'bold' } },
-            { Headline4Fg = { fg = color4_bg, cterm = 'bold', gui = 'bold' } },
-            { Headline5Fg = { fg = color5_bg, cterm = 'bold', gui = 'bold' } },
-            { Headline6Fg = { fg = color6_bg, cterm = 'bold', gui = 'bold' } },
+            { RenderMarkdownH1 = { fg = color1_bg, cterm = 'bold', gui = 'bold' } },
+            { RenderMarkdownH2 = { fg = color2_bg, cterm = 'bold', gui = 'bold' } },
+            { RenderMarkdownH3 = { fg = color3_bg, cterm = 'bold', gui = 'bold' } },
+            { RenderMarkdownH4 = { fg = color4_bg, cterm = 'bold', gui = 'bold' } },
+            { RenderMarkdownH5 = { fg = color5_bg, cterm = 'bold', gui = 'bold' } },
+            { RenderMarkdownH6 = { fg = color6_bg, cterm = 'bold', gui = 'bold' } },
           },
         },
       })
@@ -233,26 +234,9 @@ return {
     opts = {
       file_types = { 'markdown', 'Avante' },
       heading = {
-        sign = false,
-        -- signs = { '󰫎 ' },
+        sign = false, --  { '󰫎 ' }
         enabled = not ar.treesitter.enable,
         icons = { '󰎤 ', '󰎧 ', '󰎪 ', '󰎭 ', '󰎱 ', '󰎳 ' },
-        backgrounds = {
-          'Headline1Bg',
-          'Headline2Bg',
-          'Headline3Bg',
-          'Headline4Bg',
-          'Headline5Bg',
-          'Headline6Bg',
-        },
-        foregrounds = {
-          'Headline1Fg',
-          'Headline2Fg',
-          'Headline3Fg',
-          'Headline4Fg',
-          'Headline5Fg',
-          'Headline6Fg',
-        },
       },
       checkbox = {
         enabled = true,
