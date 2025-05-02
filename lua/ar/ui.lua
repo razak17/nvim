@@ -330,7 +330,7 @@ local filetypes = ar.p_table({
   ['org'] = presets.minimal_editing:with({ winbar = false }),
   ['orgagenda'] = presets.minimal_editing:with({ winbar = false }),
   ['qf'] = presets.tool_panel,
-  ['query'] = presets.tool_panel,
+  -- ['query'] = presets.tool_panel,
   ['slide'] = presets.tool_panel:with({ winbar = 'ignore' }),
   ['snacks_notif_history'] = presets.tool_panel,
   ['snacks_picker_input'] = presets.tool_panel:with({ statuscolumn = true }),
