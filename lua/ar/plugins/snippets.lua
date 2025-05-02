@@ -54,7 +54,7 @@ return {
       { '<leader>S', function() require('luasnip.loaders').edit_snippet_files() end, desc = 'LuaSnip: edit snippet' },
       { '<C-l>', expand_or_jump, desc = 'LuaSnip: expand or jump', mode = { 'i', 's' } },
 			{ '<C-b>', jump_prev, desc = 'LuaSnip: jump prev', mode = { 's' } },
-			{ '<C-m>', change_choice, desc = 'LuaSnip: change choice', mode = { 'i', 's' } },
+			{ '<C-/>', change_choice, desc = 'LuaSnip: change choice', mode = { 'i', 's' } },
     },
     config = function()
       local ls = require('luasnip')
