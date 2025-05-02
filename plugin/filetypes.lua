@@ -42,19 +42,6 @@ settings({
         run_bash_file,
         { desc = 'execute file', buffer = 0 }
       )
-
-      if is_available('LuaSnip') and is_available('snips') then
-        local ls = require('luasnip')
-        local bash = require('snips.bash')
-
-        local s = ls.s
-
-        ls.add_snippets('sh', {
-          s('set', bash.primitives.default_flags()),
-          s('f', bash.primitives.func()),
-          s('v', bash.choices.variable()),
-        })
-      end
     end,
   },
   config = {
@@ -118,63 +105,12 @@ settings({
   [{ 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }] = {
     bo = { textwidth = 100 },
     opt = { spell = true },
-    function()
-      map('i', 't', require('ar.async_func').add, { buffer = true })
-
-      if is_available('LuaSnip') and is_available('snips') then
-        local ls = require('luasnip')
-        local js = require('snips.javascript')
-
-        local s = ls.s
-        local i = ls.insert_node
-
-        local snippets = function()
-          return {
-            s('f', js.dynamic.func(), {
-              stored = {
-                name = i(1, 'name'),
-                param = i(1),
-                body = i(1),
-              },
-            }),
-            s('o', js.choices.stdout(), {
-              stored = {
-                value = i(1, 'value'),
-              },
-            }),
-            s('con', js.primitives.constructor()),
-            s('c', js.primitives.class()),
-          }
-        end
-
-        ls.add_snippets('javascript', snippets())
-        ls.add_snippets('typescript', snippets())
-        ls.add_snippets('javascriptreact', snippets())
-        ls.add_snippets('typescriptreact', snippets())
-      end
-    end,
+    function() map('i', 't', require('ar.async_func').add, { buffer = true }) end,
   },
   [{ 'javascriptreact', 'typescriptreact' }] = {
     bo = { textwidth = 100 },
     opt = { spell = true },
     function()
-      if is_available('LuaSnip') and is_available('snips') then
-        local ls = require('luasnip')
-        local jsr = require('snips.typescriptreact')
-
-        local s = ls.s
-
-        local snippets = function()
-          return {
-            s('hs', jsr.primitives.use_state()),
-            s('he', jsr.primitives.use_effect()),
-          }
-        end
-
-        ls.add_snippets('javascriptreact', snippets())
-        ls.add_snippets('typescriptreact', snippets())
-      end
-
       local function toggle_use_client()
         local first_line = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]
         if string.match(first_line, 'use client') then
@@ -323,22 +259,6 @@ settings({
         })
       end,
     },
-    function()
-      if is_available('LuaSnip') and is_available('snips') then
-        local ls = require('luasnip')
-        local rust = require('snips.rust')
-        local common = require('snips.common')
-
-        local s = ls.s
-
-        ls.add_snippets('rust', {
-          s('o', rust.dynamic.stdout()),
-          s('v', rust.primitives.variable()),
-          s('r', common.primitives.returns()),
-          s('vec', rust.primitives.vector_struct()),
-        })
-      end
-    end,
   },
   text = {
     bo = { textwidth = 78 },
@@ -358,20 +278,6 @@ settings({
     function()
       vim.opt.iskeyword:append('-,$,#')
       vim.opt.indentkeys:append('<:>')
-
-      if is_available('LuaSnip') and is_available('snips') then
-        local ls = require('luasnip')
-        local kubernetes = require('snips.kubernetes')
-
-        local s = ls.s
-
-        ls.add_snippets('yaml', {
-          s('pod', kubernetes.primitives.pod()),
-          s('rs', kubernetes.primitives.replicaset()),
-          s('dep', kubernetes.primitives.deployment()),
-          s('ser', kubernetes.primitives.service()),
-        })
-      end
     end,
   },
 })
