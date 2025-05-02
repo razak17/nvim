@@ -232,6 +232,10 @@ return {
       })
     end,
     opts = {
+      completions = {
+        blink = { enabled = ar_config.completion.variant == 'blink' },
+        lsp = { enabled = ar.lsp.enable },
+      },
       file_types = { 'markdown', 'Avante' },
       heading = {
         sign = false, --  { '󰫎 ' }
