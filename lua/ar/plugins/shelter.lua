@@ -48,15 +48,20 @@ return {
         nvim_cmp = ar_config.completion.variant == 'cmp',
         blink_cmp = ar_config.completion.variant == 'blink',
         lspsaga = false,
-        lsp = false,
+        lsp = false, -- TODO: check this out later
       },
       shelter = {
         configuration = { partial_mode = true, mask_char = '*' },
         modules = {
           files = true,
           peek = false,
-          telescope = true,
           cmp = true,
+          telescope = true,
+          telescope_previewer = true,
+          fzf = true,
+          fzf_previewer = true,
+          snacks_previewer = true,
+          snacks = true,
         },
       },
       path = vim.fn.getcwd(),
