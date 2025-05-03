@@ -143,6 +143,9 @@ return {
               table.insert(providers, 'nvim-px-to-rem')
               table.insert(providers, 'dadbod')
             end
+            if ar_config.shelter.variant == 'ecolog' then
+              table.insert(providers, 'ecolog')
+            end
             return providers
           end
         end,
@@ -360,6 +363,13 @@ return {
           }
           opts.keymap['<A-y>'] = require('minuet').make_blink_map()
         end
+      end
+
+      if ar_config.shelter.variant == 'ecolog' then
+        opts.sources.providers.ecolog = {
+          name = '[ECOLOG]',
+          module = 'ecolog.integrations.cmp.blink_cmp',
+        }
       end
 
       if show_index then
