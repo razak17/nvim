@@ -26,10 +26,18 @@ return {
     'philosofonusus/ecolog.nvim',
     cond = cond and variant == 'ecolog',
     -- stylua: ignore
-    keys = {
-      { '<leader>ep', '<Cmd>EcologPeek<CR>', desc = 'ecolog: peek variable' },
-      { '<leader>el', '<Cmd>EcologShelterLinePeek<CR>', desc = 'ecolog: peek line' },
-    },
+    keys = function()
+      local keys = {
+        { '<leader>ep', '<Cmd>EcologPeek<CR>', desc = 'ecolog: peek variable' },
+        { '<leader>el', '<Cmd>EcologShelterLinePeek<CR>', desc = 'ecolog: peek line' },
+      }
+      if ar_config.picker.variant == 'snacks' then
+        table.insert(keys, { '<leader>f;', '<Cmd>EcologSnacks<CR>', desc = 'snacks: ecolog' })
+      elseif ar_config.picker.variant == 'fzf-lua' then
+        table.insert(keys, { '<leader>f;', '<Cmd>EcologFzf<CR>', desc = 'picker: ecolog' })
+      end
+      return keys
+    end,
     init = function()
       ar.add_to_select_menu('toggle', {
         ['Toggle Ecolog Shelter'] = 'EcologShelterToggle',
@@ -61,6 +69,8 @@ return {
       preferred_environment = 'local',
       types = true,
       integrations = {
+        fzf = ar_config.picker.variant == 'fzf-lua',
+        snacks = ar_config.picker.variant == 'snacks',
         omnifunc = { auto_setup = false },
         nvim_cmp = ar_config.completion.variant == 'cmp',
         blink_cmp = ar_config.completion.variant == 'blink',

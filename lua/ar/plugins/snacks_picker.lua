@@ -181,8 +181,8 @@ return {
   recommended = true,
   'folke/snacks.nvim',
   keys = function(_, keys)
+    keys = keys or {}
     if ar_config.picker.files == 'snacks' then
-      keys = keys or {}
       table.insert(keys, { '<C-p>', find_files, desc = 'snacks: find files' })
     end
     if ar_config.picker.variant == 'snacks' then
@@ -357,6 +357,7 @@ return {
               ['<A-u>'] = { 'preview_scroll_up', mode = { 'i', 'n' } },
               ['<A-h>'] = { 'preview_scroll_left', mode = { 'i', 'n' } },
               ['<A-l>'] = { 'preview_scroll_right', mode = { 'i', 'n' } },
+              ['<A-w>'] = { 'cycle_win', mode = { 'i', 'n' } },
             },
           },
         },
