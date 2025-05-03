@@ -310,6 +310,11 @@ local git_command = {
   vim.fs.root(vim.fn.getcwd(), '.git'),
 }
 
+-- stylua: ignore
+local delta_command = {
+  'git', '-c', 'core.pager=delta', '-c', 'delta.side-by-side=false', 'diff',
+}
+
 local layout_config = { width = 0.9, horizontal = { preview_width = 0.5 } }
 
 local function telescope_commits(opts)
@@ -336,25 +341,49 @@ local function telescope_commits(opts)
     :find()
 end
 
+local delta = previewers.new_termopen_previewer({
+  get_command = function(entry)
+    return vim.list_extend(delta_command, { entry.value .. '^!' })
+  end,
+})
+
 function M.browse_commits(branch)
   local opts = {
     attach_mappings = telescope_commits_mappings,
     entry_maker = custom_make_entry_gen_from_git_commits(),
     git_command = git_command,
     layout_config = layout_config,
-    previewer = ar.telescope.delta_opts().previewer,
+    previewer = {
+      delta,
+      previewers.git_commit_message.new({}),
+      previewers.git_commit_diff_as_was.new({}),
+    },
   }
   if branch then opts.branch = branch end
   telescope_commits(opts)
 end
 
-function M.browse_bcommits()
+local delta_bcommits = previewers.new_termopen_previewer({
+  get_command = function(entry)
+    return vim.list_extend(
+      delta_command,
+      { entry.value .. '^!', '--', entry.current_file }
+    )
+  end,
+})
+
+function M.browse_bcommits(opts)
+  opts = opts or {}
   require('telescope.builtin').git_bcommits({
     attach_mappings = telescope_commits_mappings,
     entry_maker = custom_make_entry_gen_from_git_commits(),
     git_command = git_command,
     layout_config = layout_config,
-    previewer = ar.telescope.delta_opts().previewer,
+    previewer = {
+      delta_bcommits,
+      previewers.git_commit_message.new(opts),
+      previewers.git_commit_diff_as_was.new(opts),
+    },
   })
 end
 

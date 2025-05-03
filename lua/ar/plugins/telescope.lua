@@ -156,28 +156,6 @@ local function extensions(name, prop)
   end
 end
 
-local function delta_opts(opts, is_buf)
-  local previewers = require('telescope.previewers')
-  local delta = previewers.new_termopen_previewer({
-    get_command = function(entry)
-      local args = {
-        'git',
-        '-c',
-        'core.pager=delta',
-        '-c',
-        'delta.side-by-side=false',
-        'diff',
-        entry.value .. '^!',
-      }
-      if is_buf then vim.list_extend(args, { '--', entry.current_file }) end
-      return args
-    end,
-  })
-  opts = opts or {}
-  opts.previewer = { delta, previewers.git_commit_message.new(opts) }
-  return opts
-end
-
 local function find_files(opts) extensions('menufacture', 'find_files')(opts)() end
 
 local function nvim_config()
@@ -405,6 +383,10 @@ local focus_preview = function(prompt_bufnr)
   local previewer = picker.previewer
   local winid = previewer.state.winid
   local bufnr = previewer.state.bufnr
+  if not winid then
+    vim.notify('No preview window found')
+    return
+  end
   map(
     'n',
     '<S-Tab>',
@@ -501,7 +483,6 @@ ar.telescope = {
     vim.tbl_extend('keep', opts, { previewer = false })
     return dropdown(opts)
   end,
-  delta_opts = delta_opts,
 }
 
 return {

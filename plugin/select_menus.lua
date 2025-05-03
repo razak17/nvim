@@ -47,7 +47,7 @@ if ar.is_git_repo() or ar.is_git_env() then
     ar.add_to_select_menu('git', {
       ['Browse Branches'] = "lua require'ar.select_menus.git'.browse_branches()",
       ['Browse Commits'] = "lua require'ar.select_menus.git'.browse_commits()",
-      ['Show Buffer Commits'] = "lua require'ar.select_menus.git'.browse_bcommits()",
+      ['Browse Buffer Commits'] = "lua require'ar.select_menus.git'.browse_bcommits()",
       ['Browse Stashes'] = "lua require'ar.select_menus.git'.list_stashes()",
     })
   end
