@@ -27,8 +27,8 @@ return {
     cond = cond and variant == 'ecolog',
     -- stylua: ignore
     keys = {
-      { '<leader>ep', '<Cmd>EcologPeek<cr>', desc = 'ecolog: peek variable' },
-      { '<leader>el', '<Cmd>EcologShelterLinePeek<cr>', desc = 'ecolog: peek line' },
+      { '<leader>ep', '<Cmd>EcologPeek<CR>', desc = 'ecolog: peek variable' },
+      { '<leader>el', '<Cmd>EcologShelterLinePeek<CR>', desc = 'ecolog: peek line' },
     },
     init = function()
       ar.add_to_select_menu('toggle', {
@@ -39,7 +39,21 @@ return {
         ['Ecolog Goto'] = 'EcologGoto',
         ['Ecolog Goto Var'] = 'EcologGotoVar',
       })
+      if ar_config.completion.variant == 'omnifunc' then
+        ar.augroup('EcologOmniFunc', {
+          event = { 'FileType' },
+          pattern = { 'javascript', 'typescript', 'python', 'lua' },
+          command = function(args)
+            vim.api.nvim_set_option_value(
+              'omnifunc',
+              "v:lua.require'ecolog.integrations.cmp.omnifunc'.complete",
+              { buf = args.buf }
+            )
+          end,
+        })
+      end
     end,
+    ft = { 'config' },
     lazy = false,
     opts = {
       load_shell = true,
@@ -47,6 +61,7 @@ return {
       preferred_environment = 'local',
       types = true,
       integrations = {
+        omnifunc = { auto_setup = false },
         nvim_cmp = ar_config.completion.variant == 'cmp',
         blink_cmp = ar_config.completion.variant == 'blink',
         lspsaga = false,

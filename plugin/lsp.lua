@@ -764,6 +764,14 @@ local function on_attach(client, bufnr)
   end
   setup_colors(client, bufnr)
   setup_lsp_plugins(client, bufnr)
+  if ar_config.completion.variant == 'omnifunc' then
+    -- api.nvim_set_option_value(
+    --   'omnifunc',
+    --   'v:lua.vim.lsp.omnifunc',
+    --   { buf = bufnr }
+    -- )
+    require('ar.compl')(client, bufnr)
+  end
 end
 
 augroup('LspSetupAutoCommands', {
@@ -782,9 +790,6 @@ augroup('LspSetupAutoCommands', {
     local overrides = client_overrides[client.name]
     if not overrides or not overrides.on_attach then return end
     overrides.on_attach(client, args.buf)
-    api.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc', {
-      buf = args.buf,
-    })
   end,
 }, {
   event = { 'LspDetach' },
