@@ -42,6 +42,7 @@ return {
     end,
     lazy = false,
     opts = {
+      load_shell = true,
       preferred_environment = 'local',
       types = true,
       integrations = {
