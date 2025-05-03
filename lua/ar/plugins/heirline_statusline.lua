@@ -497,6 +497,32 @@ return {
             },
           },
         },
+        -- Ecolog Status
+        {
+          cond = function()
+            return not minimal
+              and ar_config.shelter.enable
+              and ar_config.shelter.variant == 'ecolog'
+          end,
+          init = function(self)
+            local ecolog_utils = require('ecolog.utils')
+            local shelter = ecolog_utils.get_module('ecolog.shelter')
+            self.shelter_active = shelter.is_enabled('files')
+          end,
+          {
+            provider = function(self)
+              local icon = self.shelter_active and '' or '🌲'
+              return ' ' .. icon
+            end,
+            hl = function(self)
+              if self.shelter_active then
+                return { fg = 'blue', bold = true }
+              end
+              return { fg = 'comment', bold = true }
+            end,
+          },
+          { provider = ' ' .. separator, hl = { bold = true } },
+        },
         -- Copilot Status
         {
           condition = function()
@@ -670,7 +696,7 @@ return {
           provider = function()
             local line_number = fn.line('.')
             if line_number > 99 then
-            return ' ' .. '%7(%l/%3L%):%2c ' .. statusline.progress()
+              return '  ' .. '%7(%l/%3L%):%2c ' .. statusline.progress()
             elseif line_number > 9 then
               return ' ' .. '%7(%l/%3L%):%2c ' .. statusline.progress()
             end

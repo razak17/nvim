@@ -76,6 +76,7 @@ return {
         blink_cmp = ar_config.completion.variant == 'blink',
         lspsaga = false,
         lsp = false, -- TODO: check this out later
+        statusline = true,
       },
       shelter = {
         configuration = { partial_mode = true, mask_char = '*' },
