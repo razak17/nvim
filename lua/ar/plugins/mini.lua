@@ -373,7 +373,7 @@ return {
   },
   {
     'echasnovski/mini.completion',
-    cond = minimal,
+    cond = minimal or ar_config.completion.variant == 'mini.completion',
     event = { 'InsertEnter', 'BufEnter' },
     opts = {},
     config = function(_, opts)

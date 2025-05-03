@@ -29,7 +29,7 @@ local env = vim.env
 ---@alias ArExplorerRename 'local' | 'snacks'
 ---@alias ArTypescriptLsp 'ts_ls' | 'typescript-tools' | 'vtsls'
 ---@alias ArPythonLsp 'pyright' | 'ruff' | 'jedi_language_server' | 'basedpyright'
----@alias ArCompletion 'cmp' | 'blink' | 'omnifunc'
+---@alias ArCompletion 'cmp' | 'blink' | 'mini.completion' | 'omnifunc'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
 ---@alias ArWhichDashboard 'alpha' | 'snacks'
 ---@alias ArWhichExplorer 'neo-tree' | 'snacks' | 'mini.files' | 'oil'

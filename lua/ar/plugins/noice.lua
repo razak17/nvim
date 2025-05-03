@@ -46,7 +46,10 @@ return {
       enabled = true,
       view = 'mini', -- minimise pattern not found messages
     },
-    popupmenu = { backend = 'nui' },
+    popupmenu = {
+      enabled = ar_config.completion.variant ~= 'mini.completion',
+      backend = 'nui',
+    },
     notify = { enabled = true, view = 'notify' },
     lsp = {
       documentation = {
