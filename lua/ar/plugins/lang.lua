@@ -143,6 +143,7 @@ return {
     },
   },
   {
+    -- 'fabridamicelli/cronex.nvim',
     'razak17/cronex.nvim',
     cond = not minimal,
     build = 'npm install -g cronstrue',

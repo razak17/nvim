@@ -2,6 +2,11 @@ local minimal = ar.plugins.minimal
 
 return {
   {
+    'emmanueltouzery/apidocs.nvim',
+    cmd = { 'ApidocsInstall', 'ApidocsOpen' },
+    opts = {},
+  },
+  {
     'maskudo/devdocs.nvim',
     cond = not minimal,
     -- lazy = false,
