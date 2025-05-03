@@ -668,7 +668,13 @@ return {
         -- Ruler
         {
           provider = function()
+            local line_number = fn.line('.')
+            if line_number > 99 then
             return ' ' .. '%7(%l/%3L%):%2c ' .. statusline.progress()
+            elseif line_number > 9 then
+              return ' ' .. '%7(%l/%3L%):%2c ' .. statusline.progress()
+            end
+            return '%7(%l/%3L%):%2c ' .. statusline.progress()
           end,
         },
         -- Scroll Bar
