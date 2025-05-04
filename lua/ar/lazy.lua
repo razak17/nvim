@@ -20,7 +20,7 @@ if not vim.uv.fs_stat(lazy_path) then
 end
 vim.opt.rtp:prepend(lazy_path)
 require('lazy').setup({
-  spec = { { import = 'ar.plugins' } },
+  spec = require('ar.plugins'),
   defaults = { lazy = true },
   change_detection = { notify = false },
   git = { timeout = 720 },
