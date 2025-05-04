@@ -12,6 +12,7 @@ return {
   'tpope/vim-rhubarb',
   { 'tyru/capture.vim', cmd = { 'Capture' } },
   { 'Rasukarusan/nvim-block-paste', cmd = { 'Block' } },
+  { 'dundalek/bloat.nvim', cmd = 'Bloat' },
   {
     'ariel-frischer/bmessages.nvim',
     cond = not minimal,
