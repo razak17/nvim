@@ -11,7 +11,7 @@ return {
   },
   {
     'OXY2DEV/helpview.nvim',
-    cond = not minimal and niceties and ar.treesitter.enable,
+    cond = not minimal and niceties and ar.ts_extra_enabled,
     lazy = false,
     init = function()
       ar.add_to_select_menu(

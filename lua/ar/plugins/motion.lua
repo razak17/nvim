@@ -30,7 +30,7 @@ return {
   },
   {
     'mawkler/demicolon.nvim',
-    cond = not minimal,
+    cond = not minimal and ar.treesitter.enable,
     init = function()
       map({ 'n', 'x', 'o' }, ';n', require('demicolon.repeat_jump').forward)
       map({ 'n', 'x', 'o' }, ';p', require('demicolon.repeat_jump').backward)

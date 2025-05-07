@@ -265,7 +265,7 @@ return {
   {
     'stevearc/aerial.nvim',
     cmd = { 'AerialToggle' },
-    cond = not minimal and ar.treesitter.enable and false,
+    cond = not minimal and ar.ts_extra_enabled and false,
     init = function()
       ar.add_to_select_menu('toggle', { ['Toggle Aerial'] = 'AerialToggle' })
     end,

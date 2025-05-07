@@ -125,7 +125,7 @@ return {
   -- https://github.com/AntonVanAssche/md-headers.nvim
   {
     'AntonVanAssche/md-headers.nvim',
-    cond = ar.treesitter.enable,
+    cond = ar.ts_extra_enabled,
     cmd = { 'MarkdownHeaders', 'MarkdownHeadersClosest' },
     -- stylua: ignore
     keys = {
@@ -241,7 +241,7 @@ return {
       },
       file_types = { 'markdown', 'Avante' },
       heading = {
-        enabled = not ar.treesitter.enable,
+        enabled = not ar.ts_extra_enabled,
         sign = false, --  { '󰫎 ' }
         icons = { '󰎤 ', '󰎧 ', '󰎪 ', '󰎭 ', '󰎱 ', '󰎳 ' },
       },

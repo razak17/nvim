@@ -3,7 +3,7 @@ local minimal = ar.plugins.minimal
 return {
   {
     'numToStr/Comment.nvim',
-    cond = false and not minimal and not ar.treesitter.enable,
+    cond = false and not minimal and not ar.ts_extra_enabled,
     keys = { 'gcc', { 'gc', mode = { 'x', 'n', 'o' } } },
     opts = function(_, opts)
       local ok, integration =
@@ -13,7 +13,7 @@ return {
   },
   {
     'folke/ts-comments.nvim',
-    cond = not minimal and ar.treesitter.enable,
+    cond = not minimal and ar.ts_extra_enabled,
     event = 'VeryLazy',
     opts = {},
   },

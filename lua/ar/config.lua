@@ -199,7 +199,10 @@ local namespace = {
     },
   },
   completion = { enable = env.RVIM_COMPLETION_ENABLED == '1' },
-  treesitter = { enable = env.RVIM_TREESITTER_ENABLED == '1' },
+  treesitter = {
+    enable = env.RVIM_TREESITTER_ENABLED == '1',
+    extra = { enable = env.RVIM_TREESITTER_EXTRA_ENABLED == '1' },
+  },
   ui = {
     colorscheme = {
       disabled = {

@@ -98,6 +98,10 @@ function ar.demicolon_jump(callback, opts)
   return function() require('demicolon.jump').repeatably_do(callback, opts) end
 end
 
+function ar.ts_extra_enabled()
+  return ar.treesitter.enable and ar.treesitter.extra.enable
+end
+
 function ar.remove_duplicates(table)
   local seen = {}
   return vim

@@ -1,10 +1,12 @@
 local highlight = ar.highlight
 local minimal = ar.plugins.minimal
 local ts_enabled = ar.treesitter.enable
+local ts_extra_enabled = ar.ts_extra_enabled
 
 return {
   {
     'nvim-treesitter/nvim-treesitter',
+    cond = ts_enabled,
     event = 'BufReadPost',
     build = ':TSUpdate',
     lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
@@ -22,7 +24,7 @@ return {
       highlight = {
         enable = true,
         disable = function(_, buf)
-          if not ts_enabled and vim.bo.ft ~= 'lua' then return true end
+          if not ts_extra_enabled and vim.bo.ft ~= 'lua' then return true end
           local max_filesize = 100 * 1024 -- 100 KB
           local ok, stats =
             pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
@@ -144,7 +146,7 @@ return {
     dependencies = {
       {
         'nvim-treesitter/nvim-treesitter-textobjects',
-        cond = not minimal,
+        ond = not minimal and ts_enabled,
         event = 'VeryLazy',
         config = function()
           -- ref: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/treesitter.lua?plain=1#L108
@@ -174,7 +176,7 @@ return {
   },
   {
     'windwp/nvim-ts-autotag',
-    cond = not minimal and ts_enabled,
+    cond = not minimal and ts_extra_enabled,
     ft = {
       'typescriptreact',
       'javascript',
@@ -187,12 +189,12 @@ return {
   },
   {
     'nvim-treesitter/playground',
-    cond = not minimal and ts_enabled,
+    cond = not minimal and ts_extra_enabled,
     cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
   },
   {
     'nvim-treesitter/nvim-treesitter-context',
-    cond = not minimal and ts_enabled,
+    cond = not minimal and ts_extra_enabled,
     event = { 'BufRead', 'BufNewFile' },
     cmd = { 'TSContextEnable', 'TSContextDisable', 'TSContextToggle' },
     init = function()
@@ -228,7 +230,7 @@ return {
   {
     'andymass/vim-matchup',
     event = { 'BufReadPre', 'BufNewFile' },
-    cond = not minimal and ts_enabled,
+    cond = not minimal and ts_extra_enabled,
     keys = {
       { '[[', '<plug>(matchup-[%)', mode = { 'n', 'x' } },
       { ']]', '<plug>(matchup-]%)', mode = { 'n', 'x' } },
@@ -267,13 +269,13 @@ return {
   },
   {
     'sustech-data/wildfire.nvim',
-    cond = not minimal and ts_enabled and false,
+    cond = not minimal and ts_extra_enabled and false,
     event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
   {
     'andersevenrud/nvim_context_vt',
-    cond = not minimal and ts_enabled,
+    cond = not minimal and ts_extra_enabled,
     cmd = 'NvimContextVtToggle',
     keys = {
       {

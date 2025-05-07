@@ -107,10 +107,12 @@ return {
       ls.filetype_extend('typescriptreact', { 'javascript', 'typescript' })
       ls.filetype_extend('NeogitCommitMessage', { 'gitcommit' })
 
-      local snippets_list = get_snippets_list()
-      for _, module_path in ipairs(snippets_list) do
-        local ok, snip = pcall(require, module_path)
-        if ok then snip.setup() end
+      if ar.treesitter.enable then
+        local snippets_list = get_snippets_list()
+        for _, module_path in ipairs(snippets_list) do
+          local ok, snip = pcall(require, module_path)
+          if ok then snip.setup() end
+        end
       end
     end,
   },

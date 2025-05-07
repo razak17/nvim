@@ -2,7 +2,8 @@
 
 export RVIM_PLUGINS_ENABLED='1'
 export RVIM_LSP_ENABLED='0'
-export RVIM_TREESITTER_ENABLED='0'
+export RVIM_TREESITTER_ENABLED='1'
+export RVIM_TREESITTER_EXTRA_ENABLED='0'
 export RVIM_AI_ENABLED='0'
 export RVIM_NICETIES_ENABLED='0'
 export RVIM_COMPLETION_ENABLED='1'
@@ -41,6 +42,10 @@ while [ "$#" -gt 0 ]; do
     ;;
   --no-treesitter | -no-ts)
     export RVIM_TREESITTER_ENABLED='0'
+    shift
+    ;;
+  --treesitter-extra | -ts-extra)
+    export RVIM_TREESITTER_EXTRA_ENABLED='1'
     shift
     ;;
   --lsp)
