@@ -36,10 +36,7 @@ return {
         },
         dap = {
           adapter = function()
-            local mason_registry = require('mason-registry')
-            local codelldb = mason_registry.get_package('codelldb')
-            local extension_path = vim.fn.expand('$MASON')
-              .. '/packages/codelldb/extension'
+            local extension_path = ar.get_pkg_path('codelldb', 'extension')
             local codelldb_path = extension_path .. '/adapter/codelldb'
             local liblldb_path = extension_path .. '/lldb/lib/liblldb.so'
 

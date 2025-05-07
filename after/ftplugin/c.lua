@@ -11,8 +11,7 @@ vim.cmd([[setlocal path+=/usr/include/**,/usr/local/include/**]])
 
 if not ar.plugins.enable or ar.plugins.minimal then return end
 
-local codelldb_path = vim.fn.expand('$MASON')
-  .. '/codelldb/extension/adapter/codelldb'
+local codelldb_path = ar.get_pkg_path('codelldb', 'extension/adapter/codelldb')
 
 require('dap').adapters.codelldb = {
   type = 'server',

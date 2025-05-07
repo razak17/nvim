@@ -55,7 +55,7 @@ if ar.lsp.enable then
 end
 
 local dap = require('dap')
-local dlv_path = vim.fn.expand('$MASON') .. '/packages/delve/dlv'
+local dlv_path = ar.get_pkg_path('delve', 'dlv')
 
 dap.adapters.go = {
   type = 'server',

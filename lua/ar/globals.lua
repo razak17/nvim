@@ -98,10 +98,6 @@ function ar.demicolon_jump(callback, opts)
   return function() require('demicolon.jump').repeatably_do(callback, opts) end
 end
 
-function ar.ts_extra_enabled()
-  return ar.treesitter.enable and ar.treesitter.extra.enable
-end
-
 function ar.remove_duplicates(table)
   local seen = {}
   return vim
@@ -262,6 +258,37 @@ function ar.is_loaded(plugin)
   local lazy_config_avail, lazy_config = pcall(require, 'lazy.core.config')
   if not lazy_config_avail then return false end
   return lazy_config.plugins[plugin] and lazy_config.plugins[plugin]._.loaded
+end
+
+function ar.ts_extra_enabled()
+  return ar.treesitter.enable and ar.treesitter.extra.enable
+end
+
+-- Ref: https://github.com/LazyVim/LazyVim/blob/ec5981dfb1222c3bf246d9bcaa713d5cfa486fbd/lua/lazyvim/util/init.lua?plain=1#L250
+--- Gets a path to a package in the Mason registry.
+--- Prefer this to `get_package`, since the package might not always be
+--- available yet and trigger errors.
+---@param pkg string
+---@param path? string
+---@param opts? { warn?: boolean }
+function ar.get_pkg_path(pkg, path, opts)
+  pcall(require, 'mason') -- make sure Mason is loaded. Will fail when generating docs
+  local root = vim.env.MASON or (fn.stdpath('data') .. '/mason')
+  opts = opts or {}
+  opts.warn = opts.warn == nil and true or opts.warn
+  path = path or ''
+  local ret = root .. '/packages/' .. pkg .. '/' .. path
+  if opts.warn and not vim.loop.fs_stat(ret) then
+    vim.notify(
+      ('Mason package path not found for **%s**:\n- `%s`\nYou may need to force update the package.'):format(
+        pkg,
+        path
+      ),
+      L.WARN,
+      { title = 'Mason' }
+    )
+  end
+  return ret
 end
 
 -- Check if a lsp is disabled

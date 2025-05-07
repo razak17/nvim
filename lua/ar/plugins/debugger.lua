@@ -164,9 +164,6 @@ return {
         },
       }
 
-      local debug_server_path = fn.expand('$MASON')
-        .. '/packages/js-debug-adapter/js-debug/src/dapDebugServer.js'
-
       for _, adapter in pairs({ 'node', 'chrome' }) do
         local pwa_adapter = 'pwa-' .. adapter
         -- Handle launch.json configurations
@@ -178,7 +175,13 @@ return {
           port = '${port}',
           executable = {
             command = 'node',
-            args = { debug_server_path, '${port}' },
+            args = {
+              ar.get_pkg_path(
+                'js-debug-adapter',
+                'js-debug/src/dapDebugServer.js'
+              ),
+              '${port}',
+            },
           },
           enrich_config = function(config, on_config)
             -- Under the hood, always use the main adapter
@@ -413,7 +416,6 @@ return {
       { 'theHamsta/nvim-dap-virtual-text', opts = { all_frames = true } },
       {
         'Weissle/persistent-breakpoints.nvim',
-        cond = false,
         event = { 'BufReadPost' },
         keys = {
           {

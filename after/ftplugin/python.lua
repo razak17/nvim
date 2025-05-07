@@ -10,7 +10,7 @@ opt.spell = true
 if not ar.plugins.enable or ar.plugins.minimal then return end
 
 local dap = require('dap')
-local debugpy_path = fn.expand('$MASON') .. '/packages/debugpy/venv/bin/python'
+local debugpy_path = ar.get_pkg_path('debugpy', 'venv/bin/python')
 
 local pythonPath = function()
   local cwd = fn.getcwd()
