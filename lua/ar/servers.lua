@@ -2,25 +2,14 @@
 --------------------------------------------------------------------------------
 -- Language servers
 --------------------------------------------------------------------------------
-local fmt = string.format
-
 local function get_clangd_cmd()
-  local cmd = 'clangd'
-  if ar.is_available('mason.nvim') then
-    local clangd = require('mason-registry').get_package('clangd')
-    local path = clangd:get_install_path()
-    clangd:get_installed_version(function(success, version_or_err)
-      if success then
-        cmd = fmt('%s/clangd_%s/bin/clangd', path, version_or_err)
-      end
-    end)
-  end
+  local cmd = ar.is_available('mason.nvim')
+      and vim.fn.expand('$MASON') .. '/bin/clangd'
+    or 'clangd'
+  -- stylua: ignore
   return {
-    cmd,
-    '--all-scopes-completion',
-    '--background-index',
-    '--cross-file-rename',
-    '--header-insertion=never',
+    cmd, '--all-scopes-completion', '--background-index',
+    '--cross-file-rename', '--header-insertion=never',
   }
 end
 
