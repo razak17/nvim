@@ -11,9 +11,8 @@ vim.cmd([[setlocal path+=/usr/include/**,/usr/local/include/**]])
 
 if not ar.plugins.enable or ar.plugins.minimal then return end
 
-local mason_registry = require('mason-registry')
-local codelldb_path = mason_registry.get_package('codelldb'):get_install_path()
-  .. '/extension/adapter/codelldb'
+local codelldb_path = vim.fn.expand('$MASON')
+  .. '/codelldb/extension/adapter/codelldb'
 
 require('dap').adapters.codelldb = {
   type = 'server',

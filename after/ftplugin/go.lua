@@ -55,9 +55,7 @@ if ar.lsp.enable then
 end
 
 local dap = require('dap')
-local mason_registry = require('mason-registry')
-local dlv_path = mason_registry.get_package('delve'):get_install_path()
-  .. '/dlv'
+local dlv_path = vim.fn.expand('$MASON') .. '/packages/delve/dlv'
 
 dap.adapters.go = {
   type = 'server',

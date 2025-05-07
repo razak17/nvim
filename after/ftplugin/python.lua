@@ -10,9 +10,7 @@ opt.spell = true
 if not ar.plugins.enable or ar.plugins.minimal then return end
 
 local dap = require('dap')
-local mason_registry = require('mason-registry')
-local debugpy_path = mason_registry.get_package('debugpy'):get_install_path()
-  .. '/venv/bin/python'
+local debugpy_path = fn.expand('$MASON') .. '/packages/debugpy/venv/bin/python'
 
 local pythonPath = function()
   local cwd = fn.getcwd()

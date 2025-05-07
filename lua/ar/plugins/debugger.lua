@@ -164,9 +164,8 @@ return {
         },
       }
 
-      local js_debug = require('mason-registry').get_package('js-debug-adapter')
-      local debug_server_path = js_debug:get_install_path()
-        .. '/js-debug/src/dapDebugServer.js'
+      local debug_server_path = fn.expand('$MASON')
+        .. '/packages/js-debug-adapter/js-debug/src/dapDebugServer.js'
 
       for _, adapter in pairs({ 'node', 'chrome' }) do
         local pwa_adapter = 'pwa-' .. adapter
