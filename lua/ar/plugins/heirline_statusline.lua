@@ -87,47 +87,52 @@ return {
         {
           -- condition = conditions.is_git_repo,
           condition = function() return not statusline.is_dots_repo end,
-          init = function(self) self.status_dict = vim.b.gitsigns_status_dict end,
+          init = function(self)
+            self.status_dict = vim.b.gitsigns_status_dict
+            self.git_status = statusline.git_status
+          end,
           update = {
             'User',
             pattern = { 'GitSignsUpdate', 'GitSignsChanged' },
             callback = function() vim.schedule(vim.cmd.redrawstatus) end,
           },
           {
-            condition = function() return GitStatus ~= nil end,
-            update = { 'User', pattern = 'GitStatusChanged' },
+            condition = function(self) return self.git_status ~= nil end,
+            update = { 'User', pattern = 'git_statusChanged' },
             {
-              condition = function() return GitStatus.status == 'pending' end,
+              condition = function(self)
+                return self.git_status.status == 'pending'
+              end,
               provider = ' ' .. codicons.git.pending,
             },
             {
-              provider = function()
-                return ' ' .. GitStatus.behind .. icons.misc.arrow_down
+              provider = function(self)
+                return ' ' .. self.git_status.behind .. icons.misc.arrow_down
               end,
-              hl = function()
+              hl = function(self)
                 return {
-                  fg = GitStatus.behind == 0 and fg or 'pale_red',
+                  fg = self.git_status.behind == 0 and fg or 'pale_red',
                 }
               end,
               on_click = {
-                callback = function()
-                  if GitStatus.behind > 0 then statusline.git_pull() end
+                callback = function(self)
+                  if self.git_status.behind > 0 then statusline.git_pull() end
                 end,
                 name = 'git_pull',
               },
             },
             {
-              provider = function()
-                return ' ' .. GitStatus.ahead .. icons.misc.arrow_up
+              provider = function(self)
+                return ' ' .. self.git_status.ahead .. icons.misc.arrow_up
               end,
-              hl = function()
+              hl = function(self)
                 return {
-                  fg = GitStatus.ahead == 0 and fg or 'yellowgreen',
+                  fg = self.git_status.ahead == 0 and fg or 'yellowgreen',
                 }
               end,
               on_click = {
-                callback = function()
-                  if _G.GitStatus.ahead > 0 then statusline.git_push() end
+                callback = function(self)
+                  if self.git_status.ahead > 0 then statusline.git_push() end
                 end,
                 name = 'git_push',
               },

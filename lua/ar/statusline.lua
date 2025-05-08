@@ -10,7 +10,7 @@ local M = {}
 
 M.is_dots_repo = false
 
-_G.GitStatus = { ahead = 0, behind = 0, status = nil }
+M.git_status = { ahead = 0, behind = 0, status = nil }
 
 function M.block() return icons.separators.bar end
 
@@ -45,14 +45,14 @@ function M.git_remote_sync()
   local git_fetch = Job:new({
     command = cmd,
     args = fetch_args,
-    on_start = function() GitStatus.status = 'pending' end,
-    on_exit = function() GitStatus.status = 'done' end,
+    on_start = function() M.git_status.status = 'pending' end,
+    on_exit = function() M.git_status.status = 'done' end,
   })
 
   local function on_status_change()
     vim.schedule(
       function()
-        api.nvim_exec_autocmds('User', { pattern = 'GitStatusChanged' })
+        api.nvim_exec_autocmds('User', { pattern = 'git_statusChanged' })
       end
     )
   end
@@ -62,18 +62,18 @@ function M.git_remote_sync()
     command = cmd,
     args = upstream_args,
     on_start = function()
-      GitStatus.status = 'pending'
+      M.git_status.status = 'pending'
       on_status_change()
     end,
     on_exit = function(job, _)
       local res = job:result()[1]
       if type(res) ~= 'string' then
-        GitStatus = { ahead = 0, behind = 0, status = 'error' }
+        M.git_status = { ahead = 0, behind = 0, status = 'error' }
         return
       end
       local _, ahead, behind = pcall(string.match, res, '(%d+)%s*(%d+)')
 
-      GitStatus =
+      M.git_status =
         { ahead = tonumber(ahead), behind = tonumber(behind), status = 'done' }
       on_status_change()
     end,
