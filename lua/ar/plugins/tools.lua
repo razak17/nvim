@@ -46,7 +46,7 @@ local supported = ar.lsp.prettier.supported
 --- Checks if a Prettier config file exists for the given context
 ---@param ctx ConformCtx
 local function has_config(ctx)
-  fn.system({ 'prettier', '--find-config-path', ctx.filename })
+  vim.system({ 'prettier', '--find-config-path', ctx.filename }):wait()
   return vim.v.shell_error == 0
 end
 
@@ -57,7 +57,8 @@ local function has_parser(ctx)
   -- default filetypes are always supported
   if vim.tbl_contains(supported, ft) then return true end
   -- otherwise, check if a parser can be inferred
-  local ret = fn.system({ 'prettier', '--file-info', ctx.filename })
+  local ret =
+    vim.system({ 'prettier', '--file-info', ctx.filename }):wait().stdout
   ---@type boolean, string?
   local ok, parser = pcall(
     function() return fn.json_decode(ret).inferredParser end

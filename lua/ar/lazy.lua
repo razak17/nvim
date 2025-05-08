@@ -6,7 +6,7 @@ local plugins_enabled = ar.plugins.enable
 if not vim.uv.fs_stat(lazy_path) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
   -- stylua: ignore start
-  local out = fn.system({ 'git', 'clone', '--filter=blob:none', '--single-branch', lazyrepo, lazy_path })
+  local out = vim.system({ 'git', 'clone', '--filter=blob:none', '--single-branch', lazyrepo, lazy_path }):wait().stdout
   -- stylua: ignore end
   if vim.v.shell_error ~= 0 then
     api.nvim_echo({

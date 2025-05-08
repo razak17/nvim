@@ -321,7 +321,7 @@ local function generate_toc()
   end
   -- Silently save the file, in case TOC being created for first time (yes, you need the 2 saves)
   cmd('silent write')
-  fn.system('markdown-toc -i ' .. path)
+  vim.system('markdown-toc -i ' .. path):wait()
   cmd('edit!')
   cmd('silent write')
   vim.notify('TOC updated and file saved', L.INFO)
@@ -359,7 +359,7 @@ end
 local function open_in_neovide()
   local file_path = fn.expand('%:p')
   if file_path ~= '' then
-    fn.system({ 'neovide', file_path })
+    vim.system({ 'neovide', file_path }):wait()
   else
     print('No file is currently open')
   end

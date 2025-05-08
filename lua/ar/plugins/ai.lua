@@ -6,7 +6,7 @@
 --     )
 --     return
 --   end
---   local key = fn.system('pass show api/tokens/openai-work')
+--   local key = vim.system('pass show api/tokens/openai-work'):wait().stdout
 --   if not key or vim.v.shell_error ~= 0 then
 --     vim.notify('OpenAI key not found', vim.log.levels.ERROR)
 --     return

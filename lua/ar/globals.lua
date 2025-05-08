@@ -833,7 +833,9 @@ function ar.trash_file(path, notify)
     return
   end
   notify = notify or false
-  local success, _ = pcall(function() fn.system({ 'gio', 'trash', path }) end)
+  local success, _ = pcall(
+    function() vim.system({ 'gio', 'trash', path }):wait() end
+  )
   if not notify then return end
   if success then
     vim.notify(fmt('Moved %s to trash', path), L.INFO)
