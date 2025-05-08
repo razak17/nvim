@@ -86,10 +86,8 @@ return {
         -- Git
         {
           -- condition = conditions.is_git_repo,
-          init = function(self)
-            self.status_dict = vim.b.gitsigns_status_dict
-            -- statusline.git_remote_sync()
-          end,
+          condition = function() return not statusline.is_dots_repo end,
+          init = function(self) self.status_dict = vim.b.gitsigns_status_dict end,
           update = {
             'User',
             pattern = { 'GitSignsUpdate', 'GitSignsChanged' },

@@ -7,7 +7,9 @@ local conditions = require('heirline.conditions')
 local Job = require('plenary.job')
 
 local M = {}
-_G.IsDotsRepo = false
+
+M.is_dots_repo = false
+
 _G.GitStatus = { ahead = 0, behind = 0, status = nil }
 
 function M.block() return icons.separators.bar end
@@ -38,15 +40,6 @@ function M.git_remote_sync()
   local fetch_args = { 'fetch' }
   local upstream_args =
     { 'rev-list', '--left-right', '--count', 'HEAD...@{upstream}' }
-
-  if IsDotsRepo then
-    local git_command =
-      fmt('git --git-dir=%s --work-tree=$HOME', vim.g.dotfiles)
-    cmd = 'sh'
-    fetch_args = { '-c', git_command .. ' fetch' }
-    upstream_args =
-      { '-c', git_command .. ' ' .. table.concat(upstream_args, ' ') }
-  end
 
   -- Fetch the remote repository
   local git_fetch = Job:new({
@@ -96,7 +89,7 @@ local repo_branch_cache = {}
 
 local function git_branch_from_path(git_path)
   local head_path =
-    fmt('%s/HEAD', IsDotsRepo and git_path or git_path .. '/.git')
+    fmt('%s/HEAD', M.is_dots_repo and git_path or git_path .. '/.git')
   local f_head = io.open(head_path)
   if f_head == nil then return '' end
   local head = f_head:read()
@@ -117,7 +110,7 @@ local function git_branch_changed(git_path)
 
   ---@diagnostic disable-next-line: need-check-nil
   watcher:start(
-    git_path .. fmt('%s', IsDotsRepo and '/HEAD' or '/.git/HEAD'),
+    git_path .. fmt('%s', M.is_dots_repo and '/HEAD' or '/.git/HEAD'),
     {},
     vim.schedule_wrap(function(_, _, evts)
       if evts.change then git_branch_changed(git_path) end
@@ -141,7 +134,7 @@ function M.git_branch()
     local dots_repo = fmt('%s/dotfiles', vim.g.dotfiles)
     if fn.isdirectory(dots_repo) then
       git_path = dots_repo
-      IsDotsRepo = true
+      M.is_dots_repo = true
     else
       return ''
     end
