@@ -142,9 +142,9 @@ return {
             if not ar.plugins.minimal then
               table.insert(providers, 'nvim-px-to-rem')
               table.insert(providers, 'dadbod')
-            end
-            if ar_config.shelter.variant == 'ecolog' then
-              table.insert(providers, 'ecolog')
+              if ar_config.shelter.variant == 'ecolog' then
+                table.insert(providers, 'ecolog')
+              end
             end
             return providers
           end
@@ -365,7 +365,7 @@ return {
         end
       end
 
-      if ar_config.shelter.variant == 'ecolog' then
+      if not ar.plugins.minimal and ar_config.shelter.variant == 'ecolog' then
         opts.sources.providers.ecolog = {
           name = '[ECOLOG]',
           module = 'ecolog.integrations.cmp.blink_cmp',
