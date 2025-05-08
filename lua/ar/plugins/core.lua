@@ -236,7 +236,7 @@ return {
         '<leader><localleader>fd',
         function ()
           if vim.fn.confirm('Delete file?', '&Yes\n&No') == 1 then
-            g.trashFile()
+            require('genghis').trashFile()
           end
         end,
         desc = 'genghis: move to trash',
