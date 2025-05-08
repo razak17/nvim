@@ -354,6 +354,7 @@ local config = {
   plugin = {
     custom = {
       auto_cursorline = { enable = true },
+      baredot = { enable = true },
       big_file = { enable = true },
       custom_fold = { enable = false },
       interceptor = { enable = true },

@@ -761,7 +761,7 @@ return {
   },
   {
     'ejrichards/baredot.nvim',
-    cond = not minimal and not ar.is_git_repo(),
+    cond = not minimal and not ar.is_git_repo() and false,
     lazy = false,
     opts = {
       git_dir = '~/.dots/dotfiles', -- Change this path
