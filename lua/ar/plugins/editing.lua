@@ -34,6 +34,7 @@ return {
       { '<localleader>yo', '<Cmd>YankyRingHistory<CR>', desc = 'yanky: open yank history', },
     },
     opts = { ring = { storage = 'sqlite' } },
+    dependencies = 'kkharji/sqlite.lua'
   },
   {
     desc = 'Duplicate visual selection, lines, and textobjects',
