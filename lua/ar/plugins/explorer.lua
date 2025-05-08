@@ -56,6 +56,10 @@ return {
       local function image_preview(state)
         local width = state.window.width + 1
         local node = state.tree:get_node()
+        if not ar.is_available('image.nvim') then
+          ar.snacks_show_image(node:get_id())
+          return
+        end
         ar.show_image(node:get_id(), { col = width })
       end
 

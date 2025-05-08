@@ -719,14 +719,13 @@ end
 ---@param win_opts? table Options for float window
 ---@param image_opts? table Options for image render (see image.nvim ImageGeometry)
 function ar.show_image(path, win_opts, image_opts)
-  local buf = api.nvim_create_buf(false, true)
-
   local ok, img_api = pcall(require, 'image')
   if not ok then
-    vim.noify('image.nvim is required')
+    vim.notify('image.nvim is required')
     return
   end
 
+  local buf = api.nvim_create_buf(false, true)
   local ok_image, image = pcall(img_api.from_file, path, { buffer = buf })
   if not (ok_image and image) then return end
 
@@ -765,6 +764,57 @@ function ar.show_image(path, win_opts, image_opts)
       end
     end,
   })
+end
+
+---Show image in float window using snacks.nvim
+---@param path string Path to image
+---@param win_opts? table Options for float window
+function ar.snacks_show_image(path, win_opts)
+  local ok, _ = pcall(require, 'snacks.image')
+  if not ok then
+    vim.notify('snacks.nvim is required')
+    return
+  end
+
+  local current_buf = api.nvim_get_current_buf()
+  win_opts = vim.tbl_deep_extend('keep', win_opts or {}, {
+    width = 60,
+    height = 17,
+  })
+
+  Snacks.image.doc.at_cursor(function(src)
+    src = path
+    local config = {
+      border = 'single',
+      backdrop = false,
+      relative = 'editor',
+      row = 1,
+      float = true,
+      show = false,
+      enter = false,
+      focusable = false,
+    }
+    local win = Snacks.win(config)
+    win:show()
+    local opts = Snacks.config.merge({}, Snacks.image.config.doc, {
+      on_update_pre = function()
+        win.opts.width = win_opts.width
+        win.opts.height = win_opts.height
+        win:show()
+      end,
+      inline = false,
+    })
+    local hover = {
+      win = win,
+      buf = current_buf,
+      img = Snacks.image.placement.new(win.buf, src, opts),
+    }
+
+    vim.on_key(function()
+      hover.win:close()
+      hover.img:close()
+    end, 0)
+  end)
 end
 
 --- search current word in website. see usage below
