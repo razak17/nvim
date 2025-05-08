@@ -157,6 +157,11 @@ return {
   ------------------------------------------------------------------------------
   { 'meznaric/key-analyzer.nvim', cmd = { 'KeyAnalyzer' }, opts = {} },
   {
+    'crixuamg/visual-complexity.nvim',
+    cmd = { 'VisualComplexity', 'ToggleComplexityReasons' },
+    opts = {},
+  },
+  {
     'mikesmithgh/kitty-scrollback.nvim',
     cmd = { 'KittyScrollbackGenerateKittens', 'KittyScrollbackCheckHealth' },
     event = { 'User KittyScrollbackLaunch' },
