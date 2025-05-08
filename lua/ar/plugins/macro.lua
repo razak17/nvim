@@ -5,6 +5,11 @@ return {
     'jake-stewart/recursive-macro.nvim',
     cond = not minimal,
     event = 'VeryLazy',
+    init = function()
+      vim.g.whichkey_add_spec({
+        { '<localleader>q', desc = 'recursive-macro: start recording' },
+      })
+    end,
     opts = {
       registers = { 'q', 'w', 'e', 'r', 't', 'y' },
       startMacro = ',q',
