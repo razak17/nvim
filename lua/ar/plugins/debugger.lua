@@ -45,6 +45,13 @@ ar.debugger = {
   },
 }
 
+---@param source string
+---@param opts? table
+---@return function
+local function d(source, opts)
+  return function() require('dap')[source](opts) end
+end
+
 return {
   {
     'mfussenegger/nvim-dap',
@@ -58,18 +65,18 @@ return {
     end,
     -- stylua: ignore
     keys = {
-      {'<localleader>da', function() require('dap').continue({before = get_args}) end, desc = 'dap: run with args' },
+      {'<localleader>da', function() d('continue',{ before = get_args}) end, desc = 'dap: run with args' },
       { '<localleader>dbm', function() require('dap').set_breakpoint(nil, nil, input('Log point message: ')) end, desc = 'dap: log breakpoint', },
-      { '<localleader>dc', function() require('dap').continue() end, desc = 'dap: continue or start debugging' },
-      { '<localleader>dh', function() require('dap').step_back() end, desc = 'dap: step back' },
-      { '<localleader>di', function() require('dap').step_into() end, desc = 'dap: step into' },
-      { '<localleader>do', function() require('dap').step_over() end, desc = 'dap: step over' },
-      { '<localleader>dO', function() require('dap').step_out() end, desc = 'dap: step out' },
-      { '<localleader>drc', function() require('dap').run_to_cursor() end, desc = 'dap: run to cursor' },
-      { '<localleader>drl', function() require('dap').run_last() end, desc = 'dap: run last' },
+      { '<localleader>dc', d('continue'), desc = 'dap: continue or start debugging' },
+      { '<localleader>dh', d('step_back'), desc = 'dap: step back' },
+      { '<localleader>di', d('step_into'), desc = 'dap: step into' },
+      { '<localleader>do', d('step_over'), desc = 'dap: step over' },
+      { '<localleader>dO', d('step_out'), desc = 'dap: step out' },
+      { '<localleader>drc', d('run_to_cursor'), desc = 'dap: run to cursor' },
+      { '<localleader>drl', d('run_last'), desc = 'dap: run last' },
       { '<localleader>drr', function() require('dap').repl.toggle() end, desc = 'dap: toggle repl' },
-      { '<localleader>drs', function() require('dap').restart() end, desc = 'dap: restart' },
-      { '<localleader>dx', function() require('dap').terminate() end, desc = 'dap: terminate' },
+      { '<localleader>drs', d('restart'), desc = 'dap: restart' },
+      { '<localleader>dx', d('terminate'), desc = 'dap: terminate' },
       {
         '<localleader>ds',
         function()
