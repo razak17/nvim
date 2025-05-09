@@ -2,7 +2,7 @@ local sync = ar.sync_dir
 
 return {
   {
-    'epwalsh/obsidian.nvim',
+    'obsidian-nvim/obsidian.nvim',
     cond = not ar.plugins.minimal,
     init = function()
       vim.g.whichkey_add_spec({ '<leader><localleader>o', group = 'Obsidian' })
