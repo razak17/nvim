@@ -8,15 +8,16 @@ return {
       vim.g.whichkey_add_spec({ '<leader><localleader>o', group = 'Obsidian' })
     end,
     event = 'BufRead ' .. sync('obsidian') .. '/*.md',
+    cmd = { 'Obsidian' },
     -- stylua: ignore
     keys = {
-      { '<leader><localleader>ob', '<Cmd>ObsidianBacklinks<CR>', desc = 'obsidian: buffer backlinks', },
-      { '<leader><localleader>od', '<Cmd>ObsidianToday<CR>', desc = 'obsidian: open daily note', },
-      { '<leader><localleader>on', ':ObsidianNew ', desc = 'obsidian: new note' },
-      { '<leader><localleader>oy', '<Cmd>ObsidianYesterday<CR>', desc = 'obsidian: previous daily note', },
-      { '<leader><localleader>oo', ':ObsidianOpen ', desc = 'obsidian: open in app' },
-      { '<leader><localleader>os', '<Cmd>ObsidianSearch<CR>', desc = 'obsidian: search', },
-      { '<leader><localleader>ot', '<Cmd>ObsidianTemplate<CR>', desc = 'obsidian: insert template', },
+      { '<leader><localleader>ob', '<Cmd>Obsidian backlinks<CR>', desc = 'obsidian: buffer backlinks', },
+      { '<leader><localleader>od', '<Cmd>Obsidian today<CR>', desc = 'obsidian: open daily note', },
+      { '<leader><localleader>on', ':Obsidian new ', desc = 'obsidian: new note' },
+      { '<leader><localleader>oy', '<Cmd>Obsidian yesterday<CR>', desc = 'obsidian: previous daily note', },
+      { '<leader><localleader>oo', ':Obsidian open ', desc = 'obsidian: open in app' },
+      { '<leader><localleader>os', '<Cmd>Obsidian search<CR>', desc = 'obsidian: search', },
+      { '<leader><localleader>ot', '<Cmd>Obsidian template<CR>', desc = 'obsidian: insert template', },
     },
     opts = {
       dir = sync('obsidian'),
