@@ -554,7 +554,7 @@ return {
         },
         -- CodeCompanion
         {
-          cond = function() return not minimal and ar.ai.enable end,
+          condition = function() return not minimal and ar.ai.enable end,
           static = { processing = false },
           update = {
             'User',
