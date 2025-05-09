@@ -59,13 +59,13 @@ return {
       cond = ar.lsp.enable,
       event = { 'BufReadPre', 'BufNewFile' },
       opts = {
+        automatic_enable = false,
         handlers = {
           function(name)
             local is_override = not falsy(ar_config.lsp.override)
               and not find_string(ar_config.lsp.override, name)
             local directory_disabled =
               ar.dirs_match(ar_config.lsp.disabled.directories, fmt('%s', cwd))
-            local server_disabled = ar.lsp_disabled(name)
 
             local ts_lang = ar_config.lsp.lang.typescript
 
@@ -76,7 +76,7 @@ return {
 
             local should_skip = is_override
               or directory_disabled
-              or server_disabled
+              or ar.lsp_disabled(name)
               or ts_tools
               or (name == 'vtsls' and not vtsls)
               or (name == 'ts_ls' and not ts_ls)
