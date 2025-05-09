@@ -425,6 +425,7 @@ return {
         {
           update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
           condition = function()
+            if vim.bo.readonly then return false end
             return conditions.lsp_attached and not ar_config.lsp.null_ls.enable
           end,
           init = function(self)
@@ -529,6 +530,7 @@ return {
         -- Copilot Status
         {
           condition = function()
+            if vim.bo.readonly then return false end
             return not minimal and ar.ai.enable and ar_config.ai.models.copilot
           end,
           init = function(self)
@@ -554,7 +556,10 @@ return {
         },
         -- CodeCompanion
         {
-          condition = function() return not minimal and ar.ai.enable end,
+          condition = function()
+            if vim.bo.readonly then return false end
+            return not minimal and ar.ai.enable
+          end,
           static = { processing = false },
           update = {
             'User',
