@@ -42,6 +42,7 @@ return {
   },
   {
     'midoBB/nvim-quicktype',
+    cond = not minimal,
     cmd = 'QuickType',
     build = 'npm install -g quicktype',
     ft = {
@@ -75,6 +76,7 @@ return {
   },
   {
     'bennypowers/template-literal-comments.nvim',
+    cond = not minimal,
     ft = { 'javascript', 'typescript' },
     opts = {},
   },
@@ -89,6 +91,7 @@ return {
   },
   {
     'razak17/template-string.nvim',
+    cond = not minimal,
     cmd = { 'TemplateString' },
     init = function()
       ar.add_to_select_menu('toggle', {
@@ -107,6 +110,7 @@ return {
   },
   {
     'mawkler/jsx-element.nvim',
+    cond = not minimal,
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
       'nvim-treesitter/nvim-treesitter-textobjects',
