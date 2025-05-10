@@ -146,8 +146,7 @@ return {
     dependencies = {
       {
         'nvim-treesitter/nvim-treesitter-textobjects',
-        ond = not minimal and ts_enabled,
-        event = 'VeryLazy',
+        cond = not minimal and ts_enabled,
         config = function()
           -- ref: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/treesitter.lua?plain=1#L108
           -- When in diff mode, we want to use the default
