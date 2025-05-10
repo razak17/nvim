@@ -69,10 +69,32 @@ return {
   },
   {
     'jdrupal-dev/parcel.nvim',
-    cond = not minimal,
+    cond = not minimal and false,
     event = 'BufRead package.json',
     opts = {},
     dependencies = { 'phelipetls/jsonpath.nvim' },
+  },
+  {
+    'razak17/package-info.nvim',
+    cond = not minimal,
+    event = 'BufRead package.json',
+    config = function()
+      vim.g.whichkey_add_spec({ '<localleader>P', group = 'Package Info' })
+
+      highlight.plugin('package-info', {
+        theme = {
+          -- stylua: ignore
+          ['onedark'] = {
+            { PackageInfoUpToDateVersion = { link = 'DiagnosticVirtualTextInfo' } },
+            { PackageInfoOutdatedVersion = { link = 'DiagnosticVirtualTextWarn' } },
+          },
+        },
+      })
+      require('package-info').setup({
+        autostart = false,
+        hide_up_to_date = true,
+      })
+    end,
   },
   {
     'bennypowers/template-literal-comments.nvim',
@@ -90,7 +112,8 @@ return {
     opts = {},
   },
   {
-    'razak17/template-string.nvim',
+    -- 'razak17/template-string.nvim',
+    'axelvc/template-string.nvim',
     cond = not minimal,
     cmd = { 'TemplateString' },
     init = function()
@@ -407,29 +430,6 @@ return {
   --------------------------------------------------------------------------------
   -- Disabled
   --------------------------------------------------------------------------------
-  {
-    'razak17/package-info.nvim',
-    enabled = false,
-    cond = not minimal and false,
-    event = 'BufRead package.json',
-    config = function()
-      vim.g.whichkey_add_spec({ '<localleader>P', group = 'Package Info' })
-
-      highlight.plugin('package-info', {
-        theme = {
-          -- stylua: ignore
-          ['onedark'] = {
-            { PackageInfoUpToDateVersion = { link = 'DiagnosticVirtualTextInfo' } },
-            { PackageInfoOutdatedVersion = { link = 'DiagnosticVirtualTextWarn' } },
-          },
-        },
-      })
-      require('package-info').setup({
-        autostart = false,
-        hide_up_to_date = true,
-      })
-    end,
-  },
   {
     'turbio/bracey.vim',
     enabled = false,
