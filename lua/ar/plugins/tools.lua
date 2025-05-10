@@ -4,8 +4,8 @@ local border = ar.ui.current.border
 local function get_lsp_servers()
   local servers = require('ar.servers').list
   return vim.iter(servers):fold({}, function(acc, key)
-    local server_mapping = require('mason-lspconfig.mappings.server')
-    local pkg_name = server_mapping.lspconfig_to_package[key]
+    local mason_map = require('mason-lspconfig.mappings').get_mason_map()
+    local pkg_name = mason_map.lspconfig_to_package[key]
     table.insert(acc, pkg_name)
     return acc
   end)
@@ -216,7 +216,7 @@ return {
           end,
         },
         -- https://github.com/mistweaverco/kulala-fmt
-        kulala = {
+        ['kulala-fmt'] = {
           command = 'kulala-fmt',
           args = { '$FILENAME' },
           stdin = false,
@@ -231,7 +231,7 @@ return {
         python = ar.lsp_disabled('ruff') and { 'isort', 'autopep8' }
           or not ar.lsp.enable and { 'black', 'yapf' }
           or {},
-        http = { 'kulala' },
+        http = { 'kulala-fmt' },
       },
       log_level = vim.log.levels.DEBUG,
       format_on_save = false,
