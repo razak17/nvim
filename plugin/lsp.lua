@@ -577,6 +577,15 @@ local ts_overrides = {
 --- without putting all this logic in the general on_attach function
 ---@type {[string]: ClientOverrides}
 local client_overrides = {
+  graphql = {
+    on_attach = function(client)
+      -- Disable workspaceSymbolProvider because this prevents
+      -- searching for symbols in typescript files which this server
+      -- is also enabled for.
+      -- @see: https://github.com/nvim-telescope/telescope.nvim/issues/964
+      client.server_capabilities.workspaceSymbolProvider = false
+    end,
+  },
   ts_ls = ts_overrides,
   vtsls = ts_overrides,
   ['typescript-tools'] = ts_overrides,

@@ -166,15 +166,7 @@ local servers = {
       },
     },
   },
-  graphql = {
-    on_attach = function(client)
-      -- Disable workspaceSymbolProvider because this prevents
-      -- searching for symbols in typescript files which this server
-      -- is also enabled for.
-      -- @see: https://github.com/nvim-telescope/telescope.nvim/issues/964
-      client.server_capabilities.workspaceSymbolProvider = false
-    end,
-  },
+  graphql = {},
   jedi_language_server = {},
   jsonls = {
     settings = {
