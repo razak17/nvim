@@ -3,6 +3,7 @@ local fmt = string.format
 local cmp_utils = require('ar.utils.cmp')
 local ui = ar.ui
 local border, lsp_hls = ui.current.border, ui.lsp.highlights
+local minimal = ar.plugins.minimal
 local is_blink = ar_config.completion.variant == 'blink'
 local ai_models = ar_config.ai.models
 local ai_cmp = ar_config.ai.completion.variant
@@ -14,7 +15,7 @@ local show_index = false
 return {
   {
     'saghen/blink.cmp',
-    cond = ar.completion.enable and is_blink,
+    cond = ar.completion.enable and not minimal and is_blink,
     event = { 'InsertEnter', 'CmdlineEnter' },
     version = '*', -- REQUIRED `version` needed to download pre-built binary
     opts_extend = {
@@ -139,7 +140,7 @@ return {
               if is_copilot then table.insert(providers, 'copilot') end
               if is_minuet then table.insert(providers, 'minuet') end
             end
-            if not ar.plugins.minimal then
+            if not minimal then
               table.insert(providers, 'nvim-px-to-rem')
               table.insert(providers, 'dadbod')
               if ar_config.shelter.variant == 'ecolog' then
@@ -302,7 +303,7 @@ return {
         Deepseek = ai_icons.deepseek,
       }, symbols)
 
-      if not ar.plugins.minimal then
+      if not minimal then
         opts.snippets = {
           preset = 'luasnip',
           expand = function(snippet) require('luasnip').lsp_expand(snippet) end,
@@ -365,7 +366,7 @@ return {
         end
       end
 
-      if not ar.plugins.minimal and ar_config.shelter.variant == 'ecolog' then
+      if not minimal and ar_config.shelter.variant == 'ecolog' then
         opts.sources.providers.ecolog = {
           name = '[ECOLOG]',
           module = 'ecolog.integrations.cmp.blink_cmp',
@@ -399,7 +400,10 @@ return {
       'L3MON4D3/LuaSnip',
       'jsongerber/nvim-px-to-rem',
       'moyiz/blink-emoji.nvim',
-      { 'giuxtaposition/blink-cmp-copilot', cond = is_copilot },
+      {
+        'giuxtaposition/blink-cmp-copilot',
+        cond = not minimal and tis_copilot,
+      },
       {
         'saghen/blink.compat',
         cond = false,
