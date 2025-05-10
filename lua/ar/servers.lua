@@ -112,16 +112,14 @@ local servers = {
     },
   },
   denols = {
-    root_dir = function(fname)
-      return require('lspconfig/util').root_pattern('deno.json', 'deno.jsonc')(
-        fname
-      )
-    end,
+    root_dir = require('lspconfig.util').root_pattern(
+      'deno.json',
+      'deno.jsonc'
+    ),
   },
   docker_compose_language_service = function()
-    local lspconfig = require('lspconfig')
     return {
-      root_dir = lspconfig.util.root_pattern('docker-compose.yml'),
+      root_markers = { 'docker-compose.yaml', 'docker-compose.yml' },
       filetypes = { 'yaml', 'dockerfile' },
     }
   end,
@@ -134,7 +132,7 @@ local servers = {
   elixirls = {},
   emmet_ls = {
     root_dir = function(fname)
-      return require('lspconfig/util').root_pattern('package.json')(fname)
+      return require('lspconfig.util').root_pattern('package.json')(fname)
     end,
   },
   emmet_language_server = {},
@@ -166,7 +164,13 @@ local servers = {
       },
     },
   },
-  graphql = {},
+  graphql = {
+    root_dir = require('lspconfig.util').root_pattern(
+      '.graphqlrc*',
+      '.graphql.config.*',
+      'graphql.config.*'
+    ),
+  },
   jedi_language_server = {},
   jsonls = {
     settings = {

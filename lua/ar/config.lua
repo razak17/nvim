@@ -328,7 +328,7 @@ local config = {
     disabled = {
       filetypes = {},
       directories = { vim.fn.stdpath('data') },
-      servers = { 'denols', 'emmet_ls', 'pyright', 'jedi_language_server' },
+      servers = { 'emmet_ls', 'pyright', 'jedi_language_server' },
     },
     format_on_save = { enable = true },
     hover_diagnostics = { enable = false, go_to = false, scope = 'cursor' },
