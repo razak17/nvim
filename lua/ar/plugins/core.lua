@@ -27,6 +27,9 @@ return {
     opts = {
       commands = {
         Norm = { cmd = 'norm' },
+        G = { cmd = 'g' },
+        D = { cmd = 'd' },
+        LSubvert = { cmd = 'Subvert' },
       },
     },
     config = function(_, opt) require('live-command').setup(opt) end,
