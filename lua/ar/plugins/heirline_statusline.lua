@@ -431,48 +431,22 @@ return {
           init = function(self)
             local curwin = api.nvim_get_current_win()
             local curbuf = api.nvim_win_get_buf(curwin)
-            self.active = true
-            self.clients = vim.lsp.get_clients({ bufnr = curbuf })
-            self.clients = vim.tbl_filter(
-              function(client) return client.name ~= 'copilot' end,
-              self.clients
-            )
-            if falsy(self.clients) then self.active = false end
+            self.client_names = vim
+              .iter(vim.lsp.get_clients({ bufnr = curbuf }))
+              :filter(function(client) return client.name ~= 'copilot' end)
+              :map(function(client) return client.name end)
+              :totable()
             self.linters = statusline.get_linters()
             self.formatters = statusline.get_formatters(curbuf)
           end,
           {
             update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
-            init = function(self)
-              if self.active then
-                local lsp_servers = vim.tbl_map(
-                  function(client) return { name = client.name } end,
-                  self.clients
-                )
-                self.client_names = vim
-                  .iter(ipairs(lsp_servers))
-                  :map(function(_, c) return c.name end)
-                  :totable()
-                self.servers = codicons.misc.disconnect
-                  .. ' '
-                  .. table.concat(self.client_names, fmt('%s ', separator))
-                  .. separator
-              end
-            end,
             provider = function(self)
-              if not self.active then
-                return ' '
-                  .. codicons.misc.disconnect
-                  .. ' No Active LSP '
-                  .. separator
+              local icon = ' ' .. codicons.misc.disconnect .. ' '
+              if falsy(self.client_names) then
+                return icon .. 'No Active LSP ' .. separator
               end
-              if #self.client_names > 1 then
-                -- return ' ' .. table.concat(self.client_names, ', ') .. separator
-                return ' '
-                  .. fmt('%s +%d', self.client_names[1], #self.client_names - 1)
-                  .. separator
-              end
-              return ' ' .. self.servers
+              return icon .. statusline.format_servers(self.client_names)
             end,
             hl = { bold = true },
             on_click = {

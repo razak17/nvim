@@ -350,6 +350,16 @@ function M.package_info()
   return pkg_info.get_status()
 end
 
+function M.format_servers(servers)
+  if #servers == 0 then return '' end
+  if #servers > 1 then
+    return fmt('%s +%d %s', servers[1], #servers - 1, separator)
+  end
+  local names = table.concat(servers, fmt(' %s ', separator))
+  -- return table.concat(servers, ', ') .. ' ' .. separator
+  return fmt('%s ', names) .. separator
+end
+
 local function stl_lsp_clients(bufnum)
   local clients = vim.lsp.get_clients({ bufnr = bufnum })
   clients = vim.tbl_filter(
@@ -412,10 +422,7 @@ function M.get_linters()
     .iter(pairs(lint.linters_by_ft[ft]))
     :map(function(_, l) return l end)
     :totable()
-  if #linters > 1 then
-    return fmt('%s +%d', linters[1], #linters - 1) .. separator
-  end
-  return table.concat(linters, ', ') .. separator
+  return M.format_servers(linters)
 end
 
 -- Add formatters (from conform.nvim)
@@ -428,10 +435,7 @@ function M.get_formatters(curbuf)
     .iter(ipairs(conform.list_formatters(curbuf)))
     :map(function(_, f) return f.name end)
     :totable()
-  if #formatters > 1 then
-    return fmt('%s +%d', formatters[1], #formatters - 1) .. separator
-  end
-  return table.concat(formatters, ', ') .. separator
+  return M.format_servers(formatters)
 end
 
 function M.copilot_indicator()
