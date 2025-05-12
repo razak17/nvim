@@ -408,17 +408,74 @@ return {
         },
         -- LSP Clients (null-ls)
         {
+          update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
           condition = function()
+            if vim.bo.readonly then return false end
             return conditions.lsp_attached and ar_config.lsp.null_ls.enable
           end,
-          update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
-          provider = function() return ' ' .. statusline.lsp_client_names() end,
-          hl = { bold = true },
-          on_click = {
-            callback = function()
-              vim.defer_fn(function() vim.cmd('LspInfo') end, 100)
+          init = function(self)
+            local curwin = api.nvim_get_current_win()
+            local curbuf = api.nvim_win_get_buf(curwin)
+            local ft = vim.bo[curbuf].ft
+            self.client_names = vim
+              .iter(vim.lsp.get_clients({ bufnr = curbuf }))
+              :filter(function(client) return client.name ~= 'copilot' end)
+              :map(function(client) return client.name end)
+              :totable()
+            self.is_null_ls = vim
+              .iter(self.client_names)
+              :filter(function(client) return client:match('null') end)
+              :totable()
+            self.client_names = vim
+              .iter(self.client_names)
+              :filter(function(client) return not client:match('null') end)
+              :totable()
+            if not falsy(self.is_null_ls) then
+              self.formatters = statusline.get_null_ls_formatters(ft)
+              self.linters = statusline.get_null_ls_linters(ft)
+            end
+          end,
+          {
+            provider = function(self)
+              local icon = ' ' .. codicons.misc.connect .. ' '
+              if falsy(self.client_names) then
+                return icon .. 'No Active LSP ' .. separator
+              end
+              return icon .. statusline.format_servers(self.client_names)
             end,
-            name = 'lsp_clients',
+            hl = { bold = true },
+            on_click = {
+              callback = function()
+                vim.defer_fn(function() vim.cmd('LspInfo') end, 100)
+              end,
+              name = 'lsp_clients',
+            },
+          },
+          {
+            update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
+            {
+              condition = function(self)
+                return not falsy(self.linters) or not falsy(self.formatters)
+              end,
+              provider = function() return ' ' .. codicons.misc.null_ls end,
+              hl = { bold = true },
+            },
+            {
+              condition = function(self) return not falsy(self.linters) end,
+              provider = function(self) return ' ' .. self.linters end,
+              hl = { bold = true },
+            },
+            {
+              condition = function(self) return not falsy(self.formatters) end,
+              provider = function(self) return ' ' .. self.formatters end,
+              hl = { bold = true },
+            },
+            on_click = {
+              callback = function()
+                vim.defer_fn(function() vim.cmd('NullLsInfo') end, 100)
+              end,
+              name = 'null_ls',
+            },
           },
         },
         -- LSP Clients (conform,nvim-lint)
@@ -458,13 +515,13 @@ return {
           },
           {
             update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
-            condition = function(self) return not ar.falsy(self.linters) end,
+            condition = function(self) return not falsy(self.linters) end,
             provider = function(self) return ' ' .. self.linters end,
             hl = { bold = true },
           },
           {
             update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
-            condition = function(self) return not ar.falsy(self.formatters) end,
+            condition = function(self) return not falsy(self.formatters) end,
             provider = function(self) return ' ' .. self.formatters end,
             hl = { bold = true },
             on_click = {
@@ -663,10 +720,10 @@ return {
               self.exec = fn.reg_executing()
             end,
             provider = function(self)
-              if not ar.falsy(self.rec) then
+              if not falsy(self.rec) then
                 return '  ' .. icons.misc.dot_alt .. ' ' .. 'REC'
               end
-              if not ar.falsy(self.exec) then
+              if not falsy(self.exec) then
                 return '  ' .. icons.misc.play .. ' ' .. 'PLAY'
               end
             end,

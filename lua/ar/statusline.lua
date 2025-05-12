@@ -360,57 +360,28 @@ function M.format_servers(servers)
   return fmt('%s ', names) .. separator
 end
 
-local function stl_lsp_clients(bufnum)
-  local clients = vim.lsp.get_clients({ bufnr = bufnum })
-  clients = vim.tbl_filter(
-    function(client) return client.name ~= 'copilot' end,
-    clients
-  )
-  -- local lsp_clients = vim.tbl_filter(function(client) return client.name ~= 'null-ls' end, clients)
-  if falsy(clients) then return { { name = 'No Active LSP' } } end
-
-  table.sort(clients, function(a, b)
-    if a.name == 'null-ls' then return false end
-    if b.name == 'null-ls' then return true end
-    return a.name < b.name
-  end)
-
-  return vim.tbl_map(function(client)
-    if client.name:match('null') then
-      local sources =
-        require('null-ls.sources').get_available(vim.bo[bufnum].filetype)
-      local source_names = vim.tbl_map(function(s) return s.name end, sources)
-      return {
-        name = codicons.misc.null_ls .. table.concat(source_names, ', '),
-        priority = 7,
-      }
-    end
-    return { name = client.name, priority = 4 }
-  end, clients)
+-- Get linters (from null-ls)
+function M.get_null_ls_linters(filetype)
+  local s = require('null-ls.sources')
+  local linters = vim
+    .iter(s.get_available(filetype))
+    :filter(function(l) return l.methods.NULL_LS_FORMATTING end)
+    :map(function(l) return l.name end)
+    :totable()
+  table.sort(linters)
+  return M.format_servers(linters)
 end
 
-function M.lsp_client_names()
-  local curwin = api.nvim_get_current_win()
-  local curbuf = api.nvim_win_get_buf(curwin)
-  local client_names = vim
-    .iter(ipairs(stl_lsp_clients(curbuf)))
-    :map(function(_, c) return c.name end)
+-- Get formatters (from null-ls)
+function M.get_null_ls_formatters(filetype)
+  local s = require('null-ls.sources')
+  local formatters = vim
+    .iter(s.get_available(filetype))
+    :filter(function(f) return f.methods.NULL_LS_DIAGNOSTICS end)
+    :map(function(l) return l.name end)
     :totable()
-
-  -- No LSP client but null-ls sources
-  if
-    client_names[1]
-    -- check string is not alphabetic
-    and string.match(string.sub(client_names[1], 2, 2), '[^%a]')
-  then
-    return 'No Active LSP '
-      .. table.concat(client_names, fmt(' %s ', separator))
-      .. separator
-  end
-  return codicons.misc.disconnect
-    .. ' '
-    .. table.concat(client_names, fmt('%s ', separator))
-    .. separator
+  table.sort(formatters)
+  return M.format_servers(formatters)
 end
 
 -- Add linters (from nvim-lint)
