@@ -1,5 +1,4 @@
 local fn, v, api = vim.fn, vim.v, vim.api
-local fmt = string.format
 
 local minimal = ar.plugins.minimal
 local sep = ar.ui.icons.separators
@@ -445,8 +444,10 @@ return {
             end,
             hl = { bold = true },
             on_click = {
-              callback = function()
-                vim.defer_fn(function() vim.cmd('LspInfo') end, 100)
+              callback = function(self)
+                if not falsy(self.client_names) then
+                  vim.defer_fn(function() vim.cmd('LspInfo') end, 100)
+                end
               end,
               name = 'lsp_clients',
             },
@@ -507,8 +508,10 @@ return {
             end,
             hl = { bold = true },
             on_click = {
-              callback = function()
-                vim.defer_fn(function() vim.cmd('LspInfo') end, 100)
+              callback = function(self)
+                if not falsy(self.client_names) then
+                  vim.defer_fn(function() vim.cmd('LspInfo') end, 100)
+                end
               end,
               name = 'lsp_clients',
             },
