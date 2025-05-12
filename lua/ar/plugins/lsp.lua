@@ -58,11 +58,13 @@ return {
     {
       'williamboman/mason-lspconfig.nvim',
       cond = ar.lsp.enable,
-      event = { 'BufReadPre', 'BufNewFile' },
-      opts = {
-        automatic_enable = false,
-        handlers = {
-          function(name)
+      event = { 'VeryLazy' },
+      config = function()
+        local servers = require('ar.servers').list
+        local enabled_servers = vim
+          .iter(servers)
+          :map(function(name) return name end)
+          :filter(function(name)
             local is_override = not falsy(ar_config.lsp.override)
               and not find_string(ar_config.lsp.override, name)
             local directory_disabled =
@@ -82,21 +84,16 @@ return {
               or (name == 'vtsls' and not vtsls)
               or (name == 'ts_ls' and not ts_ls)
 
-            local use_legacy_config = { 'graphql' }
+            if should_skip then return false end
 
-            if should_skip then return end
             local config = require('ar.servers').get(name)
-            if config then
-              if vim.tbl_contains(use_legacy_config, name) then
-                require('lspconfig')[name].setup(config)
-              else
-                vim.lsp.config(name, config)
-                vim.lsp.enable(name)
-              end
-            end
-          end,
-        },
-      },
+            if not config then return false end
+            vim.lsp.config(name, config)
+            return true
+          end)
+          :totable()
+        require('mason-lspconfig').setup({ automatic_enable = enabled_servers })
+      end,
       dependencies = {
         {
           'neovim/nvim-lspconfig',
