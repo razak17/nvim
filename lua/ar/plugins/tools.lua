@@ -74,18 +74,28 @@ return {
     'nvimtools/none-ls.nvim',
     cond = ar_config.lsp.null_ls.enable,
     event = { 'VeryLazy' },
-    keys = {
-      {
-        '<leader>ln',
-        function()
-          require('null-ls.info').show_window({
-            height = 0.7,
-            border = border,
-          })
-        end,
-        desc = 'null-ls info',
-      },
-    },
+    keys = function()
+      local mappings = {
+        {
+          '<leader>ln',
+          function()
+            require('null-ls.info').show_window({
+              height = 0.7,
+              border = border,
+            })
+          end,
+          desc = 'null-ls info',
+        },
+      }
+      if not ar.lsp.enable then
+        table.insert(mappings, {
+          '<leader>lf',
+          function() vim.lsp.buf.format() end,
+          desc = 'null_ls: format',
+        })
+      end
+      return mappings
+    end,
     opts = {
       debug = true,
       sources = {},
