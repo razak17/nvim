@@ -72,7 +72,8 @@ has_parser = ar.memoize(has_parser)
 return {
   {
     'nvimtools/none-ls.nvim',
-    cond = ar.lsp.enable and ar_config.lsp.null_ls.enable,
+    cond = ar_config.lsp.null_ls.enable,
+    event = { 'VeryLazy' },
     keys = {
       {
         '<leader>ln',
@@ -85,61 +86,42 @@ return {
         desc = 'null-ls info',
       },
     },
-  },
-  {
-    'jay-babu/mason-null-ls.nvim',
-    cond = ar.lsp.enable and ar_config.lsp.null_ls.enable,
-    event = { 'BufReadPre', 'BufNewFile' },
-    config = function()
-      local null_ls = require('null-ls')
-      require('mason-null-ls').setup({
-        automatic_setup = true,
-        automatic_installation = false,
-        ensure_installed = {
-          'goimports',
-          'golangci_lint',
-          'stylua',
-          'prettierd',
-          'zsh',
-          'flake8',
-          'black',
-          'autopep8',
-        },
-        handlers = {
-          black = function()
-            null_ls.register(null_ls.builtins.formatting.black.with({
-              extra_args = { '--fast' },
-            }))
-          end,
-          -- eslint_d = function()
-          --   null_ls.register(
-          --     null_ls.builtins.diagnostics.eslint_d.with({ filetypes = { 'svelte' } })
-          --   )
-          -- end,
-          prettier = function() end,
-          eslint_d = function() end,
-          prettierd = function()
-            null_ls.register(null_ls.builtins.formatting.prettierd.with({
-              filetypes = {
-                'javascript',
-                'typescript',
-                'typescriptreact',
-                'json',
-                'yaml',
-                'markdown',
-                'svelte',
-              },
-            }))
-          end,
-          shellcheck = function()
-            null_ls.register(null_ls.builtins.diagnostics.shellcheck.with({
-              extra_args = { '--severity', 'warning' },
-            }))
-          end,
-        },
+    opts = {
+      debug = true,
+      sources = {},
+    },
+    config = function(_, opts)
+      -- https://github.com/teto/home/blob/c317bf0e5fce5bf0b79b71c08cb886091cd01741/config/nvim/lua/plugins/none-ls.lua#L19
+      local none_ls = require('null-ls')
+      vim.list_extend(opts.sources or {}, {
+        require('none-ls-shellcheck.diagnostics'),
+        require('none-ls-shellcheck.code_actions'),
+        none_ls.builtins.diagnostics.markdownlint,
+        none_ls.builtins.diagnostics.yamllint,
+        none_ls.builtins.diagnostics.zsh,
+        none_ls.builtins.formatting.goimports,
+        none_ls.builtins.formatting.goimports_reviser,
+        -- none_ls.builtins.formatting.markdown_toc,
+        none_ls.builtins.formatting.prettier,
+        none_ls.builtins.formatting.shfmt,
+        none_ls.builtins.formatting.stylua,
+        none_ls.builtins.formatting.yamlfmt, -- from google
       })
-      null_ls.setup({ debug = ar_config.debug.enable })
+      if ar.lsp_disabled('ruff') then
+        vim.list_extend(opts.sources, {
+          none_ls.builtins.diagnostics.mypy,
+          none_ls.builtins.formatting.black,
+          none_ls.builtins.formatting.isort,
+        })
+      elseif not ar.lsp.enable then
+        vim.list_extend(opts.sources, {
+          none_ls.builtins.formatting.black,
+          none_ls.builtins.formatting.yapf,
+        })
+      end
+      none_ls.setup(opts)
     end,
+    dependencies = { 'gbprod/none-ls-shellcheck.nvim' },
   },
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
