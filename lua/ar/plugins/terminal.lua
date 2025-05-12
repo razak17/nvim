@@ -55,4 +55,15 @@ return {
       })
     end,
   },
+  {
+    'carldaws/surface.nvim',
+    keys = {
+      {
+        '<localleader>o/',
+        "<Cmd>lua require('surface').open(os.getenv('SHELL'), 'center')<CR>",
+        desc = 'surface: open shell',
+      },
+    },
+    opts = { default_position = 'right' },
+  },
 }
