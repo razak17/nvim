@@ -334,9 +334,11 @@ return {
         ['claude-3.7-sonnet'] = {},
         ['claude-3.7-sonnet-thought'] = { max_tokens = 8192 },
         ['gemini-2.0-flash-001'] = {},
+        ['gemini-2.5-pro'] = {},
         ['gpt-4o'] = {},
         ['gpt-4o-mini'] = {},
         ['o3-mini'] = {},
+        ['o4-mini'] = {},
       }
       for model, config in pairs(copilot_models) do
         setup_model({
