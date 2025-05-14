@@ -104,15 +104,6 @@ return {
     config = function(_, opts) require('due_nvim').setup(opts) end,
   },
   {
-    'ellisonleao/glow.nvim',
-    cond = not minimal,
-    cmd = 'Glow',
-    opts = {
-      border = 'single',
-      width = 120,
-    },
-  },
-  {
     'wallpants/github-preview.nvim',
     cond = not minimal,
     cmd = {
