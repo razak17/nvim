@@ -33,8 +33,9 @@ local function apply_specific_code_action(res)
 end
 
 ---@param bufnr number
----@param params table
+---@param params lsp.CodeActionParams
 function M.better_code_actions(bufnr, params)
+  local file_path = vim.fn.expand('%:p')
   local actions = {
     ['Goto Definition'] = { priority = 4, call = lsp.buf.definition },
     ['Goto Implementation'] = { priority = 3, call = lsp.buf.implementation },
@@ -64,11 +65,14 @@ function M.better_code_actions(bufnr, params)
         :map(
           function(k, v)
             return {
-              action = { title = k },
-              priority = v.priority,
-              call = overrides[k] and overrides[k].call or v.call,
+              action = {
+                title = k,
+                data = v.orig and v.orig.data or 'file://' .. file_path,
+                kind = v.orig and v.orig.kind or 'quickfix',
+              },
               ctx = ctx,
-              orig = v.orig,
+              priority = v.priority,
+              call = overrides[k] or v.call,
             }
           end
         )
@@ -84,8 +88,17 @@ function M.better_code_actions(bufnr, params)
 
       local select_opts = {
         prompt = 'Code actions:',
-        kind = ar_config.picker.variant == 'snacks' and 'codeaction' or '',
-        format_item = function(item) return item.action.title end,
+        kind = 'codeaction',
+        format_item = function(item)
+          local clients = lsp.get_clients({ bufnr = item.ctx.bufnr })
+          local title =
+            item.action.title:gsub('\r\n', '\\r\\n'):gsub('\n', '\\n')
+
+          if #clients == 1 then return title end
+
+          local source = lsp.get_client_by_id(item.ctx.client_id).name
+          return ('%s [%s]'):format(title, source)
+        end,
       }
 
       vim.ui.select(items, select_opts, function(choice)

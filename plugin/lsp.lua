@@ -388,8 +388,9 @@ local function setup_mappings(client, bufnr)
         --   vim.lsp.buf.code_action({
         --     context = { diagnostics = ar.lsp.get_diagnostic_at_cursor() },
         --   })
-        ---@type table
-        local params = lsp.util.make_range_params(0, client.offset_encoding)
+        local win = api.nvim_get_current_win()
+        ---@type lsp.CodeActionParams
+        local params = lsp.util.make_range_params(win, client.offset_encoding)
         params.context = {
           triggerKind = lsp.protocol.CodeActionTriggerKind.Invoked,
           diagnostics = ar.lsp.get_diagnostic_at_cursor(),

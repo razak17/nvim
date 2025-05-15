@@ -350,7 +350,7 @@ local config = {
   ---@type ArNotifier
   notifier = { enable = true, variant = 'snacks' },
   ---@type ArPicker
-  picker = { enable = true, files ='fzf-lua', variant = 'fzf-lua' },
+  picker = { enable = true, files = 'snacks', variant = 'snacks' },
   plugin = {
     custom = {
       auto_cursorline = { enable = true },
