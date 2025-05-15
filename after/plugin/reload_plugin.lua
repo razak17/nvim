@@ -15,17 +15,20 @@ end
 
 if ar_picker ~= 'telescope' then
   map('n', '<leader>oL', function()
-    local plugins = require('lazy').plugins()
-    local plugin_names = {}
-    for _, plugin in ipairs(plugins) do
-      table.insert(plugin_names, plugin.name)
-    end
+    local items = vim
+      .iter(require('lazy').plugins())
+      :map(function(plugin) return { name = plugin.name } end)
+      :totable()
 
-    vim.ui.select(
-      plugin_names,
-      { title = 'Reload plugin' },
-      function(selected) require('lazy').reload({ plugins = { selected } }) end
-    )
+    local select_opts = {
+      prompt = 'Reload plugin:',
+      format_item = function(item) return item.name end,
+    }
+
+    vim.ui.select(items, select_opts, function(choice)
+      if choice == nil then return end
+      require('lazy').reload({ plugins = { choice.name } })
+    end)
   end, { desc = 'lazy: reload plugins' })
   return
 end
