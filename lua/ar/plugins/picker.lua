@@ -35,7 +35,7 @@ local fzf_lua = reqcall('fzf-lua') ---@module 'fzf-lua'
 --------------------------------------------------------------------------------
 -- FZF-LUA HELPERS
 --------------------------------------------------------------------------------
-local file_picker = function(cwd) fzf_lua.files({ cwd = cwd }) end
+local find_files = function(cwd) fzf_lua.files({ cwd = cwd }) end
 
 local function dropdown(opts)
   opts = opts or { winopts = {} }
@@ -124,14 +124,14 @@ return {
       local mappings = {}
 
       if ar_config.picker.files == 'fzf-lua' then
-        table.insert(mappings, { '<C-p>', fzf_lua.git_files, desc = 'find files' })
+        table.insert(mappings, { '<C-p>', find_files, desc = 'find files' })
       end
       if ar_config.picker.variant == 'fzf-lua' then
         local fzf_mappings = {
           { '<leader>f?', fzf_lua.help_tags, desc = 'help' },
           { '<leader>fa', '<Cmd>FzfLua<CR>', desc = 'builtins' },
           { '<leader>fb', fzf_lua.grep_curbuf, desc = 'current buffer fuzzy find' },
-          { '<leader>ff', file_picker, desc = 'find files' },
+          { '<leader>ff', fzf_lua.git_files, desc = 'find files' },
           { '<leader>fh', fzf_lua.oldfiles, desc = 'Most (f)recently used files' },
           { '<leader>fm', fzf_lua.changes, desc = 'changes' },
           { '<leader>fo', fzf_lua.buffers, desc = 'buffers' },
@@ -152,7 +152,7 @@ return {
           { '<leader>ls', fzf_lua.lsp_live_workspace_symbols, desc = 'workspace symbols' },
           { '<leader>le', fzf_lua.diagnostics_document, desc = 'document diagnostics' },
           { '<leader>lw', fzf_lua.diagnostics_workspace, desc = 'workspace diagnostics' },
-          { '<leader>fc', function() file_picker(fn.stdpath('config')) end, desc = 'nvim config' },
+          { '<leader>fc', function() find_files(fn.stdpath('config')) end, desc = 'nvim config' },
           { '<leader>fla', lazy, desc = 'all plugins' },
           { '<leader>fO', notes, desc = 'notes' },
         }
@@ -232,10 +232,7 @@ return {
         },
         files = {
           prompt = prompt,
-          -- find_opts = [[-type f -not -path '*/\.git/*' '*/\node_modules/*' -printf '%P\n']],
-          -- rg_opts = "--color=never --files --hidden --follow -g '!.git' -g '!node_modules'",
-          rg_opts = '--column --hidden --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
-          -- fd_opts = "--color=never --type f --hidden --follow --exclude '.git' --exclude 'node_modules' --exclude '.obsidian'",
+          fd_opts = "--color never --type f --type l --hidden --no-ignore --exclude '**/.git/**' --exclude '**/node_modules/**' --exclude '**/.next/**' --exclude '**/build/**' --exclude '**/tmp/**' --exclude '**/env/**' --exclude '**/__pycache__/**' --exclude '**/.mypy_cache/**' --exclude '**/.pytest_cache/**'",
           winopts = { title = '  Files ' },
           fzf_opts = {
             ['--tiebreak'] = 'end',
