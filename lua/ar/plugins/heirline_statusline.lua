@@ -537,7 +537,7 @@ return {
         },
         -- Ecolog Status
         {
-          cond = function()
+          condition = function()
             return not minimal
               and ar_config.shelter.enable
               and ar_config.shelter.variant == 'ecolog'
