@@ -1,5 +1,6 @@
 local api, fn, uv = vim.api, vim.fn, vim.uv
 local border = ar.ui.current.border
+local minimal = ar.plugins.minimal
 
 local function get_lsp_servers()
   local servers = require('ar.servers').list
@@ -72,7 +73,7 @@ has_parser = ar.memoize(has_parser)
 return {
   {
     'nvimtools/none-ls.nvim',
-    cond = ar_config.lsp.null_ls.enable,
+    cond = not minimal and ar_config.lsp.null_ls.enable,
     event = { 'VeryLazy' },
     keys = function()
       local mappings = {
@@ -135,7 +136,7 @@ return {
   },
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
-    cond = ar.lsp.enable,
+    cond = not minimal and ar.lsp.enable,
     cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
     config = function()
       local packages = get_lsp_servers()
@@ -160,7 +161,7 @@ return {
   },
   {
     'stevearc/conform.nvim',
-    cond = not ar_config.lsp.null_ls.enable,
+    cond = not minimal and not ar_config.lsp.null_ls.enable,
     event = { 'BufReadPre', 'BufNewFile' },
     cmd = 'ConformInfo',
     keys = function()
@@ -242,7 +243,7 @@ return {
   },
   {
     'mfussenegger/nvim-lint',
-    cond = ar.lsp.enable and not ar_config.lsp.null_ls.enable,
+    cond = not minimal and ar.lsp.enable and not ar_config.lsp.null_ls.enable,
     -- stylua: ignore
     ft = {
       'javascript', 'javascript.jsx', 'javascriptreact', 'lua', 'python', 'rst',
