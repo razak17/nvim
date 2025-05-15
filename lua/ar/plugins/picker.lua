@@ -129,13 +129,13 @@ return {
       end
       if ar_config.picker.variant == 'fzf-lua' then
         local fzf_mappings = {
+          { '<M-space>', fzf_lua.buffers, desc = 'buffers' },
           { '<leader>f?', fzf_lua.help_tags, desc = 'help' },
           { '<leader>fa', '<Cmd>FzfLua<CR>', desc = 'builtins' },
           { '<leader>fb', fzf_lua.grep_curbuf, desc = 'current buffer fuzzy find' },
           { '<leader>ff', fzf_lua.git_files, desc = 'find files' },
           { '<leader>fh', fzf_lua.oldfiles, desc = 'Most (f)recently used files' },
           { '<leader>fm', fzf_lua.changes, desc = 'changes' },
-          { '<leader>fo', fzf_lua.buffers, desc = 'buffers' },
           { '<leader>fr', fzf_lua.resume, desc = 'resume picker' },
           { '<leader>fs', fzf_lua.live_grep, desc = 'live grep' },
           { '<leader>fw', fzf_lua.grep_cword, desc = 'grep cword' },
@@ -262,7 +262,7 @@ return {
           winopts = { title = ' 󰋖 Help ' },
         }),
         buffers = dropdown({
-          fzf_opts = { ['--delimiter'] = "' '", ['--with-nth'] = '-1..' },
+          fzf_opts = { ['--delimiter'] = ' ', ['--with-nth'] = '-1..' },
           winopts = { title = ' 󰈙 Buffers ' },
           no_action_zz = true,
         }),
