@@ -350,7 +350,7 @@ local config = {
   ---@type ArNotifier
   notifier = { enable = true, variant = 'snacks' },
   ---@type ArPicker
-  picker = { enable = true, files = 'snacks', variant = 'snacks' },
+  picker = { enable = true, files ='fzf-lua', variant = 'fzf-lua' },
   plugin = {
     custom = {
       auto_cursorline = { enable = true },
@@ -370,6 +370,7 @@ local config = {
       smart_tilde = { enable = true },
       sticky_note = { enable = false },
       sticky_yank = { enable = true },
+      surf_plugins = { enable = true },
       wb_current_line = { enable = true },
       yank_ring = { enable = true },
     },

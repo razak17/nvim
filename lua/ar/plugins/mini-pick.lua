@@ -16,8 +16,12 @@ local picker_config = {
   ---@param opts? ArPickOpts
   open = function(source, opts)
     opts = opts or {}
+    if opts.cwd then
+      opts.source = { cwd = opts.cwd }
+      opts.cwd = nil
+    end
     local builtin = require('mini.pick').builtin[source]
-    if builtin then return builtin(opts) end
+    if builtin then return builtin({}, opts) end
     -- stylua: ignore
     local lsp_scopes = {
       'declaration', 'definition', 'document_symbol', 'implementation', 'references',
@@ -87,8 +91,7 @@ local function find_files()
     '--type', 'f',
     '--type', 'l',
     '--color', 'never',
-    '--hidden',
-    '--no-ignore',
+    '--hidden', '--no-ignore',
     '--exclude', '**/.git/**',
     '--exclude', '**/.next/**',
     '--exclude', '**/node_modules/**',
@@ -101,8 +104,7 @@ local function find_files()
   } or {
     'rg',
     '--files',
-    '--hidden',
-    '--no-ignore',
+    '--hidden', '--no-ignore',
     '--glob', '!**/.git/**',
     '--glob', '!**/node_modules/**',
     '--glob', '!**/build/**',
@@ -119,7 +121,18 @@ local function lazy()
 end
 
 local function notes()
-  b('files', { source = { cwd = ar.sync_dir('obsidian') } })()
+  -- stylua: ignore
+  local cmd = {
+    'fd',
+    '--type', 'f',
+    '--type', 'l',
+    '--color', 'never',
+    '--hidden', '--no-ignore',
+    '--glob', '*.md',
+    '--exclude', '**/.git/**',
+    '--exclude', '**/node_modules/**',
+  }
+  cli({ command = cmd }, { source = { cwd = ar.sync_dir('obsidian') } })()
 end
 
 return {
@@ -164,7 +177,7 @@ return {
         { '<leader>fvt', extra('treesitter'), desc = 'treesitter' },
         { '<leader>fw', b('grep'), desc = 'grep' },
         { '<leader>fs', b('grep_live'), desc = 'live grep' },
-        { '<leader>fl', lazy, desc = 'plugins' },
+        { '<leader>fla', lazy, desc = 'plugins' },
         -- lsp
         { '<leader>lw', extra('diagnostic'), desc = 'mini.pick: diagnostics' },
         { '<leader>lR', lsp('references'), desc = 'mini.pick: references' },

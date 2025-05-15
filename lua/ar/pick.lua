@@ -16,6 +16,7 @@ local L = vim.log.levels
 ---@field follow? boolean
 ---@field extension? string
 ---@field scope? table
+---@field source? table
 
 ---@class ArPick
 ---@field name string

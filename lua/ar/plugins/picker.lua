@@ -91,10 +91,19 @@ local function list_sessions()
     })
   )
 end
+local function lazy()
+  fzf_lua.files({
+    cwd = fn.stdpath('data') .. '/lazy',
+    cmd = 'fd --exact-depth 2 --ignore-case readme.md',
+  })
+end
 
-local function obsidian_open() file_picker(ar.sync_dir('obsidian')) end
-
-ar.command('ObsidianFind', obsidian_open)
+local function notes()
+  fzf_lua.files({
+    cwd = ar.sync_dir('obsidian'),
+    cmd = "fd --type f --type l --hidden --no-ignore --glob '*.md'",
+  })
+end
 
 ar.fzf = { dropdown = dropdown, cursor_dropdown = cursor_dropdown }
 
@@ -144,8 +153,8 @@ return {
           { '<leader>le', fzf_lua.diagnostics_document, desc = 'document diagnostics' },
           { '<leader>lw', fzf_lua.diagnostics_workspace, desc = 'workspace diagnostics' },
           { '<leader>fc', function() file_picker(fn.stdpath('config')) end, desc = 'nvim config' },
-          { '<leader>fO', obsidian_open, desc = 'find notes' },
-          { '<leader>fP', function() file_picker(fn.stdpath('data') .. '/lazy') end, desc = 'plugins' },
+          { '<leader>fla', lazy, desc = 'all plugins' },
+          { '<leader>fO', notes, desc = 'notes' },
         }
 
         vim
