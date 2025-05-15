@@ -30,7 +30,7 @@ if ar_picker ~= 'telescope' then
   return
 end
 
-if not has_telescope and ar_picker ~= 'telescope' then return end
+if not has_telescope or ar_picker ~= 'telescope' then return end
 
 ---@class Plugin
 ---@field path string
