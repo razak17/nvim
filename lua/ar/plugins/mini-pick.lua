@@ -1,5 +1,7 @@
 local fn = vim.fn
 
+local use_fd = true
+
 ---@type ArPick
 local picker_config = {
   name = 'snacks',
@@ -80,10 +82,25 @@ end
 
 local function find_files()
   -- stylua: ignore start
-  local cmd = {
+  local cmd = use_fd and {
+    'fd',
+    '--type', 'f',
+    '--type', 'l',
+    '--color', 'never',
+    '--hidden',
+    '--no-ignore',
+    '--exclude', '**/.git/**',
+    '--exclude', '**/.next/**',
+    '--exclude', '**/node_modules/**',
+    '--exclude', '**/build/**',
+    '--exclude', '**/tmp/**',
+    '--exclude', '**/env/**',
+    '--exclude', '**/__pycache__/**',
+    '--exclude', '**/.mypy_cache/**',
+    '--exclude', '**/.pytest_cache/**',
+  } or {
     'rg',
     '--files',
-    '--follow',
     '--hidden',
     '--no-ignore',
     '--glob', '!**/.git/**',
@@ -107,8 +124,13 @@ end
 
 return {
   'echasnovski/mini.pick',
-  cond = not ar.plugin_disabled('mini.pick')
-    and ar_config.picker.variant == 'mini.pick',
+  cond = function()
+    if ar.plugin_disabled('mini.pick') then return false end
+    return (
+      ar_config.picker.files == 'mini.pick'
+      or ar_config.picker.variant == 'mini.pick'
+    )
+  end,
   keys = function()
     local mappings = {}
     if ar_config.picker.files == 'mini.pick' then
