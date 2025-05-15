@@ -77,12 +77,11 @@ function M.better_code_actions(results, ctx)
   local select_opts = { prompt = 'Code actions:', kind = 'codeaction' }
 
   vim.ui.select(items, select_opts, function(choice)
-    if choice ~= nil then
-      if type(choice.call) == 'string' then
-        vim.cmd(choice.call)
-      elseif type(choice.call) == 'function' then
-        choice.call()
-      end
+    if choice == nil then return end
+    if type(choice.call) == 'string' then
+      vim.cmd(choice.call)
+    elseif type(choice.call) == 'function' then
+      choice.call()
     end
   end)
 end
@@ -141,12 +140,11 @@ function M.better_code_actions_sync(results)
   }
 
   vim.ui.select(items, select_opts, function(choice)
-    if choice ~= nil then
-      if type(choice.call) == 'string' then
-        vim.cmd(choice.call)
-      elseif type(choice.call) == 'function' then
-        choice.call()
-      end
+    if choice == nil then return end
+    if type(choice.call) == 'string' then
+      vim.cmd(choice.call)
+    elseif type(choice.call) == 'function' then
+      choice.call()
     end
   end)
 end
