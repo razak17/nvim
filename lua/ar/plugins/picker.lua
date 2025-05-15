@@ -170,20 +170,19 @@ return {
       local fzf = require('fzf-lua')
 
       if ar_config.picker.variant == 'fzf-lua' then
-        fzf.register_ui_select(
-          function(ui_opts, _)
-            return {
-              prompt = prompt,
-              winopts = {
-                title = ui_opts.prompt:gsub(':%s*$', ''),
-                title_pos = 'center',
-                row = 0.5,
-                height = 0.30,
-                width = 0.55,
-              },
-            }
-          end
-        )
+        fzf.register_ui_select(function(ui_opts, _)
+          ui_opts.prompt = ui_opts.prompt or "Select one of"
+          return {
+            prompt = prompt,
+            winopts = {
+              title = ui_opts.prompt:gsub(':%s*$', ''),
+              title_pos = 'center',
+              row = 0.5,
+              height = 0.30,
+              width = 0.55,
+            },
+          }
+        end)
       end
 
       fzf.setup({

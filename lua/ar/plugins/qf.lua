@@ -37,8 +37,32 @@ return {
   },
   {
     'brunobmello25/persist-quickfix.nvim',
-    -- stylua: ignore
-    keys = { '<leader>oq', '<Cmd>lua require("persist-quickfix").choose()<CR>', 'persist-quickfix: choose' },
+    init = function()
+      ar.add_to_select_menu('command_palette', {
+        ['Save Qf List'] = function()
+          vim.ui.input({
+            prompt = 'List name: ',
+            default = '',
+          }, function(input)
+            if not input then return end
+            require('persist-quickfix').save(input)
+          end)
+        end,
+        ['Load Qf List'] = function()
+          vim.ui.input({
+            prompt = 'List name: ',
+            default = '',
+          }, function(input)
+            if not input then return end
+            require('persist-quickfix').load(input)
+          end)
+        end,
+        ['Choose Qf List'] = function() require('persist-quickfix').choose() end,
+        ['Delete Qf List'] = function()
+          require('persist-quickfix').choose_delete()
+        end,
+      })
+    end,
     ft = 'qf',
     --- @type PersistQuickfix.Config
     opts = {},
