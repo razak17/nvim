@@ -29,6 +29,8 @@ return {
           { '<leader>e', group = 'Explorer' },
           { '<leader>f', group = 'Picker' },
           { '<leader>fg', group = 'Git' },
+          { '<leader>fl', group = 'Lazy' },
+          { '<leader>fq', group = 'List' },
           { '<leader>fv', group = 'Vim' },
           { '<leader>g', group = 'Git' },
           { '<leader>gb', group = 'Blame' },

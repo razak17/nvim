@@ -157,6 +157,23 @@ local function lazy()
   })()
 end
 
+local function surf_plugins()
+  local items = vim
+    .iter(require('lazy').plugins())
+    :map(function(plugin) return { name = plugin.name, dir = plugin.dir } end)
+    :totable()
+
+  local select_opts = {
+    prompt = 'Surf Plugins:',
+    format_item = function(item) return item.name end,
+  }
+
+  vim.ui.select(items, select_opts, function(choice)
+    if choice == nil then return end
+    p('files', { cwd = choice.dir })()
+  end)
+end
+
 local function notes()
   p('files', { matcher = { frecency = true }, cwd = ar.sync_dir('obsidian') })()
 end
@@ -204,7 +221,8 @@ return {
           { '<leader>fh', p('help'), desc = 'help pages' },
           { '<leader>fk', p('keymaps'), desc = 'keymaps' },
           { '<leader>fK', p('colorschemes'), desc = 'colorschemes' },
-          { '<leader>fl', lazy, desc = 'surf plugins' },
+          { '<leader>fla', lazy, desc = 'all' },
+          { '<leader>fll', surf_plugins, desc = 'surf plugins' },
           { '<leader>fL', p('lines'), desc = 'buffer lines' },
           { '<leader>fm', p('man'), desc = 'man pages' },
           { '<leader>fn', p('notifications'), desc = 'notification history' },
