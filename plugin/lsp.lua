@@ -388,38 +388,15 @@ local function setup_mappings(client, bufnr)
         --   vim.lsp.buf.code_action({
         --     context = { diagnostics = ar.lsp.get_diagnostic_at_cursor() },
         --   })
-
         ---@type table
         local params = lsp.util.make_range_params(0, client.offset_encoding)
         params.context = {
           triggerKind = lsp.protocol.CodeActionTriggerKind.Invoked,
           diagnostics = ar.lsp.get_diagnostic_at_cursor(),
         }
-
         local clients = lsp.get_clients({ bufnr = bufnr })
-
         if #clients == 0 then return end
-
-        -- When there are multiple clients, we need to use the sync version. This
-        -- is because the async version runs multiple times (once for each client).
-
-        if #clients > 1 then
-          local results =
-            lsp.buf_request_sync(bufnr, M.textDocument_codeAction, params, 1000)
-          require('ar.lsp_code_action').better_code_actions_sync(results)
-          return
-        end
-
-        lsp.buf_request(
-          bufnr,
-          M.textDocument_codeAction,
-          params,
-          function(_, results, ctx, _)
-            if client then
-              require('ar.lsp_code_action').better_code_actions(results, ctx)
-            end
-          end
-        )
+        require('ar.lsp_code_action').better_code_actions(bufnr, params)
       end,
       desc = 'code action',
       capability = M.textDocument_codeAction,
@@ -973,8 +950,6 @@ end
 --------------------------------------------------------------------------------
 -- Code Action
 --------------------------------------------------------------------------------
--- ref: https://github.com/rockyzhang24/dotfiles/blob/master/.config/nvim/lua/rockyz/lsp/lightbulb.lua
-
 --- Get diagnostics (LSP Diagnostic) at the cursor
 ---
 --- Grab the code from https://github.com/neovim/neovim/issues/21985

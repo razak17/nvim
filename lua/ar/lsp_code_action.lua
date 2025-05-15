@@ -3,15 +3,9 @@
 --  Code Actions
 --------------------------------------------------------------------------------
 local lsp = vim.lsp
+local m = vim.lsp.protocol.Methods
 
 local M = {}
-
-local actions = {
-  ['Goto Definition'] = { priority = 4, call = lsp.buf.definition },
-  ['Goto Implementation'] = { priority = 3, call = lsp.buf.implementation },
-  ['Show References'] = { priority = 2, call = lsp.buf.references },
-  ['Rename'] = { priority = 1, call = lsp.buf.rename },
-}
 
 local overrides = {
   ['Add all missing imports'] = {
@@ -31,122 +25,79 @@ local overrides = {
   },
 }
 
----@param results (lsp.Command|lsp.CodeAction)[]
----@param ctx lsp.HandlerContext
-function M.better_code_actions(results, ctx)
-  if not results or #results == 0 then return end
-
-  local function apply_specific_code_action(res)
-    lsp.buf.code_action({
-      filter = function(action) return action.title == res.title end,
-      apply = true,
-    })
-  end
-
-  vim.iter(results):each(function(res)
-    local priority = 5
-    if res.isPreferred then priority = res.kind == 'quickfix' and 7 or 6 end
-    actions[res.title] = {
-      priority = priority,
-      call = function() apply_specific_code_action(res) end,
-      orig = res,
-    }
-  end)
-
-  local items = vim
-    .iter(actions)
-    :map(
-      function(k, v)
-        return {
-          action = { title = k },
-          priority = v.priority,
-          call = overrides[k] and overrides[k].call or v.call,
-          ctx = ctx,
-          orig = v.orig,
-        }
-      end
-    )
-    :totable()
-
-  -- sort by priority, then by title
-  table.sort(items, function(a, b)
-    if a.priority == b.priority then return a.action.title < b.action.title end
-    return a.priority > b.priority
-  end)
-
-  local select_opts = { prompt = 'Code actions:', kind = 'codeaction' }
-
-  vim.ui.select(items, select_opts, function(choice)
-    if choice == nil then return end
-    if type(choice.call) == 'string' then
-      vim.cmd(choice.call)
-    elseif type(choice.call) == 'function' then
-      choice.call()
-    end
-  end)
+local function apply_specific_code_action(res)
+  lsp.buf.code_action({
+    filter = function(action) return action.title == res.title end,
+    apply = true,
+  })
 end
 
----@param results (lsp.Command|lsp.CodeAction)[]
-function M.better_code_actions_sync(results)
-  if not results or #results == 0 then return end
+---@param bufnr number
+---@param params table
+function M.better_code_actions(bufnr, params)
+  local actions = {
+    ['Goto Definition'] = { priority = 4, call = lsp.buf.definition },
+    ['Goto Implementation'] = { priority = 3, call = lsp.buf.implementation },
+    ['Show References'] = { priority = 2, call = lsp.buf.references },
+    ['Rename'] = { priority = 1, call = lsp.buf.rename },
+  }
 
-  local function apply_specific_code_action(res)
-    lsp.buf.code_action({
-      filter = function(action) return action.title == res.title end,
-      apply = true,
-    })
-  end
+  lsp.buf_request(
+    bufnr,
+    m.textDocument_codeAction,
+    params,
+    function(_, results, ctx, _)
+      if not results or #results == 0 then return end
 
-  vim.iter(results):each(function(res)
-    if res.result then
-      vim.iter(res.result):each(function(r)
+      vim.iter(results):each(function(res)
         local priority = 5
-        priority = r.kind == 'quickfix' and 7 or 6
-        if r.title then
-          actions[r.title] = {
-            priority = priority,
-            call = function() apply_specific_code_action(r) end,
-            orig = r,
-          }
+        if res.isPreferred then priority = res.kind == 'quickfix' and 7 or 6 end
+        actions[res.title] = {
+          priority = priority,
+          call = function() apply_specific_code_action(res) end,
+          orig = res,
+        }
+      end)
+
+      local items = vim
+        .iter(actions)
+        :map(
+          function(k, v)
+            return {
+              action = { title = k },
+              priority = v.priority,
+              call = overrides[k] and overrides[k].call or v.call,
+              ctx = ctx,
+              orig = v.orig,
+            }
+          end
+        )
+        :totable()
+
+      -- sort by priority, then by title
+      table.sort(items, function(a, b)
+        if a.priority == b.priority then
+          return a.action.title < b.action.title
+        end
+        return a.priority > b.priority
+      end)
+
+      local select_opts = {
+        prompt = 'Code actions:',
+        kind = ar_config.picker.variant == 'snacks' and 'codeaction' or '',
+        format_item = function(item) return item.action.title end,
+      }
+
+      vim.ui.select(items, select_opts, function(choice)
+        if choice == nil then return end
+        if type(choice.call) == 'string' then
+          vim.cmd(choice.call)
+        elseif type(choice.call) == 'function' then
+          choice.call()
         end
       end)
     end
-  end)
-
-  local items = vim
-    .iter(actions)
-    :map(
-      function(k, v)
-        return {
-          action = { title = k },
-          priority = v.priority,
-          call = overrides[k] and overrides[k].call or v.call,
-          orig = v.orig,
-        }
-      end
-    )
-    :totable()
-
-  -- sort by priority, then by title
-  table.sort(items, function(a, b)
-    if a.priority == b.priority then return a.action.title < b.action.title end
-    return a.priority > b.priority
-  end)
-
-  local select_opts = {
-    prompt = 'Code actions:',
-    kind = '',
-    format_item = function(item) return item.action.title end,
-  }
-
-  vim.ui.select(items, select_opts, function(choice)
-    if choice == nil then return end
-    if type(choice.call) == 'string' then
-      vim.cmd(choice.call)
-    elseif type(choice.call) == 'function' then
-      choice.call()
-    end
-  end)
+  )
 end
 
 return M
