@@ -61,7 +61,9 @@ return {
     local snack_opts = vim.tbl_deep_extend('force', opts or {}, {
       picker = { ui_select = false },
     })
-    vim.ui.select = snacks_ui_select
+    if ar_config.picker.variant == 'snacks' then
+      vim.ui.select = snacks_ui_select
+    end
     return snack_opts
   end,
 }

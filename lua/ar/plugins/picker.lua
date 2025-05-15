@@ -27,8 +27,9 @@ if ar_config.picker.variant == 'fzf-lua' then
 end
 
 local fn, ui, reqcall = vim.fn, ar.ui, ar.reqcall
-local codicons, lsp_hls = ui.codicons, ui.lsp.highlights
-local prompt = ' ' .. codicons.misc.search_alt .. '  '
+local fmt = string.format
+local icons, codicons, lsp_hls = ui.icons, ui.codicons, ui.lsp.highlights
+local prompt = fmt('%s ', icons.misc.chevron_right)
 local minimal = ar.plugins.minimal
 
 local fzf_lua = reqcall('fzf-lua') ---@module 'fzf-lua'
@@ -168,6 +169,23 @@ return {
       local lsp_kind = require('lspkind')
       local fzf = require('fzf-lua')
 
+      if ar_config.picker.variant == 'fzf-lua' then
+        fzf.register_ui_select(
+          function(ui_opts, _)
+            return {
+              prompt = prompt,
+              winopts = {
+                title = ui_opts.prompt:gsub(':%s*$', ''),
+                title_pos = 'center',
+                row = 0.5,
+                height = 0.30,
+                width = 0.55,
+              },
+            }
+          end
+        )
+      end
+
       fzf.setup({
         prompt = prompt,
         fzf_opts = {
@@ -278,17 +296,11 @@ return {
           },
           code_actions = {
             winopts = {
-              width = 0.7,
+              width = 0.9,
               height = 0.8,
-              preview = {
-                layout = 'vertical',
-                height = 0.5,
-                vertical = 'up:65%',
-              },
-              winopts = { title = ' 󰌵 Code Actions ', '@type' },
+              winopts = { title = ' 󰌵 Code Actions ' },
             },
             previewer = 'codeaction_native',
-            preview_pager = "delta --side-by-side --width=$FZF_PREVIEW_COLUMNS --hunk-header-style='omit' --file-style='omit'",
           },
         },
         jumps = dropdown({
