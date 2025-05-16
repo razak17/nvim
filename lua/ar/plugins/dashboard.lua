@@ -5,16 +5,28 @@ ar.dashboard = {}
 
 local session_commands = {
   persisted = {
-    load_last = 'SessionLoadLast',
     select = 'SessionSelect',
+    restore = function()
+      if ar.is_git_repo() then
+        vim.cmd('SessionLoad')
+      else
+        vim.cmd('SessionLoadLast')
+      end
+    end,
   },
   persistence = {
-    load_last = 'lua require("persistence").load({ last = true })',
     select = 'lua require("persistence").select()',
+    restore = function()
+      if ar.is_git_repo() then
+        require('persistence').load({ last = true })
+      else
+        require('persistence').load()
+      end
+    end,
   },
 }
 
----@param command 'load_last' | 'select'
+---@param command 'restore' | 'select'
 function ar.dashboard.session(command)
   local variant = ar_config.session.variant
   local cmd = session_commands[variant] and session_commands[variant][command]
@@ -150,7 +162,7 @@ return {
           'Directory',
           'r',
           '  Restore session',
-          '<Cmd>lua ar.dashboard.session("load_last")<CR>'
+          '<Cmd>lua ar.dashboard.session("restore")<CR>'
         ),
         button(
           'Todo',
