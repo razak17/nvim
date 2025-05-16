@@ -20,7 +20,10 @@ end
 return {
   {
     'nvim-neo-tree/neo-tree.nvim',
-    cond = ar_config.explorer.variant == 'neo-tree',
+    cond = function()
+      return ar_config.explorer.variant == 'neo-tree'
+        or ar_config.picker.variant ~= 'snacks'
+    end,
     branch = 'v3.x',
     cmd = { 'Neotree' },
     keys = {
