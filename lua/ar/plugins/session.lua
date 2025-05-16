@@ -9,9 +9,9 @@ return {
     opts = {},
     -- stylua: ignore
     keys = {
-      { '<leader>qs', function() require('persistence').load() end, desc = 'restore session' },
-      { '<leader>ql', function() require('persistence').load({ last = true }) end, desc = 'restore last session' },
-      { '<leader>qL', function() require('persistence').select() end,desc = 'select session' },
+      { '<leader>ql', function() require('persistence').load() end, desc = 'restore session' },
+      { '<leader>qL', function() require('persistence').load({ last = true }) end, desc = 'restore last session' },
+      { '<leader>qo', function() require('persistence').select() end,desc = 'select session' },
       { '<leader>qd', function() require('persistence').stop() end, desc = "don't save current session" },
     },
   },
@@ -25,9 +25,9 @@ return {
     cmd = { 'SessionLoad', 'SessionLoadLast', 'SessionSelect', 'SessionStop' },
     -- stylua: ignore
     keys = {
-      { '<leader>qs', ':SessionLoad<CR>', desc = 'restore session', silent = true },
-      { '<leader>ql', ':SessionLoadLast<CR>', desc = 'restore last session', silent = true },
-      { '<leader>qL', ':SessionSelect<CR>', desc = 'list session', silent = true },
+      { '<leader>ql', ':SessionLoad<CR>', desc = 'restore session', silent = true },
+      { '<leader>qL', ':SessionLoadLast<CR>', desc = 'restore last session', silent = true },
+      { '<leader>qo', ':SessionSelect<CR>', desc = 'list session', silent = true },
       { '<leader>qd', ':SessionStop<CR>', desc = "don't save current session", silent = true },
     },
     opts = {
