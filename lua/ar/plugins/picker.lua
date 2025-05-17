@@ -119,6 +119,23 @@ return {
         { '<localleader>fg', group = 'Git' },
         { '<localleader>fv', group = 'Vim' },
       })
+
+      if ar_config.picker.variant == 'fzf-lua' then
+        local fzf = require('fzf-lua')
+        fzf.register_ui_select(function(ui_opts, _)
+          ui_opts.prompt = ui_opts.prompt or 'Select one of'
+          return {
+            prompt = prompt,
+            winopts = {
+              title = ui_opts.prompt:gsub(':%s*$', ''),
+              title_pos = 'center',
+              row = 0.5,
+              height = 0.30,
+              width = 0.55,
+            },
+          }
+        end)
+      end
     end,
     -- stylua: ignore
     keys = function()
@@ -168,22 +185,6 @@ return {
     config = function()
       local lsp_kind = require('lspkind')
       local fzf = require('fzf-lua')
-
-      if ar_config.picker.variant == 'fzf-lua' then
-        fzf.register_ui_select(function(ui_opts, _)
-          ui_opts.prompt = ui_opts.prompt or "Select one of"
-          return {
-            prompt = prompt,
-            winopts = {
-              title = ui_opts.prompt:gsub(':%s*$', ''),
-              title_pos = 'center',
-              row = 0.5,
-              height = 0.30,
-              width = 0.55,
-            },
-          }
-        end)
-      end
 
       fzf.setup({
         prompt = prompt,
