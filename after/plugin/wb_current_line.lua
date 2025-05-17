@@ -30,7 +30,7 @@ end
 ---@param back_key string
 ---@param bufnr number
 local function set_keymap(mode, key, back_key, bufnr)
-  vim.keymap.set(
+  map(
     mode,
     key,
     function() motion(key, back_key) end,
