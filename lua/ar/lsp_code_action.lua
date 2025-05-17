@@ -4,25 +4,30 @@
 --------------------------------------------------------------------------------
 local lsp = vim.lsp
 local m = vim.lsp.protocol.Methods
+local lsp_menus = require('ar.select_menus.lsp')
 
 local M = {}
 
-local overrides = {
-  ['Add all missing imports'] = {
-    call = "lua require'ar.select_menus.lsp'.add_missing_imports()",
-  },
-  ['Organize imports'] = {
-    call = "lua require'ar.select_menus.lsp'.organize_imports()",
-  },
-  ['Remove unused imports'] = {
-    call = "lua require'ar.select_menus.lsp'.remove_unused_imports()",
-  },
-  ['Remove unused'] = {
-    call = "lua require'ar.select_menus.lsp'.remove_unused()",
-  },
-  ['Fix all problems'] = {
-    call = "lua require'ar.select_menus.lsp'.fix_all()",
-  },
+local actions_overrides = {
+  ['Add all missing imports'] = { call = lsp_menus.add_missing_imports },
+  ['Organize imports'] = { call = lsp_menus.organize_imports },
+  ['Remove unused imports'] = { call = lsp_menus.remove_unused_imports },
+  ['Remove unused'] = { call = lsp_menus.remove_unused },
+  ['Fix all problems'] = { call = lsp_menus.fix_all },
+}
+
+local ts_priority_overrides = {
+  ['Organize imports'] = 7,
+  ['Remove unused imports'] = 7,
+  ['Add all missing imports'] = 7,
+  ['Update import from'] = 8,
+  ['Add import from'] = 8,
+}
+
+local priority_overrides = {
+  ['typescript-tools'] = ts_priority_overrides,
+  ts_ls = ts_priority_overrides,
+  vtsls = ts_priority_overrides,
 }
 
 local function apply_specific_code_action(res)
@@ -32,9 +37,10 @@ local function apply_specific_code_action(res)
   })
 end
 
+---@param client vim.lsp.Client
 ---@param bufnr number
 ---@param params lsp.CodeActionParams
-function M.better_code_actions(bufnr, params)
+function M.better_code_actions(client, bufnr, params)
   local file_path = vim.fn.expand('%:p')
   local actions = {
     ['Goto Definition'] = { priority = 4, call = lsp.buf.definition },
@@ -50,9 +56,23 @@ function M.better_code_actions(bufnr, params)
     function(_, results, ctx, _)
       if not results or #results == 0 then return end
 
+      ---@param res lsp.CodeAction
+      ---@return string
+      local function get_title(res)
+        local title = res.title
+        -- Match actions such as 'Add import from "foo"' or 'Update import from "../foo"'
+        local before, quoted = title:match('^(.+)%s+"([^"]+)"$')
+        if before and quoted then
+          title = title:match('^(.-)"'):gsub('%s+$', '')
+        end
+        return title
+      end
+
       vim.iter(results):each(function(res)
         local priority = 5
         if res.isPreferred then priority = res.kind == 'quickfix' and 7 or 6 end
+        local overrides = priority_overrides[client.name]
+        if overrides then priority = overrides[get_title(res)] or priority end
         actions[res.title] = {
           priority = priority,
           call = function() apply_specific_code_action(res) end,
@@ -72,7 +92,7 @@ function M.better_code_actions(bufnr, params)
               },
               ctx = ctx,
               priority = v.priority,
-              call = overrides[k] or v.call,
+              call = actions_overrides[k] or v.call,
             }
           end
         )

@@ -397,7 +397,7 @@ local function setup_mappings(client, bufnr)
         }
         local clients = lsp.get_clients({ bufnr = bufnr })
         if #clients == 0 then return end
-        require('ar.lsp_code_action').better_code_actions(bufnr, params)
+        require('ar.lsp_code_action').better_code_actions(client, bufnr, params)
       end,
       desc = 'code action',
       capability = M.textDocument_codeAction,
