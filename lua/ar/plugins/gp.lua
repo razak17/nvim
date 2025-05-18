@@ -51,7 +51,7 @@ local mode = { 'n', 'i', 'v' }
 
 return {
   'robitx/gp.nvim',
-  cond = not ar.plugins.minimal and ar.ai.enable,
+  cond = ar.ai.enable,
   -- stylua: ignore
   keys = {
     { '<c-g><c-a>', gp_choose_agent, desc = 'gp: choose model' },
