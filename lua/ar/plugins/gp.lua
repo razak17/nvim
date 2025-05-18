@@ -47,6 +47,8 @@ local function gp_finder()
   })
 end
 
+local mode = { 'n', 'i', 'v' }
+
 return {
   'robitx/gp.nvim',
   cond = not ar.plugins.minimal and ar.ai.enable,
@@ -54,24 +56,24 @@ return {
   keys = {
     { '<c-g><c-a>', gp_choose_agent, desc = 'gp: choose model' },
     -- Chat commands
-    { '<c-g>n', '<Cmd>GpChatNew<CR>', desc = 'gp: new chat', mode = { 'n', 'i', 'v' }, },
-    { '<c-g>f', gp_finder, desc = 'gp: find chat', mode = { 'n', 'i' }, },
-    { '<c-g><c-g>', '<Cmd>GpChatRespond<CR>', desc = 'gp: respond', mode = { 'n', 'i' }, },
-    { '<c-g>d', '<Cmd>GpChatDelete<CR>', desc = 'gp: delete chat', mode = { 'n', 'i' }, },
+    { '<c-g>n', '<Cmd>GpChatNew<CR>', desc = 'gp: new chat', mode = mode, },
+    { '<c-g>f', gp_finder, desc = 'gp: find chat', mode = mode, },
+    { '<c-g><c-g>', '<Cmd>GpChatRespond<CR>', desc = 'gp: respond', mode = mode, },
+    { '<c-g>d', '<Cmd>GpChatDelete<CR>', desc = 'gp: delete chat', mode = mode, },
     { '<c-g>s', '<Cmd>GpChatToggle split<CR>', desc = 'gp: toggle chat in horizontal split' },
     { '<c-g>v', '<Cmd>GpChatToggle vsplit<CR>', desc = 'gp: toggle chat in vertical split' },
     -- Prompt commands
-    { '<c-g>r', '<Cmd>GpRewrite<CR>', desc = 'gp: rewrite', mode = { 'n', 'i', 'v' }, },
-    { '<c-g>a', '<Cmd>GpAppend<CR>', desc = 'gp: append', mode = { 'n', 'i', 'v' }, },
-    { '<c-g>b', '<Cmd>GpPrepend<CR>', desc = 'gp: prepend', mode = { 'n', 'i', 'v' }, },
-    { '<c-g>e', '<Cmd>GpEnew<CR>', desc = 'gp: enew', mode = { 'n', 'i', 'v' }, },
-    { '<c-g>I', '<Cmd>GpInputRole<CR>', desc = 'gp: input role', mode = { 'n', 'i', 'v' }, },
-    { '<c-g>p', '<Cmd>GpPopup<CR>', desc = 'gp: popup', mode = { 'n', 'i', 'v' }, },
-    { '<c-g>u', '<Cmd>GpUnitTests<CR>', desc = 'gp: unit tests', mode = { 'n', 'i', 'v' }, },
-    { '<c-g>x', '<Cmd>GpExplain<CR>', desc = 'gp: explain', mode = { 'n', 'i', 'v' }, },
-    { '<c-g>c', '<Cmd>GpCodeReview<CR>', desc = 'gp: code review', mode = { 'n', 'i', 'v' }, },
-    { '<c-g>N', '<Cmd>GpBufferChatNew<CR>', desc = 'gp: buffer chat new', mode = { 'n', 'i', 'v' }, },
-    { '<c-g>o', '<Cmd>GpActAs<CR>', desc = 'gp: act as', mode = { 'n', 'i', 'v' }, },
+    { '<c-g>r', '<Cmd>GpRewrite<CR>', desc = 'gp: rewrite', mode = mode, },
+    { '<c-g>a', '<Cmd>GpAppend<CR>', desc = 'gp: append', mode = mode, },
+    { '<c-g>b', '<Cmd>GpPrepend<CR>', desc = 'gp: prepend', mode = mode, },
+    { '<c-g>e', '<Cmd>GpEnew<CR>', desc = 'gp: enew', mode = mode, },
+    { '<c-g>I', '<Cmd>GpInputRole<CR>', desc = 'gp: input role', mode = mode, },
+    { '<c-g>p', '<Cmd>GpPopup<CR>', desc = 'gp: popup', mode = mode, },
+    { '<c-g>u', '<Cmd>GpUnitTests<CR>', desc = 'gp: unit tests', mode = mode, },
+    { '<c-g>x', '<Cmd>GpExplain<CR>', desc = 'gp: explain', mode = mode, },
+    { '<c-g>c', '<Cmd>GpCodeReview<CR>', desc = 'gp: code review', mode = mode, },
+    { '<c-g>N', '<Cmd>GpBufferChatNew<CR>', desc = 'gp: buffer chat new', mode = mode, },
+    { '<c-g>o', '<Cmd>GpActAs<CR>', desc = 'gp: act as', mode = mode, },
   },
   cmd = {
     'GpChatNew',
