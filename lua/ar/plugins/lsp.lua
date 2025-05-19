@@ -70,10 +70,14 @@ return {
             local directory_disabled =
               ar.dirs_match(ar_config.lsp.disabled.directories, fmt('%s', cwd))
 
-            local ts_lang = ar_config.lsp.lang.typescript
+            local function ts_lang_cond(server)
+              local ts_lang = ar_config.lsp.lang.typescript
+              local cond = ar.find_string(ar_config.lsp.override, server)
+              return ts_lang == server or cond
+            end
 
-            local ts_ls = ts_lang == 'ts_ls'
-            local vtsls = ts_lang == 'vtsls'
+            local ts_ls = ts_lang_cond('ts_ls')
+            local vtsls = ts_lang_cond('vtsls')
             local ts_tools = (name == 'ts_ls' or name == 'vtsls')
               and ts_lang == 'typescript-tools'
 
