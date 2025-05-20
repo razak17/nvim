@@ -8,12 +8,12 @@ local lsp_menus = require('ar.select_menus.lsp')
 
 local M = {}
 
-local actions_overrides = {
-  ['Add all missing imports'] = { call = lsp_menus.add_missing_imports },
-  ['Organize imports'] = { call = lsp_menus.organize_imports },
-  ['Remove unused imports'] = { call = lsp_menus.remove_unused_imports },
-  ['Remove unused'] = { call = lsp_menus.remove_unused },
-  ['Fix all problems'] = { call = lsp_menus.fix_all },
+local call_overrides = {
+  ['Add all missing imports'] = lsp_menus.add_missing_imports,
+  ['Organize imports'] = lsp_menus.organize_imports,
+  ['Remove unused imports'] = lsp_menus.remove_unused_imports,
+  ['Remove unused'] = lsp_menus.remove_unused,
+  ['Fix all problems'] = lsp_menus.fix_all,
 }
 
 local ts_priority_overrides = {
@@ -92,7 +92,7 @@ function M.better_code_actions(client, bufnr, params)
               },
               ctx = ctx,
               priority = v.priority,
-              call = actions_overrides[k] or v.call,
+              call = call_overrides[k] or v.call,
             }
           end
         )
