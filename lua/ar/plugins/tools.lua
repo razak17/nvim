@@ -42,7 +42,8 @@ end
 
 ---@alias ConformCtx {buf: number, filename: string, dirname: string}
 
-local supported = ar.lsp.prettier.supported
+local prettier_ft = ar.lsp.prettier.supported
+local sql_ft = { 'sql', 'mysql', 'plsql', 'psql', 'pgsql' }
 
 --- Checks if a Prettier config file exists for the given context
 ---@param ctx ConformCtx
@@ -56,7 +57,7 @@ end
 local function has_parser(ctx)
   local ft = vim.bo[ctx.buf].filetype --[[@as string]]
   -- default filetypes are always supported
-  if vim.tbl_contains(supported, ft) then return true end
+  if vim.tbl_contains(prettier_ft, ft) then return true end
   -- otherwise, check if a parser can be inferred
   local ret =
     vim.system({ 'prettier', '--file-info', ctx.filename }):wait().stdout
@@ -117,12 +118,14 @@ return {
         none_ls.builtins.formatting.shfmt,
         none_ls.builtins.formatting.stylua,
         none_ls.builtins.formatting.yamlfmt, -- from google
+        none_ls.builtins.formatting.sqlfluff,
       })
       if ar.lsp_disabled('ruff') then
         vim.list_extend(opts.sources, {
           none_ls.builtins.diagnostics.mypy,
           none_ls.builtins.formatting.black,
           none_ls.builtins.formatting.isort,
+          none_ls.builtins.diagnostics.sqlfluff,
         })
       elseif not ar.lsp.enable then
         vim.list_extend(opts.sources, {
@@ -165,13 +168,13 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     cmd = 'ConformInfo',
     keys = {
-        { '<localleader>lC', '<Cmd>ConformInfo<CR>', desc = 'conform info' },
-        {
-          '<localleader>lF',
-          function() require('conform').format({ formatters = { 'injected' } }) end,
-          mode = { 'n', 'v' },
-          desc = 'conform: format injected langs',
-        },
+      { '<localleader>lC', '<Cmd>ConformInfo<CR>', desc = 'conform info' },
+      {
+        '<localleader>lF',
+        function() require('conform').format({ formatters = { 'injected' } }) end,
+        mode = { 'n', 'v' },
+        desc = 'conform: format injected langs',
+      },
     },
     init = function() vim.o.formatexpr = "v:lua.require'conform'.formatexpr()" end,
     opts = {
@@ -226,8 +229,11 @@ return {
       vim.g.async_format_filetypes = opts.user_async_format_filetypes
 
       opts.formatters_by_ft = opts.formatters_by_ft or {}
-      for _, ft in ipairs(supported) do
+      for _, ft in ipairs(prettier_ft) do
         opts.formatters_by_ft[ft] = { 'prettier' }
+      end
+      for _, ft in ipairs(sql_ft) do
+        opts.formatters_by_ft[ft] = { 'sqlfluff' }
       end
 
       local conform = require('conform')
@@ -238,12 +244,8 @@ return {
         command = function(args)
           local clients = vim.lsp.get_clients({ bufnr = args.buf })
           if #clients ~= 0 then return end
-          map(
-            'n',
-            '<leader>lf',
-            conform.format,
-            { desc = 'conform: format', buffer = args.buf }
-          )
+          local map_opts = { desc = 'conform: format', buffer = args.buf }
+          map('n', '<leader>lf', conform.format, map_opts)
         end,
       })
     end,
@@ -268,6 +270,9 @@ return {
     },
     config = function(_, opts)
       local lint = require('lint')
+      for _, ft in ipairs(sql_ft) do
+        opts.linters_by_ft[ft] = { 'sqlfluff' }
+      end
       lint.linters_by_ft = opts.linters_by_ft
       for k, v in pairs(opts.linters) do
         lint.linters[k] = v
