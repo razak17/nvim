@@ -164,8 +164,7 @@ return {
     cond = not minimal and not ar_config.lsp.null_ls.enable,
     event = { 'BufReadPre', 'BufNewFile' },
     cmd = 'ConformInfo',
-    keys = function()
-      local mappings = {
+    keys = {
         { '<localleader>lC', '<Cmd>ConformInfo<CR>', desc = 'conform info' },
         {
           '<localleader>lF',
@@ -173,16 +172,7 @@ return {
           mode = { 'n', 'v' },
           desc = 'conform: format injected langs',
         },
-      }
-      if not ar.lsp.enable then
-        table.insert(mappings, {
-          '<leader>lf',
-          function() require('conform').format() end,
-          desc = 'conform: format',
-        })
-      end
-      return mappings
-    end,
+    },
     init = function() vim.o.formatexpr = "v:lua.require'conform'.formatexpr()" end,
     opts = {
       formatters = {
@@ -238,7 +228,23 @@ return {
       for _, ft in ipairs(supported) do
         opts.formatters_by_ft[ft] = { 'prettier' }
       end
-      require('conform').setup(opts)
+
+      local conform = require('conform')
+      conform.setup(opts)
+
+      ar.augroup('ConformFormat', {
+        event = { 'BufEnter' },
+        command = function(args)
+          local clients = vim.lsp.get_clients({ bufnr = args.buf })
+          if #clients ~= 0 then return end
+          map(
+            'n',
+            '<leader>lf',
+            conform.format,
+            { desc = 'conform: format', buffer = args.buf }
+          )
+        end,
+      })
     end,
   },
   {
