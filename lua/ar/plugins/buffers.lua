@@ -13,10 +13,7 @@ return {
     'chrisgrieser/nvim-early-retirement',
     cond = not minimal,
     event = 'VeryLazy',
-    opts = {
-      minimumBufferNum = 4,
-      notificationOnAutoClose = true,
-    },
+    opts = { minimumBufferNum = 6, notificationOnAutoClose = true },
   },
   {
     'razak17/cybu.nvim',
