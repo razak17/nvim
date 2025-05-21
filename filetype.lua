@@ -11,6 +11,7 @@ vim.filetype.add({
     Podfile = 'ruby',
     Spacefile = 'yaml',
     ['.env'] = 'config',
+    ['.sequelizerc'] = 'javascript',
   },
   pattern = {
     -- ['.*%.blade%.php'] = 'php',
