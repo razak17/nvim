@@ -138,7 +138,7 @@ return {
           { event = events.FILE_RENAMED, handler = on_move },
         },
         filesystem = {
-          hijack_netrw_behavior = 'disabled',
+          hijack_netrw_behavior = 'open_current',
           use_libuv_file_watcher = true,
           follow_current_file = {
             enabled = false,
