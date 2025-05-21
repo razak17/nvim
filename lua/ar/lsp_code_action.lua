@@ -42,12 +42,21 @@ end
 ---@param params lsp.CodeActionParams
 function M.better_code_actions(client, bufnr, params)
   local file_path = vim.fn.expand('%:p')
-  local actions = {
+  local default_actions = {
     ['Goto Definition'] = { priority = 4, call = lsp.buf.definition },
     ['Goto Implementation'] = { priority = 3, call = lsp.buf.implementation },
     ['Show References'] = { priority = 2, call = lsp.buf.references },
     ['Rename'] = { priority = 1, call = lsp.buf.rename },
   }
+
+  local base_actions = {
+    basedpyright = default_actions,
+    ts_ls = default_actions,
+    vtsls = default_actions,
+    ['typescript-tools'] = default_actions,
+  }
+
+  local actions = base_actions[client.name] or {}
 
   lsp.buf_request(
     bufnr,
