@@ -37,7 +37,7 @@ if vim.fn.expand('%:t') == 'package.json' then
   map('n', '<localleader>Pi', package_info.install, with_desc('install new'))
   map(
     'n',
-    '<localleader>pc',
+    '<localleader>Pc',
     package_info.change_version,
     with_desc('change version')
   )
