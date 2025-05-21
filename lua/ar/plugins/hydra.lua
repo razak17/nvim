@@ -73,7 +73,7 @@ return {
     local hint_opts = { position = 'bottom', border = border, type = 'window' }
 
     local splits = ar.reqcall('smart-splits')
-    local bufdelete = Snacks.bufdelete
+    local bufdelete = ar.reqcall('snacks.bufdelete')
     local textcase = ar.reqcall('textcase')
 
     local base_config = function(opts)
