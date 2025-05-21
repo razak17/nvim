@@ -233,6 +233,7 @@ local servers = {
       },
     },
   },
+  sqls = {},
   tailwindcss = {},
   ts_ls = {
     init_options = { documentFormatting = false, hostInfo = 'neovim' },
