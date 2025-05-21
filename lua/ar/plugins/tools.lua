@@ -236,7 +236,7 @@ return {
         opts.formatters_by_ft[ft] = { 'prettier' }
       end
       for _, ft in ipairs(sql_ft) do
-        opts.formatters_by_ft[ft] = { 'sqlfluff' }
+        opts.formatters_by_ft[ft] = { 'sql_formatter' }
       end
 
       local conform = require('conform')
@@ -274,7 +274,7 @@ return {
     config = function(_, opts)
       local lint = require('lint')
       for _, ft in ipairs(sql_ft) do
-        opts.linters_by_ft[ft] = { 'sqlfluff' }
+        opts.linters_by_ft[ft] = { 'sqruff' }
       end
       lint.linters_by_ft = opts.linters_by_ft
       for k, v in pairs(opts.linters) do
