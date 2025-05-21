@@ -150,7 +150,7 @@ return {
         if conform_ok then
           local formatters = vim
             .iter(pairs(conform.list_all_formatters()))
-            :map(function(_, f) return f.name end)
+            :map(function(_, f) return f.command end)
             :totable()
           vim.list_extend(packages, formatters)
         end
