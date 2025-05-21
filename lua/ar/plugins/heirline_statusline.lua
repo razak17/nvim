@@ -539,6 +539,7 @@ return {
         {
           condition = function()
             return not minimal
+              and ar.is_available('ecolog.nvim')
               and ar_config.shelter.enable
               and ar_config.shelter.variant == 'ecolog'
           end,
