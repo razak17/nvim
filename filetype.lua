@@ -12,6 +12,8 @@ vim.filetype.add({
     Spacefile = 'yaml',
     ['.env'] = 'config',
     ['.sequelizerc'] = 'javascript',
+    ['.sqlfluff'] = 'toml',
+    ['.sqruff'] = 'toml',
   },
   pattern = {
     -- ['.*%.blade%.php'] = 'php',
