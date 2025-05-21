@@ -46,10 +46,17 @@ ar.debugger = {
 }
 
 ---@param source string
----@param opts? table
+---@param opts? table | string
 ---@return function
 local function d(source, opts)
   return function() require('dap')[source](opts) end
+end
+
+---@param source string
+---@return function
+local function pbp(source, opts)
+  opts = opts or {}
+  return function() require('persistent-breakpoints.api')[source](opts) end
 end
 
 return {
@@ -66,6 +73,13 @@ return {
     -- stylua: ignore
     keys = {
       {'<localleader>da', function() d('continue',{ before = get_args}) end, desc = 'dap: run with args' },
+      { '<localleader>dbp', d('toggle_breakpoint'), desc = 'dap: toggle breakpoint' },
+      {
+        '<localleader>dbc',
+        function() require('dap').set_breakpoint(input('Breakpoint condition: ')) end,
+        desc = 'dap: set conditional breakpoint',
+      },
+      { '<localleader>dbx', d('clear_breakpoints'), desc = 'dap: clear breakpoint' },
       { '<localleader>dbm', function() require('dap').set_breakpoint(nil, nil, input('Log point message: ')) end, desc = 'dap: log breakpoint', },
       { '<localleader>dc', d('continue'), desc = 'dap: continue or start debugging' },
       { '<localleader>dh', d('step_back'), desc = 'dap: step back' },
@@ -424,33 +438,16 @@ return {
       {
         'Weissle/persistent-breakpoints.nvim',
         event = { 'BufReadPost' },
+        cond = false,
+        -- stylua: ignore
         keys = {
-          {
-            '<localleader>dbp',
-            -- function() require('dap').toggle_breakpoint() end,
-            function()
-              require('persistent-breakpoints.api').toggle_breakpoint()
-            end,
-            desc = 'dap: toggle breakpoint',
-          },
+          { '<localleader>dbp', pbp('toggle_breakpoint'), desc = 'dap: toggle breakpoint', },
           {
             '<localleader>dbc',
-            -- function() require('dap').set_breakpoint(input('Breakpoint condition: ')) end,
-            function()
-              require('persistent-breakpoints.api').set_breakpoint(
-                'Breakpoint condition: '
-              )
-            end,
+            function() require('persistent-breakpoints.api').set_conditional_breakpoint( 'Breakpoint condition: ') end,
             desc = 'dap: set conditional breakpoint',
           },
-          {
-            '<localleader>dbx',
-            -- function() require('dap').clear_breakpoints() end,
-            function()
-              require('persistent-breakpoints.api').clear_all_breakpoints()
-            end,
-            desc = 'dap: clear breakpoint',
-          },
+          { '<localleader>dbx', pbp('clear_all_breakpoints'), desc = 'dap: clear breakpoint', },
         },
         opts = { load_breakpoints_event = { 'BufReadPost' } },
       },
