@@ -24,6 +24,7 @@ ar.smart_splits = {
     'TelescopePrompt',
     'noice',
     'snacks_dashboard',
+    'codecompanion',
   },
 }
 
