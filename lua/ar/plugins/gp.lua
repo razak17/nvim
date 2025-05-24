@@ -345,7 +345,7 @@ return {
       for model, config in pairs(copilot_models) do
         setup_model({
           provider = 'copilot',
-          name = fmt('ChatCopilot (%s)', model),
+          name = fmt('ChatCopilot-%s', model),
           model = {
             model = model,
             temperature = config.temp or 1.1,
