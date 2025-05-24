@@ -1,5 +1,10 @@
 local minimal = ar.plugins.minimal
 local variant = ar_config.shelter.variant
+local is_available = ar.is_available
+local is_fzf = ar_config.picker.variant == 'fzf-lua'
+local is_snacks = ar_config.picker.variant == 'snacks'
+local is_cmp = ar_config.completion.variant == 'cmp'
+local is_blink = ar_config.completion.variant == 'blink'
 
 local cond = not minimal and ar_config.shelter.enable
 
@@ -68,12 +73,13 @@ return {
       vim_env = true,
       preferred_environment = 'local',
       types = true,
+      -- stylua: ignore
       integrations = {
-        fzf = ar_config.picker.variant == 'fzf-lua',
-        snacks = ar_config.picker.variant == 'snacks',
+        fzf = is_fzf and is_available('fzf-lua'),
+        snacks = is_snacks and is_available('snacks.nvim'),
+        nvim_cmp = is_cmp and is_available('nvim-cmp'),
+        blink_cmp = is_blink and is_available('blink.nvim'),
         omnifunc = { auto_setup = false },
-        nvim_cmp = ar_config.completion.variant == 'cmp',
-        blink_cmp = ar_config.completion.variant == 'blink',
         lspsaga = false,
         lsp = false, -- TODO: check this out later
         statusline = true,
