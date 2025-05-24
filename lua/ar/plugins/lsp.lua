@@ -18,7 +18,6 @@ return {
   {
     {
       'mason-org/mason.nvim',
-      cond = not minimal,
       event = { 'BufReadPre', 'BufNewFile' },
       keys = { { '<leader>lm', '<cmd>Mason<CR>', desc = 'mason info' } },
       build = ':MasonUpdate',
