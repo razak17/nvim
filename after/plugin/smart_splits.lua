@@ -25,6 +25,7 @@ ar.smart_splits = {
     'noice',
     'snacks_dashboard',
     'codecompanion',
+    'kulala_ui',
   },
 }
 
