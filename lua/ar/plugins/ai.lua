@@ -132,18 +132,15 @@ return {
             ['Lsp'] = function() visual_cmd('CodeCompanion /lsp') end,
             ['Tests'] = function() visual_cmd('CodeCompanion /tests') end,
             ['Commit'] = function() visual_cmd('CodeCompanion /commit') end,
-            ['Buffer'] = function() visual_cmd('CodeCompanion /buffer') end,
-            ['Workflow'] = function() visual_cmd('CodeCompanion /workflow') end,
+            ['Workspace'] = 'CodeCompanion /workspace',
+            ['Code Workflow'] = 'CodeCompanion /cw',
+            ['Edit<->Test workflow'] = 'CodeCompanion /et',
           })()
         end,
       })
     end,
-    cmd = {
-      'CodeCompanion',
-      'CodeCompanionActions',
-      'CodeCompanionChat',
-      'CodeCompanionCmd',
-    },
+    -- stylua: ignore
+    cmd = { 'CodeCompanion', 'CodeCompanionActions', 'CodeCompanionChat', 'CodeCompanionCmd' },
     opts = function()
       local opts = {
         strategies = {
