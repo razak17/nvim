@@ -17,40 +17,64 @@ local templates = {
     .. 'Please analyze for code smells and suggest improvements.',
 }
 
+local function get_csv_items(prompts)
+  local lines = {}
+
+  local items = table.concat(fn.readfile(prompts), '\n')
+  for line in string.gmatch(items, '[^\n]+') do
+    local act, _prompt = string.match(line, '"(.*)","(.*)"')
+    if act ~= 'act' and act ~= nil then
+      _prompt = string.gsub(_prompt, '""', '"')
+      table.insert(lines, { act = act, prompt = _prompt })
+    end
+  end
+  return lines
+end
+
 local function gp_choose_agent()
   local buf = api.nvim_get_current_buf()
   local file_name = api.nvim_buf_get_name(buf)
-  local is_chat = require('gp').not_chat(buf, file_name) == nil
-  local agents = is_chat and require('gp')._chat_agents
-    or require('gp')._command_agents
+  local gp = require('gp')
+  local is_chat = gp.not_chat(buf, file_name) == nil
+  local agents = is_chat and gp._chat_agents or gp._command_agents
+  -- local agents = gp._chat_agents
   local prompt_title = is_chat and 'Chat Models' or 'Completion Models'
   vim.ui.select(agents, { prompt = prompt_title }, function(selected)
-    if selected ~= nil then require('gp').cmd.Agent({ args = selected }) end
+    if selected == nil then return end
+    -- if not is_chat then vim.cmd('GpChatNew') end
+    require('gp').cmd.Agent({ args = selected })
   end)
 end
 
 local function gp_finder()
-  Snacks.picker.files({
+  ar.pick.open('files', {
     show_empty = true,
+    prompt = 'Find Chat',
     cwd = fn.stdpath('data') .. '/gp/chats',
     on_show = function() vim.cmd.stopinsert() end,
-    -- TODO: Find a way to get newest files first
-    -- matcher = { cwd_bonus = true, frecency = true, sort_empty = true },
-    transform = function(item) return item end,
-    win = {
-      input = {
-        keys = {
-          ['<C-d>'] = 'trash_files',
-        },
-      },
-    },
   })
+  -- Snacks.picker.files({
+  --   show_empty = true,
+  --   cwd = fn.stdpath('data') .. '/gp/chats',
+  --   on_show = function() vim.cmd.stopinsert() end,
+  --   -- TODO: Find a way to get newest files first
+  --   -- matcher = { cwd_bonus = true, frecency = true, sort_empty = true },
+  --   transform = function(item) return item end,
+  --   win = {
+  --     input = {
+  --       keys = {
+  --         ['<C-d>'] = 'trash_files',
+  --       },
+  --     },
+  --   },
+  -- })
 end
 
 local mode = { 'n', 'i', 'v' }
 
 return {
   'robitx/gp.nvim',
+  event = 'VeryLazy',
   cond = ar.ai.enable,
   -- stylua: ignore
   keys = {
@@ -75,23 +99,11 @@ return {
     { '<c-g>N', '<Cmd>GpBufferChatNew<CR>', desc = 'gp: buffer chat new', mode = mode, },
     { '<c-g>o', '<Cmd>GpActAs<CR>', desc = 'gp: act as', mode = mode, },
   },
+  -- stylua: ignore
   cmd = {
-    'GpChatNew',
-    'GpChatFinder',
-    'GpChatRespond',
-    'GpChatDelete',
-    'GpChatToggle',
-    'GpRewrite',
-    'GpAppend',
-    'GpPrepend',
-    'GpEnew',
-    'GpInputRole',
-    'GpPopup',
-    'GpUnitTests',
-    'GpExplain',
-    'GpCodeReview',
-    'GpBufferChatNew',
-    'GpActAs',
+    'GpChatNew', 'GpChatFinder', 'GpChatRespond', 'GpChatDelete', 'GpChatToggle',
+    'GpRewrite', 'GpAppend', 'GpPrepend', 'GpEnew', 'GpInputRole', 'GpPopup',
+    'GpUnitTests', 'GpExplain', 'GpCodeReview', 'GpBufferChatNew', 'GpActAs',
   },
   init = function()
     ar.add_to_select_menu('ai', {
@@ -147,7 +159,6 @@ return {
             gp.cmd.ChatNew(params, input, agent)
           end)
         end,
-
         ActAs = function(gp, params)
           local prompts =
             join_paths(fn.stdpath('data'), 'site', 'prompts', 'prompts.csv')
@@ -157,153 +168,21 @@ return {
             return
           end
 
-          local pickers = require('telescope.pickers')
-          local finders = require('telescope.finders')
-          local actions = require('telescope.actions')
-          local action_state = require('telescope.actions.state')
-          local conf = require('telescope.config').values
-          local previewers = require('telescope.previewers')
+          local items = vim
+            .iter(get_csv_items(prompts))
+            :map(function(p) return { act = p.act, prompt = p.prompt } end)
+            :totable()
 
-          local function defaulter(f, default_opts)
-            default_opts = default_opts or {}
-            return {
-              new = function(opts)
-                if conf.preview == false and not opts.preview then
-                  return false
-                end
-                opts.preview = type(opts.preview) ~= 'table' and {}
-                  or opts.preview
-                if type(conf.preview) == 'table' then
-                  for k, v in pairs(conf.preview) do
-                    opts.preview[k] = vim.F.if_nil(opts.preview[k], v)
-                  end
-                end
-                return f(opts)
-              end,
-              __call = function()
-                local ok, err = pcall(f(default_opts))
-                if not ok then error(debug.traceback(err)) end
-              end,
-            }
-          end
+          local select_opts = {
+            prompt = 'Gp Act As:',
+            format_item = function(item) return item.act end,
+          }
 
-          local display_content_wrapped = defaulter(function(_)
-            return previewers.new_buffer_previewer({
-              define_preview = function(self, entry, _)
-                local width = vim.api.nvim_win_get_width(self.state.winid)
-                entry.preview_command(entry, self.state.bufnr, width)
-              end,
-            })
-          end, {})
-
-          local function split(text)
-            local t = {}
-            for str in string.gmatch(text, '%S+') do
-              table.insert(t, str)
-            end
-            return t
-          end
-
-          local function split_string_by_line(text)
-            local lines = {}
-            for line in (text .. '\n'):gmatch('(.-)\n') do
-              table.insert(lines, line)
-            end
-            return lines
-          end
-
-          local function wrap_text_to_table(text, max_line_length)
-            local lines = {}
-
-            local textByLines = split_string_by_line(text)
-            for _, line in ipairs(textByLines) do
-              if #line > max_line_length then
-                local tmp_line = ''
-                local words = split(line)
-                for _, word in ipairs(words) do
-                  if #tmp_line + #word + 1 > max_line_length then
-                    table.insert(lines, tmp_line)
-                    tmp_line = word
-                  else
-                    tmp_line = tmp_line .. ' ' .. word
-                  end
-                end
-                table.insert(lines, tmp_line)
-              else
-                table.insert(lines, line)
-              end
-            end
-            return lines
-          end
-
-          local function preview_command(entry, bufnr, width)
-            vim.api.nvim_buf_call(bufnr, function()
-              local preview = wrap_text_to_table(entry.value, width - 5)
-              table.insert(preview, 1, '---')
-              table.insert(preview, 1, entry.display)
-              vim.api.nvim_buf_set_lines(bufnr, 0, -1, true, preview)
-            end)
-          end
-
-          local function entry_maker(entry)
-            return {
-              value = entry.prompt,
-              display = entry.act,
-              ordinal = entry.act,
-              get_command = function(e, _) return { 'bat', e.prompt } end,
-              preview_command = preview_command,
-            }
-          end
-
-          local finder = function()
-            local results = {}
-            local lines = {}
-
-            local items = table.concat(fn.readfile(prompts), '\n')
-            for line in string.gmatch(items, '[^\n]+') do
-              local act, _prompt = string.match(line, '"(.*)","(.*)"')
-              if act ~= 'act' and act ~= nil then
-                _prompt = string.gsub(_prompt, '""', '"')
-                table.insert(lines, { act = act, prompt = _prompt })
-              end
-            end
-
-            for _, line in ipairs(lines) do
-              local v = entry_maker(line)
-              table.insert(results, v)
-            end
-
-            return results
-          end
-
-          pickers
-            .new({}, {
-              prompt_title = 'Prompt',
-              results_title = 'Gp Acts As ...',
-              sorter = conf.generic_sorter({}),
-              previewer = display_content_wrapped.new({}),
-              finder = finders.new_table({
-                results = finder(),
-                entry_maker = function(entry)
-                  return {
-                    value = entry.value,
-                    ordinal = entry.ordinal,
-                    display = entry.display,
-                    preview_command = entry.preview_command,
-                  }
-                end,
-              }),
-              attach_mappings = function(prompt_bufnr, _)
-                actions.select_default:replace(function()
-                  actions.close(prompt_bufnr)
-                  local selection = action_state.get_selected_entry()
-                  local agent = gp.get_command_agent()
-                  gp.cmd.ChatNew(params, selection.value, agent)
-                end)
-                return true
-              end,
-            })
-            :find()
+          vim.ui.select(items, select_opts, function(choice)
+            if choice == nil then return end
+            local agent = gp.get_command_agent()
+            gp.cmd.ChatNew(params, choice.prompt, agent)
+          end)
         end,
       },
       providers = {
@@ -313,8 +192,10 @@ return {
         anthropic = { disable = not models.claude },
       },
       agents = {
-        { name = 'ChatClaude-3-Haiku', disable = true },
+        { name = 'ChatClaude-3-5-Haiku', disable = true },
         { name = 'ChatCopilot', disable = true },
+        { name = 'CodeClaude-3-5-Haiku', disable = true },
+        { name = 'CodeCopilot', disable = true },
       },
       default_chat_agent = 'ChatGemini',
     }
