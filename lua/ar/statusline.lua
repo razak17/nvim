@@ -168,6 +168,30 @@ function M.git_pull() git_push_pull('pull', 'from') end
 
 function M.git_push() git_push_pull('push', 'to') end
 
+-- https://www.reddit.com/r/neovim/comments/1kig7rc/shorten_git_branch_name/
+local function abbreviate(name, sign)
+  sign = sign or '.'
+  local s = name:gsub('[-_]', ' ')
+  s = s:gsub('(%l)(%u)', '%1 %2')
+  local parts = {}
+  for word in s:gmatch('%S+') do
+    parts[#parts + 1] = word
+  end
+  local letters = {}
+  for _, w in ipairs(parts) do
+    letters[#letters + 1] = w:sub(1, 2):lower()
+  end
+  return table.concat(letters, sign)
+end
+
+function M.pretty_branch()
+  local branch = M.git_branch()
+  if branch:len() < 15 then return branch end
+  local prefix, rest = branch:match('^([^/]+)/(.+)$')
+  if prefix then return prefix .. '/' .. abbreviate(rest) end
+  return abbreviate(branch)
+end
+
 M.mode_colors = {
   n = 'blue',
   i = 'yellowgreen',

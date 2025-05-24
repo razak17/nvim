@@ -34,15 +34,15 @@ return {
   cond = not minimal,
   opts = function(_, opts)
     local separator = sep.dotted_thin_block
-    local statusline = require('ar.statusline')
+    local stl = require('ar.statusline')
     local conditions = require('heirline.conditions')
     local is_git_repo = conditions.is_git_repo
     local align = { provider = '%=' }
     local utils = require('heirline.utils')
-    local file_block = statusline.file_block
+    local file_block = stl.file_block
 
     local bg, fg = 'bg_dark', 'fg'
-    local mode_colors = statusline.mode_colors
+    local mode_colors = stl.mode_colors
     return vim.tbl_deep_extend('force', opts or {}, {
       statusline = vim.tbl_deep_extend('force', opts.statusline or {}, {
         hl = { bg = bg, fg = fg },
@@ -60,7 +60,7 @@ return {
             ),
           },
           {
-            provider = function() return statusline.block() .. ' ' end,
+            provider = function() return stl.block() .. ' ' end,
             hl = function(self) return { fg = self.mode_color } end,
           },
         },
@@ -72,11 +72,11 @@ return {
             'FocusGained',
           }),
           provider = function()
-            return codicons.git.branch .. ' ' .. statusline.git_branch()
+            return codicons.git.branch .. ' ' .. stl.pretty_branch()
           end,
           on_click = {
             callback = function()
-              vim.defer_fn(function() statusline.list_branches() end, 100)
+              vim.defer_fn(function() stl.list_branches() end, 100)
             end,
             name = 'git_change_branch',
           },
@@ -85,10 +85,10 @@ return {
         -- Git
         {
           -- condition = conditions.is_git_repo,
-          condition = function() return not statusline.is_dots_repo end,
+          condition = function() return not stl.is_dots_repo end,
           init = function(self)
             self.status_dict = vim.b.gitsigns_status_dict
-            self.git_status = statusline.git_status
+            self.git_status = stl.git_status
           end,
           update = {
             'User',
@@ -115,7 +115,7 @@ return {
               end,
               on_click = {
                 callback = function(self)
-                  if self.git_status.behind > 0 then statusline.git_pull() end
+                  if self.git_status.behind > 0 then stl.git_pull() end
                 end,
                 name = 'git_pull',
               },
@@ -131,7 +131,7 @@ return {
               end,
               on_click = {
                 callback = function(self)
-                  if self.git_status.ahead > 0 then statusline.git_push() end
+                  if self.git_status.ahead > 0 then stl.git_push() end
                 end,
                 name = 'git_push',
               },
@@ -141,16 +141,12 @@ return {
         -- Filename
         utils.insert(
           file_block,
-          utils.insert(
-            statusline.pretty_path,
-            statusline.file_flags,
-            statusline.file_size
-          )
+          utils.insert(stl.pretty_path, stl.file_flags, stl.file_size)
         ),
         -- Python env
         {
           condition = function() return vim.bo.filetype == 'python' end,
-          provider = function() return ' ' .. statusline.python_env() end,
+          provider = function() return ' ' .. stl.python_env() end,
           hl = { fg = 'yellowgreen' },
         },
         -- LSP Diagnostics
@@ -224,17 +220,17 @@ return {
         align,
         -- LSP
         {
-          init = function() statusline.autocmds() end,
+          init = function() stl.autocmds() end,
           condition = function() return not minimal and ar.lsp.enable end,
           -- LSP Progress
           {
-            provider = function() return statusline.lsp_progress end,
+            provider = function() return stl.lsp_progress end,
             hl = { fg = 'comment' },
           },
           -- LSP Pending Requests
           {
-            condition = function() return statusline.lsp_progress == '' end,
-            provider = function() return statusline.lsp_pending end,
+            condition = function() return stl.lsp_progress == '' end,
+            provider = function() return stl.lsp_pending end,
             hl = { fg = 'comment' },
           },
         },
@@ -335,7 +331,7 @@ return {
         -- Package Info
         {
           condition = function() return fn.expand('%') == 'package.json' end,
-          provider = statusline.package_info,
+          provider = stl.package_info,
           hl = { fg = 'comment' },
           on_click = {
             callback = function() require('package_info').toggle() end,
@@ -382,7 +378,7 @@ return {
         },
         -- Lazy
         {
-          provider = statusline.lazy_updates,
+          provider = stl.lazy_updates,
           hl = { fg = 'dark_orange' },
           on_click = {
             callback = function() require('lazy').update() end,
@@ -403,7 +399,7 @@ return {
         -- Word Count
         {
           condition = function() return vim.bo.filetype == 'markdown' end,
-          provider = statusline.word_count,
+          provider = stl.word_count,
         },
         -- LSP Clients (null-ls)
         {
@@ -430,8 +426,8 @@ return {
               :filter(function(client) return not client:match('null') end)
               :totable()
             if not falsy(self.is_null_ls) then
-              self.formatters = statusline.get_null_ls_formatters(ft)
-              self.linters = statusline.get_null_ls_linters(ft)
+              self.formatters = stl.get_null_ls_formatters(ft)
+              self.linters = stl.get_null_ls_linters(ft)
             end
           end,
           {
@@ -440,7 +436,7 @@ return {
               if falsy(self.client_names) then
                 return icon .. 'No Active LSP ' .. separator
               end
-              return icon .. statusline.format_servers(self.client_names)
+              return icon .. stl.format_servers(self.client_names)
             end,
             hl = { bold = true },
             on_click = {
@@ -494,8 +490,8 @@ return {
               :filter(function(client) return client.name ~= 'copilot' end)
               :map(function(client) return client.name end)
               :totable()
-            self.linters = statusline.get_linters()
-            self.formatters = statusline.get_formatters(curbuf)
+            self.linters = stl.get_linters()
+            self.formatters = stl.get_formatters(curbuf)
           end,
           {
             update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
@@ -504,7 +500,7 @@ return {
               if falsy(self.client_names) then
                 return icon .. 'No Active LSP ' .. separator
               end
-              return icon .. statusline.format_servers(self.client_names)
+              return icon .. stl.format_servers(self.client_names)
             end,
             hl = { bold = true },
             on_click = {
@@ -570,7 +566,7 @@ return {
           end,
           init = function(self)
             self.processing = false
-            local status = statusline.copilot_status()
+            local status = stl.copilot_status()
             -- local status = statusline.copilot_indicator()
             if status == 'pending' then self.processing = true end
           end,
@@ -634,7 +630,7 @@ return {
           },
         },
         -- File Type
-        utils.insert(file_block, statusline.file_icon, statusline.file_type),
+        utils.insert(file_block, stl.file_icon, stl.file_type),
         -- Buffers
         {
           condition = function()
@@ -684,7 +680,7 @@ return {
         -- Treesitter
         {
           condition = function() return ar.treesitter.enable and false end,
-          provider = function() return '  ' .. statusline.ts_active() end,
+          provider = function() return '  ' .. stl.ts_active() end,
           hl = { fg = 'forest_green' },
         },
         -- Session
@@ -739,11 +735,11 @@ return {
           provider = function()
             local line_number = fn.line('.')
             if line_number > 99 then
-              return '  ' .. '%7(%l/%3L%):%2c ' .. statusline.progress()
+              return '  ' .. '%7(%l/%3L%):%2c ' .. stl.progress()
             elseif line_number > 9 then
-              return ' ' .. '%7(%l/%3L%):%2c ' .. statusline.progress()
+              return ' ' .. '%7(%l/%3L%):%2c ' .. stl.progress()
             end
-            return '%7(%l/%3L%):%2c ' .. statusline.progress()
+            return '%7(%l/%3L%):%2c ' .. stl.progress()
           end,
         },
         -- Scroll Bar
