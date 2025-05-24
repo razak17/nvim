@@ -53,7 +53,9 @@ function M.pretty_path()
     dir = table.concat({ unpack(parts, 1, #parts - 1) }, sep)
     dir = dir .. sep
   end
-  return dir .. parts[#parts]
+  local name = parts[#parts] or ''
+  if name:len() > 10 then name = ar.abbreviate(name) end
+  return dir .. name
 end
 
 return M
