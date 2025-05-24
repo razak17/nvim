@@ -1,5 +1,6 @@
 local fn, v, api = vim.fn, vim.v, vim.api
 
+local is_avail = ar.is_available
 local minimal = ar.plugins.minimal
 local sep = ar.ui.icons.separators
 local icons, codicons = ar.ui.icons, ar.ui.codicons
@@ -81,6 +82,22 @@ return {
             name = 'git_change_branch',
           },
           hl = { fg = 'yellowgreen' },
+        },
+        {
+          condition = function() return is_avail('nvim-tinygit') and false end,
+          init = function(self)
+            self.blame = require('tinygit.statusline').blame()
+            self.branch_state = require('tinygit.statusline').branchState()
+          end,
+          {
+            condition = function(self) return self.blame ~= '' end,
+            provider = function(self) return ' ' .. self.blame end,
+            hl = { fg = 'comment' },
+          },
+          {
+            condition = function(self) return self.branch_state ~= '' end,
+            provider = function(self) return ' ' .. self.branch_state end,
+          },
         },
         -- Git
         {
@@ -271,7 +288,7 @@ return {
         -- Debug
         -- {
         --   condition = function()
-        --     if not ar.is_available('nvim-dap') then return false end
+        --     if not is_available('nvim-dap') then return false end
         --     local session = require('dap').session()
         --     return session ~= nil
         --   end,
@@ -388,7 +405,7 @@ return {
         -- cloc
         {
           update = { 'User', pattern = 'ClocStatusUpdated' },
-          condition = function() return ar.is_available('cloc.nvim') end,
+          condition = function() return is_avail('cloc.nvim') end,
           provider = function(_)
             local status = require('cloc').get_status()
             if status.statusCode == 'loading' then return 'Clocing...' end
@@ -535,7 +552,7 @@ return {
         {
           condition = function()
             return not minimal
-              and ar.is_available('ecolog.nvim')
+              and is_avail('ecolog.nvim')
               and ar_config.shelter.enable
               and ar_config.shelter.variant == 'ecolog'
           end,
@@ -633,9 +650,7 @@ return {
         utils.insert(file_block, stl.file_icon, stl.file_type),
         -- Buffers
         {
-          condition = function()
-            return ar.is_available('buffalo.nvim') and false
-          end,
+          condition = function() return is_avail('buffalo.nvim') and false end,
           provider = function()
             local buffers = require('buffalo').buffers()
             local tabpages = require('buffalo').tabpages()
