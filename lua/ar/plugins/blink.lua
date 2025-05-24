@@ -11,6 +11,20 @@ local is_copilot = ai_models.copilot and ai_cmp == 'copilot'
 local is_minuet = ai_models.gemini and ai_cmp == 'minuet'
 
 local show_index = false
+_G.auto_show = true
+
+local function toggle_blink_auto_show()
+  _G.auto_show = not _G.auto_show
+  vim.notify(
+    fmt('Autocompletion is now %s', _G.auto_show and 'enabled' or 'disabled'),
+    vim.log.levels.INFO,
+    { title = 'Blink Auto Show' }
+  )
+end
+
+ar.add_to_select_menu('command_palette', {
+  ['Toggle Blink Auto Show'] = toggle_blink_auto_show,
+})
 
 return {
   {
@@ -74,6 +88,7 @@ return {
         -- Recommended to avoid unnecessary request
         trigger = { prefetch_on_insert = false },
         menu = {
+          auto_show = function() return _G.auto_show end,
           border = border,
           winblend = 0,
           winhighlight = 'NormalFloat:NormalFloat,CursorLine:PmenuSel,NormalFloat:NormalFloat',
@@ -207,8 +222,8 @@ return {
         ['<CR>'] = { 'accept', 'fallback' },
         ['<C-n>'] = { 'select_next', 'show' },
         ['<C-p>'] = { 'select_prev', 'show' },
-        ['<C-j>'] = { 'select_next', 'fallback' },
-        ['<C-k>'] = { 'select_prev', 'fallback' },
+        ['<C-j>'] = { 'select_next', 'show' },
+        ['<C-k>'] = { 'select_prev', 'show' },
         ['<C-space>'] = {
           'show',
           'show_documentation',
@@ -402,7 +417,7 @@ return {
       'moyiz/blink-emoji.nvim',
       {
         'giuxtaposition/blink-cmp-copilot',
-        cond = not minimal and tis_copilot,
+        cond = not minimal and is_copilot,
       },
       {
         'saghen/blink.compat',
