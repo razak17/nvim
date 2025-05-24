@@ -88,6 +88,28 @@ function ar.get_visual_text()
   return text
 end
 
+-- https://www.reddit.com/r/neovim/comments/1kig7rc/shorten_git_branch_name/
+function ar.abbreviate(name, sign)
+  sign = sign or '.'
+  local s = name:gsub('[-_.]', ' ')
+  local first_char = string.sub(name, 1, 1)
+  s = s:gsub('(%l)(%u)', '%1 %2')
+  local parts = {}
+  for word in s:gmatch('%S+') do
+    parts[#parts + 1] = word
+  end
+  local letters = {}
+  for _, w in ipairs(parts) do
+    local end_index = w:len() < 4 and w:len() or 3
+    letters[#letters + 1] = w:sub(1, end_index):lower()
+  end
+  if first_char == '-' or first_char == '_' or first_char == '.' then
+    -- if the first char is any of -_., prepend it
+    return first_char .. table.concat(letters, sign)
+  end
+  return table.concat(letters, sign)
+end
+
 ---@param callback function
 ---@param opts { forward: boolean }
 ---@return function
