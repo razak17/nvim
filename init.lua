@@ -17,6 +17,7 @@ g.dotfiles = env.DOTFILES or fn.expand('~/.dots')
 g.projects_dir = env.DEV_HOME or fn.expand('~/personal/workspace/coding')
 -- HACK: Hot patch for issue in Neovim v0.10.3 where vim.hl is not defined
 if vim.fn.has('nvim-0.10.3') == 1 and not vim.hl then vim.hl = vim.highlight end
+-- if fn.has('nvim-0.12') == 1 then require('vim._extui').enable({}) end
 --------------------------------------------------------------------------------
 -- Load Modules
 --------------------------------------------------------------------------------

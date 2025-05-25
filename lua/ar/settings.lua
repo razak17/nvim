@@ -150,7 +150,7 @@ o.breakindentopt = 'sbr'
 o.linebreak = true -- lines wrap at words rather than random characters
 o.signcolumn = 'yes:1'
 o.ruler = false
-o.cmdheight = 1
+-- o.cmdheight = 0
 o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→', '↴'
 if not ar_config.plugin.custom.auto_cursorline.enable then
   o.cursorline = true
