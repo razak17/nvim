@@ -404,4 +404,5 @@ end
 return {
   list = servers,
   get = get,
+  names = function() return vim.tbl_keys(servers) end,
 }

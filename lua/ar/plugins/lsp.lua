@@ -59,7 +59,7 @@ return {
       cond = ar.lsp.enable,
       event = { 'VeryLazy' },
       config = function()
-        local servers = require('ar.servers').list
+        local servers = require('ar.servers').names()
         local enabled_servers = vim
           .iter(servers)
           :map(function(name) return name end)
@@ -69,8 +69,8 @@ return {
             local directory_disabled =
               ar.dirs_match(ar_config.lsp.disabled.directories, fmt('%s', cwd))
 
+            local ts_lang = ar_config.lsp.lang.typescript
             local function ts_lang_cond(server)
-              local ts_lang = ar_config.lsp.lang.typescript
               local cond = ar.find_string(ar_config.lsp.override, server)
               return ts_lang == server or cond
             end
