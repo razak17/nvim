@@ -395,9 +395,7 @@ local function setup_mappings(client, bufnr)
           triggerKind = lsp.protocol.CodeActionTriggerKind.Invoked,
           diagnostics = ar.lsp.get_diagnostic_at_cursor(),
         }
-        local clients = lsp.get_clients({ bufnr = bufnr })
-        if #clients == 0 then return end
-        require('ar.lsp_code_action').better_code_actions(client, bufnr, params)
+        require('ar.lsp_code_action').better_code_actions(bufnr, params)
       end,
       desc = 'code action',
       capability = M.textDocument_codeAction,
