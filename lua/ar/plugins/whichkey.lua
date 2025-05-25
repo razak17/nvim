@@ -69,7 +69,6 @@ return {
           { '<leader><leader>gh', group = 'History' },
           { '<leader><leader>gi', group = 'Issues' },
           { '<leader><leader>go', group = 'Open' },
-          { '<leader><leader>gs', group = 'Stash' },
           { '<leader><leader>m', desc = 'Markdown' },
           { '<leader><leader>n', group = 'Sticky Note' },
           { '<leader><localleader>', group = 'Advanced' },
