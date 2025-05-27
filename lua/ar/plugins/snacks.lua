@@ -1,6 +1,5 @@
 local api = vim.api
 local border = ar.ui.current.border
-local separators = ar.ui.icons.separators
 
 return {
   {
@@ -45,11 +44,6 @@ return {
           max_width = 60,
           max_height = 30,
         },
-      },
-      indent = {
-        enabled = ar_config.ui.indentline.enable
-          and ar_config.ui.indentline.variant == 'snacks',
-        char = separators.left_thin_block,
       },
       input = {},
       profiler = {

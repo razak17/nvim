@@ -405,7 +405,7 @@ local config = {
   },
   ui = {
     ---@type ArIndentline
-    indentline = { enable = true, variant = 'mini.indentscope' },
+    indentline = { enable = true, variant = 'snacks' },
     ---@type ArStatuscolumn
     statuscolumn = { enable = true, variant = 'local' },
     ---@type ArWinbar
