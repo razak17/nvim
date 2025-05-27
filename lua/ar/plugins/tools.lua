@@ -242,11 +242,16 @@ return {
       local conform = require('conform')
       conform.setup(opts)
 
+      local ignored_server = { 'kulala', 'render-markdown', 'injected' }
       ar.augroup('ConformFormat', {
         event = { 'BufEnter' },
         command = function(args)
           local clients = vim.lsp.get_clients({ bufnr = args.buf })
-          if #clients ~= 0 then return end
+          local filtered_clients = vim.tbl_filter(
+            function(c) return not vim.tbl_contains(ignored_server, c.name) end,
+            clients
+          )
+          if #filtered_clients ~= 0 then return end
           local map_opts = { desc = 'conform: format', buffer = args.buf }
           map('n', '<leader>lf', conform.format, map_opts)
         end,
