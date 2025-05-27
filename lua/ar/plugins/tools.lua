@@ -208,7 +208,7 @@ return {
         -- https://github.com/mistweaverco/kulala-fmt
         ['kulala-fmt'] = {
           command = 'kulala-fmt',
-          args = { '$FILENAME' },
+          args = { 'format', '$FILENAME' },
           stdin = false,
         },
       },
