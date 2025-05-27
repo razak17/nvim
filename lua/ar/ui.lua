@@ -326,6 +326,7 @@ local filetypes = ar.p_table({
   ['norg'] = presets.minimal_editing:with({ winbar = false }),
   ['notify'] = presets.tool_panel,
   ['NvimTree'] = presets.tool_panel,
+  ['outputpanel'] = presets.tool_panel,
   ['oil'] = presets.tool_panel,
   ['org'] = presets.minimal_editing:with({ winbar = false }),
   ['orgagenda'] = presets.minimal_editing:with({ winbar = false }),
