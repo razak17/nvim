@@ -180,7 +180,6 @@ return {
     config = function(_, opts)
       ar.highlight.plugin('mini-indentscope', {
         theme = {
-          -- stylua: ignore
           ['onedark'] = {
             { MiniIndentscopeSymbol = { link = 'IndentBlanklineContextChar' } },
             { MiniIndentscopeSymbolOff = { link = 'IndentBlanklineChar' } },
