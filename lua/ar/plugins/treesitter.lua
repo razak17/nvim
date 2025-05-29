@@ -8,6 +8,7 @@ return {
     'nvim-treesitter/nvim-treesitter',
     cond = ts_enabled,
     event = 'BufReadPost',
+    branch = 'master',
     build = ':TSUpdate',
     lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
     init = function(plugin)
