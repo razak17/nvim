@@ -197,7 +197,7 @@ return {
         { name = 'CodeClaude-3-5-Haiku', disable = true },
         { name = 'CodeCopilot', disable = true },
       },
-      default_chat_agent = 'ChatGemini',
+      default_chat_agent = 'ChatCopilot-claude-sonnet-4',
     }
 
     local function setup_model(model)
@@ -216,8 +216,9 @@ return {
         ['claude-3.5-sonnet'] = {},
         ['claude-3.7-sonnet'] = {},
         ['claude-3.7-sonnet-thought'] = { max_tokens = 8192 },
+        ['claude-sonnet-4'] = { max_tokens = 80000 },
         ['gemini-2.0-flash-001'] = {},
-        ['gemini-2.5-pro'] = {},
+        ['gemini-2.5-pro'] = { max_tokens = 128000 },
         ['gpt-4o'] = {},
         ['gpt-4o-mini'] = {},
         ['o3-mini'] = {},
