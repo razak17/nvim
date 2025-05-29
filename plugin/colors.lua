@@ -17,7 +17,7 @@ local function general_overrides()
     ----------------------------------------------------------------------------
     -- colorscheme overrides
     ----------------------------------------------------------------------------
-    { QuickFixLine = { bg = { from = 'Cursorline' }, fg = 'NONE' } },
+    { QuickFixLine = { bg = { from = 'CursorLine' }, fg = 'NONE' } },
     -- Neither the sign column or end of buffer highlights require an explicit bg
     -- they should both just use the bg that is in the window they are in.
     -- if either are specified this can lead to issues when a winhighlight is set
@@ -68,11 +68,16 @@ local function general_overrides()
       LspReferenceText = {
         bg = 'NONE',
         underline = true,
-        sp = { from = 'Visual', attr = 'fg', alter = -0.4 },
+        sp = { from = 'Directory', attr = 'fg', alter = -0.6 },
       },
     },
-    { LspReferenceRead = { link = 'LspReferenceText' } },
-    { LspReferenceWrite = { inherit = 'LspReferenceText', bold = true } },
+    {
+      LspReferenceRead = {
+        bg = { from = 'CursorLine', attr = 'bg', alter = 0.2 },
+      },
+    },
+    { LspReferenceWrite = { inherit = 'LspReferenceText', bold = false } },
+    { LspReferenceTarget = { inherit = 'Dim', bold = true } },
     { LspSignatureActiveParameter = { link = 'Visual' } },
     { DiagnosticFloatTitle = { inherit = 'FloatTitle', bold = true } },
     {
@@ -156,7 +161,7 @@ local function colorscheme_overrides()
           fg = { from = 'Normal' },
         },
       },
-      { FloatTitle = { bg = { from = 'Cursorline', alter = 0.05 } } },
+      { FloatTitle = { bg = { from = 'CursorLine', alter = 0.05 } } },
       { IndentBlanklineContextChar = { link = 'Comment' } },
       { Pmenu = { bg = { from = 'Pmenu', alter = -0.2 } } },
       { PmenuExtra = { link = 'Pmenu' } },
@@ -189,7 +194,7 @@ local function colorscheme_overrides()
     ['lunar'] = {
       { NeogitDiffAdd = { link = 'DiffAdd' } },
       { NeogitDiffDelete = { link = 'DiffDelete' } },
-      { ColorColumn = { link = 'Cursorline' } },
+      { ColorColumn = { link = 'CursorLine' } },
       { Todo = { link = 'Constant' } },
       { Winbar = { link = 'Variable' } },
       { WinbarNC = { link = 'LineNr' } },
