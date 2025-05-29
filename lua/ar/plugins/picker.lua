@@ -141,7 +141,6 @@ return {
         end)
       end
     end,
-    -- stylua: ignore
     keys = function()
       local mappings = {}
 
@@ -150,6 +149,7 @@ return {
       end
       if ar_config.picker.variant == 'fzf-lua' then
         local fzf_mappings = {
+        -- stylua: ignore start
           { '<M-space>', fzf_lua.buffers, desc = 'buffers' },
           { '<leader>f?', fzf_lua.help_tags, desc = 'help' },
           { '<leader>fa', '<Cmd>FzfLua<CR>', desc = 'builtins' },
@@ -171,17 +171,26 @@ return {
           { '<leader>ld', fzf_lua.lsp_document_symbols, desc = 'document symbols' },
           { '<leader>lI', fzf_lua.lsp_implementations, desc = 'search implementation' },
           { '<leader>lR', fzf_lua.lsp_references, desc = 'show references' },
-          { '<leader>ls', fzf_lua.lsp_live_workspace_symbols, desc = 'workspace symbols' },
-          { '<leader>le', fzf_lua.diagnostics_document, desc = 'document diagnostics' },
-          { '<leader>lw', fzf_lua.diagnostics_workspace, desc = 'workspace diagnostics' },
+          { '<leader>lsl', fzf_lua.lsp_live_workspace_symbols, desc = 'live workspace symbols' },
           { '<leader>fc', function() find_files(fn.stdpath('config')) end, desc = 'nvim config' },
           { '<leader>fla', lazy, desc = 'all plugins' },
           { '<leader>fO', notes, desc = 'notes' },
+          -- stylua: ignore end
         }
-
-        vim
-          .iter(fzf_mappings)
-          :each(function(m) table.insert(mappings, m) end)
+        if
+          ar_config.lsp.symbols.enable
+          and ar_config.lsp.symbols.variant == 'picker'
+        then
+          -- stylua: ignore
+          table.insert(fzf_mappings, {
+            '<leader>lsd', fzf_lua.diagnostics_document, desc = 'document diagnostics'
+          })
+          -- stylua: ignore
+          table.insert(fzf_mappings, {
+            '<leader>lsw', fzf_lua.diagnostics_workspace, desc = 'workspace diagnostics'
+          })
+        end
+        vim.iter(fzf_mappings):each(function(m) table.insert(mappings, m) end)
       end
 
       return mappings

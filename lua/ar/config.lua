@@ -36,6 +36,7 @@ local env = vim.env
 ---@alias ArWhichGx 'local' | 'plugin'
 ---@alias ArWhichIndentline 'mini.indentscope' | 'ibl' | 'snacks' | 'indentmini'
 ---@alias ArWhichLspProgress 'builtin' | 'noice' | 'snacks'
+---@alias ArWhichLspSymbols 'builtin' | 'picker' | 'namu'
 ---@alias ArWhichLspVirtualLines 'builtin' | 'lsp_lines' | 'tiny-inline'
 ---@alias ArWhichLspVirtualText 'builtin' | 'lsp_lines' | 'tiny-inline'
 ---@alias ArWhichNotifier 'nvim-notify' | 'snacks'
@@ -93,6 +94,10 @@ local env = vim.env
 ---@field enable boolean
 ---@field variant ArWhichWinbar
 
+---@class ArLspSymbols
+---@field enable boolean
+---@field variant ArWhichLspSymbols
+
 ---@class ArLspVirtualLines
 ---@field enable boolean
 ---@field variant ArWhichLspVirtualLines
@@ -113,6 +118,7 @@ local env = vim.env
 ---@field progress ArLspProgress
 ---@field semantic_tokens ArCond
 ---@field signs ArCond
+---@field symbols ArLspSymbols
 ---@field virtual_lines ArLspVirtualLines
 ---@field virtual_text ArLspVirtualText
 ---@field workspace_diagnostics ArCond
@@ -343,6 +349,7 @@ local config = {
     progress = { enable = true, variant = 'noice' },
     semantic_tokens = { enable = false },
     signs = { enable = false },
+    symbols = { enable = true, variant = 'namu' },
     virtual_text = { enable = false },
     virtual_lines = { enable = false, variant = 'tiny-inline' },
     workspace_diagnostics = { enable = false },

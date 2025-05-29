@@ -243,8 +243,6 @@ return {
           { '<leader>lR', p('lsp_references'), nowait = true, desc = 'snacks: references' },
           { '<leader>lI', p('lsp_implementations'), desc = 'snacks: goto implementation' },
           { '<leader>ly', p('lsp_type_definitions'), desc = 'snacks: goto t[y]pe definition' },
-          { '<leader>ld', p('lsp_symbols'), desc = 'snacks: lsp symbols' },
-          { '<leader>lw', p('lsp_workspace_symbols'), desc = 'snacks: lsp workspace symbols' },
           -- explorer
           { "<leader>fe", function() Snacks.explorer() end, desc = "explorer" },
         -- stylua: ignore end
@@ -254,6 +252,19 @@ return {
           '<C-n>',
           function() Snacks.explorer() end,
           desc = 'explorer',
+        })
+      end
+      if
+        ar_config.lsp.symbols.enable
+        and ar_config.lsp.symbols.variant == 'picker'
+      then
+        -- stylua: ignore
+        table.insert(picker_mappings, {
+          '<leader>lsd', p('lsp_symbols'), desc = 'snacks: lsp symbols'
+        })
+        -- stylua: ignore
+        table.insert(picker_mappings, {
+          '<leader>lsw', p('lsp_workspace_symbols'), desc = 'snacks: lsp workspace symbols'
         })
       end
       vim.iter(picker_mappings):each(function(m) table.insert(keys, m) end)

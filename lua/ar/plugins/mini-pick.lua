@@ -179,16 +179,27 @@ return {
         { '<leader>fs', b('grep_live'), desc = 'live grep' },
         { '<leader>fla', lazy, desc = 'plugins' },
         -- lsp
-        { '<leader>lw', extra('diagnostic'), desc = 'mini.pick: diagnostics' },
+        { '<leader>le', extra('diagnostic'), desc = 'mini.pick: diagnostics' },
         { '<leader>lR', lsp('references'), desc = 'mini.pick: references' },
         { '<leader>lI', lsp('implementation'), desc = 'mini.pick: implementation' },
         { '<leader>ly', lsp('type_definition'), desc = 'mini.pick: type definition' },
-        { '<leader>ld', lsp('document_symbol'), desc = 'mini.pick: document symbols' },
-        { '<leader>lw', lsp('workspace_symbol'), desc = 'mini.pick: workspace symbols' },
         -- explorer
         { '<leader>fe', extra('explorer'), desc = 'explorer' },
         -- stylua: ignore end
       }
+      if
+        ar_config.lsp.symbols.enable
+        and ar_config.lsp.symbols.variant == 'picker'
+      then
+        -- stylua: ignore
+        table.insert(picker_mappings, {
+          '<leader>lsd', lsp('document_symbol'), desc = 'mini.pick: document symbols'
+        })
+        -- stylua: ignore
+        table.insert(picker_mappings, {
+          '<leader>lsw', lsp('workspace_symbol'), desc = 'mini.pick: workspace symbols'
+        })
+      end
       vim.iter(picker_mappings):each(function(m) table.insert(mappings, m) end)
     end
     return mappings

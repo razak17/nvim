@@ -541,14 +541,23 @@ return {
   {
     'bassamsdata/namu.nvim',
     cond = not minimal and ar.lsp.enable,
-    keys = {
-      {
-        '<leader>ls',
-        function() require('namu.namu_symbols').show() end,
-        mode = { 'n', 'x', 'o' },
-        desc = 'namu: show',
-      },
-    },
+    keys = function()
+      local mappings = {}
+      if
+        ar_config.lsp.symbols.enable
+        and ar_config.lsp.symbols.variant == 'namu'
+      then
+        -- stylua: ignore
+        table.insert(mappings, {
+          '<leader>lsd', '<Cmd>Namu symbols<CR>', desc = 'namu: document symbols'
+        })
+        -- stylua: ignore
+        table.insert(mappings, {
+          '<leader>lsw', '<Cmd>Namu workspace<CR>', desc = 'namu: workspace symbols'
+        })
+      end
+      return mappings
+    end,
     opts = {
       namu_symbols = {
         enable = true,
