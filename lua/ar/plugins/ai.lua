@@ -342,6 +342,13 @@ return {
         ['Copilot'] = function()
           ar.create_select_menu('Copilot', {
             ['Toggle Copilot Auto Trigger'] = 'lua require("copilot.suggestion").toggle_auto_trigger()',
+            ['Disable'] = function() vim.cmd('Copilot disable') end,
+            ['Enable'] = function() vim.cmd('Copilot enable') end,
+            ['Toggle'] = function() vim.cmd('Copiot toggle') end,
+            ['Attach'] = function() vim.cmd('Copiot attach') end,
+            ['Detach'] = function() vim.cmd('Copiot detach') end,
+            ['Panel'] = function() vim.cmd('Copilot panel') end,
+            ['Status'] = function() vim.cmd('Copiot status') end,
           })()
         end,
       })
