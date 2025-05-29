@@ -307,7 +307,7 @@ return {
                 keys = {
                   ['z'] = 'explorer_close_all',
                   ['O'] = { { 'pick_win', 'jump' }, mode = { 'n', 'i' } },
-                  ['W'] = 'window_picker',
+                  ['w'] = 'window_picker',
                   [']c'] = 'explorer_git_next',
                   ['[c'] = 'explorer_git_prev',
                   ['<C-b>'] = 'close',
