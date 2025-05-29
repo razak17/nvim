@@ -6,8 +6,8 @@ local border = ar.ui.current.border
 local left_block = icons.separators.left_block
 
 local minimal = ar.plugins.minimal
-local enabled = not minimal and ar.is_git_repo()
 local is_git = ar.is_git_repo() or ar.is_git_env()
+local enabled = not minimal and is_git
 
 return {
   -- Lazy nvim
@@ -68,7 +68,7 @@ return {
   },
   {
     'NeogitOrg/neogit',
-    cond = not minimal and is_git,
+    cond =  enabled,
     cmd = 'Neogit',
     -- stylua: ignore
     keys = {
