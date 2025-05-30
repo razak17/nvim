@@ -41,14 +41,6 @@ function M.git_remote_sync()
   local upstream_args =
     { 'rev-list', '--left-right', '--count', 'HEAD...@{upstream}' }
 
-  -- Fetch the remote repository
-  local git_fetch = Job:new({
-    command = cmd,
-    args = fetch_args,
-    on_start = function() M.git_status.status = 'pending' end,
-    on_exit = function() M.git_status.status = 'done' end,
-  })
-
   local function on_status_change()
     vim.schedule(
       function()
@@ -57,30 +49,31 @@ function M.git_remote_sync()
     )
   end
 
+  -- Fetch the remote repository
+  ar.run_command(
+    cmd,
+    fetch_args,
+    function() M.git_status.status = 'done' end,
+    function() M.git_status.status = 'pending' end
+  )
+
   -- Compare local repository to upstream
-  local git_upstream = Job:new({
-    command = cmd,
-    args = upstream_args,
-    on_start = function()
-      M.git_status.status = 'pending'
-      on_status_change()
-    end,
-    on_exit = function(job, _)
-      local res = job:result()[1]
-      if type(res) ~= 'string' then
-        M.git_status = { ahead = 0, behind = 0, status = 'error' }
-        return
-      end
-      local _, ahead, behind = pcall(string.match, res, '(%d+)%s*(%d+)')
-
-      M.git_status =
-        { ahead = tonumber(ahead), behind = tonumber(behind), status = 'done' }
-      on_status_change()
-    end,
-  })
-
-  git_fetch:start()
-  git_upstream:start()
+  local function on_exit(job)
+    local res = job:result()[1]
+    if type(res) ~= 'string' then
+      M.git_status = { ahead = 0, behind = 0, status = 'error' }
+      return
+    end
+    local _, ahead, behind = pcall(string.match, res, '(%d+)%s*(%d+)')
+    M.git_status =
+      { ahead = tonumber(ahead), behind = tonumber(behind), status = 'done' }
+    on_status_change()
+  end
+  local function on_start()
+    M.git_status.status = 'pending'
+    on_status_change()
+  end
+  ar.run_command(cmd, upstream_args, on_exit, on_start)
 end
 ar.command('GitRemoteSync', M.git_remote_sync)
 
@@ -155,11 +148,11 @@ local function git_push_pull(action, _)
       .. "'?",
   }, function(choice)
     if choice == 'Yes' then
-      Job:new({
-        command = 'git',
-        args = { action },
-        on_exit = function() ar.GitRemoteSync() end,
-      }):start()
+      ar.run_command(
+        'git',
+        { action, 'origin', branch },
+        function() ar.GitRemoteSync() end
+      )
     end
   end)
 end
