@@ -76,7 +76,7 @@ return {
     cond = not minimal,
     config = function(_, opts)
       local conditions = require('heirline.conditions')
-      local statusline = require('ar.statusline')
+      local stl = require('ar.statusline')
 
       opts.colors = setup_colors
       opts.statusline = vim.tbl_deep_extend('force', opts.statusline or {}, {
@@ -126,19 +126,11 @@ return {
       require('heirline').setup(opts)
       ar.augroup('HeirlineGitRemote', {
         event = { 'VimEnter' },
-        command = function()
-          local timer = vim.uv.new_timer()
-          ---@diagnostic disable-next-line: need-check-nil
-          timer:start(0, 120000, function() statusline.git_remote_sync() end)
-        end,
+        command = function() ar.set_timeout(stl.git_remote_sync, 0, 120000) end,
       }, {
         event = { 'User' },
         pattern = { 'Neogit*' },
-        command = function()
-          local timer = vim.uv.new_timer()
-          ---@diagnostic disable-next-line: need-check-nil
-          timer:start(0, 120000, function() statusline.git_remote_sync() end)
-        end,
+        command = function() ar.set_timeout(stl.git_remote_sync, 0, 120000) end,
       })
     end,
   },

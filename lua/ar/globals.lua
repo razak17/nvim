@@ -329,6 +329,22 @@ function ar.reload_all()
   cmd('Gitsigns refresh')
 end
 
+-- Ref: https://github.com/serranomorante/dotfiles/blob/main/nvim/dot-config/nvim/lua/serranomorante/utils.lua?plain=1#L186
+---Simple setTimeout wrapper
+---@param callback function
+---@param timeout integer
+---@param ms integer
+function ar.set_timeout(callback, timeout, ms)
+  local timer = vim.uv.new_timer()
+  if timer == nil then return end
+  timer:start(timeout, ms, function()
+    timer:stop()
+    timer:close()
+    if callback then callback() end
+  end)
+  return timer
+end
+
 --- Run a command
 ---@param command string
 ---@param params table
