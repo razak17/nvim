@@ -297,6 +297,23 @@ function M.do_stash()
   )
 end
 
+function M.do_stash_all()
+  -- stylua: ignore
+  vim.ui.input({ prompt = 'Enter a name for the stash: ', kind = 'center_win' }, function(input)
+      if input ~= nil then
+        -- untracked files are a mess with git stash: https://stackoverflow.com/a/12681856/516188
+        -- just stage everything before stashing.
+        -- stylua: ignore
+        vim.system({ 'git', 'add', '.' }, { text = true }, vim.schedule_wrap(function()
+          ar.run_command(
+            'git', { 'stash', 'push', '-m', input, '-u' }, ar.reload_all
+          )
+        end))
+      end
+    end
+  )
+end
+
 -- we could stash staged on unstaged, better staged, no mess with untracked files
 function M.git_do_stash_staged()
   vim.ui.input({
