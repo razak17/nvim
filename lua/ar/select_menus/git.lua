@@ -297,6 +297,29 @@ function M.do_stash()
   )
 end
 
+-- we could stash staged on unstaged, better staged, no mess with untracked files
+function M.git_do_stash_staged()
+  vim.ui.input({
+    prompt = 'Enter a name for the stash (staged files only): ',
+    kind = 'center_win',
+  }, function(input)
+    if input ~= nil then
+      -- get the list of staged files
+      local git_root = vim.fs.root(vim.fn.getcwd(), '.git')
+      vim.system(
+        { 'git', 'diff', '--name-only', '--cached' },
+        { text = true, cwd = git_root },
+        vim.schedule_wrap(function(res)
+          local staged = vim.split(vim.trim(res.stdout), '\n')
+          local params = { 'stash', 'push', '-m', input, '--' }
+          vim.list_extend(params, staged)
+          ar.run_command('git', params, ar.reload_all)
+        end)
+      )
+    end
+  end)
+end
+
 --------------------------------------------------------------------------------
 -- Commits
 --------------------------------------------------------------------------------
