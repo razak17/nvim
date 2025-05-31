@@ -353,33 +353,35 @@ end
 function ar.run_command(command, params, exit_cb, start_cb)
   local Job = require('plenary.job')
   local error_msg = nil
-  Job
-    :new({
-      command = command,
-      args = params,
-      on_start = function()
-        if start_cb then start_cb() end
-      end,
-      on_stderr = function(_, data, _)
-        if error_msg == nil then error_msg = data end
-      end,
-      on_exit = function(job, code, _)
-        vim.schedule_wrap(function()
-          if code == 0 then
+  Job:new({
+    command = command,
+    args = params,
+    on_start = function()
+      if start_cb then start_cb() end
+    end,
+    on_stderr = function(_, data, _)
+      if error_msg == nil then error_msg = data end
+    end,
+    on_exit = function(job, code, _)
+      vim.schedule_wrap(function()
+        if code == 0 then
+          if ar_config.debug.enable then
             vim.notify(command .. ' executed successfully', vim.log.levels.INFO)
-            if exit_cb then exit_cb(job) end
-          else
-            local info = { command .. ' failed!' }
-            if error_msg ~= nil then
-              table.insert(info, error_msg)
-              print(error_msg)
-            end
+          end
+          if exit_cb then exit_cb(job) end
+        else
+          local info = { command .. ' failed!' }
+          if error_msg ~= nil then
+            table.insert(info, error_msg)
+            print(error_msg)
+          end
+          if ar_config.debug.enable then
             vim.notify(info, vim.log.levels.ERROR)
           end
-        end)()
-      end,
-    })
-    :start()
+        end
+      end)()
+    end,
+  }):start()
 end
 
 --- vim.cmd in visual mode
