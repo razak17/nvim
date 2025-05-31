@@ -4,7 +4,6 @@ local separator = icons.separators.dotted_thin_block
 local spinners = ar.ui.spinners.common
 
 local conditions = require('heirline.conditions')
-local Job = require('plenary.job')
 
 local M = {}
 

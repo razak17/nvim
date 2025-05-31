@@ -126,11 +126,17 @@ return {
       require('heirline').setup(opts)
       ar.augroup('HeirlineGitRemote', {
         event = { 'VimEnter' },
-        command = function() ar.set_timeout(stl.git_remote_sync, 0, 120000) end,
+        command = function()
+          if not ar.is_git_repo() then return end
+          ar.set_timeout(stl.git_remote_sync, 0, 120000)
+        end,
       }, {
         event = { 'User' },
         pattern = { 'Neogit*' },
-        command = function() ar.set_timeout(stl.git_remote_sync, 0, 120000) end,
+        command = function()
+          if not ar.is_git_repo() then return end
+          ar.set_timeout(stl.git_remote_sync, 0, 120000)
+        end,
       })
     end,
   },
