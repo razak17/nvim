@@ -187,7 +187,7 @@ return {
   },
   {
     'lambdalisue/suda.vim',
-    cond = not ar.plugin_disabled('suda.vim'),
+    cond = not ar.plugin_disabled('suda.vim') and false,
     lazy = false,
     init = function()
       ar.add_to_select_menu('command_palette', {

@@ -327,7 +327,7 @@ return {
   },
   {
     'letieu/btw.nvim',
-    cond = minimal and not niceties,
+    cond = minimal and not niceties and false,
     lazy = false,
     opts = {},
   },
