@@ -1,38 +1,29 @@
 local enabled = ar.lsp.enable
 
+-- stylua: ignore
 local filetypes = {
-  'javascript',
-  'javascriptreact',
-  'javascript.jsx',
-  'typescript',
-  'typescriptreact',
-  'typescript.tsx',
+  'javascript', 'javascriptreact', 'javascript.jsx',
+  'typescript', 'typescriptreact', 'typescript.tsx',
 }
 
-local function typescript_tools_cond()
-  if
-    not ar.falsy(ar_config.lsp.override)
-    and not ar.find_string(ar_config.lsp.override, 'typescript-tools')
-  then
-    return false
-  end
-  if ar.plugin_disabled('typescript-tools.nvim') or not ar.lsp.enable then
-    return false
-  end
-  return ar_config.lsp.lang.typescript == 'typescript-tools'
+local function cond(server, plugin)
+  local override = ar_config.lsp.override
+  if ar.plugin_disabled(plugin) or not ar.lsp.enable then return false end
+  if not ar.falsy(override) then return ar.find_string(override, server) end
+  return ar_config.lsp.lang.typescript == server
 end
 
 return {
   'dmmulroy/ts-error-translator.nvim',
   {
     'yioneko/nvim-vtsls',
-    cond = ar_config.lsp.lang.typescript == 'vtsls',
+    cond = function() return cond('vtsls', 'nvim-vtsls') end,
     ft = filetypes,
   },
   {
     'pmizio/typescript-tools.nvim',
     ft = filetypes,
-    cond = typescript_tools_cond(),
+    cond = function() return cond('typescript-tools', 'typescript-tools.nvim') end,
     opts = {
       handlers = {
         ['textDocument/publishDiagnostics'] = function(err, result, ctx)

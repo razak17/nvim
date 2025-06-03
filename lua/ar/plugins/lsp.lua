@@ -3,7 +3,6 @@ local cwd = fn.getcwd()
 local fmt = string.format
 local ui, highlight = ar.ui, ar.highlight
 local icons, codicons = ar.ui.icons, ar.ui.codicons
-local falsy, find_string = ar.falsy, ar.find_string
 local border = ui.current.border
 local lsp_icons = codicons.lsp
 local detour = ar.reqidx('detour')
@@ -18,6 +17,7 @@ return {
   {
     {
       'mason-org/mason.nvim',
+      -- cond = function() return not minimal or ar.lsp.enable end,
       event = { 'BufReadPre', 'BufNewFile' },
       keys = { { '<leader>lm', '<cmd>Mason<CR>', desc = 'mason info' } },
       build = ':MasonUpdate',
@@ -26,14 +26,10 @@ return {
           ['Update All Mason Packages'] = 'MasonUpdateAll',
         })
       end,
+      -- stylua: ignore
       cmd = {
-        'Mason',
-        'MasonInstall',
-        'MasonUninstall',
-        'MasonUninstallAll',
-        'MasonLog',
-        'MasonUpdate',
-        'MasonUpdateAll', -- this cmd is provided by mason-extra-cmds
+        'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll',
+        'MasonLog', 'MasonUpdate', 'MasonUpdateAll', -- this cmd is provided by mason-extra-cmds
       },
       opts = {
         ui = {
@@ -57,35 +53,24 @@ return {
     {
       'williamboman/mason-lspconfig.nvim',
       cond = ar.lsp.enable,
-      event = { 'VeryLazy' },
+      event = { 'BufReadPre' },
       config = function()
         local servers = require('ar.servers').names()
         local enabled_servers = vim
           .iter(servers)
           :map(function(name) return name end)
           :filter(function(name)
-            local is_override = not falsy(ar_config.lsp.override)
-              and not find_string(ar_config.lsp.override, name)
-            local directory_disabled =
-              ar.dirs_match(ar_config.lsp.disabled.directories, fmt('%s', cwd))
-
             local ts_lang = ar_config.lsp.lang.typescript
             local function ts_lang_cond(server)
               local cond = ar.find_string(ar_config.lsp.override, server)
               return ts_lang == server or cond
             end
 
-            local ts_ls = ts_lang_cond('ts_ls')
-            local vtsls = ts_lang_cond('vtsls')
-            local ts_tools = (name == 'ts_ls' or name == 'vtsls')
-              and ts_lang == 'typescript-tools'
-
-            local should_skip = is_override
-              or directory_disabled
+            local should_skip = ar.lsp_override(name)
               or ar.lsp_disabled(name)
-              or ts_tools
-              or (name == 'vtsls' and not vtsls)
-              or (name == 'ts_ls' and not ts_ls)
+              or ar.dir_lsp_disabled(cwd)
+              or name == 'ts_ls' and not ts_lang_cond('ts_ls')
+              or name == 'vtsls' and not ts_lang_cond('vtsls')
 
             if should_skip then return false end
 
