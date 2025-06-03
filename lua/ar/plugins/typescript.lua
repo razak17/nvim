@@ -62,11 +62,20 @@ return {
     opts = { highlight = 'DiagnosticVirtualTextInfo' },
   },
   {
-    'OlegGulevskyy/better-ts-errors.nvim',
+    'razak17/better-ts-errors.nvim',
     cond = enabled,
     event = 'LspAttach',
     ft = filetypes,
+    keys = {
+      {
+        '<localleader>lo',
+        function() require('better-ts-errors.diagnostics').show(true) end,
+        desc = 'better-ts-errors: show error',
+      },
+    },
     opts = {
+      default_mappings = false,
+      enable_prettify = true,
       keymaps = {
         toggle = '<localleader>lo',
         go_to_definition = '<localleader>ld',
