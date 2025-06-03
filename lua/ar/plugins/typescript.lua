@@ -30,20 +30,17 @@ return {
     ft = filetypes,
   },
   {
-
     'pmizio/typescript-tools.nvim',
     ft = filetypes,
     cond = typescript_tools_cond(),
-    config = function(_, opts)
-      local api = require('typescript-tools.api')
-      opts.handlers = {
-        ['textDocument/publishDiagnostics'] = api.filter_diagnostics({
-          80001, -- Ignore this might be converted to a ES export
-        }),
-      }
-      require('typescript-tools').setup(opts)
-    end,
     opts = {
+      handlers = {
+        ['textDocument/publishDiagnostics'] = function(err, result, ctx)
+          local lsp_diag = require('ar.lsp_diagnostics')
+          local pub_diag = vim.lsp.diagnostic.on_publish_diagnostics
+          lsp_diag.on_publish_diagnostics(err, result, ctx, pub_diag)
+        end,
+      },
       settings = {
         expose_as_code_action = 'all',
         complete_function_calls = false,

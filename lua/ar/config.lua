@@ -162,6 +162,14 @@ local namespace = {
   },
   kitty_scrollback = { enable = env.KITTY_SCROLLBACK_NVIM == 'true' },
   lsp = {
+    -- codes: https://github.com/microsoft/TypeScript/blob/main/src/compiler/diagnosticMessages.json
+    disabled_codes = {
+      ts = {
+        80001, -- Ignore this might be converted to a ES export
+        80006, -- Ignore this might be converted into an async function
+        -- 6133, -- Ignore this var declared but its value is never read
+      },
+    },
     enable = env.RVIM_LSP_ENABLED == '1',
     prettier = {
       needs_config = false,
