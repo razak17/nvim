@@ -34,7 +34,7 @@ return {
       { '<localleader>yo', '<Cmd>YankyRingHistory<CR>', desc = 'yanky: open yank history', },
     },
     opts = { ring = { storage = 'sqlite' } },
-    dependencies = 'kkharji/sqlite.lua'
+    dependencies = 'kkharji/sqlite.lua',
   },
   {
     desc = 'Duplicate visual selection, lines, and textobjects',
@@ -142,12 +142,16 @@ return {
     'altermo/ultimate-autopair.nvim',
     cond = not minimal,
     event = { 'InsertEnter', 'CmdlineEnter' },
-    -- stylua: ignore
-    keys = {
-      -- Open new scope (`remap` to trigger auto-pairing)
-      { '<localleader>os', 'a{<CR>', desc = 'ultimate-autopair: open new scope', remap = true },
-      { '<localleader>os', '{<CR>', mode = 'i', desc = 'ultimate-autopair: open new scope', remap = true },
-    },
+    init = function()
+      ar.add_to_select_menu('command_palette', {
+        ['Toggle Auto-pairing'] = function()
+          require('ultimate-autopair').toggle()
+          local mode = require('ultimate-autopair').isenabled() and 'enabled'
+            or 'disabled'
+          vim.notify(mode, nil, { title = 'Auto-pairing', icon = '' })
+        end,
+      })
+    end,
     opts = {
       bs = {
         space = 'balance',
