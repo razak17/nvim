@@ -173,11 +173,26 @@ return {
         multiline = false,
       },
       cr = { autoclose = true },
-      space = { enable = true },
-      space2 = { enable = true },
+      tabout = { enable = false, map = '<Nop>' },
+      extensions = { -- disable in these filetypes
+        filetype = {
+          nft = { 'TelescopePrompt', 'snacks_picker_input', 'rip-substitute' },
+        },
+      },
       config_internal_pairs = {
-        { "'", "'", nft = { 'markdown' } }, -- since used as apostrophe
-        { '"', '"', nft = { 'vim' } }, -- vimscript uses quotes as comments
+        { "'", "'", nft = { 'markdown', 'gitcommit' } }, -- used as apostrophe
+        { '"', '"', nft = { 'vim' } }, -- uses as comments in vimscript
+
+        { -- disable codeblocks, see https://github.com/Saghen/blink.cmp/issues/1692
+          '`',
+          '`',
+          cond = function(_fn)
+            local mdCodeblock = vim.bo.ft == 'markdown'
+              and api.nvim_get_current_line():find('^[%s`]*$')
+            return not mdCodeblock
+          end,
+        },
+        { '```', '```', nft = { 'markdown' } },
       },
       -- INFO custom keys need to be "appended" to the opts as a list
       { '**', '**', ft = { 'markdown' } }, -- bold
