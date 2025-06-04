@@ -1,3 +1,4 @@
+local api = vim.api
 local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
@@ -179,7 +180,7 @@ return {
         '(',
         '): ',
         ft = { 'gitcommit' },
-        cond = function(_) return not vim.api.nvim_get_current_line():find(' ') end,
+        cond = function(_) return not api.nvim_get_current_line():find(' ') end,
       },
       -- for keymaps like `<C-a>`
       { '<', '>', ft = { 'vim' } },
@@ -190,7 +191,7 @@ return {
         cond = function(fn)
           -- FIX https://github.com/altermo/ultimate-autopair.nvim/issues/88
           local in_lua_lua =
-            vim.endswith(vim.api.nvim_buf_get_name(0), '/ftplugin/lua.lua')
+            vim.endswith(api.nvim_buf_get_name(0), '/ftplugin/lua.lua')
           return not in_lua_lua and fn.in_string()
         end,
       },
