@@ -144,6 +144,13 @@ return {
     cond = not minimal,
     event = { 'InsertEnter', 'CmdlineEnter' },
     init = function()
+      ar.augroup('UltimateAutoPair', {
+        event = { 'RecordingEnter' },
+        command = function() require('ultimate-autopair').disable() end,
+      }, {
+        event = { 'RecordingLeave' },
+        command = function() require('ultimate-autopair').enable() end,
+      })
       ar.add_to_select_menu('command_palette', {
         ['Toggle Auto-pairing'] = function()
           require('ultimate-autopair').toggle()
