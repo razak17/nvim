@@ -222,10 +222,11 @@ return {
       })
 
       ar.add_to_select_menu('command_palette', {
-        ['RenderMarkdown Toggle'] = 'RenderMarkdown toggle',
+        ['Toggle RenderMarkdown'] = 'RenderMarkdown toggle',
       })
     end,
     opts = {
+      latex = { enabled = false },
       completions = {
         blink = { enabled = ar_config.completion.variant == 'blink' },
         lsp = { enabled = ar.lsp.enable },
@@ -238,7 +239,7 @@ return {
       },
       checkbox = {
         enabled = true,
-        position = 'inline',
+        -- position = 'inline',
         unchecked = {
           icon = '', -- 🔲
           highlight = '@markup.list.unchecked',

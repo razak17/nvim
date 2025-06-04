@@ -20,6 +20,7 @@ return {
       { '<leader><localleader>ot', '<Cmd>Obsidian template<CR>', desc = 'obsidian: insert template', },
     },
     opts = {
+      ui = { enable = false },
       dir = sync('obsidian'),
       notes_subdir = 'Zettelkasten',
       daily_notes = { folder = 'Daily Notes' },
