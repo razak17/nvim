@@ -236,7 +236,7 @@ return {
           { '<leader>fvm', p('marks'), desc = 'marks' },
           { '<leader>fvr', p('registers'), desc = 'registers' },
           { '<leader>fvs', p('search_history'), desc = 'search history' },
-          { '<leader>fw', p('grep_word'), desc = 'visual selection or word', mode = { 'n', 'x' } },
+          { '<leader>fw', '<Cmd>lua Snacks.picker.grep_word()<CR>', desc = 'visual selection or word', mode = { 'n', 'x' } },
           -- lsp
           { '<leader>le', p('diagnostics_buffer'), desc = 'snacks: buffer diagnostics' },
           { '<leader>lw', p('diagnostics'), desc = 'snacks: diagnostics' },
