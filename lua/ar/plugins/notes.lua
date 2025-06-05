@@ -20,7 +20,17 @@ return {
       { '<leader><localleader>ot', '<Cmd>Obsidian template<CR>', desc = 'obsidian: insert template', },
     },
     opts = {
-      ui = { enable = false },
+      ui = {
+        enable = false,
+        checkboxes = {
+          [' '] = { char = '', hl_group = 'ObsidianTodo' },
+          ['x'] = { char = '', hl_group = 'ObsidianDone' },
+          ['>'] = { char = '', hl_group = 'ObsidianRightArrow' },
+          ['~'] = { char = '󰰱', hl_group = 'ObsidianTilde' },
+          ['!'] = { char = '', hl_group = 'ObsidianImportant' },
+        },
+        bullets = { char = '•', hl_group = 'ObsidianBullet' },
+      },
       dir = sync('obsidian'),
       notes_subdir = 'Zettelkasten',
       daily_notes = { folder = 'Daily Notes' },
