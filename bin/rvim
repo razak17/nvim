@@ -5,6 +5,7 @@ export RVIM_LSP_ENABLED='0'
 export RVIM_TREESITTER_ENABLED='1'
 export RVIM_TREESITTER_EXTRA_ENABLED='0'
 export RVIM_AI_ENABLED='0'
+export RVIM_GIT_ENABLED='1'
 export RVIM_NICETIES_ENABLED='0'
 export RVIM_COMPLETION_ENABLED='1'
 export RVIM_PLUGINS_MINIMAL='1'
@@ -48,6 +49,10 @@ while [ "$#" -gt 0 ]; do
     export RVIM_TREESITTER_EXTRA_ENABLED='1'
     shift
     ;;
+  --no-treesitter-extra | -no-ts-extra)
+    export RVIM_TREESITTER_EXTRA_ENABLED='0'
+    shift
+    ;;
   --lsp)
     export RVIM_LSP_ENABLED='1'
     shift
@@ -62,6 +67,14 @@ while [ "$#" -gt 0 ]; do
     ;;
   --no-ai)
     export RVIM_AI_ENABLED='0'
+    shift
+    ;;
+  --git)
+    export RVIM_GIT_ENABLED='1'
+    shift
+    ;;
+  --no-git)
+    export RVIM_GIT_ENABLED='0'
     shift
     ;;
   --minimal | -min)
@@ -108,9 +121,4 @@ while [ "$#" -gt 0 ]; do
 done
 
 # ref: https://www.reddit.com/r/neovim/comments/15gihnd/neat_trick_for_restarting_neovim_fast_when_using/
-while true; do
-  launch_nvim "$ui" "$@"
-  if [ $? -ne 1 ]; then
-    break
-  fi
-done
+launch_nvim "$ui" "$@"

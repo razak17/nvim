@@ -7,10 +7,9 @@ local left_block = icons.separators.left_block
 
 local minimal = ar.plugins.minimal
 local is_git = ar.is_git_repo() or ar.is_git_env()
-local enabled = not minimal and is_git
+local enabled = ar.git.enable and is_git
 
 return {
-  -- Lazy nvim
   {
     '2kabhishek/octohub.nvim',
     init = function()
@@ -389,7 +388,7 @@ return {
   },
   {
     'lewis6991/gitsigns.nvim',
-    cond = not minimal and is_git,
+    cond =  enabled,
     event = { 'BufRead', 'BufNewFile' },
     init = function()
       ar.add_to_select_menu('git', {
@@ -680,39 +679,6 @@ return {
     end,
   },
   {
-    'akinsho/git-conflict.nvim',
-    cond = enabled and false,
-    event = 'BufReadPre',
-    opts = {
-      disable_diagnostics = true,
-      default_mappings = {
-        ours = 'c<',
-        theirs = 'c>',
-        none = 'co',
-        both = 'c.',
-        next = ']x',
-        prev = '[x',
-      },
-    },
-    config = function(_, opts)
-      ar.highlight.plugin('git-conflict', {
-        {
-          theme = {
-            ['onedark'] = {
-              { GitConflictCurrent = { inherit = 'DiffAdd' } },
-              { GitConflictCurrentLabel = { inherit = 'DiffAdd' } },
-              { GitConflictIncoming = { inherit = 'DiffDelete' } },
-              { GitConflictIncomingLabel = { inherit = 'DiffDelete' } },
-              { GitConflictAncestor = { inherit = 'DiffText' } },
-              { GitConflictAncestorLabel = { inherit = 'DiffText' } },
-            },
-          },
-        },
-      })
-      require('git-conflict').setup(opts)
-    end,
-  },
-  {
     '2kabhishek/co-author.nvim',
     cond = enabled,
     cmd = 'CoAuthor',
@@ -758,14 +724,6 @@ return {
     config = function() require('litee.gh').setup() end,
   },
   {
-    'ejrichards/baredot.nvim',
-    cond = not minimal and not ar.is_git_repo() and false,
-    lazy = false,
-    opts = {
-      git_dir = '~/.dots/dotfiles', -- Change this path
-    },
-  },
-  {
     'isakbm/gitgraph.nvim',
     cond = enabled,
     opts = {
@@ -792,6 +750,47 @@ return {
   --------------------------------------------------------------------------------
   -- Disabled
   --------------------------------------------------------------------------------
+  {
+    'ejrichards/baredot.nvim',
+    cond = enabled and false,
+    lazy = false,
+    opts = {
+      git_dir = '~/.dots/dotfiles', -- Change this path
+    },
+  },
+  {
+    'akinsho/git-conflict.nvim',
+    cond = enabled and false,
+    event = 'BufReadPre',
+    opts = {
+      disable_diagnostics = true,
+      default_mappings = {
+        ours = 'c<',
+        theirs = 'c>',
+        none = 'co',
+        both = 'c.',
+        next = ']x',
+        prev = '[x',
+      },
+    },
+    config = function(_, opts)
+      ar.highlight.plugin('git-conflict', {
+        {
+          theme = {
+            ['onedark'] = {
+              { GitConflictCurrent = { inherit = 'DiffAdd' } },
+              { GitConflictCurrentLabel = { inherit = 'DiffAdd' } },
+              { GitConflictIncoming = { inherit = 'DiffDelete' } },
+              { GitConflictIncomingLabel = { inherit = 'DiffDelete' } },
+              { GitConflictAncestor = { inherit = 'DiffText' } },
+              { GitConflictAncestorLabel = { inherit = 'DiffText' } },
+            },
+          },
+        },
+      })
+      require('git-conflict').setup(opts)
+    end,
+  },
   {
     'SuperBo/fugit2.nvim',
     enabled = false,

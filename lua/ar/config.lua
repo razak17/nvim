@@ -160,6 +160,7 @@ local namespace = {
     image = { 'jpg', 'png', 'jpeg', 'ico', 'gif' },
     video = { 'mp4', 'mkv' },
   },
+  git = { enable = env.RVIM_GIT_ENABLED == '1' },
   kitty_scrollback = { enable = env.KITTY_SCROLLBACK_NVIM == 'true' },
   lsp = {
     -- codes: https://github.com/microsoft/TypeScript/blob/main/src/compiler/diagnosticMessages.json
