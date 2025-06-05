@@ -105,8 +105,9 @@ lsp.handlers[M.textDocument_publishDiagnostics] = function(err, result, ctx)
   result.diagnostics = vim.tbl_map(show_related_locations, result.diagnostics)
   local client = lsp.get_client_by_id(ctx.client_id)
   if client and (client.name == 'ts_ls' or client.name == 'vtsls') then
-    lsp_diag.on_publish_diagnostics(err, result, ctx, publish_handler)
+    lsp_diag.on_publish_diagnostics(err, result, ctx)
   end
+  publish_handler(err, result, ctx)
 end
 --------------------------------------------------------------------------------
 --  Smart Definitions
@@ -749,6 +750,7 @@ augroup('LspSetupAutoCommands', {
     if not ar_config.lsp.omnifunc.enable then
       diagnostic.setloclist({ open = false })
     end
+    if ar.falsy(args.data) or not args.data.diagnostics then return end
     if #args.data.diagnostics == 0 then vim.cmd('silent! lclose') end
   end,
 })
