@@ -15,12 +15,13 @@ return {
   --------------------------------------------------------------------------------
   {
     'sotte/presenting.nvim',
+    cond = function() return ar.get_plugin_cond('presenting.nvim') end,
     opts = {},
     cmd = { 'Presenting' },
   },
   {
     'bullets-vim/bullets.vim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('bullets.vim', not minimal) end,
     ft = { 'markdown' },
     init = function()
       vim.g.bullets_set_mappings = 0
@@ -52,7 +53,7 @@ return {
   {
     'HakonHarnes/img-clip.nvim',
     cmd = { 'PasteImage' },
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('img-clip.nvim', not minimal) end,
     opts = {},
   },
   {
@@ -75,14 +76,14 @@ return {
   },
   {
     'Zeioth/markmap.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('markmap.nvim', not minimal) end,
     build = 'yarn global add markmap-cli',
     cmd = { 'MarkmapOpen', 'MarkmapSave', 'MarkmapWatch', 'MarkmapWatchStop' },
     opts = {},
   },
   {
     'arminveres/md-pdf.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('md-pdf.nvim', not minimal) end,
     keys = {
       {
         '<localleader>mp',
@@ -94,7 +95,7 @@ return {
   },
   {
     'NFrid/due.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('due.nvim', not minimal) end,
     ft = 'markdown',
     opts = {
       use_clock_time = true,
@@ -105,7 +106,9 @@ return {
   },
   {
     'wallpants/github-preview.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('github-preview.nvim', not minimal)
+    end,
     cmd = {
       'GithubPreviewStart',
       'GithubPreviewStop',
@@ -116,7 +119,9 @@ return {
   -- https://github.com/AntonVanAssche/md-headers.nvim
   {
     'AntonVanAssche/md-headers.nvim',
-    cond = ar.ts_extra_enabled,
+    cond = function()
+      return ar.get_plugin_cond('md-headers.nvim', ar.ts_extra_enabled)
+    end,
     cmd = { 'MarkdownHeaders', 'MarkdownHeadersClosest' },
     -- stylua: ignore
     keys = {
@@ -138,7 +143,9 @@ return {
   },
   {
     'iamcco/markdown-preview.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('markdown-preview.nvim', not minimal)
+    end,
     build = function() vim.fn['mkdp#util#install']() end,
     cmd = {
       'MarkdownPreview',
@@ -152,7 +159,7 @@ return {
   },
   {
     'AckslD/nvim-FeMaco.lua',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('nvim-FeMaco.lua', not minimal) end,
     cmd = { 'FeMaco' },
     opts = {
       float_opts = function(code_block)
@@ -185,7 +192,9 @@ return {
   },
   {
     'MeanderingProgrammer/render-markdown.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('render-markdown.nvim', not minimal)
+    end,
     cmd = { 'RenderMarkdown' },
     ft = { 'markdown', 'Avante' },
     init = function()

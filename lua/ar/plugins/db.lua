@@ -1,7 +1,12 @@
 return {
-  { 'jsborjesson/vim-uppercase-sql', ft = { 'sql' } },
+  {
+    'jsborjesson/vim-uppercase-sql',
+    cond = function() return ar.get_plugin_cond('vim-uppercase-sql') end,
+    ft = { 'sql' },
+  },
   {
     'kristijanhusak/vim-dadbod-ui',
+    cond = function() return ar.get_plugin_cond('vim-dadbod-ui') end,
     init = function()
       vim.g.whichkey_add_spec({ '<leader><leader>d', group = 'Dadbod' })
 

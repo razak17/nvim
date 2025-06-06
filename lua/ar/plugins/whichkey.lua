@@ -8,7 +8,7 @@ end
 
 return {
   'folke/which-key.nvim',
-  cond = not ar.plugin_disabled('which-key.nvim'),
+  cond = function() return ar.get_plugin_cond('which-key.nvim') end,
   event = 'VeryLazy',
   opts = function()
     local opts = {

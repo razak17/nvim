@@ -5,7 +5,10 @@ local niceties = ar.plugins.niceties
 return {
   {
     'Goose97/timber.nvim',
-    cond = not minimal and niceties,
+    cond = function()
+      local condition = not minimal and niceties
+      return ar.get_plugin_cond('timber.nvim', condition)
+    end,
     event = 'VeryLazy',
     opts = {
       keymaps = {
@@ -86,7 +89,7 @@ return {
   },
   {
     'andrewferrier/debugprint.nvim',
-    cond = not ar.plugin_disabled('debugprint.nvim'),
+    cond = function() return ar.get_plugin_cond('debugprint.nvim') end,
     -- stylua: ignore
     keys = {
       'g?a', 'g?A',

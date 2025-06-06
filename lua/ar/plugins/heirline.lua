@@ -60,20 +60,21 @@ local function setup_colors()
   return P
 end
 
-ar.augroup('Heirline', {
-  event = 'ColorScheme',
-  command = function()
-    if not ar.is_available('heirline.nvim') then return end
-    local utils = require('heirline.utils')
-    utils.on_colorscheme(setup_colors)
-  end,
-})
-
 return {
   {
     'rebelot/heirline.nvim',
     event = 'BufWinEnter',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('heirline.nvim', not minimal) end,
+    init = function()
+      ar.augroup('Heirline', {
+        event = 'ColorScheme',
+        command = function()
+          if not ar.is_available('heirline.nvim') then return end
+          local utils = require('heirline.utils')
+          utils.on_colorscheme(setup_colors)
+        end,
+      })
+    end,
     config = function(_, opts)
       local conditions = require('heirline.conditions')
       local stl = require('ar.statusline')
@@ -128,14 +129,16 @@ return {
         event = { 'VimEnter' },
         command = function()
           if not ar.is_git_repo() then return end
-          ar.set_timeout(stl.git_remote_sync, 0, 120000)
+          -- ar.set_timeout(stl.git_remote_sync, 0, 120000)
+          vim.schedule(function() stl.git_remote_sync() end)
         end,
       }, {
         event = { 'User' },
         pattern = { 'Neogit*' },
         command = function()
           if not ar.is_git_repo() then return end
-          ar.set_timeout(stl.git_remote_sync, 0, 120000)
+          -- ar.set_timeout(stl.git_remote_sync, 0, 120000)
+          vim.schedule(function() stl.git_remote_sync() end)
         end,
       })
     end,

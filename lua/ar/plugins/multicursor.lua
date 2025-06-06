@@ -4,7 +4,7 @@ local minimal = ar.plugins.minimal
 return {
   {
     'jake-stewart/multicursor.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('multicursor.nvim', not minimal) end,
     event = 'VeryLazy',
     config = function()
       local mc = require('multicursor-nvim')

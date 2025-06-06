@@ -3,12 +3,13 @@ local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 return {
   {
     'yorickpeterse/nvim-pqf',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('nvim-pqf', not minimal) end,
     event = 'BufRead',
     opts = {},
   },
   {
     'kevinhwang91/nvim-bqf',
+    cond = function() return ar.get_plugin_cond('nvim-bqf') end,
     ft = 'qf',
     opts = {
       preview = {
@@ -31,12 +32,16 @@ return {
   },
   {
     'mei28/qfc.nvim',
-    cond = not minimal and niceties,
+    cond = function()
+      local condition = not minimal and niceties
+      return ar.get_plugin_cond('qfc.nvim', condition)
+    end,
     ft = 'qf',
     opts = { timeout = 4000, autoclose = true },
   },
   {
     'brunobmello25/persist-quickfix.nvim',
+    cond = function() return ar.get_plugin_cond('persist-quickfix.nvim') end,
     init = function()
       ar.add_to_select_menu('command_palette', {
         ['Save Qf List'] = function()

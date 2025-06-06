@@ -32,7 +32,7 @@ return {
   desc = 'heirline statusline',
   recommended = true,
   'rebelot/heirline.nvim',
-  cond = not minimal,
+  cond = function() return ar.get_plugin_cond('heirline.nvim', not minimal) end,
   opts = function(_, opts)
     local separator = sep.dotted_thin_block
     local stl = require('ar.statusline')

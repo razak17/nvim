@@ -15,14 +15,16 @@ return {
   { 'dundalek/bloat.nvim', cmd = 'Bloat' },
   {
     'ariel-frischer/bmessages.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('bmessages.nvim', not minimal) end,
     cmd = { 'Bmessages', 'Bmessagesvs', 'Bmessagessp', 'BmessagesEdit' },
     event = 'CmdlineEnter',
     opts = {},
   },
   {
     'smjonas/live-command.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('live-command.nvim', not minimal)
+    end,
     event = 'VeryLazy',
     opts = {
       commands = {
@@ -57,12 +59,18 @@ return {
   {
     'altermo/nwm',
     branch = 'x11',
-    cond = not minimal and niceties,
+    cond = function()
+      local condition = not minimal and niceties
+      return ar.get_plugin_cond('nwm', condition)
+    end,
     lazy = false,
   },
   {
     'yuratomo/w3m.vim',
-    cond = not minimal and niceties,
+    cond = function()
+      local condition = not minimal and niceties
+      return ar.get_plugin_cond('w3m.vim', condition)
+    end,
     event = 'VeryLazy',
     init = function()
       local function w3m_input(cmd)
@@ -91,13 +99,16 @@ return {
   },
   {
     'r-cha/encourage.nvim',
-    cond = not minimal and niceties,
+    cond = function()
+      local condition = not minimal and niceties
+      return ar.get_plugin_cond('encourage.nvim', condition)
+    end,
     event = { 'BufReadPost', 'BufNewFile' },
     opts = {},
   },
   {
     'stevearc/profile.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('profile.nvim', not minimal) end,
     lazy = false,
     init = function()
       local should_profile = os.getenv('NVIM_PROFILE')
@@ -187,7 +198,7 @@ return {
   },
   {
     'lambdalisue/suda.vim',
-    cond = not ar.plugin_disabled('suda.vim') and false,
+    cond = function() return ar.get_plugin_cond('suda.vim', false) end,
     lazy = false,
     init = function()
       ar.add_to_select_menu('command_palette', {
@@ -202,14 +213,14 @@ return {
   {
     '2kabhishek/nerdy.nvim',
     cmd = 'Nerdy',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('nerdy.nvim', not minimal) end,
     init = function()
       ar.add_to_select_menu('command_palette', { ['Nerdy'] = 'Nerdy' })
     end,
   },
   {
     'AndrewRadev/linediff.vim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('linediff.vim', not minimal) end,
     cmd = 'Linediff',
     keys = {
       { '<localleader>lL', '<cmd>Linediff<CR>', desc = 'linediff: toggle' },
@@ -217,7 +228,7 @@ return {
   },
   {
     'ahmedkhalf/project.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('project.nvim', not minimal) end,
     name = 'project_nvim',
     opts = {
       detection_methods = { 'pattern', 'lsp' },
@@ -227,7 +238,7 @@ return {
   },
   {
     'chrisgrieser/nvim-genghis',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('nvim-genghis', not minimal) end,
     event = { 'BufReadPost', 'BufNewFile' },
     init = function()
       vim.g.whichkey_add_spec({ '<leader><localleader>f', group = 'Genghis' })
@@ -253,7 +264,10 @@ return {
   },
   {
     'jpalardy/vim-slime',
-    cond = not minimal and ar.plugins.niceties,
+    cond = function()
+      local condition = not minimal and niceties
+      return ar.get_plugin_cond('vim-slime', condition)
+    end,
     event = 'VeryLazy',
     -- stylua: ignore
     keys = {
@@ -269,7 +283,10 @@ return {
   },
   {
     'razak17/readonly.nvim',
-    cond = not minimal and niceties,
+    cond = function()
+      local condition = not minimal and niceties
+      return ar.get_plugin_cond('readonly.nvim', condition)
+    end,
     lazy = false,
     opts = {
       secured_files = {

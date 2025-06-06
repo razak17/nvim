@@ -3,7 +3,7 @@ local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 return {
   {
     'jake-stewart/recursive-macro.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('recursive-macro.nvim', not minimal) end,
     event = 'VeryLazy',
     init = function()
       vim.g.whichkey_add_spec({

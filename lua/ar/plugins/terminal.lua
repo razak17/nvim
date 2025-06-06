@@ -4,7 +4,7 @@ local border = ui.current.border
 return {
   {
     'akinsho/toggleterm.nvim',
-    cond = not ar.plugin_disabled('toggleterm.nvim'),
+    cond = function() return ar.get_plugin_cond('toggleterm.nvim') end,
     event = 'VeryLazy',
     opts = {
       open_mapping = [[<c-\>]],

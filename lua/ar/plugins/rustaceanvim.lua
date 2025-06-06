@@ -1,12 +1,10 @@
 local border = ar.ui.current.border
 
-local enabled = ar.lsp.enable and not ar.plugin_disabled('rustaceanvim')
-
 return {
   {
     'mrcjkb/rustaceanvim',
     ft = { 'rust' },
-    cond = enabled,
+    cond = function() return ar.get_plugin_cond('rustaceanvim', ar.lsp.enable) end,
     init = function()
       vim.g.whichkey_add_spec({ '<leader><leader>r', group = 'Rustaceanvim' })
     end,

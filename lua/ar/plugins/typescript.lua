@@ -64,7 +64,6 @@ return {
   {
     'razak17/better-ts-errors.nvim',
     cond = enabled,
-    event = 'LspAttach',
     ft = filetypes,
     keys = {
       {

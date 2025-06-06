@@ -70,15 +70,16 @@ end
 return {
   {
     'echasnovski/mini.extra',
+    cond = function() return ar.get_plugin_cond('mini.extra') end,
     config = function() require('mini.extra').setup() end,
   },
   {
     'echasnovski/mini.hipatterns',
     cond = function()
-      if ar.plugin_disabled('mini.hipatterns') then return false end
-      return (
+      local condition = (
         io.open(fn.expand('%:p:h') .. '/.lazy.lua', 'r') ~= nil and not minimal
       ) or minimal
+      return ar.get_plugin_cond('mini.hipatterns', condition)
     end,
     event = { 'BufRead', 'BufNewFile' },
     opts = function()
@@ -206,7 +207,7 @@ return {
   },
   {
     'echasnovski/mini.bracketed',
-    cond = not ar.plugins.minimal,
+    cond = function() return ar.get_plugin_cond('mini.bracketed', not minimal) end,
     event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
@@ -227,7 +228,7 @@ return {
   },
   {
     'echasnovski/mini.ai',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('mini.ai', not minimal) end,
     event = { 'VeryLazy' },
     config = function()
       -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util/mini.lua?plain=1#L64
@@ -407,7 +408,7 @@ return {
   },
   {
     'echasnovski/mini.pairs',
-    cond = minimal and not ar.plugin_disabled('mini.pairs'),
+    cond = function() return ar.get_plugin_cond('mini.pairs', minimal) end,
     event = 'VeryLazy',
     init = function()
       local function toggle_minipairs()
@@ -443,7 +444,7 @@ return {
   },
   {
     'echasnovski/mini.comment',
-    cond = not ar.plugin_disabled('mini.comment'),
+    cond = function() return ar.get_plugin_cond('mini.comment') end,
     event = 'VeryLazy',
     opts = {
       options = {

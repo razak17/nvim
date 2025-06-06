@@ -14,12 +14,14 @@ end
 return {
   {
     'ton/vim-bufsurf',
-    cond = not minimal and not ar.plugin_disabled('vim-bufsurf'),
+    cond = function() return ar.get_plugin_cond('vim-bufsurf', not minimal) end,
     keys = { '[b', ']b' },
   },
   {
     'chrisgrieser/nvim-early-retirement',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('nvim-early-retirement', not minimal)
+    end,
     event = 'VeryLazy',
     init = function()
       ar.add_to_select_menu('command_palette', {
@@ -39,7 +41,7 @@ return {
   },
   {
     'razak17/cybu.nvim',
-    cond = not minimal and not ar.plugin_disabled('cybu.nvim'),
+    cond = function() return ar.get_plugin_cond('cybu.nvim', not minimal) end,
     event = { 'BufRead', 'BufNewFile' },
     opts = {
       position = { relative_to = 'win', anchor = 'topright' },
@@ -50,7 +52,9 @@ return {
   },
   {
     'rachartier/tiny-buffers-switcher.nvim',
-    cond = not minimal and not ar.plugin_disabled('tiny-buffers-switcher.nvim'),
+    cond = function()
+      return ar.get_plugin_cond('tiny-buffers-switcher.nvim', not minimal)
+    end,
     -- stylua: ignore
     keys = {
       { '<localleader>bb', ':lua require("tiny-buffers-switcher").switcher()<CR>', desc = 'buffer switch' },
@@ -59,7 +63,7 @@ return {
   },
   {
     'jlanzarotta/bufexplorer',
-    cond = not minimal and not ar.plugin_disabled('bufexplorer'),
+    cond = function() return ar.get_plugin_cond('bufexplorer', not minimal) end,
     config = function() vim.g.bufExplorerShowRelativePath = 1 end,
     keys = {
       { '<localleader>be', '<cmd>BufExplorer<cr>', desc = 'bufexplorer: open' },
@@ -67,9 +71,10 @@ return {
   },
   {
     'sathishmanohar/quick-buffer-jump',
-    cond = not minimal and niceties and not ar.plugin_disabled(
-      'quick-buffer-jump'
-    ),
+    cond = function()
+      local condition = not minimal and niceties
+      return ar.get_plugin_cond('quick-buffer-jump', condition)
+    end,
     cmd = { 'QuickBufferJump' },
     -- stylua: ignore
     keys = { { '<M-u>', '<Cmd>QuickBufferJump<CR>', desc = 'quick buffer jump' } },
@@ -77,9 +82,10 @@ return {
   },
   {
     'stevearc/stickybuf.nvim',
-    cond = not minimal and niceties and not ar.plugin_disabled(
-      'stickybuf.nvim'
-    ),
+    cond = function()
+      local condition = not minimal and niceties
+      return ar.get_plugin_cond('stickybuf.nvim', condition)
+    end,
     cmd = { 'PinBuffer', 'PinBuftype', 'PinFiletype', 'Unpin' },
     config = function()
       require('stickybuf').setup({
@@ -102,7 +108,7 @@ return {
   --------------------------------------------------------------------------------
   {
     'kazhala/close-buffers.nvim',
-    cond = false and ar.plugin_disabled('close-buffers.nvim'),
+    cond = function() return ar.get_plugin_cond('close-buffers.nvim', false) end,
     cmd = { 'BDelete', 'BWipeout' },
     keys = {
       { '<leader>qb', '<Cmd>BDelete this<CR>', desc = 'buffer delete' },
@@ -176,7 +182,7 @@ return {
   },
   {
     'razak17/arena.nvim',
-    cond = not ar.plugin_disabled('arena.nvim') and false,
+    cond = function() return ar.get_plugin_cond('arena.nvim', false) end,
     cmd = { 'ArenaToggle', 'ArenaOpen', 'ArenaClose' },
     keys = { { '<M-space>', '<Cmd>ArenaToggle<CR>', desc = 'arena: toggle' } },
     opts = {
@@ -197,7 +203,7 @@ return {
   },
   {
     'Pheon-Dev/buffalo-nvim',
-    cond = not ar.plugin_disabled('buffalo-nvim') and false,
+    cond = function() return ar.get_plugin_cond('buffalo-nvim', false) end,
     -- stylua: ignore
     keys = {
       { '<M-y>', '<Cmd>lua require("buffalo.ui").toggle_buf_menu()<CR>', desc = 'buffalo: toggle' },

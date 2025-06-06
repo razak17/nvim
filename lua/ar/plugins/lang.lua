@@ -10,19 +10,24 @@ return {
   { 'fladson/vim-kitty', ft = 'kitty' },
   {
     'raimon49/requirements.txt.vim',
-    cond = not minimal and niceties,
+    cond = function()
+      local condition = not minimal and niceties
+      return ar.get_plugin_cond('requirements.txt.vim', condition)
+    end,
     lazy = false,
   },
   {
     'gennaro-tedesco/nvim-jqx',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('nvim-jqx', not minimal) end,
     ft = { 'json', 'yaml' },
   },
   -- Web Dev (Typescript)
   --------------------------------------------------------------------------------
   {
     'Redoxahmii/json-to-types.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('json-to-types.nvim', not minimal)
+    end,
     build = 'sh install.sh npm',
     init = function()
       vim.g.whichkey_add_spec({ '<leader><leader>t', group = 'JSON to types' })
@@ -42,7 +47,7 @@ return {
   },
   {
     'midoBB/nvim-quicktype',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('nvim-quicktype', not minimal) end,
     cmd = 'QuickType',
     build = 'npm install -g quicktype',
     ft = {
@@ -76,7 +81,9 @@ return {
   },
   {
     'razak17/package-info.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('package-info.nvim', not minimal)
+    end,
     event = 'BufRead package.json',
     config = function()
       vim.g.whichkey_add_spec({ '<localleader>P', group = 'Package Info' })
@@ -98,13 +105,17 @@ return {
   },
   {
     'bennypowers/template-literal-comments.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('template-literal-comments.nvim', not minimal)
+    end,
     ft = { 'javascript', 'typescript' },
     opts = {},
   },
   {
     'jdrupal-dev/code-refactor.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('code-refactor.nvim', not minimal)
+    end,
     -- stylua: ignore
     keys = {
       { '<localleader>la', '<cmd>CodeActions all<CR>', desc = 'Show code-refactor.nvim (not LSP code actions)' },
@@ -114,7 +125,9 @@ return {
   {
     -- 'razak17/template-string.nvim',
     'axelvc/template-string.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('template-string.nvim', not minimal)
+    end,
     cmd = { 'TemplateString' },
     init = function()
       ar.add_to_select_menu('toggle', {
@@ -133,7 +146,9 @@ return {
   },
   {
     'mawkler/jsx-element.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('jsx-element.nvim', not minimal)
+    end,
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
       'nvim-treesitter/nvim-treesitter-textobjects',
@@ -143,7 +158,9 @@ return {
   },
   {
     'joeldotdias/jsdoc-switch.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('jsdoc-switch.nvim', not minimal)
+    end,
     -- ft = { 'javascript', 'javascriptreact' },
     init = function()
       vim.g.whichkey_add_spec({
@@ -161,7 +178,9 @@ return {
   },
   {
     'Diogo-ss/five-server.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('five-server.nvim', not minimal)
+    end,
     cmd = { 'FiveServer' },
     build = function() require('fs.utils.install')() end,
     opts = {
@@ -172,7 +191,7 @@ return {
   {
     -- 'fabridamicelli/cronex.nvim',
     'razak17/cronex.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('cronex.nvim', not minimal) end,
     build = 'npm install -g cronstrue',
     cmd = {
       'CronExplainedEnable',
@@ -243,7 +262,9 @@ return {
   },
   {
     'MaximilianLloyd/tw-values.nvim',
-    cond = ar.lsp.enable,
+    cond = function()
+      return ar.get_plugin_cond('tw-values.nvim', ar.lsp.enable)
+    end,
     -- stylua: ignore
     keys = {
       { '<localleader>lt', '<Cmd>TWValues<cr>', desc = 'tw-values: show values', },
@@ -274,6 +295,9 @@ return {
   },
   {
     'linux-cultist/venv-selector.nvim',
+    cond = function()
+      return ar.get_plugin_cond('venv-selector.nvim', ar.lsp.enable)
+    end,
     branch = 'regexp', -- This is the regexp branch, use this for the new version
     init = function()
       ar.add_to_select_menu('command_palette', {
@@ -281,7 +305,6 @@ return {
         ['Venv Selector: select cached env'] = 'VenvSelectCached',
       })
     end,
-    cond = ar.lsp.enable,
     cmd = 'VenvSelect',
     opts = {
       name = { 'venv', '.venv', 'env', '.env' },
@@ -289,9 +312,9 @@ return {
   },
   {
     'alexpasmantier/pymple.nvim',
+    cond = function() return ar.get_plugin_cond('pymple.nvim', ar.lsp.enable) end,
     build = ':PympleBuild',
     ft = { 'python' },
-    cond = ar.lsp.enable,
     opts = {
       resolve_import_under_cursor = {
         desc = 'resolve import under cursor',
@@ -314,7 +337,10 @@ return {
   --------------------------------------------------------------------------------
   {
     'olexsmir/gopher.nvim',
-    cond = ar.lsp.enable and not minimal,
+    cond = function()
+      local condition = ar.lsp.enable and not minimal
+      return ar.get_plugin_cond('gopher.nvim', condition)
+    end,
     ft = 'go',
   },
   {
@@ -328,7 +354,9 @@ return {
   --------------------------------------------------------------------------------
   {
     'vidocqh/data-viewer.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('data-viewer.nvim', not minimal)
+    end,
     -- ft = { 'csv', 'tsv', 'sqlite' },
     cmd = { 'DataViewer', 'DataViewerClose' },
     opts = {},
@@ -347,7 +375,7 @@ return {
   },
   {
     'emmanueltouzery/decisive.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('decisive.nvim', not minimal) end,
     ft = { 'csv' },
     keys = {
       {
@@ -382,7 +410,9 @@ return {
   --------------------------------------------------------------------------------
   {
     'bennypowers/nvim-regexplainer',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('nvim-regexplainer', not minimal)
+    end,
     keys = {
       {
         '<leader>rx',
@@ -402,7 +432,10 @@ return {
   },
   {
     'tomiis4/Hypersonic.nvim',
-    cond = not minimal and niceties,
+    cond = function()
+      local condition = not minimal and niceties
+      return ar.get_plugin_cond('Hypersonic.nvim', condition)
+    end,
     event = 'CmdlineEnter',
     cmd = 'Hypersonic',
     keys = {
@@ -421,7 +454,10 @@ return {
   ------------------------------------------------------------------------------
   {
     'psliwka/vim-dirtytalk',
-    cond = not minimal and niceties,
+    cond = function()
+      local condition = not minimal and niceties
+      return ar.get_plugin_cond('vim-dirtytalk', condition)
+    end,
     lazy = false,
     build = ':DirtytalkUpdate',
     init = function() vim.opt.spelllang:append('programming') end,

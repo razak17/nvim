@@ -3,7 +3,7 @@ local minimal = ar.plugins.minimal
 return {
   {
     'razak17/accelerated-jk.nvim',
-    cond = not ar.plugin_disabled('accelerated-jk.nvim'),
+    cond = function() return ar.get_plugin_cond('accelerated-jk.nvim') end,
     event = 'VeryLazy',
     -- stylua: ignore
     keys = {
@@ -15,7 +15,7 @@ return {
     'aaronik/treewalker.nvim',
     event = 'VeryLazy',
     cmd = { 'Treewalker' },
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('treewalker.nvim', not minimal) end,
     keys = {
       -- { mode = { 'n', 'v' }, '<C-h>', '<Cmd>Treewalker Left<cr>' },
       { mode = { 'n', 'v' }, '<A-j>', '<Cmd>Treewalker Down<cr>' },

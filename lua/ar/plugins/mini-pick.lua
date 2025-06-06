@@ -138,11 +138,9 @@ end
 return {
   'echasnovski/mini.pick',
   cond = function()
-    if ar.plugin_disabled('mini.pick') then return false end
-    return (
-      ar_config.picker.files == 'mini.pick'
+    local condition = ar_config.picker.files == 'mini.pick'
       or ar_config.picker.variant == 'mini.pick'
-    )
+    return ar.get_plugin_cond('mini.pick', condition)
   end,
   keys = function()
     local mappings = {}

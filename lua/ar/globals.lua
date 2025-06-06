@@ -249,6 +249,17 @@ function ar.plugin_disabled(plugin)
   return ar.find_string(ar_config.plugins.disabled, plugin)
 end
 
+-- Get a plugin's enable condition
+---@param plugin string The plugin to search for.
+---@param cond boolean # Other conditions to check.
+---@return boolean disabled # Whether the plugin is disabled.
+function ar.get_plugin_cond(plugin, cond)
+  local disabled = ar.plugin_disabled(plugin)
+  if disabled then return false end
+  if cond == nil then cond = true end
+  return cond
+end
+
 --- Check if a plugin is defined in lazy. Useful with lazy loading
 --- when a plugin is not necessarily loaded yet.
 ---@param plugin string The plugin to search for.

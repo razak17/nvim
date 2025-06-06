@@ -45,9 +45,12 @@ end
 return {
   {
     'goolord/alpha-nvim',
-    cond = not minimal
-      and ar_config.dashboard.enable
-      and ar_config.dashboard.variant == 'alpha',
+    cond = function()
+      local condition = not minimal
+        and ar_config.dashboard.enable
+        and ar_config.dashboard.variant == 'alpha'
+      return ar.get_plugin_cond('alpha-nvim', condition)
+    end,
     event = 'VimEnter',
     keys = { { '<leader>;', '<cmd>Alpha<CR>', desc = 'alpha' } },
     opts = function()

@@ -64,7 +64,7 @@ focus^^^^^^  window^^^^^^  ^_=_: equalize^   _o_: remain only
 
 return {
   'smoka7/hydra.nvim',
-  cond = not minimal,
+  cond = function() return ar.get_plugin_cond('hydra.nvim', not minimal) end,
   event = 'VeryLazy',
   config = function()
     local Hydra = require('hydra')

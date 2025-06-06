@@ -2,8 +2,9 @@ return {
   {
     'kevinhwang91/nvim-ufo',
     cond = function()
-      return not ar_config.plugin.custom.custom_fold.enable
+      local condition = not ar_config.plugin.custom.custom_fold.enable
         and not ar.plugins.minimal
+      return ar.get_plugin_cond('nvim-ufo', condition)
     end,
     event = 'UIEnter', -- needed for folds to load in time and comments being closed
     init = function() vim.opt.foldexpr = '0' end,
@@ -103,7 +104,9 @@ return {
   },
   {
     'chrisgrieser/nvim-origami',
-    cond = not ar.plugins.minimal,
+    cond = function()
+      return ar.get_plugin_cond('nvim-origami', not ar.plugins.minimal)
+    end,
     -- event = 'BufReadPost',
     keys = {
       { '<BS>', function() require('origami').h() end, desc = 'close fold' },

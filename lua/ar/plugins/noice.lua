@@ -1,11 +1,12 @@
 local fn, L = vim.fn, vim.log.levels
 
-local noice_disabled = ar.plugin_disabled('noice.nvim')
 local is_cmp = ar_config.completion.variant == 'cmp'
 
 return {
   'folke/noice.nvim',
-  cond = not ar.plugins.minimal and not noice_disabled,
+  cond = function()
+    return ar.get_plugin_cond('noice.nvim', not ar.plugins.minimal)
+  end,
   event = 'VeryLazy',
   init = function()
     vim.g.whichkey_add_spec({ '<leader><leader>n', group = 'Noice' })

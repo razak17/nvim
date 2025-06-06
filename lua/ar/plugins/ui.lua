@@ -3,15 +3,25 @@ local icons, separators = ui.icons, ui.icons.separators
 
 local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
+local ui_cond = function(plugin, cond)
+  if cond == nil then cond = true end
+  local condition = not minimal and niceties and cond
+  return ar.get_plugin_cond(plugin, condition)
+end
+
 return {
-  { 'razak17/spaceless.nvim', lazy = false, cond = not minimal },
+  {
+    'razak17/spaceless.nvim',
+    lazy = false,
+    cond = function() return ar.get_plugin_cond('spaceless.nvim', not minimal) end,
+  },
   {
     'razak17/lspkind.nvim',
     config = function() require('lspkind').init({ preset = 'codicons' }) end,
   },
   {
     'OXY2DEV/helpview.nvim',
-    cond = not minimal and niceties and ar.ts_extra_enabled,
+    cond = function() return ui_cond('helpview.nvim', ar.ts_extra_enabled) end,
     lazy = false,
     init = function()
       ar.add_to_select_menu(
@@ -23,7 +33,7 @@ return {
   },
   {
     'nmac427/guess-indent.nvim',
-    cond = not minimal and niceties,
+    cond = function() return ui_cond('guess-indent.nvim') end,
     event = 'BufReadPost',
     config = function() require('guess-indent').setup({}) end,
   },
@@ -41,7 +51,7 @@ return {
   },
   {
     'karb94/neoscroll.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('neoscroll.nvim', not minimal) end,
     event = 'BufRead',
     opts = {
       mappings = { '<C-d>', '<C-u>', '<C-y>', 'zt', 'zz', 'zb' },
@@ -50,7 +60,9 @@ return {
   },
   {
     'razak17/smartcolumn.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('smartcolumn.nvim', not minimal)
+    end,
     event = { 'BufRead', 'BufNewFile' },
     opts = {
       colorcolumn = '0',
@@ -59,19 +71,19 @@ return {
   },
   {
     'Pocco81/HighStr.nvim',
-    cond = not minimal and niceties,
+    cond = function() return ui_cond('HighStr.nvim') end,
     cmd = { 'HSHighlight', 'HSRmHighlight', 'HSImport' },
     opts = {},
     config = function(_, opts) require('high-str').setup(opts) end,
   },
   {
     'koron/nyancat-vim',
-    cond = not minimal and niceties,
+    cond = function() return ui_cond('nyancat-vim') end,
     cmd = { 'Nyancat', 'Nyancat2' },
   },
   {
     'HampusHauffman/block.nvim',
-    cond = not minimal and niceties,
+    cond = function() return ui_cond('block.nvim') end,
     cmd = { 'Block', 'BlockOn', 'BlockOff' },
     opts = {
       percent = 0.7,
@@ -85,7 +97,7 @@ return {
   },
   {
     'razak17/nvim-strict',
-    cond = not minimal and niceties,
+    cond = function() return ui_cond('nvim-strict') end,
     event = { 'BufReadPost', 'BufNewFile' },
     init = function()
       vim.g.whichkey_add_spec({ '<localleader>s', group = 'Strict' })
@@ -137,20 +149,20 @@ return {
   },
   {
     'tzachar/local-highlight.nvim',
-    cond = not minimal and niceties and not ar.lsp.enable,
+    cond = function() return ui_cond('local-highlight.nvim', not ar.lsp.enable) end,
     event = { 'BufRead', 'BufNewFile' },
     opts = { hlgroup = 'CursorLine' },
   },
   {
     'razak17/range-highlight.nvim',
-    cond = not minimal and niceties,
+    cond = function() return ui_cond('range-highlight.nvim') end,
     event = { 'BufRead', 'BufNewFile' },
     dependencies = { 'winston0410/cmd-parser.nvim' },
     opts = {},
   },
   {
     'folke/twilight.nvim',
-    cond = niceties,
+    cond = function() return ar.get_plugin_cond('twilight.nvim', niceties) end,
     cmd = 'Twilight',
     init = function()
       ar.add_to_select_menu('toggle', { ['Toggle Twilight'] = 'Twilight' })
@@ -174,7 +186,7 @@ return {
   },
   {
     'kevinhwang91/nvim-hlslens',
-    cond = not minimal and niceties,
+    cond = function() return ui_cond('nvim-hlslens') end,
     event = { 'BufRead', 'BufNewFile' },
     keys = {
       {
@@ -252,7 +264,9 @@ return {
   },
   {
     'folke/todo-comments.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('todo-comments.nvim', not minimal)
+    end,
     event = 'BufReadPost',
     cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
     init = function()
@@ -279,10 +293,10 @@ return {
   },
   {
     'LudoPinelli/comment-box.nvim',
+    cond = function() return ui_cond('comment-box.nvim') end,
     init = function()
       vim.g.whichkey_add_spec({ '<leader><leader>b', group = 'Comment Box' })
     end,
-    cond = not minimal and niceties,
     config = function(_, opts) require('comment-box').setup(opts) end,
     keys = {
       {
@@ -340,7 +354,7 @@ return {
   },
   {
     'gregorias/toggle.nvim',
-    cond = not minimal and niceties,
+    cond = function() return ui_cond('toggle.nvim') end,
     event = { 'VeryLazy' },
     opts = {
       keymaps = {
@@ -353,7 +367,9 @@ return {
   },
   {
     'GitMarkedDan/you-are-an-idiot.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('you-are-an-idiot.nvim', not minimal)
+    end,
     cmd = { 'ToggleIdiot' },
     init = function()
       ar.add_to_select_menu('toggle', { ['Toggle Idiot'] = 'ToggleIdiot' })
@@ -417,7 +433,9 @@ return {
   {
     'lukas-reineke/virt-column.nvim',
     enabled = false,
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('virt-column.nvim', not minimal)
+    end,
     event = { 'BufRead', 'BufNewFile' },
     opts = {
       char = separators.right_thin_block,

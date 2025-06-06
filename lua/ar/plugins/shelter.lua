@@ -29,7 +29,10 @@ return {
   },
   {
     'philosofonusus/ecolog.nvim',
-    cond = cond and variant == 'ecolog',
+    cond = function()
+      local condition = cond and variant == 'ecolog'
+      return ar.get_plugin_cond('ecolog.nvim', condition)
+    end,
     -- stylua: ignore
     keys = function()
       local keys = {
@@ -75,6 +78,7 @@ return {
       types = true,
       -- stylua: ignore
       integrations = {
+        telescope = function() return is_avail('telescope.nvim') end,
         fzf = function () return is_fzf and is_avail('fzf-lua') end,
         snacks = function () return is_snacks and is_avail('snacks.nvim') end,
         nvim_cmp = function () return is_avail('blink.cmp') end,
@@ -91,8 +95,8 @@ return {
           files = true,
           peek = false,
           cmp = true,
-          telescope = true,
-          telescope_previewer = true,
+          telescope = is_avail('telescope.nvim'),
+          telescope_previewer = is_avail('telescope.nvim'),
           fzf = true,
           fzf_previewer = true,
           snacks_previewer = true,

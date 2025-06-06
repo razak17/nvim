@@ -4,6 +4,7 @@ local cmp_utils = require('ar.utils.cmp')
 local ui = ar.ui
 local border, lsp_hls = ui.current.border, ui.lsp.highlights
 local minimal = ar.plugins.minimal
+local is_avail = ar.is_available
 local is_blink = ar_config.completion.variant == 'blink'
 local ai_models = ar_config.ai.models
 local ai_cmp = ar_config.ai.completion.variant
@@ -158,7 +159,10 @@ return {
             if not minimal then
               table.insert(providers, 'nvim-px-to-rem')
               table.insert(providers, 'dadbod')
-              if ar_config.shelter.variant == 'ecolog' then
+              if
+                ar_config.shelter.variant == 'ecolog'
+                and is_avail('ecolog.nvim')
+              then
                 table.insert(providers, 'ecolog')
               end
             end
@@ -381,7 +385,11 @@ return {
         end
       end
 
-      if not minimal and ar_config.shelter.variant == 'ecolog' then
+      if
+        not minimal
+        and ar_config.shelter.variant == 'ecolog'
+        and is_avail('ecolog.nvim')
+      then
         opts.sources.providers.ecolog = {
           name = '[ECOLOG]',
           module = 'ecolog.integrations.cmp.blink_cmp',

@@ -62,7 +62,7 @@ end
 return {
   {
     'mfussenegger/nvim-dap',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('nvim-dap', not minimal) end,
     init = function()
       vim.g.whichkey_add_spec({
         { '<localleader>d', group = 'Dap' },
@@ -385,9 +385,15 @@ return {
       end
     end,
     dependencies = {
-      'nvim-neotest/nvim-nio',
+      {
+        'nvim-neotest/nvim-nio',
+        cond = function() return ar.get_plugin_cond('nvim-nio') end,
+      },
       {
         'jbyuki/one-small-step-for-vimkind',
+        cond = function()
+          return ar.get_plugin_cond('one-small-step-for-vimkind')
+        end,
         keys = {
           {
             '<leader>dL',
@@ -403,6 +409,7 @@ return {
       },
       {
         'rcarriga/nvim-dap-ui',
+        cond = function() return ar.get_plugin_cond('nvim-dap-ui') end,
         -- stylua: ignore
         keys = {
           { '<localleader>d?', function() require('dapui').eval(nil, { enter = true }) end, desc = 'dap-ui: eval' },
@@ -434,7 +441,13 @@ return {
           l.before.event_terminated['dapui_config'] = function() dapui.close() end
         end,
       },
-      { 'theHamsta/nvim-dap-virtual-text', opts = { all_frames = true } },
+      {
+        'theHamsta/nvim-dap-virtual-text',
+        cond = function()
+          return ar.get_plugin_cond('nvim-dap-virtual-text', not minimal)
+        end,
+        opts = { all_frames = true },
+      },
       {
         'Weissle/persistent-breakpoints.nvim',
         event = { 'BufReadPost' },
@@ -455,7 +468,9 @@ return {
   },
   {
     'jay-babu/mason-nvim-dap.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('mason-nvim-dap.nvim', not minimal)
+    end,
     dependencies = 'mason.nvim',
     cmd = { 'DapInstall', 'DapUninstall' },
     opts = {},

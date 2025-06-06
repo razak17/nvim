@@ -7,11 +7,16 @@ local left_block = icons.separators.left_block
 
 local minimal = ar.plugins.minimal
 local is_git = ar.is_git_repo() or ar.is_git_env()
-local enabled = ar.git.enable and is_git
+
+local git_cond = function(plugin)
+  local condition = ar.git.enable and is_git
+  return ar.get_plugin_cond(plugin, condition)
+end
 
 return {
   {
     '2kabhishek/octohub.nvim',
+    cond = function() return git_cond('octohub.nvim') end,
     init = function()
       vim.g.whichkey_add_spec({ '<leader><leader>o', group = 'Octohub' })
     end,
@@ -42,10 +47,14 @@ return {
     dependencies = { '2kabhishek/utils.nvim', 'nvim-telescope/telescope.nvim' },
     opts = { add_default_keybindings = false },
   },
-  { 'yyk/find-git-root.nvim', cond = enabled, cmd = { 'CdGitRoot' } },
+  {
+    'yyk/find-git-root.nvim',
+    cond = function() return git_cond('find-git-root.nvim') end,
+    cmd = { 'CdGitRoot' },
+  },
   {
     'kilavila/nvim-gitignore',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('nvim-gitignore', not minimal) end,
     cmd = { 'Gitignore', 'Licenses' },
     init = function()
       ar.add_to_select_menu('command_palette', {
@@ -56,22 +65,29 @@ return {
   },
   {
     'yutkat/git-rebase-auto-diff.nvim',
-    cond = enabled,
+    cond = function() return git_cond('git-rebase-auto-diff.nvim') end,
     ft = { 'gitrebase' },
     opts = {},
   },
   {
     'tpope/vim-fugitive',
-    cond = enabled,
+    cond = function() return git_cond('vim-fugitive') end,
     keys = { { '<localleader>gS', '<Cmd>G<CR>', desc = 'fugitive' } },
   },
   {
     'NeogitOrg/neogit',
-    cond =  enabled,
+    cond = function() return git_cond('neogit') end,
     cmd = 'Neogit',
     -- stylua: ignore
     keys = {
-      { '<localleader>gs', function() require('neogit').open() end, desc = 'open status buffer', },
+      {
+        '<localleader>gs',
+        function() require('neogit').open({
+          cwd = vim.uv.cwd(),
+          no_expand = true
+        }) end,
+        desc = 'open status buffer',
+      },
       { '<localleader>gc', function() require('neogit').open({ 'commit' }) end, desc = 'open commit buffer', },
       { '<localleader>gl', function() require('neogit.popups.pull').create() end, desc = 'open pull popup', },
       { '<localleader>gp', function() require('neogit.popups.push').create({}) end, desc = 'open push popup', },
@@ -131,7 +147,7 @@ return {
   },
   {
     'chrisgrieser/nvim-tinygit',
-    cond = enabled,
+    cond = function() return git_cond('nvim-tinygit') end,
     -- stylua: ignore
     keys = {
       { '<leader><leader>ga', '<Cmd>lua require("tinygit").amendOnlyMsg()<CR>', desc = 'tinygit: amend commit' },
@@ -153,7 +169,7 @@ return {
   },
   {
     'sindrets/diffview.nvim',
-    cond = enabled,
+    cond = function() return git_cond('diffview.nvim') end,
     cmd = {
       'DiffviewOpen',
       'DiffviewFileHistory',
@@ -388,7 +404,7 @@ return {
   },
   {
     'lewis6991/gitsigns.nvim',
-    cond =  enabled,
+    cond = function() return git_cond('gitsigns.nvim') end,
     event = { 'BufRead', 'BufNewFile' },
     init = function()
       ar.add_to_select_menu('git', {
@@ -454,7 +470,7 @@ return {
   },
   {
     'almo7aya/openingh.nvim',
-    cond = enabled,
+    cond = function() return git_cond('openingh.nvim') end,
     cmd = { 'OpenInGHFile', 'OpenInGHRepo', 'OpenInGHFileLines' },
     init = function()
       ar.add_to_select_menu('git', {
@@ -497,7 +513,7 @@ return {
   },
   {
     'https://git.sr.ht/~tomleb/repo-url.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('repo-url.nvim', not minimal) end,
     -- stylua: ignore
     keys= {
       {  mode = { 'n', 'v' }, '<localleader>gyb', ':lua require("repo-url").copy_blob_url()<CR>', desc= 'copy blob URL' },
@@ -558,7 +574,7 @@ return {
   },
   {
     'linrongbin16/gitlinker.nvim',
-    cond = enabled,
+    cond = function() return git_cond('gitlinker.nvim') end,
     cmd = { 'GitLink' },
     opts = {
 
@@ -621,7 +637,7 @@ return {
   },
   {
     'emmanueltouzery/agitator.nvim',
-    cond = enabled,
+    cond = function() return git_cond('agitator.nvim') end,
     init = function()
       local function time_machine()
         require('agitator').git_time_machine({ use_current_win = true })
@@ -651,7 +667,7 @@ return {
   },
   {
     'FabijanZulj/blame.nvim',
-    cond = enabled,
+    cond = function() return git_cond('blame.nvim') end,
     cmd = { 'BlameToggle' },
     init = function()
       ar.add_to_select_menu('git', { ['Toggle Blame'] = 'BlameToggle' })
@@ -660,8 +676,8 @@ return {
   },
   {
     'dlvhdr/gh-addressed.nvim',
+    cond = function() return git_cond('gh-addressed.nvim') end,
     cmd = 'GhReviewComments',
-    cond = enabled,
     -- stylua: ignore
     keys = {
       { '<leader>gc', '<Cmd>GhReviewComments<CR>', desc = 'github review comments' },
@@ -669,8 +685,8 @@ return {
   },
   {
     'aaronhallaert/advanced-git-search.nvim',
+    cond = function() return git_cond('advanced-git-search.nvim') end,
     cmd = { 'AdvancedGitSearch' },
-    cond = enabled,
     init = function()
       ar.add_to_select_menu('git', { ['Git Search'] = 'AdvancedGitSearch' })
     end,
@@ -680,7 +696,7 @@ return {
   },
   {
     '2kabhishek/co-author.nvim',
-    cond = enabled,
+    cond = function() return git_cond('co-author.nvim') end,
     cmd = 'CoAuthor',
     init = function()
       ar.add_to_select_menu('git', { ['List Authors'] = 'CoAuthor' })
@@ -688,7 +704,7 @@ return {
   },
   {
     'niuiic/git-log.nvim',
-    cond = enabled,
+    cond = function() return git_cond('git-log.nvim') end,
     -- stylua: ignore
     keys = {
       { '<leader>gL', "<Cmd>lua require'git-log'.check_log()<CR>", mode = { 'n', 'x' }, desc = 'git-log: show line/selection log', },
@@ -697,7 +713,7 @@ return {
   },
   {
     'rbong/vim-flog',
-    cond = enabled,
+    cond = function() return git_cond('vim-flog') end,
     init = function()
       ar.add_to_select_menu('git', { ['View Branch Graph'] = 'Flog' })
     end,
@@ -705,7 +721,7 @@ return {
   },
   {
     'ldelossa/gh.nvim',
-    cond = enabled,
+    cond = function() return git_cond('gh.nvim') end,
     -- stylua: ignore
     cmd = {
       'GHCloseCommit', 'GHExpandCommit', 'GHOpenToCommit', 'GHPopOutCommit',
@@ -725,7 +741,7 @@ return {
   },
   {
     'isakbm/gitgraph.nvim',
-    cond = enabled,
+    cond = function() return git_cond('gitgraph.nvim') end,
     opts = {
       symbols = {
         merge_commit = 'M',
@@ -752,7 +768,7 @@ return {
   --------------------------------------------------------------------------------
   {
     'ejrichards/baredot.nvim',
-    cond = enabled and false,
+    cond = git_cond('baredot.nvim') and false,
     lazy = false,
     opts = {
       git_dir = '~/.dots/dotfiles', -- Change this path
@@ -760,7 +776,7 @@ return {
   },
   {
     'akinsho/git-conflict.nvim',
-    cond = enabled and false,
+    cond = git_cond('git-conflict.nvim') and false,
     event = 'BufReadPre',
     opts = {
       disable_diagnostics = true,
@@ -794,7 +810,7 @@ return {
   {
     'SuperBo/fugit2.nvim',
     enabled = false,
-    cond = enabled and false,
+    cond = git_cond('fugit2.nvim') and false,
     cmd = { 'Fugit2', 'Fugit2Diff', 'Fugit2Graph' },
     keys = {
       { '<leader><localleader>F', '<Cmd>Fugit2<CR>', desc = 'fugit2: open' },
@@ -804,7 +820,7 @@ return {
   {
     'dlvhdr/gh-blame.nvim',
     enabled = false,
-    cond = enabled and false,
+    cond = git_cond('gh-blame.nvim') and false,
     -- stylua: ignore
     keys = {
       { '<leader>gbp', '<Cmd>GhBlameCurrentLine<CR>', desc = 'blame current line (PR)' },

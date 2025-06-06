@@ -1,7 +1,12 @@
 return {
   {
     'tribela/transparent.nvim',
-    cond = ar_config.ui.transparent.enable,
+    cond = function()
+      return ar.get_plugin_cond(
+        'transparent.nvim',
+        ar_config.ui.transparent.enable
+      )
+    end,
     event = 'VimEnter',
     opts = {
       extra_groups = {
