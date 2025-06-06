@@ -40,12 +40,9 @@ function M.git_remote_sync()
   local upstream_args =
     { 'rev-list', '--left-right', '--count', 'HEAD...@{upstream}' }
 
-  local function on_status_change()
-    vim.schedule(
-      function()
-        api.nvim_exec_autocmds('User', { pattern = 'git_statusChanged' })
-      end
-    )
+  if ar.falsy(fn.executable(cmd)) then
+    vim.notify('Git is not installed or not in PATH', vim.log.levels.ERROR)
+    return
   end
 
   -- Fetch the remote repository
@@ -55,6 +52,14 @@ function M.git_remote_sync()
     function() M.git_status.status = 'done' end,
     function() M.git_status.status = 'pending' end
   )
+
+  local function on_status_change()
+    vim.schedule(
+      function()
+        api.nvim_exec_autocmds('User', { pattern = 'git_statusChanged' })
+      end
+    )
+  end
 
   -- Compare local repository to upstream
   local function on_exit(job)
