@@ -33,8 +33,8 @@ return {
     cond = not minimal and ar.treesitter.enable,
     -- stylua: ignore
     init = function()
-      map({ 'n', 'x', 'o' }, ';n', require('demicolon.repeat_jump').forward, { desc = 'demicolon: forward' })
-      map({ 'n', 'x', 'o' }, ';p', require('demicolon.repeat_jump').backward, { desc = 'demicolon: backward' })
+      map({ 'n', 'x', 'o' }, ';n', function () require('demicolon.repeat_jump').forward() end, { desc = 'demicolon: forward' })
+      map({ 'n', 'x', 'o' }, ';p', function () require('demicolon.repeat_jump').backward() end, { desc = 'demicolon: backward' })
     end,
     keys = { ';', ']', '[' },
     dependencies = 'nvim-treesitter/nvim-treesitter-textobjects',
