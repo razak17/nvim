@@ -287,7 +287,7 @@ local config = {
   ai = {
     ---@type ArAIModels
     models = {
-      claude = true,
+      claude = false,
       copilot = true,
       gemini = true,
       openai = false,

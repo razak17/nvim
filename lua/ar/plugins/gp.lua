@@ -192,10 +192,7 @@ return {
         anthropic = { disable = not models.claude },
       },
       agents = {
-        { name = 'ChatClaude-3-5-Haiku', disable = true },
-        { name = 'ChatCopilot', disable = true },
         { name = 'CodeClaude-3-5-Haiku', disable = true },
-        { name = 'CodeCopilot', disable = true },
       },
       default_chat_agent = 'ChatCopilot-claude-sonnet-4',
     }
