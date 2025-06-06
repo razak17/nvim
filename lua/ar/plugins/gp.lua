@@ -216,10 +216,12 @@ return {
         ['claude-sonnet-4'] = { max_tokens = 80000 },
         ['gemini-2.0-flash-001'] = {},
         ['gemini-2.5-pro'] = { max_tokens = 128000 },
-        ['gpt-4o'] = {},
-        ['gpt-4o-mini'] = {},
-        ['o3-mini'] = {},
-        ['o4-mini'] = {},
+        ['gpt-4'] = { max_tokens = 32768 },
+        ['gpt-4.1'] = { max_tokens = 128000 },
+        ['gpt-4o'] = { max_tokens = 64000 },
+        ['gpt-4o-mini'] = { max_tokens = 12288 },
+        ['o3-mini'] = { max_tokens = 64000 },
+        ['o4-mini'] = { max_tokens = 128000 },
       }
       for model, config in pairs(copilot_models) do
         setup_model({
