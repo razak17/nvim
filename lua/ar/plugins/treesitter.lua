@@ -105,11 +105,11 @@ return {
         lint_events = { 'BufWrite', 'CursorHold' },
       },
       playground = { persist_queries = true },
-        -- stylua: ignore
-        ensure_installed = {
-          'c', 'vim', 'vimdoc', 'query', 'lua', 'luadoc', 'luap', 'diff', 'regex',
-          'gitcommit', 'git_config', 'git_rebase', 'markdown', 'markdown_inline',
-        },
+      -- stylua: ignore
+      ensure_installed = {
+        'c', 'vim', 'vimdoc', 'query', 'lua', 'luadoc', 'luap', 'diff', 'regex',
+        'gitcommit', 'git_config', 'git_rebase', 'markdown', 'markdown_inline',
+      },
     },
     config = function(_, opts)
       local parser_config =
