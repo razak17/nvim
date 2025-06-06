@@ -8,6 +8,7 @@ return {
     return ar.get_plugin_cond('noice.nvim', not ar.plugins.minimal)
   end,
   event = 'VeryLazy',
+  lazy = false,
   init = function()
     vim.g.whichkey_add_spec({ '<leader><leader>n', group = 'Noice' })
   end,
