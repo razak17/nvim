@@ -41,9 +41,12 @@ local function get_snippets_list()
 end
 
 return {
-  's1n7ax/nvim-ts-utils',
   { 'rafamadriz/friendly-snippets', cond = not minimal },
-  { 's1n7ax/nvim-snips', name = 'snips' },
+  {
+    's1n7ax/nvim-snips',
+    name = 'snips',
+    dependencies = { 's1n7ax/nvim-ts-utils' },
+  },
   {
     'L3MON4D3/LuaSnip',
     cond = not minimal,
@@ -107,7 +110,7 @@ return {
       ls.filetype_extend('typescriptreact', { 'javascript', 'typescript' })
       ls.filetype_extend('NeogitCommitMessage', { 'gitcommit' })
 
-      if ar.treesitter.enable then
+      if ar.treesitter.enable and ar.is_available('snips') then
         local snippets_list = get_snippets_list()
         for _, module_path in ipairs(snippets_list) do
           local ok, snip = pcall(require, module_path)
