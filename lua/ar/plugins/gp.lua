@@ -37,12 +37,26 @@ local function gp_choose_agent()
   local gp = require('gp')
   local is_chat = gp.not_chat(buf, file_name) == nil
   local agents = is_chat and gp._chat_agents or gp._command_agents
-  -- local agents = gp._chat_agents
   local prompt_title = is_chat and 'Chat Models' or 'Completion Models'
-  vim.ui.select(agents, { prompt = prompt_title }, function(selected)
-    if selected == nil then return end
-    -- if not is_chat then vim.cmd('GpChatNew') end
-    require('gp').cmd.Agent({ args = selected })
+  local options = {}
+  if models.claude then table.insert(options, 'ChatClaude') end
+  if models.copilot then table.insert(options, 'ChatCopilot') end
+  if models.gemini then table.insert(options, 'ChatGemini') end
+  if models.openai then table.insert(options, 'ChatGPT') end
+  vim.ui.select(options, { prompt = prompt_title }, function(choice)
+    local selected = vim
+      .iter(agents)
+      :filter(function(agent) return agent:match(choice) end)
+      :map(function(agent)
+        if agent == choice then return choice end
+        return string.match(agent, 'ChatCopilot%-(.+)')
+      end)
+      :totable()
+    vim.ui.select(selected, { prompt = choice .. ' models' }, function(agent)
+      if agent == nil then return end
+      if agent ~= choice then agent = fmt('%s-%s', choice, agent) end
+      require('gp').cmd.Agent({ args = agent })
+    end)
   end)
 end
 
