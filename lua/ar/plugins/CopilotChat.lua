@@ -119,7 +119,7 @@ return {
       end, 3000)
     end,
     opts = {
-      model = 'claude-3.7-sonnet',
+      model = 'claude-sonnet-4',
       prompts = prompts,
       auto_follow_cursor = false, -- Don't follow the cursor after getting response
       show_help = true, -- Show help in virtual text, set to true if that's 1st time using Copilot Chat
@@ -127,7 +127,7 @@ return {
       mappings = {
         complete = {
           detail = 'Use @<Tab> or /<Tab> for options.',
-          insert = '<Tab>',
+          insert = '<C-u>',
         },
         close = { normal = 'q', insert = '<C-c>' },
         reset = { normal = '<C-x>', insert = '<C-x>' },
