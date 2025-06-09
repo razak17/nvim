@@ -79,7 +79,7 @@ local function create_ts_action(source, description)
   }
 end
 
----@type lspconfig.options
+---@type lspconfig.Config
 local servers = {
   astro = {},
   clangd = { cmd = get_clangd_cmd() },
@@ -87,7 +87,6 @@ local servers = {
   cssls = {},
   dockerls = {},
   -- golangci_lint_ls = {},
-  lemminx = {},
   marksman = {},
   prismals = {},
   prosemd_lsp = {},
@@ -177,6 +176,32 @@ local servers = {
       json = {
         schemas = require('schemastore').json.schemas(),
         validate = { enable = true },
+      },
+    },
+  },
+  lemminx = {
+    filetypes = { 'xml', 'xsl', 'xslt', 'svg', 'ant' },
+    single_file_support = true,
+    init_options = {
+      settings = {
+        xml = {
+          format = {
+            enabled = true,
+            maxLineWidth = 280,
+            splitAttributes = 'preserve', -- 'preserve' | 'alignWithFirst' | 'alignWithFirstAndIndent' | 'alignWithFirstAttr'
+            joinContentLines = true,
+            preservedNewlines = 1,
+            insertSpaces = true,
+            tabSize = 4,
+          },
+        },
+        xslt = {
+          format = {
+            enabled = true,
+            splitAttributes = 'preserve',
+            maxLineWidth = 280,
+          },
+        },
       },
     },
   },
