@@ -193,41 +193,6 @@ return {
     cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
   },
   {
-    'nvim-treesitter/nvim-treesitter-context',
-    cond = not minimal and ts_extra_enabled,
-    keys = {
-      {
-        '[K',
-        function() require('treesitter-context').go_to_context(vim.v.count1) end,
-        desc = 'goto treesitter context',
-      },
-    },
-    event = { 'BufRead', 'BufNewFile' },
-    cmd = { 'TSContext' },
-    init = function()
-      ar.add_to_select_menu(
-        'toggle',
-        { ['Toggle TS Context'] = 'TSContext toggle' }
-      )
-    end,
-    config = function()
-      highlight.plugin('treesitter-context', {
-        theme = {
-          ['onedark'] = {
-            { TreesitterContextSeparator = { link = 'VertSplit' } },
-            { TreesitterContext = { inherit = 'Normal' } },
-            { TreesitterContextLineNumber = { inherit = 'LineNr' } },
-          },
-        },
-      })
-      require('treesitter-context').setup({
-        multiline_threshold = 4,
-        separator = '─', -- alternatives: ▁ ─ ▄
-        mode = 'cursor',
-      })
-    end,
-  },
-  {
     'andymass/vim-matchup',
     event = { 'BufReadPre', 'BufNewFile' },
     cond = not minimal and ts_extra_enabled,
@@ -272,29 +237,6 @@ return {
     cond = not minimal and ts_extra_enabled and false,
     event = { 'BufRead', 'BufNewFile' },
     opts = {},
-  },
-  {
-    'andersevenrud/nvim_context_vt',
-    cond = not minimal and ts_extra_enabled,
-    cmd = 'NvimContextVtToggle',
-    keys = {
-      {
-        '<localleader>lb',
-        '<cmd>NvimContextVtToggle<CR>',
-        desc = 'toggle context visualizer',
-      },
-    },
-    init = function()
-      ar.add_to_select_menu(
-        'command_palette',
-        { ['Toggle Context Visualizer'] = 'NvimContextVtToggle' }
-      )
-    end,
-    opts = { highlight = 'Comment' },
-    config = function(_, opts)
-      require('nvim_context_vt').setup(opts)
-      vim.cmd([[NvimContextVtToggle]])
-    end,
   },
   --------------------------------------------------------------------------------
   -- Disabled
