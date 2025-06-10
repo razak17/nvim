@@ -32,6 +32,7 @@ return {
             'BufWinEnter',
             'BufWritePost',
             'BufEnter',
+            'FileType',
           },
           enable = function(buf, win)
             local b, w = vim.bo[buf], vim.wo[win]

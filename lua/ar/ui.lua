@@ -289,6 +289,7 @@ local filetypes = ar.p_table({
   ['arena'] = presets.tool_panel:with({ number = true }),
   ['Avante'] = presets.tool_panel,
   ['blame'] = presets.tool_panel,
+  ['bufexplorer'] = presets.tool_panel,
   ['buffalo'] = presets.tool_panel:with({ number = true }),
   ['buffer_manager'] = presets.tool_panel:with({ number = true }),
   ['checkhealth'] = presets.tool_panel,
