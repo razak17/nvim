@@ -15,39 +15,6 @@ end
 
 return {
   {
-    '2kabhishek/octohub.nvim',
-    cond = function() return git_cond('octohub.nvim') end,
-    init = function()
-      vim.g.whichkey_add_spec({ '<leader><leader>o', group = 'Octohub' })
-    end,
-    cmd = {
-      'OctoRepos',
-      'OctoRepo',
-      'OctoStats',
-      'OctoActivityStats',
-      'OctoContributionStats',
-      'OctoRepoStats',
-      'OctoProfile',
-      'OctoRepoWeb',
-    },
-    -- stylua: ignore
-    keys = {
-      { '<leader><leader>oo', '<Cmd>OctoRepos<CR>', desc = 'octohub: all repos' },
-      { '<leader><leader>os', '<Cmd>OctoRepos sort:stars<CR>', desc = 'octohub: top starred repos' },
-      { '<leader><leader>oi', '<Cmd>OctoRepos sort:issues<CR>', desc = 'octohub: repos with issues' },
-      { '<leader><leader>ou', '<Cmd>OctoRepos sort:updated<CR>', desc = 'octohub: recently updated repos' },
-      { '<leader><leader>op', '<Cmd>OctoRepos type:private<CR>', desc = 'octohub: private repos' },
-      { '<leader><leader>of', '<Cmd>OctoRepos type:fork<CR>', desc = 'octohub: forked repos' },
-      { '<leader><leader>oc', '<Cmd>OctoRepo<CR>', desc = 'octohub: open repo' },
-      { '<leader><leader>ot', '<Cmd>OctoStats<CR>', desc = 'octohub: all stats' },
-      { '<leader><leader>oa', '<Cmd>OctoActivityStats<CR>', desc = 'octohub: activity stats' },
-      { '<leader><leader>og', '<Cmd>OctoContributionStats<CR>', desc = 'octohub: contribution graph' },
-      { '<leader><leader>or', '<Cmd>OctoRepoStats<CR>', desc = 'octohub: repo stats' },
-    },
-    dependencies = { '2kabhishek/utils.nvim', 'nvim-telescope/telescope.nvim' },
-    opts = { add_default_keybindings = false },
-  },
-  {
     'yyk/find-git-root.nvim',
     cond = function() return git_cond('find-git-root.nvim') end,
     cmd = { 'CdGitRoot' },
@@ -825,5 +792,39 @@ return {
     keys = {
       { '<leader>gbp', '<Cmd>GhBlameCurrentLine<CR>', desc = 'blame current line (PR)' },
     },
+  },
+  {
+    '2kabhishek/octohub.nvim',
+    enabled = false,
+    cond = function() return git_cond('octohub.nvim') end,
+    init = function()
+      vim.g.whichkey_add_spec({ '<leader><leader>o', group = 'Octohub' })
+    end,
+    cmd = {
+      'OctoRepos',
+      'OctoRepo',
+      'OctoStats',
+      'OctoActivityStats',
+      'OctoContributionStats',
+      'OctoRepoStats',
+      'OctoProfile',
+      'OctoRepoWeb',
+    },
+    -- stylua: ignore
+    keys = {
+      { '<leader><leader>oo', '<Cmd>OctoRepos<CR>', desc = 'octohub: all repos' },
+      { '<leader><leader>os', '<Cmd>OctoRepos sort:stars<CR>', desc = 'octohub: top starred repos' },
+      { '<leader><leader>oi', '<Cmd>OctoRepos sort:issues<CR>', desc = 'octohub: repos with issues' },
+      { '<leader><leader>ou', '<Cmd>OctoRepos sort:updated<CR>', desc = 'octohub: recently updated repos' },
+      { '<leader><leader>op', '<Cmd>OctoRepos type:private<CR>', desc = 'octohub: private repos' },
+      { '<leader><leader>of', '<Cmd>OctoRepos type:fork<CR>', desc = 'octohub: forked repos' },
+      { '<leader><leader>oc', '<Cmd>OctoRepo<CR>', desc = 'octohub: open repo' },
+      { '<leader><leader>ot', '<Cmd>OctoStats<CR>', desc = 'octohub: all stats' },
+      { '<leader><leader>oa', '<Cmd>OctoActivityStats<CR>', desc = 'octohub: activity stats' },
+      { '<leader><leader>og', '<Cmd>OctoContributionStats<CR>', desc = 'octohub: contribution graph' },
+      { '<leader><leader>or', '<Cmd>OctoRepoStats<CR>', desc = 'octohub: repo stats' },
+    },
+    dependencies = { '2kabhishek/utils.nvim', 'nvim-telescope/telescope.nvim' },
+    opts = { add_default_keybindings = false },
   },
 }
