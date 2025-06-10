@@ -170,6 +170,7 @@ local servers = {
       'graphql.config.*'
     ),
   },
+  jdtls = {},
   jedi_language_server = {},
   jsonls = {
     settings = {
