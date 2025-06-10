@@ -23,6 +23,31 @@ local is_ai_cmp = ar_config.ai.completion.enable
 
 return {
   {
+    'kylesnowschwartz/prompt-tower.nvim',
+    cond = not minimal and ar.ai.enable,
+    init = function()
+      ar.add_to_select_menu('ai', {
+        ['Prompt Tower'] = function()
+          ar.create_select_menu('Prompt Tower', {
+            ['UI'] = 'PromptTower ui',
+            ['Clear'] = 'PromptTower clear',
+            ['Select'] = 'PromptTower select',
+            ['Format'] = 'PromptTower format',
+            ['Generate'] = 'PromptTower generate',
+          })()
+        end,
+      })
+    end,
+    cmd = { 'PromptTower' },
+    config = function()
+      require('prompt-tower').setup({
+        output_format = {
+          default_format = 'markdown', -- Options: 'xml', 'markdown', 'minimal'
+        },
+      })
+    end,
+  },
+  {
     'yetone/avante.nvim',
     cond = not minimal and ar.ai.enable and false,
     init = function()
