@@ -63,7 +63,6 @@ end
 local function gp_finder()
   ar.pick.open('files', {
     show_empty = true,
-    prompt = 'Find Chat',
     cwd = fn.stdpath('data') .. '/gp/chats',
     on_show = function() vim.cmd.stopinsert() end,
   })
