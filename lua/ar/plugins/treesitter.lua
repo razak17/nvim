@@ -195,6 +195,13 @@ return {
   {
     'nvim-treesitter/nvim-treesitter-context',
     cond = not minimal and ts_extra_enabled,
+    keys = {
+      {
+        '[K',
+        function() require('treesitter-context').go_to_context(vim.v.count1) end,
+        desc = 'goto treesitter context',
+      },
+    },
     event = { 'BufRead', 'BufNewFile' },
     cmd = { 'TSContext' },
     init = function()
@@ -213,18 +220,11 @@ return {
           },
         },
       })
-      local ts_ctx = require('treesitter-context')
-      ts_ctx.setup({
+      require('treesitter-context').setup({
         multiline_threshold = 4,
         separator = '─', -- alternatives: ▁ ─ ▄
         mode = 'cursor',
       })
-      map(
-        'n',
-        '[K',
-        function() ts_ctx.go_to_context(vim.v.count1) end,
-        { desc = 'goto context' }
-      )
     end,
   },
   {
