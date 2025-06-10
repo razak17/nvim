@@ -196,11 +196,11 @@ return {
     'nvim-treesitter/nvim-treesitter-context',
     cond = not minimal and ts_extra_enabled,
     event = { 'BufRead', 'BufNewFile' },
-    cmd = { 'TSContextEnable', 'TSContextDisable', 'TSContextToggle' },
+    cmd = { 'TSContext' },
     init = function()
       ar.add_to_select_menu(
         'toggle',
-        { ['Toggle TS Context'] = 'TSContextToggle' }
+        { ['Toggle TS Context'] = 'TSContext toggle' }
       )
     end,
     config = function()
