@@ -170,7 +170,7 @@ local servers = {
       'graphql.config.*'
     ),
   },
-  jdtls = {},
+  -- jdtls = {},
   jedi_language_server = {},
   jsonls = {
     settings = {
@@ -371,13 +371,11 @@ local servers = {
   },
 }
 
----Get the configuration for a specific language server
----@param name string?
----@return table<string, any>?
-local function get(name)
-  local config = servers[name]
-  if not config then return nil end
-  if type(config) == 'function' then config = config() end
+---@param name string
+---@param config lspconfig.Config?
+---@return lspconfig.Config
+local function capabilities(name, config)
+  config = config or {}
   local has_cmp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
   local has_blink, blink = pcall(require, 'blink.cmp')
   config.capabilities = vim.tbl_deep_extend(
@@ -427,8 +425,19 @@ local function get(name)
   return config
 end
 
+---Get the configuration for a specific language server
+---@param name string?
+---@return table<string, any>?
+local function get(name)
+  local config = servers[name]
+  if not config then return nil end
+  if type(config) == 'function' then config = config() end
+  return capabilities(name, config)
+end
+
 return {
   list = servers,
+  capabilities = capabilities,
   get = get,
   names = function() return vim.tbl_keys(servers) end,
 }

@@ -119,12 +119,7 @@ return {
                 global_settings = 'nvim.json',
               },
             },
-            {
-              'nvim-java/nvim-java',
-              -- cond = false,
-              ft = { 'java' },
-              config = function() require('java').setup({}) end,
-            },
+            { 'mfussenegger/nvim-jdtls', cond = ar.lsp.enable },
           },
         },
       },
