@@ -18,7 +18,7 @@ return {
     cmd = { 'TSContext' },
     init = function()
       ar.add_to_select_menu(
-        'toggle',
+        'command_palette',
         { ['Toggle TS Context'] = 'TSContext toggle' }
       )
     end,
@@ -46,13 +46,6 @@ return {
       return ar.get_plugin_cond('nvim_context_vt', condition)
     end,
     cmd = 'NvimContextVtToggle',
-    keys = {
-      {
-        '<localleader>lb',
-        '<cmd>NvimContextVtToggle<CR>',
-        desc = 'toggle context visualizer',
-      },
-    },
     init = function()
       ar.add_to_select_menu(
         'command_palette',
@@ -64,5 +57,15 @@ return {
       require('nvim_context_vt').setup(opts)
       vim.cmd([[NvimContextVtToggle]])
     end,
+  },
+  {
+    'nabekou29/pair-lens.nvim',
+    cond = function()
+      local condition = not minimal and ar.ts_extra_enabled and false
+      return ar.get_plugin_cond('pair-lens.nvim', condition)
+    end,
+    event = { 'BufReadPre', 'BufNewFile' },
+    cmd = { 'PairLensToggle', 'PairLensEnable', 'PairLensDisable' },
+    opts = {},
   },
 }
