@@ -74,6 +74,16 @@ return {
     config = function() vim.g.bufExplorerShowRelativePath = 1 end,
   },
   {
+    'wasabeef/bufferin.nvim',
+    cond = function()
+      local condition = not minimal and ar_config.buffers.variant == 'bufferin'
+      return ar.get_plugin_cond('bufferin.nvim', condition)
+    end,
+    cmd = { 'Bufferin' },
+    keys = { { '<M-space>', '<Cmd>Bufferin<cr>', desc = 'buffferin: toggle' } },
+    opts = {},
+  },
+  {
     'sathishmanohar/quick-buffer-jump',
     cond = function()
       local condition = not minimal and niceties
