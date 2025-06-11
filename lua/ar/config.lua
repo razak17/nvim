@@ -27,6 +27,7 @@ local env = vim.env
 ---@alias ArAIModel 'claude' | 'gemini' | 'openai' | 'copilot'
 ---@alias ArAICompletion 'copilot' | 'minuet'
 ---@alias ArExplorerRename 'local' | 'snacks'
+---@alias ArWhichBuffers 'bufexplorer' | 'bufferin' | 'snacks'
 ---@alias ArTypescriptLsp 'ts_ls' | 'typescript-tools' | 'vtsls'
 ---@alias ArPythonLsp 'pyright' | 'ruff' | 'jedi_language_server' | 'basedpyright'
 ---@alias ArCompletion 'cmp' | 'blink' | 'mini.completion' | 'omnifunc'
@@ -52,6 +53,10 @@ local env = vim.env
 ---@field gemini boolean
 ---@field openai boolean
 ---@field copilot boolean
+
+---@class ArBuffers
+---@field enable boolean
+---@field variant ArWhichBuffers
 
 ---@class ArDashboard
 ---@field enable boolean
@@ -323,6 +328,8 @@ local config = {
     explorer = 'thunar',
   },
   autosave = { enable = true, current = true },
+  ---@type ArBuffers
+  buffers = { enable = true, variant = 'snacks' },
   completion = {
     ---@type ArCompletionIcons
     icons = 'lspkind',

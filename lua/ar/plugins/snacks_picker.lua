@@ -194,10 +194,12 @@ return {
     if ar_config.picker.files == 'snacks' then
       table.insert(keys, { '<C-p>', find_files, desc = 'snacks: find files' })
     end
+    if ar_config.buffers.variant == 'snacks' then
+      table.insert(keys, { '<M-space>', buffers, desc = 'snacks: buffers' })
+    end
     if ar_config.picker.variant == 'snacks' then
       local picker_mappings = {
           -- stylua: ignore start
-          { '<M-space>', buffers, desc = 'snacks: buffers' },
           { '<leader>fc', p('files', { cwd = fn.stdpath('config') }), desc = 'find config file' },
           { '<leader>ff', p('files'), desc = 'find files' },
           { '<leader>fgb', p('git_branches'), desc = 'find git branches' },

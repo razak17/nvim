@@ -63,11 +63,15 @@ return {
   },
   {
     'jlanzarotta/bufexplorer',
-    cond = function() return ar.get_plugin_cond('bufexplorer', not minimal) end,
-    config = function() vim.g.bufExplorerShowRelativePath = 1 end,
+    cond = function()
+      local condition = not minimal
+        and ar_config.buffers.variant == 'bufexplorer'
+      return ar.get_plugin_cond('bufexplorer', condition)
+    end,
     keys = {
-      { '<localleader>be', '<cmd>BufExplorer<cr>', desc = 'bufexplorer: open' },
+      { '<M-space>', '<cmd>BufExplorer<cr>', desc = 'bufexplorer: open' },
     },
+    config = function() vim.g.bufExplorerShowRelativePath = 1 end,
   },
   {
     'sathishmanohar/quick-buffer-jump',
