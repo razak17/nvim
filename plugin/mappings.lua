@@ -615,11 +615,11 @@ command('ConvertGitUrl', function()
 end, { force = true })
 map('n', '<leader>gu', '<Cmd>ConvertGitUrl<CR>', { desc = 'convert git url' })
 --------------------------------------------------------------------------------
--- 70/30 split for split windows
+-- vertical resize
 map('n', '<leader>wr', function()
   vim.ui.input({ prompt = 'Enter win size: ', default = '120' }, function(input)
     if not input or input == '' then return end
-    vim.cmd('vertical resize ' .. input)
+    vim.cmd.resize({ input, mods = { vertical = true } })
   end)
 end, { desc = 'increase vertical spacing' })
 --------------------------------------------------------------------------------
