@@ -310,6 +310,9 @@ end
 if not ar.plugins.enable then
   nnoremap('<C-n>', ':Ex<CR>', { desc = 'explorer' })
 end
+if not ar.plugins.enable or ar.plugins.minimal then
+  nnoremap('<leader>;', '<Cmd>intro<CR>', { desc = 'intro' })
+end
 nnoremap('<localleader>bo', function()
   local current_buffer = fn.bufnr('%')
   for _, buffer in ipairs(fn.getbufinfo({ buflisted = 1 })) do
