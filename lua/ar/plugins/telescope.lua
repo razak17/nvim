@@ -620,7 +620,7 @@ return {
           -- LSP
           { '<leader>ld', b('lsp_document_symbols'), desc = 'telescope: document symbols', },
           { '<leader>lI', b('lsp_implementations'), desc = 'telescope: search implementation', },
-          { '<leader>lR', b('lsp_references'), desc = 'telescope: show references', },
+          { '<leader>lr', b('lsp_references'), desc = 'telescope: show references', },
           { '<leader>ls', b('lsp_dynamic_workspace_symbols'), desc = 'telescope: workspace symbols', },
           { '<leader>le', b('diagnostics', { bufnr = 0 }), desc = 'telescope: document diagnostics', },
           { '<leader>lw', b('diagnostics'), desc = 'telescope: workspace diagnostics', },

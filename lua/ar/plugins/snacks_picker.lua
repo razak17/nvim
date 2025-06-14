@@ -242,7 +242,7 @@ return {
           -- lsp
           { '<leader>le', p('diagnostics_buffer'), desc = 'snacks: buffer diagnostics' },
           { '<leader>lw', p('diagnostics'), desc = 'snacks: diagnostics' },
-          { '<leader>lR', p('lsp_references'), nowait = true, desc = 'snacks: references' },
+          { '<leader>lr', p('lsp_references'), nowait = true, desc = 'snacks: references' },
           { '<leader>lI', p('lsp_implementations'), desc = 'snacks: goto implementation' },
           { '<leader>ly', p('lsp_type_definitions'), desc = 'snacks: goto t[y]pe definition' },
           -- explorer

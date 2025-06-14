@@ -170,7 +170,7 @@ return {
           { '<leader>fgc', fzf_lua.git_commits, desc = 'commits' },
           { '<leader>ld', fzf_lua.lsp_document_symbols, desc = 'document symbols' },
           { '<leader>lI', fzf_lua.lsp_implementations, desc = 'search implementation' },
-          { '<leader>lR', fzf_lua.lsp_references, desc = 'show references' },
+          { '<leader>lr', fzf_lua.lsp_references, desc = 'show references' },
           { '<leader>lsl', fzf_lua.lsp_live_workspace_symbols, desc = 'live workspace symbols' },
           { '<leader>fc', function() find_files(fn.stdpath('config')) end, desc = 'nvim config' },
           { '<leader>fla', lazy, desc = 'all plugins' },

@@ -178,7 +178,7 @@ return {
         { '<leader>fla', lazy, desc = 'plugins' },
         -- lsp
         { '<leader>le', extra('diagnostic'), desc = 'mini.pick: diagnostics' },
-        { '<leader>lR', lsp('references'), desc = 'mini.pick: references' },
+        { '<leader>lr', lsp('references'), desc = 'mini.pick: references' },
         { '<leader>lI', lsp('implementation'), desc = 'mini.pick: implementation' },
         { '<leader>ly', lsp('type_definition'), desc = 'mini.pick: type definition' },
         -- explorer

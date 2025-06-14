@@ -429,7 +429,7 @@ local function setup_mappings(client, bufnr)
     },
     {
       'n',
-      '<leader>lr',
+      '<leader>ln',
       lsp.buf.rename,
       desc = 'rename',
       capability = M.textDocument_rename,
