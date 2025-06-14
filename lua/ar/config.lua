@@ -329,7 +329,7 @@ local config = {
   },
   autosave = { enable = true, current = true },
   ---@type ArBuffers
-  buffers = { enable = true, variant = 'bufferin' },
+  buffers = { enable = true, variant = 'snacks' },
   completion = {
     ---@type ArCompletionIcons
     icons = 'lspkind',
