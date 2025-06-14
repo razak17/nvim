@@ -81,6 +81,19 @@ return {
           end)
           :totable()
         require('mason-lspconfig').setup({ automatic_enable = enabled_servers })
+        local manual_servers = { 'tsgo' }
+        vim
+          .iter(manual_servers)
+          :filter(function(name)
+            local should_skip = ar.lsp_override(name)
+              or ar.lsp_disabled(name)
+              or ar.dir_lsp_disabled(cwd)
+            return not should_skip
+          end)
+          :each(function(name)
+            local config = require('ar.servers').get(name)
+            if config then vim.lsp.enable(name) end
+          end)
       end,
       dependencies = {
         {
