@@ -30,7 +30,6 @@ local function snacks_ui_select(items, opts, on_choice)
     format = Snacks.picker.format.ui_select(opts.kind, #items),
     title = title,
     layout = {
-      preview = false,
       layout = {
         height = math.floor(math.min(vim.o.lines * 0.5 - 10, #items + 2) + 0.5),
       },
