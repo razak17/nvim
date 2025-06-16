@@ -111,7 +111,7 @@ local function find_files()
     format = 'file',
     show_empty = true,
     supports_live = true,
-    -- layout = 'telescope',
+    layout = { cycle = true, preset = 'telescope' },
       -- stylua: ignore start
     args = {
       '--exclude', '**/.git/**',
