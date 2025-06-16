@@ -193,6 +193,7 @@ return {
             },
           },
           chat = {
+            auto_scroll = false,
             show_settings = true,
             window = {
               layout = 'vertical', -- float|vertical|horizontal|buffer
