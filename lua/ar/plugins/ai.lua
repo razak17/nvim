@@ -224,6 +224,13 @@ return {
         set_adapter_and_strategy('copilot')
       end
 
+      opts.strategies.chat.opts = opts.strategies.chat.opts or {}
+      if cmp == 'blink' or cmp == 'cmp' then
+        opts.strategies.chat.opts.completion_provider = cmp
+      else
+        opts.strategies.chat.opts.completion_provider = 'default'
+      end
+
       return opts
     end,
     config = function(_, opts)

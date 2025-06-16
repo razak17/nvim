@@ -155,6 +155,7 @@ return {
             if ar.ai.enable then
               if is_copilot then table.insert(providers, 'copilot') end
               if is_minuet then table.insert(providers, 'minuet') end
+              table.insert(providers, 'codecompanion')
             end
             if not minimal then
               table.insert(providers, 'nvim-px-to-rem')
@@ -383,6 +384,22 @@ return {
           }
           opts.keymap['<A-y>'] = require('minuet').make_blink_map()
         end
+        opts.sources.providers.codecompanion = {
+          enabled = function() return ar.ai.enable end,
+          name = '[CC]',
+          module = 'codecompanion.providers.completion.blink',
+          score_offset = 100,
+          transform_items = function(_, items)
+            local CompletionItemKind =
+              require('blink.cmp.types').CompletionItemKind
+            local kind_idx = #CompletionItemKind + 1
+            CompletionItemKind[kind_idx] = 'CodeCompanion'
+            for _, item in ipairs(items) do
+              item.kind = kind_idx
+            end
+            return items
+          end,
+        }
       end
 
       if
