@@ -15,6 +15,8 @@
 -- end
 --
 -- vim.g.openai_api_key = get_openai_key()
+
+local fmt = string.format
 local minimal = ar.plugins.minimal
 local models = ar_config.ai.models
 local cmp = ar_config.completion.variant
@@ -163,7 +165,12 @@ return {
       local opts = {
         strategies = {
           chat = {
-            roles = { llm = '  CodeCompanion', user = 'me' },
+            roles = {
+              llm = function(adapter)
+                return fmt('  CodeCompanion (%s)', adapter.formatted_name)
+              end,
+              user = 'me',
+            },
             keymaps = {
               close = {
                 modes = { n = 'q', i = '<C-c>' },
