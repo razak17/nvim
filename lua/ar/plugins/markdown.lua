@@ -186,7 +186,7 @@ return {
     'nfrid/markdown-togglecheck',
     -- stylua: ignore
     keys = {
-      { '<leader>om', function() require('markdown-togglecheck').toggle() end, desc = 'toggle markdown checkbox', },
+      { '<leader>om', function() require('markdown-togglecheck').toggle() end, desc = 'toggle markdown checkbox' },
     },
     dependencies = { 'nfrid/treesitter-utils' },
   },

@@ -1,5 +1,6 @@
 local api = vim.api
 local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
+local get_cond = ar.get_plugin_cond
 
 return {
   {
@@ -162,6 +163,7 @@ return {
         end,
       })
     end,
+    -- https://github.com/chrisgrieser/.config/blob/788aa7dc619410086e972d6da4177af29827d3e9/nvim/lua/plugin-specs/ultimate-autopair.lua?plain=1#L30
     opts = {
       bs = {
         space = 'balance',
@@ -174,7 +176,7 @@ return {
         nocursormove = true,
         multiline = false,
       },
-      cr = { autoclose = true },
+      cr = { autoclose = false },
       tabout = { enable = false, map = '<Nop>' },
       extensions = { -- disable in these filetypes
         filetype = {
@@ -184,11 +186,10 @@ return {
       config_internal_pairs = {
         { "'", "'", nft = { 'markdown', 'gitcommit' } }, -- used as apostrophe
         { '"', '"', nft = { 'vim' } }, -- uses as comments in vimscript
-
         { -- disable codeblocks, see https://github.com/Saghen/blink.cmp/issues/1692
           '`',
           '`',
-          cond = function(_fn)
+          cond = function()
             local mdCodeblock = vim.bo.ft == 'markdown'
               and api.nvim_get_current_line():find('^[%s`]*$')
             return not mdCodeblock
@@ -199,8 +200,8 @@ return {
       -- INFO custom keys need to be "appended" to the opts as a list
       { '**', '**', ft = { 'markdown' } }, -- bold
       { [[\"]], [[\"]], ft = { 'zsh', 'json', 'applescript' } }, -- escaped quote
-
-      { -- commit scope (= only first word) for commit messages
+      -- commit scope (= only first word) for commit messages
+      {
         '(',
         '): ',
         ft = { 'gitcommit' },
