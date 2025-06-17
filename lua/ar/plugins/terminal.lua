@@ -3,6 +3,21 @@ local border = ui.current.border
 
 return {
   {
+    'nvzone/floaterm',
+    cond = function() return ar.get_plugin_cond('floaterm') end,
+    opts = {},
+    cmd = 'FloatermToggle',
+    keys = {
+      {
+        mode = { 't', 'n' },
+        [[<M-\>]],
+        '<Cmd>FloatermToggle<CR>',
+        desc = 'floaterm: toggle terminal',
+      },
+    },
+    dependencies = 'nvzone/volt',
+  },
+  {
     'akinsho/toggleterm.nvim',
     cond = function() return ar.get_plugin_cond('toggleterm.nvim') end,
     event = 'VeryLazy',

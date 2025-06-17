@@ -10,7 +10,10 @@ return {
         ['Toggle Stay Centered'] = 'lua require("stay-centered").toggle()',
       })
     end,
-    opts = { enabled = true },
+    opts = {
+      enabled = true,
+      skip_filetypes = { 'FloatermSidebar', 'VoltWindow' },
+    },
   },
   {
     'rlychrisg/keepcursor.nvim',
