@@ -344,6 +344,24 @@ local function setup_mappings(client, bufnr)
       capability = M.textDocument_documentColor,
     },
     {
+      'n',
+      '<leader>lY',
+      function()
+        local line = api.nvim_win_get_cursor(0)[1]
+        local diagnostics = diagnostic.get(0, { lnum = line - 1 })
+        -- empty the register first
+        fn.setreg('+', {}, 'V')
+        for _, d in ipairs(diagnostics) do
+          fn.setreg('+', vim.fn.getreg('+') .. d['message'], 'V')
+        end
+        vim.notify(
+          ('Yanked %d diagnostics to + register'):format(#diagnostics),
+          L.INFO
+        )
+      end,
+      desc = 'yank line diagnostics',
+    },
+    {
       { 'n', 'x' },
       '<leader>la',
       -- lsp.buf.code_action,

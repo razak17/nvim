@@ -441,9 +441,10 @@ function ar.escape_pattern(text) return text:gsub('([^%w])', '%%%1') end
 
 --- copy some text to clipboard
 ---@param to_copy string
----@param msg? string
+---@param msg? string | boolean
 function ar.copy_to_clipboard(to_copy, msg)
-  fn.setreg('+', to_copy)
+  fn.setreg('+', to_copy, 'V')
+  if msg == false then return end
   msg = msg or 'Copied to clipboard'
   vim.notify(msg, vim.log.levels.INFO)
 end
