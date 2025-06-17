@@ -19,6 +19,20 @@ local function cancel() neotest().run.stop({ interactive = true }) end
 local function run_last() neotest().run.run_last() end
 local function debug_nearest() require('neotest').run.run({ strategy = 'dap' }) end
 
+local testing_menu = function()
+  ar.create_select_menu(
+    ar.select_menu['testing'].title,
+    ar.select_menu['testing'].options
+  )()
+end
+
+map(
+  'n',
+  '<leader>ot',
+  testing_menu,
+  { desc = '[t]esting [a]ctions: open menu for testing' }
+)
+
 return {
   {
     'nvim-neotest/neotest',

@@ -201,20 +201,3 @@ map(
   command_palette_menu,
   { desc = '[c]ommand [p]alette: open menu for command palette actions' }
 )
-
---------------------------------------------------------------------------------
--- Testing
---------------------------------------------------------------------------------
-local testing_menu = function()
-  ar.create_select_menu(
-    ar.select_menu['testing'].title,
-    ar.select_menu['testing'].options
-  )()
-end
-
-map(
-  'n',
-  '<leader>ot',
-  testing_menu,
-  { desc = '[t]esting [a]ctions: open menu for testing' }
-)
