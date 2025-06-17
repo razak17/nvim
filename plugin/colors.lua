@@ -153,6 +153,12 @@ end
 local function colorscheme_overrides()
   local overrides = {
     ['default'] = {
+      {
+        NormalFloat = {
+          bg = { from = 'Normal', alter = -0.1 },
+          fg = { from = 'Normal' },
+        },
+      },
       { Comment = { fg = { from = 'Comment', alter = -0.2 } } },
       { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.3 } } },
       {
