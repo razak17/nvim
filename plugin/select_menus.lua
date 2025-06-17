@@ -47,10 +47,10 @@ if ar.is_git_repo() or ar.is_git_env() then
   })
   if ar.is_available('telescope.nvim') then
     ar.add_to_select_menu('git', {
-      ['Browse Branches'] = "lua require'ar.select_menus.git'.browse_branches()",
-      ['Browse Commits'] = "lua require'ar.select_menus.git'.browse_commits()",
-      ['Browse Buffer Commits'] = "lua require'ar.select_menus.git'.browse_bcommits()",
-      ['Browse Stashes'] = "lua require'ar.select_menus.git'.list_stashes()",
+      ['Browse Branches'] = "lua require'ar.select_menus.telescope_git'.browse_branches()",
+      ['Browse Commits'] = "lua require'ar.select_menus.telescope_git'.browse_commits()",
+      ['Browse Buffer Commits'] = "lua require'ar.select_menus.telescope_git'.browse_bcommits()",
+      ['Browse Stashes'] = "lua require'ar.select_menus.telescope_git'.list_stashes()",
     })
   end
 
