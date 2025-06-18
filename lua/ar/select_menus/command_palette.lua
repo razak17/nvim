@@ -1,5 +1,7 @@
 local api, fn = vim.api, vim.fn
 local fmt = string.format
+local utils = require('ar.utils.fs')
+
 local M = {}
 
 function M.format_buf()
@@ -109,29 +111,12 @@ function M.copy_path(which)
   if expand_arg then ar.copy_to_clipboard(fn.expand(expand_arg)) end
 end
 
-local function to_file_path_in_project(full_path)
-  local projects = ar.get_projects()
-  if projects == nil then return end
-
-  for _, project in pairs(projects) do
-    if full_path:match('^' .. ar.escape_pattern(project)) then
-      return {
-        project,
-        full_path:gsub('^' .. ar.escape_pattern(project .. '/'), ''),
-      }
-    end
-  end
-  return nil
+function M.copy_file_path()
+  local buf = api.nvim_get_current_buf()
+  local name = api.nvim_buf_get_name(buf)
+  name = utils.truncpath(name, 40, { cwd = vim.uv.cwd() })
+  ar.copy_to_clipboard(name)
 end
-
-local function cur_file_path_in_project()
-  local full_path = vim.fn.expand('%:p')
-  local project_info = to_file_path_in_project(full_path)
-  -- if no project that matches, return the relative path
-  return project_info and project_info[2] or vim.fn.expand('%')
-end
-
-function M.copy_file_path() ar.copy_to_clipboard(cur_file_path_in_project()) end
 
 function M.quick_set_ft()
   local filetypes = {

@@ -476,22 +476,6 @@ function ar.format_text(t, k)
   return t
 end
 
--- Get project info for all (de)activated projects
-function ar.get_projects()
-  if not ar.is_available('project_nvim') then
-    vim.notify('project.nvim is not installed')
-    return
-  end
-
-  local projects_file = fn.stdpath('data') .. '/project_nvim/project_history'
-
-  local projects = {}
-  for line in io.lines(projects_file) do
-    table.insert(projects, line)
-  end
-  return projects
-end
-
 --[[ create_select_menu()
 -- Create a menu to execute a Vim command or Lua function using vim.ui.select()
 -- Example usage:
