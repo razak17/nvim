@@ -25,10 +25,11 @@ return {
   {
     'CopilotC-Nvim/CopilotChat.nvim',
     cond = function()
-      return not minimal
+      local condition = not minimal
         and ar.ai.enable
         and ar.completion.enable
         and ar_config.ai.models.copilot
+      return ar.get_plugin_cond('CopilotChat.nvim', condition)
     end,
     cmd = {
       'CopilotChatExplain',

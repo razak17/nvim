@@ -88,7 +88,7 @@ local mode = { 'n', 'i', 'v' }
 return {
   'robitx/gp.nvim',
   event = 'VeryLazy',
-  cond = ar.ai.enable,
+  cond = function() return ar.get_plugin_cond('gp.nvim', ar.ai.enable) end,
   -- stylua: ignore
   keys = {
     { '<c-g><c-a>', gp_choose_agent, desc = 'gp: choose model' },
@@ -231,8 +231,9 @@ return {
         ['gemini-2.5-pro'] = { max_tokens = 128000 },
         ['gpt-4'] = { max_tokens = 32768 },
         ['gpt-4.1'] = { max_tokens = 128000 },
-        ['gpt-4o'] = { max_tokens = 64000 },
+        ['gpt-4o-2024-11-20'] = { max_tokens = 64000 },
         ['gpt-4o-mini'] = { max_tokens = 12288 },
+        ['o1'] = { max_tokens = 64000 },
         ['o3-mini'] = { max_tokens = 64000 },
         ['o4-mini'] = { max_tokens = 128000 },
       }
