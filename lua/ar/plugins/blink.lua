@@ -155,6 +155,11 @@ return {
             if ar.ai.enable then
               if is_copilot then table.insert(providers, 'copilot') end
               if is_minuet then table.insert(providers, 'minuet') end
+              if is_copilot and ar.ai.enable then
+                table.insert(providers, 'avante_commands')
+                table.insert(providers, 'avante_mentions')
+                table.insert(providers, 'avante_files')
+              end
               table.insert(providers, 'codecompanion')
             end
             if not minimal then
@@ -360,6 +365,7 @@ return {
             end,
           }
         end
+
         if is_minuet then
           opts.sources.providers.minuet = {
             enabled = function()
@@ -384,8 +390,8 @@ return {
           }
           opts.keymap['<A-y>'] = require('minuet').make_blink_map()
         end
+
         opts.sources.providers.codecompanion = {
-          enabled = function() return ar.ai.enable end,
           name = '[CC]',
           module = 'codecompanion.providers.completion.blink',
           score_offset = 100,
@@ -399,6 +405,25 @@ return {
             end
             return items
           end,
+        }
+
+        opts.sources.providers.avante_commands = {
+          name = 'avante_commands',
+          module = 'blink.compat.source',
+          score_offset = 90, -- show at a higher priority than lsp
+          opts = {},
+        }
+        opts.sources.providers.avante_files = {
+          name = 'avante_files',
+          module = 'blink.compat.source',
+          score_offset = 100, -- show at a higher priority than lsp
+          opts = {},
+        }
+        opts.sources.providers.avante_mentions = {
+          name = 'avante_mentions',
+          module = 'blink.compat.source',
+          score_offset = 1000, -- show at a higher priority than lsp
+          opts = {},
         }
       end
 
@@ -446,7 +471,6 @@ return {
       },
       {
         'saghen/blink.compat',
-        cond = false,
         version = '*',
         opts = { impersonate_nvim_cmp = true },
       },

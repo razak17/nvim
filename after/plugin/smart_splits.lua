@@ -7,6 +7,9 @@ local fn = vim.fn
 ar.smart_splits = {
   exclusions = {
     'alpha',
+    'Avante',
+    'AvanteInput',
+    'AvanteSelectedFiles',
     'DiffviewFileHistory',
     'DiffviewFiles',
     'gitcommit',
@@ -20,7 +23,6 @@ ar.smart_splits = {
     'startup',
     'trouble',
     'tsplayground',
-    'AvanteInput',
     'TelescopePrompt',
     'noice',
     'snacks_dashboard',

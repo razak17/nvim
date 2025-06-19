@@ -74,7 +74,7 @@ augroup('UpdateVim', {
 }, {
   event = { 'VimResized' },
   pattern = { '*' },
-  command = 'wincmd =', -- Make windows equal size when vim resizes
+  command = 'wincmd =',
 })
 
 augroup('WinBehavior', {
