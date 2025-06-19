@@ -23,5 +23,9 @@
   "inspect": {
     "prefix": "vi",
     "body": ["print(\"${1}: \" .. vim.inspect(${1}))"]
+  },
+  "function": {
+    "prefix": "fn",
+    "body": ["local function ${1:name}(${2:args})", "\t${3}", "end"]
   }
 }
