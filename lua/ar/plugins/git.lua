@@ -15,6 +15,20 @@ end
 
 return {
   {
+    'TungstnBallon/conflict.nvim',
+    cond = function() return git_cond('conflict.nvim') end,
+    event = { 'BufReadPre', 'BufNewFile' },
+    keys = {
+      { '<leader>g?n', '<Plug>ConflictJumpToNext', desc = 'next conflict' },
+      { '<leader>g?p', '<Plug>ConflictJumpToPrevious', desc = 'prev conflict' },
+      {
+        '<leader>g??',
+        '<Plug>ConflictResolveAroundCursor',
+        desc = 'resolve conflict',
+      },
+    },
+  },
+  {
     'yyk/find-git-root.nvim',
     cond = function() return git_cond('find-git-root.nvim') end,
     cmd = { 'CdGitRoot' },
