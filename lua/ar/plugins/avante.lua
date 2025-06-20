@@ -63,6 +63,17 @@ return {
           })()
         end,
       })
+      ar.augroup('Avante', {
+        event = { 'FocusGained' },
+        pattern = { '*' },
+        command = function(arg)
+          local ignored_filetypes =
+            { 'Avante', 'AvanteInput', 'AvanteSelectedFiles' }
+          local ft = vim.bo[arg.buf].ft
+          if not vim.tbl_contains(ignored_filetypes, ft) then return end
+          vim.cmd.resize({ '50', mods = { vertical = true } })
+        end,
+      })
     end,
     -- stylua: ignore
     keys = {
