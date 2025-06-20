@@ -31,7 +31,7 @@ return {
         { 'nmap', 'o', '<Plug>(bullets-newline)' },
         { 'vmap', 'gN', '<Plug>(bullets-renumber)' },
         { 'nmap', 'gN', '<Plug>(bullets-renumber)' },
-        { 'nmap', '<leader>ox', '<Plug>(bullets-toggle-checkbox)' },
+        { 'nmap', '<leader>om', '<Plug>(bullets-toggle-checkbox)' },
         { 'imap', '<C-t>', '<Plug>(bullets-demote)' },
         { 'nmap', '>>', '<Plug>(bullets-demote)' },
         { 'vmap', '>', '<Plug>(bullets-demote)' },
@@ -183,14 +183,6 @@ return {
     },
   },
   {
-    'nfrid/markdown-togglecheck',
-    -- stylua: ignore
-    keys = {
-      { '<leader>om', function() require('markdown-togglecheck').toggle() end, desc = 'toggle markdown checkbox' },
-    },
-    dependencies = { 'nfrid/treesitter-utils' },
-  },
-  {
     'MeanderingProgrammer/render-markdown.nvim',
     cond = function()
       return ar.get_plugin_cond('render-markdown.nvim', not minimal)
@@ -295,5 +287,14 @@ return {
         { ['Toggle Markview'] = 'Markview' }
       )
     end,
+  },
+  {
+    'nfrid/markdown-togglecheck',
+    enabled = false,
+    -- stylua: ignore
+    keys = {
+      { '<leader>om', function() require('markdown-togglecheck').toggle() end, desc = 'toggle markdown checkbox' },
+    },
+    dependencies = { 'nfrid/treesitter-utils' },
   },
 }
