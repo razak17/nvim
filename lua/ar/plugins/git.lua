@@ -81,6 +81,7 @@ return {
             { NeogitHunkHeader = { inherit = 'Headline2', bold = true } },
             { NeogitDiffHeader = { inherit = 'Headline2', bold = true } },
             { NeogitWinSeparator = { link = 'WinSeparator' } },
+            { NeogitCommitViewHeader = { link = 'Normal' } },
             {
               NeogitCursorLine = {
                 bg = { from = 'CursorLine' },
