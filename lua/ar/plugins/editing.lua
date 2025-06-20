@@ -359,6 +359,31 @@ return {
         jsdoc = { source = gww, description = gww },
         javascript = joinWithoutCurly,
         typescript = joinWithoutCurly,
+        svelte = {
+          ['quoted_attribute_value'] = {
+            both = {
+              enable = function(tsn) return tsn:parent():type() == 'attribute' end,
+            },
+            split = {
+              format_tree = function(tsj)
+                local str = tsj:child('attribute_value')
+                local words = vim.split(str:text(), ' ')
+                tsj:remove_child('attribute_value')
+                for i, word in ipairs(words) do
+                  tsj:create_child({ text = word }, i + 1)
+                end
+              end,
+            },
+            join = {
+              format_tree = function(tsj)
+                local str = tsj:child('attribute_value')
+                local node_text = str:text()
+                tsj:remove_child('attribute_value')
+                tsj:create_child({ text = node_text }, 2)
+              end,
+            },
+          },
+        },
       }
       require('treesj').setup(opts)
     end,
