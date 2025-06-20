@@ -76,9 +76,8 @@ return {
   {
     'echasnovski/mini.hipatterns',
     cond = function()
-      local condition = (
-        io.open(fn.expand('%:p:h') .. '/.lazy.lua', 'r') ~= nil and not minimal
-      ) or minimal
+      local lazy_file = io.open(fn.expand('%:p:h') .. '/.lazy.lua', 'r') ~= nil
+      local condition = (lazy_file and not minimal) or minimal
       return ar.get_plugin_cond('mini.hipatterns', condition)
     end,
     event = { 'BufRead', 'BufNewFile' },
