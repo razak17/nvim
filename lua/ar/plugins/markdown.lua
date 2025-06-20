@@ -191,7 +191,7 @@ return {
       return ar.get_plugin_cond('render-markdown.nvim', not minimal)
     end,
     cmd = { 'RenderMarkdown' },
-    ft = { 'markdown', 'Avante' },
+    ft = { 'markdown', 'Avante', 'Avante', 'codecompanion' },
     init = function()
       local color1_bg = '#f265b5'
       local color2_bg = '#37f499'
