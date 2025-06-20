@@ -26,7 +26,9 @@ local is_ai_cmp = ar_config.ai.completion.enable
 return {
   {
     'kylesnowschwartz/prompt-tower.nvim',
-    cond = not minimal and ar.ai.enable,
+    cond = function()
+      return ar.get_plugin_cond('prompt-tower.nvim', ar.ai.enable)
+    end,
     init = function()
       ar.add_to_select_menu('ai', {
         ['Prompt Tower'] = function()
@@ -73,7 +75,9 @@ return {
   },
   {
     'olimorris/codecompanion.nvim',
-    cond = not minimal and ar.ai.enable,
+    cond = function()
+      return ar.get_plugin_cond('codecompanion.nvim', ar.ai.enable)
+    end,
     -- stylua: ignore
     keys = {
       { '<leader>akk', '<Cmd>CodeCompanionChat<CR>', desc = 'codecompanion: toggle' },
@@ -227,7 +231,8 @@ return {
     'milanglacier/minuet-ai.nvim',
     cond = function()
       local is_minuet = models.gemini and ai_cmp == 'minuet'
-      return not minimal and ar.ai.enable and is_minuet
+      local condition = ar.ai.enable and is_minuet
+      return ar.get_plugin_cond('minuet-ai.nvim', condition)
     end,
     cmd = { 'Minuet' },
     event = 'InsertEnter',
@@ -326,7 +331,8 @@ return {
     'zbirenbaum/copilot.lua',
     cond = function()
       local is_copilot = models.copilot and ai_cmp == 'copilot'
-      return not minimal and ar.ai.enable and is_copilot
+      local condition = ar.ai.enable and is_copilot
+      return ar.get_plugin_cond('minuet-ai.nvim', condition)
     end,
     cmd = 'Copilot',
     event = 'InsertEnter',
@@ -384,7 +390,10 @@ return {
   },
   {
     'piersolenski/wtf.nvim',
-    cond = not minimal and ar.lsp.enable and ar.ai.enable,
+    cond = function()
+      local condition = ar.lsp.enable and ar.ai.enable and models.openai
+      return ar.get_plugin_cond('wtf.nvim', condition)
+    end,
     init = function() vim.g.whichkey_add_spec({ '<leader>aw', group = 'wtf' }) end,
     -- stylua: ignore
     keys = {
@@ -398,9 +407,12 @@ return {
       winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
     },
   },
+  --------------------------------------------------------------------------------
+  -- Disabled
+  --------------------------------------------------------------------------------
   {
     'razak17/backseat.nvim',
-    cond = not minimal and ar.ai.enable and models.copilot,
+    cond = not minimal and ar.ai.enable and models.copilot and false,
     cmd = { 'Backseat', 'BackseatAsk', 'BackseatClear', 'BackseatClearLine' },
     opts = {
       highlight = { icon = '', group = 'DiagnosticVirtualTextInfo' },
@@ -408,9 +420,6 @@ return {
       winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
     },
   },
-  --------------------------------------------------------------------------------
-  -- Disabled
-  --------------------------------------------------------------------------------
   {
     'moozd/aidoc.nvim',
     cond = not minimal and ar.ai.enable and false,
