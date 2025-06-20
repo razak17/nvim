@@ -23,21 +23,24 @@ return {
     'bullets-vim/bullets.vim',
     cond = function() return ar.get_plugin_cond('bullets.vim', not minimal) end,
     ft = { 'markdown' },
+    -- stylua: ignore
+    keys = {
+      { 'o', '<Plug>(bullets-newline)', desc = 'bullets: new line' },
+      { 'gN', '<Plug>(bullets-renumber)', desc = 'bullets: renumber' },
+      { 'gN', '<Plug>(bullets-renumber)', desc = 'bullets: renumber', mode = { 'x' } },
+      { '<leader>om', '<Plug>(bullets-toggle-checkbox)', desc = 'bullets: toggle checkbox' },
+      { '<C-t>', '<Plug>(bullets-demote)', desc = 'bullets: demote', mode = { 'i' } },
+      { '>>', '<Plug>(bullets-demote)', desc = 'bullets: demote' },
+      { '>', '<Plug>(bullets-demote)', desc = 'bullets: demote', mode = { 'x' } },
+      { '<C-d>', '<Plug>(bullets-promote)', desc = 'bullets: promote', mode = { 'i' } },
+      { '<<', '<Plug>(bullets-promote)', desc = 'bullets: promote' },
+      { '<', '<Plug>(bullets-promote)', desc = 'bullets: promote', mode = { 'x' } },
+    },
     init = function()
       vim.g.bullets_set_mappings = 0
       vim.g.bullets_custom_mappings = {
         -- { 'imap', '<cr>', '<Plug>(bullets-newline)' },
         -- { 'inoremap', '<C-cr>', '<cr>' },
-        { 'nmap', 'o', '<Plug>(bullets-newline)' },
-        { 'vmap', 'gN', '<Plug>(bullets-renumber)' },
-        { 'nmap', 'gN', '<Plug>(bullets-renumber)' },
-        { 'nmap', '<leader>om', '<Plug>(bullets-toggle-checkbox)' },
-        { 'imap', '<C-t>', '<Plug>(bullets-demote)' },
-        { 'nmap', '>>', '<Plug>(bullets-demote)' },
-        { 'vmap', '>', '<Plug>(bullets-demote)' },
-        { 'imap', '<C-d>', '<Plug>(bullets-promote)' },
-        { 'nmap', '<<', '<Plug>(bullets-promote)' },
-        { 'vmap', '<', '<Plug>(bullets-promote)' },
       }
 
       ar.augroup('BulletsMappings', {
