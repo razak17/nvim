@@ -630,6 +630,47 @@ return {
           },
           { provider = ' ' .. separator, hl = { bold = true } },
         },
+        -- MCPHub
+        {
+          condition = function()
+            if vim.bo.readonly then return false end
+            return is_avail('mcphub.nvim') and not minimal and ar.ai.enable
+          end,
+          static = {
+            active_servers = 0,
+            is_connected = false,
+            is_connecting = false,
+          },
+          update = {
+            'User',
+            pattern = 'MCPHubStateChange',
+            callback = function(self, args)
+              if args.data then
+                local status = args.data.state
+                self.is_connected = status == 'ready' or status == 'restarted'
+                self.is_connecting = status == 'starting'
+                  or status == 'restarting'
+                self.active_servers = args.data.active_servers or 0
+              end
+              vim.cmd('redrawstatus')
+            end,
+          },
+          {
+            provider = function(self)
+              local tower = '󰐻'
+              local active_servers = tostring(self.active_servers or 0)
+              if self.active_servers == 0 then return ' ' .. tower end
+              return ' ' .. tower .. ' ' .. active_servers
+            end,
+            hl = function(self)
+              local color = 'comment'
+              if self.is_connected then color = 'green' end
+              if self.is_connecting then color = 'blue' end
+              return { fg = color, bold = true }
+            end,
+          },
+          { provider = ' ' .. separator, hl = { bold = true } },
+        },
         -- Kulala env
         {
           condition = function() return vim.bo.ft == 'http' end,
