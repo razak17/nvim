@@ -6,12 +6,12 @@ return {
   {
     desc = 'readline style keybindings in insert mode',
     'tpope/vim-rsi',
-    cond = function() return ar.get_plugin_cond('vim-rsi', not minimal) end,
+    cond = function() return get_cond('vim-rsi', not minimal) end,
     event = { 'InsertEnter' },
   },
   {
     'johmsalas/text-case.nvim',
-    cond = function() return ar.get_plugin_cond('text-case.nvim', not minimal) end,
+    cond = function() return get_cond('text-case.nvim', not minimal) end,
     opts = { default_keymappings_enabled = false },
   },
   {
@@ -23,7 +23,7 @@ return {
         mode = { 'n', 'x' },
       })
     end,
-    cond = function() return ar.get_plugin_cond('yanky.nvim', not minimal) end,
+    cond = function() return get_cond('yanky.nvim', not minimal) end,
     cmd = { 'YankyRingHistory' },
     -- stylua: ignore
     keys = {
@@ -41,7 +41,7 @@ return {
   {
     desc = 'Duplicate visual selection, lines, and textobjects',
     'hinell/duplicate.nvim',
-    cond = function() return ar.get_plugin_cond('duplicate.nvim', not minimal) end,
+    cond = function() return get_cond('duplicate.nvim', not minimal) end,
     cmd = { 'LineDuplicate', 'VisualDuplicate' },
     -- stylua: ignore
     keys = {
@@ -53,7 +53,7 @@ return {
   },
   {
     'monaqa/dial.nvim',
-    cond = function() return ar.get_plugin_cond('dial.nvim', not minimal) end,
+    cond = function() return get_cond('dial.nvim', not minimal) end,
     keys = {
       {
         '<C-a>',
@@ -142,9 +142,7 @@ return {
   },
   {
     'altermo/ultimate-autopair.nvim',
-    cond = function()
-      return ar.get_plugin_cond('ultimate-autopair.nvim', not minimal)
-    end,
+    cond = function() return get_cond('ultimate-autopair.nvim', not minimal) end,
     event = { 'InsertEnter', 'CmdlineEnter' },
     init = function()
       ar.augroup('UltimateAutoPair', {
@@ -256,7 +254,7 @@ return {
   },
   {
     'mfussenegger/nvim-treehopper',
-    cond = function() return ar.get_plugin_cond('nvim-treehopper', not minimal) end,
+    cond = function() return get_cond('nvim-treehopper', not minimal) end,
     keys = {
       {
         'u',
@@ -291,7 +289,7 @@ return {
   },
   {
     'danymat/neogen',
-    cond = function() return ar.get_plugin_cond('neogen', not minimal) end,
+    cond = function() return get_cond('neogen', not minimal) end,
     -- stylua: ignore
     keys = {
       { '<localleader>nd', function() require('neogen').generate() end, desc = 'neogen: generate doc', },
@@ -304,7 +302,7 @@ return {
   },
   {
     'ckolkey/ts-node-action',
-    cond = function() return ar.get_plugin_cond('ts-node-action', not minimal) end,
+    cond = function() return get_cond('ts-node-action', not minimal) end,
     -- stylua: ignore
     keys = {
       { '<leader>K', function() require('ts-node-action').node_action() end, desc = 'ts-node-action: run', },
@@ -313,7 +311,7 @@ return {
   },
   {
     'Wansmer/treesj',
-    cond = function() return ar.get_plugin_cond('treesj', not minimal) end,
+    cond = function() return get_cond('treesj', not minimal) end,
     -- stylua: ignore
     keys = {
       { '<leader>oK', function() require('treesj').toggle() end, desc = 'split-join lines' },
@@ -373,9 +371,7 @@ return {
   },
   {
     'ThePrimeagen/refactoring.nvim',
-    cond = function()
-      return ar.get_plugin_cond('refactoring.nvim', not minimal)
-    end,
+    cond = function() return get_cond('refactoring.nvim', not minimal) end,
     -- stylua: ignore
     init = function()
       vim.g.whichkey_add_spec({ '<leader><leader>r', desc = 'Refactoring', mode = { 'n', 'x' } })
@@ -419,9 +415,7 @@ return {
   },
   {
     'HiPhish/rainbow-delimiters.nvim',
-    cond = function()
-      return ar.get_plugin_cond('rainbow-delimiters.nvim', niceties)
-    end,
+    cond = function() return get_cond('rainbow-delimiters.nvim', niceties) end,
     event = { 'BufRead', 'BufNewFile' },
     config = function()
       local rainbow_delimiters = require('rainbow-delimiters')
@@ -440,10 +434,7 @@ return {
   {
     'subnut/nvim-ghost.nvim',
     cond = function()
-      return ar.get_plugin_cond(
-        'nvim-ghost.nvim',
-        ar.plugins.overrides.ghost_text.enable
-      )
+      return get_cond('nvim-ghost.nvim', ar.plugins.overrides.ghost_text.enable)
     end,
     lazy = not ar.plugins.overrides.ghost_text.enable,
   },
@@ -458,9 +449,7 @@ return {
   },
   {
     'max397574/better-escape.nvim',
-    cond = function()
-      return ar.get_plugin_cond('better-escape.nvim', not minimal)
-    end,
+    cond = function() return get_cond('better-escape.nvim', not minimal) end,
     event = { 'InsertEnter' },
     opts = {
       default_mappings = false,
@@ -477,7 +466,7 @@ return {
   ------------------------------------------------------------------------------
   {
     'mizlan/iswap.nvim',
-    cond = function() return ar.get_plugin_cond('iswap.nvim', not minimal) end,
+    cond = function() return get_cond('iswap.nvim', not minimal) end,
     keys = {
       { '<leader>ia', '<cmd>ISwap<CR>', desc = 'iswap: swap' },
       { '<leader>iw', '<cmd>ISwapWith<CR>', desc = 'iswap: swap with' },
@@ -509,7 +498,7 @@ return {
   ------------------------------------------------------------------------------
   {
     'nguyenvukhang/nvim-toggler',
-    cond = function() return ar.get_plugin_cond('nvim-toggler', not minimal) end,
+    cond = function() return get_cond('nvim-toggler', not minimal) end,
     -- stylua: ignore
     keys = {
       { '<leader>ii', function() require("nvim-toggler").toggle() end, desc = 'nvim-toggler: toggle', },
@@ -635,7 +624,7 @@ return {
   },
   {
     'carbon-steel/detour.nvim',
-    cond = function() return ar.get_plugin_cond('detour.nvim', niceties) end,
+    cond = function() return get_cond('detour.nvim', niceties) end,
     cmd = { 'Detour' },
     keys = { { '<c-w><enter>', ':Detour<cr>', desc = 'detour: toggle' } },
   },
@@ -644,16 +633,14 @@ return {
   ------------------------------------------------------------------------------
   {
     'dawsers/edit-code-block.nvim',
-    cond = function()
-      return ar.get_plugin_cond('edit-code-block.nvim', not minimal)
-    end,
+    cond = function() return get_cond('edit-code-block.nvim', not minimal) end,
     cmd = { 'EditCodeBlock', 'EditCodeBlockOrg', 'EditCodeBlockSelection' },
     name = 'ecb',
     opts = { wincmd = 'split' },
   },
   {
     'haolian9/nag.nvim',
-    cond = function() return ar.get_plugin_cond('nag.nvim', not minimal) end,
+    cond = function() return get_cond('nag.nvim', not minimal) end,
     dependencies = { 'haolian9/infra.nvim' },
     init = function()
       vim.g.whichkey_add_spec({
