@@ -4,12 +4,6 @@ local get_cond = ar.get_plugin_cond
 
 return {
   {
-    desc = 'readline style keybindings in insert mode',
-    'tpope/vim-rsi',
-    cond = function() return get_cond('vim-rsi', not minimal) end,
-    event = { 'InsertEnter' },
-  },
-  {
     'johmsalas/text-case.nvim',
     cond = function() return get_cond('text-case.nvim', not minimal) end,
     opts = { default_keymappings_enabled = false },
@@ -631,6 +625,13 @@ return {
   ------------------------------------------------------------------------------
   -- Edit Code Blocks
   ------------------------------------------------------------------------------
+  {
+    desc = 'readline style keybindings in insert mode',
+    'tpope/vim-rsi',
+    enabled = false,
+    cond = function() return get_cond('vim-rsi', not minimal) end,
+    event = { 'InsertEnter' },
+  },
   {
     'dawsers/edit-code-block.nvim',
     cond = function() return get_cond('edit-code-block.nvim', not minimal) end,
