@@ -26,7 +26,7 @@ end
 local function filename()
   local fname = vim.fn.expand('%:t')
   if fname == '' then return '' end
-  return fname .. ' '
+  return ' ' .. fname
 end
 
 --- @param severity integer
@@ -74,7 +74,7 @@ local modes = {
 --- @return string
 local function mode()
   local current_mode = vim.api.nvim_get_mode().mode
-  return string.format(' %s ', modes[current_mode]):upper()
+  return string.format(' %s', modes[current_mode]):upper()
 end
 
 --- @return string
@@ -272,7 +272,7 @@ local function full_git()
   local branch = git_branch()
   if branch ~= '' then
     local icon = git_branch_icon()
-    full = full .. space .. icon .. space .. branch .. space
+    full = full .. space .. icon .. space .. branch
   end
 
   local added = git_diff_added()
@@ -359,8 +359,8 @@ StatusLine.active = function()
   local statusline = {
     '%#StatusLineBar#▊%*',
     mode(),
-    filename(),
     full_git(),
+    filename(),
     '%=',
     '%=',
     '%S ',
