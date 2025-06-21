@@ -36,7 +36,7 @@ return {
     opts = function()
       local ft_map = { rust = 'lsp' }
       return {
-        open_fold_hl_timeout = 800,
+        open_fold_hl_timeout = 0,
         preview = {
           win_config = {
             border = ar.ui.current.border,
