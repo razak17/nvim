@@ -116,6 +116,7 @@ return {
       })
       require('ufo').setup(opts)
     end,
+    dependencies = 'kevinhwang91/promise-async',
   },
   {
     'chrisgrieser/nvim-origami',
