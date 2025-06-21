@@ -7,7 +7,13 @@ bo.softtabstop = 4
 bo.shiftwidth = 4
 opt.spell = true
 
-if not ar.plugins.enable or ar.plugins.minimal then return end
+if
+  not ar.plugins.enable
+  or ar.plugins.minimal
+  or not ar.is_available('nvim-dap')
+then
+  return
+end
 
 local dap = require('dap')
 local debugpy_path = ar.get_pkg_path('debugpy', 'venv/bin/python')
