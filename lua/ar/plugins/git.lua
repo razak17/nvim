@@ -14,9 +14,10 @@ local git_cond = function(plugin)
 end
 
 return {
+  -- FIX: Causes performance issues in large folds (~1000+ lines)
   {
     'TungstnBallon/conflict.nvim',
-    cond = function() return git_cond('conflict.nvim') end,
+    cond = function() return git_cond('conflict.nvim') and false end,
     event = { 'BufReadPre', 'BufNewFile' },
     keys = {
       { '<leader>g?n', '<Plug>ConflictJumpToNext', desc = 'next conflict' },
