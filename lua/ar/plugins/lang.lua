@@ -350,6 +350,13 @@ return {
     cmd = { 'ImplGenerate', 'ImplSearch' },
     opts = {},
   },
+  {
+    'fredrikaverpil/godoc.nvim',
+    cmd = { 'GoDoc' }, -- optional
+    version = '*',
+    build = 'go install github.com/lotusirous/gostdsym/stdsym@latest', -- optional
+    opts = {}, -- see further down below for configuration
+  },
   -- CSV
   --------------------------------------------------------------------------------
   {
