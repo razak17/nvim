@@ -553,14 +553,15 @@ return {
             self.formatters = stl.get_null_ls_formatters(ft)
             self.linters = stl.get_null_ls_linters(ft)
           end
+          self.icon = ' ' .. codicons.misc.connect .. ' '
         end,
         {
           provider = function(self)
-            local icon = ' ' .. codicons.misc.connect .. ' '
+            if not ar.lsp.enable then return '' end
             if falsy(self.client_names) then
-              return icon .. 'No Active LSP ' .. separator
+              return self.icon .. 'No Active LSP ' .. separator
             end
-            return icon .. stl.format_servers(self.client_names)
+            return self.icon .. stl.format_servers(self.client_names)
           end,
           hl = { bold = true },
           on_click = {
@@ -615,15 +616,16 @@ return {
             :totable()
           self.linters = stl.get_linters()
           self.formatters = stl.get_formatters(curbuf)
+          self.icon = ' ' .. codicons.misc.disconnect .. ' '
         end,
         {
           update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
           provider = function(self)
-            local icon = ' ' .. codicons.misc.disconnect .. ' '
+            if not ar.lsp.enable then return '' end
             if falsy(self.client_names) then
-              return icon .. 'No Active LSP ' .. separator
+              return self.icon .. 'No Active LSP ' .. separator
             end
-            return icon .. stl.format_servers(self.client_names)
+            return self.icon .. stl.format_servers(self.client_names)
           end,
           hl = { bold = true },
           on_click = {
@@ -638,13 +640,19 @@ return {
         {
           update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
           condition = function(self) return not falsy(self.linters) end,
-          provider = function(self) return ' ' .. self.linters end,
+          provider = function(self)
+            if ar.lsp.enable then return ' ' .. self.formatters end
+            return self.icon .. self.linters
+          end,
           hl = { bold = true },
         },
         {
           update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
           condition = function(self) return not falsy(self.formatters) end,
-          provider = function(self) return ' ' .. self.formatters end,
+          provider = function(self)
+            if ar.lsp.enable then return ' ' .. self.formatters end
+            return self.icon .. self.formatters
+          end,
           hl = { bold = true },
           on_click = {
             callback = function()
