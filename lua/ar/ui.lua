@@ -167,6 +167,7 @@ ar.ui.codicons = {
     table = '',
     tabs = '󰓩',
     tag = '',
+    terminal = '',
     tree = '', -- 󰁳
   },
 }

@@ -142,8 +142,12 @@ return {
       vim_mode,
       {
         provider = function()
+          local icon = codicons.misc.terminal .. ' '
+          if vim.bo.filetype == 'toggleterm' then
+            return icon .. 'ToggleTerm #' .. vim.b.toggle_number
+          end
           local tname, _ = api.nvim_buf_get_name(0):gsub('.*:', '')
-          return ' ' .. tname
+          return icon .. tname
         end,
         hl = { fg = 'blue', bold = true },
       },
