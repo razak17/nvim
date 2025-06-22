@@ -60,6 +60,19 @@ return {
       },
     }
 
+    local help_statusline = {
+      condition = function() return vim.bo.filetype == 'help' end,
+      vim_mode,
+      {
+        provider = function()
+          local filename = vim.api.nvim_buf_get_name(0)
+          return fn.fnamemodify(filename, ':t')
+        end,
+        hl = { fg = 'blue' },
+      },
+      align,
+    }
+
     local lazy_statusline = {
       condition = function() return vim.bo.filetype == 'lazy' end,
       vim_mode,
@@ -831,6 +844,7 @@ return {
       statusline = vim.tbl_extend('force', opts.statusline or {}, {
         hl = { bg = 'bg_dark', fg = 'fg' },
         fallthrough = false,
+        help_statusline,
         lazy_statusline,
         minimal_statusline,
         statusline,
