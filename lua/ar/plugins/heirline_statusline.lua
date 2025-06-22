@@ -92,10 +92,11 @@ return {
     local lazy_statusline = {
       condition = function() return vim.bo.filetype == 'lazy' end,
       vim_mode,
+      { provider = 'lazy' },
       {
         provider = function()
           local lazy = require('lazy')
-          return ' lazy 💤 loaded: '
+          return ' 💤 loaded: '
             .. lazy.stats().loaded
             .. '/'
             .. lazy.stats().count
