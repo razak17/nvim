@@ -322,7 +322,7 @@ nnoremap('<localleader>bo', function()
   end
 end, { desc = 'close other buffers' })
 nnoremap('<leader>od', function()
-  if fn.confirm('Delete file?', '&Yes\n&No') == 1 then
+  if fn.confirm('Move file to trash?', '&Yes\n&No') == 1 then
     ar_config.autosave.enable = not ar_config.autosave.enable
     local file = fn.expand('%:p')
     ar.trash_file(file, true)
