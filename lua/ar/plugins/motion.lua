@@ -2,16 +2,6 @@ local minimal = ar.plugins.minimal
 
 return {
   {
-    'razak17/accelerated-jk.nvim',
-    cond = function() return ar.get_plugin_cond('accelerated-jk.nvim') end,
-    event = 'VeryLazy',
-    -- stylua: ignore
-    keys = {
-      { 'j', "<Cmd>lua require'accelerated-jk'.command('gj')<CR>", mode = { 'x', 'n' }, },
-      { 'k', "<Cmd>lua require'accelerated-jk'.command('gk')<CR>", mode = { 'x', 'n' }, },
-    },
-  },
-  {
     'aaronik/treewalker.nvim',
     event = 'VeryLazy',
     cmd = { 'Treewalker' },

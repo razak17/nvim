@@ -376,6 +376,7 @@ local config = {
   picker = { enable = true, files = 'snacks', variant = 'snacks' },
   plugin = {
     custom = {
+      accelerated_jk = { enable = true },
       auto_cursorline = { enable = true },
       baredot = { enable = true },
       big_file = { enable = true },
