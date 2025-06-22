@@ -416,7 +416,7 @@ function M.organize_imports()
     vim.cmd('TSToolsOrganizeImports')
   elseif is_avail('nvim-vtsls') then
     vim.cmd('VtsExec organize_imports')
-  elseif ts_lsp == 'ts_ls' then
+  elseif ts_lsp['ts_ls']  then
     vim.cmd('OrganizeImports')
   end
 end
@@ -426,7 +426,7 @@ function M.add_missing_imports()
     vim.cmd('TSToolsAddMissingImports')
   elseif is_avail('nvim-vtsls') then
     vim.cmd('VtsExec add_missing_imports')
-  elseif ts_lsp == 'ts_ls' then
+  elseif ts_lsp['ts_ls']  then
     vim.cmd('AddMissingImports')
   end
 end
@@ -436,7 +436,7 @@ function M.remove_unused()
     vim.cmd('TSToolsRemoveUnused')
   elseif is_avail('nvim-vtsls') then
     vim.cmd('VtsExec remove_unused')
-  elseif ts_lsp == 'ts_ls' then
+  elseif ts_lsp['ts_ls']  then
     vim.cmd('RemoveUnused')
   end
 end

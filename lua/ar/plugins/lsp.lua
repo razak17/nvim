@@ -20,7 +20,7 @@ local function get_servers()
       local override = ar_config.lsp.override
       local function ts_lang_cond(server)
         local is_override = ar.find_string(override, server)
-        return ts_lang == server or is_override
+        return ts_lang[server] or is_override
       end
       local py_lang = ar_config.lsp.lang.python
       local function py_lang_cond(server)

@@ -3,8 +3,6 @@
 --------------------------------------------------------------------------------
 local env = vim.env
 
----@alias ArCond {enable: boolean,}
-
 ---@class ArApps
 ---@field image string
 ---@field pdf string
@@ -28,8 +26,6 @@ local env = vim.env
 ---@alias ArAICompletion 'copilot' | 'minuet'
 ---@alias ArExplorerRename 'local' | 'snacks'
 ---@alias ArWhichBuffers 'bufexplorer' | 'bufferin' | 'snacks'
----@alias ArTypescriptLsp 'ts_ls' | 'typescript-tools' | 'vtsls'
----@alias ArPythonLsp 'pyright' | 'ruff' | 'jedi_language_server' | 'basedpyright'
 ---@alias ArCompletion 'cmp' | 'blink' | 'mini.completion' | 'omnifunc'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
 ---@alias ArWhichDashboard 'alpha' | 'snacks'
@@ -47,6 +43,10 @@ local env = vim.env
 ---@alias ArWhichShelter 'cloak' | 'ecolog'
 ---@alias ArWhichStatuscolumn 'local' | 'plugin'
 ---@alias ArWhichWinbar 'local' | 'plugin'
+
+---@alias ArCond {enable: boolean,}
+---@alias ArPythonLang { basedpyright: boolean, ruff: boolean, ty: boolean, }
+---@alias ArTypescriptLang { ts_ls: boolean, typescript-tools: boolean, vtsls: boolean, tsgo: boolean, }
 
 ---@class ArAIModels
 ---@field claude boolean
@@ -83,6 +83,10 @@ local env = vim.env
 ---@field enable boolean
 ---@field variant ArWhichSession
 
+---@class ArLspLang
+---@field python ArPythonLang
+---@field typescript ArTypescriptLang
+
 ---@class ArLspProgress
 ---@field enable boolean
 ---@field variant ArWhichLspProgress
@@ -116,7 +120,7 @@ local env = vim.env
 ---@field format_on_save ArCond
 ---@field hover_diagnostics table
 ---@field inlay_hint ArCond
----@field lang table
+---@field lang ArLspLang
 ---@field null_ls ArCond
 ---@field omnifunc ArCond
 ---@field override table
@@ -357,12 +361,17 @@ local config = {
     inlay_hint = { enable = false },
     lang = {
       python = {
-        basedpyright = true,
+        pyright = false,
         ruff = true,
+        basedpyright = true,
         ty = false,
       },
-      ---@type ArTypescriptLsp
-      typescript = 'typescript-tools',
+      typescript = {
+        ts_ls = false,
+        ['typescript-tools'] = true,
+        vtsls = false,
+        tsgo = false,
+      },
     },
     null_ls = { enable = false },
     omnifunc = { enable = true },
