@@ -135,6 +135,21 @@ return {
       align,
     }
 
+    local terminal_statusline = {
+      condition = function()
+        return conditions.buffer_matches({ buftype = { 'terminal' } })
+      end,
+      vim_mode,
+      {
+        provider = function()
+          local tname, _ = api.nvim_buf_get_name(0):gsub('.*:', '')
+          return ' ' .. tname
+        end,
+        hl = { fg = 'blue', bold = true },
+      },
+      align,
+    }
+
     local minimal_statusline = {
       condition = function(self)
         return conditions.buffer_matches({ filetype = self.filetypes })
@@ -890,6 +905,7 @@ return {
         explorer_statusline,
         help_statusline,
         lazy_statusline,
+        terminal_statusline,
         minimal_statusline,
         statusline,
       }),
