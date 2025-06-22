@@ -84,6 +84,15 @@ return {
     cond = function()
       return ar.get_plugin_cond('package-info.nvim', not minimal)
     end,
+    cmd = {
+      'PackageInfoChangeVersion',
+      'PackageInfoDelete',
+      'PackageInfoHide',
+      'PackageInfoInstall',
+      'PackageInfoShow',
+      'PackageInfoShowForce',
+      'PackageInfoUpdate',
+    },
     event = 'BufRead package.json',
     config = function()
       vim.g.whichkey_add_spec({ '<localleader>P', group = 'Package Info' })
