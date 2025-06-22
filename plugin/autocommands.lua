@@ -115,6 +115,8 @@ augroup('Utilities', {
   event = { 'BufEnter' },
   command = function(args)
     local paths = vim.split(vim.o.runtimepath, ',')
+    -- NOTE: Disable formatting for all plugins
+    table.insert(paths, fn.stdpath('data') .. '/lazy')
     local match = vim.iter(paths):find(function(dir)
       local path = api.nvim_buf_get_name(args.buf)
       -- HACK: Disable for my config dir manually
