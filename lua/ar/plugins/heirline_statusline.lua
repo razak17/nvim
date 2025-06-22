@@ -60,6 +60,22 @@ return {
       },
     }
 
+    local explorer_statusline = {
+      condition = function()
+        local filetypes = {
+          '^neo--tree$',
+          'snacks_picker_list',
+        }
+        return conditions.buffer_matches({ filetype = filetypes })
+      end,
+      vim_mode,
+      {
+        provider = function() return fn.fnamemodify(fn.getcwd(), ':~') end,
+        hl = { fg = 'blue' },
+      },
+      align,
+    }
+
     local help_statusline = {
       condition = function() return vim.bo.filetype == 'help' end,
       vim_mode,
@@ -844,6 +860,7 @@ return {
       statusline = vim.tbl_extend('force', opts.statusline or {}, {
         hl = { bg = 'bg_dark', fg = 'fg' },
         fallthrough = false,
+        explorer_statusline,
         help_statusline,
         lazy_statusline,
         minimal_statusline,
