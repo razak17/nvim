@@ -407,7 +407,6 @@ function ar.run_command(command, params, exit_cb, start_cb)
           if ar_config.debug.enable then
             vim.notify(command .. ' executed successfully', vim.log.levels.INFO)
           end
-          if exit_cb then exit_cb(job) end
         else
           local info = { command .. ' failed!' }
           if error_msg ~= nil then
@@ -418,6 +417,7 @@ function ar.run_command(command, params, exit_cb, start_cb)
             vim.notify(info, vim.log.levels.ERROR)
           end
         end
+        if exit_cb then exit_cb(job) end
       end)()
     end,
   }):start()
