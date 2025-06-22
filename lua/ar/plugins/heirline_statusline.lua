@@ -105,7 +105,7 @@ return {
       condition = function() return vim.bo.buftype == 'help' end,
       vim_mode,
       stl.root_dir(),
-      stl.pretty_path,
+      utils.insert(utils.insert(stl.pretty_path, stl.file_flags)),
       align,
     }
 
@@ -228,40 +228,40 @@ return {
                 and self.git_status.status ~= 'error'
                 and self.git_status.status ~= nil
             end,
-          {
-            provider = function(self)
-              return ' ' .. self.git_status.behind .. icons.misc.arrow_down
-            end,
-            hl = function(self)
-              return {
-                fg = self.git_status.behind == 0 and 'fg' or 'pale_red',
-              }
-            end,
-            on_click = {
-              callback = function(self)
-                if self.git_status.behind > 0 then stl.git_pull() end
+            {
+              provider = function(self)
+                return ' ' .. self.git_status.behind .. icons.misc.arrow_down
               end,
-              name = 'git_pull',
+              hl = function(self)
+                return {
+                  fg = self.git_status.behind == 0 and 'fg' or 'pale_red',
+                }
+              end,
+              on_click = {
+                callback = function(self)
+                  if self.git_status.behind > 0 then stl.git_pull() end
+                end,
+                name = 'git_pull',
+              },
             },
-          },
-          {
-            provider = function(self)
-              return ' ' .. self.git_status.ahead .. icons.misc.arrow_up
-            end,
-            hl = function(self)
-              return {
-                fg = self.git_status.ahead == 0 and 'fg' or 'yellowgreen',
-              }
-            end,
-            on_click = {
-              callback = function(self)
-                if self.git_status.ahead > 0 then stl.git_push() end
+            {
+              provider = function(self)
+                return ' ' .. self.git_status.ahead .. icons.misc.arrow_up
               end,
-              name = 'git_push',
+              hl = function(self)
+                return {
+                  fg = self.git_status.ahead == 0 and 'fg' or 'yellowgreen',
+                }
+              end,
+              on_click = {
+                callback = function(self)
+                  if self.git_status.ahead > 0 then stl.git_push() end
+                end,
+                name = 'git_push',
+              },
             },
           },
         },
-      },
       },
       -- Filename
       utils.insert(
@@ -811,12 +811,13 @@ return {
       -- Formatting
       {
         condition = function()
+          if not vim.bo.modifiable or vim.bo.readonly then return false end
           local curwin = api.nvim_get_current_win()
           local curbuf = api.nvim_win_get_buf(curwin)
           return vim.b[curbuf].formatting_disabled == true
             or vim.g.formatting_disabled == true
         end,
-        provider = function() return '  ' .. codicons.misc.shaded_lock end,
+        provider = function() return '  ' .. codicons.misc.lock end,
         hl = { fg = 'blue', bold = true },
       },
       -- Spell

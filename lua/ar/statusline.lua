@@ -239,9 +239,7 @@ end
 M.file_block = {
   init = function(self) self.filename = api.nvim_buf_get_name(0) end,
   condition = function(self)
-    return not conditions.buffer_matches({
-      filetype = self.filetypes,
-    })
+    return not conditions.buffer_matches({ filetype = self.filetypes })
   end,
 }
 
@@ -283,7 +281,10 @@ M.pretty_path = {
     },
     {
       condition = function(self) return self.filename ~= '' and self.name ~= '' end,
-      provider = function(self) return self.name end,
+      provider = function(self)
+        if self.dir == '' then return ' ' .. self.name end
+        return self.name
+      end,
       hl = { fg = 'fg', bold = true },
     },
     on_click = {
@@ -292,11 +293,6 @@ M.pretty_path = {
       end,
       name = 'pretty_path',
     },
-  },
-  {
-    condition = function() return vim.bo.readonly end,
-    provider = function() return ' ' .. codicons.misc.shaded_lock end,
-    hl = { fg = 'orange' },
   },
 }
 
@@ -327,7 +323,8 @@ M.file_flags = {
   },
   {
     condition = function() return not vim.bo.modifiable or vim.bo.readonly end,
-    provider = codicons.shaded_lock,
+    provider = function() return ' ' .. codicons.misc.lock end,
+    hl = { fg = 'orange' },
   },
 }
 
