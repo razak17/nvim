@@ -10,6 +10,35 @@ local features = ar.reqidx('detour.features')
 local minimal = ar.plugins.minimal
 local virtual_lines_variant = ar_config.lsp.virtual_lines.variant
 
+local function get_servers()
+  local servers = require('ar.servers').names()
+  local enabled_servers = vim
+    .iter(servers)
+    :map(function(name) return name end)
+    :filter(function(name)
+      local ts_lang = ar_config.lsp.lang.typescript
+      local function ts_lang_cond(server)
+        local cond = ar.find_string(ar_config.lsp.override, server)
+        return ts_lang == server or cond
+      end
+
+      local should_skip = ar.lsp_override(name)
+        or ar.lsp_disabled(name)
+        or ar.dir_lsp_disabled(cwd)
+        or name == 'ts_ls' and not ts_lang_cond('ts_ls')
+        or name == 'vtsls' and not ts_lang_cond('vtsls')
+
+      if should_skip then return false end
+
+      local config = require('ar.servers').get(name)
+      if not config then return false end
+      vim.lsp.config(name, config)
+      return true
+    end)
+    :totable()
+  return enabled_servers
+end
+
 return {
   ------------------------------------------------------------------------------
   -- LSP {{{1
@@ -55,32 +84,7 @@ return {
       cond = ar.lsp.enable,
       event = { 'BufReadPre' },
       config = function()
-        local servers = require('ar.servers').names()
-        local enabled_servers = vim
-          .iter(servers)
-          :map(function(name) return name end)
-          :filter(function(name)
-            local ts_lang = ar_config.lsp.lang.typescript
-            local function ts_lang_cond(server)
-              local cond = ar.find_string(ar_config.lsp.override, server)
-              return ts_lang == server or cond
-            end
-
-            local should_skip = ar.lsp_override(name)
-              or ar.lsp_disabled(name)
-              or ar.dir_lsp_disabled(cwd)
-              or name == 'ts_ls' and not ts_lang_cond('ts_ls')
-              or name == 'vtsls' and not ts_lang_cond('vtsls')
-
-            if should_skip then return false end
-
-            local config = require('ar.servers').get(name)
-            if not config then return false end
-            vim.lsp.config(name, config)
-            return true
-          end)
-          :totable()
-        require('mason-lspconfig').setup({ automatic_enable = enabled_servers })
+        require('mason-lspconfig').setup({ automatic_enable = get_servers() })
         local manual_servers = { 'tsgo' }
         vim
           .iter(manual_servers)
