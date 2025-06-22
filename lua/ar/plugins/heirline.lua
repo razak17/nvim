@@ -5,6 +5,23 @@ local minimal = ar.plugins.minimal
 
 local buftypes = { 'nofile', 'prompt', 'help', 'quickfix' }
 
+local filetypes = {
+  '^git.*',
+  'fugitive',
+  'alpha',
+  'help',
+  'lazy',
+  '^neo--tree$',
+  '^neotest--summary$',
+  '^neo--tree--popup$',
+  '^NvimTree$',
+  'snacks_dashboard',
+  'snacks_picker_input',
+  '^toggleterm$',
+  'FloatermSidebar',
+  'VoltWindow',
+}
+
 -- Filetypes which force the statusline to be inactive
 local force_inactive_filetypes = {
   '^aerial$',
@@ -81,22 +98,26 @@ return {
 
       opts.colors = setup_colors
       opts.statusline = vim.tbl_deep_extend('force', opts.statusline or {}, {
-        condition = function()
-          local win = api.nvim_get_current_win()
-          local buf = api.nvim_win_get_buf(win)
-          local decs = decor.get({
-            ft = bo[buf].ft,
-            fname = fn.bufname(buf),
-            setting = 'statusline',
-          })
-          if not decs or ar.falsy(decs) then
-            return not conditions.buffer_matches({
-              buftype = buftypes,
-              filetype = force_inactive_filetypes,
-            })
-          end
-          return decs.ft == true or decs.fname == true
-        end,
+        static = {
+          filetypes = filetypes,
+          force_inactive_filetypes = force_inactive_filetypes,
+        },
+        -- condition = function()
+        --   local win = api.nvim_get_current_win()
+        --   local buf = api.nvim_win_get_buf(win)
+        --   local decs = decor.get({
+        --     ft = bo[buf].ft,
+        --     fname = fn.bufname(buf),
+        --     setting = 'statusline',
+        --   })
+        --   if not decs or ar.falsy(decs) then
+        --     return not conditions.buffer_matches({
+        --       buftype = buftypes,
+        --       filetype = force_inactive_filetypes,
+        --     })
+        --   end
+        --   return decs.ft == true or decs.fname == true
+        -- end,
       })
       opts.statuscolumn =
         vim.tbl_deep_extend('force', opts.statuscolumn or {}, {

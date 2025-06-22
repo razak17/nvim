@@ -345,7 +345,7 @@ function M.lazy_updates()
   local lazy_ok, lazy = pcall(require, 'lazy.status')
   local pending_updates = lazy_ok and lazy.updates() or nil
   local has_pending_updates = lazy_ok and lazy.has_updates() or false
-  if has_pending_updates then return ' ' .. pending_updates end
+  if has_pending_updates then return pending_updates end
   return ''
 end
 
