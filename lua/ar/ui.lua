@@ -260,7 +260,7 @@ local presets = {
     colorcolumn = false,
     statusline = 'minimal',
     statuscolumn = false,
-    cursorline = true,
+    cursorline = false,
   }),
 }
 
