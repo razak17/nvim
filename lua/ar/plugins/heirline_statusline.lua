@@ -60,6 +60,31 @@ return {
       },
     }
 
+    local mason_statusline = {
+      condition = function() return vim.bo.filetype == 'mason' end,
+      vim_mode,
+      { provider = 'Mason' },
+      {
+        condition = function() return is_avail('mason.nvim') end,
+        init = function(self)
+          self.mason_registry = nil
+          local ok, registry = pcall(require, 'mason-registry')
+          if ok then self.mason_registry = registry end
+        end,
+        {
+          condition = function(self) return self.mason_registry ~= nil end,
+          provider = function(self)
+            return ' Installed: '
+              .. #self.mason_registry.get_installed_packages()
+              .. '/'
+              .. #self.mason_registry.get_all_package_specs()
+          end,
+          hl = { fg = 'comment' },
+        },
+      },
+      align,
+    }
+
     local explorer_statusline = {
       condition = function()
         local filetypes = {
@@ -861,6 +886,7 @@ return {
       statusline = vim.tbl_extend('force', opts.statusline or {}, {
         hl = { bg = 'bg_dark', fg = 'fg' },
         fallthrough = false,
+        mason_statusline,
         explorer_statusline,
         help_statusline,
         lazy_statusline,
