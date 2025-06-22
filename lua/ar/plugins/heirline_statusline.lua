@@ -220,7 +220,14 @@ return {
               return self.git_status.status == 'pending'
             end,
             provider = ' ' .. codicons.git.pending,
+            hl = { fg = 'comment', bold = true },
           },
+          {
+            condition = function(self)
+              return self.git_status.status ~= 'pending'
+                and self.git_status.status ~= 'error'
+                and self.git_status.status ~= nil
+            end,
           {
             provider = function(self)
               return ' ' .. self.git_status.behind .. icons.misc.arrow_down
@@ -254,6 +261,7 @@ return {
             },
           },
         },
+      },
       },
       -- Filename
       utils.insert(

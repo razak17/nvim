@@ -317,6 +317,7 @@ M.file_size = {
 
     return string.format(' %.1f%s', fsize / math.pow(1024, i), suffix[i + 1])
   end,
+  hl = { fg = 'comment' },
 }
 
 M.file_flags = {
