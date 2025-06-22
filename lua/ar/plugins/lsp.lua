@@ -17,9 +17,15 @@ local function get_servers()
     :map(function(name) return name end)
     :filter(function(name)
       local ts_lang = ar_config.lsp.lang.typescript
+      local override = ar_config.lsp.override
       local function ts_lang_cond(server)
-        local cond = ar.find_string(ar_config.lsp.override, server)
-        return ts_lang == server or cond
+        local is_override = ar.find_string(override, server)
+        return ts_lang == server or is_override
+      end
+      local py_lang = ar_config.lsp.lang.python
+      local function py_lang_cond(server)
+        local is_override = vim.tbl_contains(override, server)
+        return py_lang[server] or is_override
       end
 
       local should_skip = ar.lsp_override(name)
@@ -27,6 +33,9 @@ local function get_servers()
         or ar.dir_lsp_disabled(cwd)
         or name == 'ts_ls' and not ts_lang_cond('ts_ls')
         or name == 'vtsls' and not ts_lang_cond('vtsls')
+        or name == 'ty' and not py_lang_cond('ty')
+        or name == 'ruff' and not py_lang_cond('ruff')
+        or name == 'basedpyright' and not py_lang_cond('basedpyright')
 
       if should_skip then return false end
 

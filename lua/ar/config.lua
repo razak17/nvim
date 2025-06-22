@@ -356,6 +356,11 @@ local config = {
     hover_diagnostics = { enable = false, go_to = false, scope = 'cursor' },
     inlay_hint = { enable = false },
     lang = {
+      python = {
+        basedpyright = true,
+        ruff = true,
+        ty = false,
+      },
       ---@type ArTypescriptLsp
       typescript = 'typescript-tools',
     },

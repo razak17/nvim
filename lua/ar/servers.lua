@@ -325,6 +325,7 @@ local servers = {
       },
     },
   },
+  ty = {},
   vtsls = {
     single_file_support = false,
     experimental = {
