@@ -13,6 +13,7 @@ ar.smart_splits = {
     'DiffviewFileHistory',
     'DiffviewFiles',
     'gitcommit',
+    'help',
     'lazy',
     'neo-tree',
     'NeogitCommitMessage',
