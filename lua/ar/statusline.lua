@@ -2,6 +2,7 @@ local fn, api, env, fmt = vim.fn, vim.api, vim.env, string.format
 local falsy, icons, codicons = ar.falsy, ar.ui.icons, ar.ui.codicons
 local separator = icons.separators.dotted_thin_block
 local spinners = ar.ui.spinners.common
+local root_util = require('ar.utils.root')
 
 local conditions = require('heirline.conditions')
 
@@ -195,6 +196,44 @@ M.mode_colors = {
   ['!'] = 'pale_red',
   t = 'red',
 }
+-- https://github.com/LazyVim/LazyVim/blob/3f034d0a7f58031123300309f2efd3bb0356ee21/lua/lazyvim/util/lualine.lua?plain=1#L141
+---@param opts? {cwd:false, subdirectory: true, parent: true, other: true, icon?:string}
+function M.root_dir(opts)
+  opts = vim.tbl_extend('force', {
+    cwd = false,
+    subdirectory = true,
+    parent = true,
+    other = true,
+    icon = '󱉭',
+    color = function() return { fg = ar.highlight.get('Special', 'fg') } end,
+  }, opts or {})
+
+  local function get()
+    local cwd = root_util.cwd()
+    local root = root_util.get({ normalize = true })
+    local name = vim.fs.basename(root)
+
+    if root == cwd then
+      -- root is cwd
+      return opts.cwd and name
+    elseif root:find(cwd, 1, true) == 1 then
+      -- root is subdirectory of cwd
+      return opts.subdirectory and name
+    elseif cwd:find(root, 1, true) == 1 then
+      -- root is parent directory of cwd
+      return opts.parent and name
+    else
+      -- root and cwd are not related
+      return opts.other and name
+    end
+  end
+
+  return {
+    provider = function() return (opts.icon and opts.icon .. ' ') .. get() end,
+    condition = function() return type(get()) == 'string' end,
+    hl = opts.color,
+  }
+end
 
 ---Return the filename of the current buffer
 M.file_block = {
@@ -216,22 +255,48 @@ M.file_name = {
     callback = function()
       vim.defer_fn(function() ar.pick('files')() end, 100)
     end,
-    name = 'find_files',
+    name = 'find_name',
   },
 }
 
 M.pretty_path = {
-  provider = function(self)
-    local filename = fn.fnamemodify(self.filename, ':p:h')
-    if filename == '' then return '[No Name]' end
-    local pretty_path = require('ar.pretty_path')
-    return ' ' .. pretty_path.pretty_path()
-  end,
-  on_click = {
-    callback = function()
-      vim.defer_fn(function() ar.pick('files')() end, 100)
+  {
+    init = function(self)
+      local pretty_path = require('ar.pretty_path').pretty_path()
+      self.dir = ''
+      self.name = ''
+      if type(pretty_path) == 'table' then
+        self.dir = pretty_path.dir
+        self.name = pretty_path.name
+      end
+      self.filename = fn.fnamemodify(self.filename, ':p:h')
     end,
-    name = 'find_files',
+    {
+      condition = function(self) return self.filename == '' end,
+      provider = function() return '[No Name]' end,
+      hl = { fg = 'comment', bold = true },
+    },
+    {
+      condition = function(self) return self.filename ~= '' and self.dir ~= '' end,
+      provider = function(self) return ' ' .. self.dir end,
+      hl = { fg = 'comment', bold = true },
+    },
+    {
+      condition = function(self) return self.filename ~= '' and self.name ~= '' end,
+      provider = function(self) return self.name end,
+      hl = { fg = 'fg', bold = true },
+    },
+    on_click = {
+      callback = function()
+        vim.defer_fn(function() ar.pick('files')() end, 100)
+      end,
+      name = 'pretty_path',
+    },
+  },
+  {
+    condition = function() return vim.bo.readonly end,
+    provider = function() return ' ' .. codicons.misc.shaded_lock end,
+    hl = { fg = 'orange' },
   },
 }
 

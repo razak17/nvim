@@ -102,15 +102,10 @@ return {
     }
 
     local help_statusline = {
-      condition = function() return vim.bo.filetype == 'help' end,
+      condition = function() return vim.bo.buftype == 'help' end,
       vim_mode,
-      {
-        provider = function()
-          local filename = vim.api.nvim_buf_get_name(0)
-          return fn.fnamemodify(filename, ':t')
-        end,
-        hl = { fg = 'blue' },
-      },
+      stl.root_dir(),
+      stl.pretty_path,
       align,
     }
 

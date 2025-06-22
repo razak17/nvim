@@ -1,25 +1,13 @@
 local fn, uv = vim.fn, vim.uv
-local M = {}
+local root_util = require('ar.utils.root')
 
----@return string
-function M.norm(path)
-  if path:sub(1, 1) == '~' then
-    local home = uv.os_homedir()
-    if not home or home == '' then return path end
-    if home:sub(-1) == '\\' or home:sub(-1) == '/' then
-      home = home:sub(1, -2)
-    end
-    path = home .. path:sub(2)
-  end
-  path = path:gsub('\\', '/'):gsub('/+', '/')
-  return path:sub(-1) == '/' and path:sub(1, -2) or path
-end
+local M = {}
 
 function M.root_cwd()
   local path = uv.cwd()
   if path == '' or path == nil then return nil end
   path = uv.fs_realpath(path) or path
-  return M.norm(path)
+  return ar.norm(path)
 end
 
 function M.pretty_path()
@@ -29,9 +17,9 @@ function M.pretty_path()
 
   if path == '' then return '' end
 
-  path = M.norm(path)
-  local root = uv.cwd()
-  local cwd = M.root_cwd()
+  path = ar.norm(path)
+  local root = root_util.get({ normalize = true })
+  local cwd = root_util.cwd()
 
   if opts.relative == 'cwd' and path:find(cwd, 1, true) == 1 then
     path = path:sub(#cwd + 2)
@@ -55,7 +43,7 @@ function M.pretty_path()
   end
   local name = parts[#parts] or ''
   if name:len() > 10 then name = ar.abbreviate(name) end
-  return dir .. name
+  return { dir = dir, name = name }
 end
 
 return M
