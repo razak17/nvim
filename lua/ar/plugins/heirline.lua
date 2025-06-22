@@ -16,7 +16,7 @@ local filetypes = {
   '^neo--tree--popup$',
   '^NvimTree$',
   'snacks_dashboard',
-  'snacks_picker_input',
+  'snacks_picker_*',
   '^toggleterm$',
   'FloatermSidebar',
   'VoltWindow',
