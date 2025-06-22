@@ -63,7 +63,7 @@ return {
     local mason_statusline = {
       condition = function() return vim.bo.filetype == 'mason' end,
       vim_mode,
-      { provider = 'Mason' },
+      { provider = 'Mason', bold = true },
       {
         condition = function() return is_avail('mason.nvim') end,
         init = function(self)
@@ -117,7 +117,7 @@ return {
     local lazy_statusline = {
       condition = function() return vim.bo.filetype == 'lazy' end,
       vim_mode,
-      { provider = 'lazy' },
+      { provider = 'lazy', hl = { fg = 'fg', bold = true } },
       {
         provider = function()
           local lazy = require('lazy')
@@ -126,7 +126,7 @@ return {
             .. '/'
             .. lazy.stats().count
         end,
-        hl = { fg = 'comment' },
+        hl = { fg = 'comment', bold = true },
       },
       {
         provider = function() return ' ' .. stl.lazy_updates() end,
