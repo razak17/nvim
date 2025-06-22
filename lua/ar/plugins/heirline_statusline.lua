@@ -60,6 +60,26 @@ return {
       },
     }
 
+    local lazy_statusline = {
+      condition = function() return vim.bo.filetype == 'lazy' end,
+      vim_mode,
+      {
+        provider = function()
+          local lazy = require('lazy')
+          return ' lazy 💤 loaded: '
+            .. lazy.stats().loaded
+            .. '/'
+            .. lazy.stats().count
+        end,
+        hl = { fg = 'comment' },
+      },
+      {
+        provider = function() return ' ' .. stl.lazy_updates() end,
+        hl = { fg = 'dark_orange' },
+      },
+      align,
+    }
+
     local minimal_statusline = {
       condition = function(self)
         return conditions.buffer_matches({ filetype = self.filetypes })
@@ -811,6 +831,7 @@ return {
       statusline = vim.tbl_extend('force', opts.statusline or {}, {
         hl = { bg = 'bg_dark', fg = 'fg' },
         fallthrough = false,
+        lazy_statusline,
         minimal_statusline,
         statusline,
       }),
