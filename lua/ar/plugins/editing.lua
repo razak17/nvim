@@ -458,15 +458,6 @@ return {
     lazy = not ar.plugins.overrides.ghost_text.enable,
   },
   {
-    'gabrielpoca/replacer.nvim',
-    opts = { rename_files = false },
-    -- stylua: ignore
-    keys = {
-      { '<leader>oh', function() require('replacer').run() end, desc = 'replacer: run' },
-      { '<leader>os', function() require('replacer').save() end, desc = 'replacer: save' },
-    },
-  },
-  {
     'max397574/better-escape.nvim',
     cond = function() return get_cond('better-escape.nvim', not minimal) end,
     event = { 'InsertEnter' },
@@ -692,5 +683,18 @@ return {
       { '<leader>of', ':FocusClear<CR>', desc = 'focus: clear', silent = true, mode = { 'n' } },
     },
     opts = {},
+  },
+  --------------------------------------------------------------------------------
+  -- Disabled
+  --------------------------------------------------------------------------------
+  {
+    'gabrielpoca/replacer.nvim',
+    cond = function() return get_cond('replacer.nvim', false) end,
+    opts = { rename_files = false },
+    -- stylua: ignore
+    keys = {
+      { '<leader>oh', function() require('replacer').run() end, desc = 'replacer: run' },
+      { '<leader>os', function() require('replacer').save() end, desc = 'replacer: save' },
+    },
   },
 }
