@@ -494,15 +494,6 @@ return {
       highlight_node_at_cursor = true,
     },
   },
-  {
-    'Wansmer/binary-swap.nvim',
-    cond = false,
-    -- stylua: ignore
-    keys = {
-      { '<leader>iA', function() require('binary-swap').swap_operands() end, desc = 'binary-swap: swap' },
-      { '<leader>iB', function() require('binary-swap').swap_operands_with_operator() end, desc = 'binary-swap: swap with operator' },
-    },
-  },
   ------------------------------------------------------------------------------
   -- Toggle Text
   ------------------------------------------------------------------------------
@@ -538,37 +529,6 @@ return {
         ['and'] = 'or',
         ['GET'] = 'POST',
       },
-    },
-  },
-  {
-    'al-ce/opptogg.nvim',
-    cond = false,
-    cmd = { 'OppTogg' },
-    keys = {
-      { '<leader>io', '<cmd>OppTogg<CR>', desc = 'opptogg: toggle' },
-    },
-    opts = {},
-    opp_table = {
-      ['true'] = 'false',
-      ['yes'] = 'no',
-      ['foo'] = 'bar',
-      ['vim'] = 'emacs',
-      ['let'] = 'const',
-      ['margin'] = 'padding',
-      ['-'] = '+',
-      ['onClick'] = 'onSubmit',
-      ['public'] = 'private',
-      ['string'] = 'int',
-      ['leader'] = 'localleader',
-      ['chore'] = 'feat',
-      ['double'] = 'single',
-      ['config'] = 'opts',
-      ['pre'] = 'post',
-      ['column'] = 'row',
-      ['before'] = 'after',
-      ['end'] = 'start',
-      ['high'] = 'low',
-      ['open'] = 'close',
     },
   },
   ------------------------------------------------------------------------------
@@ -642,13 +602,6 @@ return {
   -- Edit Code Blocks
   ------------------------------------------------------------------------------
   {
-    desc = 'readline style keybindings in insert mode',
-    'tpope/vim-rsi',
-    enabled = false,
-    cond = function() return get_cond('vim-rsi', not minimal) end,
-    event = { 'InsertEnter' },
-  },
-  {
     'dawsers/edit-code-block.nvim',
     cond = function() return get_cond('edit-code-block.nvim', not minimal) end,
     cmd = { 'EditCodeBlock', 'EditCodeBlockOrg', 'EditCodeBlockSelection' },
@@ -673,17 +626,6 @@ return {
       { mode = 'x', '<localleader>nt', ":lua require'nag'.tab()<CR>", desc = 'nag: split tab', },
     },
   },
-  {
-    'kelvinauta/focushere.nvim',
-    cond = false,
-    cmd = { 'FocusHere', 'FocusClear' },
-    -- stylua: ignore
-    keys = {
-      { '<leader>of', ':FocusHere<CR>', desc = 'focus: here', silent = true, mode = { 'v' } },
-      { '<leader>of', ':FocusClear<CR>', desc = 'focus: clear', silent = true, mode = { 'n' } },
-    },
-    opts = {},
-  },
   --------------------------------------------------------------------------------
   -- Disabled
   --------------------------------------------------------------------------------
@@ -696,5 +638,63 @@ return {
       { '<leader>oh', function() require('replacer').run() end, desc = 'replacer: run' },
       { '<leader>os', function() require('replacer').save() end, desc = 'replacer: save' },
     },
+  },
+  {
+    'Wansmer/binary-swap.nvim',
+    cond = false,
+    -- stylua: ignore
+    keys = {
+      { '<leader>iA', function() require('binary-swap').swap_operands() end, desc = 'binary-swap: swap' },
+      { '<leader>iB', function() require('binary-swap').swap_operands_with_operator() end, desc = 'binary-swap: swap with operator' },
+    },
+  },
+  {
+    'al-ce/opptogg.nvim',
+    cond = false,
+    cmd = { 'OppTogg' },
+    keys = {
+      { '<leader>io', '<cmd>OppTogg<CR>', desc = 'opptogg: toggle' },
+    },
+    opts = {},
+    opp_table = {
+      ['true'] = 'false',
+      ['yes'] = 'no',
+      ['foo'] = 'bar',
+      ['vim'] = 'emacs',
+      ['let'] = 'const',
+      ['margin'] = 'padding',
+      ['-'] = '+',
+      ['onClick'] = 'onSubmit',
+      ['public'] = 'private',
+      ['string'] = 'int',
+      ['leader'] = 'localleader',
+      ['chore'] = 'feat',
+      ['double'] = 'single',
+      ['config'] = 'opts',
+      ['pre'] = 'post',
+      ['column'] = 'row',
+      ['before'] = 'after',
+      ['end'] = 'start',
+      ['high'] = 'low',
+      ['open'] = 'close',
+    },
+  },
+  {
+    desc = 'readline style keybindings in insert mode',
+    'tpope/vim-rsi',
+    enabled = false,
+    cond = function() return get_cond('vim-rsi', not minimal) end,
+    event = { 'InsertEnter' },
+  },
+  {
+    'kelvinauta/focushere.nvim',
+    cond = false,
+    cmd = { 'FocusHere', 'FocusClear' },
+    -- stylua: ignore
+    keys = {
+      { '<leader>of', ':FocusHere<CR>', desc = 'focus: here', silent = true, mode = { 'v' } },
+      { '<leader>of', ':FocusClear<CR>', desc = 'focus: clear', silent = true, mode = { 'n' } },
+    },
+    opts = {},
   },
 }
