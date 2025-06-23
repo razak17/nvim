@@ -216,6 +216,7 @@ return {
   },
   {
     'AgusDOLARD/backout.nvim',
+    cond = function() return get_cond('backout.nvim', not minimal) end,
     opts = {},
     keys = {
       -- stylua: ignore
