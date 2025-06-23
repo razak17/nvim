@@ -2,10 +2,32 @@ local minimal = ar.plugins.minimal
 
 return {
   {
+    'chrisgrieser/nvim-origami',
+    cond = function() return ar.get_plugin_cond('nvim-origami', not minimal) end,
+    init = function()
+      vim.opt.foldlevel = 99
+      vim.opt.foldlevelstart = 99
+    end,
+    event = 'UIEnter', -- needed for folds to load in time and comments being closed
+    opts = {
+      foldtext = {
+        enabled = true,
+        padding = 2,
+        lineCount = { template = ' %d', hlgroup = 'Comment' },
+        diagnosticsCount = false,
+        gitsignsCount = false,
+      },
+    },
+  },
+  ------------------------------------------------------------------------------
+  -- Disabled {{{1
+  ------------------------------------------------------------------------------
+  {
     'kevinhwang91/nvim-ufo',
     cond = function()
       local condition = not ar_config.plugin.custom.custom_fold.enable
         and not minimal
+        and false
       return ar.get_plugin_cond('nvim-ufo', condition)
     end,
     event = 'UIEnter', -- needed for folds to load in time and comments being closed
@@ -117,15 +139,6 @@ return {
       require('ufo').setup(opts)
     end,
     dependencies = 'kevinhwang91/promise-async',
-  },
-  {
-    'chrisgrieser/nvim-origami',
-    cond = function() return ar.get_plugin_cond('nvim-origami', not minimal) end,
-    -- event = 'BufReadPost',
-    keys = {
-      { '<BS>', function() require('origami').h() end, desc = 'close fold' },
-    },
-    opts = { setupFoldKeymaps = false },
   },
   {
     'gh-liu/fold_line.nvim',
