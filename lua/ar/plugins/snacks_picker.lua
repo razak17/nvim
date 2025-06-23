@@ -154,6 +154,21 @@ local function lazy()
     matcher = { frecency = true },
     args = { '--exact-depth', '2', '--ignore-case', 'readme.md' },
     cwd = fn.stdpath('data') .. '/lazy',
+    -- on_close = function(picker)
+    --   vim.cmd.stopinsert()
+    --   if not picker then return end
+    --   local items = picker:selected({ fallback = true })
+    --   if not items or #items == 0 then return end
+    --   local item = items[1]
+    --   vim.schedule(function()
+    --     if item and item.file and item.file:match('^%w+%.nvim') then
+    --       local plugin_name = item.file:match('^(%w+%.nvim)')
+    --       ar.pick.open('files', { cwd = item.cwd .. '/' .. plugin_name })
+    --     else
+    --       vim.notify('No valid plugin found in selection')
+    --     end
+    --   end)
+    -- end,
   })()
 end
 
