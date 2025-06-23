@@ -117,6 +117,7 @@ local env = vim.env
 
 ---@class ArLsp
 ---@field disabled ArLspDisabled
+---@field foldexpr ArCond
 ---@field format_on_save ArCond
 ---@field hover_diagnostics table
 ---@field inlay_hint ArCond
@@ -356,6 +357,7 @@ local config = {
       directories = { vim.fn.stdpath('data') },
       servers = { 'emmet_ls', 'pyright', 'jedi_language_server', 'tsgo' },
     },
+    foldexpr = { enable = false },
     format_on_save = { enable = true },
     hover_diagnostics = { enable = false, go_to = false, scope = 'cursor' },
     inlay_hint = { enable = false },

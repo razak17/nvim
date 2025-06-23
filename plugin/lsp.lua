@@ -712,22 +712,26 @@ local function setup_colors(client, bufnr)
   end
 end
 
+---@param client vim.lsp.Client
+local function setup_lsp_foldexpr(client)
+  if client:supports_method(M.textDocument_foldingRange) then
+    local win = api.nvim_get_current_win()
+    vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+  end
+end
+
 -- Add buffer local mappings, autocommands etc for attaching servers
 -- this runs for each client because they have different capabilities so each time one
 -- attaches it might enable autocommands or mappings that the previous client did not support
 ---@param client vim.lsp.Client the lsp client
 ---@param bufnr number
 local function on_attach(client, bufnr)
+  local ar_lsp = ar_config.lsp
   setup_autocommands(client, bufnr)
   setup_mappings(client, bufnr)
   setup_lsp_stop_detached()
-  if client:supports_method(M.textDocument_foldingRange) then
-    local win = api.nvim_get_current_win()
-    vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
-  end
-  if ar_config.lsp.semantic_tokens.enable then
-    setup_semantic_tokens(client, bufnr)
-  end
+  if ar_lsp.foldexpr.enable then setup_lsp_foldexpr(client) end
+  if ar_lsp.semantic_tokens.enable then setup_semantic_tokens(client, bufnr) end
   setup_colors(client, bufnr)
   setup_lsp_plugins(client, bufnr)
   if ar_config.completion.variant == 'omnifunc' then
