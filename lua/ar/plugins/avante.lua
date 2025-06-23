@@ -114,6 +114,7 @@ return {
       local opts = {
         mode = 'agentic',
         behaviour = { auto_set_keymaps = false },
+        hints = { enabled = false },
         selector = {
           provider = 'snacks',
           provider_opts = {},
@@ -146,6 +147,14 @@ return {
       elseif models.copilot then
         set_provider('gemini')
       end
+
+      ar.highlight.plugin('neogit', {
+        theme = {
+          ['onedark'] = {
+            { AvanteInlineHint = { inherit = 'DiagnosticVirtualTextInfo' } },
+          },
+        },
+      })
 
       return opts
     end,
