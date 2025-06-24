@@ -175,6 +175,7 @@ local function colorscheme_overrides()
       { PmenuExtraSel = { link = 'PmenuSel' } },
       { PmenuThumb = { link = 'CurSearch' } },
       { VertSplit = { fg = { from = 'NonText', alter = -0.2 } } },
+      { CurSearch = { link = 'WildMenu' } },
       { WinSeparator = { link = 'VertSplit' } },
       { FloatBorder = { link = 'VertSplit' } },
       { IndentBlanklineChar = { link = 'VertSplit' } },
