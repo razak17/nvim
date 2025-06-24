@@ -10,7 +10,8 @@ function M.root_cwd()
   return ar.norm(path)
 end
 
-function M.pretty_path()
+---@param truncate boolean
+function M.pretty_path(truncate)
   local opts = { relative = 'cwd', length = 3 }
 
   local path = fn.expand('%:p') --[[@as string]]
@@ -42,7 +43,7 @@ function M.pretty_path()
     dir = dir .. sep
   end
   local name = parts[#parts] or ''
-  if name:len() > 10 then name = ar.abbreviate(name) end
+  if truncate and name:len() > 10 then name = ar.abbreviate(name) end
   return { dir = dir, name = name }
 end
 

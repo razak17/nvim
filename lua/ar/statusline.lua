@@ -237,17 +237,17 @@ end
 
 ---Return the filename of the current buffer
 M.file_block = {
-  init = function(self) self.filename = api.nvim_buf_get_name(0) end,
-  condition = function(self)
-    return not conditions.buffer_matches({ filetype = self.filetypes })
+  init = function(self)
+    self.filename = api.nvim_buf_get_name(0)
+    self.lfilename = fn.fnamemodify(self.filename, ':.')
+    self.sfilename = fn.fnamemodify(self.filename, ':t')
   end,
 }
 
 M.file_name = {
   provider = function(self)
-    local filename = fn.fnamemodify(self.filename, ':t')
-    if filename == '' then return '[No Name]' end
-    return ' ' .. filename
+    if self.sfilename == '' then return '[No Name]' end
+    return ' ' .. self.sfilename
   end,
   on_click = {
     callback = function()
@@ -257,42 +257,47 @@ M.file_name = {
   },
 }
 
+M.long_file_name = {
+  provider = function(self)
+    if self.lfilename == '' then return '[No Name]' end
+    return ' ' .. self.lfilename
+  end,
+}
+
 M.pretty_path = {
+  init = function(self)
+    local pretty_path = require('ar.pretty_path').pretty_path()
+    self.dir = ''
+    self.name = ''
+    if type(pretty_path) == 'table' then
+      self.dir = pretty_path.dir
+      self.name = pretty_path.name
+    end
+    self.filename = fn.fnamemodify(self.filename, ':p:h')
+  end,
   {
-    init = function(self)
-      local pretty_path = require('ar.pretty_path').pretty_path()
-      self.dir = ''
-      self.name = ''
-      if type(pretty_path) == 'table' then
-        self.dir = pretty_path.dir
-        self.name = pretty_path.name
-      end
-      self.filename = fn.fnamemodify(self.filename, ':p:h')
+    condition = function(self) return self.filename == '' end,
+    provider = function() return '[No Name]' end,
+    hl = { fg = 'comment', bold = true },
+  },
+  {
+    condition = function(self) return self.filename ~= '' and self.dir ~= '' end,
+    provider = function(self) return ' ' .. self.dir end,
+    hl = { fg = 'comment', bold = true },
+  },
+  {
+    condition = function(self) return self.filename ~= '' and self.name ~= '' end,
+    provider = function(self)
+      if self.dir == '' then return ' ' .. self.name end
+      return self.name
     end,
-    {
-      condition = function(self) return self.filename == '' end,
-      provider = function() return '[No Name]' end,
-      hl = { fg = 'comment', bold = true },
-    },
-    {
-      condition = function(self) return self.filename ~= '' and self.dir ~= '' end,
-      provider = function(self) return ' ' .. self.dir end,
-      hl = { fg = 'comment', bold = true },
-    },
-    {
-      condition = function(self) return self.filename ~= '' and self.name ~= '' end,
-      provider = function(self)
-        if self.dir == '' then return ' ' .. self.name end
-        return self.name
-      end,
-      hl = { fg = 'fg', bold = true },
-    },
-    on_click = {
-      callback = function()
-        vim.defer_fn(function() ar.pick('files')() end, 100)
-      end,
-      name = 'pretty_path',
-    },
+    hl = { fg = 'fg', bold = true },
+  },
+  on_click = {
+    callback = function()
+      vim.defer_fn(function() ar.pick('files')() end, 100)
+    end,
+    name = 'pretty_path',
   },
 }
 

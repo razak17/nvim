@@ -44,6 +44,8 @@ return {
 
     local mode_colors = stl.mode_colors
 
+    local empty_component = { provider = '' }
+
     local vim_mode = {
       init = function(self)
         self.mode = fn.mode(1)
@@ -55,7 +57,7 @@ return {
         callback = vim.schedule_wrap(function() vim.cmd('redrawstatus') end),
       },
       {
-        provider = function() return stl.block() .. ' ' end,
+        provider = function() return stl.block() end,
         hl = function(self) return { fg = self.mode_color } end,
       },
     }
@@ -63,7 +65,7 @@ return {
     local mason_statusline = {
       condition = function() return vim.bo.filetype == 'mason' end,
       vim_mode,
-      { provider = 'Mason', bold = true },
+      { provider = ' Mason', bold = true },
       {
         condition = function() return is_avail('mason.nvim') end,
         init = function(self)
@@ -94,6 +96,7 @@ return {
         return conditions.buffer_matches({ filetype = filetypes })
       end,
       vim_mode,
+      { provider = ' ' },
       {
         provider = function() return fn.fnamemodify(fn.getcwd(), ':~') end,
         hl = { fg = 'blue' },
@@ -104,6 +107,7 @@ return {
     local help_statusline = {
       condition = function() return vim.bo.buftype == 'help' end,
       vim_mode,
+      { provider = ' ' },
       stl.root_dir(),
       utils.insert(utils.insert(stl.pretty_path, stl.file_flags)),
       align,
@@ -112,7 +116,7 @@ return {
     local lazy_statusline = {
       condition = function() return vim.bo.filetype == 'lazy' end,
       vim_mode,
-      { provider = 'lazy', hl = { fg = 'fg', bold = true } },
+      { provider = ' lazy', hl = { fg = 'fg', bold = true } },
       {
         provider = function()
           local lazy = require('lazy')
@@ -135,6 +139,7 @@ return {
         return conditions.buffer_matches({ buftype = { 'terminal' } })
       end,
       vim_mode,
+      { provider = ' ' },
       {
         provider = function()
           local icon = codicons.misc.terminal .. ' '
@@ -154,6 +159,7 @@ return {
         return conditions.buffer_matches({ filetype = self.filetypes })
       end,
       vim_mode,
+      { provider = ' ' },
       {
         condition = function() return vim.bo.filetype ~= 'help' end,
         provider = function() return string.lower(vim.bo.filetype) end,
@@ -167,21 +173,21 @@ return {
       vim_mode,
       -- Git Branch
       {
-        init = update_events({
-          'BufEnter',
-          'BufWritePost',
-          'FocusGained',
-        }),
-        provider = function()
-          return codicons.git.branch .. ' ' .. stl.pretty_branch()
-        end,
-        on_click = {
-          callback = function()
-            vim.defer_fn(function() stl.list_branches() end, 100)
+        flexible = 4,
+        {
+          init = update_events({ 'BufEnter', 'BufWritePost', 'FocusGained' }),
+          provider = function()
+            return ' ' .. codicons.git.branch .. ' ' .. stl.pretty_branch()
           end,
-          name = 'git_change_branch',
+          on_click = {
+            callback = function()
+              vim.defer_fn(function() stl.list_branches() end, 100)
+            end,
+            name = 'git_change_branch',
+          },
+          hl = { fg = 'yellowgreen' },
         },
-        hl = { fg = 'yellowgreen' },
+        empty_component,
       },
       {
         condition = function() return is_avail('nvim-tinygit') and false end,
@@ -201,646 +207,752 @@ return {
       },
       -- Git
       {
-        -- condition = conditions.is_git_repo,
-        condition = function() return not stl.is_dots_repo end,
-        init = function(self)
-          self.status_dict = vim.b.gitsigns_status_dict
-          self.git_status = stl.git_status
-        end,
-        update = {
-          'User',
-          pattern = { 'GitSignsUpdate', 'GitSignsChanged' },
-          callback = function() vim.schedule(vim.cmd.redrawstatus) end,
-        },
+        flexible = 3,
         {
-          condition = function(self) return self.git_status ~= nil end,
-          update = { 'User', pattern = 'git_statusChanged' },
-          {
-            condition = function(self)
-              return self.git_status.status == 'pending'
-            end,
-            provider = ' ' .. codicons.git.pending,
-            hl = { fg = 'comment', bold = true },
+          -- condition = conditions.is_git_repo,
+          condition = function() return not stl.is_dots_repo end,
+          init = function(self)
+            self.status_dict = vim.b.gitsigns_status_dict
+            self.git_status = stl.git_status
+          end,
+          update = {
+            'User',
+            pattern = { 'GitSignsUpdate', 'GitSignsChanged' },
+            callback = function() vim.schedule(vim.cmd.redrawstatus) end,
           },
           {
-            condition = function(self)
-              return self.git_status.status ~= 'pending'
-                and self.git_status.status ~= 'error'
-                and self.git_status.status ~= nil
-            end,
+            condition = function(self) return self.git_status ~= nil end,
+            update = { 'User', pattern = 'git_statusChanged' },
             {
-              provider = function(self)
-                return ' ' .. self.git_status.behind .. icons.misc.arrow_down
+              condition = function(self)
+                return self.git_status.status == 'pending'
               end,
-              hl = function(self)
-                return {
-                  fg = self.git_status.behind == 0 and 'fg' or 'pale_red',
-                }
-              end,
-              on_click = {
-                callback = function(self)
-                  if self.git_status.behind > 0 then stl.git_pull() end
-                end,
-                name = 'git_pull',
-              },
+              provider = ' ' .. codicons.git.pending,
+              hl = { fg = 'comment', bold = true },
             },
             {
-              provider = function(self)
-                return ' ' .. self.git_status.ahead .. icons.misc.arrow_up
+              condition = function(self)
+                return self.git_status.status ~= 'pending'
+                  and self.git_status.status ~= 'error'
+                  and self.git_status.status ~= nil
               end,
-              hl = function(self)
-                return {
-                  fg = self.git_status.ahead == 0 and 'fg' or 'yellowgreen',
-                }
-              end,
-              on_click = {
-                callback = function(self)
-                  if self.git_status.ahead > 0 then stl.git_push() end
+              {
+                provider = function(self)
+                  return ' ' .. self.git_status.behind .. icons.misc.arrow_down
                 end,
-                name = 'git_push',
+                hl = function(self)
+                  return {
+                    fg = self.git_status.behind == 0 and 'fg' or 'pale_red',
+                  }
+                end,
+                on_click = {
+                  callback = function(self)
+                    if self.git_status.behind > 0 then stl.git_pull() end
+                  end,
+                  name = 'git_pull',
+                },
+              },
+              {
+                provider = function(self)
+                  return ' ' .. self.git_status.ahead .. icons.misc.arrow_up
+                end,
+                hl = function(self)
+                  return {
+                    fg = self.git_status.ahead == 0 and 'fg' or 'yellowgreen',
+                  }
+                end,
+                on_click = {
+                  callback = function(self)
+                    if self.git_status.ahead > 0 then stl.git_push() end
+                  end,
+                  name = 'git_push',
+                },
               },
             },
           },
         },
+        empty_component,
       },
       -- Filename
       utils.insert(
-        file_block,
-        utils.insert(stl.pretty_path, stl.file_flags, stl.file_size)
+        { flexible = 3 },
+        utils.insert(file_block, stl.pretty_path, stl.file_flags, stl.file_size),
+        utils.insert(file_block, stl.file_name, stl.file_flags)
       ),
       -- Python env
       {
-        condition = function() return vim.bo.filetype == 'python' end,
-        provider = function() return ' ' .. stl.python_env() end,
-        hl = { fg = 'yellowgreen' },
+        flexible = 3,
+        {
+          condition = function() return vim.bo.filetype == 'python' end,
+          provider = function() return ' ' .. stl.python_env() end,
+          hl = { fg = 'yellowgreen' },
+        },
+        empty_component,
       },
       -- LSP Diagnostics
       {
-        condition = conditions.has_diagnostics,
-        static = {
-          error_icon = codicons.lsp.error .. ' ',
-          warn_icon = codicons.lsp.warn .. ' ',
-          hint_icon = codicons.lsp.hint .. ' ',
-          info_icon = codicons.lsp.info .. ' ',
-        },
-        update = { 'LspAttach', 'LspDetach', 'DiagnosticChanged', 'BufEnter' },
-        init = function(self)
-          local bufnr = api.nvim_get_current_buf()
-          if not vim.b[bufnr].is_large_file then
-            self.errors = #vim.diagnostic.get(
-              0,
-              { severity = vim.diagnostic.severity.ERROR }
-            )
-            self.warnings = #vim.diagnostic.get(
-              0,
-              { severity = vim.diagnostic.severity.WARN }
-            )
-            self.hints = #vim.diagnostic.get(
-              0,
-              { severity = vim.diagnostic.severity.HINT }
-            )
-            self.info = #vim.diagnostic.get(
-              0,
-              { severity = vim.diagnostic.severity.INFO }
-            )
-          else
-            self.errors = 0
-            self.warnings = 0
-            self.hints = 0
-            self.info = 0
-          end
-        end,
+        flexible = 3,
         {
-          provider = function(self)
-            return self.errors > 0 and (' ' .. self.error_icon .. self.errors)
+          condition = conditions.has_diagnostics,
+          static = {
+            error_icon = codicons.lsp.error .. ' ',
+            warn_icon = codicons.lsp.warn .. ' ',
+            hint_icon = codicons.lsp.hint .. ' ',
+            info_icon = codicons.lsp.info .. ' ',
+          },
+          update = { 'LspAttach', 'LspDetach', 'DiagnosticChanged', 'BufEnter' },
+          init = function(self)
+            local bufnr = api.nvim_get_current_buf()
+            if not vim.b[bufnr].is_large_file then
+              self.errors = #vim.diagnostic.get(
+                0,
+                { severity = vim.diagnostic.severity.ERROR }
+              )
+              self.warnings = #vim.diagnostic.get(
+                0,
+                { severity = vim.diagnostic.severity.WARN }
+              )
+              self.hints = #vim.diagnostic.get(
+                0,
+                { severity = vim.diagnostic.severity.HINT }
+              )
+              self.info = #vim.diagnostic.get(
+                0,
+                { severity = vim.diagnostic.severity.INFO }
+              )
+            else
+              self.errors = 0
+              self.warnings = 0
+              self.hints = 0
+              self.info = 0
+            end
           end,
-          hl = { fg = 'error_red' },
+          {
+            provider = function(self)
+              return self.errors > 0 and (' ' .. self.error_icon .. self.errors)
+            end,
+            hl = { fg = 'error_red' },
+          },
+          {
+            provider = function(self)
+              return self.warnings > 0
+                and (' ' .. self.warn_icon .. self.warnings)
+            end,
+            hl = { fg = 'dark_orange' },
+          },
+          {
+            provider = function(self)
+              return self.info > 0 and (' ' .. self.info_icon .. self.info)
+            end,
+            hl = { fg = 'blue' },
+          },
+          {
+            provider = function(self)
+              return self.hints > 0 and (' ' .. self.hint_icon .. self.hints)
+            end,
+            hl = { fg = 'forest_green' },
+          },
+          on_click = {
+            callback = function()
+              vim.defer_fn(ar.pick('diagnostics_buffer'), 100)
+            end,
+            name = 'lsp_diagnostics',
+          },
         },
-        {
-          provider = function(self)
-            return self.warnings > 0
-              and (' ' .. self.warn_icon .. self.warnings)
-          end,
-          hl = { fg = 'dark_orange' },
-        },
-        {
-          provider = function(self)
-            return self.info > 0 and (' ' .. self.info_icon .. self.info)
-          end,
-          hl = { fg = 'blue' },
-        },
-        {
-          provider = function(self)
-            return self.hints > 0 and (' ' .. self.hint_icon .. self.hints)
-          end,
-          hl = { fg = 'forest_green' },
-        },
-        on_click = {
-          callback = function()
-            vim.defer_fn(ar.pick('diagnostics_buffer'), 100)
-          end,
-          name = 'lsp_diagnostics',
-        },
+        empty_component,
       },
       align,
       -- LSP
       {
-        init = function() stl.autocmds() end,
-        condition = function() return ar.lsp.enable end,
-        -- LSP Progress
+        flexible = 1,
         {
-          provider = function() return stl.lsp_progress end,
-          hl = { fg = 'comment' },
+          init = function() stl.autocmds() end,
+          condition = function() return ar.lsp.enable end,
+          -- LSP Progress
+          {
+            provider = function() return stl.lsp_progress end,
+            hl = { fg = 'comment' },
+          },
+          -- LSP Pending Requests
+          {
+            condition = function() return stl.lsp_progress == '' end,
+            provider = function() return stl.lsp_pending end,
+            hl = { fg = 'comment' },
+          },
         },
-        -- LSP Pending Requests
-        {
-          condition = function() return stl.lsp_progress == '' end,
-          provider = function() return stl.lsp_pending end,
-          hl = { fg = 'comment' },
-        },
+        empty_component,
       },
       align,
       -- Noice Status
       {
-        condition = function()
-          return ar.is_available('noice.nvim')
+        flexible = 4,
+        {
+          condition = function()
+            return ar.is_available('noice.nvim')
+              ---@diagnostic disable-next-line: undefined-field
+              and require('noice').api.status.command.has()
+          end,
+          provider = function()
             ---@diagnostic disable-next-line: undefined-field
-            and require('noice').api.status.command.has()
-        end,
-        provider = function()
-          ---@diagnostic disable-next-line: undefined-field
-          local noice_cmd = require('noice').api.status.command.get()
-          return noice_cmd or ''
-        end,
-        hl = { fg = 'blue' },
+            local noice_cmd = require('noice').api.status.command.get()
+            return noice_cmd or ''
+          end,
+          hl = { fg = 'blue' },
+        },
+        empty_component,
       },
       -- Search Matches
       {
-        condition = function() return v.hlsearch ~= 0 end,
-        init = function(self)
-          local ok, search = pcall(fn.searchcount)
-          if ok and search.total then self.search = search end
-        end,
+        flexible = 4,
         {
+          condition = function() return v.hlsearch ~= 0 end,
+          init = function(self)
+            local ok, search = pcall(fn.searchcount)
+            if ok and search.total then self.search = search end
+          end,
           provider = function(self)
             local search = self.search
-            return ' '
-              .. string.format(
-                ' %d/%d ',
-                search.current,
-                math.min(search.total, search.maxcount)
-              )
+            return string.format(
+              ' %d/%d',
+              search.current,
+              math.min(search.total, search.maxcount)
+            )
           end,
         },
+        empty_component,
       },
       -- Debug
       {
-        condition = function()
-          if not is_avail('nvim-dap') then return false end
-          local session = require('dap').session()
-          return session ~= nil and false
-        end,
-        provider = function()
-          return codicons.misc.bug_alt .. ' ' .. require('dap').status() .. ' '
-        end,
-        hl = { fg = 'red' },
+        flexible = 1,
         {
-          provider = ' ',
-          on_click = {
-            callback = function() require('dap').step_into() end,
-            name = 'heirline_dap_step_into',
-          },
-        },
-        { provider = ' ' },
-        {
-          provider = ' ',
-          on_click = {
-            callback = function() require('dap').step_out() end,
-            name = 'heirline_dap_step_out',
-          },
-        },
-        { provider = ' ' },
-        {
-          provider = ' ',
-          on_click = {
-            callback = function() require('dap').step_over() end,
-            name = 'heirline_dap_step_over',
-          },
-        },
-        { provider = ' ' },
-        {
-          provider = ' ',
-          hl = { fg = 'green' },
-          on_click = {
-            callback = function() require('dap').run_last() end,
-            name = 'heirline_dap_run_last',
-          },
-        },
-        { provider = ' ' },
-        {
-          provider = ' ',
+          condition = function()
+            if not is_avail('nvim-dap') then return false end
+            local session = require('dap').session()
+            return session ~= nil and false
+          end,
+          provider = function()
+            return codicons.misc.bug_alt
+              .. ' '
+              .. require('dap').status()
+              .. ' '
+          end,
           hl = { fg = 'red' },
-          on_click = {
-            callback = function()
-              require('dap').terminate()
-              require('dapui').close({})
-            end,
-            name = 'heirline_dap_close',
+          {
+            provider = ' ',
+            on_click = {
+              callback = function() require('dap').step_into() end,
+              name = 'heirline_dap_step_into',
+            },
           },
+          { provider = ' ' },
+          {
+            provider = ' ',
+            on_click = {
+              callback = function() require('dap').step_out() end,
+              name = 'heirline_dap_step_out',
+            },
+          },
+          { provider = ' ' },
+          {
+            provider = ' ',
+            on_click = {
+              callback = function() require('dap').step_over() end,
+              name = 'heirline_dap_step_over',
+            },
+          },
+          { provider = ' ' },
+          {
+            provider = ' ',
+            hl = { fg = 'green' },
+            on_click = {
+              callback = function() require('dap').run_last() end,
+              name = 'heirline_dap_run_last',
+            },
+          },
+          { provider = ' ' },
+          {
+            provider = ' ',
+            hl = { fg = 'red' },
+            on_click = {
+              callback = function()
+                require('dap').terminate()
+                require('dapui').close({})
+              end,
+              name = 'heirline_dap_close',
+            },
+          },
+          --       ﰇ  
         },
-        --       ﰇ  
+        empty_component,
       },
       -- Package Info
       {
-        condition = function() return fn.expand('%') == 'package.json' end,
-        provider = stl.package_info,
-        hl = { fg = 'comment' },
-        on_click = {
-          callback = function() require('package_info').toggle() end,
-          name = 'update_plugins',
+        flexible = 3,
+        {
+          condition = function() return fn.expand('%') == 'package.json' end,
+          provider = stl.package_info,
+          hl = { fg = 'comment' },
+          on_click = {
+            callback = function() require('package_info').toggle() end,
+            name = 'update_plugins',
+          },
         },
+        empty_component,
       },
       -- Git Diff
       {
-        condition = is_git_repo,
-        init = function(self)
-          self.status_dict = vim.b.gitsigns_status_dict
-          self.has_changes = self.status_dict.added ~= 0
-            or self.status_dict.removed ~= 0
-            or self.status_dict.changed ~= 0
-        end,
-        hl = { fg = 'dark_orange' },
+        flexible = 3,
         {
-          provider = function(self)
-            local count = self.status_dict.added or 0
-            return count > 0 and (' ' .. codicons.git.added .. ' ' .. count)
+          condition = is_git_repo,
+          init = function(self)
+            self.status_dict = vim.b.gitsigns_status_dict
+            self.has_changes = self.status_dict.added ~= 0
+              or self.status_dict.removed ~= 0
+              or self.status_dict.changed ~= 0
           end,
-          hl = { fg = 'yellowgreen' },
-        },
-        {
-          provider = function(self)
-            local count = self.status_dict.removed or 0
-            return count > 0 and (' ' .. codicons.git.removed .. ' ' .. count)
-          end,
-          hl = { fg = 'error_red' },
-        },
-        {
-          provider = function(self)
-            local count = self.status_dict.changed or 0
-            return count > 0 and (' ' .. codicons.git.mod .. ' ' .. count)
-          end,
+          {
+            provider = function(self)
+              local count = self.status_dict.added or 0
+              return count > 0 and (' ' .. codicons.git.added .. ' ' .. count)
+            end,
+            hl = { fg = 'yellowgreen' },
+          },
+          {
+            provider = function(self)
+              local count = self.status_dict.removed or 0
+              return count > 0 and (' ' .. codicons.git.removed .. ' ' .. count)
+            end,
+            hl = { fg = 'error_red' },
+          },
+          {
+            provider = function(self)
+              local count = self.status_dict.changed or 0
+              return count > 0 and (' ' .. codicons.git.mod .. ' ' .. count)
+            end,
+            hl = { fg = 'dark_orange' },
+          },
+          on_click = {
+            callback = function()
+              vim.defer_fn(function() vim.cmd('Neogit') end, 100)
+            end,
+            name = 'git diff',
+          },
           hl = { fg = 'dark_orange' },
         },
-        on_click = {
-          callback = function()
-            vim.defer_fn(function() vim.cmd('Neogit') end, 100)
-          end,
-          name = 'git diff',
-        },
+        empty_component,
       },
       -- Lazy
       {
-        provider = function() return ' ' .. stl.lazy_updates() end,
-        hl = { fg = 'dark_orange' },
-        on_click = {
-          callback = function() require('lazy').update() end,
-          name = 'update_plugins',
+        flexible = 5,
+        {
+          provider = function() return ' ' .. stl.lazy_updates() end,
+          hl = { fg = 'dark_orange' },
+          on_click = {
+            callback = function() require('lazy').update() end,
+            name = 'update_plugins',
+          },
         },
+        empty_component,
       },
       -- cloc
       {
-        update = { 'User', pattern = 'ClocStatusUpdated' },
-        condition = function() return is_avail('cloc.nvim') end,
-        provider = function(_)
-          local status = require('cloc').get_status()
-          if status.statusCode == 'loading' then return 'Clocing...' end
-          if status.statusCode == 'error' then return 'Error' end
-          return ' ' .. status.data[1].code
-        end,
+        flexible = 3,
+        {
+          update = { 'User', pattern = 'ClocStatusUpdated' },
+          condition = function() return is_avail('cloc.nvim') end,
+          provider = function(_)
+            local status = require('cloc').get_status()
+            if status.statusCode == 'loading' then return 'Clocing...' end
+            if status.statusCode == 'error' then return 'Error' end
+            return ' ' .. status.data[1].code
+          end,
+        },
+        empty_component,
       },
       -- Word Count
       {
-        condition = function() return vim.bo.filetype == 'markdown' end,
-        provider = stl.word_count,
+        flexible = 3,
+        {
+          condition = function() return vim.bo.filetype == 'markdown' end,
+          provider = stl.word_count,
+        },
+        empty_component,
       },
       -- LSP Clients (null-ls)
       {
-        update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
-        condition = function()
-          return conditions.lsp_attached and ar_config.lsp.null_ls.enable
-        end,
-        init = function(self)
-          local curwin = api.nvim_get_current_win()
-          local curbuf = api.nvim_win_get_buf(curwin)
-          local ft = vim.bo[curbuf].ft
-          self.client_names = vim
-            .iter(vim.lsp.get_clients({ bufnr = curbuf }))
-            :filter(function(client) return client.name ~= 'copilot' end)
-            :map(function(client) return client.name end)
-            :totable()
-          self.is_null_ls = vim
-            .iter(self.client_names)
-            :filter(function(client) return client:match('null') end)
-            :totable()
-          self.client_names = vim
-            .iter(self.client_names)
-            :filter(function(client) return not client:match('null') end)
-            :totable()
-          if not falsy(self.is_null_ls) then
-            self.formatters = stl.get_null_ls_formatters(ft)
-            self.linters = stl.get_null_ls_linters(ft)
-          end
-          self.icon = ' ' .. codicons.misc.connect .. ' '
-        end,
-        {
-          provider = function(self)
-            if not ar.lsp.enable then return '' end
-            if falsy(self.client_names) then
-              return self.icon .. 'No Active LSP ' .. separator
-            end
-            return self.icon .. stl.format_servers(self.client_names)
-          end,
-          hl = { bold = true },
-          on_click = {
-            callback = function(self)
-              if not falsy(self.client_names) then
-                vim.defer_fn(function() vim.cmd('LspInfo') end, 100)
-              end
-            end,
-            name = 'lsp_clients',
-          },
-        },
+        flexible = 1,
         {
           update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
+          condition = function()
+            return conditions.lsp_attached and ar_config.lsp.null_ls.enable
+          end,
+          init = function(self)
+            local curwin = api.nvim_get_current_win()
+            local curbuf = api.nvim_win_get_buf(curwin)
+            local ft = vim.bo[curbuf].ft
+            self.client_names = vim
+              .iter(vim.lsp.get_clients({ bufnr = curbuf }))
+              :filter(function(client) return client.name ~= 'copilot' end)
+              :map(function(client) return client.name end)
+              :totable()
+            self.is_null_ls = vim
+              .iter(self.client_names)
+              :filter(function(client) return client:match('null') end)
+              :totable()
+            self.client_names = vim
+              .iter(self.client_names)
+              :filter(function(client) return not client:match('null') end)
+              :totable()
+            if not falsy(self.is_null_ls) then
+              self.formatters = stl.get_null_ls_formatters(ft)
+              self.linters = stl.get_null_ls_linters(ft)
+            end
+            self.icon = ' ' .. codicons.misc.connect .. ' '
+          end,
           {
-            condition = function(self)
-              return not falsy(self.linters) or not falsy(self.formatters)
+            provider = function(self)
+              if not ar.lsp.enable then return '' end
+              if falsy(self.client_names) then
+                return self.icon .. 'No Active LSP ' .. separator
+              end
+              return self.icon .. stl.format_servers(self.client_names)
             end,
-            provider = function() return ' ' .. codicons.misc.null_ls end,
             hl = { bold = true },
+            on_click = {
+              callback = function(self)
+                if not falsy(self.client_names) then
+                  vim.defer_fn(function() vim.cmd('LspInfo') end, 100)
+                end
+              end,
+              name = 'lsp_clients',
+            },
           },
           {
-            condition = function(self) return not falsy(self.linters) end,
-            provider = function(self) return ' ' .. self.linters end,
-            hl = { bold = true },
-          },
-          {
-            condition = function(self) return not falsy(self.formatters) end,
-            provider = function(self) return ' ' .. self.formatters end,
-            hl = { bold = true },
-          },
-          on_click = {
-            callback = function()
-              vim.defer_fn(function() vim.cmd('NullLsInfo') end, 100)
-            end,
-            name = 'null_ls',
+            update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
+            {
+              condition = function(self)
+                return not falsy(self.linters) or not falsy(self.formatters)
+              end,
+              provider = function() return ' ' .. codicons.misc.null_ls end,
+              hl = { bold = true },
+            },
+            {
+              condition = function(self) return not falsy(self.linters) end,
+              provider = function(self) return ' ' .. self.linters end,
+              hl = { bold = true },
+            },
+            {
+              condition = function(self) return not falsy(self.formatters) end,
+              provider = function(self) return ' ' .. self.formatters end,
+              hl = { bold = true },
+            },
+            on_click = {
+              callback = function()
+                vim.defer_fn(function() vim.cmd('NullLsInfo') end, 100)
+              end,
+              name = 'null_ls',
+            },
           },
         },
+        empty_component,
       },
       -- LSP Clients (conform,nvim-lint)
       {
-        update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
-        condition = function()
-          return conditions.lsp_attached and not ar_config.lsp.null_ls.enable
-        end,
-        init = function(self)
-          local curwin = api.nvim_get_current_win()
-          local curbuf = api.nvim_win_get_buf(curwin)
-          self.client_names = vim
-            .iter(vim.lsp.get_clients({ bufnr = curbuf }))
-            :filter(function(client) return client.name ~= 'copilot' end)
-            :map(function(client) return client.name end)
-            :totable()
-          self.linters = stl.get_linters()
-          self.formatters = stl.get_formatters(curbuf)
-          self.icon = ' ' .. codicons.misc.disconnect .. ' '
-        end,
+        flexible = 1,
         {
           update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
-          provider = function(self)
-            if not ar.lsp.enable then return '' end
-            if falsy(self.client_names) then
-              return self.icon .. 'No Active LSP ' .. separator
-            end
-            return self.icon .. stl.format_servers(self.client_names)
+          condition = function()
+            return conditions.lsp_attached and not ar_config.lsp.null_ls.enable
           end,
-          hl = { bold = true },
-          on_click = {
-            callback = function(self)
-              if not falsy(self.client_names) then
-                vim.defer_fn(function() vim.cmd('LspInfo') end, 100)
+          init = function(self)
+            local curwin = api.nvim_get_current_win()
+            local curbuf = api.nvim_win_get_buf(curwin)
+            self.client_names = vim
+              .iter(vim.lsp.get_clients({ bufnr = curbuf }))
+              :filter(function(client) return client.name ~= 'copilot' end)
+              :map(function(client) return client.name end)
+              :totable()
+            self.linters = stl.get_linters()
+            self.formatters = stl.get_formatters(curbuf)
+            self.icon = ' ' .. codicons.misc.disconnect .. ' '
+          end,
+          {
+            update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
+            provider = function(self)
+              if not ar.lsp.enable then return '' end
+              if falsy(self.client_names) then
+                return self.icon .. 'No Active LSP ' .. separator
               end
+              return self.icon .. stl.format_servers(self.client_names)
             end,
-            name = 'lsp_clients',
+            hl = { bold = true },
+            on_click = {
+              callback = function(self)
+                if not falsy(self.client_names) then
+                  vim.defer_fn(function() vim.cmd('LspInfo') end, 100)
+                end
+              end,
+              name = 'lsp_clients',
+            },
+          },
+          {
+            update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
+            condition = function(self) return not falsy(self.linters) end,
+            provider = function(self)
+              if ar.lsp.enable then return ' ' .. self.formatters end
+              return self.icon .. self.linters
+            end,
+            hl = { bold = true },
+          },
+          {
+            update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
+            condition = function(self) return not falsy(self.formatters) end,
+            provider = function(self)
+              if ar.lsp.enable then return ' ' .. self.formatters end
+              return self.icon .. self.formatters
+            end,
+            hl = { bold = true },
+            on_click = {
+              callback = function()
+                vim.defer_fn(function() vim.cmd('ConformInfo') end, 100)
+              end,
+              name = 'formatters',
+            },
           },
         },
-        {
-          update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
-          condition = function(self) return not falsy(self.linters) end,
-          provider = function(self)
-            if ar.lsp.enable then return ' ' .. self.formatters end
-            return self.icon .. self.linters
-          end,
-          hl = { bold = true },
-        },
-        {
-          update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
-          condition = function(self) return not falsy(self.formatters) end,
-          provider = function(self)
-            if ar.lsp.enable then return ' ' .. self.formatters end
-            return self.icon .. self.formatters
-          end,
-          hl = { bold = true },
-          on_click = {
-            callback = function()
-              vim.defer_fn(function() vim.cmd('ConformInfo') end, 100)
-            end,
-            name = 'formatters',
-          },
-        },
+        empty_component,
       },
       -- Ecolog Status
       {
-        condition = function()
-          return is_avail('ecolog.nvim')
-            and ar_config.shelter.enable
-            and ar_config.shelter.variant == 'ecolog'
-        end,
-        init = function(self)
-          local ecolog_utils = require('ecolog.utils')
-          local shelter = ecolog_utils.get_module('ecolog.shelter')
-          self.shelter_active = shelter.is_enabled('files')
-        end,
+        flexible = 2,
         {
-          provider = function(self)
-            local icon = self.shelter_active and '' or '🌲'
-            return ' ' .. icon
+          condition = function()
+            return is_avail('ecolog.nvim')
+              and ar_config.shelter.enable
+              and ar_config.shelter.variant == 'ecolog'
           end,
-          hl = function(self)
-            if self.shelter_active then return { fg = 'blue', bold = true } end
-            return { fg = 'comment', bold = true }
+          init = function(self)
+            local ecolog_utils = require('ecolog.utils')
+            local shelter = ecolog_utils.get_module('ecolog.shelter')
+            self.shelter_active = shelter.is_enabled('files')
           end,
+          {
+            provider = function(self)
+              local icon = self.shelter_active and '' or '🌲'
+              return ' ' .. icon
+            end,
+            hl = function(self)
+              if self.shelter_active then
+                return { fg = 'blue', bold = true }
+              end
+              return { fg = 'comment', bold = true }
+            end,
+          },
+          { provider = ' ' .. separator, hl = { bold = true } },
         },
-        { provider = ' ' .. separator, hl = { bold = true } },
+        empty_component,
       },
       -- Copilot Status
       {
-        condition = function()
-          return ar.ai.enable and ar_config.ai.models.copilot
-        end,
-        init = function(self)
-          self.processing = false
-          local status = stl.copilot_status()
-          -- local status = statusline.copilot_indicator()
-          if status == 'pending' then self.processing = true end
-        end,
+        flexible = 2,
         {
-          provider = ' ' .. codicons.misc.copilot,
-          hl = function(self)
-            return self.processing and { fg = 'yellow', bold = true }
-              or { fg = 'comment', bold = true }
+          condition = function()
+            return ar.ai.enable and ar_config.ai.models.copilot
           end,
-          on_click = {
-            callback = function()
-              vim.defer_fn(function() vim.cmd('copilot panel') end, 100)
+          init = function(self)
+            self.processing = false
+            local status = stl.copilot_status()
+            -- local status = statusline.copilot_indicator()
+            if status == 'pending' then self.processing = true end
+          end,
+          {
+            provider = ' ' .. codicons.misc.copilot,
+            hl = function(self)
+              return self.processing and { fg = 'yellow', bold = true }
+                or { fg = 'comment', bold = true }
             end,
-            name = 'copilot_status',
+            on_click = {
+              callback = function()
+                vim.defer_fn(function() vim.cmd('copilot panel') end, 100)
+              end,
+              name = 'copilot_status',
+            },
           },
+          { provider = ' ' .. separator, hl = { bold = true } },
         },
-        { provider = ' ' .. separator, hl = { bold = true } },
+        empty_component,
       },
       -- CodeCompanion
       {
-        condition = function() return ar.ai.enable end,
-        static = { processing = false },
-        update = {
-          'User',
-          pattern = 'CodeCompanionRequest*',
-          callback = function(self, args)
-            if args.match == 'CodeCompanionRequestStarted' then
-              self.processing = true
-            elseif args.match == 'CodeCompanionRequestFinished' then
-              self.processing = false
-            end
-            vim.cmd('redrawstatus')
-          end,
-        },
+        flexible = 2,
         {
-          provider = ' ' .. codicons.misc.robot_alt,
-          hl = function(self)
-            if self.processing then return { fg = 'yellow', bold = true } end
-            return { fg = 'comment', bold = true }
-          end,
+          condition = function() return ar.ai.enable end,
+          static = { processing = false },
+          update = {
+            'User',
+            pattern = 'CodeCompanionRequest*',
+            callback = function(self, args)
+              if args.match == 'CodeCompanionRequestStarted' then
+                self.processing = true
+              elseif args.match == 'CodeCompanionRequestFinished' then
+                self.processing = false
+              end
+              vim.cmd('redrawstatus')
+            end,
+          },
+          {
+            provider = ' ' .. codicons.misc.robot_alt,
+            hl = function(self)
+              if self.processing then return { fg = 'yellow', bold = true } end
+              return { fg = 'comment', bold = true }
+            end,
+          },
+          { provider = ' ' .. separator, hl = { bold = true } },
         },
-        { provider = ' ' .. separator, hl = { bold = true } },
+        empty_component,
       },
       -- MCPHub
       {
-        condition = function() return is_avail('mcphub.nvim') and ar.ai.enable end,
-        static = {
-          active_servers = 0,
-          is_connected = false,
-          is_connecting = false,
-        },
-        update = {
-          'User',
-          pattern = 'MCPHubStateChange',
-          callback = function(self, args)
-            if args.data then
-              local status = args.data.state
-              self.is_connected = status == 'ready' or status == 'restarted'
-              self.is_connecting = status == 'starting'
-                or status == 'restarting'
-              self.active_servers = args.data.active_servers or 0
-            end
-            vim.cmd('redrawstatus')
-          end,
-        },
+        flexible = 2,
         {
-          provider = function(self)
-            local tower = '󰐻'
-            local active_servers = tostring(self.active_servers or 0)
-            if self.active_servers == 0 then return ' ' .. tower end
-            return ' ' .. tower .. ' ' .. active_servers
+          condition = function()
+            return is_avail('mcphub.nvim') and ar.ai.enable
           end,
-          hl = function(self)
-            local color = 'comment'
-            if self.is_connected then color = 'green' end
-            if self.is_connecting then color = 'blue' end
-            return { fg = color, bold = true }
-          end,
+          static = {
+            active_servers = 0,
+            is_connected = false,
+            is_connecting = false,
+          },
+          update = {
+            'User',
+            pattern = 'MCPHubStateChange',
+            callback = function(self, args)
+              if args.data then
+                local status = args.data.state
+                self.is_connected = status == 'ready' or status == 'restarted'
+                self.is_connecting = status == 'starting'
+                  or status == 'restarting'
+                self.active_servers = args.data.active_servers or 0
+              end
+              vim.cmd('redrawstatus')
+            end,
+          },
+          {
+            provider = function(self)
+              local tower = '󰐻'
+              local active_servers = tostring(self.active_servers or 0)
+              if self.active_servers == 0 then return ' ' .. tower end
+              return ' ' .. tower .. ' ' .. active_servers
+            end,
+            hl = function(self)
+              local color = 'comment'
+              if self.is_connected then color = 'green' end
+              if self.is_connecting then color = 'blue' end
+              return { fg = color, bold = true }
+            end,
+          },
+          { provider = ' ' .. separator, hl = { bold = true } },
         },
-        { provider = ' ' .. separator, hl = { bold = true } },
+        empty_component,
       },
       -- Kulala env
       {
-        condition = function() return vim.bo.ft == 'http' end,
+        flexible = 3,
         {
-          provider = function()
-            local CONFIG = require('kulala.config')
-            local env = vim.g.kulala_selected_env or CONFIG.get().default_env
-            if not env then return '' end
-            return ' ' .. icons.misc.right_arrow .. ' ' .. env
-          end,
+          condition = function() return vim.bo.ft == 'http' end,
+          {
+            provider = function()
+              local CONFIG = require('kulala.config')
+              local env = vim.g.kulala_selected_env or CONFIG.get().default_env
+              if not env then return '' end
+              return ' ' .. icons.misc.right_arrow .. ' ' .. env
+            end,
+          },
+          {
+            provider = ' ' .. separator,
+            hl = { bold = true },
+          },
         },
-        {
-          provider = ' ' .. separator,
-          hl = { bold = true },
-        },
+        empty_component,
       },
       -- File Type
-      utils.insert(file_block, stl.file_icon, stl.file_type),
+      utils.insert(
+        { flexible = 4 },
+        utils.insert(file_block, stl.file_icon, stl.file_type),
+        empty_component
+      ),
       -- Buffers
       {
-        condition = function() return is_avail('buffalo.nvim') and false end,
-        provider = function()
-          local buffers = require('buffalo').buffers()
-          local tabpages = require('buffalo').tabpages()
-          return codicons.misc.buffers
-            .. buffers
-            .. codicons.misc.tabs
-            .. tabpages
-        end,
-        hl = { fg = 'yellow' },
+        flexible = 3,
+        {
+          condition = function() return is_avail('buffalo.nvim') and false end,
+          provider = function()
+            local buffers = require('buffalo').buffers()
+            local tabpages = require('buffalo').tabpages()
+            return codicons.misc.buffers
+              .. buffers
+              .. codicons.misc.tabs
+              .. tabpages
+          end,
+          hl = { fg = 'yellow' },
+        },
+        empty_component,
       },
       -- File Encoding
       {
-        condition = function() return false end,
+        flexible = 4,
         {
-          provider = function()
-            local enc = (vim.bo.fenc ~= '' and vim.bo.fenc) or vim.o.enc -- :h 'enc'
-            return ' ' .. enc
-          end,
+          condition = function() return false end,
+          {
+            provider = function()
+              local enc = (vim.bo.fenc ~= '' and vim.bo.fenc) or vim.o.enc -- :h 'enc'
+              return ' ' .. enc
+            end,
+          },
         },
+        empty_component,
       },
       -- Formatting
       {
-        condition = function()
-          if not vim.bo.modifiable or vim.bo.readonly then return false end
-          local curwin = api.nvim_get_current_win()
-          local curbuf = api.nvim_win_get_buf(curwin)
-          return vim.b[curbuf].formatting_disabled == true
-            or vim.g.formatting_disabled == true
-        end,
-        provider = function() return '  ' .. codicons.misc.lock end,
-        hl = { fg = 'blue', bold = true },
+        flexible = 2,
+        {
+          condition = function()
+            if not vim.bo.modifiable or vim.bo.readonly then return false end
+            local curwin = api.nvim_get_current_win()
+            local curbuf = api.nvim_win_get_buf(curwin)
+            return vim.b[curbuf].formatting_disabled == true
+              or vim.g.formatting_disabled == true
+          end,
+          provider = function() return '  ' .. codicons.misc.lock end,
+          hl = { fg = 'blue', bold = true },
+        },
+        empty_component,
       },
       -- Spell
       {
-        condition = function() return vim.wo.spell and false end,
-        provider = function() return ' ' .. icons.misc.spell_check end,
-        hl = { fg = 'blue' },
+        flexible = 2,
+        {
+          condition = function() return vim.wo.spell and false end,
+          provider = function() return ' ' .. icons.misc.spell_check end,
+          hl = { fg = 'blue' },
+        },
+        empty_component,
       },
       -- Treesitter
       {
-        condition = function() return ar.treesitter.enable and false end,
-        provider = function() return '  ' .. stl.ts_active() end,
-        hl = { fg = 'forest_green' },
+        flexible = 2,
+        {
+          condition = function() return ar.treesitter.enable and false end,
+          provider = function() return '  ' .. stl.ts_active() end,
+          hl = { fg = 'forest_green' },
+        },
+        empty_component,
       },
       -- Session
       {
-        update = { 'User', pattern = 'PersistedStateChange' },
+        flexible = 3,
         {
+          update = { 'User', pattern = 'PersistedStateChange' },
           condition = function() return false end,
           {
             provider = function()
@@ -857,56 +969,69 @@ return {
             },
           },
         },
+        empty_component,
       },
       -- Macro
       {
-        condition = function()
-          return fn.reg_recording() ~= '' or fn.reg_executing() ~= ''
-        end,
-        update = { 'RecordingEnter', 'RecordingLeave' },
+        flexible = 3,
         {
-          init = function(self)
-            self.rec = fn.reg_recording()
-            self.exec = fn.reg_executing()
+          condition = function()
+            return fn.reg_recording() ~= '' or fn.reg_executing() ~= ''
           end,
-          provider = function(self)
-            if not falsy(self.rec) then
-              return '  ' .. icons.misc.dot_alt .. ' ' .. 'REC'
-            end
-            if not falsy(self.exec) then
-              return '  ' .. icons.misc.play .. ' ' .. 'PLAY'
-            end
-          end,
-          hl = { fg = 'red' },
+          update = { 'RecordingEnter', 'RecordingLeave' },
+          {
+            init = function(self)
+              self.rec = fn.reg_recording()
+              self.exec = fn.reg_executing()
+            end,
+            provider = function(self)
+              if not falsy(self.rec) then
+                return '  ' .. icons.misc.dot_alt .. ' ' .. 'REC'
+              end
+              if not falsy(self.exec) then
+                return '  ' .. icons.misc.play .. ' ' .. 'PLAY'
+              end
+            end,
+            hl = { fg = 'red' },
+          },
         },
+        empty_component,
       },
       -- Ruler
       {
-        provider = function()
-          local line_number = fn.line('.')
-          if line_number > 99 then
-            return '  ' .. '%7(%l/%3L%):%2c ' .. stl.progress()
-          elseif line_number > 9 then
-            return ' ' .. '%7(%l/%3L%):%2c ' .. stl.progress()
-          end
-          return '%7(%l/%3L%):%2c ' .. stl.progress()
-        end,
+        flexible = 6,
+        {
+          provider = function()
+            local line_number = fn.line('.')
+            if line_number > 99 then
+              return '  ' .. '%7(%l/%3L%):%2c ' .. stl.progress()
+            elseif line_number > 9 then
+              return ' ' .. '%7(%l/%3L%):%2c ' .. stl.progress()
+            end
+            return '%7(%l/%3L%):%2c ' .. stl.progress()
+          end,
+        },
+        empty_component,
       },
       -- Scroll Bar
       {
-        init = function(self)
-          self.mode = fn.mode(1)
-          self.mode_color = mode_colors[self.mode:sub(1, 1)]
-        end,
-        provider = function()
-          local current_line = fn.line('.')
-          local total_lines = fn.line('$')
-          local chars = icons.scrollbars.thin
-          local line_ratio = current_line / total_lines
-          local index = math.ceil(line_ratio * #chars)
-          return ' ' .. chars[index]
-        end,
-        hl = function(self) return { fg = self.mode_color } end,
+        flexible = 7,
+        {
+          init = function(self)
+            self.mode = fn.mode(1)
+            self.mode_color = mode_colors[self.mode:sub(1, 1)]
+          end,
+          provider = function()
+            local current_line = fn.line('.')
+            local total_lines = fn.line('$')
+            local chars = icons.scrollbars.thin
+            local line_ratio = current_line / total_lines
+            local index = math.ceil(line_ratio * #chars)
+            return ' ' .. chars[index]
+          end,
+          hl = function(self) return { fg = self.mode_color } end,
+        },
+        empty_component,
       },
     }
 
