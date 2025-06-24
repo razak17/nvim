@@ -136,7 +136,7 @@ return {
   },
   {
     'altermo/ultimate-autopair.nvim',
-    cond = function() return get_cond('ultimate-autopair.nvim', not minimal) end,
+    cond = function() return get_cond('ultimate-autopair.nvim', false) end,
     event = { 'InsertEnter', 'CmdlineEnter' },
     init = function()
       ar.augroup('UltimateAutoPair', {
@@ -226,7 +226,7 @@ return {
   },
   {
     'windwp/nvim-autopairs',
-    cond = false,
+    cond = function() return get_cond('nvim-autopairs', not minimal) end,
     event = 'InsertEnter',
     config = function()
       local autopairs = require('nvim-autopairs')
