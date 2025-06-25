@@ -2,9 +2,8 @@ local fn, api, env, fmt = vim.fn, vim.api, vim.env, string.format
 local falsy, icons, codicons = ar.falsy, ar.ui.icons, ar.ui.codicons
 local separator = icons.separators.dotted_thin_block
 local spinners = ar.ui.spinners.common
+local is_avail = ar.is_available
 local root_util = require('ar.utils.root')
-
-local conditions = require('heirline.conditions')
 
 local M = {}
 
@@ -335,12 +334,12 @@ M.file_flags = {
 
 M.file_icon = {
   init = function(self)
-    if ar.is_available('nvim-web-devicons') then
-      self.icon, self.icon_color =
-        require('nvim-web-devicons').get_icon(vim.fn.expand('%:t'))
+    if is_avail('nvim-web-devicons') or is_avail('mini.icons') then
+      self.icon, self.icon_hl =
+        require('nvim-web-devicons').get_icon(fn.expand('%:t'))
     end
-    if falsy(self.icon) or falsy(self.icon_color) then
-      self.icon, self.icon_color =
+    if falsy(self.icon) or falsy(self.icon_hl) then
+      self.icon, self.icon_hl =
         codicons.documents.default_file, 'DevIconDefault'
     end
   end,
@@ -349,7 +348,7 @@ M.file_icon = {
     callback = function() ar.change_filetype() end,
     name = 'change_ft',
   },
-  hl = function(self) return { fg = ar.highlight.get(self.icon_color, 'fg') } end,
+  hl = function(self) return { fg = ar.highlight.get(self.icon_hl, 'fg') } end,
 }
 
 M.file_type = {
