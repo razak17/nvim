@@ -425,7 +425,7 @@ end
 
 function M.format_servers(servers)
   if #servers == 0 then return '' end
-  if #servers > 1 then
+  if #servers > 2 then
     return fmt('%s +%d %s', servers[1], #servers - 1, separator)
   end
   local names = table.concat(servers, fmt(' %s ', separator))
