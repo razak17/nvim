@@ -738,14 +738,13 @@ return {
           end,
           {
             provider = function(self)
-              local icon = self.shelter_active and '' or '🌲'
-              return ' ' .. icon
+              if self.shelter_active then return ' ' end
+              return ''
             end,
             hl = function(self)
-              if self.shelter_active then
-                return { fg = 'blue', bold = true }
-              end
-              return { fg = 'comment', bold = true }
+              local color = 'comment'
+              if self.shelter_active then color = '#5c913b' end
+              return { fg = color, bold = true }
             end,
           },
           { provider = ' ' .. separator, hl = { bold = true } },
