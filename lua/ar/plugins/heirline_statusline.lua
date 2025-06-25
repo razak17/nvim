@@ -288,7 +288,11 @@ return {
         flexible = 3,
         {
           condition = function() return vim.bo.filetype == 'python' end,
-          provider = function() return ' ' .. stl.python_env() end,
+          init = function(self) self.python_env = stl.python_env() end,
+          provider = function(self)
+            if not self.env then return '' end
+            return ' ' .. self.env
+          end,
           hl = { fg = 'yellowgreen' },
         },
         empty_component,
