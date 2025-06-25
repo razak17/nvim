@@ -57,7 +57,13 @@ return {
     'HakonHarnes/img-clip.nvim',
     cmd = { 'PasteImage' },
     cond = function() return ar.get_plugin_cond('img-clip.nvim', not minimal) end,
-    opts = {},
+    opts = function(_, opts)
+      return vim.tbl_extend('force', opts or {}, {
+        default = vim.tbl_deep_extend('force', opts.default or {}, {
+          verbose = false, -- To hide annoying "Content is not an image." warning
+        }),
+      })
+    end,
   },
   {
     '3rd/image.nvim',
