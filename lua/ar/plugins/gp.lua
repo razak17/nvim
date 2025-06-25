@@ -108,6 +108,7 @@ return {
     { '<c-g>p', '<Cmd>GpPopup<CR>', desc = 'gp: popup', mode = mode, },
     { '<c-g>u', '<Cmd>GpUnitTests<CR>', desc = 'gp: unit tests', mode = mode, },
     { '<c-g>x', '<Cmd>GpExplain<CR>', desc = 'gp: explain', mode = mode, },
+    { '<c-g>q', '<Cmd>GpStop<CR>', desc = 'gp: stop' },
     { '<c-g>c', '<Cmd>GpCodeReview<CR>', desc = 'gp: code review', mode = mode, },
     { '<c-g>N', '<Cmd>GpBufferChatNew<CR>', desc = 'gp: buffer chat new', mode = mode, },
     { '<c-g>o', '<Cmd>GpActAs<CR>', desc = 'gp: act as', mode = mode, },
