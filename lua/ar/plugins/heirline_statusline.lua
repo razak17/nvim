@@ -190,20 +190,24 @@ return {
         empty_component,
       },
       {
-        condition = function() return is_avail('nvim-tinygit') and false end,
-        init = function(self)
-          self.blame = require('tinygit.statusline').blame()
-          self.branch_state = require('tinygit.statusline').branchState()
-        end,
+        flexible = 3,
         {
-          condition = function(self) return self.blame ~= '' end,
-          provider = function(self) return ' ' .. self.blame end,
-          hl = { fg = 'comment' },
+          condition = function() return is_avail('nvim-tinygit') and false end,
+          init = function(self)
+            self.blame = require('tinygit.statusline').blame()
+            self.branch_state = require('tinygit.statusline').branchState()
+          end,
+          {
+            condition = function(self) return self.blame ~= '' end,
+            provider = function(self) return ' ' .. self.blame end,
+            hl = { fg = 'comment' },
+          },
+          {
+            condition = function(self) return self.branch_state ~= '' end,
+            provider = function(self) return ' ' .. self.branch_state end,
+          },
         },
-        {
-          condition = function(self) return self.branch_state ~= '' end,
-          provider = function(self) return ' ' .. self.branch_state end,
-        },
+        empty_component,
       },
       -- Git
       {
