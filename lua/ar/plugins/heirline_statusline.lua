@@ -279,7 +279,7 @@ return {
       },
       -- Filename
       utils.insert(
-        { flexible = 3 },
+        { flexible = 4 },
         utils.insert(file_block, stl.pretty_path, stl.file_flags, stl.file_size),
         utils.insert(file_block, stl.file_name, stl.file_flags)
       ),
@@ -297,9 +297,52 @@ return {
         },
         empty_component,
       },
-      -- LSP Diagnostics
+      -- Git Diff
       {
         flexible = 3,
+        {
+          condition = is_git_repo,
+          init = function(self)
+            self.status_dict = vim.b.gitsigns_status_dict
+            self.has_changes = self.status_dict.added ~= 0
+              or self.status_dict.removed ~= 0
+              or self.status_dict.changed ~= 0
+          end,
+          { provider = ' ' },
+          {
+            provider = function(self)
+              local count = self.status_dict.added or 0
+              return count > 0 and (' ' .. codicons.git.added .. ' ' .. count)
+            end,
+            hl = { fg = 'yellowgreen' },
+          },
+          {
+            provider = function(self)
+              local count = self.status_dict.removed or 0
+              return count > 0 and (' ' .. codicons.git.removed .. ' ' .. count)
+            end,
+            hl = { fg = 'error_red' },
+          },
+          {
+            provider = function(self)
+              local count = self.status_dict.changed or 0
+              return count > 0 and (' ' .. codicons.git.mod .. ' ' .. count)
+            end,
+            hl = { fg = 'dark_orange' },
+          },
+          on_click = {
+            callback = function()
+              vim.defer_fn(function() vim.cmd('Neogit') end, 100)
+            end,
+            name = 'git diff',
+          },
+          hl = { fg = 'dark_orange' },
+        },
+        empty_component,
+      },
+      -- LSP Diagnostics
+      {
+        flexible = 4,
         {
           condition = conditions.has_diagnostics,
           static = {
@@ -335,6 +378,7 @@ return {
               self.info = 0
             end
           end,
+          { provider = ' ' },
           {
             provider = function(self)
               return self.errors > 0 and (' ' .. self.error_icon .. self.errors)
@@ -504,48 +548,6 @@ return {
             callback = function() require('package_info').toggle() end,
             name = 'update_plugins',
           },
-        },
-        empty_component,
-      },
-      -- Git Diff
-      {
-        flexible = 3,
-        {
-          condition = is_git_repo,
-          init = function(self)
-            self.status_dict = vim.b.gitsigns_status_dict
-            self.has_changes = self.status_dict.added ~= 0
-              or self.status_dict.removed ~= 0
-              or self.status_dict.changed ~= 0
-          end,
-          {
-            provider = function(self)
-              local count = self.status_dict.added or 0
-              return count > 0 and (' ' .. codicons.git.added .. ' ' .. count)
-            end,
-            hl = { fg = 'yellowgreen' },
-          },
-          {
-            provider = function(self)
-              local count = self.status_dict.removed or 0
-              return count > 0 and (' ' .. codicons.git.removed .. ' ' .. count)
-            end,
-            hl = { fg = 'error_red' },
-          },
-          {
-            provider = function(self)
-              local count = self.status_dict.changed or 0
-              return count > 0 and (' ' .. codicons.git.mod .. ' ' .. count)
-            end,
-            hl = { fg = 'dark_orange' },
-          },
-          on_click = {
-            callback = function()
-              vim.defer_fn(function() vim.cmd('Neogit') end, 100)
-            end,
-            name = 'git diff',
-          },
-          hl = { fg = 'dark_orange' },
         },
         empty_component,
       },
