@@ -4,31 +4,40 @@ if not ar or ar.none or not enabled then return end
 
 local fn = vim.fn
 
-ar.smart_splits = {
-  exclusions = {
-    'alpha',
-    'Avante',
-    'AvanteInput',
-    'AvanteSelectedFiles',
-    'DiffviewFileHistory',
-    'DiffviewFiles',
-    'gitcommit',
-    'help',
-    'lazy',
-    'neo-tree',
-    'NeogitCommitMessage',
-    'NeogitStatus',
-    'oil',
-    'qf',
-    'starter',
-    'startup',
-    'trouble',
-    'tsplayground',
-    'TelescopePrompt',
-    'noice',
-    'snacks_dashboard',
-    'codecompanion',
-    'kulala_ui',
+local config = {
+  excluded = {
+    filetypes = {
+      'alpha',
+      'Avante',
+      'AvanteInput',
+      'AvanteSelectedFiles',
+      'DiffviewFileHistory',
+      'DiffviewFiles',
+      'gitcommit',
+      'help',
+      'lazy',
+      'neo-tree',
+      'NeogitCommitMessage',
+      'NeogitStatus',
+      'oil',
+      'qf',
+      'starter',
+      'startup',
+      'trouble',
+      'tsplayground',
+      'TelescopePrompt',
+      'noice',
+      'snacks_dashboard',
+      'codecompanion',
+      'kulala_ui',
+    },
+    buftypes = {
+      'nofile',
+      'nowrite',
+      'quickfix',
+      'prompt',
+      'terminal',
+    },
   },
 }
 
@@ -38,21 +47,20 @@ ar.smart_splits = {
 -- Move to a window (one of hjkl) or create a split if a window does not exist in the direction
 -- @see: https://github.com/theopn/theovim/blob/main/lua/config/keymap.lua#L100
 local function move_or_create_win(key)
-  if ar.find_string(ar.smart_splits.exclusions, vim.bo.ft) then
-    vim.cmd('wincmd ' .. key)
-    return
-  end
-  local curr_win = fn.winnr()
-  vim.cmd('wincmd ' .. key) --> attempt to move
-
-  if curr_win == fn.winnr() then --> didn't move, so create a split
-    if key == 'h' or key == 'l' then
-      vim.cmd('wincmd v')
-    else
-      vim.cmd('wincmd s')
+  local is_excluded_bt = ar.find_string(config.excluded.buftypes, vim.bo.bt)
+  local is_excluded_ft = ar.find_string(config.excluded.buftypes, vim.bo.ft)
+  if not is_excluded_bt and not is_excluded_ft then
+    local curr_win = fn.winnr()
+    vim.cmd('wincmd ' .. key) --> attempt to move
+    if curr_win == fn.winnr() then --> didn't move, so create a split
+      if key == 'h' or key == 'l' then
+        vim.cmd('wincmd v')
+      else
+        vim.cmd('wincmd s')
+      end
     end
-    vim.cmd('wincmd ' .. key)
   end
+  vim.cmd('wincmd ' .. key)
 end
 
 local function create_map(direction, key, description)
