@@ -37,9 +37,11 @@ return {
           enable = function(buf, win)
             local b, w = vim.bo[buf], vim.wo[win]
             local decs = decor.get({ ft = b.ft, bt = b.bt, setting = 'winbar' })
+            local bufname = api.nvim_buf_get_name(buf)
+            local is_diffview = vim.startswith(bufname, 'diffview://')
 
             local show = false
-            if not decs or ar.falsy(decs) then
+            if not decs or ar.falsy(decs) or is_diffview then
               show = true
             else
               show = decs.ft == true or decs.bt == true
