@@ -152,7 +152,7 @@ return {
   },
   {
     'otavioschwanck/arrow.nvim',
-    cond = function() return ar.get_plugin_cond('arrow.nvim', not minimal) end,
+    cond = function() return ar.get_plugin_cond('arrow.nvim', false) end,
     -- stylua: ignore
     keys = {
       '\\',
