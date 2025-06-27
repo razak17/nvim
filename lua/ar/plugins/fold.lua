@@ -4,6 +4,10 @@ return {
   {
     'chrisgrieser/nvim-origami',
     cond = function() return ar.get_plugin_cond('nvim-origami', not minimal) end,
+    keys = {
+      -- { 'h', function() require('origami').h() end, desc = 'close fold' },
+      { 'l', function() require('origami').l() end, desc = 'open fold' },
+    },
     init = function()
       vim.opt.foldlevel = 99
       vim.opt.foldlevelstart = 99
@@ -17,6 +21,10 @@ return {
         lineCount = { template = ' %d', hlgroup = 'Comment' },
         diagnosticsCount = false,
         gitsignsCount = false,
+      },
+      foldKeymaps = {
+        setup = true, -- modifies `h` and `l`
+        hOnlyOpensOnFirstColumn = false,
       },
     },
   },
