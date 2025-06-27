@@ -434,24 +434,6 @@ return {
     opts = {},
   },
   {
-    'HiPhish/rainbow-delimiters.nvim',
-    cond = function() return get_cond('rainbow-delimiters.nvim', niceties) end,
-    event = { 'BufRead', 'BufNewFile' },
-    config = function()
-      local rainbow_delimiters = require('rainbow-delimiters')
-
-      vim.g.rainbow_delimiters = {
-        blacklist = { 'svelte' },
-        strategy = {
-          [''] = rainbow_delimiters.strategy['global'],
-        },
-        query = {
-          [''] = 'rainbow-delimiters',
-        },
-      }
-    end,
-  },
-  {
     'subnut/nvim-ghost.nvim',
     cond = function()
       return get_cond('nvim-ghost.nvim', ar.plugins.overrides.ghost_text.enable)
@@ -630,6 +612,25 @@ return {
   --------------------------------------------------------------------------------
   -- Disabled
   --------------------------------------------------------------------------------
+  {
+    'HiPhish/rainbow-delimiters.nvim',
+    enabled = false,
+    cond = function() return get_cond('rainbow-delimiters.nvim', niceties) end,
+    event = { 'BufRead', 'BufNewFile' },
+    config = function()
+      local rainbow_delimiters = require('rainbow-delimiters')
+
+      vim.g.rainbow_delimiters = {
+        blacklist = { 'svelte' },
+        strategy = {
+          [''] = rainbow_delimiters.strategy['global'],
+        },
+        query = {
+          [''] = 'rainbow-delimiters',
+        },
+      }
+    end,
+  },
   {
     'gabrielpoca/replacer.nvim',
     cond = function() return get_cond('replacer.nvim', false) end,
