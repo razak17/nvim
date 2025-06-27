@@ -549,7 +549,7 @@ function M.autocmds()
       local progress = ''
 
       if data.percentage then
-        local spinners = ar.ui.spinners.common
+        local spinners = ar.ui.spinners.circle_quarters
         local idx = math.max(1, math.floor(data.percentage / 10))
         progress = spinners[idx] .. ' ' .. data.percentage .. '%% '
       end
