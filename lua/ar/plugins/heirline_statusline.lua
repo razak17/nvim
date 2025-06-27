@@ -720,37 +720,32 @@ return {
       -- Copilot Status
       {
         flexible = 2,
+        {
+          init = function(self) self.status = stl.copilot_status() end,
           condition = function()
             return ar.ai.enable and ar_config.ai.models.copilot
           end,
-        {
-          init = function(self)
-            self.processing = false
-            local status = stl.copilot_status()
-            -- local status = statusline.copilot_indicator()
-            if status == 'pending' then self.processing = true end
-          end,
           {
-            provider = ' ' .. codicons.misc.copilot,
-            hl = function(self)
-              return self.processing and { fg = 'yellow', bold = true }
-                or { fg = 'comment', bold = true }
+            condition = function(self)
+              return self.status.icon and self.status.hl
             end,
+            provider = function(self) return ' ' .. self.status.icon end,
+            hl = function(self) return { fg = self.status.hl, bold = true } end,
             on_click = {
               callback = function()
                 vim.defer_fn(function() vim.cmd('copilot panel') end, 100)
               end,
               name = 'copilot_status',
             },
+            { provider = ' ' .. separator },
           },
-          { provider = ' ' .. separator, hl = { bold = true } },
         },
         empty_component,
       },
       -- CodeCompanion
       {
         flexible = 2,
-          condition = function() return ar.ai.enable end,
+        condition = function() return ar.ai.enable end,
         {
           static = { processing = false },
           update = {

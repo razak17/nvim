@@ -1,7 +1,6 @@
 local fn, api, env, fmt = vim.fn, vim.api, vim.env, string.format
 local falsy, icons, codicons = ar.falsy, ar.ui.icons, ar.ui.codicons
 local separator = icons.separators.dotted_thin_block
-local spinners = ar.ui.spinners.common
 local is_avail = ar.is_available
 local root_util = require('ar.utils.root')
 
@@ -501,15 +500,39 @@ function M.copilot_indicator()
   return vim.tbl_isempty(client.requests) and 'idle' or 'pending'
 end
 
+-- Ref: https://github.com/AndreM222/copilot-lualine/blob/6bc29ba1fcf8f0f9ba1f0eacec2f178d9be49333/lua/lualine/components/copilot.lua?plain=1#L7
 function M.copilot_status()
+  local opts = {
+    icons = {
+      enabled = '',
+      sleep = '',
+      disabled = '',
+      warning = '',
+      unknown = '',
+    },
+    hl = {
+      pending = '#50FA7B',
+      sleep = '#636DA6',
+      warning = '#FFB86C',
+      unknown = '#FF5555',
+    },
+  }
   local clients = vim.lsp.get_clients({ name = 'copilot', bufnr = 0 })
-  if clients and #clients > 0 then
-    local status = require('copilot.status').data.status
-    return (status == 'InProgress' and 'pending')
-      or (status == 'Warning' and 'error')
-      or 'ok'
+  if not ar.is_available('copilot.lua') and not (clients and #clients > 0) then
+    return { icon = opts.icons.unknown, hl = opts.hl.unknown }
   end
-  return ''
+  local copilot = require('ar.copilot_status')
+  if copilot.is_loading() then
+    return { icon = opts.icons.enabled, hl = opts.hl.pending }
+  elseif copilot.is_error() then
+    return { icon = opts.icons.warning, hl = opts.hl.warning }
+  elseif not copilot.is_enabled() then
+    return { icon = opts.icons.disabled, hl = opts.hl.sleep }
+  elseif copilot.is_sleep() then
+    return { icon = opts.icons.sleep, hl = opts.hl.sleep }
+  else
+    return { icon = opts.icons.enabled, hl = opts.hl.sleep }
+  end
 end
 
 M.lsp_progress = ''
@@ -526,6 +549,7 @@ function M.autocmds()
       local progress = ''
 
       if data.percentage then
+        local spinners = ar.ui.spinners.common
         local idx = math.max(1, math.floor(data.percentage / 10))
         progress = spinners[idx] .. ' ' .. data.percentage .. '%% '
       end
