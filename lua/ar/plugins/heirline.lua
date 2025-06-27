@@ -9,6 +9,7 @@ local filetypes = {
   '^git.*',
   'fugitive',
   'alpha',
+  'DiffviewFiles',
   'help',
   'lazy',
   '^neo--tree$',

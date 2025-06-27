@@ -305,7 +305,7 @@ M.file_size = {
     local bufnr = api.nvim_get_current_buf()
     local buf = api.nvim_buf_get_name(bufnr)
 
-    if vim.bo[bufnr].readonly then return '' end
+    if vim.bo[bufnr].readonly or vim.bo.bt == 'nowrite' then return '' end
 
     if string.len(buf) == 0 then return '' end
 
@@ -422,8 +422,22 @@ function M.package_info()
   return pkg_info.get_status()
 end
 
+function M.get_lsp_servers(opts)
+  local curwin = api.nvim_get_current_win()
+  local curbuf = api.nvim_win_get_buf(curwin)
+  opts.ignored = opts.ignored or {}
+  opts.included = opts.included or {}
+  -- stylua: ignore
+  return vim
+    .iter(vim.lsp.get_clients({ bufnr = curbuf }))
+    :filter(function(c) return #opts.included and vim.tbl_contains(opts.included, c.name) or true end)
+    :filter(function(c) return not vim.tbl_contains(opts.ignored, c.name) end)
+    :map(function(client) return client.name end)
+    :totable()
+end
+
 function M.format_servers(servers)
-  if #servers == 0 then return '' end
+  if #servers == 0 then return 'No Active LSP ' end
   if #servers > 2 then
     return fmt('%s +%d %s', servers[1], #servers - 1, separator)
   end
@@ -441,7 +455,7 @@ function M.get_null_ls_linters(filetype)
     :map(function(l) return l.name end)
     :totable()
   table.sort(linters)
-  return M.format_servers(linters)
+  return #linters > 0 and M.format_servers(linters) or ''
 end
 
 -- Get formatters (from null-ls)
@@ -453,7 +467,7 @@ function M.get_null_ls_formatters(filetype)
     :map(function(l) return l.name end)
     :totable()
   table.sort(formatters)
-  return M.format_servers(formatters)
+  return #formatters > 0 and M.format_servers(formatters) or ''
 end
 
 -- Add linters (from nvim-lint)
@@ -551,6 +565,6 @@ function M.autocmds()
   })
 end
 
-function M.word_count() return ' ' .. tostring(fn.wordcount().words) .. ' words' end
+function M.word_count() return '' .. tostring(fn.wordcount().words) .. ' words' end
 
 return M

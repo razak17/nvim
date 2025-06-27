@@ -590,145 +590,100 @@ return {
         },
         empty_component,
       },
-      -- LSP Clients (null-ls)
+      -- LSP Clients, Linters, Formatters
       {
         flexible = 1,
         {
-          update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
-          condition = function()
-            return conditions.lsp_attached and ar_config.lsp.null_ls.enable
-          end,
+          hl = { bold = true },
+          condition = function() return conditions.lsp_attached end,
           init = function(self)
-            local curwin = api.nvim_get_current_win()
-            local curbuf = api.nvim_win_get_buf(curwin)
-            local ft = vim.bo[curbuf].ft
-            self.client_names = vim
-              .iter(vim.lsp.get_clients({ bufnr = curbuf }))
-              :filter(function(client) return client.name ~= 'copilot' end)
-              :map(function(client) return client.name end)
-              :totable()
-            self.is_null_ls = vim
-              .iter(self.client_names)
-              :filter(function(client) return client:match('null') end)
-              :totable()
-            self.client_names = vim
-              .iter(self.client_names)
-              :filter(function(client) return not client:match('null') end)
-              :totable()
-            if not falsy(self.is_null_ls) then
-              self.formatters = stl.get_null_ls_formatters(ft)
-              self.linters = stl.get_null_ls_linters(ft)
-            end
-            self.icon = ' ' .. codicons.misc.connect .. ' '
+            self.curwin = api.nvim_get_current_win()
+            self.curbuf = api.nvim_win_get_buf(self.curwin)
+            local ignored = { 'copilot', 'dev-tools', 'null-ls' }
+            self.client_names = stl.get_lsp_servers({ ignored = ignored })
+            local icon = ar_config.lsp.null_ls.enable and codicons.misc.connect
+              or codicons.misc.disconnect
+            self.icon = ' ' .. icon
           end,
+          -- LSP Clients
           {
+            condition = function() return ar.lsp.enable end,
+            update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
             provider = function(self)
-              if not ar.lsp.enable then return '' end
-              if falsy(self.client_names) then
-                return self.icon .. 'No Active LSP ' .. separator
-              end
-              return self.icon .. stl.format_servers(self.client_names)
+              if #self.client_names == 0 then return '' end
+              return self.icon .. ' ' .. stl.format_servers(self.client_names)
             end,
-            hl = { bold = true },
             on_click = {
-              callback = function(self)
-                if not falsy(self.client_names) then
-                  vim.defer_fn(function() vim.cmd('LspInfo') end, 100)
-                end
+              callback = function()
+                vim.defer_fn(function() vim.cmd('LspInfo') end, 100)
               end,
               name = 'lsp_clients',
             },
           },
+          -- Linters, Formatters (nvim-lint, conform)
           {
+            condition = function() return not ar_config.lsp.null_ls.enable end,
             update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
+            init = function(self)
+              if not ar_config.lsp.null_ls.enable then
+                self.linters = stl.get_linters()
+                self.formatters = stl.get_formatters(self.curbuf)
+              end
+            end,
+            {
+              condition = function(self)
+                return not ar.lsp.enable
+                  and (not falsy(self.linters) or not falsy(self.formatters))
+              end,
+              provider = function(self) return self.icon end,
+            },
+            {
+              condition = function(self) return not falsy(self.linters) end,
+              provider = function(self) return ' ' .. self.linters end,
+            },
+            {
+              condition = function(self) return not falsy(self.formatters) end,
+              provider = function(self) return ' ' .. self.formatters end,
+              on_click = {
+                callback = function(self)
+                  vim.defer_fn(function() vim.cmd(self.cmd) end, 100)
+                end,
+                name = 'formatters',
+              },
+            },
+          },
+          -- Linters, Formatters (null-ls)
+          {
+            condition = function() return ar_config.lsp.null_ls.enable end,
+            update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
+            init = function(self)
+              local ft = vim.bo[self.curbuf].ft
+              self.is_null_ls =
+                stl.get_lsp_servers({ included = { 'null-ls' } })
+              if not falsy(self.is_null_ls) then
+                self.formatters = stl.get_null_ls_formatters(ft)
+                self.linters = stl.get_null_ls_linters(ft)
+              end
+            end,
             {
               condition = function(self)
                 return not falsy(self.linters) or not falsy(self.formatters)
               end,
               provider = function() return ' ' .. codicons.misc.null_ls end,
-              hl = { bold = true },
             },
             {
               condition = function(self) return not falsy(self.linters) end,
               provider = function(self) return ' ' .. self.linters end,
-              hl = { bold = true },
             },
             {
               condition = function(self) return not falsy(self.formatters) end,
               provider = function(self) return ' ' .. self.formatters end,
-              hl = { bold = true },
             },
             on_click = {
               callback = function()
                 vim.defer_fn(function() vim.cmd('NullLsInfo') end, 100)
               end,
               name = 'null_ls',
-            },
-          },
-        },
-        empty_component,
-      },
-      -- LSP Clients (conform,nvim-lint)
-      {
-        flexible = 1,
-        {
-          update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
-          condition = function()
-            return conditions.lsp_attached and not ar_config.lsp.null_ls.enable
-          end,
-          init = function(self)
-            local curwin = api.nvim_get_current_win()
-            local curbuf = api.nvim_win_get_buf(curwin)
-            self.client_names = vim
-              .iter(vim.lsp.get_clients({ bufnr = curbuf }))
-              :filter(function(client) return client.name ~= 'copilot' end)
-              :map(function(client) return client.name end)
-              :totable()
-            self.linters = stl.get_linters()
-            self.formatters = stl.get_formatters(curbuf)
-            self.icon = ' ' .. codicons.misc.disconnect .. ' '
-          end,
-          {
-            update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
-            provider = function(self)
-              if not ar.lsp.enable then return '' end
-              if falsy(self.client_names) then
-                return self.icon .. 'No Active LSP ' .. separator
-              end
-              return self.icon .. stl.format_servers(self.client_names)
-            end,
-            hl = { bold = true },
-            on_click = {
-              callback = function(self)
-                if not falsy(self.client_names) then
-                  vim.defer_fn(function() vim.cmd('LspInfo') end, 100)
-                end
-              end,
-              name = 'lsp_clients',
-            },
-          },
-          {
-            update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
-            condition = function(self) return not falsy(self.linters) end,
-            provider = function(self)
-              if ar.lsp.enable then return ' ' .. self.formatters end
-              return self.icon .. self.linters
-            end,
-            hl = { bold = true },
-          },
-          {
-            update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
-            condition = function(self) return not falsy(self.formatters) end,
-            provider = function(self)
-              if ar.lsp.enable then return ' ' .. self.formatters end
-              return self.icon .. self.formatters
-            end,
-            hl = { bold = true },
-            on_click = {
-              callback = function()
-                vim.defer_fn(function() vim.cmd('ConformInfo') end, 100)
-              end,
-              name = 'formatters',
             },
           },
         },
