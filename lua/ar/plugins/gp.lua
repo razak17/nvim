@@ -44,6 +44,7 @@ local function gp_choose_agent()
   if models.gemini then table.insert(options, 'ChatGemini') end
   if models.openai then table.insert(options, 'ChatGPT') end
   vim.ui.select(options, { prompt = prompt_title }, function(choice)
+    if choice == nil then return end
     local selected = vim
       .iter(agents)
       :filter(function(agent) return agent:match(choice) end)
