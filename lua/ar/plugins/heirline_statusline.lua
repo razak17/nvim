@@ -721,10 +721,10 @@ return {
       -- Copilot Status
       {
         flexible = 2,
-        {
           condition = function()
             return ar.ai.enable and ar_config.ai.models.copilot
           end,
+        {
           init = function(self)
             self.processing = false
             local status = stl.copilot_status()
@@ -751,8 +751,8 @@ return {
       -- CodeCompanion
       {
         flexible = 2,
-        {
           condition = function() return ar.ai.enable end,
+        {
           static = { processing = false },
           update = {
             'User',
@@ -780,10 +780,8 @@ return {
       -- MCPHub
       {
         flexible = 2,
+        condition = function() return is_avail('mcphub.nvim') and ar.ai.enable end,
         {
-          condition = function()
-            return is_avail('mcphub.nvim') and ar.ai.enable
-          end,
           static = {
             active_servers = 0,
             is_connected = false,
