@@ -25,7 +25,7 @@ return {
     ft = { 'markdown' },
     -- stylua: ignore
     keys = {
-      { 'o', '<Plug>(bullets-newline)', desc = 'bullets: new line' },
+      -- { 'o', '<Plug>(bullets-newline)', desc = 'bullets: new line' },
       { 'gN', '<Plug>(bullets-renumber)', desc = 'bullets: renumber' },
       { 'gN', '<Plug>(bullets-renumber)', desc = 'bullets: renumber', mode = { 'x' } },
       { '<leader>om', '<Plug>(bullets-toggle-checkbox)', desc = 'bullets: toggle checkbox' },
@@ -39,6 +39,7 @@ return {
     init = function()
       vim.g.bullets_set_mappings = 0
       vim.g.bullets_custom_mappings = {
+        { 'nmap', 'o', '<Plug>(bullets-newline)' },
         -- { 'imap', '<cr>', '<Plug>(bullets-newline)' },
         -- { 'inoremap', '<C-cr>', '<cr>' },
       }
