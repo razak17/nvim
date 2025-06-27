@@ -62,6 +62,7 @@ end
 return {
   {
     'LeonHeidelbach/trailblazer.nvim',
+    cond = function() return ar.get_plugin_cond('trailblazer.nvim') end,
     -- stylua: ignore
     keys = {
       '<A-l>',
@@ -98,7 +99,13 @@ return {
   },
   {
     'cbochs/grapple.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('grapple.nvim', not minimal) end,
+    -- stylua: ignore
+    keys = {
+      { '<leader>ma', '<Cmd>Grapple toggle<CR>', desc = 'grapple: add file' },
+      { '<leader>mm', '<Cmd>Grapple toggle_tags<CR>', desc = 'grapple: toggle tags' },
+    },
+    cmd = 'Grapple',
     opts = {
       scope = 'git_branch',
       default_scopes = {
@@ -107,16 +114,10 @@ return {
         global = { shown = true },
       },
     },
-    cmd = 'Grapple',
-    -- stylua: ignore
-    keys = {
-      { '<leader>ma', '<Cmd>Grapple toggle<CR>', desc = 'grapple: add file' },
-      { '<leader>mm', '<Cmd>Grapple toggle_tags<CR>', desc = 'grapple: toggle tags' },
-    },
   },
   {
     'ThePrimeagen/harpoon',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('harpoon', not minimal) end,
     branch = 'harpoon2',
     -- stylua: ignore
     keys = function()
@@ -151,7 +152,7 @@ return {
   },
   {
     'otavioschwanck/arrow.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('arrow.nvim', not minimal) end,
     -- stylua: ignore
     keys = {
       '\\',
@@ -167,7 +168,7 @@ return {
   },
   {
     'cbochs/portal.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('portal.nvim', not minimal) end,
     -- stylua: ignore
     keys = {
       { 'g<c-i>', '<Cmd>Portal jumplist forward<CR>', desc = 'portal jump backward' },
@@ -177,7 +178,9 @@ return {
   },
   {
     'razak17/whatthejump.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('whatthejump.nvim', not minimal)
+    end,
     keys = { '<C-o>', '<C-i>', '<M-o>', '<M-i>' },
     -- event = { 'BufRead', 'BufNewFile' },
     opts = { winblend = 0 },
@@ -197,7 +200,10 @@ return {
   },
   {
     'bloznelis/before.nvim',
-    cond = not minimal and niceties,
+    cond = function()
+      local condition = not minimal and niceties
+      return ar.get_plugin_cond('before.nvim', condition)
+    end,
     event = { 'BufRead', 'BufNewFile' },
     -- stylua: ignore
     keys = {
