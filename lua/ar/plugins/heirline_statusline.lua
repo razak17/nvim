@@ -632,10 +632,9 @@ return {
             end,
             {
               condition = function(self)
-                return not ar.lsp.enable
-                  and (not falsy(self.linters) or not falsy(self.formatters))
+                return not falsy(self.linters) or not falsy(self.formatters)
               end,
-              provider = function(self) return self.icon end,
+              provider = function() return ' ' .. codicons.misc.cmd end,
             },
             {
               condition = function(self) return not falsy(self.linters) end,

@@ -140,6 +140,7 @@ ar.ui.codicons = {
     circuit_board = '',
     clock = '',
     code = '',
+    cmd = '',
     comment = '󰅺',
     connect = '󱘖',
     copilot = '',
