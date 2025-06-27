@@ -23,7 +23,7 @@ return {
         gitsignsCount = false,
       },
       foldKeymaps = {
-        setup = true, -- modifies `h` and `l`
+        setup = false, -- modifies `h` and `l`
         hOnlyOpensOnFirstColumn = false,
       },
     },
