@@ -242,7 +242,7 @@ return {
       local conform = require('conform')
       conform.setup(opts)
 
-      local ignored_server = { 'kulala', 'render-markdown', 'injected' }
+      local ignored_server = { 'kulala', 'render-markdown', 'injected', 'dev-tools' }
       ar.augroup('ConformFormat', {
         event = { 'BufEnter' },
         command = function(args)
