@@ -8,6 +8,8 @@ local lsp_icons = codicons.lsp
 local detour = ar.reqidx('detour')
 local features = ar.reqidx('detour.features')
 local minimal = ar.plugins.minimal
+local lsp_override = ar_config.lsp.override
+local ts_lang = ar_config.lsp.lang.typescript
 local virtual_lines_variant = ar_config.lsp.virtual_lines.variant
 
 local function get_servers()
@@ -16,33 +18,36 @@ local function get_servers()
     .iter(servers)
     :map(function(name) return name end)
     :filter(function(name)
-      local ts_lang = ar_config.lsp.lang.typescript
-      local override = ar_config.lsp.override
       local function ts_lang_cond(server)
-        local is_override = ar.find_string(override, server)
+        local is_override = vim.tbl_contains(lsp_override, server)
         return ts_lang[server] or is_override
       end
       local py_lang = ar_config.lsp.lang.python
       local function py_lang_cond(server)
-        local is_override = vim.tbl_contains(override, server)
+        local is_override = vim.tbl_contains(lsp_override, server)
         return py_lang[server] or is_override
       end
 
-      local should_skip = ar.lsp_override(name)
-        or ar.lsp_disabled(name)
-        or ar.dir_lsp_disabled(cwd)
-        or name == 'ts_ls' and not ts_lang_cond('ts_ls')
-        or name == 'vtsls' and not ts_lang_cond('vtsls')
-        or name == 'ty' and not py_lang_cond('ty')
-        or name == 'ruff' and not py_lang_cond('ruff')
-        or name == 'basedpyright' and not py_lang_cond('basedpyright')
+      local should_skip = not vim.tbl_contains(lsp_override, name)
 
-      if should_skip then return false end
+      if should_skip then
+        should_skip = ar.lsp_override(name)
+          or ar.lsp_disabled(name)
+          or ar.dir_lsp_disabled(cwd)
+          or name == 'ts_ls' and not ts_lang_cond('ts_ls')
+          or name == 'vtsls' and not ts_lang_cond('vtsls')
+          or name == 'ty' and not py_lang_cond('ty')
+          or name == 'ruff' and not py_lang_cond('ruff')
+          or name == 'basedpyright' and not py_lang_cond('basedpyright')
+      end
 
+      return not should_skip
+    end)
+    :map(function(name)
       local config = require('ar.servers').get(name)
       if not config then return false end
       vim.lsp.config(name, config)
-      return true
+      return name
     end)
     :totable()
   return enabled_servers
@@ -64,11 +69,11 @@ return {
           ['Update All Mason Packages'] = 'MasonUpdateAll',
         })
       end,
-      -- stylua: ignore
-      cmd = {
-        'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll',
-        'MasonLog', 'MasonUpdate', 'MasonUpdateAll', -- this cmd is provided by mason-extra-cmds
-      },
+        -- stylua: ignore
+        cmd = {
+          'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll',
+          'MasonLog', 'MasonUpdate', 'MasonUpdateAll', -- this cmd is provided by mason-extra-cmds
+        },
       opts = {
         ui = {
           border = border,
@@ -94,18 +99,24 @@ return {
       event = { 'BufReadPre' },
       config = function()
         require('mason-lspconfig').setup({ automatic_enable = get_servers() })
-        local manual_servers = { 'tsgo' }
+        local manual_servers = require('ar.servers').names({ manual = true })
         vim
           .iter(manual_servers)
           :filter(function(name)
-            local should_skip = ar.lsp_override(name)
-              or ar.lsp_disabled(name)
-              or ar.dir_lsp_disabled(cwd)
+            local should_skip = not vim.tbl_contains(lsp_override, name)
+            if should_skip then
+              should_skip = ar.lsp_override(name)
+                or ar.lsp_disabled(name)
+                or ar.dir_lsp_disabled(cwd)
+            end
             return not should_skip
           end)
           :each(function(name)
-            local config = require('ar.servers').get(name)
-            if config then vim.lsp.enable(name) end
+            local config = require('ar.servers').get(name, { manual = true })
+            if config then
+              vim.lsp.config(name, config)
+              vim.lsp.enable(name)
+            end
           end)
       end,
       dependencies = {
@@ -194,28 +205,28 @@ return {
     -- 'razak17/glance.nvim',
     'dnlhc/glance.nvim',
     cond = ar.lsp.enable,
-    -- stylua: ignore
-    -- keys = {
-    --   { 'gD', '<Cmd>Glance definitions<CR>', desc = 'lsp: glance definitions' },
-    --   { 'gR', '<Cmd>Glance references<CR>', desc = 'lsp: glance references' },
-    --   { 'gY', '<Cmd>Glance type_definitions<CR>', desc = 'lsp: glance type definitions' },
-    --   { 'gM', '<Cmd>Glance implementations<CR>', desc = 'lsp: glance implementations' },
-    -- },
-    config = function()
-      require('glance').setup({
-        preview_win_opts = { relativenumber = false },
-      })
+      -- stylua: ignore
+      -- keys = {
+        --   { 'gD', '<Cmd>Glance definitions<CR>', desc = 'lsp: glance definitions' },
+        --   { 'gR', '<Cmd>Glance references<CR>', desc = 'lsp: glance references' },
+        --   { 'gY', '<Cmd>Glance type_definitions<CR>', desc = 'lsp: glance type definitions' },
+        --   { 'gM', '<Cmd>Glance implementations<CR>', desc = 'lsp: glance implementations' },
+        -- },
+        config = function()
+          require('glance').setup({
+            preview_win_opts = { relativenumber = false },
+          })
 
-      highlight.plugin('glance', {
-        theme = {
-          ['onedark'] = {
-            { GlancePreviewNormal = { link = 'NormalFloat' } },
-            -- { GlancePreviewMatch = { link = 'Comment' } },
-            { GlanceListMatch = { link = 'Search' } },
-          },
-        },
-      })
-    end,
+          highlight.plugin('glance', {
+            theme = {
+              ['onedark'] = {
+                { GlancePreviewNormal = { link = 'NormalFloat' } },
+                -- { GlancePreviewMatch = { link = 'Comment' } },
+                { GlanceListMatch = { link = 'Search' } },
+              },
+            },
+          })
+        end,
   },
   {
     'cseickel/diagnostic-window.nvim',
@@ -357,16 +368,16 @@ return {
   {
     'rmagatti/goto-preview',
     cond = ar.lsp.enable,
-    -- stylua: ignore
-    keys = {
-      { 'gpd', '<Cmd>lua require("goto-preview").goto_preview_definition()<CR>', desc = 'goto preview: definition' },
-      { 'gpt', '<Cmd>lua require("goto-preview").goto_preview_type_definition()<CR>', desc = 'goto preview: type definition' },
-      { 'gpi', '<Cmd>lua require("goto-preview").goto_preview_implementation()<CR>', desc = 'goto preview: implementation' },
-      { 'gpD', '<Cmd>lua require("goto-preview").goto_preview_declaration()<CR>', desc = 'goto preview: declaration' },
-      { 'gpr', '<Cmd>lua require("goto-preview").goto_preview_references()<CR>', desc = 'goto preview: references' },
-      { 'gpx', '<Cmd>lua require("goto-preview").close_all_win()<CR>', desc = 'goto preview: close all windows' },
-      { 'gpo', '<Cmd>lua require("goto-preview").close_all_win({ skip_curr_window = true })<CR>', desc = 'goto preview: close other windows' },
-    },
+                -- stylua: ignore
+                keys = {
+                  { 'gpd', '<Cmd>lua require("goto-preview").goto_preview_definition()<CR>', desc = 'goto preview: definition' },
+                  { 'gpt', '<Cmd>lua require("goto-preview").goto_preview_type_definition()<CR>', desc = 'goto preview: type definition' },
+                  { 'gpi', '<Cmd>lua require("goto-preview").goto_preview_implementation()<CR>', desc = 'goto preview: implementation' },
+                  { 'gpD', '<Cmd>lua require("goto-preview").goto_preview_declaration()<CR>', desc = 'goto preview: declaration' },
+                  { 'gpr', '<Cmd>lua require("goto-preview").goto_preview_references()<CR>', desc = 'goto preview: references' },
+                  { 'gpx', '<Cmd>lua require("goto-preview").close_all_win()<CR>', desc = 'goto preview: close all windows' },
+                  { 'gpo', '<Cmd>lua require("goto-preview").close_all_win({ skip_curr_window = true })<CR>', desc = 'goto preview: close other windows' },
+                },
     event = 'LspAttach',
     opts = {},
     dependencies = { 'rmagatti/logger.nvim' },
@@ -377,13 +388,13 @@ return {
     init = function()
       vim.g.whichkey_add_spec({ '<leader>l?', group = 'Rulebook' })
     end,
-    -- stylua: ignore
-    keys = {
-      { '<leader>l?f', function() require('rulebook').suppressFormatter() end, mode = { 'n', 'x' }, desc = 'rulebook: formatter suppress' },
-      { '<leader>l?i', function() require('rulebook').ignoreRule() end, desc = 'rulebook: ignore rule' },
-      { '<leader>l?l', function() require('rulebook').lookupRule() end, desc = 'rulebook: lookup rule' },
-      { '<leader>l?y', function() require('rulebook').yankDiagnosticCode() end, desc = 'rulebook: yank diagnostic code' },
-    },
+                -- stylua: ignore
+                keys = {
+                  { '<leader>l?f', function() require('rulebook').suppressFormatter() end, mode = { 'n', 'x' }, desc = 'rulebook: formatter suppress' },
+                  { '<leader>l?i', function() require('rulebook').ignoreRule() end, desc = 'rulebook: ignore rule' },
+                  { '<leader>l?l', function() require('rulebook').lookupRule() end, desc = 'rulebook: lookup rule' },
+                  { '<leader>l?y', function() require('rulebook').yankDiagnosticCode() end, desc = 'rulebook: yank diagnostic code' },
+                },
     opts = {
       suppressFormatter = {
         -- use `biome` instead of `prettier`
@@ -416,10 +427,10 @@ return {
     'stevanmilic/nvim-lspimport',
     cond = ar.lsp.enable,
     ft = { 'python' },
-    -- stylua: ignore
-    keys = {
-      { '<localleader>ll', function() require('lspimport').import() end, desc = 'lsp-import: import (python)' },
-    },
+                -- stylua: ignore
+                keys = {
+                  { '<localleader>ll', function() require('lspimport').import() end, desc = 'lsp-import: import (python)' },
+                },
   },
   {
     'antosha417/nvim-lsp-file-operations',
@@ -447,13 +458,13 @@ return {
         end,
       })
     end,
-    -- stylua: ignore
-    keys = {
-      { '<leader>jj', '<Cmd>AnyJump<CR>', desc = 'any-jump: jump' },
-      { mode = { 'x' }, '<leader>jj', '<Cmd>AnyJumpVisual<CR>', desc = 'any-jump: jump' },
-      { '<leader>jb', '<Cmd>AnyJumpBack<CR>', desc = 'any-jump: back' },
-      { '<leader>jl', '<Cmd>AnyJumpLastResults<CR>', desc = 'any-jump: resume' },
-    },
+                -- stylua: ignore
+                keys = {
+                  { '<leader>jj', '<Cmd>AnyJump<CR>', desc = 'any-jump: jump' },
+                  { mode = { 'x' }, '<leader>jj', '<Cmd>AnyJumpVisual<CR>', desc = 'any-jump: jump' },
+                  { '<leader>jb', '<Cmd>AnyJumpBack<CR>', desc = 'any-jump: back' },
+                  { '<leader>jl', '<Cmd>AnyJumpLastResults<CR>', desc = 'any-jump: resume' },
+                },
   },
   {
     'folke/trouble.nvim',
@@ -465,19 +476,19 @@ return {
     end,
     cond = ar.lsp.enable,
     cmd = { 'Trouble' },
-    -- stylua: ignore
-    keys = {
-      { '<localleader>xd', '<Cmd>Trouble diagnostics toggle<CR>', desc = 'trouble: toggle diagnostics' },
-      {
-        '<localleader>xl',
-        "<Cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-        desc = 'trouble: lsp references',
-      },
-      { '<localleader>xL', '<Cmd>Trouble loclist toggle<CR>', desc = 'trouble: toggle loclist' },
-      { '<localleader>xq', '<Cmd>Trouble qflist toggle<CR>', desc  = 'trouble: toggle qflist' },
-      { '<localleader>xt', '<Cmd>Trouble todo toggle<CR>', desc = 'trouble: toggle todo' },
-      { '<localleader>xx', '<Cmd>Trouble diagnostics toggle filter.buf=0<CR>', desc = 'trouble: toggle buffer diagnostics' },
-    },
+                -- stylua: ignore
+                keys = {
+                  { '<localleader>xd', '<Cmd>Trouble diagnostics toggle<CR>', desc = 'trouble: toggle diagnostics' },
+                  {
+                    '<localleader>xl',
+                    "<Cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+                    desc = 'trouble: lsp references',
+                  },
+                  { '<localleader>xL', '<Cmd>Trouble loclist toggle<CR>', desc = 'trouble: toggle loclist' },
+                  { '<localleader>xq', '<Cmd>Trouble qflist toggle<CR>', desc  = 'trouble: toggle qflist' },
+                  { '<localleader>xt', '<Cmd>Trouble todo toggle<CR>', desc = 'trouble: toggle todo' },
+                  { '<localleader>xx', '<Cmd>Trouble diagnostics toggle filter.buf=0<CR>', desc = 'trouble: toggle buffer diagnostics' },
+                },
     opts = {},
   },
   {
@@ -544,14 +555,14 @@ return {
         ar_config.lsp.symbols.enable
         and ar_config.lsp.symbols.variant == 'namu'
       then
-        -- stylua: ignore
-        table.insert(mappings, {
-          '<leader>lsd', '<Cmd>Namu symbols<CR>', desc = 'namu: document symbols'
-        })
-        -- stylua: ignore
-        table.insert(mappings, {
-          '<leader>lsw', '<Cmd>Namu workspace<CR>', desc = 'namu: workspace symbols'
-        })
+                      -- stylua: ignore
+                      table.insert(mappings, {
+                        '<leader>lsd', '<Cmd>Namu symbols<CR>', desc = 'namu: document symbols'
+                      })
+                      -- stylua: ignore
+                      table.insert(mappings, {
+                        '<leader>lsw', '<Cmd>Namu workspace<CR>', desc = 'namu: workspace symbols'
+                      })
       end
       return mappings
     end,
@@ -735,10 +746,10 @@ return {
     'aznhe21/actions-preview.nvim',
     enabled = false,
     cond = ar.lsp.enable and ar.plugins.niceties,
-    -- stylua: ignore
-    keys = {
-      { '<leader>lA', function() require('actions-preview').code_actions() end, desc = 'code action preview' },
-    },
+                  -- stylua: ignore
+                  keys = {
+                    { '<leader>lA', function() require('actions-preview').code_actions() end, desc = 'code action preview' },
+                  },
     init = function()
       ar.add_to_select_menu('lsp', {
         ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
@@ -758,15 +769,15 @@ return {
     config = function()
       highlight.plugin('symbol-usage', {
         theme = {
-          -- stylua: ignore
-          ['onedark'] = {
-            { SymbolUsageRounding = { italic = true, fg = { from = 'CursorLine', attr = 'bg' }, }, },
-            { SymbolUsageContent = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Comment' }, }, },
-            { SymbolUsageRef = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Function' }, }, },
-            { SymbolUsageDef = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Type' }, }, },
-            { SymbolUsageImpl = { italic = true, bg = { from = 'CursorLine' }, fg = { from = '@keyword' }, }, },
-            { SymbolUsageContent = { bold = false, italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Comment' }, }, },
-          },
+                        -- stylua: ignore
+                        ['onedark'] = {
+                          { SymbolUsageRounding = { italic = true, fg = { from = 'CursorLine', attr = 'bg' }, }, },
+                          { SymbolUsageContent = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Comment' }, }, },
+                          { SymbolUsageRef = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Function' }, }, },
+                          { SymbolUsageDef = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Type' }, }, },
+                          { SymbolUsageImpl = { italic = true, bg = { from = 'CursorLine' }, fg = { from = '@keyword' }, }, },
+                          { SymbolUsageContent = { bold = false, italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Comment' }, }, },
+                        },
         },
       })
 

@@ -261,24 +261,6 @@ local servers = {
   },
   sqls = {},
   tailwindcss = {},
-  tsgo = {
-    cmd = { 'tsgo', '--lsp', '--stdio' },
-    filetypes = {
-      'javascript',
-      'javascriptreact',
-      'javascript.jsx',
-      'typescript',
-      'typescriptreact',
-      'typescript.tsx',
-    },
-    root_markers = {
-      'tsconfig.json',
-      'jsconfig.json',
-      'package.json',
-      '.git',
-      'tsconfig.base.json',
-    },
-  },
   ts_ls = {
     init_options = { documentFormatting = false, hostInfo = 'neovim' },
     commands = {
@@ -390,6 +372,27 @@ local servers = {
   },
 }
 
+local manual_servers = {
+  tsgo = {
+    cmd = { 'tsgo', '--lsp', '--stdio' },
+    filetypes = {
+      'javascript',
+      'javascriptreact',
+      'javascript.jsx',
+      'typescript',
+      'typescriptreact',
+      'typescript.tsx',
+    },
+    root_markers = {
+      'tsconfig.json',
+      'jsconfig.json',
+      'package.json',
+      '.git',
+      'tsconfig.base.json',
+    },
+  },
+}
+
 ---@param name string
 ---@param config lspconfig.Config?
 ---@return lspconfig.Config
@@ -446,17 +449,29 @@ end
 
 ---Get the configuration for a specific language server
 ---@param name string?
+---@param opts? { manual?: boolean }
 ---@return table<string, any>?
-local function get(name)
+local function get(name, opts)
+  opts = opts or {}
   local config = servers[name]
-  if not config then return nil end
+  if opts.manual then config = manual_servers[name] end
+  if not config then return {} end
   if type(config) == 'function' then config = config() end
   return capabilities(name, config)
+end
+
+---Get the list of language servers
+---@param opts? { manual?: boolean }
+---@return string[]
+local function names(opts)
+  opts = opts or {}
+  local lsp_servers = opts.manual and manual_servers or servers
+  return vim.tbl_keys(lsp_servers)
 end
 
 return {
   list = servers,
   capabilities = capabilities,
   get = get,
-  names = function() return vim.tbl_keys(servers) end,
+  names = names,
 }
