@@ -289,10 +289,10 @@ return {
         {
           condition = function() return vim.bo.filetype == 'python' end,
           init = function(self) self.python_env = stl.python_env() end,
-          provider = function(self)
-            if not self.env then return '' end
-            return ' ' .. self.env
-          end,
+          {
+            condition = function(self) return self.python_env ~= '' end,
+            provider = function(self) return ' ' .. self.python_env end,
+          },
           hl = { fg = 'yellowgreen' },
         },
         empty_component,
