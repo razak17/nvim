@@ -152,6 +152,7 @@ return {
   },
   {
     'assistcontrol/readline.nvim',
+    cond = function() return ar.get_plugin_cond('readline.nvim') end,
     -- stylua: ignore
     keys = {
       { '<M-f>', function() require('readline').forward_word() end, mode = '!' },
