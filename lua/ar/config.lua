@@ -355,7 +355,7 @@ local config = {
     disabled = {
       filetypes = {},
       directories = { vim.fn.stdpath('data') },
-      servers = { 'emmet_ls', 'pyright', 'jedi_language_server', 'tsgo' },
+      servers = { 'emmet_ls', 'pyright', 'jedi_language_server' },
     },
     foldexpr = { enable = false },
     format_on_save = { enable = true },
@@ -370,9 +370,9 @@ local config = {
       },
       typescript = {
         ts_ls = false,
-        ['typescript-tools'] = true,
+        ['typescript-tools'] = false,
         vtsls = false,
-        tsgo = false,
+        tsgo = true,
       },
     },
     null_ls = { enable = false },
