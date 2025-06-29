@@ -49,18 +49,21 @@ local config = {
 local function move_or_create_win(key)
   local is_excluded_bt = ar.find_string(config.excluded.buftypes, vim.bo.bt)
   local is_excluded_ft = ar.find_string(config.excluded.filetypes, vim.bo.ft)
-  if not is_excluded_bt and not is_excluded_ft then
-    local curr_win = fn.winnr()
-    vim.cmd('wincmd ' .. key) --> attempt to move
-    if curr_win == fn.winnr() then --> didn't move, so create a split
-      if key == 'h' or key == 'l' then
-        vim.cmd('wincmd v')
-      else
-        vim.cmd('wincmd s')
-      end
-    end
+  if is_excluded_bt or is_excluded_ft then
+    vim.cmd('wincmd ' .. key)
+    return
   end
-  vim.cmd('wincmd ' .. key)
+  local curr_win = fn.winnr()
+  vim.cmd('wincmd ' .. key) --> attempt to move
+
+  if curr_win == fn.winnr() then --> didn't move, so create a split
+    if key == 'h' or key == 'l' then
+      vim.cmd('wincmd v')
+    else
+      vim.cmd('wincmd s')
+    end
+    vim.cmd('wincmd ' .. key)
+  end
 end
 
 local function create_map(direction, key, description)
