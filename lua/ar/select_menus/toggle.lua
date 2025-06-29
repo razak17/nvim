@@ -4,6 +4,7 @@ local l = vim.log.levels
 local M = {}
 
 local config = {
+  alpha_green = { enabled = false },
   color_my_pencils = {
     enabled = false,
     highlights = {},
@@ -69,6 +70,16 @@ function M.toggle_conceal_cursor()
       ar.bool2str(ar.falsy(opt_l.concealcursor:get()))
     )
   )
+end
+
+function M.alpha_green()
+  local enabled = config.alpha_green.enabled
+  if enabled then
+    vim.cmd.colorscheme(ar_config.colorscheme or 'default')
+  else
+    vim.cmd.colorscheme('alpha-green')
+  end
+  config.alpha_green.enabled = not enabled
 end
 
 function M.color_my_pencils()

@@ -13,6 +13,7 @@ ar.add_to_select_menu('toggle', {
   ['Toggle Conceal Cursor'] = 'lua require"ar.select_menus.toggle".toggle_conceal_cursor()',
   ['Toggle Statusline'] = 'lua require"ar.select_menus.toggle".toggle_statusline()',
   ['Toggle Color Pencils'] = 'lua require"ar.select_menus.toggle".color_my_pencils()',
+  ['Toggle Alpha Green'] = 'lua require"ar.select_menus.toggle".alpha_green()',
   ['Toggle Guides'] = 'lua require"ar.select_menus.toggle".toggle_guides()',
 })
 
