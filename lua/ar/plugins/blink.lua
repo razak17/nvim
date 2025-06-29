@@ -134,13 +134,14 @@ return {
       sources = {
         default = function()
           local node = vim.treesitter.get_node()
-          local providers = {
+          local sources = {
             'lsp',
             'path',
             'snippets',
             'buffer',
             'ripgrep',
             'emoji',
+            'tmux',
           }
 
           if
@@ -153,26 +154,26 @@ return {
             return { 'buffer' }
           else
             if ar.ai.enable then
-              if is_copilot then table.insert(providers, 'copilot') end
-              if is_minuet then table.insert(providers, 'minuet') end
+              if is_copilot then table.insert(sources, 'copilot') end
+              if is_minuet then table.insert(sources, 'minuet') end
               if is_copilot and ar.ai.enable then
-                table.insert(providers, 'avante_commands')
-                table.insert(providers, 'avante_mentions')
-                table.insert(providers, 'avante_files')
+                table.insert(sources, 'avante_commands')
+                table.insert(sources, 'avante_mentions')
+                table.insert(sources, 'avante_files')
               end
-              table.insert(providers, 'codecompanion')
+              table.insert(sources, 'codecompanion')
             end
             if not minimal then
-              table.insert(providers, 'nvim-px-to-rem')
-              table.insert(providers, 'dadbod')
+              table.insert(sources, 'nvim-px-to-rem')
+              table.insert(sources, 'dadbod')
               if
                 ar_config.shelter.variant == 'ecolog'
                 and is_avail('ecolog.nvim')
               then
-                table.insert(providers, 'ecolog')
+                table.insert(sources, 'ecolog')
               end
             end
-            return providers
+            return sources
           end
         end,
         providers = {
@@ -224,6 +225,16 @@ return {
             score_offset = 15,
             min_keyword_length = 2,
             opts = { insert = true },
+          },
+          tmux = {
+            module = 'blink-cmp-tmux',
+            name = '[TMUX]',
+            opts = {
+              all_panes = false,
+              capture_history = false,
+              triggered_only = false,
+              trigger_chars = { '.' },
+            },
           },
         },
       },
@@ -465,6 +476,7 @@ return {
       'L3MON4D3/LuaSnip',
       'jsongerber/nvim-px-to-rem',
       'moyiz/blink-emoji.nvim',
+      'mgalliou/blink-cmp-tmux',
       {
         'giuxtaposition/blink-cmp-copilot',
         cond = not minimal and is_copilot,
