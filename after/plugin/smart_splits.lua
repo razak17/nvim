@@ -32,7 +32,7 @@ local config = {
       'kulala_ui',
     },
     buftypes = {
-      'nofile',
+      -- 'nofile',
       'nowrite',
       'quickfix',
       'prompt',
