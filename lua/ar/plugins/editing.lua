@@ -226,7 +226,11 @@ return {
   },
   {
     'windwp/nvim-autopairs',
-    cond = function() return get_cond('nvim-autopairs', not minimal) end,
+    cond = function()
+      local condition = not minimal
+        and ar_config.completion.variant ~= 'omnifunc'
+      return get_cond('nvim-autopairs', condition)
+    end,
     event = 'InsertEnter',
     config = function()
       local autopairs = require('nvim-autopairs')
