@@ -4,11 +4,12 @@ local l = vim.log.levels
 local M = {}
 
 local config = {
-  alpha_green = { enabled = false },
+  alpha_green = {
+    enabled = false,
+  },
   color_my_pencils = {
     enabled = false,
-    highlights = {},
-    default_highlights = {
+    highlights = {
       ColorColumn = { bg = 'cyan' },
       CursorLine = { bg = '#1d7c78', fg = 'black' },
       CursorLineNr = { fg = '#aed75f' },
@@ -84,37 +85,19 @@ end
 
 function M.color_my_pencils()
   local enabled = config.color_my_pencils.enabled
+  if enabled then
+    vim.cmd.colorscheme(ar_config.colorscheme or 'default')
+  else
+    for hl, value in pairs(config.color_my_pencils.highlights) do
+      if value.fg then api.nvim_set_hl(0, hl, { fg = value.fg }) end
+      if value.bg then api.nvim_set_hl(0, hl, { bg = value.bg }) end
+    end
+  end
   config.color_my_pencils.enabled = not enabled
-  if not enabled then
-    local get_hl = ar.highlight.get
-    config.color_my_pencils.highlights = {
-      ColorColumn = { bg = get_hl('ColorColumn', 'bg') },
-      CursorLine = {
-        bg = get_hl('CursorLine', 'bg'),
-        fg = get_hl('CursorLine', 'fg'),
-      },
-      CursorLineNr = { fg = get_hl('CursorLineNr', 'fg') },
-      LineNr = { fg = get_hl('LineNr', 'fg') },
-      Normal = { bg = get_hl('Normal', 'bg') },
-      netrwDir = { fg = get_hl('netrwDir', 'fg') },
-      qfFileName = { fg = get_hl('qfFileName', 'fg') },
-    }
-  end
-  local highlights = enabled and config.color_my_pencils.highlights
-    or config.color_my_pencils.default_highlights
-  for key, value in pairs(highlights) do
-    if value.fg then
-      vim.cmd(string.format('highlight %s guifg=%s', key, value.fg))
-    end
-    if value.bg then
-      vim.cmd(string.format('highlight %s guibg=%s', key, value.bg))
-    end
-  end
 end
 
 function M.toggle_guides()
   local enabled = config.toggle_guides.enabled
-  config.toggle_guides.enabled = not enabled
   ar_config.plugin.main.numbers.enable = not enabled
   local wins = api.nvim_list_wins()
   for _, win in ipairs(wins) do
@@ -122,6 +105,7 @@ function M.toggle_guides()
     vim.wo[win].signcolumn = enabled and 'no' or 'yes'
     vim.wo[win].colorcolumn = enabled and '800' or '80'
   end
+  config.toggle_guides.enabled = not enabled
 end
 
 return M
