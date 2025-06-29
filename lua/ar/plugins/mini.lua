@@ -194,17 +194,6 @@ return {
     end,
   },
   {
-    'echasnovski/mini.misc',
-    cond = false,
-    init = function()
-      ar.add_to_select_menu(
-        'toggle',
-        { ['Toggle Zoom'] = 'lua require("mini.misc").zoom()' }
-      )
-    end,
-    opts = {},
-  },
-  {
     'echasnovski/mini.bracketed',
     cond = function() return ar.get_plugin_cond('mini.bracketed', not minimal) end,
     event = { 'BufRead', 'BufNewFile' },
@@ -217,12 +206,6 @@ return {
       { '<leader>wx', '<Cmd>lua MiniTrailspace.trim()<CR>', desc = 'trailspace: trim all', },
       { '<leader>wl', '<Cmd>lua MiniTrailspace.trim_last_lines()<CR>', desc = 'trailspace: trim last lines', },
     },
-    opts = {},
-  },
-  {
-    'echasnovski/mini.cursorword',
-    cond = false,
-    event = { 'BufRead', 'BufNewFile' },
     opts = {},
   },
   {
@@ -372,7 +355,11 @@ return {
   },
   {
     'echasnovski/mini.completion',
-    cond = minimal or ar_config.completion.variant == 'mini.completion',
+    cond = function()
+      local condition = minimal
+        or ar_config.completion.variant == 'mini.completion'
+      return ar.get_plugin_cond('mini.completion', condition)
+    end,
     event = { 'InsertEnter', 'BufEnter' },
     opts = {},
     config = function(_, opts)
@@ -398,12 +385,6 @@ return {
     'echasnovski/mini.splitjoin',
     keys = { { '<leader>J', desc = 'splitjoin: toggle' } },
     opts = { mappings = { toggle = '<leader>J' } },
-  },
-  {
-    'echasnovski/mini.diff',
-    event = { 'BufRead', 'BufNewFile' },
-    cond = false,
-    opts = {},
   },
   {
     'echasnovski/mini.pairs',
@@ -459,6 +440,29 @@ return {
   --------------------------------------------------------------------------------
   -- Disabled
   --------------------------------------------------------------------------------
+  {
+    'echasnovski/mini.misc',
+    cond = false,
+    init = function()
+      ar.add_to_select_menu(
+        'toggle',
+        { ['Toggle Zoom'] = 'lua require("mini.misc").zoom()' }
+      )
+    end,
+    opts = {},
+  },
+  {
+    'echasnovski/mini.cursorword',
+    cond = false,
+    event = { 'BufRead', 'BufNewFile' },
+    opts = {},
+  },
+  {
+    'echasnovski/mini.diff',
+    event = { 'BufRead', 'BufNewFile' },
+    cond = false,
+    opts = {},
+  },
   {
     'echasnovski/mini.animate',
     cond = function()
