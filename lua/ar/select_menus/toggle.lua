@@ -6,6 +6,10 @@ local M = {}
 local config = {
   alpha_green = {
     enabled = false,
+    highlights = {
+      bg = '#000000',
+      fg = '#00ff00',
+    },
   },
   color_my_pencils = {
     enabled = false,
@@ -75,16 +79,26 @@ end
 
 function M.alpha_green()
   local enabled = config.alpha_green.enabled
+  vim.cmd('hi clear')
   if enabled then
     vim.cmd.colorscheme(ar_config.colorscheme or 'default')
   else
-    vim.cmd.colorscheme('alpha-green')
+    local hl = config.alpha_green.highlights
+    for hl_group, attrs in pairs(vim.api.nvim_get_hl(0, {})) do
+      if attrs.fg then attrs.fg = hl.fg end
+      if attrs.bg then attrs.bg = hl.bg end
+      api.nvim_set_hl(0, hl_group, attrs)
+    end
+    api.nvim_set_hl(0, 'Visual', { bg = '#222222' })
+    api.nvim_set_hl(0, 'CursorLine', { bg = '#002200' })
+    api.nvim_set_hl(0, 'ColorColumn', { bg = hl.fg })
   end
   config.alpha_green.enabled = not enabled
 end
 
 function M.color_my_pencils()
   local enabled = config.color_my_pencils.enabled
+  vim.cmd('hi clear')
   if enabled then
     vim.cmd.colorscheme(ar_config.colorscheme or 'default')
   else
