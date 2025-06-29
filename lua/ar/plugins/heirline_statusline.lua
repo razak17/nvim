@@ -41,6 +41,7 @@ return {
     local align = { provider = '%=' }
     local utils = require('heirline.utils')
     local file_block = stl.file_block
+    local space = stl.space
 
     local mode_colors = stl.mode_colors
 
@@ -959,15 +960,17 @@ return {
       {
         flexible = 6,
         {
-          provider = function()
+          init = function(self)
+            local location = '%7(%l/%3L%):%2c '
+            local progress = stl.progress()
             local line_number = fn.line('.')
-            if line_number > 99 then
-              return '  ' .. '%7(%l/%3L%):%2c ' .. stl.progress()
-            elseif line_number > 9 then
-              return ' ' .. '%7(%l/%3L%):%2c ' .. stl.progress()
-            end
-            return '%7(%l/%3L%):%2c ' .. stl.progress()
+            self.space = line_number > 999 and space(2)
+              or line_number > 99 and space(3)
+              or line_number > 9 and space(4)
+              or space(4)
+            self.ruler = self.space .. location .. progress
           end,
+          provider = function(self) return self.ruler end,
         },
         empty_component,
       },

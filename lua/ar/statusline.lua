@@ -10,6 +10,10 @@ M.is_dots_repo = false
 
 M.git_status = { ahead = 0, behind = 0, status = nil }
 
+---@param num? integer
+---@return string
+function M.space(num) return string.rep(' ', num or 1) end
+
 function M.block() return icons.separators.bar end
 
 function M.list_branches()
