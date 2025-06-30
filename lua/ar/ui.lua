@@ -296,6 +296,7 @@ local filetypes = ar.p_table({
   ['bufexplorer'] = presets.tool_panel,
   ['buffalo'] = presets.tool_panel:with({ number = true }),
   ['buffer_manager'] = presets.tool_panel:with({ number = true }),
+  ['cheatsheet'] = presets.tool_panel,
   ['checkhealth'] = presets.tool_panel,
   ['codecompanion'] = presets.statusline_only,
   ['compile'] = presets.statusline_only,

@@ -175,6 +175,8 @@ ar.add_to_select_menu('command_palette', {
   ['Change Filetype'] = "lua require'ar.select_menus.command_palette'.quick_set_ft()",
   ['Search Code Deps'] = "lua require'ar.select_menus.command_palette'.search_code_deps()",
   ['Toggle File Diff'] = "lua require'ar.select_menus.command_palette'.toggle_file_diff()",
+  ['Cheatsheet (Grid)'] = "lua require('ar.cheatsheet').run('grid')",
+  ['Cheatsheet (Simple)'] = "lua require('ar.cheatsheet').run('simple')",
   ['Yank Last Message'] = [[let @+=substitute(execute('messages'), '\n\+', '\n', 'g')]],
   ['Clear Messages'] = function() vim.cmd('messages clear') end,
   ['Yank Last Ex Command'] = 'let @+=@:',

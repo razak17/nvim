@@ -211,10 +211,35 @@ local function colorscheme_overrides()
   if hls then highlight.all(hls) end
 end
 
+local function set_cheatsheet_highlight()
+  highlight.all({
+    {
+      NvChHeading = {
+        fg = { from = 'Dim', alter = -0.5 },
+        bg = { from = 'Directory', attr = 'fg' },
+      },
+    },
+    { NvChAsciiHeader = { link = 'Debug' } },
+    { NvChSection = { link = 'NormalFloat' } },
+    { NvChHeadblue = { bg = '#61AFEF', fg = '#282C34' } },
+    { NvChHeadred = { bg = '#E06C75', fg = '#282C34' } },
+    { NvChHeadgreen = { bg = '#98C379', fg = '#282C34' } },
+    { NvChHeadyellow = { bg = '#E5C07B', fg = '#282C34' } },
+    { NvChHeadorange = { bg = '#D19A66', fg = '#282C34' } },
+    { NvChHeadbaby_pink = { bg = '#FF6AC1', fg = '#282C34' } },
+    { NvChHeadpurple = { bg = '#C678DD', fg = '#282C34' } },
+    { NvChHeadwhite = { bg = '#ABB2BF', fg = '#282C34' } },
+    { NvChHeadcyan = { bg = '#56B6C2', fg = '#282C34' } },
+    { NvChHeadvibrant_green = { bg = '#98C379', fg = '#282C34' } },
+    { NvChHeadteal = { bg = '#008080', fg = '#b3deef' } },
+  })
+end
+
 local function user_highlights()
   general_overrides()
   colorscheme_overrides()
   if not transparent then set_sidebar_highlight() end
+  set_cheatsheet_highlight()
 end
 
 ar.augroup('UserHighlights', {
