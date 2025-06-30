@@ -587,7 +587,7 @@ return {
         flexible = 3,
         {
           condition = function() return vim.bo.filetype == 'markdown' end,
-          provider = stl.word_count,
+          provider = function() return '  ' .. stl.word_count() .. ' ' end,
         },
         empty_component,
       },
