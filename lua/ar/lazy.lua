@@ -38,6 +38,14 @@ require('lazy').setup({
     notify = false,
     frequency = 3600,
   },
+  ui = {
+    icons = {
+      ft = '',
+      lazy = '󰂠 ',
+      loaded = '',
+      not_loaded = '',
+    },
+  },
   performance = {
     rtp = {
       paths = { join_paths(data, 'site'), join_paths(data, 'site', 'after') },
