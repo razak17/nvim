@@ -19,7 +19,7 @@ local function add_trail_mark_stack()
   vim.ui.input({ prompt = 'stack name: ' }, function(name)
     if not name then return end
     local available_stacks = get_available_stacks()
-    if ar.find_string(available_stacks, name) then
+    if vim.tbl_contains(available_stacks, name) then
       vim.notify(
         fmt('"%s" stack already exists.', name),
         'warn',
@@ -41,7 +41,7 @@ local function delete_trail_mark_stack()
   vim.ui.input({ prompt = 'stack name: ' }, function(name)
     if not name then return end
     local available_stacks = get_available_stacks()
-    if not ar.find_string(available_stacks, name) then
+    if not vim.tbl_contains(available_stacks, name) then
       vim.notify(
         fmt('"%s" stack does not exist.', name),
         'warn',

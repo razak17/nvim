@@ -380,7 +380,7 @@ return {
         if is_minuet then
           opts.sources.providers.minuet = {
             enabled = function()
-              return not ar.find_string(
+              return not vim.tbl_contains(
                 ar_config.ai.ignored_filetypes,
                 vim.bo.ft
               )

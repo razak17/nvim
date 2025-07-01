@@ -277,7 +277,7 @@ return {
             }
 
             if
-              not ar.find_string(custom_sources, entry.source.name)
+              not vim.tbl_contains(custom_sources, entry.source.name)
               and item.kind ~= 'Color'
             then
               if ar_config.completion.icons == 'mini.icons' then

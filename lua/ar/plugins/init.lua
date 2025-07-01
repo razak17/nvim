@@ -5,7 +5,7 @@ local plugins_path = vim.fn.stdpath('config') .. '/lua/ar/plugins'
 ---@param module string The module to search for.
 ---@return boolean disabled # Whether the module is disabled.
 local function module_disabled(module)
-  return ar.find_string(ar_config.plugins.modules.disabled, module)
+  return vim.tbl_contains(ar_config.plugins.modules.disabled, module)
 end
 
 local plugins_list = vim.split(vim.fn.globpath(plugins_path, '*.lua'), '\n')

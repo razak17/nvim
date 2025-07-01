@@ -260,7 +260,7 @@ end
 ---@param plugin string The plugin to search for.
 ---@return boolean disabled # Whether the plugin is disabled.
 function ar.plugin_disabled(plugin)
-  return ar.find_string(ar_config.plugins.disabled, plugin)
+  return vim.tbl_contains(ar_config.plugins.disabled, plugin)
 end
 
 -- Get a plugin's enable condition
@@ -342,7 +342,7 @@ end
 ---@param lsp string The lsp to search for.
 ---@return boolean disabled # Whether the lsp is disabled.
 function ar.lsp_disabled(lsp)
-  return ar.find_string(ar_config.lsp.disabled.servers, lsp)
+  return vim.tbl_contains(ar_config.lsp.disabled.servers, lsp)
 end
 
 -- Check if a lsp is disabled in a directory
@@ -356,7 +356,7 @@ end
 ---@return boolean disabled # Whether the lsp is disabled.
 function ar.lsp_override(lsp)
   return not ar.falsy(ar_config.lsp.override)
-    and not ar.find_string(ar_config.lsp.override, lsp)
+    and not vim.tbl_contains(ar_config.lsp.override, lsp)
 end
 
 ---Get whether using nightly version of neovim
@@ -718,7 +718,7 @@ local function use_window_picker(callback, set_current_win, command)
     local visible_bufs = {}
     vim.iter(api.nvim_list_wins()):each(function(w)
       local buf = api.nvim_win_get_buf(w)
-      if not ar.find_string(ignored_filetypes, vim.bo[buf].ft) then
+      if not vim.tbl_contains(ignored_filetypes, vim.bo[buf].ft) then
         table.insert(visible_bufs, buf)
       end
     end)

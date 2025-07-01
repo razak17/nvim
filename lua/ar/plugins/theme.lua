@@ -4,7 +4,7 @@ local function is_colorscheme(name) return ar_config.colorscheme == name end
 ---@param names table
 ---@return boolean
 local function get_cond(names)
-  return not ar.plugins.minimal and ar.find_string(names, ar_config.colorscheme)
+  return not ar.plugins.minimal and vim.tbl_contains(names, ar_config.colorscheme)
 end
 
 ---@param names table

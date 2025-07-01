@@ -58,7 +58,7 @@ local function format(opts)
     local lsp_fallback
     local lsp_fallback_inclusions = { 'eslint' }
     for _, c in pairs(client_names) do
-      if ar.find_string(lsp_fallback_inclusions, c) then
+      if vim.tbl_contains(lsp_fallback_inclusions, c) then
         lsp_fallback = 'always'
         break
       end

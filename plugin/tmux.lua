@@ -19,7 +19,7 @@ local ignored = {
 --- Get the color of the current vim background and update tmux accordingly
 ---@param reset boolean?
 local function set_statusline(reset)
-  if ar.find_string(ignored, vim.bo.ft) then return end
+  if vim.tbl_contains(ignored, vim.bo.ft) then return end
   local tmux_bg = '#20222f'
   local bg = tmux_bg
   if ar_config.ui.transparent.enable then
