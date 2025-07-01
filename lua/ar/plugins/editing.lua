@@ -278,7 +278,7 @@ return {
             {
               TSNodeKey = {
                 fg = { from = 'VertSplit', attr = 'fg', alter = -0.2 },
-                bg = { from = 'qfLineNr', attr = 'fg' },
+                bg = { from = 'WildMenu', attr = 'fg', alter = 1.2 },
               },
             },
           },
