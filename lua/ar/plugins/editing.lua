@@ -18,7 +18,6 @@ return {
       })
     end,
     cond = function() return get_cond('yanky.nvim', not minimal) end,
-    cmd = { 'YankyRingHistory' },
     -- stylua: ignore
     keys = {
       { 'p', '<Plug>(YankyPutAfter)', mode = { 'n', 'x' }, desc = 'yanky: put after', },
@@ -29,7 +28,16 @@ return {
       { '<localleader>yb', '<Plug>(YankyCycleBackward)', desc = 'yanky: cycle backward' },
       { '<localleader>yo', '<Cmd>YankyRingHistory<CR>', desc = 'yanky: open yank history', },
     },
+    cmd = { 'YankyRingHistory' },
     opts = { ring = { storage = 'sqlite' } },
+    config = function(_, opts)
+      ar.highlight.plugin('treehopper', {
+        theme = {
+          ['onedark'] = { { YankyYanked = { link = 'IncSearch' } } },
+        },
+      })
+      require('yanky').setup(opts)
+    end,
     dependencies = 'kkharji/sqlite.lua',
   },
   {
