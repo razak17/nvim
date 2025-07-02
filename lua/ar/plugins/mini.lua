@@ -75,40 +75,7 @@ return {
   },
   {
     'echasnovski/mini.hipatterns',
-    cond = function()
-      local lazy_file = io.open(fn.expand('%:p:h') .. '/.lazy.lua', 'r') ~= nil
-      local condition = (lazy_file and not minimal) or minimal
-      return ar.get_plugin_cond('mini.hipatterns', condition)
-    end,
-    event = { 'BufRead', 'BufNewFile' },
-    opts = function()
-      local hipatterns = require('mini.hipatterns')
-      local opts = {}
-      if minimal then
-        opts = vim.tbl_extend('force', opts, {
-          highlighters = {
-            fixme = {
-              pattern = '%f[%w]()FIXME()%f[%W]',
-              group = 'MiniHipatternsFixme',
-            },
-            hack = {
-              pattern = '%f[%w]()HACK()%f[%W]',
-              group = 'MiniHipatternsHack',
-            },
-            todo = {
-              pattern = '%f[%w]()TODO()%f[%W]',
-              group = 'MiniHipatternsTodo',
-            },
-            note = {
-              pattern = '%f[%w]()NOTE()%f[%W]',
-              group = 'MiniHipatternsNote',
-            },
-            hex_color = hipatterns.gen_highlighter.hex_color(),
-          },
-        })
-      end
-      return opts
-    end,
+    cond = function() return ar.get_plugin_cond('mini.hipatterns') end,
   },
   {
     'echasnovski/mini.icons',
