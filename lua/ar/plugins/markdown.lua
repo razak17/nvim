@@ -212,7 +212,6 @@ return {
         -- stylua: ignore
         theme = {
           ['onedark'] = {
-            { MarkdownCodeBlock = { link = 'CodeBlock' } },
             -- Heading colors (when not hovered over), extends through the entire line
             { RenderMarkdownH1Bg = { fg = color_fg, bg = color1_bg } },
             { RenderMarkdownH2Bg = { fg = color_fg, bg = color2_bg } },
@@ -268,8 +267,9 @@ return {
       code = {
         enabled = true,
         sign = false,
-        style = 'normal', -- 'normal' | 'full' | 'language' | 'thick'
-        highlight = 'NormalFloat',
+        render_modes = false,
+        style = ar_config.ui.transparent.enable and 'language' or 'full', -- 'normal' | 'full' | 'language' | 'none'
+        highlight = 'CodeBlock',
         language_icon = true,
         language_name = true,
       },
