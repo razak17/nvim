@@ -35,7 +35,10 @@ return {
       use_git_branch = true,
       save_dir = vim.fn.expand(vim.fn.stdpath('cache') .. '/sessions/'),
       on_autoload_no_session = function() vim.cmd.Alpha() end,
-      should_save = function() return vim.bo.filetype ~= 'alpha' end,
+      should_save = function()
+        return not vim.tbl_contains({ 'alpha', 'cheatsheet' }, vim.bo.ft)
+          and not vim.tbl_contains({ 'nofile' }, vim.bo.bt)
+      end,
     },
   },
 }
