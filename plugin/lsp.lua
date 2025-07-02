@@ -708,7 +708,10 @@ end
 ---@param client vim.lsp.Client
 ---@param bufnr number
 local function setup_colors(client, bufnr)
-  if client:supports_method(M.textDocument_documentColor) then
+  if
+    client:supports_method(M.textDocument_documentColor)
+    or client.capabilities.textDocument.colorProvider -- NOTE: this is needed for tailwind colors
+  then
     lsp.document_color.enable(true, bufnr, { style = 'virtual' })
   end
 end
