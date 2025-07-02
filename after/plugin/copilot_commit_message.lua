@@ -1,4 +1,4 @@
-local enabled = true
+local enabled = ar_config.plugin.custom.copilot_commit_message.enable
 
 if not ar or ar.none or not enabled then return end
 

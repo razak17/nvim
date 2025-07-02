@@ -397,6 +397,7 @@ local config = {
       baredot = { enable = true },
       big_file = { enable = true },
       colorify = { enable = true },
+      copilot_commit_message = { enable = true },
       custom_fold = { enable = false },
       interceptor = { enable = true },
       large_file = { enable = true },
