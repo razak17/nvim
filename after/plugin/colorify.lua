@@ -122,8 +122,9 @@ local function lsp_var(buf, line, min, max)
   local param = { textDocument = vim.lsp.util.make_text_document_params(buf) }
 
   for _, client in pairs(vim.lsp.get_clients({ bufnr = buf })) do
-    if client.server_capabilities.colorProvider then
-      client.request('textDocument/documentColor', param, function(_, resp)
+    local m = vim.lsp.protocol.Methods
+    if client:supports_method(m.textDocument_documentColor) then
+      client.request(m.textDocument_documentColor, param, function(_, resp)
         if resp and line then
           resp = vim.tbl_filter(
             function(v) return v.range['start'].line == line end,
@@ -225,6 +226,7 @@ api.nvim_create_autocmd({
   'LspAttach',
   'WinScrolled',
   'BufEnter',
+  'BufRead',
 }, {
   callback = function(args)
     if vim.bo[args.buf].bl then attach(args.buf, args.event) end
