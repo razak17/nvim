@@ -3,6 +3,7 @@ local minimal = ar.plugins.minimal
 return {
   {
     'catgoose/nvim-colorizer.lua',
+    cond = function() return ar.get_plugin_cond('nvim-colorizer.lua') end,
     config = function() require('colorizer').setup() end,
     cmd = {
       'ColorizerAttachToBuffer',
@@ -11,7 +12,10 @@ return {
       'ColorizerToggle',
     },
     init = function()
-      ar.add_to_select_menu('toggle', { ['Toggle Colorizer'] = 'ColorizerToggle' })
+      ar.add_to_select_menu(
+        'toggle',
+        { ['Toggle Colorizer'] = 'ColorizerToggle' }
+      )
     end,
   },
   {
@@ -20,7 +24,10 @@ return {
     event = { 'LspAttach' },
     cmd = { 'HighlightColors' },
     init = function()
-      ar.add_to_select_menu('toggle', { ['Toggle Colors'] = 'HighlightColors Toggle' })
+      ar.add_to_select_menu(
+        'toggle',
+        { ['Toggle Colors'] = 'HighlightColors Toggle' }
+      )
     end,
     opts = {
       render = 'virtual',
@@ -30,7 +37,7 @@ return {
   },
   {
     'uga-rosa/ccc.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('ccc.nvim', not minimal) end,
     cmd = { 'CccHighlighterToggle', 'CccHighlighterEnable', 'CccPick' },
     init = function()
       ar.add_to_select_menu('toggle', {
@@ -69,12 +76,14 @@ return {
   },
   {
     'cjodo/convert.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('convert.nvim', not minimal) end,
     cmd = { 'ConvertFindNext', 'ConvertFindCurrent' },
   },
   {
     'eero-lehtinen/oklch-color-picker.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('oklch-color-picker.nvim', not minimal)
+    end,
     init = function()
       ar.add_to_select_menu('toggle', {
         ['Toggle Color Picker'] = "lua require('oklch-color-picker').pick_under_cursor()",
