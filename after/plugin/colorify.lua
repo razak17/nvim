@@ -124,7 +124,7 @@ local function lsp_var(buf, line, min, max)
   for _, client in pairs(vim.lsp.get_clients({ bufnr = buf })) do
     local m = vim.lsp.protocol.Methods
     if client:supports_method(m.textDocument_documentColor) then
-      client.request(m.textDocument_documentColor, param, function(_, resp)
+      client:request(m.textDocument_documentColor, param, function(_, resp)
         if resp and line then
           resp = vim.tbl_filter(
             function(v) return v.range['start'].line == line end,
