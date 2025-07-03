@@ -396,6 +396,7 @@ local config = {
       auto_cursorline = { enable = true },
       baredot = { enable = true },
       big_file = { enable = true },
+      cheatsheet = { enable = true },
       colorify = { enable = true },
       copilot_commit_message = { enable = true },
       custom_fold = { enable = false },
