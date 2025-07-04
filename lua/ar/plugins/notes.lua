@@ -44,8 +44,6 @@ return {
         date_format = '%Y-%m-%d-%a',
         time_format = '%H:%M',
       },
-      finder = 'fzf-lua',
-      mappings = {},
     },
   },
   {
