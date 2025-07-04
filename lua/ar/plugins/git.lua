@@ -658,15 +658,6 @@ return {
     config = function() require('blame').setup() end,
   },
   {
-    'dlvhdr/gh-addressed.nvim',
-    cond = function() return git_cond('gh-addressed.nvim') end,
-    cmd = 'GhReviewComments',
-    -- stylua: ignore
-    keys = {
-      { '<leader>gc', '<Cmd>GhReviewComments<CR>', desc = 'github review comments' },
-    },
-  },
-  {
     'aaronhallaert/advanced-git-search.nvim',
     cond = function() return git_cond('advanced-git-search.nvim') end,
     cmd = { 'AdvancedGitSearch' },
