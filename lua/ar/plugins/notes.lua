@@ -22,6 +22,7 @@ return {
       { '<leader><localleader>ot', '<Cmd>Obsidian template<CR>', desc = 'obsidian: insert template', },
     },
     opts = {
+      legacy_commands = false,
       ui = {
         enable = false,
         checkboxes = {
