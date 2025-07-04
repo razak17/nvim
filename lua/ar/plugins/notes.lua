@@ -34,7 +34,9 @@ return {
         },
         bullets = { char = '•', hl_group = 'ObsidianBullet' },
       },
-      dir = sync('obsidian'),
+      workspaces = {
+        { name = 'personal', path = sync('obsidian') },
+      },
       notes_subdir = 'Zettelkasten',
       daily_notes = { folder = 'Daily Notes' },
       templates = {
