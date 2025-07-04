@@ -371,7 +371,7 @@ local config = {
       typescript = {
         ts_ls = false,
         ['typescript-tools'] = false,
-        vtsls = false,
+        vtsls = true,
         tsgo = true,
       },
     },
