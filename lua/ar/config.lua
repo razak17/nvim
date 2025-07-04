@@ -404,6 +404,7 @@ local config = {
       large_file = { enable = true },
       last_place = { enable = true },
       notepad = { enable = true },
+      orphans = { enable = true },
       recording_studio = { enable = true },
       reload_plugin = { enable = true },
       remote_sync = { enable = false },
