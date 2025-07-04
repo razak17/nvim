@@ -113,6 +113,7 @@ return {
     opts = function()
       local opts = {
         mode = 'agentic',
+        system_prompt = function() return ar_config.ai.prompts.beast_mode end,
         behaviour = { auto_set_keymaps = false },
         hints = { enabled = false },
         selector = {

@@ -158,6 +158,7 @@ return {
         },
         opts = { log_level = 'DEBUG' },
         extensions = {},
+        system_prompt = function() return ar_config.ai.prompts.beast_mode end,
       }
 
       local function set_adapter_and_strategy(model_name)
