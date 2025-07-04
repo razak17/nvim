@@ -205,28 +205,28 @@ return {
     -- 'razak17/glance.nvim',
     'dnlhc/glance.nvim',
     cond = ar.lsp.enable,
-      -- stylua: ignore
-      -- keys = {
-        --   { 'gD', '<Cmd>Glance definitions<CR>', desc = 'lsp: glance definitions' },
-        --   { 'gR', '<Cmd>Glance references<CR>', desc = 'lsp: glance references' },
-        --   { 'gY', '<Cmd>Glance type_definitions<CR>', desc = 'lsp: glance type definitions' },
-        --   { 'gM', '<Cmd>Glance implementations<CR>', desc = 'lsp: glance implementations' },
-        -- },
-        config = function()
-          require('glance').setup({
-            preview_win_opts = { relativenumber = false },
-          })
+    -- stylua: ignore
+    -- keys = {
+      --   { 'gD', '<Cmd>Glance definitions<CR>', desc = 'lsp: glance definitions' },
+      --   { 'gR', '<Cmd>Glance references<CR>', desc = 'lsp: glance references' },
+      --   { 'gY', '<Cmd>Glance type_definitions<CR>', desc = 'lsp: glance type definitions' },
+      --   { 'gM', '<Cmd>Glance implementations<CR>', desc = 'lsp: glance implementations' },
+      -- },
+    config = function()
+      require('glance').setup({
+        preview_win_opts = { relativenumber = false },
+      })
 
-          highlight.plugin('glance', {
-            theme = {
-              ['onedark'] = {
-                { GlancePreviewNormal = { link = 'NormalFloat' } },
-                -- { GlancePreviewMatch = { link = 'Comment' } },
-                { GlanceListMatch = { link = 'Search' } },
-              },
-            },
-          })
-        end,
+      highlight.plugin('glance', {
+        theme = {
+          ['onedark'] = {
+            { GlancePreviewNormal = { link = 'NormalFloat' } },
+            -- { GlancePreviewMatch = { link = 'Comment' } },
+            { GlanceListMatch = { link = 'Search' } },
+          },
+        },
+      })
+    end,
   },
   {
     'cseickel/diagnostic-window.nvim',
@@ -368,16 +368,16 @@ return {
   {
     'rmagatti/goto-preview',
     cond = ar.lsp.enable,
-                -- stylua: ignore
-                keys = {
-                  { 'gpd', '<Cmd>lua require("goto-preview").goto_preview_definition()<CR>', desc = 'goto preview: definition' },
-                  { 'gpt', '<Cmd>lua require("goto-preview").goto_preview_type_definition()<CR>', desc = 'goto preview: type definition' },
-                  { 'gpi', '<Cmd>lua require("goto-preview").goto_preview_implementation()<CR>', desc = 'goto preview: implementation' },
-                  { 'gpD', '<Cmd>lua require("goto-preview").goto_preview_declaration()<CR>', desc = 'goto preview: declaration' },
-                  { 'gpr', '<Cmd>lua require("goto-preview").goto_preview_references()<CR>', desc = 'goto preview: references' },
-                  { 'gpx', '<Cmd>lua require("goto-preview").close_all_win()<CR>', desc = 'goto preview: close all windows' },
-                  { 'gpo', '<Cmd>lua require("goto-preview").close_all_win({ skip_curr_window = true })<CR>', desc = 'goto preview: close other windows' },
-                },
+    -- stylua: ignore
+    keys = {
+      { 'gpd', '<Cmd>lua require("goto-preview").goto_preview_definition()<CR>', desc = 'goto preview: definition' },
+      { 'gpt', '<Cmd>lua require("goto-preview").goto_preview_type_definition()<CR>', desc = 'goto preview: type definition' },
+      { 'gpi', '<Cmd>lua require("goto-preview").goto_preview_implementation()<CR>', desc = 'goto preview: implementation' },
+      { 'gpD', '<Cmd>lua require("goto-preview").goto_preview_declaration()<CR>', desc = 'goto preview: declaration' },
+      { 'gpr', '<Cmd>lua require("goto-preview").goto_preview_references()<CR>', desc = 'goto preview: references' },
+      { 'gpx', '<Cmd>lua require("goto-preview").close_all_win()<CR>', desc = 'goto preview: close all windows' },
+      { 'gpo', '<Cmd>lua require("goto-preview").close_all_win({ skip_curr_window = true })<CR>', desc = 'goto preview: close other windows' },
+    },
     event = 'LspAttach',
     opts = {},
     dependencies = { 'rmagatti/logger.nvim' },
@@ -388,13 +388,13 @@ return {
     init = function()
       vim.g.whichkey_add_spec({ '<leader>l?', group = 'Rulebook' })
     end,
-                -- stylua: ignore
-                keys = {
-                  { '<leader>l?f', function() require('rulebook').suppressFormatter() end, mode = { 'n', 'x' }, desc = 'rulebook: formatter suppress' },
-                  { '<leader>l?i', function() require('rulebook').ignoreRule() end, desc = 'rulebook: ignore rule' },
-                  { '<leader>l?l', function() require('rulebook').lookupRule() end, desc = 'rulebook: lookup rule' },
-                  { '<leader>l?y', function() require('rulebook').yankDiagnosticCode() end, desc = 'rulebook: yank diagnostic code' },
-                },
+    -- stylua: ignore
+    keys = {
+      { '<leader>l?f', function() require('rulebook').suppressFormatter() end, mode = { 'n', 'x' }, desc = 'rulebook: formatter suppress' },
+      { '<leader>l?i', function() require('rulebook').ignoreRule() end, desc = 'rulebook: ignore rule' },
+      { '<leader>l?l', function() require('rulebook').lookupRule() end, desc = 'rulebook: lookup rule' },
+      { '<leader>l?y', function() require('rulebook').yankDiagnosticCode() end, desc = 'rulebook: yank diagnostic code' },
+    },
     opts = {
       suppressFormatter = {
         -- use `biome` instead of `prettier`
@@ -427,10 +427,10 @@ return {
     'stevanmilic/nvim-lspimport',
     cond = ar.lsp.enable,
     ft = { 'python' },
-                -- stylua: ignore
-                keys = {
-                  { '<localleader>ll', function() require('lspimport').import() end, desc = 'lsp-import: import (python)' },
-                },
+    -- stylua: ignore
+    keys = {
+      { '<localleader>ll', function() require('lspimport').import() end, desc = 'lsp-import: import (python)' },
+    },
   },
   {
     'antosha417/nvim-lsp-file-operations',
@@ -458,13 +458,13 @@ return {
         end,
       })
     end,
-                -- stylua: ignore
-                keys = {
-                  { '<leader>jj', '<Cmd>AnyJump<CR>', desc = 'any-jump: jump' },
-                  { mode = { 'x' }, '<leader>jj', '<Cmd>AnyJumpVisual<CR>', desc = 'any-jump: jump' },
-                  { '<leader>jb', '<Cmd>AnyJumpBack<CR>', desc = 'any-jump: back' },
-                  { '<leader>jl', '<Cmd>AnyJumpLastResults<CR>', desc = 'any-jump: resume' },
-                },
+    -- stylua: ignore
+    keys = {
+      { '<leader>jj', '<Cmd>AnyJump<CR>', desc = 'any-jump: jump' },
+      { mode = { 'x' }, '<leader>jj', '<Cmd>AnyJumpVisual<CR>', desc = 'any-jump: jump' },
+      { '<leader>jb', '<Cmd>AnyJumpBack<CR>', desc = 'any-jump: back' },
+      { '<leader>jl', '<Cmd>AnyJumpLastResults<CR>', desc = 'any-jump: resume' },
+    },
   },
   {
     'folke/trouble.nvim',
@@ -476,30 +476,26 @@ return {
     end,
     cond = ar.lsp.enable,
     cmd = { 'Trouble' },
-                -- stylua: ignore
-                keys = {
-                  { '<localleader>xd', '<Cmd>Trouble diagnostics toggle<CR>', desc = 'trouble: toggle diagnostics' },
-                  {
-                    '<localleader>xl',
-                    "<Cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-                    desc = 'trouble: lsp references',
-                  },
-                  { '<localleader>xL', '<Cmd>Trouble loclist toggle<CR>', desc = 'trouble: toggle loclist' },
-                  { '<localleader>xq', '<Cmd>Trouble qflist toggle<CR>', desc  = 'trouble: toggle qflist' },
-                  { '<localleader>xt', '<Cmd>Trouble todo toggle<CR>', desc = 'trouble: toggle todo' },
-                  { '<localleader>xx', '<Cmd>Trouble diagnostics toggle filter.buf=0<CR>', desc = 'trouble: toggle buffer diagnostics' },
-                },
+    -- stylua: ignore
+    keys = {
+      { '<localleader>xd', '<Cmd>Trouble diagnostics toggle<CR>', desc = 'trouble: toggle diagnostics' },
+      {
+        '<localleader>xl',
+        "<Cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+        desc = 'trouble: lsp references',
+      },
+      { '<localleader>xL', '<Cmd>Trouble loclist toggle<CR>', desc = 'trouble: toggle loclist' },
+      { '<localleader>xq', '<Cmd>Trouble qflist toggle<CR>', desc  = 'trouble: toggle qflist' },
+      { '<localleader>xt', '<Cmd>Trouble todo toggle<CR>', desc = 'trouble: toggle todo' },
+      { '<localleader>xx', '<Cmd>Trouble diagnostics toggle filter.buf=0<CR>', desc = 'trouble: toggle buffer diagnostics' },
+    },
     opts = {},
   },
   {
     'SmiteshP/nvim-navbuddy',
     cond = not minimal,
     keys = {
-      {
-        '<leader>nv',
-        '<cmd>Navbuddy<cr>',
-        desc = 'navbuddy: toggle',
-      },
+      { '<leader>nv', '<cmd>Navbuddy<cr>', desc = 'navbuddy: toggle' },
     },
     dependencies = { 'SmiteshP/nvim-navic' },
     opts = { lsp = { auto_attach = true } },
@@ -582,14 +578,14 @@ return {
         ar_config.lsp.symbols.enable
         and ar_config.lsp.symbols.variant == 'namu'
       then
-                      -- stylua: ignore
-                      table.insert(mappings, {
-                        '<leader>lsd', '<Cmd>Namu symbols<CR>', desc = 'namu: document symbols'
-                      })
-                      -- stylua: ignore
-                      table.insert(mappings, {
-                        '<leader>lsw', '<Cmd>Namu workspace<CR>', desc = 'namu: workspace symbols'
-                      })
+        -- stylua: ignore
+        table.insert(mappings, {
+          '<leader>lsd', '<Cmd>Namu symbols<CR>', desc = 'namu: document symbols'
+        })
+        -- stylua: ignore
+        table.insert(mappings, {
+          '<leader>lsw', '<Cmd>Namu workspace<CR>', desc = 'namu: workspace symbols'
+        })
       end
       return mappings
     end,
@@ -773,10 +769,10 @@ return {
     'aznhe21/actions-preview.nvim',
     enabled = false,
     cond = ar.lsp.enable and ar.plugins.niceties,
-                  -- stylua: ignore
-                  keys = {
-                    { '<leader>lA', function() require('actions-preview').code_actions() end, desc = 'code action preview' },
-                  },
+    -- stylua: ignore
+    keys = {
+      { '<leader>lA', function() require('actions-preview').code_actions() end, desc = 'code action preview' },
+    },
     init = function()
       ar.add_to_select_menu('lsp', {
         ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
@@ -796,15 +792,15 @@ return {
     config = function()
       highlight.plugin('symbol-usage', {
         theme = {
-                        -- stylua: ignore
-                        ['onedark'] = {
-                          { SymbolUsageRounding = { italic = true, fg = { from = 'CursorLine', attr = 'bg' }, }, },
-                          { SymbolUsageContent = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Comment' }, }, },
-                          { SymbolUsageRef = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Function' }, }, },
-                          { SymbolUsageDef = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Type' }, }, },
-                          { SymbolUsageImpl = { italic = true, bg = { from = 'CursorLine' }, fg = { from = '@keyword' }, }, },
-                          { SymbolUsageContent = { bold = false, italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Comment' }, }, },
-                        },
+          -- stylua: ignore
+          ['onedark'] = {
+            { SymbolUsageRounding = { italic = true, fg = { from = 'CursorLine', attr = 'bg' }, }, },
+            { SymbolUsageContent = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Comment' }, }, },
+            { SymbolUsageRef = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Function' }, }, },
+            { SymbolUsageDef = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Type' }, }, },
+            { SymbolUsageImpl = { italic = true, bg = { from = 'CursorLine' }, fg = { from = '@keyword' }, }, },
+            { SymbolUsageContent = { bold = false, italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Comment' }, }, },
+          },
         },
       })
 
