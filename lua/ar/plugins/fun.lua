@@ -1,10 +1,19 @@
-local minimal = ar.plugins.minimal
+local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
   {
     'koron/nyancat-vim',
     cond = function() ar.get_plugin_cond('nyancat-vim') end,
     cmd = { 'Nyancat', 'Nyancat2' },
+  },
+  {
+    'r-cha/encourage.nvim',
+    cond = function()
+      local condition = not minimal and niceties
+      return ar.get_plugin_cond('encourage.nvim', condition)
+    end,
+    event = { 'BufReadPost', 'BufNewFile' },
+    opts = {},
   },
   {
     'tjdevries/sPoNGe-BoB.NvIm',

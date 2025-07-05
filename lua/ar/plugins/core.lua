@@ -98,15 +98,6 @@ return {
     config = function() vim.g['w3m#external_browser'] = 'firefox' end,
   },
   {
-    'r-cha/encourage.nvim',
-    cond = function()
-      local condition = not minimal and niceties
-      return ar.get_plugin_cond('encourage.nvim', condition)
-    end,
-    event = { 'BufReadPost', 'BufNewFile' },
-    opts = {},
-  },
-  {
     'stevearc/profile.nvim',
     cond = function() return ar.get_plugin_cond('profile.nvim', not minimal) end,
     lazy = false,
