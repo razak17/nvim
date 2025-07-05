@@ -9,7 +9,6 @@ local detour = ar.reqidx('detour')
 local features = ar.reqidx('detour.features')
 local minimal = ar.plugins.minimal
 local lsp_override = ar_config.lsp.override
-local ts_lang = ar_config.lsp.lang.typescript
 local virtual_lines_variant = ar_config.lsp.virtual_lines.variant
 
 local function get_servers()
@@ -18,6 +17,7 @@ local function get_servers()
     .iter(servers)
     :map(function(name) return name end)
     :filter(function(name)
+      local ts_lang = ar_config.lsp.lang.typescript
       local function ts_lang_cond(server)
         local is_override = vim.tbl_contains(lsp_override, server)
         return ts_lang[server] or is_override
@@ -26,6 +26,11 @@ local function get_servers()
       local function py_lang_cond(server)
         local is_override = vim.tbl_contains(lsp_override, server)
         return py_lang[server] or is_override
+      end
+      local tailwind_lang = ar_config.lsp.lang.tailwind
+      local function tailwind_lang_cond(server)
+        local is_override = vim.tbl_contains(lsp_override, server)
+        return tailwind_lang[server] or is_override
       end
 
       local should_skip = not vim.tbl_contains(lsp_override, name)
@@ -39,6 +44,7 @@ local function get_servers()
           or name == 'ty' and not py_lang_cond('ty')
           or name == 'ruff' and not py_lang_cond('ruff')
           or name == 'basedpyright' and not py_lang_cond('basedpyright')
+          or name == 'tailwindcss' and not tailwind_lang_cond('tailwindcss')
       end
 
       return not should_skip

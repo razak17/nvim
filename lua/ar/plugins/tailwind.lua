@@ -3,6 +3,13 @@ local border = ar.ui.current.border
 return {
   {
     'razak17/tailwind-fold.nvim',
+    cond = function()
+      if not ar.lsp.enable then
+        return ar.get_plugin_cond('tailwind-fold.nvim')
+      end
+      local condition = not ar_config.lsp.lang.tailwind['tailwind-tools']
+      return ar.get_plugin_cond('tailwind-fold.nvim', condition)
+    end,
     init = function()
       ar.add_to_select_menu('toggle', {
         ['Toggle Tailwind Fold'] = 'TailwindFoldToggle',
@@ -34,7 +41,11 @@ return {
   },
   {
     'luckasRanarison/tailwind-tools.nvim',
-    cond = false,
+    cond = function()
+      local condition = ar.lsp.enable
+        and ar_config.lsp.lang.tailwind['tailwind-tools']
+      return ar.get_plugin_cond('tailwind-fold.nvim', condition)
+    end,
     ft = {
       'html',
       'svelte',
@@ -55,7 +66,7 @@ return {
     },
     init = function()
       ar.add_to_select_menu('lsp', {
-        ['Toggle Tailwind Conceal'] = 'TailwindConcealEnable',
+        ['Toggle Tailwind Tools Fold'] = 'TailwindConcealToggle',
         ['Toggle Tailwind Colors'] = 'TailwindColorToggle',
         ['Sort Tailwind Classes'] = 'TailwindSort',
       })
