@@ -10,15 +10,35 @@ return {
   'kevinhwang91/promise-async',
   'kkharji/sqlite.lua',
   'tpope/vim-rhubarb',
-  { 'tyru/capture.vim', cmd = { 'Capture' } },
-  { 'Rasukarusan/nvim-block-paste', cmd = { 'Block' } },
   { 'dundalek/bloat.nvim', cmd = 'Bloat' },
+  { 'tyru/capture.vim', cmd = { 'Capture' } },
+  { 'will133/vim-dirdiff', cmd = { 'DirDiff' } },
+  { 'godlygeek/tabular', cmd = { 'Tabularize' } },
+  { 'ragnarok22/whereami.nvim', cmd = 'Whereami' },
+  { 'Rasukarusan/nvim-block-paste', cmd = { 'Block' } },
+  { 'meznaric/key-analyzer.nvim', cmd = { 'KeyAnalyzer' }, opts = {} },
   {
     'ariel-frischer/bmessages.nvim',
     cond = function() return ar.get_plugin_cond('bmessages.nvim', not minimal) end,
     cmd = { 'Bmessages', 'Bmessagesvs', 'Bmessagessp', 'BmessagesEdit' },
     event = 'CmdlineEnter',
     opts = {},
+  },
+  {
+    '2kabhishek/nerdy.nvim',
+    cmd = 'Nerdy',
+    cond = function() return ar.get_plugin_cond('nerdy.nvim', not minimal) end,
+    init = function()
+      ar.add_to_select_menu('command_palette', { ['Nerdy'] = 'Nerdy' })
+    end,
+  },
+  {
+    'AndrewRadev/linediff.vim',
+    cond = function() return ar.get_plugin_cond('linediff.vim', not minimal) end,
+    cmd = 'Linediff',
+    keys = {
+      { '<localleader>lL', '<cmd>Linediff<CR>', desc = 'linediff: toggle' },
+    },
   },
   {
     'smjonas/live-command.nvim',
@@ -161,12 +181,6 @@ return {
   ------------------------------------------------------------------------------
   -- Utilities {{{2
   ------------------------------------------------------------------------------
-  { 'meznaric/key-analyzer.nvim', cmd = { 'KeyAnalyzer' }, opts = {} },
-  {
-    'crixuamg/visual-complexity.nvim',
-    cmd = { 'VisualComplexity', 'ToggleComplexityReasons' },
-    opts = {},
-  },
   {
     'mikesmithgh/kitty-scrollback.nvim',
     cmd = { 'KittyScrollbackGenerateKittens', 'KittyScrollbackCheckHealth' },
@@ -198,35 +212,6 @@ return {
         ['Write File With Sudo Permissions'] = 'SudaWrite',
       })
     end,
-  },
-  { 'will133/vim-dirdiff', cmd = { 'DirDiff' } },
-  { 'godlygeek/tabular', cmd = { 'Tabularize' } },
-  { 'ragnarok22/whereami.nvim', cmd = 'Whereami' },
-  {
-    '2kabhishek/nerdy.nvim',
-    cmd = 'Nerdy',
-    cond = function() return ar.get_plugin_cond('nerdy.nvim', not minimal) end,
-    init = function()
-      ar.add_to_select_menu('command_palette', { ['Nerdy'] = 'Nerdy' })
-    end,
-  },
-  {
-    'AndrewRadev/linediff.vim',
-    cond = function() return ar.get_plugin_cond('linediff.vim', not minimal) end,
-    cmd = 'Linediff',
-    keys = {
-      { '<localleader>lL', '<cmd>Linediff<CR>', desc = 'linediff: toggle' },
-    },
-  },
-  {
-    'ahmedkhalf/project.nvim',
-    cond = function() return ar.get_plugin_cond('project.nvim', not minimal) end,
-    name = 'project_nvim',
-    opts = {
-      detection_methods = { 'pattern', 'lsp' },
-      ignore_lsp = { 'null-ls' },
-      patterns = { '.git' },
-    },
   },
   {
     'chrisgrieser/nvim-genghis',
