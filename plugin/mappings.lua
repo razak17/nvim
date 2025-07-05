@@ -326,7 +326,7 @@ nnoremap('<leader>od', function()
     ar_config.autosave.enable = not ar_config.autosave.enable
     local file = fn.expand('%:p')
     ar.trash_file(file, true)
-    vim.cmd('bdel')
+    Snacks.bufdelete.delete()
     ar_config.autosave.enable = not ar_config.autosave.enable
   end
 end, { desc = 'trash file' })
