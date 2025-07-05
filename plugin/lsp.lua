@@ -364,7 +364,7 @@ local function setup_mappings(client, bufnr)
     },
     {
       { 'n', 'x' },
-      '<leader>la',
+      '<leader>laa',
       -- lsp.buf.code_action,
       function()
         --   vim.lsp.buf.code_action({
@@ -384,7 +384,7 @@ local function setup_mappings(client, bufnr)
     },
     {
       { 'n', 'x' },
-      '<leader>lA',
+      '<leader>las',
       function()
         lsp.buf.code_action({
           apply = true,

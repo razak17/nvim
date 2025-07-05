@@ -229,6 +229,17 @@ return {
     end,
   },
   {
+    desc = 'Fully customizable previewer for LSP code actions.',
+    'aznhe21/actions-preview.nvim',
+    cond = ar.lsp.enable,
+    -- stylua: ignore
+    keys = { { '<leader>lap', function() require('actions-preview').code_actions() end, desc = 'code action preview' }, },
+    opts = {
+      backend = { 'snacks', 'telescope', 'minipick', 'nui' },
+      telescope = function() ar.telescope.vertical() end,
+    },
+  },
+  {
     'cseickel/diagnostic-window.nvim',
     cond = ar.lsp.enable and ar.plugins.niceties,
     event = 'LspAttach',
@@ -734,25 +745,6 @@ return {
         lsp_icons.hint,
       },
     },
-  },
-  {
-    'aznhe21/actions-preview.nvim',
-    enabled = false,
-    cond = ar.lsp.enable and ar.plugins.niceties,
-    -- stylua: ignore
-    keys = {
-      { '<leader>lA', function() require('actions-preview').code_actions() end, desc = 'code action preview' },
-    },
-    init = function()
-      ar.add_to_select_menu('lsp', {
-        ['Preview Code Actions'] = 'lua require("actions-preview").code_actions()',
-      })
-    end,
-    config = function()
-      require('actions-preview').setup({
-        telescope = ar.telescope.vertical(),
-      })
-    end,
   },
   {
     'Wansmer/symbol-usage.nvim',
