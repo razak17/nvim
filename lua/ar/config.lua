@@ -25,7 +25,7 @@ local env = vim.env
 ---@alias ArAIModel 'claude' | 'gemini' | 'openai' | 'copilot'
 ---@alias ArAICompletion 'copilot' | 'minuet'
 ---@alias ArExplorerRename 'local' | 'snacks'
----@alias ArWhichBuffers 'bufexplorer' | 'bufferin' | 'snacks'
+---@alias ArWhichBuffers 'snacks'
 ---@alias ArCompletion 'cmp' | 'blink' | 'mini.completion' | 'omnifunc'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
 ---@alias ArWhichDashboard 'alpha' | 'snacks'
