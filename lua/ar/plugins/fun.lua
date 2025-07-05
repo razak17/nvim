@@ -38,4 +38,42 @@ return {
       end, { desc = 'Toggles YouAreAnIdiot' })
     end,
   },
+  {
+    desc = 'Vim plugin: footprints. Highlight last edited lines.',
+    'axlebedev/vim-footprints',
+    cond = function() return ar.get_plugin_cond('vim-footprints', not minimal) end,
+    lazy = false,
+    cmd = {
+      'FootprintsToggle',
+      'FootprintsEnable',
+      'FootprintsDisable',
+      'FootprintsBufferToggle',
+      'FootprintsBufferEnable',
+      'FootprintsBufferDisable',
+      'FootprintsCurrentLineToggle',
+      'FootprintsCurrentLineEnable',
+      'FootprintsCurrentLineDisable',
+    },
+    init = function()
+      vim.g.footprintsColor = ar.highlight.get('CursorLine', 'bg')
+      vim.g.footprintsTermColor = '208'
+      vim.g.footprintsEasingFunction = 'linear'
+      vim.g.footprintsHistoryDepth = 20
+      vim.g.footprintsExcludeFiletypes = { 'magit', 'nerdtree', 'diff' }
+      vim.g.footprintsEnabledByDefault = 0
+      vim.g.footprintsOnCurrentLine = 0
+
+      ar.add_to_select_menu('toggle', {
+        ['Toggle Footprints'] = 'FootprintsToggle',
+        ['Enable Footprints'] = 'FootprintsEnable',
+        ['Disable Footprints'] = 'FootprintsDisable',
+        ['Toggle Footprints Buffer'] = 'FootprintsBufferToggle',
+        ['Enable Footprints Buffer'] = 'FootprintsBufferEnable',
+        ['Disable Footprints Buffer'] = 'FootprintsBufferDisable',
+        ['Toggle Footprints Current Line'] = 'FootprintsCurrentLineToggle',
+        ['Enable Footprints Current Line'] = 'FootprintsCurrentLineEnable',
+        ['Disable Footprints Current Line'] = 'FootprintsCurrentLineDisable',
+      })
+    end,
+  },
 }
