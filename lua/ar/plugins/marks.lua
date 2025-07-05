@@ -1,6 +1,6 @@
 local fmt = string.format
 local bookmark = ar.ui.codicons.misc.bookmark
-local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
+local minimal = ar.plugins.minimal
 
 local function get_available_stacks(notify)
   local available_stacks =
@@ -61,6 +61,7 @@ end
 
 return {
   {
+    desc = 'TrailBlazer enables you to seemlessly move through important project marks as quickly and efficiently as possible to make your workflow blazingly fast ™.',
     'LeonHeidelbach/trailblazer.nvim',
     cond = function() return ar.get_plugin_cond('trailblazer.nvim') end,
     -- stylua: ignore
@@ -98,6 +99,7 @@ return {
     },
   },
   {
+    desc = 'Neovim plugin for tagging important files',
     'cbochs/grapple.nvim',
     cond = function() return ar.get_plugin_cond('grapple.nvim', not minimal) end,
     -- stylua: ignore
@@ -116,6 +118,7 @@ return {
     },
   },
   {
+    desc = 'Neovim plugin for improved location list navigation',
     'cbochs/portal.nvim',
     cond = function() return ar.get_plugin_cond('portal.nvim', not minimal) end,
     -- stylua: ignore
@@ -126,6 +129,7 @@ return {
     opts = {},
   },
   {
+    desc = 'Show jumplist in a floating window.',
     'razak17/whatthejump.nvim',
     cond = function()
       return ar.get_plugin_cond('whatthejump.nvim', not minimal)
