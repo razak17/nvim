@@ -34,8 +34,8 @@ return {
   {
     'nmac427/guess-indent.nvim',
     cond = function() return ui_cond('guess-indent.nvim') end,
-    event = 'BufReadPost',
-    config = function() require('guess-indent').setup({}) end,
+    cmd = { 'GuessIndent' },
+    opts = {},
   },
   {
     'ObserverOfTime/notifications.nvim',
