@@ -73,13 +73,6 @@ return {
     opts = {},
   },
   {
-    'jdrupal-dev/parcel.nvim',
-    cond = not minimal and false,
-    event = 'BufRead package.json',
-    opts = {},
-    dependencies = { 'phelipetls/jsonpath.nvim' },
-  },
-  {
     'razak17/package-info.nvim',
     cond = function()
       return ar.get_plugin_cond('package-info.nvim', not minimal)
@@ -236,72 +229,8 @@ return {
     },
     opts = {},
   },
-  -- Tailwind
-  --------------------------------------------------------------------------------
-  {
-    'razak17/tailwind-fold.nvim',
-    init = function()
-      ar.add_to_select_menu('toggle', {
-        ['Toggle Tailwind Fold'] = 'TailwindFoldToggle',
-      })
-    end,
-    cmd = {
-      'TailwindFoldToggle',
-      'TailwindFoldEnable',
-      'TailwindFoldDisable',
-    },
-    opts = { min_chars = 5, symbol = '󱏿' },
-    ft = {
-      'html',
-      'clojure',
-      'svelte',
-      'astro',
-      'vue',
-      'typescriptreact',
-      'javascriptreact',
-      'php',
-      'blade',
-      'eruby',
-      'htmlangular',
-      'htmldjango',
-      'templ',
-      'cshtml',
-      'razor',
-    },
-  },
-  {
-    'MaximilianLloyd/tw-values.nvim',
-    cond = function()
-      return ar.get_plugin_cond('tw-values.nvim', ar.lsp.enable)
-    end,
-    -- stylua: ignore
-    keys = {
-      { '<localleader>lt', '<Cmd>TWValues<cr>', desc = 'tw-values: show values', },
-    },
-    opts = { border = border, show_unknown_classes = true },
-  },
-  {
-    'atiladefreitas/tinyunit',
-    keys = {
-      { '<leader>tu', desc = 'tinyunit: open', mode = { 'n', 'x' } },
-    },
-    opts = {
-      keymap = {
-        open = 'tu',
-        close = 'q',
-      },
-    },
-  },
   -- Python
   --------------------------------------------------------------------------------
-  {
-    'roobert/f-string-toggle.nvim',
-    cond = false,
-    ft = { 'python' },
-    opts = {
-      key_binding = '<localleader>ls',
-    },
-  },
   {
     'linux-cultist/venv-selector.nvim',
     cond = function()
@@ -353,7 +282,6 @@ return {
   },
   {
     'jack-rabe/impl.nvim',
-    cond = false,
     ft = 'go',
     cmd = { 'ImplGenerate', 'ImplSearch' },
     opts = {},
@@ -471,49 +399,4 @@ return {
     init = function() vim.opt.spelllang:append('programming') end,
   },
   ---}}}
-  --------------------------------------------------------------------------------
-  -- Disabled
-  --------------------------------------------------------------------------------
-  {
-    'turbio/bracey.vim',
-    enabled = false,
-    cond = not minimal and false,
-    ft = 'html',
-    build = 'npm install --prefix server',
-  },
-  {
-    'luckasRanarison/tailwind-tools.nvim',
-    enabled = false,
-    cond = ar.lsp.enable and false,
-    ft = {
-      'html',
-      'svelte',
-      'astro',
-      'vue',
-      'typescriptreact',
-      'javascriptreact',
-      'htmlangular',
-      'php',
-      'blade',
-    },
-    event = { 'BufRead' },
-    cmd = {
-      'TailwindConcealToggle',
-      'TailwindColorToggle',
-      'TailwindSort',
-      'TailwindSortSelection',
-    },
-    init = function()
-      ar.add_to_select_menu('lsp', {
-        ['Toggle Tailwind Conceal'] = 'TailwindConcealEnable',
-        ['Toggle Tailwind Colors'] = 'TailwindColorToggle',
-        ['Sort Tailwind Classes'] = 'TailwindSort',
-      })
-    end,
-    opts = {
-      document_color = { enabled = true, inline_symbol = '󰝤 ' },
-      conceal = { enabled = true, symbol = '󱏿', min_length = 5 },
-      custom_filetypes = {},
-    },
-  },
 }
