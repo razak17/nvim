@@ -304,7 +304,6 @@ return {
   --------------------------------------------------------------------------------
   -- { 'lewis6991/fileline.nvim', lazy = false },
   -- { 'axlebedev/vim-footprints', lazy = false },
-  { 'nvim-tree/nvim-web-devicons', cond = false },
   { 'jghauser/mkdir.nvim', enabled = false, lazy = false },
   { 'gcanoxl/cloc.nvim', cond = false, opts = {} },
   {

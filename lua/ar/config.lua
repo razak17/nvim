@@ -31,6 +31,7 @@ local env = vim.env
 ---@alias ArWhichDashboard 'alpha' | 'snacks'
 ---@alias ArWhichExplorer 'neo-tree' | 'snacks' | 'mini.files' | 'oil'
 ---@alias ArWhichGx 'local' | 'plugin'
+---@alias ArWhichIcon 'nvim-web-devicons' | 'mini.icons'
 ---@alias ArWhichIndentline 'mini.indentscope' | 'ibl' | 'snacks' | 'indentmini'
 ---@alias ArWhichLspProgress 'builtin' | 'noice' | 'snacks'
 ---@alias ArWhichLspSymbols 'builtin' | 'picker' | 'namu'
@@ -69,6 +70,10 @@ local env = vim.env
 ---@class ArGx
 ---@field enable boolean
 ---@field variant ArWhichGx
+
+---@class ArIcons
+---@field enable boolean
+---@field variant ArWhichIcon
 
 ---@class ArNotifier
 ---@field enable boolean
@@ -372,6 +377,8 @@ local config = {
   frecency = { enable = true },
   ---@type ArGx
   gx = { enable = true, variant = 'plugin' },
+  ---@type ArIcons
+  icons = { enable = true, variant = 'mini.icons' },
   ---@type ArLsp
   lsp = {
     disabled = {

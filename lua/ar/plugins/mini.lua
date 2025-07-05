@@ -78,48 +78,6 @@ return {
     cond = function() return ar.get_plugin_cond('mini.hipatterns') end,
   },
   {
-    'echasnovski/mini.icons',
-    init = function()
-      package.preload['nvim-web-devicons'] = function()
-        require('mini.icons').mock_nvim_web_devicons()
-        return package.loaded['nvim-web-devicons']
-      end
-    end,
-    opts = {
-      file = {
-        ['init.lua'] = { glyph = '󰢱', hl = 'MiniIconsAzure' }, -- disable nvim glyph: https://github.com/echasnovski/mini.nvim/issues/1384
-        ['README.md'] = { glyph = '' },
-        ['.ignore'] = { glyph = '󰈉', hl = 'MiniIconsGrey' },
-        ['pre-commit'] = { glyph = '󰊢' },
-      },
-      extension = {
-        ['d.ts'] = { hl = 'MiniIconsRed' }, -- distinguish `.d.ts` from `.ts`
-        ['applescript'] = { glyph = '󰀵', hl = 'MiniIconsGrey' },
-        ['log'] = { glyph = '󱂅', hl = 'MiniIconsGrey' },
-        ['gitignore'] = { glyph = '' },
-      },
-      filetype = {
-        ['css'] = { glyph = '', hl = 'MiniIconsRed' },
-        ['typescript'] = { hl = 'MiniIconsCyan' },
-        ['vim'] = { glyph = '' }, -- used for `obsidian.vimrc`
-
-        -- plugin-filetypes
-        ['snacks_input'] = { glyph = '󰏫' },
-        ['snacks_notif'] = { glyph = '󰎟' },
-        ['noice'] = { glyph = '󰎟' },
-        ['mason'] = { glyph = '' },
-        ['ccc-ui'] = { glyph = '' },
-        ['scissors-snippet'] = { glyph = '󰩫' },
-        ['rip-substitute'] = { glyph = '' },
-      },
-      config = function(_, opts)
-        require('mini.icons').setup(opts)
-        -- plugin still needing the devicons mock: telescope
-        require('mini.icons').mock_nvim_web_devicons()
-      end,
-    },
-  },
-  {
     'echasnovski/mini.indentscope',
     cond = function()
       local indentline_enable = ar_config.ui.indentline.enable
