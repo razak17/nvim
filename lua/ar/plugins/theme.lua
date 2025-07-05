@@ -39,6 +39,29 @@ return {
   ------------------------------------------------------------------------------
   -- Monochrome
   {
+    'cdmill/neomodern.nvim',
+    -- enabled = false,
+    cond = get_cond({ 'neomodern' }),
+    priority = get_priority({ 'neomodern' }),
+    event = get_event({ 'neomodern' }),
+    opts = {
+      theme = 'iceclimber', -- 'iceclimber' | 'gyokuro' | 'hojicha' | 'roseprime'
+      variant = 'dark', -- 'light' | 'dark', or set via vim.o.background
+    },
+    config = function(_, opts)
+      require('neomodern').setup(opts)
+      if ar_config.colorscheme == 'neomodern' then
+        require('neomodern').load()
+      end
+    end,
+  },
+  {
+    'ficcdaf/ashen.nvim',
+    cond = get_cond({ 'ashen' }),
+    priority = get_priority({ 'ashen' }),
+    event = get_event({ 'ashen' }),
+  },
+  {
     'slugbyte/lackluster.nvim',
     cond = get_cond({ 'lackluster' }),
     priority = get_priority({ 'lackluster' }),
@@ -104,12 +127,6 @@ return {
     priority = get_priority({ 'serenity' }),
     event = get_event({ 'serenity' }),
     opts = {},
-  },
-  {
-    'ficcdaf/ashen.nvim',
-    cond = get_cond({ 'ashen' }),
-    priority = get_priority({ 'ashen' }),
-    event = get_event({ 'ashen' }),
   },
   {
     'dotsilas/darcubox-nvim',
@@ -286,27 +303,4 @@ return {
     event = get_event({ 'makurai' }),
   },
   -- }}}
-  --------------------------------------------------------------------------------
-  -- Disabled
-  --------------------------------------------------------------------------------
-  {
-    'cdmill/neomodern.nvim',
-    enabled = false,
-    cond = get_cond({ 'neomodern' }),
-    priority = get_priority({ 'neomodern' }),
-    event = get_event({ 'neomodern' }),
-    config = function()
-      require('neomodern').setup({
-        highlights = {
-          ['@namespace'] = { fg = '$constant' },
-          ['@include'] = { fg = '$keyword' },
-          ['@method'] = { fg = '$func' },
-          ['@storageclass'] = { fg = '$constant' },
-          ['@preProc'] = { fg = '$preproc' },
-          ['@field'] = { fg = '$property' },
-        },
-      })
-      require('neomodern').load()
-    end,
-  },
 }
