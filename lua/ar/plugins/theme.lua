@@ -290,15 +290,6 @@ return {
   -- Disabled
   --------------------------------------------------------------------------------
   {
-    'sontungexpt/witch',
-    enabled = false,
-    cond = get_cond({ 'witch' }),
-    priority = get_priority({ 'witch' }),
-    event = get_event({ 'witch' }),
-    opts = { style = 'dark' },
-    config = function(_, opts) require('witch').setup(opts) end,
-  },
-  {
     'cdmill/neomodern.nvim',
     enabled = false,
     cond = get_cond({ 'neomodern' }),
