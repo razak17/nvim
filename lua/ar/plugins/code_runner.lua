@@ -7,36 +7,6 @@ return {
   -- Code Runner
   --------------------------------------------------------------------------------
   {
-    'razak17/builder.nvim',
-    cond = false,
-    cmd = 'Build',
-    -- stylua: ignore
-    keys = {
-      { '<leader>rb', '<Cmd>lua require("builder").build()<CR>', desc = 'builder: run', },
-    },
-    init = function()
-      ar.add_to_select_menu('command_palette', { ['Run Code'] = 'Build' })
-    end,
-    opts = {
-      type = 'float',
-      float_border = border,
-      commands = {
-        c = 'gcc % -o $basename.out && ./$basename.out',
-        cpp = 'g++ % -o $basename.out && ./$basename.out',
-        go = 'go run %',
-        java = 'java %',
-        javascript = 'node %',
-        -- lua = "lua %", -- this will override the default `:source %` for lua files
-        markdown = 'glow %',
-        python = 'python %',
-        rust = 'cargo run',
-        sh = 'sh %',
-        typescript = 'ts-node %',
-        zsh = 'zsh %',
-      },
-    },
-  },
-  {
     'razak17/jaq-nvim',
     cond = not minimal,
     cmd = 'Jaq',
