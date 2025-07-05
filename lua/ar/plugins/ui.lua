@@ -20,27 +20,9 @@ return {
     config = function() require('lspkind').init({ preset = 'codicons' }) end,
   },
   {
-    'OXY2DEV/helpview.nvim',
-    cond = function() return ui_cond('helpview.nvim', ar.ts_extra_enabled) end,
-    lazy = false,
-    init = function()
-      ar.add_to_select_menu(
-        'toggle',
-        { ['Toggle Helpview'] = 'Helpview toggleAll' }
-      )
-    end,
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
-  },
-  {
     'nmac427/guess-indent.nvim',
     cond = function() return ui_cond('guess-indent.nvim') end,
     cmd = { 'GuessIndent' },
-    opts = {},
-  },
-  {
-    'ObserverOfTime/notifications.nvim',
-    cond = false,
-    event = 'VeryLazy',
     opts = {},
   },
   {
@@ -64,30 +46,9 @@ return {
     },
   },
   {
-    'Pocco81/HighStr.nvim',
-    cond = function() return ui_cond('HighStr.nvim') end,
-    cmd = { 'HSHighlight', 'HSRmHighlight', 'HSImport' },
-    opts = {},
-    config = function(_, opts) require('high-str').setup(opts) end,
-  },
-  {
     'koron/nyancat-vim',
     cond = function() return ui_cond('nyancat-vim') end,
     cmd = { 'Nyancat', 'Nyancat2' },
-  },
-  {
-    'HampusHauffman/block.nvim',
-    cond = function() return ui_cond('block.nvim') end,
-    cmd = { 'Block', 'BlockOn', 'BlockOff' },
-    opts = {
-      percent = 0.7,
-      depth = 4,
-      -- colors = {
-      --   "red",
-      --   "green",
-      --   "yellow",
-      -- },
-    },
   },
   {
     'razak17/nvim-strict',
