@@ -1,7 +1,6 @@
-local api, fn = vim.api, vim.fn
-local ui = ar.ui
+local api = vim.api
 local fmt = string.format
-local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
+local minimal = ar.plugins.minimal
 
 _G.early_retirement_enabled = true
 
@@ -13,6 +12,7 @@ end
 
 return {
   {
+    desc = 'Vim plugin that enables surfing through buffers based on viewing history per window ',
     'ton/vim-bufsurf',
     event = 'VeryLazy',
     cond = function() return ar.get_plugin_cond('vim-bufsurf', not minimal) end,
@@ -22,6 +22,7 @@ return {
     },
   },
   {
+    desc = 'Send buffers into early retirement by automatically closing them after x minutes of inactivity.',
     'chrisgrieser/nvim-early-retirement',
     cond = function()
       return ar.get_plugin_cond('nvim-early-retirement', not minimal)
@@ -44,6 +45,7 @@ return {
     },
   },
   {
+    desc = 'Neovim plugin that offers context when cycling buffers in the form of a customizable notification window. ',
     'razak17/cybu.nvim',
     cond = function() return ar.get_plugin_cond('cybu.nvim', not minimal) end,
     event = { 'BufRead', 'BufNewFile' },
@@ -55,11 +57,9 @@ return {
     },
   },
   {
+    desc = 'Neovim plugin for locking a buffer to a window',
     'stevearc/stickybuf.nvim',
-    cond = function()
-      local condition = not minimal and niceties
-      return ar.get_plugin_cond('stickybuf.nvim', condition)
-    end,
+    cond = function() return ar.get_plugin_cond('stickybuf.nvim', not minimal) end,
     cmd = { 'PinBuffer', 'PinBuftype', 'PinFiletype', 'Unpin' },
     config = function()
       require('stickybuf').setup({
