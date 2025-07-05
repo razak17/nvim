@@ -1,5 +1,5 @@
 local ui, highlight = ar.ui, ar.highlight
-local icons, separators = ui.icons, ui.icons.separators
+local icons = ui.icons
 
 local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
@@ -56,37 +56,32 @@ return {
     event = { 'BufReadPost', 'BufNewFile' },
     init = function()
       vim.g.whichkey_add_spec({ '<localleader>s', group = 'Strict' })
+      ar.add_to_select_menu('command_palette', {
+        ['Spaces To Tabs'] = function()
+          require('strict').convert_spaces_to_tabs()
+        end,
+        ['Tabs To Spaces'] = function()
+          require('strict').remove_trailing_empty_lines()
+        end,
+        ['Remove Trailing Empty Lines'] = function()
+          require('strict').remove_trailing_empty_lines()
+        end,
+      })
     end,
     -- stylua: ignore
     keys = {
       { '<localleader>sx', '<cmd>call clearmatches()<CR>', desc = 'strict: clear' },
       { '<localleader>sw', '<cmd>lua require("strict").remove_trailing_whitespace()<CR>', desc = 'strict: remove trailing whitespace' },
-      { '<localleader>sl', '<cmd>lua require("strict").remove_trailing_empty_lines()<CR>', desc = 'strict: remove trailing empty lines' },
-      { '<localleader>st', '<cmd>lua require("strict").convert_spaces_to_tabs()<CR>', desc = 'strict: convert spaces to tabs' },
-      { '<localleader>ss', '<cmd>lua require("strict").convert_tabs_to_spaces()<CR>', desc = 'strict: convert tabs to spaces' },
       { '<localleader>sl', '<cmd>lua require("strict").split_overlong_lines()<CR>', desc = 'strict: split overlong lines' },
     },
     opts = {
       format_on_save = false,
+      -- stylua: ignore
       excluded_filetypes = {
-        'buffalo',
-        'buffer_manager',
-        'fzf',
-        'harpoon',
-        'minifiles',
-        'NeogitPopup',
-        'NeogitStatus',
-        'oil',
-        'TelescopePrompt',
-        'qf',
+        'buffalo', 'buffer_manager', 'fzf', 'harpoon', 'minifiles', 'NeogitPopup',
+        'NeogitStatus', 'oil', 'TelescopePrompt', 'qf',
       },
-      excluded_buftypes = {
-        'help',
-        'nofile',
-        'terminal',
-        'prompt',
-        'quickfix',
-      },
+      excluded_buftypes = { 'help', 'nofile', 'terminal', 'prompt', 'quickfix' },
       deep_nesting = {
         highlight_group = 'Strict',
         depth_limit = 4,
