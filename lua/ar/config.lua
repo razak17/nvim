@@ -374,6 +374,7 @@ local config = {
   debug = { enable = false },
   ---@type ArExplorer
   explorer = { rename = 'snacks', variant = 'snacks' },
+  flatten = { enable = true },
   frecency = { enable = true },
   ---@type ArGx
   gx = { enable = true, variant = 'plugin' },

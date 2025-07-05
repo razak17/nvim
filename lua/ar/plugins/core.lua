@@ -299,13 +299,13 @@ return {
       },
     },
   },
-  --------------------------------------------------------------------------------
-  -- Disabled
-  --------------------------------------------------------------------------------
   {
     'willothy/flatten.nvim',
     lazy = false,
-    cond = false,
+    cond = function()
+      local condition = not minimal and ar_config.flatten.enable
+      return ar.get_plugin_cond('flatten.nvim', condition)
+    end,
     priority = 1001,
     opts = {
       window = { open = 'tab' },
