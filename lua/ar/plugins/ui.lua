@@ -38,12 +38,6 @@ return {
     config = function() require('guess-indent').setup({}) end,
   },
   {
-    'Aasim-A/scrollEOF.nvim',
-    cond = not minimal and false, -- NOTE: stay-centered kinda makes this redundant, Keep for when it is toggled off
-    event = { 'BufRead', 'BufNewFile' },
-    opts = {},
-  },
-  {
     'ObserverOfTime/notifications.nvim',
     cond = false,
     event = 'VeryLazy',
