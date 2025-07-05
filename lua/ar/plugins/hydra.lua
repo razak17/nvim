@@ -110,9 +110,7 @@ return {
       hint = buffer_hint,
       mode = 'n',
       body = '<leader>b',
-      config = base_config({
-        hint = { position = 'top' },
-      }),
+      config = base_config({ hint = { position = 'bottom' } }),
       heads = {
         { 'a', function() bufdelete.all() end, { desc = 'close all' } },
         { 'd', function() bufdelete.delete() end, { desc = 'delete buffer' } },
@@ -257,9 +255,7 @@ return {
         mode = 'n',
         body = '<leader>wf',
         color = 'lime',
-        config = base_config({
-          hint = { position = 'middle' },
-        }),
+        config = base_config({ hint = { position = 'middle' } }),
         heads = {
           { 'k', function() flirt.move('up') end, { desc = 'move up' } },
           { 'j', function() flirt.move('down') end, { desc = 'move down' } },
@@ -277,10 +273,7 @@ return {
         hint = chatgpt_hint,
         mode = { 'n', 'x' },
         body = '<leader>aa',
-        config = base_config({
-          color = 'teal',
-          hint = { position = 'middle' },
-        }),
+        config = base_config({ color = 'teal', hint = { position = 'middle' } }),
         -- stylua: ignore
         heads = {
           { 'a', cmd 'ChatGPTRun add_tests', { desc = 'add tests' } },
