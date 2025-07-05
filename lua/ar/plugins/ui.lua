@@ -385,19 +385,4 @@ return {
       end, { desc = 'Toggles YouAreAnIdiot' })
     end,
   },
-  --------------------------------------------------------------------------------
-  -- Disabled
-  --------------------------------------------------------------------------------
-  {
-    'lukas-reineke/virt-column.nvim',
-    enabled = false,
-    cond = function()
-      return ar.get_plugin_cond('virt-column.nvim', not minimal)
-    end,
-    event = { 'BufRead', 'BufNewFile' },
-    opts = {
-      char = separators.right_thin_block,
-      highlight = 'IndentBlanklineContextChar',
-    },
-  },
 }
