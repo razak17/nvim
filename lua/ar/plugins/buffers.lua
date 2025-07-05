@@ -44,7 +44,7 @@ return {
     cond = function() return ar.get_plugin_cond('cybu.nvim', not minimal) end,
     event = { 'BufRead', 'BufNewFile' },
     opts = {
-      position = { relative_to = 'win', anchor = 'topright' },
+      position = { relative_to = 'editor', anchor = 'topright' },
       style = {
         highlights = { background = 'NormalFloat' },
       },
