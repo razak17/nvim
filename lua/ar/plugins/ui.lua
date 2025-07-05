@@ -104,26 +104,6 @@ return {
     opts = { hlgroup = 'CursorLine' },
   },
   {
-    'razak17/range-highlight.nvim',
-    cond = function() return ui_cond('range-highlight.nvim') end,
-    event = { 'BufRead', 'BufNewFile' },
-    dependencies = { 'winston0410/cmd-parser.nvim' },
-    opts = {},
-  },
-  {
-    'folke/twilight.nvim',
-    cond = function() return ar.get_plugin_cond('twilight.nvim', niceties) end,
-    cmd = 'Twilight',
-    init = function()
-      ar.add_to_select_menu('toggle', { ['Toggle Twilight'] = 'Twilight' })
-    end,
-    opts = {
-      context = 40,
-      dimming = { alpha = 0.45, inactive = true },
-      exclude = { 'alpha', 'git' },
-    },
-  },
-  {
     'tjdevries/sPoNGe-BoB.NvIm',
     cmd = { 'SpOnGeBoBiFy' },
     init = function()
