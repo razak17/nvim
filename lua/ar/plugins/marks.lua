@@ -116,57 +116,6 @@ return {
     },
   },
   {
-    'ThePrimeagen/harpoon',
-    cond = function() return ar.get_plugin_cond('harpoon', not minimal) end,
-    branch = 'harpoon2',
-    -- stylua: ignore
-    keys = function()
-      local keys = {
-        {
-          '<M-;>',
-          function()
-            local harpoon = require('harpoon')
-            harpoon.ui:toggle_quick_menu(harpoon:list())
-          end,
-          desc = 'toggle quick menu',
-        },
-        { '<localleader>ha', function() require('harpoon'):list():append() end, desc = 'harpoon: add' },
-        { '<localleader>hn', function() require('harpoon').list():next() end, desc = 'harpoon: next' },
-        { '<localleader>hp', function() require('harpoon').list():prev() end, desc = 'harpoon: prev' },
-      }
-
-      for i = 1, 5 do
-        table.insert(keys, {
-          '<localleader>h' .. i,
-          function() require('harpoon'):list():select(i) end,
-          desc = 'harpoon to file ' .. i,
-        })
-      end
-      return keys
-    end,
-    opts = {
-      menu = {
-        width = vim.api.nvim_win_get_width(0) - 4,
-      },
-    },
-  },
-  {
-    'otavioschwanck/arrow.nvim',
-    cond = function() return ar.get_plugin_cond('arrow.nvim', false) end,
-    -- stylua: ignore
-    keys = {
-      '\\',
-      { '<M-s>', '<Cmd>lua require("arrow.persist").toggle()<CR>', desc = 'arrow: toggle' },
-      { '<M-n>', '<Cmd>lua require("arrow.persist").next()<CR>', desc = 'arrow: next'},
-      { '<M-p>', '<Cmd>lua require("arrow.persist").previous()<CR>', desc = 'arrow: prev'}
-    },
-    opts = { show_icons = true, leader_key = '\\' },
-    config = function(_, opts)
-      require('arrow').setup(opts)
-      require('arrow.persist').toggle()
-    end,
-  },
-  {
     'cbochs/portal.nvim',
     cond = function() return ar.get_plugin_cond('portal.nvim', not minimal) end,
     -- stylua: ignore
@@ -197,22 +146,5 @@ return {
         return '<C-i>'
       end, { expr = true })
     end,
-  },
-  {
-    'bloznelis/before.nvim',
-    cond = function()
-      local condition = not minimal and niceties
-      return ar.get_plugin_cond('before.nvim', condition)
-    end,
-    event = { 'BufRead', 'BufNewFile' },
-    -- stylua: ignore
-    keys = {
-      { '<localleader>oj', '<Cmd>lua require("before").jump_to_last_edit()<CR>', desc = 'before: jump to last edit' },
-      { '<localleader>ok', '<Cmd>lua require("before").jump_to_next_edit()<CR>', desc = 'before: jump to next edit' },
-      { '<localleader>oq', '<Cmd>lua require("before").show_edits_in_quickfix()<CR>', desc = 'before: show edits in qflist' },
-      { '<localleader>op', '<Cmd>lua require("before").show_edits_in_telescope()<CR>', desc = 'before: show edits in picker' },
-    },
-    opts = {},
-    config = function(_, opts) require('before').setup(opts) end,
   },
 }
