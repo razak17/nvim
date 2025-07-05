@@ -247,49 +247,5 @@ return {
         { 'q', nil, { exit = true, desc = 'Quit' } },
       },
     })
-
-    if not minimal and niceties and ar.is_available('flirt.nvim') then
-      local flirt = require('flirt')
-      Hydra({
-        name = 'Flirt',
-        mode = 'n',
-        body = '<leader>wf',
-        color = 'lime',
-        config = base_config({ hint = { position = 'middle' } }),
-        heads = {
-          { 'k', function() flirt.move('up') end, { desc = 'move up' } },
-          { 'j', function() flirt.move('down') end, { desc = 'move down' } },
-          { 'h', function() flirt.move('left') end, { desc = 'move left' } },
-          { 'l', function() flirt.move('right') end, { desc = 'move right' } },
-          { '<Esc>', nil, { exit = true, desc = 'Quit' } },
-          { 'q', nil, { exit = true, desc = 'Quit' } },
-        },
-      })
-    end
-
-    if ar.is_available('ChatGPT.nvim') then
-      Hydra({
-        name = 'ChatGPT',
-        hint = chatgpt_hint,
-        mode = { 'n', 'x' },
-        body = '<leader>aa',
-        config = base_config({ color = 'teal', hint = { position = 'middle' } }),
-        -- stylua: ignore
-        heads = {
-          { 'a', cmd 'ChatGPTRun add_tests', { desc = 'add tests' } },
-          { 'c', cmd 'ChatGPTRun complete_code', { desc = 'complete code' } },
-          { 'd', cmd 'ChatGPTRun docstring', { desc = 'docstring' } },
-          { 'e', cmd 'ChatGPTRun explain_code', { desc = 'explain code' } },
-          { 'f', cmd 'ChatGPTRun fix_bugs', { desc = 'fix bugs' } },
-          { 'g', cmd 'ChatGPTRun grammar_correction', { desc = 'grammar correction' } },
-          { 'k', cmd 'ChatGPTRun keywords', { desc = 'keywords' } },
-          { 'o', cmd 'ChatGPTRun optimize_code', { desc = 'optimize code' } },
-          { 'r', cmd 'ChatGPTRun code_readability_analysis', { desc = 'code readability analysis' } },
-          { 't', cmd 'ChatGPTRun translate', { desc = 'translate' } },
-          { 'q', nil, { exit = true, nowait = true } },
-          { '<Esc>', nil, { exit = true, nowait = true } },
-        },
-      })
-    end
   end,
 }

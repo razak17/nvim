@@ -101,20 +101,4 @@ return {
       { '<leader>Am', '<Cmd>CellularAutomaton make_it_rain<CR>', desc = 'automaton: make it rain', },
     },
   },
-  {
-    'razak17/flirt.nvim',
-    enabled = false,
-    cond = not minimal and niceties and ar_config.animation.enable,
-    event = 'VeryLazy',
-    opts = { speed = 100 },
-  },
-  {
-    'sphamba/smear-cursor.nvim',
-    event = 'VeryLazy',
-    cond = not minimal and vim.g.neovide == nil and false,
-    opts = {
-      hide_target_hack = true,
-      cursor_color = 'none',
-    },
-  },
 }
