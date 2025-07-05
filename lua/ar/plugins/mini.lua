@@ -164,7 +164,7 @@ return {
     'echasnovski/mini.bracketed',
     cond = function() return ar.get_plugin_cond('mini.bracketed', not minimal) end,
     event = { 'BufRead', 'BufNewFile' },
-    opts = {},
+    opts = { buffer = { suffix = '' } },
   },
   {
     'echasnovski/mini.trailspace',

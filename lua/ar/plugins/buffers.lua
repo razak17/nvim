@@ -14,8 +14,12 @@ end
 return {
   {
     'ton/vim-bufsurf',
+    event = 'VeryLazy',
     cond = function() return ar.get_plugin_cond('vim-bufsurf', not minimal) end,
-    keys = { '[b', ']b' },
+    keys = {
+      { '[b', '<Plug>(buf-surf-back)', desc = 'vim-bufsurf: back' },
+      { ']b', '<Plug>(buf-surf-forward)', desc = 'vim-bufsurf: forward' },
+    },
   },
   {
     'chrisgrieser/nvim-early-retirement',
