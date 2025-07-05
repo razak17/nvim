@@ -266,17 +266,4 @@ return {
       line_blank_line_below = false, -- insert a blank line below the line
     },
   },
-  {
-    'gregorias/toggle.nvim',
-    cond = function() return ui_cond('toggle.nvim') end,
-    event = { 'VeryLazy' },
-    opts = {
-      keymaps = {
-        toggle_option_prefix = 'yp',
-        previous_option_prefix = '[o',
-        next_option_prefix = ']o',
-        status_dashboard = 'yos',
-      },
-    },
-  },
 }
