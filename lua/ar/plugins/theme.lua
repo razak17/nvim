@@ -4,12 +4,15 @@ local function is_colorscheme(name) return ar_config.colorscheme == name end
 ---@param names table
 ---@return boolean
 local function get_cond(names)
-  return not ar.plugins.minimal and vim.tbl_contains(names, ar_config.colorscheme)
+  if ar.plugins.niceties then return true end
+  return not ar.plugins.minimal
+    and vim.tbl_contains(names, ar_config.colorscheme)
 end
 
 ---@param names table
 ---@return number
 local function get_priority(names)
+  if ar.plugins.niceties then return 1000 end
   for _, theme in ipairs(names) do
     if is_colorscheme(theme) then return 1000 end
   end
@@ -19,6 +22,7 @@ end
 ---@param names table
 ---@return table
 local function get_event(names)
+  if ar.plugins.niceties then return { 'UiEnter' } end
   for _, theme in ipairs(names) do
     if is_colorscheme(theme) then return { 'UiEnter' } end
   end
