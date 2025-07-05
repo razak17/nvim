@@ -447,21 +447,14 @@ return {
     },
   },
   {
+    desc = 'A Neovim plugin that provides an explanation for regular expressions.',
     'tomiis4/Hypersonic.nvim',
     cond = function()
       local condition = not minimal and niceties
       return ar.get_plugin_cond('Hypersonic.nvim', condition)
     end,
     event = 'CmdlineEnter',
-    cmd = 'Hypersonic',
-    keys = {
-      {
-        mode = 'v',
-        '<leader><localleader>rh',
-        '<Cmd>HypersonichCR>',
-        desc = 'hypersonic: toggle',
-      },
-    },
+    cmd = { 'Hypersonic' },
     opts = { border = border },
   },
   -- }}}
