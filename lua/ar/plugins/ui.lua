@@ -46,11 +46,6 @@ return {
     },
   },
   {
-    'koron/nyancat-vim',
-    cond = function() return ui_cond('nyancat-vim') end,
-    cmd = { 'Nyancat', 'Nyancat2' },
-  },
-  {
     'razak17/nvim-strict',
     cond = function() return ui_cond('nvim-strict') end,
     event = { 'BufReadPost', 'BufNewFile' },
@@ -102,17 +97,6 @@ return {
     cond = function() return ui_cond('local-highlight.nvim', not ar.lsp.enable) end,
     event = { 'BufRead', 'BufNewFile' },
     opts = { hlgroup = 'CursorLine' },
-  },
-  {
-    'tjdevries/sPoNGe-BoB.NvIm',
-    cmd = { 'SpOnGeBoBiFy' },
-    init = function()
-      ar.add_to_select_menu('toggle', { ['Toggle SpOnGeBoB'] = 'SpOnGeBoBiFy' })
-    end,
-    -- stylua: ignore
-    keys = {
-      { '<localleader>ab', '<cmd>SpOnGeBoBiFy<CR>', mode = { 'v' }, desc = 'SpOnGeBoB: SpOnGeBoBiFy', },
-    },
   },
   {
     'kevinhwang91/nvim-hlslens',
@@ -294,25 +278,5 @@ return {
         status_dashboard = 'yos',
       },
     },
-  },
-  {
-    'GitMarkedDan/you-are-an-idiot.nvim',
-    cond = function()
-      return ar.get_plugin_cond('you-are-an-idiot.nvim', not minimal)
-    end,
-    cmd = { 'ToggleIdiot' },
-    init = function()
-      ar.add_to_select_menu('toggle', { ['Toggle Idiot'] = 'ToggleIdiot' })
-    end,
-    config = function()
-      local idiot = require('you-are-an-idiot')
-      vim.api.nvim_create_user_command('ToggleIdiot', function()
-        if idiot.is_running() then
-          idiot.abort()
-        else
-          idiot.run()
-        end
-      end, { desc = 'Toggles YouAreAnIdiot' })
-    end,
   },
 }
