@@ -559,8 +559,8 @@ return {
         table.insert(mappings, { '<C-p>', find_files, desc = 'find files' })
       end
       if is_telescope then
+        -- stylua: ignore
         local telescope_mappings = {
-          -- stylua: ignore start
           { '<M-space>', b('buffers'), desc = 'buffers' },
           { '<leader>f,', file_browser, desc = 'file browser (root)' },
           { '<leader>f.', function() file_browser({ path = '%:p:h', select_buffer = 'true' }) end, desc = 'file browser (curr dir)', },
@@ -617,19 +617,28 @@ return {
           { '<leader>fK', b('colorscheme'), desc = 'colorscheme' },
           { '<leader>fY', b('spell_suggest'), desc = 'spell suggest' },
           { '<leader>fy', '<Cmd>Telescope telescope-yaml<CR>', desc = 'yaml' },
-          -- LSP
-          { '<leader>ld', b('lsp_document_symbols'), desc = 'telescope: document symbols', },
-          { '<leader>lI', b('lsp_implementations'), desc = 'telescope: search implementation', },
-          { '<leader>lr', b('lsp_references'), desc = 'telescope: show references', },
-          { '<leader>ls', b('lsp_dynamic_workspace_symbols'), desc = 'telescope: workspace symbols', },
-          { '<leader>le', b('diagnostics', { bufnr = 0 }), desc = 'telescope: document diagnostics', },
-          { '<leader>lw', b('diagnostics'), desc = 'telescope: workspace diagnostics', },
           { '<localleader>ro', monorepo, desc = 'monorepo' },
           { '<leader>fL', software_licenses, desc = 'software licenses' },
           { '<leader>fX', spell_errors, desc = 'spell errors' },
-          -- stylua: ignore end
         }
-
+        -- stylua: ignore
+        if ar.lsp.enable then
+          ar.list_insert(telescope_mappings, {
+            { '<leader>le', b('diagnostics', { bufnr = 0 }), desc = 'telescope: buffer diagnostics', },
+            { '<leader>lI', b('lsp_implementations'), desc = 'telescope: search implementation', },
+            { '<leader>lr', b('lsp_references'), desc = 'telescope: show references', },
+            { '<leader>lw', b('diagnostics'), desc = 'telescope: workspace diagnostics', },
+            { '<leader>ly', b('lsp_type_definitions'), desc = 'telescope: type definitions' },
+          })
+          -- stylua: ignore
+          if ar_config.lsp.symbols.enable and ar_config.lsp.symbols.variant == 'picker' then
+            ar.list_insert(telescope_mappings, {
+              { '<leader>lsd', b('lsp_document_symbols'), desc = 'telescope: document symbols', },
+              { '<leader>lsl', b('lsp_dynamic_workspace_symbols'), desc = 'telescope: live workspace symbols' },
+              { '<leader>lsw', b('lsp_workspace_symbols'), desc = 'telescope: workspace symbols', },
+            })
+          end
+        end
         vim
           .iter(telescope_mappings)
           :each(function(m) table.insert(mappings, m) end)
