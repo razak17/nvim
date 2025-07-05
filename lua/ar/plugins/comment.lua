@@ -18,14 +18,6 @@ return {
     opts = {},
   },
   {
-    'JoosepAlviste/nvim-ts-context-commentstring',
-    opts = { enable_autocmd = false },
-    config = function(_, opts)
-      vim.g.skip_ts_context_commentstring_module = true
-      require('ts_context_commentstring').setup(opts)
-    end,
-  },
-  {
     's1n7ax/nvim-comment-frame',
     cond = not minimal,
     keys = {
