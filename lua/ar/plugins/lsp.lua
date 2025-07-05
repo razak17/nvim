@@ -599,6 +599,12 @@ return {
       ui_select = { enable = false }, -- vim.ui.select() wrapper
     },
   },
+  {
+    'kosayoda/nvim-lightbulb',
+    cond = ar.lsp.enable,
+    event = 'LspAttach',
+    opts = { autocmd = { enabled = true } },
+  },
   -- }}}
   ------------------------------------------------------------------------------
   -- Disabled {{{1
@@ -693,26 +699,6 @@ return {
         '<localleader>lp',
         '<cmd>Lspsaga peek_type_definition<cr>',
         desc = 'lspsaga: type definition',
-      },
-    },
-  },
-  {
-    'kosayoda/nvim-lightbulb',
-    enabled = false,
-    cond = ar.lsp.enable and false,
-    event = 'LspAttach',
-    opts = {
-      autocmd = { enabled = true },
-      sign = { enabled = false },
-      virtual_text = {
-        enabled = true,
-        text = icons.misc.lightbulb,
-        hl_mode = 'blend',
-      },
-      float = {
-        text = ui.icons.misc.lightbulb,
-        enabled = false,
-        win_opts = { border = 'none' },
       },
     },
   },
