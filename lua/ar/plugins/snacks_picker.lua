@@ -213,76 +213,70 @@ return {
       table.insert(keys, { '<M-space>', buffers, desc = 'snacks: buffers' })
     end
     if ar_config.picker.variant == 'snacks' then
+      -- stylua: ignore
       local picker_mappings = {
-          -- stylua: ignore start
-          { '<leader>fc', p('files', { cwd = fn.stdpath('config') }), desc = 'find config file' },
-          { '<leader>ff', p('files'), desc = 'find files' },
-          { '<leader>fgb', p('git_branches'), desc = 'find git branches' },
-          { '<leader>fgc', p('git_log'), desc = 'find git commits' },
-          { '<leader>fgd', p('git_diff'), desc = 'git diff (hunks)' },
-          { '<leader>fgf', p('git_log_file'), desc = 'git log file' },
-          { '<leader>fgF', p('git_grep'), desc = 'git grep' },
-          { '<leader>fgg', p('git_files'), desc = 'find git files' },
-          { '<leader>fgl', p('git_log'), desc = 'git log' },
-          { '<leader>fgL', p('git_log_line'), desc = 'git log line' },
-          { '<leader>fgs', p('git_status'), desc = 'git status' },
-          { '<leader>fgS', p('git_stash'), desc = 'git stash' },
-          { '<leader>fh', p('help'), desc = 'help pages' },
-          { '<leader>fk', p('keymaps'), desc = 'keymaps' },
-          { '<leader>fK', p('colorschemes'), desc = 'colorschemes' },
-          { '<leader>fla', lazy, desc = 'all plugins' },
-          { '<leader>fL', p('lines'), desc = 'buffer lines' },
-          { '<leader>fm', p('man'), desc = 'man pages' },
-          { '<leader>fn', p('notifications'), desc = 'notification history' },
-          { '<leader>fo', p('recent'), desc = 'recent' },
-          { '<leader>fO', notes, desc = 'notes' },
-          { '<leader>fp', p('projects'), desc = 'projects' },
-          { '<leader>fP', p('lazy'), desc = 'search for plugin spec' },
-          { '<leader>fr', p('resume'), desc = 'resume' },
-          { '<leader>fs', p('grep'), desc = 'grep' },
-          { '<leader>fS', p('grep_buffers'), desc = 'grep open buffers' },
-          { '<leader>fql', p('loclist'), desc = 'location list' },
-          { '<leader>fqq', p('qflist'), desc = 'quickfix List' },
-          { '<leader>fu', p('undo'), desc = 'undo history' },
-          { '<leader>fva', p('autocmds'), desc = 'autocmds' },
-          { '<leader>fvc', p('commands'), desc = 'commands' },
-          { '<leader>fvC', p('command_history'), desc = 'command history' },
-          { '<leader>fvh', p('highlights'), desc = 'highlights' },
-          { '<leader>fvi', p('icons'), desc = 'icons' },
-          { '<leader>fvj', p('jumps'), desc = 'jumps' },
-          { '<leader>fvm', p('marks'), desc = 'marks' },
-          { '<leader>fvr', p('registers'), desc = 'registers' },
-          { '<leader>fvs', p('search_history'), desc = 'search history' },
-          { '<leader>fw', '<Cmd>lua Snacks.picker.grep_word()<CR>', desc = 'visual selection or word', mode = { 'n', 'x' } },
-          -- lsp
-          { '<leader>le', p('diagnostics_buffer'), desc = 'snacks: buffer diagnostics' },
-          { '<leader>lw', p('diagnostics'), desc = 'snacks: diagnostics' },
-          { '<leader>lr', p('lsp_references'), nowait = true, desc = 'snacks: references' },
-          { '<leader>lI', p('lsp_implementations'), desc = 'snacks: goto implementation' },
-          { '<leader>ly', p('lsp_type_definitions'), desc = 'snacks: goto t[y]pe definition' },
-          -- explorer
-          { "<leader>fe", function() Snacks.explorer() end, desc = "explorer" },
-        -- stylua: ignore end
+        { '<leader>fc', p('files', { cwd = fn.stdpath('config') }), desc = 'find config file' },
+        { '<leader>ff', p('files'), desc = 'find files' },
+        { '<leader>fgb', p('git_branches'), desc = 'find git branches' },
+        { '<leader>fgc', p('git_log'), desc = 'find git commits' },
+        { '<leader>fgd', p('git_diff'), desc = 'git diff (hunks)' },
+        { '<leader>fgf', p('git_log_file'), desc = 'git log file' },
+        { '<leader>fgF', p('git_grep'), desc = 'git grep' },
+        { '<leader>fgg', p('git_files'), desc = 'find git files' },
+        { '<leader>fgl', p('git_log'), desc = 'git log' },
+        { '<leader>fgL', p('git_log_line'), desc = 'git log line' },
+        { '<leader>fgs', p('git_status'), desc = 'git status' },
+        { '<leader>fgS', p('git_stash'), desc = 'git stash' },
+        { '<leader>fh', p('help'), desc = 'help pages' },
+        { '<leader>fk', p('keymaps'), desc = 'keymaps' },
+        { '<leader>fK', p('colorschemes'), desc = 'colorschemes' },
+        { '<leader>fla', lazy, desc = 'all plugins' },
+        { '<leader>fL', p('lines'), desc = 'buffer lines' },
+        { '<leader>fm', p('man'), desc = 'man pages' },
+        { '<leader>fn', p('notifications'), desc = 'notification history' },
+        { '<leader>fo', p('recent'), desc = 'recent' },
+        { '<leader>fO', notes, desc = 'notes' },
+        { '<leader>fp', p('projects'), desc = 'projects' },
+        { '<leader>fP', p('lazy'), desc = 'search for plugin spec' },
+        { '<leader>fr', p('resume'), desc = 'resume' },
+        { '<leader>fs', p('grep'), desc = 'grep' },
+        { '<leader>fS', p('grep_buffers'), desc = 'grep open buffers' },
+        { '<leader>fql', p('loclist'), desc = 'location list' },
+        { '<leader>fqq', p('qflist'), desc = 'quickfix List' },
+        { '<leader>fu', p('undo'), desc = 'undo history' },
+        { '<leader>fva', p('autocmds'), desc = 'autocmds' },
+        { '<leader>fvc', p('commands'), desc = 'commands' },
+        { '<leader>fvC', p('command_history'), desc = 'command history' },
+        { '<leader>fvh', p('highlights'), desc = 'highlights' },
+        { '<leader>fvi', p('icons'), desc = 'icons' },
+        { '<leader>fvj', p('jumps'), desc = 'jumps' },
+        { '<leader>fvm', p('marks'), desc = 'marks' },
+        { '<leader>fvr', p('registers'), desc = 'registers' },
+        { '<leader>fvs', p('search_history'), desc = 'search history' },
+        { '<leader>fw', '<Cmd>lua Snacks.picker.grep_word()<CR>', desc = 'visual selection or word', mode = { 'n', 'x' } },
+        -- explorer
+        { "<leader>fe", function() Snacks.explorer() end, desc = "explorer" },
       }
+      -- stylua: ignore
       if ar_config.explorer.variant == 'snacks' then
-        table.insert(picker_mappings, {
-          '<C-n>',
-          function() Snacks.explorer() end,
-          desc = 'explorer',
-        })
+        table.insert(picker_mappings, { '<C-n>', function() Snacks.explorer() end, desc = 'explorer' })
       end
-      if
-        ar_config.lsp.symbols.enable
-        and ar_config.lsp.symbols.variant == 'picker'
-      then
-        -- stylua: ignore
-        table.insert(picker_mappings, {
-          '<leader>lsd', p('lsp_symbols'), desc = 'snacks: lsp symbols'
+      -- stylua: ignore
+      if ar.lsp.enable then
+        ar.list_insert(picker_mappings, {
+          { '<leader>le', p('diagnostics_buffer'), desc = 'snacks: buffer diagnostics' },
+          { '<leader>lI', p('lsp_implementations'), desc = 'snacks: goto implementation' },
+          { '<leader>lr', p('lsp_references'), nowait = true, desc = 'snacks: references' },
+          { '<leader>lw', p('diagnostics'), desc = 'snacks: workspace diagnostics' },
+          { '<leader>ly', p('lsp_type_definitions'), desc = 'snacks: goto t[y]pe definition' },
         })
         -- stylua: ignore
-        table.insert(picker_mappings, {
-          '<leader>lsw', p('lsp_workspace_symbols'), desc = 'snacks: lsp workspace symbols'
-        })
+        if ar_config.lsp.symbols.enable and ar_config.lsp.symbols.variant == 'picker' then
+            ar.list_insert(picker_mappings, {
+              { '<leader>lsd', p('lsp_symbols'), desc = 'snacks: lsp symbols' },
+              { '<leader>lsw', p('lsp_workspace_symbols'), desc = 'snacks: lsp workspace symbols' },
+            })
+        end
       end
       vim.iter(picker_mappings):each(function(m) table.insert(keys, m) end)
     end

@@ -40,6 +40,7 @@ return {
           { '<leader>h', group = 'Gitsigns' },
           { '<leader>i', group = 'Toggler/Swap' },
           { '<leader>l', group = 'LSP' },
+          { '<leader>la', group = 'Code Actions' },
           { '<leader>ls', group = 'Symbols' },
           { '<leader>m', group = 'Marks' },
           { '<leader>n', group = 'Notify' },

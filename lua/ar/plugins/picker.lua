@@ -148,8 +148,8 @@ return {
         table.insert(mappings, { '<C-p>', find_files, desc = 'find files' })
       end
       if ar_config.picker.variant == 'fzf-lua' then
+        -- stylua: ignore
         local fzf_mappings = {
-        -- stylua: ignore start
           { '<M-space>', fzf_lua.buffers, desc = 'buffers' },
           { '<leader>f?', fzf_lua.help_tags, desc = 'help' },
           { '<leader>fa', '<Cmd>FzfLua<CR>', desc = 'builtins' },
@@ -168,27 +168,27 @@ return {
           { '<leader>fgb', fzf_lua.git_branches, desc = 'branches' },
           { '<leader>fgB', fzf_lua.git_bcommits, desc = 'buffer commits' },
           { '<leader>fgc', fzf_lua.git_commits, desc = 'commits' },
-          { '<leader>ld', fzf_lua.lsp_document_symbols, desc = 'document symbols' },
-          { '<leader>lI', fzf_lua.lsp_implementations, desc = 'search implementation' },
-          { '<leader>lr', fzf_lua.lsp_references, desc = 'show references' },
-          { '<leader>lsl', fzf_lua.lsp_live_workspace_symbols, desc = 'live workspace symbols' },
           { '<leader>fc', function() find_files(fn.stdpath('config')) end, desc = 'nvim config' },
           { '<leader>fla', lazy, desc = 'all plugins' },
           { '<leader>fO', notes, desc = 'notes' },
-          -- stylua: ignore end
         }
-        if
-          ar_config.lsp.symbols.enable
-          and ar_config.lsp.symbols.variant == 'picker'
-        then
-          -- stylua: ignore
-          table.insert(fzf_mappings, {
-            '<leader>lsd', fzf_lua.diagnostics_document, desc = 'document diagnostics'
+        -- stylua: ignore
+        if ar.lsp.enable then
+          ar.list_insert(fzf_mappings, {
+            { '<leader>le', fzf_lua.diagnostics_document, desc = 'buffer diagnostics' },
+            { '<leader>lI', fzf_lua.lsp_implementations, desc = 'search implementation' },
+            { '<leader>lr', fzf_lua.lsp_references, desc = 'show references' },
+            { '<leader>lw', fzf_lua.diagnostics_workspace, desc = 'workspace diagnostics' },
+            { '<leader>ly', fzf_lua.lsp_typedefs, desc = 'type definitions' },
           })
           -- stylua: ignore
-          table.insert(fzf_mappings, {
-            '<leader>lsw', fzf_lua.diagnostics_workspace, desc = 'workspace diagnostics'
-          })
+          if ar_config.lsp.symbols.enable and ar_config.lsp.symbols.variant == 'picker' then
+            ar.list_insert(fzf_mappings, {
+              { '<leader>lsd', fzf_lua.lsp_document_symbols, desc = 'document symbols' },
+              { '<leader>lsl', fzf_lua.lsp_live_workspace_symbols, desc = 'live workspace symbols' },
+              { '<leader>lsw', fzf_lua.lsp_workspace_symbols, desc = 'workspace symbols' },
+            })
+          end
         end
         vim.iter(fzf_mappings):each(function(m) table.insert(mappings, m) end)
       end

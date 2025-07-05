@@ -148,8 +148,8 @@ return {
       table.insert(mappings, { '<C-p>', find_files, desc = 'open' })
     end
     if ar_config.picker.variant == 'mini.pick' then
+      -- stylua: ignore
       local picker_mappings = {
-        -- stylua: ignore start
         { '<M-space>', b('buffers'), desc = 'buffers' },
         { '<leader>fc', config, desc = 'config' },
         { '<leader>ff', find_files, desc = 'files' },
@@ -175,28 +175,26 @@ return {
         { '<leader>fvt', extra('treesitter'), desc = 'treesitter' },
         { '<leader>fw', b('grep'), desc = 'grep' },
         { '<leader>fs', b('grep_live'), desc = 'live grep' },
-        { '<leader>fla', lazy, desc = 'plugins' },
-        -- lsp
-        { '<leader>le', extra('diagnostic'), desc = 'mini.pick: diagnostics' },
-        { '<leader>lr', lsp('references'), desc = 'mini.pick: references' },
-        { '<leader>lI', lsp('implementation'), desc = 'mini.pick: implementation' },
-        { '<leader>ly', lsp('type_definition'), desc = 'mini.pick: type definition' },
+        { '<leader>fla', lazy, desc = 'all plugins' },
         -- explorer
         { '<leader>fe', extra('explorer'), desc = 'explorer' },
-        -- stylua: ignore end
       }
-      if
-        ar_config.lsp.symbols.enable
-        and ar_config.lsp.symbols.variant == 'picker'
-      then
-        -- stylua: ignore
-        table.insert(picker_mappings, {
-          '<leader>lsd', lsp('document_symbol'), desc = 'mini.pick: document symbols'
+      -- stylua: ignore
+      if ar.lsp.enable then
+        ar.list_insert(picker_mappings, {
+          { '<leader>le', extra('diagnostic', {}, { scope = 'current' }), desc = 'mini.pick: buffer diagnostics' },
+          { '<leader>lI', lsp('implementation'), desc = 'mini.pick: implementation' },
+          { '<leader>lr', lsp('references'), desc = 'mini.pick: references' },
+          { '<leader>lw', extra('diagnostic'), desc = 'telescope: workspace diagnostics', },
+          { '<leader>ly', lsp('type_definition'), desc = 'mini.pick: type definitions' },
         })
         -- stylua: ignore
-        table.insert(picker_mappings, {
-          '<leader>lsw', lsp('workspace_symbol'), desc = 'mini.pick: workspace symbols'
-        })
+        if ar_config.lsp.symbols.enable and ar_config.lsp.symbols.variant == 'picker' then
+          ar.list_insert(picker_mappings {
+            { '<leader>lsd', lsp('document_symbol'), desc = 'mini.pick: document symbols' },
+            { '<leader>lsw', lsp('workspace_symbol'), desc = 'mini.pick: workspace symbols' },
+          })
+        end
       end
       vim.iter(picker_mappings):each(function(m) table.insert(mappings, m) end)
     end

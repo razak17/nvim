@@ -1095,6 +1095,14 @@ function ar.p_table(map)
   })
 end
 
+function ar.list_insert(list, tbl)
+  if not list or not tbl then return end
+  if type(list) ~= 'table' or type(tbl) ~= 'table' then return end
+  for _, v in pairs(tbl) do
+    if not vim.tbl_contains(list, v) then table.insert(list, v) end
+  end
+end
+
 --- source: https://github.com/tjdevries/lazy-require.nvim
 
 --- Require on index.
