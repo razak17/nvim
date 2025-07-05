@@ -15,28 +15,4 @@ return {
       skip_filetypes = { 'FloatermSidebar', 'VoltWindow' },
     },
   },
-  {
-    'rlychrisg/keepcursor.nvim',
-    cond = not minimal,
-    cmd = {
-      'ToggleCursorTop',
-      'ToggleCursorBot',
-      'ToggleCursorMid',
-      'ToggleCursorRight',
-      'ToggleCursorLeft',
-    },
-    init = function()
-      ar.add_to_select_menu('toggle', {
-        ['Toggle Cursor Top'] = 'ToggleCursorTop',
-        ['Toggle Cursor Bottom'] = 'ToggleCursorBot 2',
-        ['Toggle Cursor Middle'] = 'ToggleCursorMid',
-        ['Toggle Cursor Right'] = 'ToggleCursorRight 30',
-        ['Toggle Cursor Left'] = 'ToggleCursorLeft',
-      })
-    end,
-    opts = {
-      enabled_on_start_v = 'none',
-      enabled_on_start_h = 'none',
-    },
-  },
 }
