@@ -408,43 +408,4 @@ return {
       winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
     },
   },
-  --------------------------------------------------------------------------------
-  -- Disabled
-  --------------------------------------------------------------------------------
-  {
-    'razak17/backseat.nvim',
-    cond = not minimal and ar.ai.enable and models.copilot and false,
-    cmd = { 'Backseat', 'BackseatAsk', 'BackseatClear', 'BackseatClearLine' },
-    opts = {
-      highlight = { icon = '', group = 'DiagnosticVirtualTextInfo' },
-      popup_type = 'popup', -- | 'popup' | 'horizontal' | 'vertical',
-      winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
-    },
-  },
-  {
-    'moozd/aidoc.nvim',
-    cond = not minimal and ar.ai.enable and false,
-    keys = {
-      {
-        mode = 'x',
-        '<leader>ad',
-        '<cmd>lua require("aidoc.api").generate({width = 65})<CR>',
-        desc = 'aidoc: generate',
-      },
-    },
-    opts = { keymap = '' },
-  },
-  {
-    'David-Kunz/gen.nvim',
-    enabled = false,
-    cond = not minimal and ar.ai.enable and false,
-    cmd = { 'Gen' },
-  },
-  {
-    'napisani/context-nvim',
-    cond = not minimal and ar.ai.enable and false,
-    cmd = { 'ContextNvim' },
-    opts = {},
-    config = function(_, opts) require('context_nvim').setup(opts) end,
-  },
 }
