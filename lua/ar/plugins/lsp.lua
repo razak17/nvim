@@ -261,20 +261,9 @@ return {
     opts = {},
   },
   {
-    'oskarrrrrrr/symbols.nvim',
-    cond = not minimal,
-    cmd = { 'Symbols', 'SymbolsClose' },
-    config = function()
-      local r = require('symbols.recipes')
-      require('symbols').setup(r.DefaultFilters, r.AsciiSymbols, {
-        sidebar = { open_direction = 'right' },
-      })
-    end,
-  },
-  {
     'stevearc/aerial.nvim',
     cmd = { 'AerialToggle' },
-    cond = not minimal and ar.ts_extra_enabled and false,
+    cond = not minimal and ar.ts_extra_enabled,
     init = function()
       ar.add_to_select_menu('toggle', { ['Toggle Aerial'] = 'AerialToggle' })
     end,
