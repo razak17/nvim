@@ -751,21 +751,6 @@ return {
     },
   },
   {
-    'roobert/action-hints.nvim',
-    enabled = false,
-    cond = ar.lsp.enable and false,
-    event = 'LspAttach',
-    config = function()
-      require('action-hints').setup({
-        template = {
-          definition = { text = ' ⊛', color = '#add8e6' },
-          references = { text = ' ↱%s', color = '#ff6666' },
-        },
-        use_virtual_text = true,
-      })
-    end,
-  },
-  {
     'aznhe21/actions-preview.nvim',
     enabled = false,
     cond = ar.lsp.enable and ar.plugins.niceties,
