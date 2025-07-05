@@ -2,6 +2,8 @@ local enabled = ar_config.plugin.custom.baredot.enable
 
 if not ar or ar.none or not enabled then return end
 
+-- Ref: https://github.com/ejrichards/baredot.nvim
+
 ar.baredot = {
   git_work_tree = '~',
   git_dir = '~/.dots/dotfiles',
