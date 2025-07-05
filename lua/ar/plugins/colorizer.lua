@@ -19,23 +19,6 @@ return {
     end,
   },
   {
-    'brenoprata10/nvim-highlight-colors',
-    cond = not minimal and false,
-    event = { 'LspAttach' },
-    cmd = { 'HighlightColors' },
-    init = function()
-      ar.add_to_select_menu(
-        'toggle',
-        { ['Toggle Colors'] = 'HighlightColors Toggle' }
-      )
-    end,
-    opts = {
-      render = 'virtual',
-      enable_tailwind = true,
-      virtual_symbol = ar.ui.icons.misc.block_alt,
-    },
-  },
-  {
     'uga-rosa/ccc.nvim',
     cond = function() return ar.get_plugin_cond('ccc.nvim', not minimal) end,
     cmd = { 'CccHighlighterToggle', 'CccHighlighterEnable', 'CccPick' },
