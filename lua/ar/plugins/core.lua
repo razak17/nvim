@@ -302,24 +302,7 @@ return {
   --------------------------------------------------------------------------------
   -- Disabled
   --------------------------------------------------------------------------------
-  -- { 'lewis6991/fileline.nvim', lazy = false },
-  -- { 'axlebedev/vim-footprints', lazy = false },
-  { 'jghauser/mkdir.nvim', enabled = false, lazy = false },
-  { 'gcanoxl/cloc.nvim', cond = false, opts = {} },
-  {
-    'romainl/vim-cool',
-    cond = false,
-    event = 'BufReadPre',
-    config = function() vim.g.CoolTotalMatches = 1 end,
-  },
-  {
-    'ryoppippi/nvim-reset',
-    cond = false,
-    opts = {
-      create_plugin_keymap = false,
-      ignore_maps = {},
-    },
-  },
+  { 'axlebedev/vim-footprints', lazy = false },
   {
     'willothy/flatten.nvim',
     lazy = false,
@@ -348,39 +331,6 @@ return {
         end
       end,
     },
-  },
-  {
-    'pogyomo/submode.nvim',
-    cond = false,
-    event = 'VeryLazy',
-    config = function()
-      local submode = require('submode')
-
-      submode.create('WinMove', {
-        mode = 'n',
-        enter = '<C-w>',
-        leave = { 'q', '<ESC>' },
-        default = function(register)
-          register('h', '<C-w>h')
-          register('j', '<C-w>j')
-          register('k', '<C-w>k')
-          register('l', '<C-w>l')
-        end,
-      })
-
-      submode.create('LspOperator', {
-        mode = 'n',
-        enter = '<Space>lo',
-        leave = { 'q', '<ESC>' },
-        default = function(register)
-          register('d', vim.lsp.buf.definition)
-          register('D', vim.lsp.buf.declaration)
-          register('H', vim.lsp.buf.hover)
-          register('i', vim.lsp.buf.implementation)
-          register('r', vim.lsp.buf.references)
-        end,
-      })
-    end,
   },
   -- }}}
 }
