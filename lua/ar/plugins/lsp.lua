@@ -2,12 +2,8 @@ local fn = vim.fn
 local cwd = fn.getcwd()
 local fmt = string.format
 local ui, highlight = ar.ui, ar.highlight
-local icons, codicons = ar.ui.icons, ar.ui.codicons
 local border = ui.current.border
-local lsp_icons = codicons.lsp
-local detour = ar.reqidx('detour')
-local features = ar.reqidx('detour.features')
-local minimal = ar.plugins.minimal
+local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 local lsp_override = ar_config.lsp.override
 local virtual_lines_variant = ar_config.lsp.virtual_lines.variant
 
@@ -246,18 +242,9 @@ return {
     },
   },
   {
-    'cseickel/diagnostic-window.nvim',
-    cond = ar.lsp.enable and ar.plugins.niceties,
-    event = 'LspAttach',
-    cmd = { 'DiagWindowShow' },
-    keys = {
-      { 'gL', '<Cmd>DiagWindowShow<CR>', desc = 'diagnostic window: show' },
-    },
-    dependencies = { 'MunifTanjim/nui.nvim' },
-  },
-  {
+    desc = 'LSP diagnostics in virtual text at the top right of your screen',
     'dgagn/diagflow.nvim',
-    cond = ar.lsp.enable and ar.plugins.niceties,
+    cond = ar.lsp.enable and niceties,
     event = 'LspAttach',
     opts = {
       format = function(diagnostic)
@@ -562,186 +549,10 @@ return {
       },
     },
   },
-  --------------------------------------------------------------------------------
-  -- Utils
   {
-    'mhanberg/output-panel.nvim',
-    init = function()
-      ar.add_to_select_menu('lsp', { ['Output Panel'] = 'OutputPanel' })
-    end,
-    event = 'LspAttach',
-    cond = not minimal and ar.lsp.enable,
-    cmd = { 'OutputPanel' },
-    opts = {},
-    config = function(_, opts) require('output_panel').setup(opts) end,
-  },
-  {
-    desc = 'Flexible and sleek fuzzy picker, LSP symbol navigator, and more. inspired by Zed.',
-    'bassamsdata/namu.nvim',
-    cond = ar.lsp.enable,
-    cmd = { 'Namu' },
-    -- stylua: ignore
-    keys = function()
-      local mappings = { { '<leader>ld', '<Cmd>Namu diagnostics<CR>', desc = 'namu: diagnostics' }, }
-      if ar_config.lsp.symbols.enable and ar_config.lsp.symbols.variant == 'namu' then
-        ar.list_insert(mappings, {
-          { '<leader>lsd', '<Cmd>Namu symbols<CR>', desc = 'namu: document symbols' },
-          { '<leader>lsw', '<Cmd>Namu workspace<CR>', desc = 'namu: workspace symbols' },
-        })
-      end
-      return mappings
-    end,
-    opts = {
-      namu_symbols = {
-        enable = true,
-        options = {}, -- here you can configure namu
-      },
-      ui_select = { enable = false }, -- vim.ui.select() wrapper
-    },
-  },
-  {
-    'kosayoda/nvim-lightbulb',
-    cond = ar.lsp.enable,
-    event = 'LspAttach',
-    opts = { autocmd = { enabled = true } },
-  },
-  -- }}}
-  ------------------------------------------------------------------------------
-  -- Disabled {{{1
-  ------------------------------------------------------------------------------
-  {
-    'glepnir/lspsaga.nvim',
-    enabled = false,
-    cond = ar.lsp.enable and false,
-    event = 'LspAttach',
-    opts = {
-      ui = { border = border },
-      code_action = { show_server_name = true },
-      lightbulb = { enable = false },
-      symbol_in_winbar = { enable = false },
-    },
-    keys = {
-      { '<leader>lo', '<cmd>Lspsaga outline<CR>', 'lspsaga: outline' },
-      {
-        '<localleader>lf',
-        '<cmd>Lspsaga finder<cr>',
-        desc = 'lspsaga: finder',
-      },
-      {
-        'gD',
-        function()
-          local popup_id = detour.Detour()
-          if popup_id then
-            require('lspsaga.definition'):init(1, 2, {})
-            features.ShowPathInTitle(popup_id)
-          end
-        end,
-        desc = 'Goto Definition <gd>',
-      },
-      {
-        'gR',
-        function()
-          local popup_id = detour.Detour()
-          if popup_id then
-            require('lspsaga.finder'):new({ 'ref', '++float' })
-            features.ShowPathInTitle(popup_id)
-          end
-        end,
-        desc = 'Goto References <gr>',
-      },
-      {
-        'gI',
-        function()
-          local popup_id = detour.Detour()
-          if popup_id then
-            require('lspsaga.finder'):new({ 'imp', '++float' })
-            features.ShowPathInTitle(popup_id)
-          end
-        end,
-        desc = 'Goto Implementation <gI>',
-      },
-      {
-        'gY',
-        function()
-          local popup_id = detour.Detour()
-          if popup_id then
-            require('lspsaga.definition'):init(2, 2, {})
-            features.ShowPathInTitle(popup_id)
-          end
-        end,
-        desc = 'Goto Type Definition <gy>',
-      },
-      {
-        '<localleader>lci',
-        function()
-          local popup_id = detour.Detour()
-          if popup_id then
-            vim.bo.bufhidden = 'delete'
-            require('lspsaga.callhierarchy'):send_method(2, { '++float' })
-            features.ShowPathInTitle(popup_id)
-          end
-        end,
-        desc = 'Incoming Calls [ci]',
-      },
-      {
-        '<localleader>lco',
-        function()
-          local popup_id = detour.Detour()
-          if popup_id then
-            vim.bo.bufhidden = 'delete'
-            require('lspsaga.callhierarchy'):send_method(3, { '++float' })
-            features.ShowPathInTitle(popup_id)
-          end
-        end,
-        desc = 'Outgoing Calls [co]',
-      },
-      {
-        '<localleader>lp',
-        '<cmd>Lspsaga peek_type_definition<cr>',
-        desc = 'lspsaga: type definition',
-      },
-    },
-  },
-  {
-    'RaafatTurki/corn.nvim',
-    enabled = false,
-    cond = ar.lsp.enable and ar.plugins.niceties and false,
-    event = 'LspAttach',
-    cmd = { 'Corn' },
-    opts = {
-      icons = {
-        error = lsp_icons.error,
-        warn = lsp_icons.warn,
-        hint = lsp_icons.hint,
-        info = lsp_icons.info,
-      },
-    },
-  },
-  {
-    'doums/dmap.nvim',
-    enabled = false,
-    cond = ar.lsp.enable and ar.plugins.niceties and false,
-    event = 'LspAttach',
-    opts = { win_h_offset = 5 },
-  },
-  {
-    'ivanjermakov/troublesum.nvim',
-    enabled = false,
-    cond = ar.lsp.enable and ar.plugins.niceties and false,
-    event = 'LspAttach',
-    opts = {
-      severity_format = {
-        lsp_icons.error,
-        lsp_icons.warn,
-        lsp_icons.info,
-        lsp_icons.hint,
-      },
-    },
-  },
-  {
+    desc = 'Display references, definitions and implementations of document symbols',
     'Wansmer/symbol-usage.nvim',
-    enabled = false,
-    cond = ar.lsp.enable and false,
+    cond = ar.lsp.enable and niceties,
     event = 'LspAttach',
     config = function()
       highlight.plugin('symbol-usage', {
@@ -806,56 +617,48 @@ return {
       })
     end,
   },
+  --------------------------------------------------------------------------------
+  -- Utils
   {
-    'luckasRanarison/clear-action.nvim',
-    enabled = false,
-    cond = ar.lsp.enable and ar.plugins.niceties,
+    'mhanberg/output-panel.nvim',
+    init = function()
+      ar.add_to_select_menu('lsp', { ['Output Panel'] = 'OutputPanel' })
+    end,
     event = 'LspAttach',
+    cond = not minimal and ar.lsp.enable,
+    cmd = { 'OutputPanel' },
+    opts = {},
+    config = function(_, opts) require('output_panel').setup(opts) end,
+  },
+  {
+    desc = 'Flexible and sleek fuzzy picker, LSP symbol navigator, and more. inspired by Zed.',
+    'bassamsdata/namu.nvim',
+    cond = ar.lsp.enable,
+    cmd = { 'Namu' },
+    -- stylua: ignore
+    keys = function()
+      local mappings = { { '<leader>ld', '<Cmd>Namu diagnostics<CR>', desc = 'namu: diagnostics' }, }
+      if ar_config.lsp.symbols.enable and ar_config.lsp.symbols.variant == 'namu' then
+        ar.list_insert(mappings, {
+          { '<leader>lsd', '<Cmd>Namu symbols<CR>', desc = 'namu: document symbols' },
+          { '<leader>lsw', '<Cmd>Namu workspace<CR>', desc = 'namu: workspace symbols' },
+        })
+      end
+      return mappings
+    end,
     opts = {
-      signs = {
+      namu_symbols = {
         enable = true,
-        combine = true,
-        show_count = false,
-        show_label = true,
-        icons = {
-          combined = icons.misc.lightbulb,
-        },
-        highlights = {
-          combined = 'CodeActionIcon',
-        },
+        options = {}, -- here you can configure namu
       },
-      popup = { border = border },
-      mappings = {
-        code_action = { '<leader><leader>la', 'code action' },
-        apply_first = { '<leader><leader>aa', 'apply first' },
-        quickfix = { '<leader><leader>aq', 'quickfix' },
-        quickfix_next = { '<leader><leader>an', 'quickfix next' },
-        quickfix_prev = { '<leader><leader>ap', 'quickfix prev' },
-        refactor = { '<leader><leader>ar', 'refactor' },
-        refactor_inline = { '<leader><leader>aR', 'refactor inline' },
-        actions = {
-          ['rust_analyzer'] = {
-            ['Import'] = { '<leader><leader>ai', 'import' },
-            ['Replace if'] = {
-              '<leader><leader>am',
-              'replace if with match',
-            },
-            ['Fill match'] = { '<leader><leader>af', 'fill match arms' },
-            ['Wrap'] = { '<leader><leader>aw', 'Wrap' },
-            ['Insert `mod'] = { '<leader><leader>aM', 'insert mod' },
-            ['Insert `pub'] = { '<leader><leader>aP', 'insert pub mod' },
-            ['Add braces'] = { '<leader><leader>ab', 'add braces' },
-          },
-        },
-      },
-      quickfix_filters = {
-        ['rust_analyzer'] = {
-          ['E0412'] = 'Import',
-          ['E0425'] = 'Import',
-          ['E0433'] = 'Import',
-          ['unused_imports'] = 'remove',
-        },
-      },
+      ui_select = { enable = false }, -- vim.ui.select() wrapper
     },
   },
+  {
+    'kosayoda/nvim-lightbulb',
+    cond = ar.lsp.enable,
+    event = 'LspAttach',
+    opts = { autocmd = { enabled = true } },
+  },
+  -- }}}
 }
