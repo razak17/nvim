@@ -559,21 +559,17 @@ return {
     config = function(_, opts) require('output_panel').setup(opts) end,
   },
   {
+    desc = 'Flexible and sleek fuzzy picker, LSP symbol navigator, and more. inspired by Zed.',
     'bassamsdata/namu.nvim',
-    cond = not minimal and ar.lsp.enable,
+    cond = ar.lsp.enable,
+    cmd = { 'Namu' },
+    -- stylua: ignore
     keys = function()
-      local mappings = {}
-      if
-        ar_config.lsp.symbols.enable
-        and ar_config.lsp.symbols.variant == 'namu'
-      then
-        -- stylua: ignore
-        table.insert(mappings, {
-          '<leader>lsd', '<Cmd>Namu symbols<CR>', desc = 'namu: document symbols'
-        })
-        -- stylua: ignore
-        table.insert(mappings, {
-          '<leader>lsw', '<Cmd>Namu workspace<CR>', desc = 'namu: workspace symbols'
+      local mappings = { { '<leader>ld', '<Cmd>Namu diagnostics<CR>', desc = 'namu: diagnostics' }, }
+      if ar_config.lsp.symbols.enable and ar_config.lsp.symbols.variant == 'namu' then
+        ar.list_insert(mappings, {
+          { '<leader>lsd', '<Cmd>Namu symbols<CR>', desc = 'namu: document symbols' },
+          { '<leader>lsw', '<Cmd>Namu workspace<CR>', desc = 'namu: workspace symbols' },
         })
       end
       return mappings
