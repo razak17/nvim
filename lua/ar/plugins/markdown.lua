@@ -200,37 +200,6 @@ return {
     cmd = { 'RenderMarkdown' },
     ft = { 'markdown', 'Avante', 'Avante', 'codecompanion' },
     init = function()
-      local color1_bg = '#f265b5'
-      local color2_bg = '#37f499'
-      local color3_bg = '#04d1f9'
-      local color4_bg = '#a48cf2'
-      local color5_bg = '#f1fc79'
-      local color6_bg = '#f7c67f'
-      local color_fg = '#323449'
-
-      highlight.plugin('render-markdown', {
-        -- stylua: ignore
-        theme = {
-          ['onedark'] = {
-            -- Heading colors (when not hovered over), extends through the entire line
-            { RenderMarkdownH1Bg = { fg = color_fg, bg = color1_bg } },
-            { RenderMarkdownH2Bg = { fg = color_fg, bg = color2_bg } },
-            { RenderMarkdownH3Bg = { fg = color_fg, bg = color3_bg } },
-            { RenderMarkdownH4Bg = { fg = color_fg, bg = color4_bg } },
-            { RenderMarkdownH5Bg = { fg = color_fg, bg = color5_bg } },
-            { RenderMarkdownH6Bg = { fg = color_fg, bg = color6_bg } },
-            -- Highlight for the heading and sign icons (symbol on the left)
-            -- I have the sign disabled for now, so this makes no effect
-            { RenderMarkdownH1 = { fg = color1_bg, cterm = 'bold', gui = 'bold' } },
-            { RenderMarkdownH2 = { fg = color2_bg, cterm = 'bold', gui = 'bold' } },
-            { RenderMarkdownH3 = { fg = color3_bg, cterm = 'bold', gui = 'bold' } },
-            { RenderMarkdownH4 = { fg = color4_bg, cterm = 'bold', gui = 'bold' } },
-            { RenderMarkdownH5 = { fg = color5_bg, cterm = 'bold', gui = 'bold' } },
-            { RenderMarkdownH6 = { fg = color6_bg, cterm = 'bold', gui = 'bold' } },
-          },
-        },
-      })
-
       ar.add_to_select_menu('command_palette', {
         ['Toggle RenderMarkdown'] = 'RenderMarkdown toggle',
       })
@@ -274,6 +243,40 @@ return {
         language_name = true,
       },
     },
+    config = function(_, opts)
+      require('render-markdown').setup(opts)
+
+      local color1_bg = '#f265b5'
+      local color2_bg = '#37f499'
+      local color3_bg = '#04d1f9'
+      local color4_bg = '#a48cf2'
+      local color5_bg = '#f1fc79'
+      local color6_bg = '#f7c67f'
+      local color_fg = '#323449'
+
+      highlight.plugin('render-markdown', {
+        -- stylua: ignore
+        theme = {
+          ['onedark'] = {
+            -- Heading colors (when not hovered over), extends through the entire line
+            { RenderMarkdownH1Bg = { fg = color_fg, bg = color1_bg } },
+            { RenderMarkdownH2Bg = { fg = color_fg, bg = color2_bg } },
+            { RenderMarkdownH3Bg = { fg = color_fg, bg = color3_bg } },
+            { RenderMarkdownH4Bg = { fg = color_fg, bg = color4_bg } },
+            { RenderMarkdownH5Bg = { fg = color_fg, bg = color5_bg } },
+            { RenderMarkdownH6Bg = { fg = color_fg, bg = color6_bg } },
+            -- Highlight for the heading and sign icons (symbol on the left)
+            -- I have the sign disabled for now, so this makes no effect
+            { RenderMarkdownH1 = { fg = color1_bg, cterm = 'bold', gui = 'bold' } },
+            { RenderMarkdownH2 = { fg = color2_bg, cterm = 'bold', gui = 'bold' } },
+            { RenderMarkdownH3 = { fg = color3_bg, cterm = 'bold', gui = 'bold' } },
+            { RenderMarkdownH4 = { fg = color4_bg, cterm = 'bold', gui = 'bold' } },
+            { RenderMarkdownH5 = { fg = color5_bg, cterm = 'bold', gui = 'bold' } },
+            { RenderMarkdownH6 = { fg = color6_bg, cterm = 'bold', gui = 'bold' } },
+          },
+        },
+      })
+    end,
   },
   --------------------------------------------------------------------------------
   -- Disabled
