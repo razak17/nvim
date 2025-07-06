@@ -479,9 +479,9 @@ return {
         flexible = 1,
         {
           condition = function()
-            if not is_avail('nvim-dap') then return false end
+            if not is_avail('nvim-dap') or true then return false end
             local session = require('dap').session()
-            return session ~= nil and false
+            return session ~= nil
           end,
           provider = function()
             return codicons.misc.bug_alt
