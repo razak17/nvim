@@ -182,18 +182,22 @@ return {
     event = get_event({ 'oh-lucy', 'oh-lucy-evening' }),
   },
   ------------------------------------------------------------------------------
-  -- Mild
+  -- Warm
   {
     'savq/melange-nvim',
     cond = get_cond({ 'melange' }),
     priority = get_priority({ 'melange' }),
     event = get_event({ 'melange' }),
   },
+  ------------------------------------------------------------------------------
+  -- Mild
   {
+    -- NOTE: Double underlines markdown headings
     'oxfist/night-owl.nvim',
     priority = get_priority({ 'night-owl' }),
-    event = get_event({ 'night-owl' }),
-    cond = get_cond({ 'night-owl' }),
+    -- event = get_event({ 'night-owl' }),
+    -- cond = get_cond({ 'night-owl' }),
+    -- opts = { underline = false },
   },
   {
     'atmosuwiryo/vim-winteriscoming',
@@ -256,8 +260,8 @@ return {
     'rjshkhr/shadow.nvim',
     cond = get_cond({ 'shadow' }),
     priority = get_priority({ 'shadow' }),
-    event = get_event({ 'shadow' }),
   },
+  --   event = get_event({ 'shadow' }),
   ------------------------------------------------------------------------------
   -- Clown show
   {
