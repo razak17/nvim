@@ -68,20 +68,26 @@ return {
   },
   {
     '3rd/image.nvim',
-    cond = false
-      and not minimal
-      and not vim.g.neovide
-      and not ar.kitty_scrollback.enable,
+    cond = function()
+      local condition = not minimal
+        and not vim.g.neovide
+        and not ar.kitty_scrollback.enable
+        and ar_config.image.variant == "image.nvim"
+      return ar.get_plugin_cond('image.nvim', condition)
+    end,
     ft = { 'markdown' },
     opts = {
       backend = 'kitty',
-      -- max_width = 50,
-      -- max_height = 50,
       integrations = {
         markdown = {
+          floating_windows = true,
           only_render_image_at_cursor = true,
         },
       },
+      max_width = 20,
+      max_height = 20,
+      -- max_width_window_percentage = 10,
+      -- max_height_window_percentage = 10,
     },
   },
   {

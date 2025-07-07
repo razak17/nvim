@@ -37,7 +37,7 @@ return {
       git = { enabled = true },
       gitbrowse = { enabled = true },
       image = {
-        enabled = true,
+        enabled = ar_config.image.variant == 'snacks',
         doc = {
           inline = false,
           float = true,

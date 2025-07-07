@@ -32,6 +32,7 @@ local env = vim.env
 ---@alias ArWhichExplorer 'neo-tree' | 'snacks' | 'mini.files' | 'oil'
 ---@alias ArWhichGx 'local' | 'plugin'
 ---@alias ArWhichIcon 'nvim-web-devicons' | 'mini.icons'
+---@alias ArWhichImage 'image.nvim' | 'snacks'
 ---@alias ArWhichIndentline 'mini.indentscope' | 'ibl' | 'snacks' | 'indentmini'
 ---@alias ArWhichLspProgress 'builtin' | 'noice' | 'snacks'
 ---@alias ArWhichLspSymbols 'builtin' | 'picker' | 'namu'
@@ -383,6 +384,11 @@ local config = {
   gx = { enable = true, variant = 'plugin' },
   ---@type ArIcons
   icons = { enable = true, variant = 'mini.icons' },
+  image = {
+    enable = true,
+    ---@type ArWhichImage
+    variant = 'snacks',
+  },
   ---@type ArLsp
   lsp = {
     disabled = {
