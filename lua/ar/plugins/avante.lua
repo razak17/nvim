@@ -141,7 +141,7 @@ return {
       if models.claude then
         set_provider('claude')
       elseif models.copilot then
-        set_provider('copilot', 'copilot-claude-sonnet-4')
+        set_provider('copilot', 'copilot-gemini-2.0-flash-001')
         opts.providers = get_copilot_providers()
       elseif models.openai then
         set_provider('openai')
