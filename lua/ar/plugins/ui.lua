@@ -51,23 +51,16 @@ return {
     event = { 'BufReadPost', 'BufNewFile' },
     init = function()
       vim.g.whichkey_add_spec({ '<localleader>s', group = 'Strict' })
+      local strict = require('strict')
       ar.add_to_select_menu('command_palette', {
-        ['Spaces To Tabs'] = function()
-          require('strict').convert_spaces_to_tabs()
-        end,
-        ['Tabs To Spaces'] = function()
-          require('strict').remove_trailing_empty_lines()
-        end,
-        ['Remove Trailing Empty Lines'] = function()
-          require('strict').remove_trailing_empty_lines()
-        end,
+        ['Spaces To Tabs'] = function() strict.convert_spaces_to_tabs() end,
+        ['Tabs To Spaces'] = function() strict.remove_trailing_empty_lines() end,
+        ['Split Long Lines'] = function() strict.split_overlong_lines() end,
       })
     end,
     -- stylua: ignore
     keys = {
       { '<localleader>sx', '<cmd>call clearmatches()<CR>', desc = 'strict: clear' },
-      { '<localleader>sw', '<cmd>lua require("strict").remove_trailing_whitespace()<CR>', desc = 'strict: remove trailing whitespace' },
-      { '<localleader>sl', '<cmd>lua require("strict").split_overlong_lines()<CR>', desc = 'strict: split overlong lines' },
     },
     opts = {
       format_on_save = false,

@@ -126,11 +126,14 @@ return {
   },
   {
     'echasnovski/mini.trailspace',
-    -- stylua: ignore
-    keys = {
-      { '<leader>wx', '<Cmd>lua MiniTrailspace.trim()<CR>', desc = 'trailspace: trim all', },
-      { '<leader>wl', '<Cmd>lua MiniTrailspace.trim_last_lines()<CR>', desc = 'trailspace: trim last lines', },
-    },
+    cond = function() return ar.get_plugin_cond('mini.trailspace', not minimal) end,
+    init = function()
+      local trailspace = require('mini.trailspace')
+      ar.add_to_select_menu('command_palette', {
+        ['Remove Trailing Empty Lines'] = trailspace.trim_last_lines,
+        ['Remove Trailing Spaces'] = trailspace.trim,
+      })
+    end,
     opts = {},
   },
   {
