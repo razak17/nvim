@@ -17,7 +17,6 @@
 -- vim.g.openai_api_key = get_openai_key()
 
 local fmt = string.format
-local minimal = ar.plugins.minimal
 local models = ar_config.ai.models
 local cmp = ar_config.completion.variant
 local ai_cmp = ar_config.ai.completion.variant
