@@ -278,36 +278,4 @@ return {
       })
     end,
   },
-  --------------------------------------------------------------------------------
-  -- Disabled
-  --------------------------------------------------------------------------------
-  {
-    'https://git.sr.ht/~swaits/thethethe.nvim',
-    enabled = false,
-    cond = not minimal and niceties and false,
-    event = 'VeryLazy',
-    opts = {},
-  },
-  {
-    'OXY2DEV/markview.nvim',
-    cond = not minimal and not niceties and false,
-    cmd = { 'Markview' },
-    ft = { 'markdown' },
-    opts = {},
-    init = function()
-      ar.add_to_select_menu(
-        'command_palette',
-        { ['Toggle Markview'] = 'Markview' }
-      )
-    end,
-  },
-  {
-    'nfrid/markdown-togglecheck',
-    enabled = false,
-    -- stylua: ignore
-    keys = {
-      { '<leader>om', function() require('markdown-togglecheck').toggle() end, desc = 'toggle markdown checkbox' },
-    },
-    dependencies = { 'nfrid/treesitter-utils' },
-  },
 }
