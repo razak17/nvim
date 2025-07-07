@@ -363,7 +363,7 @@ return {
       panel = { enabled = not is_ai_cmp },
       suggestion = {
         enabled = not is_ai_cmp,
-        auto_trigger = true,
+        auto_trigger = ar_config.ai.completion.auto_trigger,
         keymap = {
           accept_word = '<M-w>',
           accept_line = '<M-l>',
