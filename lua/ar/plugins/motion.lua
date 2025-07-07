@@ -33,35 +33,6 @@ return {
     },
   },
   {
-    'm4xshen/hardtime.nvim',
-    cond = false,
-    event = 'VeryLazy',
-    opts = {
-      disabled_filetypes = {
-        'qf',
-        'neo-tree',
-        'lazy',
-        'mason',
-        'NeogitStatus',
-        'lspinfo',
-        'null-ls-info',
-      },
-    },
-  },
-  {
-    'tris203/precognition.nvim',
-    cond = false,
-    cmd = { 'Precognition' },
-    event = { 'BufRead', 'BufNewFile' },
-    init = function()
-      ar.add_to_select_menu(
-        'toggle',
-        { ['Toggle Precognition'] = 'Precognition toggle' }
-      )
-    end,
-    opts = {},
-  },
-  {
     'chrisgrieser/nvim-spider',
     cond = not ar.plugins.minimal and ar.plugins.niceties,
     -- stylua: ignore
