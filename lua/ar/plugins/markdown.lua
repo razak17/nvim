@@ -72,7 +72,7 @@ return {
       local condition = not minimal
         and not vim.g.neovide
         and not ar.kitty_scrollback.enable
-        and ar_config.image.variant == "image.nvim"
+        and ar_config.image.variant == 'image.nvim'
       return ar.get_plugin_cond('image.nvim', condition)
     end,
     ft = { 'markdown' },
@@ -84,10 +84,6 @@ return {
           only_render_image_at_cursor = true,
         },
       },
-      max_width = 20,
-      max_height = 20,
-      -- max_width_window_percentage = 10,
-      -- max_height_window_percentage = 10,
     },
   },
   {
