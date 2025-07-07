@@ -1,10 +1,11 @@
-local border = ar.ui.current.border
 local minimal = ar.plugins.minimal
 
 return {
   {
     'jake-stewart/multicursor.nvim',
-    cond = function() return ar.get_plugin_cond('multicursor.nvim', not minimal) end,
+    cond = function()
+      return ar.get_plugin_cond('multicursor.nvim', not minimal)
+    end,
     event = 'VeryLazy',
     config = function()
       local mc = require('multicursor-nvim')
@@ -27,28 +28,5 @@ return {
         },
       })
     end,
-  },
-  {
-    'smoka7/multicursors.nvim',
-    cond = not minimal and false,
-    opts = {
-      hint_config = { border = border },
-    },
-    cmd = {
-      'MCstart',
-      'MCvisual',
-      'MCclear',
-      'MCpattern',
-      'MCvisualPattern',
-      'MCunderCursor',
-    },
-    keys = {
-      {
-        '<M-e>',
-        '<cmd>MCstart<cr>',
-        mode = { 'v', 'n' },
-        desc = 'Create a selection for selected text or word under the cursor',
-      },
-    },
   },
 }
