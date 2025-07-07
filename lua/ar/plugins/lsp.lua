@@ -658,7 +658,11 @@ return {
     'kosayoda/nvim-lightbulb',
     cond = ar.lsp.enable,
     event = 'LspAttach',
-    opts = { autocmd = { enabled = true } },
+    opts = {
+      autocmd = { enabled = true },
+      sign = { enabled = false },
+      virtual_text = { enabled = true, hl_mode = 'combine' },
+    },
   },
   -- }}}
 }
