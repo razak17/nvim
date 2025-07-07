@@ -448,6 +448,7 @@ local config = {
       search_return = { enable = true },
       smart_close = { enable = true },
       smart_hl_search = { enable = true },
+      smart_spelling = { enable = true },
       smart_splits = { enable = true },
       smart_tilde = { enable = true },
       sticky_note = { enable = false },
