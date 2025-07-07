@@ -2,16 +2,6 @@ local minimal = ar.plugins.minimal
 
 return {
   {
-    'numToStr/Comment.nvim',
-    cond = false and not minimal and not ar.ts_extra_enabled,
-    keys = { 'gcc', { 'gc', mode = { 'x', 'n', 'o' } } },
-    opts = function(_, opts)
-      local ok, integration =
-        pcall(require, 'ts_context_commentstring.integrations.comment_nvim')
-      if ok then opts.pre_hook = integration.create_pre_hook() end
-    end,
-  },
-  {
     'folke/ts-comments.nvim',
     cond = not minimal and ar.ts_extra_enabled,
     event = 'VeryLazy',
