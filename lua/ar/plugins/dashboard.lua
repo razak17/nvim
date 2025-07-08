@@ -140,7 +140,7 @@ return {
       local installed_plugins = {
         type = 'text',
         val = fmt(
-          ' %s plugins loaded in %s',
+          '%s plugins loaded in %s',
           stats.loaded .. ' of ' .. stats.count,
           ms .. 'ms'
         ),
@@ -225,7 +225,7 @@ return {
           dashboard.opts.layout[4] = {
             type = 'text',
             val = fmt(
-              ' %s plugins loaded in %s',
+              '%s plugins loaded in %s',
               stats.loaded .. ' of ' .. stats.count,
               ms .. 'ms'
             ),
