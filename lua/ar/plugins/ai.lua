@@ -226,6 +226,13 @@ return {
 
       require('codecompanion').setup(opts)
     end,
+    dependencies = {
+      {
+        'franco-ruggeri/codecompanion-spinner.nvim',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+        opts = {},
+      },
+    },
   },
   {
     'milanglacier/minuet-ai.nvim',
