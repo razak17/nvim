@@ -232,46 +232,4 @@ return {
       vim.g.matchup_matchparen_offscreen = {}
     end,
   },
-  {
-    'sustech-data/wildfire.nvim',
-    cond = not minimal and ts_extra_enabled and false,
-    event = { 'BufRead', 'BufNewFile' },
-    opts = {},
-  },
-  --------------------------------------------------------------------------------
-  -- Disabled
-  --------------------------------------------------------------------------------
-  {
-    'drybalka/tree-climber.nvim',
-    enabled = false,
-    cond = not minimal and false,
-    keys = {
-      {
-        '<localleader>pK',
-        function(opts) require('tree-climber').goto_parent(opts) end,
-        mode = { 'n', 'o' },
-      },
-      {
-        '<localleader>pL',
-        function(opts) require('tree-climber').goto_next(opts) end,
-        mode = { 'n', 'o' },
-      },
-      {
-        '<localleader>pH',
-        function(opts) require('tree-climber').goto_prev(opts) end,
-        mode = { 'n', 'o' },
-      },
-      {
-        '<localleader>pJ',
-        function(opts) require('tree-climber').goto_child(opts) end,
-        mode = { 'n', 'o' },
-      },
-    },
-  },
-  {
-    'filNaj/tree-setter',
-    enabled = false,
-    cond = not minimal and false,
-    event = 'VeryLazy',
-  },
 }
