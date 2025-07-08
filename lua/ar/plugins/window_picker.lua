@@ -50,22 +50,4 @@ return {
       },
     },
   },
-  {
-    'CodingdAwn/vim-choosewin',
-    cond = false,
-    keys = { { '<leader>ow', '<Plug>(choosewin)', desc = 'choose window' } },
-    config = function() vim.g.choosewin_overlay_enable = 1 end,
-  },
-  {
-    'tkmpypy/chowcho.nvim',
-    cond = false,
-    keys = {
-      { '<leader>wP', '<Cmd>Chowcho<CR>', desc = 'chowcho: toggle' },
-    },
-    opts = {
-      -- stylua: ignore
-      labels={'h','j','k','l','u','i','o','p','n','m','y','t','g','b','v','c','r','e','w','q','s','x','z','a','f','d'},
-      ignore_case = true,
-    },
-  },
 }
