@@ -260,8 +260,14 @@ return {
     'rjshkhr/shadow.nvim',
     cond = get_cond({ 'shadow' }),
     priority = get_priority({ 'shadow' }),
+    event = get_event({ 'shadow' }),
   },
-  --   event = get_event({ 'shadow' }),
+  {
+    'RostislavArts/naysayer.nvim',
+    cond = get_cond({ 'naysayer', 'naysayer.nvim' }),
+    priority = get_priority({ 'naysayer' }),
+    event = get_event({ 'naysayer' }),
+  },
   ------------------------------------------------------------------------------
   -- Clown show
   {
