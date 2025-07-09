@@ -3,6 +3,7 @@ local minimal = ar.plugins.minimal
 return {
   {
     'mistweaverco/kulala.nvim',
+    branch = 'develop',
     cond = not minimal,
     ft = { 'http' },
     init = function()
