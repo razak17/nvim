@@ -556,9 +556,7 @@ return {
       {
         flexible = 5,
         {
-          init = function(self) self.updates = stl.lazy_updates() end,
-          condition = function(self) return self.updates ~= '' end,
-          provider = function(self) return ' ' .. self.updates end,
+          provider = function() return ' ' .. stl.lazy_updates() end,
           hl = { fg = 'dark_orange' },
           on_click = {
             callback = function() require('lazy').update() end,
