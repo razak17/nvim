@@ -50,6 +50,7 @@ local env = vim.env
 ---@alias ArPythonLang { basedpyright: boolean, ruff: boolean, ty: boolean, }
 ---@alias ArTailwindLang { tailwindcss: boolean, tailwind-tools: boolean, }
 ---@alias ArTypescriptLang { ts_ls: boolean, typescript-tools: boolean, vtsls: boolean, tsgo: boolean, }
+---@alias ArWebLang { eslint: boolean, emmet_language_server: boolean, }
 
 ---@class ArAIModels
 ---@field claude boolean
@@ -94,6 +95,7 @@ local env = vim.env
 ---@field python ArPythonLang
 ---@field typescript ArTypescriptLang
 ---@field tailwind ArTailwindLang
+---@field web ArWebLang
 
 ---@class ArLspProgress
 ---@field enable boolean
@@ -415,7 +417,11 @@ local config = {
         ts_ls = false,
         ['typescript-tools'] = false,
         vtsls = true,
-        tsgo = true,
+        tsgo = false,
+      },
+      web = {
+        emmet_language_server = false,
+        eslint = false,
       },
     },
     null_ls = { enable = false },
