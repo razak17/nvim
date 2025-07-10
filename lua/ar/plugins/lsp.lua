@@ -6,51 +6,48 @@ local border = ui.current.border
 local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 local lsp_override = ar_config.lsp.override
 local virtual_lines_variant = ar_config.lsp.virtual_lines.variant
+local ar_lsp = ar_config.lsp.lang
+
+local server_langs = {
+  ts_ls = 'typescript',
+  ['typescript-tools'] = 'typescript',
+  tsgo = 'typescript',
+  vtsls = 'typescript',
+  ty = 'python',
+  ruff = 'python',
+  basedpyright = 'python',
+  tailwindcss = 'tailwind',
+  ['tailwind-tools'] = 'tailwind',
+  eslint = 'web',
+  emmet_language_server = 'web',
+}
+
+local function is_enabled(name)
+  if vim.tbl_contains(lsp_override, name) then return true end
+  if ar.lsp_override(name) then return false end
+  if ar.lsp_disabled(name) then return false end
+  if ar.dir_lsp_disabled(cwd) then return false end
+  local lang = server_langs[name]
+  if lang ~= nil then
+    local lang_tbl = ar_lsp[lang]
+    if not (lang_tbl and lang_tbl[name]) then return false end
+  end
+  return true
+end
 
 local function get_servers()
-  local servers = require('ar.servers').names()
+  local ar_servers = require('ar.servers')
+  local servers = ar_servers.names()
   local enabled_servers = vim
     .iter(servers)
-    :map(function(name) return name end)
-    :filter(function(name)
-      local ts_lang = ar_config.lsp.lang.typescript
-      local function ts_lang_cond(server)
-        local is_override = vim.tbl_contains(lsp_override, server)
-        return ts_lang[server] or is_override
-      end
-      local py_lang = ar_config.lsp.lang.python
-      local function py_lang_cond(server)
-        local is_override = vim.tbl_contains(lsp_override, server)
-        return py_lang[server] or is_override
-      end
-      local tailwind_lang = ar_config.lsp.lang.tailwind
-      local function tailwind_lang_cond(server)
-        local is_override = vim.tbl_contains(lsp_override, server)
-        return tailwind_lang[server] or is_override
-      end
-
-      local should_skip = not vim.tbl_contains(lsp_override, name)
-
-      if should_skip then
-        should_skip = ar.lsp_override(name)
-          or ar.lsp_disabled(name)
-          or ar.dir_lsp_disabled(cwd)
-          or name == 'ts_ls' and not ts_lang_cond('ts_ls')
-          or name == 'vtsls' and not ts_lang_cond('vtsls')
-          or name == 'ty' and not py_lang_cond('ty')
-          or name == 'ruff' and not py_lang_cond('ruff')
-          or name == 'basedpyright' and not py_lang_cond('basedpyright')
-          or name == 'tailwindcss' and not tailwind_lang_cond('tailwindcss')
-      end
-
-      return not should_skip
-    end)
+    :filter(is_enabled)
     :map(function(name)
-      local config = require('ar.servers').get(name)
-      if not config then return false end
+      local config = ar_servers.get(name)
+      if not config then return nil end -- skip if config missing
       vim.lsp.config(name, config)
       return name
     end)
+    :filter(function(x) return x ~= nil end)
     :totable()
   return enabled_servers
 end
@@ -71,11 +68,11 @@ return {
           ['Update All Mason Packages'] = 'MasonUpdateAll',
         })
       end,
-        -- stylua: ignore
-        cmd = {
-          'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll',
-          'MasonLog', 'MasonUpdate', 'MasonUpdateAll', -- this cmd is provided by mason-extra-cmds
-        },
+      -- stylua: ignore
+      cmd = {
+        'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll',
+        'MasonLog', 'MasonUpdate', 'MasonUpdateAll', -- this cmd is provided by mason-extra-cmds
+      },
       opts = {
         ui = {
           border = border,
@@ -102,24 +99,13 @@ return {
       config = function()
         require('mason-lspconfig').setup({ automatic_enable = get_servers() })
         local manual_servers = require('ar.servers').names({ manual = true })
-        vim
-          .iter(manual_servers)
-          :filter(function(name)
-            local should_skip = not vim.tbl_contains(lsp_override, name)
-            if should_skip then
-              should_skip = ar.lsp_override(name)
-                or ar.lsp_disabled(name)
-                or ar.dir_lsp_disabled(cwd)
-            end
-            return not should_skip
-          end)
-          :each(function(name)
-            local config = require('ar.servers').get(name, { manual = true })
-            if config then
-              vim.lsp.config(name, config)
-              vim.lsp.enable(name)
-            end
-          end)
+        vim.iter(manual_servers):filter(is_enabled):each(function(name)
+          local config = require('ar.servers').get(name, { manual = true })
+          if config then
+            vim.lsp.config(name, config)
+            vim.lsp.enable(name)
+          end
+        end)
       end,
       dependencies = {
         {
