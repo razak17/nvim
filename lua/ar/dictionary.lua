@@ -1420,8 +1420,6 @@ AQuisition:Acquisition
 aquitted:acquitted
 Aquitted:Acquitted
 AQuitted:Acquitted
-ar:are
-Ar:Are
 aranged:arranged
 Aranged:Arranged
 ARanged:Arranged
