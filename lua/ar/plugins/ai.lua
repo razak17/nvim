@@ -155,9 +155,12 @@ return {
             diff = { hl_groups = { added = 'DiffAdd' } },
           },
         },
-        opts = { log_level = 'DEBUG' },
+        opts = {
+          log_level = 'DEBUG', -- TRACE|DEBUG|ERROR|INFO
+          language = 'English', -- The language used for LLM responses
+          system_prompt = function() return ar_config.ai.prompts.beast_mode end,
+        },
         extensions = {},
-        system_prompt = function() return ar_config.ai.prompts.beast_mode end,
       }
 
       local function set_adapter_and_strategy(model_name)
