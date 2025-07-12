@@ -79,7 +79,7 @@ return {
     end,
     -- stylua: ignore
     keys = {
-      { '<leader>akk', '<Cmd>CodeCompanionChat<CR>', desc = 'codecompanion: toggle' },
+      { '<leader>ako', '<Cmd>CodeCompanionChat<CR>', desc = 'codecompanion: toggle' },
       { '<leader>aka', '<Cmd>CodeCompanionActions<CR>', desc = 'codecompanion: actions' },
       { 'ga', '<Cmd>CodeCompanionAdd<CR>', desc = 'codecompanion: add' },
     },
@@ -96,7 +96,6 @@ return {
             ['Fix'] = function() visual_cmd('CodeCompanion /fix') end,
             ['Lsp'] = function() visual_cmd('CodeCompanion /lsp') end,
             ['Tests'] = function() visual_cmd('CodeCompanion /tests') end,
-            ['Commit'] = function() visual_cmd('CodeCompanion /commit') end,
             ['Workspace'] = 'CodeCompanion /workspace',
             ['Code Workflow'] = 'CodeCompanion /cw',
             ['Edit<->Test workflow'] = 'CodeCompanion /et',
@@ -105,7 +104,10 @@ return {
       })
     end,
     -- stylua: ignore
-    cmd = { 'CodeCompanion', 'CodeCompanionActions', 'CodeCompanionChat', 'CodeCompanionCmd' },
+    cmd = {
+      'CodeCompanion', 'CodeCompanionActions', 'CodeCompanionChat',
+      'CodeCompanionCmd',
+    },
     opts = function()
       local opts = {
         strategies = {
