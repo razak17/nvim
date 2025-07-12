@@ -77,7 +77,7 @@ return {
     end,
     -- stylua: ignore
     keys = {
-      { '<leader>ava', '<Cmd>AvanteAsk<CR>', desc = 'avante: ask' },
+      { '<leader>avo', '<Cmd>AvanteAsk<CR>', desc = 'avante: ask' },
       { '<leader>avb', '<Cmd>AvanteBuild<CR>', desc = 'avante: build' },
       { '<leader>ave', '<Cmd>AvanteEdit<CR>', desc = 'avante: edit' },
       { '<leader>avf', '<Cmd>AvanteFocus<CR>', desc = 'avante: focus' },
@@ -89,7 +89,7 @@ return {
       { '<leader>avp', '<Cmd>AvanteSwitchProvider<CR>', desc = 'avante: switch provider' },
       { '<leader>avr', '<Cmd>AvanteRefresh<CR>', desc = 'avante: refresh' },
       { '<leader>avt', '<Cmd>AvanteToggle<CR>', desc = 'avante: toggle' },
-      { '<leader>avx', '<Cmd>AvanteStop<CR>', desc = 'avante: stop' },
+      { '<leader>avq', '<Cmd>AvanteStop<CR>', desc = 'avante: stop' },
       { '<leader>avM', repo_map, desc = 'avante: repo map' },
       { '<leader>avD', toggle_action('debug'), desc = 'avante: toggle debug' },
       { '<leader>avH', toggle_action('hint'), desc = 'avante: toggle hint' },
