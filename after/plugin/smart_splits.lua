@@ -11,6 +11,7 @@ local config = {
       'Avante',
       'AvanteInput',
       'AvanteSelectedFiles',
+      'copilot-chat',
       'DiffviewFileHistory',
       'DiffviewFiles',
       'gitcommit',
