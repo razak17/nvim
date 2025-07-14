@@ -142,6 +142,10 @@ local function on_code_action_results(results)
   vim.iter(actions):each(function(a)
     local priority = 5
     if a.isPreferred then priority = a.kind == 'quickfix' and 7 or 6 end
+    local source = lsp.get_client_by_id(a.ctx.client_id).name
+    if vim.tbl_contains({'eslint'}, source) then
+      priority = 8
+    end
     local title = a.action.title
     local client = lsp.get_client_by_id(a.ctx.client_id)
     if client then
