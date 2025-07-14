@@ -2,7 +2,6 @@ local api, fn = vim.api, vim.fn
 local data = fn.stdpath('data')
 
 local lazy_path = join_paths(data, 'lazy', 'lazy.nvim')
-local plugins_enabled = ar.plugins.enable
 if not vim.uv.fs_stat(lazy_path) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
   -- stylua: ignore start
@@ -49,7 +48,6 @@ require('lazy').setup({
   performance = {
     rtp = {
       paths = { join_paths(data, 'site'), join_paths(data, 'site', 'after') },
-      disabled_plugins = plugins_enabled and ar.rtp.disabled or {},
     },
   },
 })
