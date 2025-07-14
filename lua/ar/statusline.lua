@@ -304,6 +304,7 @@ M.pretty_path = {
 }
 
 M.file_size = {
+  condition = function() return vim.bo.bt ~= 'nofile' end,
   provider = function()
     local bufnr = api.nvim_get_current_buf()
     local buf = api.nvim_buf_get_name(bufnr)
