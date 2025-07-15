@@ -1,21 +1,3 @@
--- local function get_openai_key()
---   if not fn.executable('pass') then
---     vim.notify(
---       'Pass not found. Environment variables may not be loaded',
---       vim.log.levels.ERROR
---     )
---     return
---   end
---   local key = vim.system('pass show api/tokens/openai-work'):wait().stdout
---   if not key or vim.v.shell_error ~= 0 then
---     vim.notify('OpenAI key not found', vim.log.levels.ERROR)
---     return
---   end
---   return vim.trim(key)
--- end
---
--- vim.g.openai_api_key = get_openai_key()
-
 local models = ar_config.ai.models
 local cmp = ar_config.completion.variant
 local ai_cmp = ar_config.ai.completion.variant
