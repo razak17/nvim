@@ -43,7 +43,8 @@ return {
       'cmdline.sources',
       'term.sources',
     },
-    --- @type blink.cmp.Config
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
     opts = {
       enabled = function()
         local ignored_filetypes = {
@@ -104,6 +105,13 @@ return {
             components = {
               kind_icon = {
                 text = function(ctx)
+                  local data = ctx.source_id == 'codecompanion'
+                    and ctx.item.data
+                  if data then
+                    return data.type == 'variable' and ''
+                      or data.type == 'tool' and '󱁤'
+                      or '󰿠'
+                  end
                   local icon = ctx.kind_icon
                   if ctx.kind == 'Color' then
                     icon = fmt('%s ', ui.icons.misc.block_medium)
