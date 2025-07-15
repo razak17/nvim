@@ -9,9 +9,7 @@ local is_blink = ar_config.completion.variant == 'blink'
 local ai_models = ar_config.ai.models
 local ai_cmp = ar_config.ai.completion
 local which_ai_cmp = ai_cmp.variant
-local is_copilot = ai_models.copilot
-  and which_ai_cmp == 'copilot'
-  and ai_cmp.auto_trigger
+local is_copilot = ai_models.copilot and which_ai_cmp == 'copilot'
 local is_minuet = ai_models.gemini and which_ai_cmp == 'minuet'
 
 local show_index = false
@@ -428,7 +426,6 @@ return {
             return items
           end,
         }
-
         opts.sources.providers.avante_commands = {
           name = 'avante_commands',
           module = 'blink.compat.source',

@@ -168,7 +168,7 @@ return {
       ar.add_to_select_menu('ai', {
         ['Copilot'] = function()
           ar.create_select_menu('Copilot', {
-            ['Toggle Copilot Auto Trigger'] = 'lua require("copilot.suggestion").toggle_auto_trigger()',
+            ['Toggle Auto Trigger'] = 'lua require("copilot.suggestion").toggle_auto_trigger()',
             ['Disable'] = function() vim.cmd('Copilot disable') end,
             ['Enable'] = function() vim.cmd('Copilot enable') end,
             ['Toggle'] = function() vim.cmd('Copiot toggle') end,
@@ -189,7 +189,7 @@ return {
       panel = { enabled = not is_ai_cmp },
       suggestion = {
         enabled = not is_ai_cmp,
-        auto_trigger = ar_config.ai.completion.auto_trigger,
+        auto_trigger = true,
         keymap = {
           accept_word = '<M-w>',
           accept_line = '<M-l>',

@@ -279,7 +279,6 @@ local config = {
       openai = false,
     },
     completion = {
-      auto_trigger = false,
       enable = false,
       ---@type ArAICompletion
       variant = 'copilot',
