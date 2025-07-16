@@ -236,7 +236,6 @@ end
 local function textcase()
   extensions('textcase', 'normal_mode')(ar.telescope.minimal_ui())()
 end
-local function import() extensions('import')(ar.telescope.minimal_ui())() end
 local function whop() extensions('whop')(ar.telescope.minimal_ui())() end
 local function node_modules() extensions('node_modules', 'list')({})() end
 local function monorepo() extensions('monorepo')({})() end
@@ -462,7 +461,6 @@ ar.telescope = {
     ['textcase'] = 'text-case.nvim',
     ['undo'] = 'telescope-undo.nvim',
     ['whop'] = 'whop.nvim',
-    ['import'] = 'telescope-import.nvim',
     ['spell_errors'] = 'telescope-spell-errors.nvim',
   },
   cursor = cursor,
@@ -579,7 +577,6 @@ return {
           { '<leader>ff', find_files, desc = 'find files' },
           { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
           { '<leader>fH', helpgrep, desc = 'helpgrep' },
-          { '<leader>fi', import, desc = 'import' },
           { '<leader>fI', b('builtin'), desc = 'builtins', },
           { '<leader>fJ', b('jumplist'), desc = 'jumplist', },
           { '<leader>fk', b('keymaps'), desc = 'keymaps' },
@@ -1033,7 +1030,6 @@ return {
   { 'fdschmidt93/telescope-egrepify.nvim', cond = picker_enabled },
   { 'debugloop/telescope-undo.nvim', cond = picker_enabled },
   { 'nvim-telescope/telescope-file-browser.nvim', cond = picker_enabled },
-  { 'razak17/telescope-import.nvim', cond = picker_enabled },
   { 'catgoose/telescope-helpgrep.nvim', cond = picker_enabled },
   { 'razak17/telescope-lazy.nvim', cond = picker_enabled },
   { 'fbuchlak/telescope-directory.nvim', cond = picker_enabled, opts = {} },

@@ -368,6 +368,17 @@ return {
       ar.command('SessionList', list_sessions)
     end,
   },
+  {
+    'piersolenski/import.nvim',
+    cond = not minimal,
+    keys = { { '<leader>fi', '<Cmd>Import<CR>', desc = 'import' } },
+    cmd = { 'Import' },
+    opts = {
+      picker = ar_config.picker.variant ~= 'mini.pick'
+          and ar_config.picker.variant
+        or 'snacks', -- | "fzf-lua" | "telescope" | "snacks",
+    },
+  },
   --------------------------------------------------------------------------------
   -- Disabled
   --------------------------------------------------------------------------------
