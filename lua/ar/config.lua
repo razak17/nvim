@@ -348,7 +348,7 @@ local config = {
   flatten = { enable = true },
   frecency = { enable = true },
   ---@type ArGx
-  gx = { enable = true, variant = 'plugin' },
+  gx = { enable = true, variant = 'local' },
   ---@type ArIcons
   icons = { enable = true, variant = 'mini.icons' },
   image = {
