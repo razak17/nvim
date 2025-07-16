@@ -363,6 +363,24 @@ M.file_type = {
   },
 }
 
+local function location_space(total, line_number)
+  local t_digits = #tostring(total)
+  local ln_digits = #tostring(line_number)
+  if t_digits <= 3 then return M.space(t_digits - 2) end
+  if t_digits == 4 and ln_digits <= 1 then
+    return M.space(t_digits - ln_digits)
+  end
+  return M.space(t_digits - (ln_digits - 1))
+end
+
+function M.location()
+  local line_number = fn.line('.')
+  local total = fn.line('$')
+  local location = '%7(%l/%1L%):%2c '
+  if total <= 9 then location = '%4(%l/%1L%):%2c ' end
+  return location_space(total, line_number) .. location
+end
+
 function M.progress()
   local cur = fn.line('.')
   local total = fn.line('$')
