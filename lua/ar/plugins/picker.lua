@@ -379,42 +379,4 @@ return {
         or 'snacks', -- | "fzf-lua" | "telescope" | "snacks",
     },
   },
-  --------------------------------------------------------------------------------
-  -- Disabled
-  --------------------------------------------------------------------------------
-  {
-    'camspiers/snap',
-    cond = not minimal and false,
-    init = function()
-      vim.g.whichkey_add_spec({ '<leader><leader>f', group = 'Snap' })
-    end,
-    config = function()
-      ar.highlight.plugin('snap', {
-        theme = {
-          ['onedark'] = {
-            { SnapNormal = { link = 'NormalFloat' } },
-            { SnapBorder = { link = 'FloatBorder' } },
-          },
-        },
-      })
-    end,
-    keys = {
-      {
-        '<leader><leader>ff',
-        function()
-          local snap = require('snap')
-          snap.config.file({ producer = 'ripgrep.file' })()
-        end,
-        desc = 'snap: find files',
-      },
-      {
-        '<leader><leader>fg',
-        function()
-          local snap = require('snap')
-          snap.config.vimgrep({})()
-        end,
-        desc = 'snap: grep string',
-      },
-    },
-  },
 }
