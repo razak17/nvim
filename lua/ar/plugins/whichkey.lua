@@ -6,6 +6,11 @@ vim.g.whichkey_add_spec = function(spec)
   vim.defer_fn(function() require('which-key').add(spec) end, 1500)
 end
 
+local function show(opts)
+  opts = opts or {}
+  return function() require('which-key').show(opts) end
+end
+
 return {
   'folke/which-key.nvim',
   cond = function() return ar.get_plugin_cond('which-key.nvim') end,
@@ -111,17 +116,11 @@ return {
     end
     return opts
   end,
+  -- stylua: ignore
   keys = {
-    {
-      '<leader>?',
-      function() require('which-key').show({ global = false }) end,
-      desc = 'which-key: buffer keymaps',
-    },
-    {
-      '<c-w><space>',
-      function() require('which-key').show({ keys = '<c-w>', loop = true }) end,
-      desc = 'which-key: window hydra mode',
-    },
+    { '<leader>?', show({ global = false }), desc = 'which-key: buffer keymaps' },
+    { '<c-w><space>', show({ keys = '<c-w>', loop = true }), desc = 'which-key: window hydra mode' },
+    { '<leader>wk', '<Cmd>WhichKey <CR>', desc = 'which-key: all keymaps' },
   },
   init = function()
     ar.augroup('WhichKeyMode', {
