@@ -53,4 +53,11 @@ local function load_abbreviations()
   end
 end
 
-vim.defer_fn(load_abbreviations, config.delay_ms)
+ar.command('SmartSpellingLoad', function()
+  vim.defer_fn(load_abbreviations, config.delay_ms)
+  vim.notify(
+    'Smart Spelling Abbreviations Reloaded',
+    vim.log.levels.INFO,
+    { title = 'Smart Spelling' }
+  )
+end, { desc = 'Load smart spelling abbreviations' })
