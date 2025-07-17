@@ -45,7 +45,7 @@ return {
   {
     's1n7ax/nvim-snips',
     name = 'snips',
-    dependencies = { 's1n7ax/nvim-ts-utils' },
+    dependencies = { 'razak17/nvim-ts-utils' },
   },
   {
     'L3MON4D3/LuaSnip',
