@@ -279,7 +279,7 @@ return {
           ctx.backend_name == 'treesitter'
           and (ctx.lang == 'typescript' or ctx.lang == 'tsx')
         then
-          local utils = require('nvim-treesitter.utils')
+          local utils = require('ar.utils.treesitter')
           local value_node = (utils.get_at_path(ctx.match, 'var_type') or {}).node
           -- don't want to display in-function items
           local cur_parent = value_node and value_node:parent()
