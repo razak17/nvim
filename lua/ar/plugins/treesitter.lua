@@ -62,7 +62,7 @@ return {
             ["L:"] = { query = "@property.lhs", desc = "Select left part of an object property" },
             ["R:"] = { query = "@property.rhs", desc = "Select right part of an object property" },
 
-            -- NOTE: mii.ai does same things
+            -- NOTE: mini.ai does same things
             -- ["aa"] = { query = "@parameter.outer", desc = "Select outer part of a parameter/argument" },
             -- ["ia"] = { query = "@parameter.inner", desc = "Select inner part of a parameter/argument" },
 
