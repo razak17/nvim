@@ -12,6 +12,39 @@ end
 
 return {
   {
+    'jackMort/tide.nvim',
+    -- event = 'VeryLazy',
+    init = function()
+      vim.g.whichkey_add_spec({
+        { ';j', group = 'tide' },
+        { ';jd', group = 'tide: delete' },
+        { ';j-', group = 'tide: horizontal open' },
+        { ';j|', group = 'tide: vertical open' },
+        { ';ja', group = 'tide: add item' },
+        { ';jx', group = 'tide: clear all' },
+      })
+    end,
+    keys = { ';j' },
+    opts = {
+      keys = {
+        leader = ';j', -- Leader key to prefix all Tide commands
+        panel = ';', -- Open the panel (uses leader key as prefix)
+        add_item = 'a', -- Add a new item to the list (leader + 'a')
+        delete = 'd', -- Remove an item from the list (leader + 'd')
+        clear_all = 'x', -- Clear all items (leader + 'x')
+        horizontal = '-', -- Split window horizontally (leader + '-')
+        vertical = '|', -- Split window vertically (leader + '|')
+      },
+      hints = {
+        dictionary = 'uiopbnmsfghjklycvqwertz', -- Key hints for quick access
+      },
+    },
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'nvim-tree/nvim-web-devicons',
+    },
+  },
+  {
     desc = 'Vim plugin that enables surfing through buffers based on viewing history per window ',
     'ton/vim-bufsurf',
     event = 'VeryLazy',
