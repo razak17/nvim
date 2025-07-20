@@ -49,13 +49,13 @@ local function gp_choose_agent()
       .iter(agents)
       :filter(function(agent) return agent:match(choice) end)
       :map(function(agent)
-        if agent == choice then return choice end
-        return string.match(agent, 'ChatCopilot%-(.+)')
+        if choice ~= 'ChatCopilot' then return agent end
+        return string.match(agent, choice .. '%-(.+)')
       end)
       :totable()
     vim.ui.select(selected, { prompt = choice .. ' models' }, function(agent)
       if agent == nil then return end
-      if agent ~= choice then agent = fmt('%s-%s', choice, agent) end
+      if choice == 'ChatCopilot' then agent = fmt('%s-%s', choice, agent) end
       require('gp').cmd.Agent({ args = agent })
     end)
   end)
