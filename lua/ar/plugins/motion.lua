@@ -19,6 +19,7 @@ return {
     opts = {},
   },
   {
+    -- 'razak17/demicolon.nvim',
     'mawkler/demicolon.nvim',
     cond = not minimal and ar.treesitter.enable,
     -- stylua: ignore
