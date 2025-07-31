@@ -375,7 +375,7 @@ local config = {
         ty = false,
       },
       tailwind = {
-        tailwindcss = true,
+        tailwindcss = false,
         ['tailwind-tools'] = false,
       },
       typescript = {
