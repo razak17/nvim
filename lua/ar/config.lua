@@ -452,6 +452,7 @@ local config = {
     disabled = {},
     modules = {
       disabled = {},
+      override = {},
     },
     overrides = {
       garbage_day = { enable = false },
