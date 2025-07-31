@@ -1,9 +1,5 @@
 local api, fn = vim.api, vim.fn
 local diagnostic = vim.diagnostic
-local pickers = require('telescope.pickers')
-local entry_display = require('telescope.pickers.entry_display')
-local finders = require('telescope.finders')
-local conf = require('telescope.config').values
 local is_avail = ar.is_available
 local ts_lsp = ar_config.lsp.lang.typescript
 
@@ -322,6 +318,11 @@ end
 
 -- https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_prepareCallHierarchy
 function M.display_call_hierarchy()
+  local pickers = require('telescope.pickers')
+  local entry_display = require('telescope.pickers.entry_display')
+  local finders = require('telescope.finders')
+  local conf = require('telescope.config').values
+
   local displayer = entry_display.create({
     separator = ' ',
     items = {
@@ -416,7 +417,7 @@ function M.organize_imports()
     vim.cmd('TSToolsOrganizeImports')
   elseif is_avail('nvim-vtsls') then
     vim.cmd('VtsExec organize_imports')
-  elseif ts_lsp['ts_ls']  then
+  elseif ts_lsp['ts_ls'] then
     vim.cmd('OrganizeImports')
   end
 end
@@ -426,7 +427,7 @@ function M.add_missing_imports()
     vim.cmd('TSToolsAddMissingImports')
   elseif is_avail('nvim-vtsls') then
     vim.cmd('VtsExec add_missing_imports')
-  elseif ts_lsp['ts_ls']  then
+  elseif ts_lsp['ts_ls'] then
     vim.cmd('AddMissingImports')
   end
 end
@@ -436,7 +437,7 @@ function M.remove_unused()
     vim.cmd('TSToolsRemoveUnused')
   elseif is_avail('nvim-vtsls') then
     vim.cmd('VtsExec remove_unused')
-  elseif ts_lsp['ts_ls']  then
+  elseif ts_lsp['ts_ls'] then
     vim.cmd('RemoveUnused')
   end
 end
