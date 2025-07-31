@@ -198,6 +198,10 @@ local function colorscheme_overrides()
       { dmapWin = { inherit = 'Normal' } },
       { Strict = { link = 'DiffDeleteAlt' } },
     },
+    ['vague'] = {
+      { IndentBlanklineChar = { link = 'LineNr' } },
+      { Statusline = { bg = 'NONE' } },
+    },
     ['lunar'] = {
       { NeogitDiffAdd = { link = 'DiffAdd' } },
       { NeogitDiffDelete = { link = 'DiffDelete' } },

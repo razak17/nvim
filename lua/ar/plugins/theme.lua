@@ -40,6 +40,13 @@ return {
     event = get_event({ 'onedark' }),
     opts = { variant = 'fill' },
   },
+  {
+    'vague2k/vague.nvim',
+    cond = ar_config.colorscheme == 'vague',
+    priority = get_priority({ 'vague' }),
+    event = get_event({ 'vague' }),
+    opts = { transparent = true },
+  },
   ------------------------------------------------------------------------------
   -- Monochrome
   {
