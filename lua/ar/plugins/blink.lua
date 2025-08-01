@@ -174,7 +174,7 @@ return {
             end
             if not minimal then
               table.insert(sources, 'nvim-px-to-rem')
-              table.insert(sources, 'dadbod')
+              if is_avail('vim-dadbod-completion') then table.insert(sources, 'dadbod') end
               if
                 ar_config.shelter.variant == 'ecolog'
                 and is_avail('ecolog.nvim')
@@ -227,7 +227,6 @@ return {
             end,
             opts = { prefix_min_len = 5 },
           },
-          dadbod = { name = '[DB]', module = 'vim_dadbod_completion.blink' },
           emoji = {
             module = 'blink-emoji',
             name = '[EMOJI]',
@@ -444,6 +443,10 @@ return {
           score_offset = 1000, -- show at a higher priority than lsp
           opts = {},
         }
+      end
+      if is_avail('vim-dadbod-completion') then
+        opts.sources.providers.dadbod =
+          { name = '[DB]', module = 'vim_dadbod_completion.blink' }
       end
 
       if
