@@ -237,7 +237,6 @@ local servers = {
         },
         completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
         workspace = { checkThirdParty = false },
-        telemetry = { enable = false },
       },
     },
   },
