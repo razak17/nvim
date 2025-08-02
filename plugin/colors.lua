@@ -89,6 +89,7 @@ local function general_overrides()
     { ['@illuminate'] = { link = 'LspReferenceText' } },
     { DevIconDefault = { link = 'Comment' } },
     { NotifyBackground = { link = 'NormalFloat' } },
+    { statusline = { bg = 'NONE' } },
   })
 end
 
