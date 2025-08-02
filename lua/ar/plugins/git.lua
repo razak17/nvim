@@ -228,14 +228,14 @@ return {
       end
 
       ar.add_to_select_menu('git', {
-        ['Conflict Choose Base'] = diffview_conflict_choose('base'),
-        ['Conflict Choose Ours'] = diffview_conflict_choose('ours'),
-        ['Conflict Choose Theirs'] = diffview_conflict_choose('theirs'),
-        ['Conflict Choose None'] = diffview_conflict_choose('none'),
-        ['Conflict Choose Both'] = diffview_conflict_choose('all'),
-        ['Conflict Show Base'] = diffview_conflict('base'),
-        ['Conflict Show Ours'] = diffview_conflict('ours'),
-        ['Conflict Show Theirs'] = diffview_conflict('theirs'),
+        ['Conflict Choose Base (Diffview)'] = diffview_conflict_choose('base'),
+        ['Conflict Choose Ours (Diffview)'] = diffview_conflict_choose('ours'),
+        ['Conflict Choose Theirs (Diffview)'] = diffview_conflict_choose('theirs'),
+        ['Conflict Choose None (Diffview)'] = diffview_conflict_choose('none'),
+        ['Conflict Choose Both (Diffview)'] = diffview_conflict_choose('all'),
+        ['Conflict Show Base (Diffview)'] = diffview_conflict('base'),
+        ['Conflict Show Ours (Diffview)'] = diffview_conflict('ours'),
+        ['Conflict Show Theirs (Diffview)'] = diffview_conflict('theirs'),
         ['Show Commit At Line'] = show_commit_at_line,
         ['Browse Project History'] = project_history,
         ['Show Commit From Hash'] = display_commit_from_hash,
