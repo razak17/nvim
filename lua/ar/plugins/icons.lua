@@ -1,3 +1,4 @@
+local minimal = ar.plugins.minimal
 local ar_icons = ar_config.icons.variant
 
 return {
@@ -52,5 +53,14 @@ return {
         require('mini.icons').mock_nvim_web_devicons()
       end,
     },
+  },
+  {
+    '2kabhishek/nerdy.nvim',
+    cmd = { 'Nerdy' },
+    cond = function() return ar.get_plugin_cond('nerdy.nvim', not minimal) end,
+    init = function()
+      ar.add_to_select_menu('command_palette', { ['Nerdy'] = 'Nerdy list' })
+    end,
+    opts = { use_new_command = true },
   },
 }

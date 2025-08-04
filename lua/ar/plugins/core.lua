@@ -29,15 +29,6 @@ return {
     opts = {},
   },
   {
-    '2kabhishek/nerdy.nvim',
-    cmd = { 'Nerdy' },
-    cond = function() return ar.get_plugin_cond('nerdy.nvim', not minimal) end,
-    init = function()
-      ar.add_to_select_menu('command_palette', { ['Nerdy'] = 'Nerdy list' })
-    end,
-    opts = { use_new_command = true },
-  },
-  {
     'AndrewRadev/linediff.vim',
     cond = function() return ar.get_plugin_cond('linediff.vim', not minimal) end,
     cmd = 'Linediff',
