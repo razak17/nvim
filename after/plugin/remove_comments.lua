@@ -4,8 +4,6 @@ local ts_avilable = ar.is_available('nvim-treesitter')
 if not ar or ar.none or not enabled or not ts_avilable then return end
 
 local api = vim.api
-local ts = vim.treesitter
-local parsers = require('nvim-treesitter.parsers')
 
 local queries = {
   config = {
@@ -36,57 +34,35 @@ local queries = {
   },
 }
 
--- https://github.com/KashifKhn/nvim-remove-comments/blob/eae2fda8969b7ba31137d8c520a13b3731eb9cfa/lua/nvim-remove-comments/core.lua#L7
-local function remove_comments()
+-- https://gist.github.com/kelvinauta/bf812108f3b68fa73de58e873c309805
+local remove_comments = function()
+  local ts = vim.treesitter
   local bufnr = api.nvim_get_current_buf()
   local ft = vim.bo[bufnr].filetype
+  local lang = ts.language.get_lang(ft) or ft
 
-  if not parsers.has_parser(ft) then return end
+  local ok, parser = pcall(ts.get_parser, bufnr, lang)
+  if not ok or parser == nil then
+    return vim.notify('No parser for ' .. ft, vim.log.levels.WARN)
+  end
 
-  local parser = parsers.get_parser(bufnr, ft)
-  if not parser then return end
-
-  local root = parser:parse()[1]:root()
+  local tree = parser:parse()[1]
+  local root = tree:root()
   local query_str = queries[ft]
-  local query = ts.query.parse(ft, query_str or [[ (comment) @comment ]])
+  local query = ts.query.parse(lang, query_str or [[ (comment) @comment ]])
 
-  local lines_to_delete = {}
-
+  local ranges = {}
   for _, node in query:iter_captures(root, bufnr, 0, -1) do
-    local srow, scol, erow, ecol = node:range()
-    local lines = api.nvim_buf_get_lines(bufnr, srow, erow + 1, false)
-
-    if srow == erow then
-      local line = lines[1]
-
-      if scol == 0 and ecol == #line then
-        lines_to_delete[srow] = true
-      else
-        local before = line:sub(1, scol)
-        local after = line:sub(ecol + 1)
-        api.nvim_buf_set_lines(
-          bufnr,
-          srow,
-          srow + 1,
-          false,
-          { before .. after }
-        )
-      end
-    else
-      for i = srow, erow do
-        lines_to_delete[i] = true
-      end
-    end
+    table.insert(ranges, { node:range() })
   end
 
-  local rows = {}
-  for row in pairs(lines_to_delete) do
-    table.insert(rows, row)
-  end
-  table.sort(rows, function(a, b) return a > b end)
+  table.sort(ranges, function(a, b)
+    if a[1] == b[1] then return a[2] < b[2] end
+    return a[1] > b[1]
+  end)
 
-  for _, row in ipairs(rows) do
-    api.nvim_buf_set_lines(bufnr, row, row + 1, false, {})
+  for _, r in ipairs(ranges) do
+    vim.api.nvim_buf_set_text(bufnr, r[1], r[2], r[3], r[4], {})
   end
 end
 
@@ -95,6 +71,7 @@ ar.command('RemoveComments', remove_comments, {
   nargs = 0,
 })
 
-ar.add_to_select_menu('command_palette', {
-  ['Remove Comments'] = 'RemoveComments',
-})
+ar.add_to_select_menu(
+  'command_palette',
+  { ['Remove Comments'] = 'RemoveComments' }
+)
