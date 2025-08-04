@@ -282,7 +282,7 @@ local config = {
       claude = false,
       copilot = true,
       gemini = true,
-      openai = false,
+      openai = true,
     },
     completion = {
       enable = false,
