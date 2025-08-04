@@ -35,6 +35,7 @@ local env = vim.env
 ---@alias ArWhichImage 'image.nvim' | 'snacks'
 ---@alias ArWhichIndentline 'mini.indentscope' | 'ibl' | 'snacks' | 'indentmini'
 ---@alias ArWhichLspProgress 'builtin' | 'noice' | 'snacks'
+---@alias ArWhichLspRename 'builtin' | 'inc-rename'
 ---@alias ArWhichLspSymbols 'builtin' | 'picker' | 'namu'
 ---@alias ArWhichLspVirtualLines 'builtin' | 'lsp_lines' | 'tiny-inline'
 ---@alias ArWhichLspVirtualText 'builtin' | 'lsp_lines' | 'tiny-inline'
@@ -113,6 +114,10 @@ local env = vim.env
 ---@field enable boolean
 ---@field variant ArWhichWinbar
 
+---@class ArLspRename
+---@field enable boolean
+---@field variant ArWhichLspRename
+
 ---@class ArLspSymbols
 ---@field enable boolean
 ---@field variant ArWhichLspSymbols
@@ -136,6 +141,7 @@ local env = vim.env
 ---@field omnifunc ArCond
 ---@field override table
 ---@field progress ArLspProgress
+---@field rename ArLspRename
 ---@field semantic_tokens ArCond
 ---@field signs ArCond
 ---@field symbols ArLspSymbols
@@ -393,6 +399,7 @@ local config = {
     omnifunc = { enable = true },
     override = {},
     progress = { enable = true, variant = 'noice' },
+    rename = { enable = true, variant = 'inc-rename' },
     semantic_tokens = { enable = false },
     signs = { enable = false },
     symbols = { enable = true, variant = 'namu' },

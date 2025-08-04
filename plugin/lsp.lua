@@ -451,6 +451,7 @@ local function setup_mappings(client, bufnr)
       lsp.buf.rename,
       desc = 'rename',
       capability = M.textDocument_rename,
+      disabled = ar_config.lsp.rename.variant ~= 'builtin',
     },
     {
       'n',

@@ -147,17 +147,24 @@ return {
   },
   {
     'smjonas/inc-rename.nvim',
+    cmd = { 'IncRename' },
     cond = ar.lsp.enable,
     opts = { hl_group = 'Visual', preview_empty_name = true },
-    keys = {
-      {
-        '<leader>rn',
-        function() return fmt(':IncRename %s', fn.expand('<cword>')) end,
-        expr = true,
-        silent = false,
-        desc = 'lsp: incremental rename',
-      },
-    },
+    keys = function()
+      local mappings = {}
+      if ar_config.lsp.rename.variant == 'inc-rename' then
+        ar.list_insert(mappings, {
+          {
+            '<leader>ln',
+            function() return fmt(':IncRename %s', fn.expand('<cword>')) end,
+            expr = true,
+            silent = false,
+            desc = 'lsp: incremental rename',
+          },
+        })
+      end
+      return mappings
+    end,
   },
   {
     'antosha417/nvim-lsp-file-operations',
