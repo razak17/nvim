@@ -173,15 +173,19 @@ local servers = {
   -- jdtls = {},
   jedi_language_server = {},
   jsonls = {
-    on_new_config = function(new_config)
-      new_config.settings.json.schemas = new_config.settings.json.schemas or {}
-      vim.list_extend(
-        new_config.settings.json.schemas,
-        require('schemastore').json.schemas()
-      )
-    end,
     settings = {
       json = {
+        schemas = require('schemastore').json.schemas({
+          extra = {
+            {
+              description = 'ArConfig',
+              fileMatch = { '.rvim.json' },
+              name = '.rvim.json',
+              -- url = 'https://example.com/package.json',
+              url = 'file:///home/razak/.config/rvim/rvim.schema.json',
+            },
+          },
+        }),
         validate = { enable = true },
       },
     },

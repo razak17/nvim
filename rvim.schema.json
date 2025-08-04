@@ -1,0 +1,527 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ArConfig",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "ai": {
+      "type": "object",
+      "properties": {
+        "models": {
+          "type": "object",
+          "properties": {
+            "claude": { "type": "boolean" },
+            "copilot": { "type": "boolean" },
+            "gemini": { "type": "boolean" },
+            "openai": { "type": "boolean" }
+          },
+          "additionalProperties": false
+        },
+        "completion": {
+          "type": "object",
+          "properties": {
+            "auto_trigger": { "type": "boolean" },
+            "enable": { "type": "boolean" },
+            "variant": {
+              "type": "string",
+              "enum": ["copilot", "minuet"]
+            }
+          },
+          "additionalProperties": false
+        },
+        "ignored_filetypes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "prompts": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "animation": {
+      "type": "object",
+      "properties": {
+        "enable": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "apps": {
+      "type": "object",
+      "properties": {
+        "image": { "type": "string" },
+        "pdf": { "type": "string" },
+        "audio": { "type": "string" },
+        "video": { "type": "string" },
+        "web": { "type": "string" },
+        "explorer": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "autosave": {
+      "type": "object",
+      "properties": {
+        "enable": { "type": "boolean" },
+        "current": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "buffers": {
+      "type": "object",
+      "properties": {
+        "enable": { "type": "boolean" },
+        "variant": {
+          "type": "string",
+          "enum": ["snacks"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "completion": {
+      "type": "object",
+      "properties": {
+        "icons": {
+          "type": "string",
+          "enum": ["lspkind", "mini.icons"]
+        },
+        "variant": {
+          "type": "string",
+          "enum": ["cmp", "blink", "mini.completion", "omnifunc"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "colorscheme": { "type": "string" },
+    "dashboard": {
+      "type": "object",
+      "properties": {
+        "enable": { "type": "boolean" },
+        "variant": {
+          "type": "string",
+          "enum": ["alpha", "snacks"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "debug": {
+      "type": "object",
+      "properties": {
+        "enable": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "explorer": {
+      "type": "object",
+      "properties": {
+        "rename": {
+          "type": "string",
+          "enum": ["local", "snacks"]
+        },
+        "variant": {
+          "type": "string",
+          "enum": ["neo-tree", "snacks", "mini.files", "oil"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "flatten": {
+      "type": "object",
+      "properties": {
+        "enable": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "frecency": {
+      "type": "object",
+      "properties": {
+        "enable": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "gx": {
+      "type": "object",
+      "properties": {
+        "enable": { "type": "boolean" },
+        "variant": {
+          "type": "string",
+          "enum": ["local", "plugin"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "icons": {
+      "type": "object",
+      "properties": {
+        "enable": { "type": "boolean" },
+        "variant": {
+          "type": "string",
+          "enum": ["nvim-web-devicons", "mini.icons"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "image": {
+      "type": "object",
+      "properties": {
+        "enable": { "type": "boolean" },
+        "variant": {
+          "type": "string",
+          "enum": ["image.nvim", "snacks"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "lsp": {
+      "type": "object",
+      "properties": {
+        "disabled": {
+          "type": "object",
+          "properties": {
+            "filetypes": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "directories": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "servers": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          },
+          "additionalProperties": false
+        },
+        "foldexpr": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" }
+          },
+          "additionalProperties": false
+        },
+        "format_on_save": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" }
+          },
+          "additionalProperties": false
+        },
+        "hover_diagnostics": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" },
+            "go_to": { "type": "boolean" },
+            "scope": { "type": "string" }
+          },
+          "additionalProperties": true
+        },
+        "inlay_hint": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" }
+          },
+          "additionalProperties": false
+        },
+        "lang": {
+          "type": "object",
+          "properties": {
+            "python": {
+              "type": "object",
+              "properties": {
+                "basedpyright": { "type": "boolean" },
+                "ruff": { "type": "boolean" },
+                "ty": { "type": "boolean" },
+                "pyright": { "type": "boolean" }
+              },
+              "additionalProperties": false
+            },
+            "typescript": {
+              "type": "object",
+              "properties": {
+                "ts_ls": { "type": "boolean" },
+                "typescript-tools": { "type": "boolean" },
+                "vtsls": { "type": "boolean" },
+                "tsgo": { "type": "boolean" }
+              },
+              "additionalProperties": false
+            },
+            "tailwind": {
+              "type": "object",
+              "properties": {
+                "tailwindcss": { "type": "boolean" },
+                "tailwind-tools": { "type": "boolean" }
+              },
+              "additionalProperties": false
+            },
+            "web": {
+              "type": "object",
+              "properties": {
+                "eslint": { "type": "boolean" },
+                "emmet_language_server": { "type": "boolean" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "null_ls": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" }
+          },
+          "additionalProperties": false
+        },
+        "omnifunc": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" }
+          },
+          "additionalProperties": false
+        },
+        "override": {
+          "type": "array",
+          "additionalProperties": true
+        },
+        "progress": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" },
+            "variant": {
+              "type": "string",
+              "enum": ["builtin", "noice", "snacks"]
+            }
+          },
+          "additionalProperties": false
+        },
+        "rename": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" },
+            "variant": {
+              "type": "string",
+              "enum": ["builtin", "inc-rename"]
+            }
+          },
+          "additionalProperties": false
+        },
+        "semantic_tokens": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" }
+          },
+          "additionalProperties": false
+        },
+        "signs": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" }
+          },
+          "additionalProperties": false
+        },
+        "symbols": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" },
+            "variant": {
+              "type": "string",
+              "enum": ["builtin", "picker", "namu"]
+            }
+          },
+          "additionalProperties": false
+        },
+        "virtual_text": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" },
+            "variant": {
+              "type": "string",
+              "enum": ["builtin", "lsp_lines", "tiny-inline"]
+            }
+          },
+          "additionalProperties": false
+        },
+        "virtual_lines": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" },
+            "variant": {
+              "type": "string",
+              "enum": ["builtin", "lsp_lines", "tiny-inline"]
+            }
+          },
+          "additionalProperties": false
+        },
+        "workspace_diagnostics": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "notifier": {
+      "type": "object",
+      "properties": {
+        "enable": { "type": "boolean" },
+        "variant": {
+          "type": "string",
+          "enum": ["nvim-notify", "snacks"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "picker": {
+      "type": "object",
+      "properties": {
+        "enable": { "type": "boolean" },
+        "files": {
+          "type": "string",
+          "enum": ["smart-open", "snacks", "telescope", "fzf-lua", "mini.pick"]
+        },
+        "variant": {
+          "type": "string",
+          "enum": ["snacks", "telescope", "fzf-lua", "mini.pick"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "plugin": {
+      "type": "object",
+      "properties": {
+        "custom": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "enable": { "type": "boolean" },
+              "config": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "main": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "enable": { "type": "boolean" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "plugins": {
+      "type": "object",
+      "properties": {
+        "disabled": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "modules": {
+          "type": "object",
+          "properties": {
+            "disabled": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "override": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          },
+          "additionalProperties": false
+        },
+        "overrides": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "enable": { "type": "boolean" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "session": {
+      "type": "object",
+      "properties": {
+        "enable": { "type": "boolean" },
+        "variant": {
+          "type": "string",
+          "enum": ["persisted", "persistence"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "shelter": {
+      "type": "object",
+      "properties": {
+        "enable": { "type": "boolean" },
+        "variant": {
+          "type": "string",
+          "enum": ["cloak", "ecolog"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ui": {
+      "type": "object",
+      "properties": {
+        "indentline": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" },
+            "variant": {
+              "type": "string",
+              "enum": ["mini.indentscope", "ibl", "snacks", "indentmini"]
+            }
+          },
+          "additionalProperties": false
+        },
+        "statuscolumn": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" },
+            "variant": {
+              "type": "string",
+              "enum": ["local", "plugin"]
+            }
+          },
+          "additionalProperties": false
+        },
+        "winbar": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" },
+            "variant": {
+              "type": "string",
+              "enum": ["local", "plugin"]
+            }
+          },
+          "additionalProperties": false
+        },
+        "transparent": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
