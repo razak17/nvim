@@ -18,6 +18,10 @@ return {
   { 'Rasukarusan/nvim-block-paste', cmd = { 'Block' } },
   { 'meznaric/key-analyzer.nvim', cmd = { 'KeyAnalyzer' }, opts = {} },
   {
+    'razak17/lspkind.nvim',
+    config = function() require('lspkind').init({ preset = 'codicons' }) end,
+  },
+  {
     'ariel-frischer/bmessages.nvim',
     cond = function() return ar.get_plugin_cond('bmessages.nvim', not minimal) end,
     cmd = { 'Bmessages', 'Bmessagesvs', 'Bmessagessp', 'BmessagesEdit' },

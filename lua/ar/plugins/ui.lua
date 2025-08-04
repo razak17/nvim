@@ -16,10 +16,6 @@ return {
     cond = function() return ar.get_plugin_cond('spaceless.nvim', not minimal) end,
   },
   {
-    'razak17/lspkind.nvim',
-    config = function() require('lspkind').init({ preset = 'codicons' }) end,
-  },
-  {
     'nmac427/guess-indent.nvim',
     cond = function() return ui_cond('guess-indent.nvim') end,
     cmd = { 'GuessIndent' },
