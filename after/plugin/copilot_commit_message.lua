@@ -82,6 +82,22 @@ api.nvim_set_hl(
 )
 
 local function generate_message()
+  if not vim.fn.executable('copilot-cli') then
+    vim.notify(
+      'copilot-cli is not installed or not executable',
+      vim.log.levels.ERROR
+    )
+    return
+  end
+
+  if vim.bo.filetype ~= 'gitcommit' then
+    vim.notify(
+      'This command can only be used in a git commit buffer',
+      vim.log.levels.ERROR
+    )
+    return
+  end
+
   spinner:start()
 
   local function callback(obj)
