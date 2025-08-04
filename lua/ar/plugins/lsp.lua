@@ -193,6 +193,7 @@ return {
     -- 'razak17/glance.nvim',
     'dnlhc/glance.nvim',
     cond = ar.lsp.enable,
+    cmd = { 'Glance' },
     -- stylua: ignore
     -- keys = {
       --   { 'gD', '<Cmd>Glance definitions<CR>', desc = 'lsp: glance definitions' },
