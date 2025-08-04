@@ -430,7 +430,6 @@ local function setup_mappings(client, bufnr)
       lsp.buf.incoming_calls,
       desc = 'incoming calls',
       capability = M.textDocument_references,
-      disabled = is_available('lspsaga.nvim'),
     },
     {
       'n',
@@ -465,7 +464,6 @@ local function setup_mappings(client, bufnr)
       '<localleader>lc',
       '<Cmd>lua =vim.lsp.get_clients()[1].server_capabilities<CR>',
       desc = 'server capabilities',
-      disabled = is_available('lspsaga.nvim'),
     },
     {
       'n',
