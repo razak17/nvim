@@ -110,6 +110,10 @@ local function todos()
   fzf_lua.grep({ search = 'TODO|HACK|PERF|NOTE|FIX|WARN', no_esc = true })
 end
 
+local function frecency()
+  require('fzf-lua-frecency').frecency({ cwd_only = true })
+end
+
 ar.fzf = { dropdown = dropdown, cursor_dropdown = cursor_dropdown }
 
 return {
@@ -149,7 +153,7 @@ return {
       local mappings = {}
 
       if ar_config.picker.files == 'fzf-lua' then
-        table.insert(mappings, { '<C-p>', find_files, desc = 'find files' })
+        table.insert(mappings, { '<C-p>', frecency, desc = 'find files' })
       end
       if ar_config.picker.variant == 'fzf-lua' then
         -- stylua: ignore
@@ -373,6 +377,7 @@ return {
 
       ar.command('SessionList', list_sessions)
     end,
+    dependencies = { 'elanmed/fzf-lua-frecency.nvim' },
   },
   {
     'piersolenski/import.nvim',
