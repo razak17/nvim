@@ -134,20 +134,27 @@ return {
         adapters = {},
       }
 
-      local function set_adapter_and_strategy(model_name)
-        opts.adapters[model_name] = model_name
-        opts.strategies.chat.adapter = model_name
-        opts.strategies.inline.adapter = model_name
+      local function set_adapter_and_strategy(adapter, model)
+        opts.adapters[adapter] = function()
+          return require('codecompanion.adapters').extend(adapter, {
+            schema = { model = { default = model } },
+          })
+        end
+        opts.strategies.chat.adapter = adapter
+        opts.strategies.cmd.adapter = adapter
+        opts.strategies.inline.adapter = adapter
       end
 
       if models.claude then
         set_adapter_and_strategy('anthropic')
       elseif models.openai then
-        set_adapter_and_strategy('openai')
+        -- https://platform.openai.com/docs/models
+        set_adapter_and_strategy('openai', 'gpt-4.1-mini')
       elseif models.gemini then
         set_adapter_and_strategy('gemini')
       elseif models.copilot then
-        set_adapter_and_strategy('copilot')
+        -- https://docs.github.com/en/copilot/reference/ai-models/supported-models
+        set_adapter_and_strategy('copilot', 'o4-mini')
       end
 
       opts.strategies.chat.opts = opts.strategies.chat.opts or {}
