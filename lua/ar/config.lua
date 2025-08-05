@@ -48,7 +48,7 @@ local env = vim.env
 ---@alias ArWhichWinbar 'local' | 'plugin'
 
 ---@alias ArCond {enable: boolean,}
----@alias ArPythonLang { basedpyright: boolean, ruff: boolean, ty: boolean, }
+---@alias ArPythonLang { basedpyright: boolean, ruff: boolean, ty: boolean, jedi_language_server: boolean, pyrefly: boolean, }
 ---@alias ArTailwindLang { tailwindcss: boolean, tailwind-tools: boolean, }
 ---@alias ArTypescriptLang { ts_ls: boolean, typescript-tools: boolean, vtsls: boolean, tsgo: boolean, }
 ---@alias ArWebLang { eslint: boolean, emmet_language_server: boolean, }
@@ -367,7 +367,7 @@ local config = {
     disabled = {
       filetypes = {},
       directories = { vim.fn.stdpath('data') },
-      servers = { 'emmet_ls', 'pyright', 'jedi_language_server' },
+      servers = {},
     },
     foldexpr = { enable = false },
     format_on_save = { enable = true },
@@ -379,6 +379,8 @@ local config = {
         ruff = true,
         basedpyright = true,
         ty = false,
+        jedi_language_server = false,
+        pyrefly = false,
       },
       tailwind = {
         tailwindcss = false,
@@ -392,6 +394,7 @@ local config = {
       },
       web = {
         emmet_language_server = false,
+        emmet_ls = false,
         eslint = false,
       },
     },

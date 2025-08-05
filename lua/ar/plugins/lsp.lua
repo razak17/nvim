@@ -13,15 +13,20 @@ local server_langs = {
   vtsls = 'typescript',
   ty = 'python',
   ruff = 'python',
+  pyright = 'python',
   basedpyright = 'python',
+  jedi_language_server = 'python',
+  pyrefly = 'python',
   tailwindcss = 'tailwind',
   ['tailwind-tools'] = 'tailwind',
   eslint = 'web',
+  emmet_ls = 'web',
   emmet_language_server = 'web',
 }
 
 local function is_enabled(name)
-  if vim.tbl_contains(lsp_override, name) then return true end
+  local disabled = ar.lsp_disabled(name)
+  if vim.tbl_contains(lsp_override, name) and not disabled then return true end
   if ar.lsp_override(name) then return false end
   if ar.lsp_disabled(name) then return false end
   if ar.dir_lsp_disabled(cwd) then return false end

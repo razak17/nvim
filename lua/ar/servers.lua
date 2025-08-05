@@ -317,6 +317,7 @@ local servers = {
     },
   },
   ty = {},
+  pyrefly = {},
   vtsls = {
     single_file_support = false,
     experimental = {
