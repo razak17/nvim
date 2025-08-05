@@ -10,6 +10,7 @@ return {
     end,
     -- stylua: ignore
     keys = {
+      { '<leader>akk', '<Cmd>CodeCompanion<CR>', desc = 'codecompanion: prompt' },
       { '<leader>ako', '<Cmd>CodeCompanionChat<CR>', desc = 'codecompanion: toggle' },
       { '<leader>aka', '<Cmd>CodeCompanionActions<CR>', desc = 'codecompanion: actions' },
       { '<leader>aka', ':CodeCompanion simplify<CR>', desc = 'codecompanion: simplify' },
