@@ -161,6 +161,7 @@ return {
           { '<leader>ff', fzf_lua.git_files, desc = 'find files' },
           { '<leader>fh', fzf_lua.oldfiles, desc = 'Most (f)recently used files' },
           { '<leader>fm', fzf_lua.changes, desc = 'changes' },
+          { '<leader>fp', fzf_lua.global, desc = 'global' },
           { '<leader>fr', fzf_lua.resume, desc = 'resume picker' },
           { '<leader>fs', fzf_lua.live_grep, desc = 'live grep' },
           { '<leader>ft', todos, desc = 'todos' },
