@@ -2,6 +2,8 @@
 ---@param spec wk.Spec
 vim.g.whichkey_add_spec = function(spec)
   if not ar.is_available('which-key.nvim') then return end
+  local ok, _ = pcall(require, 'which-key')
+  if not ok then return end
   -- Deferred to ensure spec is loaded after whichkey itself
   vim.defer_fn(function() require('which-key').add(spec) end, 1500)
 end
@@ -120,7 +122,7 @@ return {
   keys = {
     { '<leader>?', show({ global = false }), desc = 'which-key: buffer keymaps' },
     { '<c-w><space>', show({ keys = '<c-w>', loop = true }), desc = 'which-key: window hydra mode' },
-    { '<leader>wk', '<Cmd>WhichKey <CR>', desc = 'which-key: all keymaps' },
+    { '<leader>wk', '<Cmd>WhichKey<CR>', desc = 'which-key: all keymaps' },
   },
   init = function()
     ar.augroup('WhichKeyMode', {
