@@ -12,6 +12,7 @@ return {
     keys = {
       { '<leader>ako', '<Cmd>CodeCompanionChat<CR>', desc = 'codecompanion: toggle' },
       { '<leader>aka', '<Cmd>CodeCompanionActions<CR>', desc = 'codecompanion: actions' },
+      { '<leader>aka', ':CodeCompanion simplify<CR>', desc = 'codecompanion: simplify' },
       { 'ga', '<Cmd>CodeCompanionAdd<CR>', desc = 'codecompanion: add' },
     },
     init = function()
@@ -86,6 +87,7 @@ return {
               },
             },
           },
+          cmd = {},
           inline = {},
         },
         display = {
