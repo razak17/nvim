@@ -106,6 +106,10 @@ local function notes()
   })
 end
 
+local function todos()
+  fzf_lua.grep({ search = 'TODO|HACK|PERF|NOTE|FIX|WARN', no_esc = true })
+end
+
 ar.fzf = { dropdown = dropdown, cursor_dropdown = cursor_dropdown }
 
 return {
@@ -159,6 +163,7 @@ return {
           { '<leader>fm', fzf_lua.changes, desc = 'changes' },
           { '<leader>fr', fzf_lua.resume, desc = 'resume picker' },
           { '<leader>fs', fzf_lua.live_grep, desc = 'live grep' },
+          { '<leader>ft', todos, desc = 'todos' },
           { '<leader>fw', fzf_lua.grep_cword, desc = 'grep cword' },
           { '<leader>fva', fzf_lua.autocmds, desc = 'autocommands' },
           { '<leader>fvh', fzf_lua.highlights, desc = 'highlights' },
