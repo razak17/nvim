@@ -61,7 +61,8 @@ function M.extmark_signs(curbuf, lnum)
       local txt, hl = item.sign_text, item.sign_hl_group
       -- HACK: to remove number from trailblazer signs by replacing it with a bookmark icon
       if hl:match('^Trail') then txt = ui.codicons.misc.bookmark end
-      local target = hl:match('^Git') and acc.git or acc.other
+      local is_git = hl:match('^Git') or hl:match('^MiniDiffSign')
+      local target = is_git and acc.git or acc.other
       table.insert(target, { text = txt, texthl = hl })
       return acc
     end)
