@@ -74,4 +74,14 @@ return {
       { '<leader>jl', '<Cmd>AnyJumpLastResults<CR>', desc = 'any-jump: resume' },
     },
   },
+  {
+    'WilliamHsieh/overlook.nvim',
+    opts = { ui = { border = 'single' } },
+    -- stylua: ignore
+    keys = {
+      { '<C-w>pd', function() require('overlook.api').peek_definition() end, desc = 'overlook: peek definition' },
+      { '<C-w>pc', function() require('overlook.api').close_all() end, desc = 'overlook: close all popup' },
+      { '<C-w>pu', function() require('overlook.api').restore_popup() end, desc = 'overlook: restore popup' },
+    },
+  },
 }
