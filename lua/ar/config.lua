@@ -461,7 +461,7 @@ local config = {
   plugins = {
     disabled = {},
     modules = {
-      disabled = { 'treesitter' },
+      disabled = { 'treesitter', 'incline' },
       override = {},
     },
     overrides = {
