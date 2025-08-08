@@ -149,12 +149,14 @@ return {
         })
 
       require('heirline').setup(opts)
+
       ar.augroup('HeirlineGitRemote', {
         event = { 'VimEnter' },
         command = function()
           if not ar.is_git_repo() then return end
           -- ar.set_timeout(stl.git_remote_sync, 0, 120000)
-          vim.schedule(function() stl.git_remote_sync() end)
+          -- vim.schedule(function() stl.git_remote_sync() end)
+          vim.schedule(function() stl.update_ahead_behind(true) end)
         end,
       }, {
         event = { 'User' },
@@ -162,7 +164,8 @@ return {
         command = function()
           if not ar.is_git_repo() then return end
           -- ar.set_timeout(stl.git_remote_sync, 0, 120000)
-          vim.schedule(function() stl.git_remote_sync() end)
+          -- vim.schedule(function() stl.git_remote_sync() end)
+          vim.schedule(function() stl.update_ahead_behind(true) end)
         end,
       })
     end,

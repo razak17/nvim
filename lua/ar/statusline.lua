@@ -84,6 +84,44 @@ function M.git_remote_sync()
 end
 ar.command('GitRemoteSync', M.git_remote_sync)
 
+-- https://github.com/matthis-k/nvim-flake/blob/main/lua/ui/statusline.lua?plain=1#L100
+local git_cache = {}
+
+local fetched = {}
+local function get_ahead_behind(git)
+  local ok, res = pcall(function()
+    -- stylua: ignore
+    local line = vim.fn.system({
+        'git', 'rev-list', '--left-right', '--count', git.head .. '...origin/' .. git.head,
+      },
+      git.root
+    )
+    local ahead, behind = line:match('(%d+)%s+(%d+)')
+    return { ahead = tonumber(ahead) or 0, behind = tonumber(behind) or 0 }
+  end)
+  return ok and res or { error = 'No remote' }
+end
+
+function M.update_ahead_behind(refetch)
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    local git = vim.b[bufnr].gitsigns_status_dict
+    if not git or not git.root then goto continue end
+    if not refetch and git_cache[git.root] then goto continue end
+    if not vim.list_contains(fetched, git.root) or refetch then
+      git_cache[git.root] = get_ahead_behind(git)
+      table.insert(fetched, git.root)
+    end
+    ::continue::
+  end
+end
+
+function M.remote_counter()
+  local gs = vim.b[vim.api.nvim_get_current_buf()].gitsigns_status_dict
+  if not gs then return '' end
+  if not git_cache[gs.root] then M.update_ahead_behind() end
+  return git_cache[gs.root]
+end
+
 local buffer_repo_cache = {}
 local repo_branch_cache = {}
 

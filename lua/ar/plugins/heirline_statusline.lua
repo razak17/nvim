@@ -218,6 +218,7 @@ return {
           init = function(self)
             self.status_dict = vim.b.gitsigns_status_dict
             self.git_status = stl.git_status
+            self.ahead_hehind = stl.remote_counter()
           end,
           update = {
             'User',
@@ -225,7 +226,45 @@ return {
             callback = function() vim.schedule(vim.cmd.redrawstatus) end,
           },
           {
-            condition = function(self) return self.git_status ~= nil end,
+            condition = function(self) return not ar.falsy(self.ahead_hehind) end,
+            update = { 'User', pattern = 'git_statusChanged' },
+            {
+              condition = function(self) return self.ahead_hehind.error end,
+              provider = function(self) return ' ' .. self.ahead_hehind.error end,
+              hl = { fg = 'comment', bold = true },
+            },
+            {
+              condition = function(self)
+                return not self.ahead_hehind.error
+                  and self.ahead_hehind.ahead ~= nil
+                  and self.ahead_hehind.behind ~= nil
+              end,
+              {
+                provider = function(self)
+                  return ' '
+                    .. self.ahead_hehind.behind
+                    .. icons.misc.arrow_down
+                end,
+                hl = function(self)
+                  return {
+                    fg = self.ahead_hehind.behind == 0 and 'fg' or 'pale_red',
+                  }
+                end,
+              },
+              {
+                provider = function(self)
+                  return ' ' .. self.ahead_hehind.ahead .. icons.misc.arrow_up
+                end,
+                hl = function(self)
+                  return {
+                    fg = self.ahead_hehind.ahead == 0 and 'fg' or 'yellowgreen',
+                  }
+                end,
+              },
+            },
+          },
+          {
+            condition = function(self) return self.git_status ~= nil and false end,
             update = { 'User', pattern = 'git_statusChanged' },
             {
               condition = function(self)
