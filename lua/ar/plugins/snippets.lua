@@ -124,25 +124,4 @@ return {
     cond = not ar.plugins.minimal,
     config = function() require('telescope').load_extension('luasnip') end,
   },
-  --------------------------------------------------------------------------------
-  -- Disabled
-  --------------------------------------------------------------------------------
-  {
-    'garymjr/nvim-snippets',
-    enabled = false,
-    cond = ar.completion.enable and false,
-    event = 'InsertEnter',
-    opts = {
-      friendly_snippets = true,
-      extended_filetypes = {
-        typescript = { 'javascript', 'javascriptreact', 'jsdoc' },
-        typescriptreact = { 'javascript', 'javascriptreact', 'jsdoc' },
-      },
-      search_paths = {
-        join_paths(fn.stdpath('config'), 'snippets', 'textmate'),
-        -- join_paths(fn.stdpath('data'), 'lazy', 'friendly-snippets'),
-      },
-    },
-    dependencies = { 'rafamadriz/friendly-snippets' },
-  },
 }
