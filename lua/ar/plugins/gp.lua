@@ -231,22 +231,7 @@ return {
     end
 
     if models.copilot then
-      local copilot_models = {
-        ['claude-3.5-sonnet'] = {},
-        ['claude-3.7-sonnet'] = {},
-        ['claude-3.7-sonnet-thought'] = { max_tokens = 8192 },
-        ['claude-sonnet-4'] = { max_tokens = 80000 },
-        ['gemini-2.0-flash-001'] = {},
-        ['gemini-2.5-pro'] = { max_tokens = 128000 },
-        ['gpt-4'] = { max_tokens = 32768 },
-        ['gpt-4.1'] = { max_tokens = 128000 },
-        ['gpt-4o-2024-11-20'] = { max_tokens = 64000 },
-        ['gpt-4o-mini'] = { max_tokens = 12288 },
-        ['o1'] = { max_tokens = 64000 },
-        ['o3-mini'] = { max_tokens = 64000 },
-        ['o4-mini'] = { max_tokens = 128000 },
-      }
-      for model, config in pairs(copilot_models) do
+      for model, config in pairs(ar.ai.copilot_models) do
         setup_model({
           provider = 'copilot',
           name = fmt('ChatCopilot-%s', model),

@@ -1,18 +1,6 @@
 local models = ar_config.ai.models
 
-local model_names = {
-  'claude-3.5-sonnet',
-  'claude-3.7-sonnet',
-  'claude-3.7-sonnet-thought',
-  'claude-sonnet-4',
-  'gemini-2.0-flash-001',
-  'gemini-2.5-pro',
-  'gpt-4.1',
-  'gpt-4o-2024-11-20',
-  'o1',
-  'o3-mini',
-  'o4-mini',
-}
+local model_names = vim.tbl_keys(ar.ai.copilot_models)
 
 local function get_copilot_providers()
   local providers_table = {
