@@ -202,14 +202,7 @@ return {
       },
       providers = {
         openai = { disable = not models.openai },
-        copilot = {
-          disable = not models.copilot,
-          secret = {
-            'bash',
-            '-c',
-            "cat ~/.config/github-copilot/apps.json | sed -e 's/.*oauth_token...//;s/\".*//'",
-          },
-        },
+        copilot = { disable = not models.copilot },
         googleai = { disable = not models.gemini },
         anthropic = { disable = not models.claude },
       },
