@@ -377,6 +377,14 @@ return {
             picker:close()
             window_picker_action(picker, _, action)
           end,
+          parent = {
+            action = function(picker, _)
+              local cwd = picker:cwd() or vim.uv.cwd()
+              cwd = vim.uv.fs_realpath(cwd .. '/..')
+              picker:set_cwd(cwd)
+              picker:find()
+            end,
+          },
         },
         win = {
           input = {
@@ -389,6 +397,7 @@ return {
               ['<A-h>'] = { 'preview_scroll_left', mode = { 'i', 'n' } },
               ['<A-l>'] = { 'preview_scroll_right', mode = { 'i', 'n' } },
               ['<A-w>'] = { 'cycle_win', mode = { 'i', 'n' } },
+              ['<A-BS>'] = { 'parent', mode = { 'i', 'n' } },
             },
           },
         },
