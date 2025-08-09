@@ -41,7 +41,13 @@ local function get_snippets_list()
 end
 
 return {
-  { 'rafamadriz/friendly-snippets', cond = not minimal },
+  {
+    'rafamadriz/friendly-snippets',
+    cond = function()
+      return not minimal
+        and ar_config.completion.snippets.variant == 'friendly-snippets'
+    end,
+  },
   {
     's1n7ax/nvim-snips',
     name = 'snips',
@@ -100,14 +106,19 @@ return {
       require('luasnip').config.setup({ store_selection_keys = '<C-x>' })
 
       require('luasnip.loaders.from_lua').lazy_load()
-      require('luasnip.loaders.from_vscode').lazy_load({
-        paths = {
-          join_paths(fn.stdpath('data'), 'lazy', 'friendly-snippets'),
-          join_paths(fn.stdpath('config'), 'snippets', 'textmate'),
-        },
-      })
 
-      ls.filetype_extend('typescriptreact', { 'javascript', 'typescript' })
+      local paths = {
+        join_paths(fn.stdpath('config'), 'snippets', 'textmate'),
+      }
+
+      if ar_config.completion.snippets.variant == 'friendly-snippets' then
+        paths = vim.list_extend(paths, {
+          join_paths(fn.stdpath('data'), 'lazy', 'friendly-snippets'),
+        })
+      end
+
+      require('luasnip.loaders.from_vscode').lazy_load({ paths = paths })
+
       ls.filetype_extend('NeogitCommitMessage', { 'gitcommit' })
 
       if ar.treesitter.enable and ar.is_available('snips') then

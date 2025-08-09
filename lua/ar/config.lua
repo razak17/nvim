@@ -344,6 +344,11 @@ local config = {
     icons = 'lspkind',
     ---@type ArCompletion
     variant = 'blink',
+    snippets = {
+      enable = true,
+      ---@type 'minimal' | 'friendly-snippets'
+      variant = 'minimal',
+    },
   },
   colorscheme = ar.plugins.minimal and 'default' or 'onedark',
   ---@type ArDashboard
