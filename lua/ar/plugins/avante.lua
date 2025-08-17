@@ -124,6 +124,7 @@ return {
       local function set_provider(provider, model_name)
         opts.provider = model_name or provider
         -- opts.auto_suggestions_provider = model_name or provider
+        -- opts.cursor_applying_provider = model_name or provider
       end
 
       if models.claude then
