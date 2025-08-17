@@ -1,4 +1,4 @@
-local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
+local minimal = ar.plugins.minimal
 local border = ar.ui.current.border
 
 local buffer_hint = [[
@@ -8,15 +8,6 @@ _p_: previous buffer   _P_: previous buffer in history   _r_: reload buffer
 _H_: previous tab      _L_: next tab
 ^
 ^ ^                 _<Esc>_: quit              _q_: exit
-]]
-
-local chatgpt_hint = [[
-_a_: add tests      _c_: complete code    _d_: docstring
-_e_: explain code   _f_: fix bugs         _g_: grammar correction
-_k_: keywords       _o_: optimize code    _r_: code readability analysis
-_t_: translate
-^
-              _<Esc>_: quit              _q_: exit
 ]]
 
 local fold_hint = [[
@@ -68,7 +59,6 @@ return {
   event = 'VeryLazy',
   config = function()
     local Hydra = require('hydra')
-    local cmd = require('hydra.keymap-util').cmd
     local pcmd = require('hydra.keymap-util').pcmd
     local hint_opts = { position = 'bottom', border = border, type = 'window' }
 
