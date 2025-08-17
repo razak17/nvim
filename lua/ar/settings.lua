@@ -5,8 +5,8 @@ local o, opt, fn = vim.o, vim.opt, vim.fn
 --------------------------------------------------------------------------------
 -- Neovim Directories {{{1
 --------------------------------------------------------------------------------
-o.udir = vim.fn.stdpath('cache') .. '/undodir'
-o.viewdir = vim.fn.stdpath('cache') .. '/view'
+o.udir = fn.stdpath('cache') .. '/undodir'
+o.viewdir = fn.stdpath('cache') .. '/view'
 --------------------------------------------------------------------------------
 -- Message output on vim actions {{{1
 --------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ o.ttimeoutlen = 10
 o.splitkeep = 'screen'
 o.splitbelow = true
 o.splitright = true
-o.eadirection = 'hor'
+o.eadirection = 'both'
 -- exclude usetab as we do not want to jump to buffers in already open tabs
 -- do not use split or vsplit to ensure we don't open any new windows
 o.switchbuf = 'useopen,uselast'
@@ -185,7 +185,7 @@ o.smartindent = true
 --------------------------------------------------------------------------------
 o.pumheight = 15
 o.confirm = true -- make vim prompt me to save before doing destructive things
-opt.completeopt = { 'menuone', 'noselect' }
+opt.completeopt = { 'menuone', 'noselect', 'popup' }
 if ar.has('nvim-0.11') then
   opt.completeopt:append('fuzzy') -- Use fuzzy matching for built-in completion
 end
