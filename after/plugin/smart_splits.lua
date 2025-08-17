@@ -5,6 +5,8 @@ if not ar or ar.none or not enabled then return end
 local fn = vim.fn
 
 local config = {
+  max_columns = 3,
+  max_rows = 3,
   excluded = {
     filetypes = {
       'alpha',
@@ -47,6 +49,27 @@ local config = {
 --------------------------------------------------------------------------------
 -- Move to a window (one of hjkl) or create a split if a window does not exist in the direction
 -- @see: https://github.com/theopn/theovim/blob/main/lua/config/keymap.lua#L100
+local function count_windows_in_direction(direction)
+  local current_tabpage = vim.api.nvim_get_current_tabpage()
+  local windows = vim.api.nvim_tabpage_list_wins(current_tabpage)
+  local current_win = vim.api.nvim_get_current_win()
+  local current_pos = vim.api.nvim_win_get_position(current_win)
+
+  local count = 0
+  for _, win in ipairs(windows) do
+    if win ~= current_win then
+      local pos = vim.api.nvim_win_get_position(win)
+      if direction == 'horizontal' then
+        if pos[1] == current_pos[1] then count = count + 1 end
+      elseif direction == 'vertical' then
+        if pos[2] == current_pos[2] then count = count + 1 end
+      end
+    end
+  end
+
+  return count + 1
+end
+
 local function move_or_create_win(key)
   local is_excluded_bt = vim.tbl_contains(config.excluded.buftypes, vim.bo.bt)
   local is_excluded_ft = vim.tbl_contains(config.excluded.filetypes, vim.bo.ft)
@@ -55,15 +78,29 @@ local function move_or_create_win(key)
     return
   end
   local curr_win = fn.winnr()
-  vim.cmd('wincmd ' .. key) --> attempt to move
+  vim.cmd('wincmd ' .. key)
 
-  if curr_win == fn.winnr() then --> didn't move, so create a split
+  if curr_win == fn.winnr() then
+    local should_create_split = true
+
     if key == 'h' or key == 'l' then
-      vim.cmd('wincmd v')
+      local current_columns = count_windows_in_direction('horizontal')
+      if current_columns >= config.max_columns then
+        should_create_split = false
+      end
     else
-      vim.cmd('wincmd s')
+      local current_rows = count_windows_in_direction('vertical')
+      if current_rows >= config.max_rows then should_create_split = false end
     end
-    vim.cmd('wincmd ' .. key)
+
+    if should_create_split then
+      if key == 'h' or key == 'l' then
+        vim.cmd('wincmd v')
+      else
+        vim.cmd('wincmd s')
+      end
+      vim.cmd('wincmd ' .. key)
+    end
   end
 end
 
