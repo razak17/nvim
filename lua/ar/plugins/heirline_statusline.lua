@@ -854,7 +854,9 @@ return {
       {
         flexible = 3,
         {
-          condition = function() return vim.bo.ft == 'http' end,
+          condition = function()
+            return is_avail('kulala.nvim') and vim.bo.ft == 'http'
+          end,
           {
             provider = function()
               local CONFIG = require('kulala.config')
