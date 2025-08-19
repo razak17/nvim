@@ -138,7 +138,7 @@ return {
               make_slash_commands = true, -- Add MCP prompts as /slash commands
             },
           },
-      }
+        }
       end
 
       local function set_adapter_and_strategy(adapter, model)
@@ -154,14 +154,14 @@ return {
 
       if models.claude then
         set_adapter_and_strategy('anthropic')
-      elseif models.openai then
-        -- https://platform.openai.com/docs/models
-        set_adapter_and_strategy('openai', 'gpt-4.1-mini')
-      elseif models.gemini then
-        set_adapter_and_strategy('gemini')
       elseif models.copilot then
         -- https://docs.github.com/en/copilot/reference/ai-models/supported-models
-        set_adapter_and_strategy('copilot', 'o4-mini')
+        set_adapter_and_strategy('copilot', 'gpt-4.1')
+      elseif models.openai then
+        -- https://platform.openai.com/docs/models
+        set_adapter_and_strategy('openai', 'gpt-4.1')
+      elseif models.gemini then
+        set_adapter_and_strategy('gemini')
       end
 
       opts.strategies.chat.opts = opts.strategies.chat.opts or {}
