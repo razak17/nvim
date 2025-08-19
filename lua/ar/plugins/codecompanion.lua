@@ -179,19 +179,19 @@ return {
             {
               CodeCompanionChatAgent = {
                 bg = { from = 'Debug', attr = 'fg', alter = -0.1 },
-                fg = { from = 'StatusLine', attr = 'bg' },
+                fg = { from = 'CurSearch', attr = 'fg' },
               },
             },
             {
               CodeCompanionChatTool = {
                 bg = { from = 'Special', attr = 'fg', alter = -0.1 },
-                fg = { from = 'StatusLine', attr = 'bg' },
+                fg = { from = 'CurSearch', attr = 'fg' },
               },
             },
             {
               CodeCompanionChatVariable = {
                 bg = { from = 'Directory', attr = 'fg', alter = 0.1 },
-                fg = { from = 'StatusLine', attr = 'bg' },
+                fg = { from = 'CurSearch', attr = 'fg' },
               },
             },
           },
