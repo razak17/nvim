@@ -185,6 +185,7 @@ local namespace = {
       ['gemini-2.0-flash-001'] = {},
       ['gemini-2.5-pro'] = { max_tokens = 128000 },
       ['gpt-5'] = { max_tokens = 128000 },
+      ['gpt-5-mini'] = { max_tokens = 128000 },
       ['gpt-4'] = { max_tokens = 32768 },
       ['gpt-4.1'] = { max_tokens = 128000 },
       ['gpt-4o-2024-11-20'] = { max_tokens = 64000 },
