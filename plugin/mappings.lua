@@ -666,7 +666,7 @@ function ar.null_pointer()
     end,
   })
 end
-nnoremap('<localleader>up', ar.null_pointer, { desc = 'share code url' })
+nnoremap('<leader>up', ar.null_pointer, { desc = 'share code url' })
 xnoremap(
   '<localleader>pp',
   ':lua ar.null_pointer()<CR>gv<Esc>',
