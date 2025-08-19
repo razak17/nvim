@@ -118,7 +118,12 @@ return {
           language = 'English', -- The language used for LLM responses
           system_prompt = function() return ar_config.ai.prompts.beast_mode end,
         },
-        extensions = {
+        extensions = {},
+        adapters = {},
+      }
+
+      if ar.is_available('mcphub.nvim') then
+        opts.extensions = {
           mcphub = {
             callback = 'mcphub.extensions.codecompanion',
             opts = {
@@ -133,9 +138,8 @@ return {
               make_slash_commands = true, -- Add MCP prompts as /slash commands
             },
           },
-        },
-        adapters = {},
       }
+      end
 
       local function set_adapter_and_strategy(adapter, model)
         opts.adapters[adapter] = function()
