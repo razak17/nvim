@@ -126,6 +126,7 @@ return {
           dependencies = {
             {
               'folke/lazydev.nvim',
+              cond = ar.lsp.enable and false,
               ft = 'lua',
               cmd = 'LazyDev',
               opts = {
@@ -137,7 +138,7 @@ return {
             },
             {
               'folke/neoconf.nvim',
-              cond = ar.lsp.enable,
+              cond = ar.lsp.enable and false,
               cmd = { 'Neoconf' },
               opts = {
                 local_settings = '.nvim.json',
