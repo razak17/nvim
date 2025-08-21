@@ -155,6 +155,7 @@ return {
   },
   {
     'iamcco/markdown-preview.nvim',
+    lazy = false,
     cond = function()
       return ar.get_plugin_cond('markdown-preview.nvim', not minimal)
     end,
