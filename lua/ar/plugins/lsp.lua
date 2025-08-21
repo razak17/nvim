@@ -7,7 +7,6 @@ local lsp_override = ar_config.lsp.override
 local ar_lsp = ar_config.lsp.lang
 
 local server_langs = {
-  biome = 'typescript',
   ts_ls = 'typescript',
   ['typescript-tools'] = 'typescript',
   tsgo = 'typescript',
@@ -20,6 +19,7 @@ local server_langs = {
   pyrefly = 'python',
   tailwindcss = 'tailwind',
   ['tailwind-tools'] = 'tailwind',
+  biome = 'web',
   eslint = 'web',
   emmet_ls = 'web',
   emmet_language_server = 'web',

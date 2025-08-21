@@ -412,13 +412,13 @@ local config = {
         ['tailwind-tools'] = false,
       },
       typescript = {
-        biome = false,
         ts_ls = false,
         ['typescript-tools'] = false,
         vtsls = true,
         tsgo = false,
       },
       web = {
+        biome = false,
         emmet_language_server = false,
         emmet_ls = false,
         eslint = false,

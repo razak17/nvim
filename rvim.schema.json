@@ -241,7 +241,6 @@
             "typescript": {
               "type": "object",
               "properties": {
-                "biome": { "type": "boolean" },
                 "ts_ls": { "type": "boolean" },
                 "typescript-tools": { "type": "boolean" },
                 "vtsls": { "type": "boolean" },
@@ -260,6 +259,7 @@
             "web": {
               "type": "object",
               "properties": {
+                "biome": { "type": "boolean" },
                 "eslint": { "type": "boolean" },
                 "emmet_language_server": { "type": "boolean" }
               },
