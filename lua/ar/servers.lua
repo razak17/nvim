@@ -55,6 +55,9 @@ local pyright_analysis = {
     reportUnnecessaryTypeIgnoreComment = 'warning',
     reportMatchNotExhaustive = 'error',
     reportShadowedImports = 'error',
+    reportAttributeAccessIssue = 'warning',
+    reportArgumentType = 'warning',
+    reportAssignmentType = 'warning',
   },
 }
 
