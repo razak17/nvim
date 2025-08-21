@@ -2,7 +2,7 @@ local enabled = ar_config.plugin.custom.smart_splits.enable
 
 if not ar or ar.none or not enabled then return end
 
-local fn = vim.fn
+local api, fn = vim.api, vim.fn
 
 local config = {
   max_columns = 3,
@@ -50,15 +50,15 @@ local config = {
 -- Move to a window (one of hjkl) or create a split if a window does not exist in the direction
 -- @see: https://github.com/theopn/theovim/blob/main/lua/config/keymap.lua#L100
 local function count_windows_in_direction(direction)
-  local current_tabpage = vim.api.nvim_get_current_tabpage()
-  local windows = vim.api.nvim_tabpage_list_wins(current_tabpage)
-  local current_win = vim.api.nvim_get_current_win()
-  local current_pos = vim.api.nvim_win_get_position(current_win)
+  local current_tabpage = api.nvim_get_current_tabpage()
+  local windows = api.nvim_tabpage_list_wins(current_tabpage)
+  local current_win = api.nvim_get_current_win()
+  local current_pos = api.nvim_win_get_position(current_win)
 
   local count = 0
   for _, win in ipairs(windows) do
     if win ~= current_win then
-      local pos = vim.api.nvim_win_get_position(win)
+      local pos = api.nvim_win_get_position(win)
       if direction == 'horizontal' then
         if pos[1] == current_pos[1] then count = count + 1 end
       elseif direction == 'vertical' then
