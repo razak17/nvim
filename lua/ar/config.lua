@@ -411,6 +411,7 @@ local config = {
         ['tailwind-tools'] = false,
       },
       typescript = {
+        biome = false,
         ts_ls = false,
         ['typescript-tools'] = false,
         vtsls = true,

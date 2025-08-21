@@ -82,6 +82,7 @@ end
 ---@type lspconfig.Config
 local servers = {
   astro = {},
+  biome = {},
   clangd = { cmd = get_clangd_cmd() },
   cmake = {},
   cssls = {},

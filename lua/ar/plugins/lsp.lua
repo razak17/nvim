@@ -7,6 +7,7 @@ local lsp_override = ar_config.lsp.override
 local ar_lsp = ar_config.lsp.lang
 
 local server_langs = {
+  biome = 'typescript',
   ts_ls = 'typescript',
   ['typescript-tools'] = 'typescript',
   tsgo = 'typescript',
