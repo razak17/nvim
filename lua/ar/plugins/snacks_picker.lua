@@ -18,6 +18,7 @@ if ar_config.picker.variant == 'snacks' then ar.pick.register(picker_config) end
 local fn = vim.fn
 local fmt = string.format
 local diag_icons = ar.ui.codicons.lsp
+local show_preview = ar_config.picker.preview
 
 local picker_layouts = {
   telescope = {
@@ -111,7 +112,7 @@ local function find_files()
     format = 'file',
     show_empty = true,
     supports_live = true,
-    layout = { cycle = true, preset = 'telescope' },
+    layout = { preview = show_preview, cycle = true, preset = 'select' },
       -- stylua: ignore start
     args = {
       '--exclude', '**/.git/**',
@@ -125,6 +126,18 @@ local function find_files()
       '--exclude', '**/.pytest_cache/**',
     },
     -- stylua: ignore end
+  })()
+end
+
+local function grep_string()
+  p('grep', {
+    layout = { preview = show_preview, cycle = true },
+  })()
+end
+
+local function grep_word()
+  p('grep_word', {
+    layout = { preview = show_preview, cycle = true },
   })()
 end
 
@@ -239,7 +252,7 @@ return {
         { '<leader>fp', p('projects'), desc = 'projects' },
         { '<leader>fP', p('lazy'), desc = 'search for plugin spec' },
         { '<leader>fr', p('resume'), desc = 'resume' },
-        { '<leader>fs', p('grep'), desc = 'grep' },
+        { '<leader>fs', grep_string, desc = 'grep' },
         { '<leader>fS', p('grep_buffers'), desc = 'grep open buffers' },
         { '<leader>fql', p('loclist'), desc = 'location list' },
         { '<leader>fqq', p('qflist'), desc = 'quickfix List' },
@@ -253,7 +266,7 @@ return {
         { '<leader>fvm', p('marks'), desc = 'marks' },
         { '<leader>fvr', p('registers'), desc = 'registers' },
         { '<leader>fvs', p('search_history'), desc = 'search history' },
-        { '<leader>fw', '<Cmd>lua Snacks.picker.grep_word()<CR>', desc = 'visual selection or word', mode = { 'n', 'x' } },
+        { '<leader>fw', grep_word, desc = 'visual selection or word', mode = { 'n', 'x' } },
         -- explorer
         { "<leader>fe", function() Snacks.explorer() end, desc = "explorer" },
       }

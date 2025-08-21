@@ -85,6 +85,7 @@ local env = vim.env
 
 ---@class ArPicker
 ---@field enable boolean
+---@field preview boolean
 ---@field files ArWhichFilesPicker
 ---@field variant ArWhichPicker
 
@@ -438,7 +439,12 @@ local config = {
   ---@type ArNotifier
   notifier = { enable = true, variant = 'snacks' },
   ---@type ArPicker
-  picker = { enable = true, files = 'snacks', variant = 'snacks' },
+  picker = {
+    enable = true,
+    preview = false,
+    files = 'snacks',
+    variant = 'snacks',
+  },
   plugin = {
     custom = {
       accelerated_jk = { enable = true },
