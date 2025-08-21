@@ -270,6 +270,13 @@ local servers = {
   },
   sqls = {},
   tailwindcss = {},
+  tinymist = {
+    settings = {
+      formatterMode = 'typstyle',
+      exportPdf = 'onType',
+      semanticTokens = 'disable',
+    },
+  },
   ts_ls = {
     init_options = { documentFormatting = false, hostInfo = 'neovim' },
     commands = {

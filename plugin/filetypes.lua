@@ -4,7 +4,6 @@ if not ar or ar.none or not enabled then return end
 
 local settings, highlight = ar.filetype_settings, ar.highlight
 local cmd, api, fn, opt_l = vim.cmd, vim.api, vim.fn, vim.opt_local
-local is_available = ar.is_available
 
 vim.treesitter.language.register('gitcommit', 'NeogitCommitMessage')
 
@@ -263,6 +262,17 @@ settings({
   text = {
     bo = { textwidth = 78 },
     wo = { spell = false },
+  },
+  typst = {
+    function()
+      api.nvim_create_user_command('OpenPdf', function()
+        local filepath = vim.api.nvim_buf_get_name(0)
+        if filepath:match('%.typ$') then
+          local pdf_path = filepath:gsub('%.typ$', '.pdf')
+          ar.open(pdf_path)
+        end
+      end, {})
+    end,
   },
   vim = {
     bo = { syntax = 'off' },

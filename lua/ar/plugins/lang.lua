@@ -385,6 +385,15 @@ return {
     opts = { border = border },
   },
   -- }}}
+  -- Typst
+  --------------------------------------------------------------------------------
+  {
+    'chomosuke/typst-preview.nvim',
+    ft = 'typst',
+    cond = function() return ar.get_plugin_cond('typst-preview') end,
+    cmd = { 'TypstPreview', 'TypstPreviewToggle', 'TypstPreviewUpdate' },
+  },
+  -- }}}
   ------------------------------------------------------------------------------
   -- Syntax {{{1
   ------------------------------------------------------------------------------
