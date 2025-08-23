@@ -15,7 +15,11 @@ return {
     'NickvanDyke/opencode.nvim',
     cond = function() return ar.get_plugin_cond('opencode.nvim', ar.ai.enable) end,
     init = function()
-      vim.g.whichkey_add_spec({ '<leader>ao', group = 'Opencode' })
+      vim.g.whichkey_add_spec({
+        '<leader>ao',
+        group = 'Opencode',
+        mode = { 'n', 'x' },
+      })
     end,
     opts = {},
     -- stylua: ignore
