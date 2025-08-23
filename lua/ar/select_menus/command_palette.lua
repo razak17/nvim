@@ -16,15 +16,45 @@ function M.format_buf()
     css = '--parser css',
     scss = '--parser scss',
   }
+  local biome_ft = {
+    'astro',
+    'css',
+    'graphql',
+    'html',
+    'javascript',
+    'javascriptreact',
+    'json',
+    'jsonc',
+    'svelte',
+    'typescript',
+    'typescript.tsx',
+    'typescriptreact',
+    'vue',
+  }
 
-  if ft ~= 'sql' and ar.falsy(fn.executable('prettier')) then
-    vim.notify('prettier executable was not found!')
+  local biome_exists = fn.executable('prettier')
+  local prettier_exists = fn.executable('biome')
+  local sql_formatter_exists = fn.executable('biome')
+
+  if ft == 'sql' and ar.falsy(sql_formatter_exists) then
+    vim.notify('sql_formatter_exists executable was not found!')
     return
   end
 
-  if ft == 'sql' then
-    vim.cmd(':%!npx sql-formatter --language postgresql')
-  elseif parser[ft] then
+  if ft ~= 'sql' and ar.falsy(prettier_exists or biome_exists) then
+    vim.notify('biome or prettier executable was not found!')
+    return
+  end
+
+  if sql_formatter_exists and ft == 'sql' then
+    vim.cmd(':%!sql-formatter --language postgresql')
+    return
+  end
+
+  if biome_exists and vim.tbl_contains(biome_ft, ft) then
+    local path = fn.expand('%')
+    vim.cmd(fmt(':!biome check --write "%s"', path))
+  elseif prettier_exists and parser[ft] then
     vim.cmd(':%!prettier ' .. parser[ft])
   else
     print('No LSP and unhandled filetype ' .. ft)
