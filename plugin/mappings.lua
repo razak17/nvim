@@ -98,7 +98,34 @@ nnoremap(
 -- Make zO recursively open whatever top level fold we're in, no matter where the
 -- cursor happens to be.
 nnoremap('zO', [[zCzO]])
+--------------------------------------------------------------------------------
+-- Multi Search
+--------------------------------------------------------------------------------
+-- https://www.reddit.com/r/neovim/comments/1mxeghf/using_as_a_multipurpose_search_tool/
 -- nnoremap('<tab>', [[za]])
+-- / search in buffer
+-- g/ search for word under cursor (* is hard to type on a querty keyboard)
+-- [/ search for first occurence of the current word
+-- <c-w>/ search for first occurence of the current word in a new window
+-- <leader>/ search in workspace
+-- <leader>g/ search current word in workspace
+-- / search inside selection (visual mode)
+nnoremap('g/', '*', { desc = 'search word under cursor' }) -- `:h *`
+nnoremap('[/', '[<c-i>', { desc = 'search for first occurence' }) -- `:h [_ctrl-i`
+nnoremap('<c-w>/', function()
+  local word = vim.fn.expand('<cword>')
+  if word ~= '' then
+    vim.cmd('split | silent! ijump /' .. word .. '/') -- `:h ijump`
+  end
+end, { desc = 'search for first occurence in new window' })
+-- Using snacks.nvim here, but all alternatives have similar commands
+nnoremap('<leader>/', ar.pick('grep'), { desc = 'search in workspace' })
+nnoremap(
+  '<leader>g/',
+  function() return ar.pick.open('grep_word') end,
+  { desc = 'search word in workspace' }
+)
+xnoremap('/', '<esc>/\\%V', { desc = 'search inside selection' }) -- `:h /\%V`
 --------------------------------------------------------------------------------
 -- Delimiters
 --------------------------------------------------------------------------------
