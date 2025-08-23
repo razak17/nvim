@@ -51,7 +51,7 @@ local env = vim.env
 ---@alias ArPythonLang { basedpyright: boolean, ruff: boolean, ty: boolean, jedi_language_server: boolean, pyrefly: boolean, }
 ---@alias ArTailwindLang { tailwindcss: boolean, tailwind-tools: boolean, }
 ---@alias ArTypescriptLang { ts_ls: boolean, typescript-tools: boolean, vtsls: boolean, tsgo: boolean, }
----@alias ArWebLang { eslint: boolean, emmet_language_server: boolean, }
+---@alias ArWebLang { biome: boolean,  eslint: boolean, emmet_language_server: boolean, }
 
 ---@class ArAIModels
 ---@field claude boolean
