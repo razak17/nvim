@@ -200,7 +200,7 @@ local namespace = {
   media = {
     audio = { 'mp3', 'm4a' },
     doc = { 'pdf' },
-    image = { 'jpg', 'png', 'jpeg', 'ico', 'gif' },
+    image = { 'jpg', 'png', 'jpeg', 'ico', 'avif', 'webp', 'gif' },
     video = { 'mp4', 'mkv' },
   },
   git = { enable = env.RVIM_GIT_ENABLED == '1' },

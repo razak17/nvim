@@ -50,7 +50,17 @@ ar.add_to_select_menu(
 
 ar.augroup('InterceptToggle', {
   event = { 'BufNew', 'BufReadPre' },
-  pattern = { '*.png', '*.jpg', '*.ico', '*.pdf', '*.mp3', '*.mp4', '*.gif' },
+  pattern = {
+    '*.png',
+    '*.jpg',
+    '*.ico',
+    '*.avif',
+    '*.webp',
+    '*.pdf',
+    '*.mp3',
+    '*.mp4',
+    '*.gif',
+  },
   command = function(args)
     if not config.enable then return end
     local path, bufnr = args.match, args.buf
