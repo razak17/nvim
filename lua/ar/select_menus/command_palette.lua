@@ -87,7 +87,7 @@ function M.generate_plugins()
     table.insert(file_content, p)
   end
 
-  local file, err = io.open(vim.fn.stdpath('config') .. '/PLUGINS.md', 'w')
+  local file, err = io.open(fn.stdpath('config') .. '/PLUGINS.md', 'w')
   if not file then error(err) end
   file:write(table.concat(file_content, '\n'))
   file:close()
@@ -182,7 +182,7 @@ function M.quick_set_ft()
 end
 
 function M.search_code_deps()
-  if vim.fn.isdirectory('node_modules') then
+  if fn.isdirectory('node_modules') then
     require('telescope').extensions.live_grep_raw.live_grep_raw({
       cwd = 'node_modules',
     })
