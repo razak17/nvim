@@ -1,6 +1,8 @@
 local api, fn, uv = vim.api, vim.fn, vim.uv
 local border = ar.ui.current.border
 local minimal = ar.plugins.minimal
+local is_biome = ar_config.lsp.lang.web.biome
+  or vim.tbl_contains(ar_config.lsp.override, 'biome')
 
 local function get_lsp_servers()
   local servers = require('ar.servers').list
@@ -203,7 +205,12 @@ return {
           condition = function(_, ctx)
             return has_parser(ctx)
               and (ar.lsp.prettier.needs_config ~= true or has_config(ctx))
+              and not is_biome
           end,
+        },
+        biome = {
+          condition = function() return is_biome end,
+          require_cwd = true,
         },
         -- https://github.com/mistweaverco/kulala-fmt
         ['kulala-fmt'] = {
@@ -232,9 +239,15 @@ return {
       vim.g.async_format_filetypes = opts.user_async_format_filetypes
 
       opts.formatters_by_ft = opts.formatters_by_ft or {}
+
       for _, ft in ipairs(prettier_ft) do
-        opts.formatters_by_ft[ft] = { 'prettier' }
+        if is_biome then
+          opts.formatters_by_ft[ft] = { 'biome' }
+        else
+          opts.formatters_by_ft[ft] = { 'prettier' }
+        end
       end
+
       for _, ft in ipairs(sql_ft) do
         opts.formatters_by_ft[ft] = { 'sql_formatter' }
       end
@@ -242,7 +255,13 @@ return {
       local conform = require('conform')
       conform.setup(opts)
 
-      local ignored_server = { 'kulala', 'render-markdown', 'injected', 'dev-tools' }
+      local ignored_server = {
+        'kulala',
+        'render-markdown',
+        'injected',
+        'dev-tools',
+      }
+
       ar.augroup('ConformFormat', {
         event = { 'BufEnter' },
         command = function(args)
