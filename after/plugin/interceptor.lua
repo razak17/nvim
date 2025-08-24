@@ -34,7 +34,7 @@ local function open_in_prog(buf, fpath, fname, prog)
   notify(string.format('Opening `%s`', fname), 'Open File in External Program')
   if prog == nil then ar.open_media(fpath) end
   if prog ~= nil then vim.system({ prog, fpath }, { detach = true }) end
-  api.nvim_buf_delete(buf, { force = true })
+  vim.schedule(function() api.nvim_buf_delete(buf, { force = true }) end)
 end
 
 ar.command('InterceptToggle', function()
