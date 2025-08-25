@@ -122,7 +122,7 @@
         },
         "variant": {
           "type": "string",
-          "enum": ["neo-tree", "snacks", "mini.files", "oil"]
+          "enum": ["neo-tree", "snacks", "mini.files", "oil", "fyler"]
         }
       },
       "additionalProperties": false
