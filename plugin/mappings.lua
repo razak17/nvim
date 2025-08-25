@@ -545,13 +545,15 @@ vnoremap(
 xnoremap('<leader>ul', [[:g/\v^ *$/d<CR>]], { desc = 'remove empty lines' })
 --------------------------------------------------------------------------------
 nnoremap('<leader>ui', vim.show_pos, { desc = 'inspect pos' })
-nnoremap('<leader>uI', '<cmd>Inspect<CR>', { desc = 'inspect tree' })
+nnoremap('<leader>uI', '<Cmd>Inspect<CR>', { desc = 'inspect tree' })
 --------------------------------------------------------------------------------
 -- Inspect treesitter tree
 nnoremap('<leader>ut', function()
   vim.treesitter.inspect_tree({ command = 'botright 60vnew' })
   vim.api.nvim_input('I')
 end, { desc = 'inspect tree' })
+-- edit treesitter query
+nnoremap('<leader>ue', '<Cmd>EditQuery<CR>', { desc = 'edit query' })
 --------------------------------------------------------------------------------
 -- Conceal Level & Cursor
 nnoremap(

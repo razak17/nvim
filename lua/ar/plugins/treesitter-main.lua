@@ -283,11 +283,6 @@ return {
     opts = {},
   },
   {
-    'nvim-treesitter/playground',
-    cond = not minimal and ts_extra_enabled,
-    cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
-  },
-  {
     'andymass/vim-matchup',
     event = { 'BufReadPre', 'BufNewFile' },
     cond = not minimal and ts_extra_enabled and false,
