@@ -356,17 +356,19 @@ return {
       }, symbols)
 
       if not minimal then
-        opts.snippets = {
-          preset = 'luasnip',
-          expand = function(snippet) require('luasnip').lsp_expand(snippet) end,
-          active = function(filter)
-            if filter and filter.direction then
-              return require('luasnip').jumpable(filter.direction)
-            end
-            return require('luasnip').in_snippet()
-          end,
-          jump = function(direction) require('luasnip').jump(direction) end,
-        }
+        if is_avail('LuaSnip') then
+          opts.snippets = {
+            preset = 'luasnip',
+            expand = function(snippet) require('luasnip').lsp_expand(snippet) end,
+            active = function(filter)
+              if filter and filter.direction then
+                return require('luasnip').jumpable(filter.direction)
+              end
+              return require('luasnip').in_snippet()
+            end,
+            jump = function(direction) require('luasnip').jump(direction) end,
+          }
+        end
         opts.sources.providers['nvim-px-to-rem'] = {
           module = 'nvim-px-to-rem.integrations.blink',
           name = '[PX2REM]',
@@ -490,9 +492,7 @@ return {
       require('blink.cmp').setup(opts)
     end,
     dependencies = {
-      'rafamadriz/friendly-snippets',
       'mikavilpas/blink-ripgrep.nvim',
-      'L3MON4D3/LuaSnip',
       'jsongerber/nvim-px-to-rem',
       'moyiz/blink-emoji.nvim',
       'mgalliou/blink-cmp-tmux',
