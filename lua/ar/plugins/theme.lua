@@ -202,9 +202,9 @@ return {
     -- NOTE: Double underlines markdown headings
     'oxfist/night-owl.nvim',
     priority = get_priority({ 'night-owl' }),
-    -- event = get_event({ 'night-owl' }),
-    -- cond = get_cond({ 'night-owl' }),
-    -- opts = { underline = false },
+    event = get_event({ 'night-owl' }),
+    cond = get_cond({ 'night-owl' }),
+    opts = { underline = false },
   },
   {
     'atmosuwiryo/vim-winteriscoming',
