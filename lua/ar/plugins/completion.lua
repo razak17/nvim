@@ -477,10 +477,4 @@ return {
     cond = ar.completion.enable and not minimal and is_cmp,
     ft = { 'c', 'cpp' },
   },
-  {
-    'jsongerber/nvim-px-to-rem',
-    cond = ar.completion.enable and not minimal,
-    ft = { 'css', 'scss' },
-    opts = { show_virtual_text = true },
-  },
 }

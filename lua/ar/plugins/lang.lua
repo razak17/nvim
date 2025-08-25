@@ -24,6 +24,13 @@ return {
   -- Web Dev (Typescript)
   --------------------------------------------------------------------------------
   {
+    'jsongerber/nvim-px-to-rem',
+    cond = function()
+      local condition =ar.completion.enable and not minimal
+      return ar.get_plugin_cond('nvim-px-to-rem', condition)
+    end,
+  },
+  {
     'Redoxahmii/json-to-types.nvim',
     cond = function()
       return ar.get_plugin_cond('json-to-types.nvim', not minimal)

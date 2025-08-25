@@ -152,9 +152,6 @@ return {
             'path',
             'snippets',
             'buffer',
-            'ripgrep',
-            'emoji',
-            'tmux',
           }
 
           if
@@ -179,7 +176,18 @@ return {
               end
             end
             if not minimal then
-              table.insert(sources, 'nvim-px-to-rem')
+              if is_avail('blink-ripgrep.nvim') then
+                table.insert(sources, 'ripgrep')
+              end
+              if is_avail('blink-emoji.nvim') then
+                table.insert(sources, 'emoji')
+              end
+              if is_avail('blink-cmp-tmux') then
+                table.insert(sources, 'tmux')
+              end
+              if is_avail('nvim-px-to-rem') then
+                table.insert(sources, 'nvim-px-to-rem')
+              end
               if is_avail('vim-dadbod-completion') then
                 table.insert(sources, 'dadbod')
               end
@@ -223,34 +231,6 @@ return {
             max_items = 15,
             module = 'blink.cmp.sources.snippets',
             score_offset = 20,
-          },
-          ripgrep = {
-            module = 'blink-ripgrep',
-            name = '[RG]',
-            transform_items = function(_, items)
-              for _, item in ipairs(items) do
-                item.kind = require('blink.cmp.types').CompletionItemKind.Field
-              end
-              return items
-            end,
-            opts = { prefix_min_len = 5 },
-          },
-          emoji = {
-            module = 'blink-emoji',
-            name = '[EMOJI]',
-            score_offset = 15,
-            min_keyword_length = 2,
-            opts = { insert = true },
-          },
-          tmux = {
-            module = 'blink-cmp-tmux',
-            name = '[TMUX]',
-            opts = {
-              all_panes = false,
-              capture_history = false,
-              triggered_only = false,
-              trigger_chars = { '.' },
-            },
           },
         },
       },
@@ -356,6 +336,41 @@ return {
       }, symbols)
 
       if not minimal then
+        if is_avail('blink-ripgrep.nvim') then
+          opts.sources.providers.ripgrep = {
+            module = 'blink-ripgrep',
+            name = '[RG]',
+            transform_items = function(_, items)
+              for _, item in ipairs(items) do
+                item.kind = require('blink.cmp.types').CompletionItemKind.Field
+              end
+              return items
+            end,
+            opts = { prefix_min_len = 5 },
+          }
+        end
+        if is_avail('blink-emoji.nvim') then
+          opts.sources.providers.emoji = {
+            module = 'blink-emoji',
+            name = '[EMOJI]',
+            score_offset = 15,
+            min_keyword_length = 2,
+            opts = { insert = true },
+          }
+        end
+        if is_avail('blink-cmp-tmux') then
+          opts.sources.providers.tmux = {
+            module = 'blink-cmp-tmux',
+            name = '[TMUX]',
+            opts = {
+              all_panes = false,
+              capture_history = false,
+              triggered_only = false,
+              trigger_chars = { '.' },
+            },
+          }
+        end
+
         if is_avail('LuaSnip') then
           opts.snippets = {
             preset = 'luasnip',
@@ -492,10 +507,6 @@ return {
       require('blink.cmp').setup(opts)
     end,
     dependencies = {
-      'mikavilpas/blink-ripgrep.nvim',
-      'jsongerber/nvim-px-to-rem',
-      'moyiz/blink-emoji.nvim',
-      'mgalliou/blink-cmp-tmux',
       {
         'giuxtaposition/blink-cmp-copilot',
         cond = not minimal and is_copilot,
