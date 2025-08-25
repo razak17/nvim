@@ -424,42 +424,16 @@ return {
   {
     'sQVe/sort.nvim',
     cmd = { 'Sort' },
+    -- stylua: ignore
     init = function()
-      vim.g.whichkey_add_spec({
-        '<localleader>S',
-        group = 'Sort',
-        mode = { 'x' },
-      })
+      vim.g.whichkey_add_spec({'<localleader>S', group = 'Sort', mode = { 'n', 'x' }, })
     end,
+    -- stylua: ignore
     keys = {
-      {
-        '<localleader>Ss',
-        '<Cmd>Sort<CR>',
-        desc = 'sort: selection',
-        mode = { 'x' },
-        silent = true,
-      },
-      {
-        '<localleader>SS',
-        '<Cmd>Sort!<CR>',
-        desc = 'sort: selection (reverse)',
-        mode = { 'x' },
-        silent = true,
-      },
-      {
-        '<localleader>Si',
-        '<Cmd>Sort i<CR>',
-        desc = 'sort: ignore case',
-        mode = { 'x' },
-        silent = true,
-      },
-      {
-        '<localleader>SI',
-        '<Cmd>Sort! i<CR>',
-        desc = 'sort: ignore case (reverse)',
-        mode = { 'x' },
-        silent = true,
-      },
+      { '<localleader>Ss', ':Sort<CR>', desc = 'sort: selection', mode = { 'n', 'x' }, silent = true },
+      { '<localleader>SS', ':Sort!<CR>', desc = 'sort: selection (reverse)', mode = { 'n', 'x' }, silent = true },
+      { '<localleader>Si', ':Sort i<CR>', desc = 'sort: ignore case', mode = { 'n', 'x' }, silent = true },
+      { '<localleader>SI', ':Sort! i<CR>', desc = 'sort: ignore case (reverse)', mode = { 'n', 'x' }, silent = true },
     },
   },
   {
