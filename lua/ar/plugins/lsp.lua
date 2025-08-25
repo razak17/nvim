@@ -72,7 +72,7 @@ return {
       -- stylua: ignore
       cmd = {
         'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll',
-        'MasonLog', 'MasonUpdate', 'MasonUpdateAll', -- this cmd is provided by mason-extra-cmds
+        'MasonLog', 'MasonUpdate'
       },
       opts = {
         ui = {
@@ -91,7 +91,11 @@ return {
         },
         providers = { 'mason.providers.registry-api', 'mason.providers.client' },
       },
-      dependencies = { 'Zeioth/mason-extra-cmds', opts = {} },
+    },
+    {
+      'Zeioth/mason-extra-cmds',
+      cmd = 'MasonUpdateAll', -- this cmd is provided by mason-extra-cmds
+      opts = {},
     },
     {
       'williamboman/mason-lspconfig.nvim',
