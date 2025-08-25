@@ -19,6 +19,19 @@ end
 
 return {
   {
+    'A7Lavinraj/fyler.nvim',
+    cond = function()
+      return ar_config.explorer.variant == 'fyler'
+        or ar_config.picker.variant ~= 'snacks'
+    end,
+    branch = 'stable',
+    cmd = { 'Fyler' },
+    keys = {
+      { '<c-n>', '<cmd>Fyler kind=split:right<CR>', desc = 'toggle tree' },
+    },
+    opts = {},
+  },
+  {
     'nvim-neo-tree/neo-tree.nvim',
     cond = function()
       return ar_config.explorer.variant == 'neo-tree'

@@ -29,7 +29,7 @@ local env = vim.env
 ---@alias ArCompletion 'cmp' | 'blink' | 'mini.completion' | 'omnifunc'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
 ---@alias ArWhichDashboard 'builtin' | 'alpha' | 'snacks'
----@alias ArWhichExplorer 'neo-tree' | 'snacks' | 'mini.files' | 'oil'
+---@alias ArWhichExplorer 'neo-tree' | 'snacks' | 'mini.files' | 'oil' | 'fyler'
 ---@alias ArWhichGx 'local' | 'plugin'
 ---@alias ArWhichIcon 'nvim-web-devicons' | 'mini.icons'
 ---@alias ArWhichImage 'image.nvim' | 'snacks'
