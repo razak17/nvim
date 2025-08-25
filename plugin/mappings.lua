@@ -47,6 +47,7 @@ nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]], {
 --------------------------------------------------------------------------------
 -- Delete a single character without copying into register:
 nnoremap('<leader>x', '"_x', { desc = 'delete char (no copy)' })
+xnoremap('<leader>x', '"_x', { desc = 'delete char (no copy)' })
 -- Greatest remap ever
 vnoremap('<leader>p', '"_dP', { desc = 'greatest remap' })
 -- Keep cursor position on paste
