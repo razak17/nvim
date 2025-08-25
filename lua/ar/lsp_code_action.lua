@@ -27,8 +27,13 @@ local ts_priority_overrides = {
   ['Remove unused declaration for'] = 8,
 }
 
+local biome_overrides = {
+  ['Organize Imports (Biome)'] = 8,
+}
+
 local priority_overrides = {
   ['typescript-tools'] = ts_priority_overrides,
+  biome = biome_overrides,
   ts_ls = ts_priority_overrides,
   vtsls = ts_priority_overrides,
 }
@@ -143,9 +148,7 @@ local function on_code_action_results(results)
     local priority = 5
     if a.isPreferred then priority = a.kind == 'quickfix' and 7 or 6 end
     local source = lsp.get_client_by_id(a.ctx.client_id).name
-    if vim.tbl_contains({'eslint'}, source) then
-      priority = 8
-    end
+    if vim.tbl_contains({ 'eslint' }, source) then priority = 8 end
     local title = a.action.title
     local client = lsp.get_client_by_id(a.ctx.client_id)
     if client then
