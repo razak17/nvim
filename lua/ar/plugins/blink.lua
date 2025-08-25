@@ -9,8 +9,12 @@ local is_blink = ar_config.completion.variant == 'blink'
 local ai_models = ar_config.ai.models
 local ai_cmp = ar_config.ai.completion
 local which_ai_cmp = ai_cmp.variant
-local is_copilot = ai_models.copilot and which_ai_cmp == 'copilot'
-local is_minuet = ai_models.gemini and which_ai_cmp == 'minuet'
+local is_copilot = ai_models.copilot
+  and which_ai_cmp == 'copilot'
+  and is_avail('copilot.lua')
+local is_minuet = ai_models.gemini
+  and which_ai_cmp == 'minuet'
+  and is_avail('minuet-ai.nvim')
 
 local show_index = false
 _G.auto_show = true
@@ -165,16 +169,20 @@ return {
             if ar.ai.enable then
               if is_copilot then table.insert(sources, 'copilot') end
               if is_minuet then table.insert(sources, 'minuet') end
-              if is_copilot and ar.ai.enable then
+              if is_copilot then
                 table.insert(sources, 'avante_commands')
                 table.insert(sources, 'avante_mentions')
                 table.insert(sources, 'avante_files')
               end
-              table.insert(sources, 'codecompanion')
+              if is_avail('codecompanion.nvim') then
+                table.insert(sources, 'codecompanion')
+              end
             end
             if not minimal then
               table.insert(sources, 'nvim-px-to-rem')
-              if is_avail('vim-dadbod-completion') then table.insert(sources, 'dadbod') end
+              if is_avail('vim-dadbod-completion') then
+                table.insert(sources, 'dadbod')
+              end
               if
                 ar_config.shelter.variant == 'ecolog'
                 and is_avail('ecolog.nvim')
