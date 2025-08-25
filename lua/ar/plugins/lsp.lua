@@ -150,12 +150,12 @@ return {
                 global_settings = 'nvim.json',
               },
             },
-            { 'mfussenegger/nvim-jdtls', cond = ar.lsp.enable },
           },
         },
       },
     },
   },
+  { 'mfussenegger/nvim-jdtls', ft = 'java', cond = ar.lsp.enable },
   {
     'smjonas/inc-rename.nvim',
     cmd = { 'IncRename' },
