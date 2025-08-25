@@ -53,7 +53,7 @@ function M.format_buf()
 
   if biome_exists and vim.tbl_contains(biome_ft, ft) then
     local path = fn.expand('%')
-    vim.cmd(fmt(':!biome check --write "%s"', path))
+    vim.cmd(fmt(':!biome format --write "%s"', path))
   elseif prettier_exists and parser[ft] then
     vim.cmd(':%!prettier ' .. parser[ft])
   else
