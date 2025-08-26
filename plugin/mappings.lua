@@ -433,7 +433,7 @@ map({ 'x' }, 'gl', '$h', { desc = 'go to end of line' })
 -- jk is escape, THEN move to the right to preserve the cursor position, unless
 -- at the first column.  <esc> will continue to work the default way.
 -- NOTE: this is a recursive mapping so anything bound (by a plugin) to <esc> still works
-if ar.plugins.minimal then
+if ar.plugins.minimal or not ar.is_available('better-escape.nvim') then
   imap('jk', [[col('.') == 1 ? '<esc>' : '<esc>l']], { expr = true })
   imap('kj', [[col('.') == 1 ? '<esc>' : '<esc>l']], { expr = true })
 end
