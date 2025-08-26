@@ -451,6 +451,7 @@ local config = {
       big_file = { enable = true },
       cheatsheet = { enable = true },
       colorify = { enable = true },
+      comment = { enable = true },
       copilot_commit_message = { enable = true },
       custom_fold = { enable = false },
       interceptor = { enable = true },
