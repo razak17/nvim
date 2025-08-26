@@ -308,13 +308,6 @@
           },
           "additionalProperties": false
         },
-        "semantic_tokens": {
-          "type": "object",
-          "properties": {
-            "enable": { "type": "boolean" }
-          },
-          "additionalProperties": false
-        },
         "signs": {
           "type": "object",
           "properties": {

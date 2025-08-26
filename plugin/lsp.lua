@@ -21,7 +21,7 @@ local lsp_diag = require('ar.lsp_diagnostics')
 local augroup, diag_icons, border =
   ar.augroup, ar.ui.codicons.lsp, ar.ui.current.border
 
-if vim.env.DEVELOPING then lsp.set_log_level(L.DEBUG) end
+if vim.env.DEVELOPING then lsp.log.set_level(L.DEBUG) end
 
 --------------------------------------------------------------------------------
 --  Related Locations
@@ -451,8 +451,6 @@ end
 --------------------------------------------------------------------------------
 local ts_overrides = {
   semantic_tokens = function(bufnr, client, token)
-    if not ar_config.lsp.semantic_tokens.enable then return end
-
     if
       token.type == 'variable'
       and token.modifiers['local']
@@ -687,7 +685,7 @@ local function on_attach(client, bufnr)
   setup_mappings(client, bufnr)
   setup_lsp_stop_detached()
   if ar_lsp.foldexpr.enable then setup_lsp_foldexpr(client) end
-  if ar_lsp.semantic_tokens.enable then setup_semantic_tokens(client, bufnr) end
+  setup_semantic_tokens(client, bufnr)
   setup_colors(client, bufnr)
   setup_lsp_plugins(client, bufnr)
   if ar_config.completion.variant == 'omnifunc' then

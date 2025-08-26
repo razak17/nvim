@@ -143,7 +143,6 @@ local env = vim.env
 ---@field override table
 ---@field progress ArLspProgress
 ---@field rename ArLspRename
----@field semantic_tokens ArCond
 ---@field signs ArCond
 ---@field symbols ArLspSymbols
 ---@field virtual_lines ArLspVirtualLines
@@ -429,7 +428,6 @@ local config = {
     override = {},
     progress = { enable = true, variant = 'noice' },
     rename = { enable = true, variant = 'inc-rename' },
-    semantic_tokens = { enable = false },
     signs = { enable = false },
     symbols = { enable = true, variant = 'namu' },
     virtual_text = { enable = false },
