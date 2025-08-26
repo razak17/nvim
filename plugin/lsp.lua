@@ -281,6 +281,16 @@ local function setup_mappings(client, bufnr)
     },
     {
       'n',
+      '<leader>lt',
+      function()
+        local enabled = lsp.semantic_tokens.is_enabled({ bufnr = bufnr })
+        lsp.semantic_tokens.enable(not enabled, { bufnr = bufnr })
+      end,
+      desc = 'toggle semantic tokens',
+      capability = M.textDocument_semanticTokens_full,
+    },
+    {
+      'n',
       '<leader>lK',
       function()
         local enabled = lsp.document_color.is_enabled(bufnr)
