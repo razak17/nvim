@@ -454,6 +454,7 @@ local config = {
       comment = { enable = true },
       copilot_commit_message = { enable = true },
       custom_fold = { enable = false },
+      git_conflict = { enable = false },
       interceptor = { enable = true },
       large_file = { enable = true },
       last_place = { enable = true },
