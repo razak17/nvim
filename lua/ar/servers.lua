@@ -114,6 +114,11 @@ local servers = {
       },
     },
   },
+  copilot = {
+    settings = {
+      telemetry = { telemetryLevel = 'off' },
+    },
+  },
   denols = {
     root_dir = require('lspconfig.util').root_pattern(
       'deno.json',

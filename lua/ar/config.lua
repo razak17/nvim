@@ -23,7 +23,7 @@ local env = vim.env
 ---@field servers table
 
 ---@alias ArAIModel 'claude' | 'gemini' | 'openai' | 'copilot'
----@alias ArAICompletion 'copilot' | 'minuet'
+---@alias ArAICompletion 'builtin' | 'copilot' | 'minuet'
 ---@alias ArExplorerRename 'local' | 'snacks'
 ---@alias ArWhichBuffers 'snacks'
 ---@alias ArCompletion 'cmp' | 'blink' | 'mini.completion' | 'omnifunc'
@@ -306,7 +306,7 @@ local config = {
     completion = {
       enable = false,
       ---@type ArAICompletion
-      variant = 'copilot',
+      variant = 'builtin',
     },
     ignored_filetypes = {
       'DressingInput',

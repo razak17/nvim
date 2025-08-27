@@ -689,6 +689,23 @@ local function setup_completion(client, bufnr)
   end
 end
 
+---@param client vim.lsp.Client
+---@param bufnr number
+local function setup_inline_completion(client, bufnr)
+  if client:supports_method(M.textDocument_inlineCompletion) then
+    vim.opt.completeopt =
+      { 'menuone', 'noselect', 'noinsert', 'fuzzy', 'popup' }
+    lsp.inline_completion.enable(true)
+    map('i', '<A-u>', function()
+      if not lsp.inline_completion.get() then return '<A-u>' end
+    end, {
+      replace_keycodes = true,
+      expr = true,
+      desc = 'current inline completion',
+    })
+  end
+end
+
 -- Add buffer local mappings, autocommands etc for attaching servers
 -- this runs for each client because they have different capabilities so each time one
 -- attaches it might enable autocommands or mappings that the previous client did not support
@@ -703,6 +720,9 @@ local function on_attach(client, bufnr)
   setup_semantic_tokens(client, bufnr)
   setup_colors(client, bufnr)
   setup_lsp_plugins(client, bufnr)
+  if ar_config.ai.completion.variant == 'builtin' then
+    setup_inline_completion(client, bufnr)
+  end
   if ar_config.completion.variant == 'omnifunc' then
     setup_completion(client, bufnr)
     require('ar.compl')(client, bufnr)
