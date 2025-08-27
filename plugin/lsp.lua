@@ -681,6 +681,11 @@ end
 local function setup_completion(client, bufnr)
   if client:supports_method(M.textDocument_completion) then
     lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
+    -- api.nvim_set_option_value(
+    --   'omnifunc',
+    --   'v:lua.vim.lsp.omnifunc',
+    --   { buf = bufnr }
+    -- )
   end
 end
 
@@ -700,11 +705,6 @@ local function on_attach(client, bufnr)
   setup_lsp_plugins(client, bufnr)
   if ar_config.completion.variant == 'omnifunc' then
     setup_completion(client, bufnr)
-    -- api.nvim_set_option_value(
-    --   'omnifunc',
-    --   'v:lua.vim.lsp.omnifunc',
-    --   { buf = bufnr }
-    -- )
     require('ar.compl')(client, bufnr)
   end
 end
