@@ -136,7 +136,7 @@ local function notes()
 end
 
 return {
-  'echasnovski/mini.pick',
+  'nvim-mini/mini.pick',
   cond = function()
     local condition = ar_config.picker.files == 'mini.pick'
       or ar_config.picker.variant == 'mini.pick'
@@ -247,5 +247,5 @@ return {
     }
     picker.setup(opts)
   end,
-  dependencies = { 'echasnovski/mini.extra' },
+  dependencies = { 'nvim-mini/mini.extra' },
 }

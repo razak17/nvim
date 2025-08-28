@@ -3,7 +3,7 @@ local minimal = ar.plugins.minimal
 
 return {
   {
-    'echasnovski/mini.indentscope',
+    'nvim-mini/mini.indentscope',
     cond = function()
       local indentline_enable = ar_config.ui.indentline.enable
       local indentline_variant = ar_config.ui.indentline.variant

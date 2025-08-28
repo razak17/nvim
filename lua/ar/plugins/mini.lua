@@ -2,22 +2,22 @@ local minimal = ar.plugins.minimal
 
 return {
   {
-    'echasnovski/mini.extra',
+    'nvim-mini/mini.extra',
     cond = function() return ar.get_plugin_cond('mini.extra') end,
     config = function() require('mini.extra').setup() end,
   },
   {
-    'echasnovski/mini.hipatterns',
+    'nvim-mini/mini.hipatterns',
     cond = function() return ar.get_plugin_cond('mini.hipatterns') end,
   },
   {
-    'echasnovski/mini.bracketed',
+    'nvim-mini/mini.bracketed',
     cond = function() return ar.get_plugin_cond('mini.bracketed', not minimal) end,
     event = { 'BufRead', 'BufNewFile' },
     opts = { buffer = { suffix = '' } },
   },
   {
-    'echasnovski/mini.trailspace',
+    'nvim-mini/mini.trailspace',
     cond = function() return ar.get_plugin_cond('mini.trailspace', not minimal) end,
     init = function()
       local trailspace = require('mini.trailspace')
@@ -29,12 +29,12 @@ return {
     opts = {},
   },
   {
-    'echasnovski/mini.splitjoin',
+    'nvim-mini/mini.splitjoin',
     keys = { { '<leader>J', desc = 'splitjoin: toggle' } },
     opts = { mappings = { toggle = '<leader>J' } },
   },
   {
-    'echasnovski/mini.comment',
+    'nvim-mini/mini.comment',
     cond = function() return ar.get_plugin_cond('mini.comment') end,
     event = 'VeryLazy',
     opts = {

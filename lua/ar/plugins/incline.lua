@@ -36,7 +36,7 @@ return {
   {
     'b0o/incline.nvim',
     event = { 'UiEnter' },
-    dependencies = 'echasnovski/mini.icons',
+    dependencies = 'nvim-mini/mini.icons',
     config = function()
       require('incline').setup(
         ---@module 'incline'

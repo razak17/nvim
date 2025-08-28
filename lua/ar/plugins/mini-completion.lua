@@ -2,7 +2,7 @@ local minimal = ar.plugins.minimal
 
 return {
   {
-    'echasnovski/mini.completion',
+    'nvim-mini/mini.completion',
     cond = function()
       local condition = minimal
         or ar_config.completion.variant == 'mini.completion'

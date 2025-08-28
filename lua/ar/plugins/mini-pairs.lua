@@ -2,7 +2,7 @@ local minimal = ar.plugins.minimal
 
 return {
   {
-    'echasnovski/mini.pairs',
+    'nvim-mini/mini.pairs',
     cond = function() return ar.get_plugin_cond('mini.pairs', minimal) end,
     event = 'VeryLazy',
     init = function()

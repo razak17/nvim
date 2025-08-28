@@ -1,6 +1,6 @@
 return {
   {
-    'echasnovski/mini.surround',
+    'nvim-mini/mini.surround',
     keys = function(_, keys)
       -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/extras/coding/mini-surround.lua#L9
       local opts = ar.opts('mini.surround')

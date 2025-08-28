@@ -10,7 +10,7 @@ return {
     end,
   },
   {
-    'echasnovski/mini.icons',
+    'nvim-mini/mini.icons',
     cond = function()
       return ar.get_plugin_cond('mini.icons') and ar_icons == 'mini.icons'
     end,
@@ -22,7 +22,7 @@ return {
     end,
     opts = {
       file = {
-        ['init.lua'] = { glyph = '󰢱', hl = 'MiniIconsAzure' }, -- disable nvim glyph: https://github.com/echasnovski/mini.nvim/issues/1384
+        ['init.lua'] = { glyph = '󰢱', hl = 'MiniIconsAzure' }, -- disable nvim glyph: https://github.com/nvim-mini/mini.nvim/issues/1384
         ['README.md'] = { glyph = '' },
         ['.ignore'] = { glyph = '󰈉', hl = 'MiniIconsGrey' },
         ['pre-commit'] = { glyph = '󰊢' },

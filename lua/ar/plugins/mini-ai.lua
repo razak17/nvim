@@ -68,7 +68,7 @@ end
 
 return {
   {
-    'echasnovski/mini.ai',
+    'nvim-mini/mini.ai',
     cond = function() return ar.get_plugin_cond('mini.ai', not minimal) end,
     event = { 'VeryLazy' },
     config = function()
@@ -163,6 +163,6 @@ return {
         mappings = { around_last = '', inside_last = '' },
       })
     end,
-    dependencies = { 'echasnovski/mini.extra' },
+    dependencies = { 'nvim-mini/mini.extra' },
   },
 }

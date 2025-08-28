@@ -321,7 +321,7 @@ return {
     },
   },
   {
-    'echasnovski/mini.files',
+    'nvim-mini/mini.files',
     cond = ar_config.explorer.variant == 'mini.files',
     keys = {
       {
