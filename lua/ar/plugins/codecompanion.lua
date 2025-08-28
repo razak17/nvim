@@ -104,7 +104,7 @@ return {
           },
           chat = {
             auto_scroll = false,
-            show_settings = true,
+            show_settings = false,
             window = {
               layout = 'vertical', -- float|vertical|horizontal|buffer
             },
