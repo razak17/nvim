@@ -309,6 +309,7 @@ local filetypes = ar.p_table({
   ['DiffviewFiles'] = presets.tool_panel,
   ['DressingInput'] = presets.tool_panel,
   ['fugitive'] = presets.statusline_only:with({ cursorline = true }),
+  ['fyler'] = presets.tool_panel,
   ['fzf'] = presets.tool_panel,
   ['gitcommit'] = commit_buffer,
   ['grug-far'] = presets.tool_panel,

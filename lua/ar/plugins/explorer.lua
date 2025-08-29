@@ -3,6 +3,7 @@ local copy = ar.copy_to_clipboard
 local highlight, lsp_hls = ar.highlight, ar.ui.lsp.highlights
 local api, fn = vim.api, vim.fn
 local utils = require('ar.utils.fs')
+local ar_icons = ar_config.icons.variant
 
 ---@param from string
 ---@param to string
@@ -27,9 +28,47 @@ return {
     branch = 'stable',
     cmd = { 'Fyler' },
     keys = {
-      { '<c-n>', '<cmd>Fyler kind=split:right<CR>', desc = 'toggle tree' },
+      { '<c-n>', '<cmd>Fyler kind=split:rightmost<CR>', desc = 'toggle tree' },
     },
-    opts = {},
+    opts = {
+      icon_provider = ar_icons == 'mini.icons' and 'mini-icons'
+        or 'nvim-web-devicons',
+      hooks = {
+        on_rename = function(src_path, dst_path) on_rename(src_path, dst_path) end,
+      },
+      views = {
+        explorer = {
+          confirm_simple = true,
+          default_explorer = true,
+          git_status = false,
+          win = {
+            win_opts = {
+              number = false,
+              relativenumber = false,
+              cursorline = true,
+            },
+          },
+          width = 0.2,
+          height = 0.8,
+          kind = 'float',
+          border = 'single',
+        },
+      },
+    },
+    config = function(_, opts)
+      require('fyler').setup(opts)
+
+      ar.augroup('FylerEnter', {
+        event = { 'BufEnter', 'FocusGained' },
+        pattern = '*',
+        command = function(args)
+          if vim.bo[args.buf].ft == 'fyler' then
+            vim.cmd('wincmd L | vertical resize 40')
+          end
+        end,
+      })
+    end,
+    dependencies = { 'nvim-mini/mini.icons' },
   },
   {
     'nvim-neo-tree/neo-tree.nvim',

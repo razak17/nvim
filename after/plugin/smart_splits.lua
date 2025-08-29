@@ -16,6 +16,7 @@ local config = {
       'copilot-chat',
       'DiffviewFileHistory',
       'DiffviewFiles',
+      'fyler',
       'gitcommit',
       'help',
       'lazy',
