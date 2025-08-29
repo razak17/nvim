@@ -23,15 +23,17 @@ return {
     },
     opts = {
       legacy_commands = false,
-      ui = {
-        enable = false,
-        checkboxes = {
+      checkbox = {
+        order = {
           [' '] = { char = '', hl_group = 'ObsidianTodo' },
           ['x'] = { char = '', hl_group = 'ObsidianDone' },
           ['>'] = { char = '', hl_group = 'ObsidianRightArrow' },
           ['~'] = { char = '󰰱', hl_group = 'ObsidianTilde' },
           ['!'] = { char = '', hl_group = 'ObsidianImportant' },
         },
+      },
+      ui = {
+        enable = false,
         bullets = { char = '•', hl_group = 'ObsidianBullet' },
       },
       workspaces = {
