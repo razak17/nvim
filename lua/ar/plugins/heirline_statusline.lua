@@ -760,7 +760,9 @@ return {
         {
           init = function(self) self.status = stl.copilot_status() end,
           condition = function()
-            return ar.ai.enable and ar_config.ai.models.copilot
+            return is_avail('copilot.lua')
+              and ar.ai.enable
+              and ar_config.ai.models.copilot
           end,
           {
             condition = function(self)
