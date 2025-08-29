@@ -70,9 +70,7 @@ ar.completion.config = {
 
 return {
   {
-    -- 'hrsh7th/nvim-cmp',
-    'iguanacucumber/magazine.nvim',
-    name = 'nvim-cmp',
+    'hrsh7th/nvim-cmp',
     cond = ar.completion.enable and is_cmp,
     event = 'InsertEnter',
     opts = function()
@@ -80,7 +78,6 @@ return {
       local cmp = require('cmp')
       local types = require('cmp.types')
       local luasnip_avail, luasnip = pcall(require, 'luasnip')
-      local MiniIcons = require('mini.icons')
       local symbols = require('lspkind').symbol_map
       local MIN_MENU_WIDTH, MAX_MENU_WIDTH =
         25, math.min(50, math.floor(vim.o.columns * 0.5))
@@ -279,6 +276,7 @@ return {
               and item.kind ~= 'Color'
             then
               if ar_config.completion.icons == 'mini.icons' then
+                local MiniIcons = require('mini.icons')
                 local icon, hl = MiniIcons.get('lsp', item.kind)
                 item.kind = icon
                 item.kind_hl_group = hl
