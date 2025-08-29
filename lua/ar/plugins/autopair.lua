@@ -1,6 +1,8 @@
 local api = vim.api
 local minimal = ar.plugins.minimal
 local get_cond = ar.get_plugin_cond
+local is_blink = ar.is_available('blink.cmp')
+local is_cmp = ar.is_available('nvim-cmp')
 
 return {
   {
@@ -13,7 +15,7 @@ return {
     event = 'InsertEnter',
     config = function()
       local autopairs = require('nvim-autopairs')
-      if ar.completion.enable then
+      if ar.completion.enable and (is_blink or is_cmp) then
         local cmp_autopairs = require('nvim-autopairs.completion.cmp')
         require('cmp').event:on('confirm_done', cmp_autopairs.on_confirm_done())
       end
