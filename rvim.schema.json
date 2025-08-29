@@ -26,7 +26,7 @@
             "enable": { "type": "boolean" },
             "variant": {
               "type": "string",
-              "enum": ["copilot", "minuet"]
+              "enum": ["builtin", "copilot", "minuet"]
             }
           },
           "additionalProperties": false
