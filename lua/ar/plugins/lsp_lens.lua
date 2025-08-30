@@ -69,5 +69,12 @@ return {
       })
     end,
   },
+  {
+    desc = 'A lightweight nvim plugin that displays fully customizeable contextual information about functions',
+    'oribarilan/lensline.nvim',
+    tag = '1.0.0',
+    cond = ar.lsp.enable and niceties,
+    event = 'LspAttach',
+    config = function() require('lensline').setup() end,
+  },
 }
-
