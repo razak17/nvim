@@ -136,7 +136,7 @@ return {
     cond = function()
       local is_copilot = models.copilot and ai_cmp == 'copilot'
       local condition = ar.ai.enable and is_copilot
-      return ar.get_plugin_cond('minuet-ai.nvim', condition)
+      return ar.get_plugin_cond('copilot.lua', condition)
     end,
     cmd = 'Copilot',
     event = 'InsertEnter',
