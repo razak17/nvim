@@ -710,6 +710,17 @@ local function setup_inline_completion(client, bufnr)
   end
 end
 
+---@param client vim.lsp.Client
+---@param bufnr number
+local function setup_type_formatting(client, bufnr)
+  if client:supports_method(M.textDocument_onTypeFormatting) then
+    lsp.on_type_formatting.enable(
+      true,
+      { client_id = client.id, buffer = bufnr }
+    )
+  end
+end
+
 -- Add buffer local mappings, autocommands etc for attaching servers
 -- this runs for each client because they have different capabilities so each time one
 -- attaches it might enable autocommands or mappings that the previous client did not support
@@ -724,6 +735,7 @@ local function on_attach(client, bufnr)
   setup_semantic_tokens(client, bufnr)
   setup_colors(client, bufnr)
   setup_lsp_plugins(client, bufnr)
+  setup_type_formatting(client, bufnr)
   if ar_config.ai.completion.variant == 'builtin' then
     setup_inline_completion(client, bufnr)
   end

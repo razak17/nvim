@@ -434,6 +434,8 @@ local function capabilities(name, config)
     has_blink and blink.get_lsp_capabilities() or {},
     config.capabilities or {}
   )
+  config.capabilities.textDocument.onTypeFormatting =
+    { dynamicRegistration = false }
   if name == 'clangd' then
     vim.tbl_deep_extend('force', config.capabilities, {
       offsetEncoding = { 'utf-16' },
