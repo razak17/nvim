@@ -161,7 +161,7 @@ return {
         -- https://platform.openai.com/docs/models
         set_adapter_and_strategy('openai', 'gpt-4.1')
       elseif models.gemini then
-        set_adapter_and_strategy('gemini')
+        set_adapter_and_strategy('gemini', 'gemini-2.5-flash-preview-05-20')
       end
 
       opts.strategies.chat.opts = opts.strategies.chat.opts or {}
