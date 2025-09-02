@@ -19,8 +19,6 @@ local M = vim.lsp.protocol.Methods
 return function(client, bufnr)
   -- Enable completion and configure keybindings.
   if client:supports_method(M.textDocument_completion) then
-    vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
-
     -- Use enter to accept completions.
     map(
       'i',
@@ -68,11 +66,7 @@ return function(client, bufnr)
     -- or select the next completion.
     -- Do something similar with <S-Tab>.
     map({ 'i', 's' }, '<Tab>', function()
-      local copilot = require('copilot.suggestion')
-
-      if copilot.is_visible() then
-        copilot.accept()
-      elseif pumvisible() then
+      if pumvisible() then
         feedkeys('<C-n>')
       elseif vim.snippet.active({ direction = 1 }) then
         vim.snippet.jump(1)

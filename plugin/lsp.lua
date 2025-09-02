@@ -681,6 +681,7 @@ end
 local function setup_completion(client, bufnr)
   if client:supports_method(M.textDocument_completion) then
     lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
+    require('ar.compl')(client, bufnr)
     -- api.nvim_set_option_value(
     --   'omnifunc',
     --   'v:lua.vim.lsp.omnifunc',
@@ -695,7 +696,10 @@ local function setup_inline_completion(client, bufnr)
   if client:supports_method(M.textDocument_inlineCompletion) then
     vim.opt.completeopt =
       { 'menuone', 'noselect', 'noinsert', 'fuzzy', 'popup' }
-    lsp.inline_completion.enable(true)
+    lsp.inline_completion.enable(
+      true,
+      { client_id = client.id, buffer = bufnr }
+    )
     map('i', '<A-u>', function()
       if not lsp.inline_completion.get() then return '<A-u>' end
     end, {
@@ -725,7 +729,6 @@ local function on_attach(client, bufnr)
   end
   if ar_config.completion.variant == 'omnifunc' then
     setup_completion(client, bufnr)
-    require('ar.compl')(client, bufnr)
   end
 end
 
