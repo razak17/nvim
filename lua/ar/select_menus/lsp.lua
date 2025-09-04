@@ -70,9 +70,9 @@ end
 function M.lsp_restart_all()
   -- get clients that would match this buffer but aren't connected
   local other_matching_configs =
-    require('lspconfig.util').get_other_matching_providers(vim.bo.filetype)
+    require('ar.utils.lsp').get_other_matching_providers(vim.bo.filetype)
   -- first restart the existing clients
-  for _, client in ipairs(require('lspconfig.util').get_managed_clients()) do
+  for _, client in ipairs(require('ar.utils.lsp').get_managed_clients()) do
     client.stop()
     vim.defer_fn(
       function() require('lspconfig.configs')[client.name].launch() end,

@@ -54,4 +54,30 @@ function M.restart(client_or_id)
   })
 end
 
+function M.get_other_matching_providers(filetype)
+  local configs = require('lspconfig.configs')
+  local active_clients_list = M.get_active_clients_list_by_ft(filetype)
+  local other_matching_configs = {}
+  for _, config in pairs(configs) do
+    if not vim.tbl_contains(active_clients_list, config.name) then
+      local filetypes = config.filetypes or {}
+      for _, ft in pairs(filetypes) do
+        if ft == filetype then table.insert(other_matching_configs, config) end
+      end
+    end
+  end
+  return other_matching_configs
+end
+
+function M.get_managed_clients()
+  local configs = require('lspconfig.configs')
+  local clients = {}
+  for _, config in pairs(configs) do
+    if config.manager then
+      vim.list_extend(clients, config.manager:clients())
+    end
+  end
+  return clients
+end
+
 return M
