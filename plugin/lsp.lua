@@ -320,7 +320,6 @@ local function setup_mappings(client, bufnr)
     {
       { 'n', 'x' },
       '<leader>laa',
-      -- lsp.buf.code_action,
       function()
         --   vim.lsp.buf.code_action({
         --     context = { diagnostics = lsp_diag.get_diagnostic_at_cursor() },
@@ -696,10 +695,7 @@ local function setup_inline_completion(client, bufnr)
   if client:supports_method(M.textDocument_inlineCompletion) then
     vim.opt.completeopt =
       { 'menuone', 'noselect', 'noinsert', 'fuzzy', 'popup' }
-    lsp.inline_completion.enable(
-      true,
-      { client_id = client.id, buffer = bufnr }
-    )
+    lsp.inline_completion.enable(true)
     map('i', '<A-u>', function()
       if not lsp.inline_completion.get() then return '<A-u>' end
     end, {
