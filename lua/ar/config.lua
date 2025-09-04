@@ -184,6 +184,7 @@ local namespace = {
       ['claude-sonnet-4'] = { max_tokens = 80000 },
       ['gemini-2.0-flash-001'] = {},
       ['gemini-2.5-pro'] = { max_tokens = 128000 },
+      ['grok-code-fast-1'] = { max_tokens = 128000 },
       ['gpt-5'] = { max_tokens = 128000 },
       ['gpt-5-mini'] = { max_tokens = 128000 },
       ['gpt-4'] = { max_tokens = 32768 },
