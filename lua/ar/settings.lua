@@ -131,6 +131,9 @@ opt.wildignore = {
   '.lock',
   '.DS_Store',
   'tags.lock',
+  '*/.git/*',
+  '*/.next/*',
+  '*/node_modules/*',
 }
 opt.wildignore =
   vim.tbl_extend('force', opt.wildignore, ui.colorscheme.disabled)
