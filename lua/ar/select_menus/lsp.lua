@@ -412,6 +412,19 @@ function M.ws_symbol_under_cursor()
   filter_lsp_symbols(word)
 end
 
+function M.apply_biome_fixes()
+  local actions = { 'source.fixAll.biome' }
+  for i = 1, #actions do
+    vim.defer_fn(function()
+      vim.lsp.buf.code_action({
+        ---@diagnostic disable-next-line: missing-fields, assign-type-mismatch
+        context = { only = { actions[i] } },
+        apply = true,
+      })
+    end, i * 100)
+  end
+end
+
 function M.organize_imports()
   if is_avail('typescript-tools.nvim') then
     vim.cmd('TSToolsOrganizeImports')

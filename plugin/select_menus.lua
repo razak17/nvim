@@ -99,6 +99,13 @@ if ar.lsp.enable then
       ['Goto Workspace Symbol Under Cursor'] = "lua require'ar.select_menus.lsp'.ws_symbol_under_cursor()",
     })
   end
+  local is_biome = ar_config.lsp.lang.web.biome
+    or vim.tbl_contains(ar_config.lsp.override, 'biome')
+  if ar.lsp.enable and is_biome then
+    ar.add_to_select_menu('lsp', {
+      ['Apply Biome Fixes'] = "lua require'ar.select_menus.lsp'.apply_biome_fixes()",
+    })
+  end
 
   local lsp_menu = function()
     if #vim.lsp.get_clients({ bufnr = 0 }) == 0 then
