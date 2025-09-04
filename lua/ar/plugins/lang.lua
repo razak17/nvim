@@ -26,7 +26,7 @@ return {
   {
     'jsongerber/nvim-px-to-rem',
     cond = function()
-      local condition =ar.completion.enable and not minimal
+      local condition = ar.completion.enable and not minimal
       return ar.get_plugin_cond('nvim-px-to-rem', condition)
     end,
   },
@@ -143,14 +143,17 @@ return {
         ['Toggle Template String'] = 'TemplateString toggle',
       })
     end,
-    ft = {
-      'javascript',
-      'javascriptreact',
-      'typescript',
-      'typescriptreact',
-      'svelte',
-      'python',
-    },
+    ft = function()
+      local fts = {
+        'javascript',
+        'javascriptreact',
+        'typescript',
+        'typescriptreact',
+        'svelte',
+      }
+      if not ar.lsp.enable then table.insert(fts, 'python') end
+      return fts
+    end,
     opts = { remove_template_string = true },
   },
   {
