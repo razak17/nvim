@@ -31,18 +31,14 @@ local function biome_format()
   local actions = { 'source.fixAll.biome' }
   for i = 1, #actions do
     vim.defer_fn(function()
-      vim.lsp.buf.code_action({
+      lsp.buf.code_action({
         ---@diagnostic disable-next-line: missing-fields, assign-type-mismatch
         context = { only = { actions[i] } },
         apply = true,
       })
     end, i * 60)
   end
-  vim.defer_fn(
-    function() require('ar.select_menus.lsp').organize_imports() end,
-    (#actions + 1) * 60
-  )
-  vim.defer_fn(vim.lsp.buf.format, (#actions + 1) * 60)
+  vim.defer_fn(lsp.buf.format, (#actions + 2) * 60)
 end
 
 ---@param opts {bufnr: integer, async: boolean, filter: fun(lsp.Client): boolean}
