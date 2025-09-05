@@ -157,18 +157,6 @@ return {
     opts = { remove_template_string = true },
   },
   {
-    'mawkler/jsx-element.nvim',
-    cond = function()
-      return ar.get_plugin_cond('jsx-element.nvim', not minimal)
-    end,
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter',
-      'nvim-treesitter/nvim-treesitter-textobjects',
-    },
-    ft = { 'typescriptreact', 'javascriptreact', 'javascript' },
-    opts = {},
-  },
-  {
     'joeldotdias/jsdoc-switch.nvim',
     cond = function()
       return ar.get_plugin_cond('jsdoc-switch.nvim', not minimal)
