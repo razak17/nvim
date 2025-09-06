@@ -21,11 +21,6 @@ return {
     config = function() require('lspkind').init({ preset = 'codicons' }) end,
   },
   {
-    'neuromaancer/readup.nvim',
-    cmd = { 'Readup', 'ReadupBrowser' },
-    opts = { float = true },
-  },
-  {
     'AndrewRadev/linediff.vim',
     cond = function() return ar.get_plugin_cond('linediff.vim', not minimal) end,
     cmd = 'Linediff',
