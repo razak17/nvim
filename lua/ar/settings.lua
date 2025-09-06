@@ -105,6 +105,12 @@ elseif ar and not ar.falsy(fn.executable('ag')) then
   opt.grepformat = opt.grepformat ^ { '%f:%l:%c:%m' }
 end
 ::continue::
+if ar and not ar.falsy(fn.executable('fd')) then
+  function ar.fd_findfunc(cmdarg, _cmdcomplete)
+    return require('ar.findfunc').fd_findfunc(cmdarg, _cmdcomplete)
+  end
+  vim.o.findfunc = 'v:lua.ar.fd_findfunc'
+end
 --------------------------------------------------------------------------------
 -- Wild and file globbing stuff in command mode {{{1
 --------------------------------------------------------------------------------
