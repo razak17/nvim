@@ -1,6 +1,7 @@
 local minimal = ar.plugins.minimal
 
 return {
+  { 'ragnarok22/whereami.nvim', cmd = 'Whereami' },
   {
     'nvim-treesitter/nvim-treesitter-context',
     cond = function()

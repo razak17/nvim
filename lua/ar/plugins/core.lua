@@ -14,7 +14,6 @@ return {
   { 'tyru/capture.vim', cmd = { 'Capture' } },
   { 'will133/vim-dirdiff', cmd = { 'DirDiff' } },
   { 'godlygeek/tabular', cmd = { 'Tabularize' } },
-  { 'ragnarok22/whereami.nvim', cmd = 'Whereami' },
   { 'Rasukarusan/nvim-block-paste', cmd = { 'Block' } },
   { 'meznaric/key-analyzer.nvim', cmd = { 'KeyAnalyzer' }, opts = {} },
   {
