@@ -1,6 +1,7 @@
 local minimal = ar.plugins.minimal
 
 return {
+  { 'dundalek/bloat.nvim', cmd = 'Bloat' },
   {
     'stevearc/profile.nvim',
     cond = function() return ar.get_plugin_cond('profile.nvim', not minimal) end,

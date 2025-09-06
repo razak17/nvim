@@ -8,7 +8,6 @@ return {
   'kevinhwang91/promise-async',
   'kkharji/sqlite.lua',
   'tpope/vim-rhubarb',
-  { 'dundalek/bloat.nvim', cmd = 'Bloat' },
   { 'tyru/capture.vim', cmd = { 'Capture' } },
   { 'godlygeek/tabular', cmd = { 'Tabularize' } },
   { 'Rasukarusan/nvim-block-paste', cmd = { 'Block' } },
