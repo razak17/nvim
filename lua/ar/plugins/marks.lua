@@ -99,25 +99,6 @@ return {
     },
   },
   {
-    desc = 'Neovim plugin for tagging important files',
-    'cbochs/grapple.nvim',
-    cond = function() return ar.get_plugin_cond('grapple.nvim', not minimal) end,
-    -- stylua: ignore
-    keys = {
-      { '<leader>ma', '<Cmd>Grapple toggle<CR>', desc = 'grapple: add file' },
-      { '<leader>mm', '<Cmd>Grapple toggle_tags<CR>', desc = 'grapple: toggle tags' },
-    },
-    cmd = 'Grapple',
-    opts = {
-      scope = 'git_branch',
-      default_scopes = {
-        git = { shown = true },
-        git_branch = { shown = true },
-        global = { shown = true },
-      },
-    },
-  },
-  {
     desc = 'Neovim plugin for improved location list navigation',
     'cbochs/portal.nvim',
     cond = function() return ar.get_plugin_cond('portal.nvim', not minimal) end,
