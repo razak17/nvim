@@ -27,7 +27,7 @@ return {
       { '<leader>aoB', oc('ask', '@buffers: '), desc = 'opencode: ask buffers' },
       { '<leader>aoc', oc('ask', '@cursor: '), desc = 'opencode: ask cursor' },
       { '<leader>aod', oc('ask', '@diagnostic: '), desc = 'opencode: ask diagnostic' },
-      { '<leader>aoD', oc('ask', '@diagnostics: '), desc = 'opencode: ask diagnostic' },
+      { '<leader>aoD', oc('ask', '@diagnostics: '), desc = 'opencode: ask diagnostics' },
       { '<leader>aoq', oc('ask', '@quickfix: '), desc = 'opencode: ask quickfix' },
       { '<leader>aos', oc('ask', '@selection: '), desc = 'opencode: ask selection', mode = 'v', },
       { '<leader>aop', oc('select'), desc = 'opencode: select prompt', mode = { 'n', 'v', }, },
