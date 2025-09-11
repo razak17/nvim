@@ -487,10 +487,4 @@ return {
       { mode = 'x', '<localleader>nt', ":lua require'nag'.tab()<CR>", desc = 'nag: split tab', },
     },
   },
-  {
-    desc = 'readline style keybindings in insert mode',
-    'tpope/vim-rsi',
-    cond = function() return get_cond('vim-rsi', not minimal) end,
-    event = { 'InsertEnter' },
-  },
 }
