@@ -12,6 +12,7 @@ end
 local config = {
   show_hostname = false,
   show_buffer_count = true,
+  pretty_path = true,
 }
 
 ar.ui.winbar = {}
@@ -36,12 +37,16 @@ end
 
 function ar.ui.winbar.render()
   local home_replaced = get_winbar_path()
+  local pretty_path = require('ar.pretty_path').pretty_path()
   local buffer_count = get_buffer_count()
   local host = fn.systemlist('hostname')[1]
 
   local left = '%#Debug#%m '
   local buf_count = '%#Directory#(' .. buffer_count .. ') '
   local file_path = '%#Normal#' .. home_replaced .. '%*%='
+  if config.pretty_path then
+    file_path = '%#Normal#' .. pretty_path.dir .. pretty_path.name .. '%*%='
+  end
   local hostname = '%#Normal#' .. host
 
   return table.concat({
