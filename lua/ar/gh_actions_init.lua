@@ -38,10 +38,9 @@ local function fetch_github_repo(repo_name, token, org, workspace_path)
 end
 
 return function(org, workspace_path, session_token)
-  org = org or 'mapfre-tech'
+  org = org or 'razak17'
   workspace_path = workspace_path or vim.fn.getcwd()
   session_token = session_token or vim.env.GH_ACTIONS_PAT
-  print(session_token)
 
   local function get_repo_name()
     local handle = io.popen('git remote get-url origin 2>/dev/null')
@@ -55,7 +54,10 @@ return function(org, workspace_path, session_token)
     local repo = result:match('([^/:]+)%.git$')
     return repo
   end
+
   local repo_name = get_repo_name()
+
+  if repo_name == nil then return {} end
 
   local repo_info =
     fetch_github_repo(repo_name, session_token, org, workspace_path)
