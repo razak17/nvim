@@ -105,21 +105,19 @@ local function show_message(client)
     or not api.nvim_win_is_valid(winid)
     or api.nvim_win_get_tabpage(winid) ~= api.nvim_get_current_tabpage() -- Switch to another tab
   then
-    local success = guard(
-      function()
-        winid = api.nvim_open_win(client.bufnr, false, {
-          relative = 'editor',
-          width = #client.message,
-          height = 1,
-          row = get_win_row(client.pos),
-          col = o.columns - #client.message,
-          focusable = false,
-          style = 'minimal',
-          noautocmd = true,
-          border = border,
-        })
-      end
-    )
+    local success = guard(function()
+      winid = api.nvim_open_win(client.bufnr, false, {
+        relative = 'editor',
+        width = #client.message,
+        height = 1,
+        row = get_win_row(client.pos),
+        col = o.columns - #client.message,
+        focusable = false,
+        style = 'minimal',
+        noautocmd = true,
+        -- border = border,
+      })
+    end)
     if not success then return end
     client.winid = winid
     M.total_wins = M.total_wins + 1
@@ -218,3 +216,53 @@ ar.augroup('lsp_progress', {
     end
   end,
 })
+
+-- https://github.com/santhosh-tekuri/dotfiles/blob/80767bccd3de67861d1dd06771b0bee06bdf4d95/.config/nvim/lua/autocmds.lua#L49
+-- Show lsp progress on statusline
+-- local lspprogress_buf = nil
+-- vim.api.nvim_create_autocmd('LspProgress', {
+--   desc = 'Show LSP Progress at bottom right corner',
+--   ---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
+--   callback = function(ev)
+--     --[[@as {percentage?: number, title?: string, message?: string, kind: "begin" | "report" | "end"}]]
+--     local value = ev.data.params.value
+--     if type(value) ~= 'table' then return end
+--     if value.kind == 'end' then
+--       if lspprogress_buf ~= nil then
+--         vim.api.nvim_buf_delete(lspprogress_buf, {})
+--         lspprogress_buf = nil
+--       end
+--       return
+--     end
+--     local width = 35
+--     if lspprogress_buf == nil then
+--       lspprogress_buf = vim.api.nvim_create_buf(false, true)
+--       vim.api.nvim_set_option_value(
+--         'bufhidden',
+--         'wipe',
+--         { buf = lspprogress_buf }
+--       )
+--       local winid = vim.api.nvim_open_win(lspprogress_buf, false, {
+--         relative = 'editor',
+--         row = vim.o.lines - 1,
+--         col = vim.o.columns - width,
+--         width = width,
+--         height = 1,
+--         style = 'minimal',
+--         focusable = false,
+--       })
+--       vim.api.nvim_set_option_value(
+--         'winhighlight',
+--         'Normal:Normal',
+--         { win = winid }
+--       )
+--     end
+--     local msg = ('%3d%%: %s %s'):format(
+--       value.percentage or 100,
+--       value.title or '',
+--       value.message or ''
+--     )
+--     msg = ('%' .. width .. 's'):format(msg)
+--     vim.api.nvim_buf_set_lines(lspprogress_buf, 0, -1, false, { msg })
+--   end,
+-- })

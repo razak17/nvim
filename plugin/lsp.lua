@@ -922,9 +922,7 @@ end
 --------------------------------------------------------------------------------
 -- LSP Progress
 --------------------------------------------------------------------------------
-if
-  ar_config.lsp.progress.enable
-  and ar_config.lsp.progress.variant == 'builtin'
-then
+local lsp_progress = ar_config.lsp.progress
+if lsp_progress.enable and lsp_progress.variant == 'builtin' then
   require('ar.lsp_progress')
 end
