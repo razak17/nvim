@@ -391,7 +391,15 @@ local servers = {
       },
       typescript = {
         updateImportsOnFileMove = { enabled = 'always' },
-        suggest = { completeFunctionCalls = true },
+        suggest = {
+          completeFunctionCalls = false, -- keep disabled for performance
+        },
+        diagnostics = {
+          enable = false,
+          reportUnusedDisableDirectives = false,
+          reportDeprecated = false,
+        },
+        format = { enable = false },
         inlayHints = {
           parameterNames = {
             enabled = 'literals', -- 'none' | 'literals' | 'all'
@@ -404,6 +412,7 @@ local servers = {
           enumMemberValues = { enabled = true },
         },
         tsserver = {
+          maxTsServerMemory = 8192,
           pluginPaths = { '.' },
           globalPlugins = {
             {
@@ -417,6 +426,7 @@ local servers = {
         enableMoveToFileCodeAction = true,
         autoUseWorkspaceTsdk = true,
         experimental = {
+          maxInlayHintLength = 30,
           completion = {
             enableServerSideFuzzyMatch = true,
           },
