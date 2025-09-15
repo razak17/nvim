@@ -144,6 +144,34 @@ local servers = {
     end,
   },
   emmet_language_server = {},
+  -- https://github.com/jugarpeupv/dotfiles/blob/535e69fdfb0590fb5aeca5f7dc5f0f7decdee651/nvim/.config/nvim/lua/plugins/lspconfig.lua#L828
+  gh_actions_ls = {
+    handlers = {
+      ['actions/readFile'] = function(_, result)
+        if type(result.path) ~= 'string' then return nil, nil end
+        local file_path = vim.uri_to_fname(result.path)
+        if vim.fn.filereadable(file_path) == 1 then
+          local content = vim.fn.readfile(file_path)
+          local text = table.concat(content, '\n')
+          return text, nil
+        end
+        return nil, nil
+      end,
+    },
+    init_options = require('ar.gh_actions_init')(),
+    filetypes = { 'yaml.github' },
+    cmd = { 'gh-actions-language-server', '--stdio' },
+    settings = {
+      yaml = {
+        format = {
+          enable = true,
+        },
+        validate = {
+          enable = true,
+        },
+      },
+    },
+  },
   --- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
   gopls = {
     settings = {
