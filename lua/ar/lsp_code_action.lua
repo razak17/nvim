@@ -176,7 +176,7 @@ local function on_code_action_results(results)
           data = v.orig and v.orig.data or 'file://' .. file_path,
           kind = v.orig and v.orig.kind or 'quickfix',
         },
-        ctx = v.ctx or {},
+        ctx = v.ctx or { bufnr = bufnr },
         priority = v.priority,
         call = call_overrides[k] or v.call,
       }
