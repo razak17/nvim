@@ -29,6 +29,7 @@ local ts_priority_overrides = {
 
 local biome_overrides = {
   ['Organize Imports (Biome)'] = 8,
+  ['Use a template literal.'] = 8,
 }
 
 local priority_overrides = {
