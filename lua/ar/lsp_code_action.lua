@@ -201,6 +201,10 @@ local function on_code_action_results(results)
 
       if #clients == 1 then return title end
 
+      if item.ctx.client_id == nil then return title end
+
+      if item.action.disabled then title = title .. ' (disabled)' end
+
       local source = lsp.get_client_by_id(item.ctx.client_id).name
       return ('%s [%s]'):format(title, source)
     end,
