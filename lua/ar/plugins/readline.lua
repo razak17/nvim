@@ -1,3 +1,5 @@
+local minimal = ar.plugins.minimal
+
 return {
   {
     desc = 'readline style keybindings in insert mode',
