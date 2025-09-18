@@ -6,7 +6,7 @@ return {
   {
     'MagicDuck/grug-far.nvim',
     cond = not minimal,
-    cmd = { 'GrugFar' },
+    cmd = { 'GrugFar', 'GrugFarWithin' },
     opts = {
       startInInsertMode = false,
       transient = false,
