@@ -60,28 +60,8 @@ local pyright_analysis = {
   },
 }
 
-local ts_code_action_sources = {
-  add_missing_imports = 'source.addMissingImports.ts',
-  organize_imports = 'source.organizeImports',
-  remove_unused = 'source.removeUnused',
-}
-
-local function create_ts_action(source, description)
-  return {
-    function()
-      vim.lsp.buf.code_action({
-        apply = true,
-        context = {
-          only = { source },
-          diagnostics = {},
-        },
-      })
-    end,
-    description = description,
-  }
-end
-
----@type lspconfig.Config
+-- https://github.com/LazyVim/LazyVim/blob/3a743f7f853bd90894259cd93432d77c688774b4/lua/lazyvim/plugins/lsp/init.lua?plain=1#L71
+---@type table<string, vim.lsp.Config|{mason?:boolean, enabled?:boolean}|boolean>
 local servers = {
   astro = {},
   biome = {},
@@ -124,12 +104,10 @@ local servers = {
       'deno.jsonc'
     ),
   },
-  docker_compose_language_service = function()
-    return {
-      root_markers = { 'docker-compose.yaml', 'docker-compose.yml' },
-      filetypes = { 'yaml', 'dockerfile' },
-    }
-  end,
+  docker_compose_language_service = {
+    root_markers = { 'docker-compose.yaml', 'docker-compose.yml' },
+    filetypes = { 'yaml', 'dockerfile' },
+  },
   eslint = {
     settings = {
       -- helps eslint find the eslintrc when it's placed in a subfolder instead of the cwd root
@@ -138,9 +116,7 @@ local servers = {
   },
   elixirls = {},
   emmet_ls = {
-    root_dir = function(fname)
-      return require('lspconfig.util').root_pattern('package.json')(fname)
-    end,
+    root_markers = { 'package.json', '.git' },
   },
   emmet_language_server = {},
   -- https://github.com/jugarpeupv/dotfiles/blob/535e69fdfb0590fb5aeca5f7dc5f0f7decdee651/nvim/.config/nvim/lua/plugins/lspconfig.lua#L828
@@ -315,20 +291,6 @@ local servers = {
   },
   ts_ls = {
     init_options = { documentFormatting = false, hostInfo = 'neovim' },
-    commands = {
-      AddMissingImports = create_ts_action(
-        ts_code_action_sources.add_missing_imports,
-        'Add Missing Imports'
-      ),
-      OrganizeImports = create_ts_action(
-        ts_code_action_sources.organize_imports,
-        'Organize Imports'
-      ),
-      RemoveUnused = create_ts_action(
-        ts_code_action_sources.remove_unused,
-        'Remove Unused Imports'
-      ),
-    },
     settings = {
       completions = {
         completeFunctionCalls = true,
