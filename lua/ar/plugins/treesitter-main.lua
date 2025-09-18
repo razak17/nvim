@@ -2,151 +2,164 @@ local highlight = ar.highlight
 local minimal = ar.plugins.minimal
 local ts_enabled = ar.treesitter.enable
 local ts_extra_enabled = ar.ts_extra_enabled
+local ts = require('ar.utils.treesitter')
 
 -- https://github.com/rachartier/dotfiles/blob/main/.config/nvim/lua/plugins/utils/treesitter.lua?plain=1#L1
-local function start_treesitter(bufnr, match)
-  local ok, _ = pcall(vim.treesitter.start, bufnr)
+-- https://github.com/chrisgrieser/.config/blob/15cc1b7ad2cfc187c3bc984144136648083e85ca/nvim/lua/plugin-specs/appearance/treesitter.lua?plain=1#L1
+-- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/treesitter.lua?plain=1#L1
 
-  if not ok then return end
-
-  vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-
-  local dont_use_treesitter_indent = { 'bash', 'zsh', 'markdown' }
-  if not vim.list_contains(dont_use_treesitter_indent, match) then
-    vim.bo[bufnr].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-  end
-end
-
-local function treesitter_install(ensure_installed)
-  -- Only install parsers that aren't already installed
-  local parsers_to_install = vim
-    .iter(ensure_installed)
-    :filter(function(parser)
-      local already_installed = require('nvim-treesitter').get_installed()
-      return not vim.tbl_contains(already_installed, parser)
-    end)
-    :totable()
-
-  -- Install missing parsers if any
-  if #parsers_to_install > 0 then
-    require('nvim-treesitter').install(parsers_to_install)
-  end
-end
-
-local function setup_treesitter_autocmd()
-  local ts = require('nvim-treesitter')
-  local parsers = ts.get_available()
-  if not parsers or #parsers == 0 then return end
-
-  local ft_to_attach = vim
-    .iter(parsers)
-    :map(function(parser)
-      local filetypes = vim.treesitter.language.get_filetypes(parser)
-      if filetypes and #filetypes > 0 then return filetypes end
-    end)
-    :filter(function(ft) return ft ~= nil end)
-    :flatten()
-    :totable()
-
-  local function treesitter_auto_install(parser_name, cb)
-    local installed_parser = ts.get_installed()
-    local is_installed = parsers
-      and vim.tbl_contains(installed_parser, parser_name)
-
-    if not is_installed then ts.install({ parser_name }):await(cb) end
-    return is_installed
-  end
-
-  ar.augroup('treesitter', {
-    event = 'FileType',
-    pattern = ft_to_attach,
-    command = function(event)
-      local ft = vim.api.nvim_get_option_value('filetype', { buf = event.buf })
-
-      local parser_name = vim.treesitter.language.get_lang(ft)
-      if not parser_name then return end
-
-      local is_installed = treesitter_auto_install(
-        parser_name,
-        function() start_treesitter(event.buf, event.match) end
-      )
-      if is_installed then start_treesitter(event.buf, event.match) end
-    end,
-  })
-end
+local ensure_installed = {
+  programming_langs = {
+    'c',
+    'cpp',
+    'bash',
+    'javascript',
+    'lua',
+    'python',
+    'ruby',
+    'rust',
+    'svelte',
+    'swift',
+    'typescript',
+    'vim',
+  },
+  data_formats = {
+    'json',
+    'json5',
+    'jsonc',
+    'toml',
+    'xml',
+    'yaml',
+  },
+  content = {
+    'css',
+    'html',
+    'markdown',
+    'markdown_inline',
+  },
+  special_filetypes = {
+    'diff',
+    'dockerfile',
+    'editorconfig',
+    'git_config',
+    'git_rebase',
+    'gitcommit',
+    'gitattributes',
+    'gitignore',
+    'just',
+    'make',
+    'query', -- treesitter query files
+    'requirements',
+  },
+  embedded_langs = {
+    'comment',
+    'graphql',
+    'jsdoc',
+    'luadoc',
+    'luap', -- lua patterns
+    'regex',
+    'rst', -- python reST
+    'vimdoc',
+  },
+}
 
 return {
   {
     'nvim-treesitter/nvim-treesitter',
     cond = ts_enabled,
     branch = 'main',
-    build = { ':TSUpdate' },
-    event = { 'BufRead' },
+    lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
+    event = { 'VeryLazy' },
+    cmd = { 'TSUpdate', 'TSInstall', 'TSLog', 'TSUninstall' },
+    build = function()
+      local TS = require('nvim-treesitter')
+      ts.ensure_treesitter_cli(
+        function() TS.update(nil, { summary = true }) end
+      )
+    end,
     enabled = true,
-    ---@class TSConfig
     opts = {
-      ensure_installed = {
-        programmingLangs = {
-          'c',
-          'cpp',
-          'bash',
-          'javascript',
-          'lua',
-          'python',
-          'ruby',
-          'rust',
-          'svelte',
-          'swift',
-          'typescript',
-          'vim',
-        },
-        dataFormats = {
-          'json',
-          'json5',
-          'jsonc',
-          'toml',
-          'xml',
-          'yaml',
-        },
-        content = {
-          'css',
-          'html',
-          'markdown',
-          'markdown_inline',
-        },
-        specialFiletypes = {
-          'diff',
-          'dockerfile',
-          'editorconfig',
-          'git_config',
-          'git_rebase',
-          'gitcommit',
-          'gitattributes',
-          'gitignore',
-          'just',
-          'make',
-          'query', -- treesitter query files
-          'requirements',
-        },
-        embeddedLangs = {
-          'comment',
-          'graphql',
-          'jsdoc',
-          'luadoc',
-          'luap', -- lua patterns
-          'regex',
-          'rst', -- python reST
-          'vimdoc',
-        },
+      indent = {
+        enable = true,
+        disable = { 'bash', 'zsh', 'markdown', 'javascript' },
       },
+      highlight = { enable = true },
+      folds = { enable = true },
+      ensure_installed = ensure_installed,
       install_dir = vim.fn.stdpath('data') .. '/treesitter',
     },
     config = function(_, opts)
-      local parsers_to_install =
-        vim.iter(vim.tbl_values(opts.ensure_installed)):flatten():totable()
+      local TS = require('nvim-treesitter')
+      TS.setup(opts)
+
       vim.treesitter.language.register('bash', 'zsh')
-      setup_treesitter_autocmd()
-      treesitter_install(parsers_to_install)
+
+      -- initialize the installed langs
+      ts.get_installed(true)
+
+      local to_install =
+        vim.iter(vim.tbl_values(opts.ensure_installed)):flatten():totable()
+
+      -- flatten ensure_installed
+      local install = vim.tbl_filter(
+        function(lang) return not ts.have(lang) end,
+        to_install
+      )
+
+      -- install missing parsers
+      if #install > 0 then
+        ts.ensure_treesitter_cli(function()
+          TS.install(install, { summary = true }):await(function()
+            ts.get_installed(true) -- refresh the installed langs
+          end)
+        end)
+      end
+
+      -- start treesitter
+      local function start(match, buf)
+        if not ts.have(match) then return end
+
+        -- highlighting
+        if vim.tbl_get(opts, 'highlight', 'enable') ~= false then
+          pcall(vim.treesitter.start)
+        end
+
+        -- indents
+        if vim.tbl_get(opts, 'indent', 'enable') ~= false then
+          local disable = opts.indent.disable or {}
+          if not vim.list_contains(disable, match) then
+            vim.bo[buf].indentexpr =
+              "v:lua.require'ar.utils.treesitter'.indentexpr()"
+          end
+        end
+
+        -- folds
+        if vim.tbl_get(opts, 'folds', 'enable') ~= false then
+          vim.wo.foldmethod = 'expr'
+          vim.wo.foldexpr = "v:lua.require'ar.utils.treesitter'.foldexpr()"
+        end
+      end
+
+      ar.augroup('ar_treesitter', {
+        event = 'FileType',
+        command = function(ev)
+          local parser_name = vim.treesitter.language.get_lang(ev.match)
+          if not parser_name then return end
+
+          -- auto install
+          if not ts.have(ev.match) then
+            ts.ensure_treesitter_cli(function()
+              TS.install({ parser_name }, { summary = true }):await(function()
+                ts.get_installed(true) -- refresh the installed langs
+                start(ev.match, ev.buf)
+              end)
+            end)
+            return
+          end
+
+          start(ev.match, ev.buf)
+        end,
+      })
     end,
   },
   {
