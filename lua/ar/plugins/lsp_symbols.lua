@@ -1,5 +1,27 @@
 local minimal = ar.plugins.minimal
 
+-- Gets a property at path
+---@param tbl table the table to access
+---@param path string the '.' separated path
+---@return table|nil result the value at path or nil
+local function get_at_path(tbl, path)
+  if path == '' then return tbl end
+
+  local segments = vim.split(path, '.', true)
+  ---@type table[]|table
+  local result = tbl
+
+  for _, segment in ipairs(segments) do
+    if type(result) == 'table' then
+      ---@type table
+      -- TODO: figure out the actual type of tbl
+      result = result[segment]
+    end
+  end
+
+  return result
+end
+
 return {
   {
     'stevearc/aerial.nvim',
@@ -30,8 +52,7 @@ return {
           ctx.backend_name == 'treesitter'
           and (ctx.lang == 'typescript' or ctx.lang == 'tsx')
         then
-          local utils = require('ar.utils.treesitter')
-          local value_node = (utils.get_at_path(ctx.match, 'var_type') or {}).node
+          local value_node = (get_at_path(ctx.match, 'var_type') or {}).node
           -- don't want to display in-function items
           local cur_parent = value_node and value_node:parent()
           while cur_parent do
