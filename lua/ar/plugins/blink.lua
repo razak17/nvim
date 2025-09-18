@@ -144,6 +144,7 @@ return {
         list = { selection = { preselect = false, auto_insert = true } },
       },
       sources = {
+        per_filetype = { lua = { inherit_defaults = true, 'lazydev' } },
         default = function()
           local node = vim.treesitter.get_node()
           local sources = {
