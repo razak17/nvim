@@ -284,6 +284,9 @@ function ar.is_available(plugin)
   return lazy_config.plugins[plugin] ~= nil
 end
 
+---@param plugin string
+function ar.has(plugin) return ar.get_plugin(plugin) ~= nil end
+
 ---@param plugin string The plugin to search for.
 ---@return boolean available # Whether the plugin is available.
 function ar.plugin_available(plugin)
@@ -1115,11 +1118,6 @@ function ar.reqidx(require_path)
     __newindex = function(_, key, value) require(require_path)[key] = value end,
   })
 end
-
----check if a certain feature/version/commit exists in nvim
----@param feature string
----@return boolean
-function ar.has(feature) return fn.has(feature) > 0 end
 
 --- Find the first entry for which the predicate returns true.
 -- @param t The table
