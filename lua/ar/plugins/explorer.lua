@@ -409,6 +409,30 @@ return {
               end, 100)
             end
           end
+
+          local get_target_dir = function()
+            local fs_entry = MiniFiles.get_fs_entry()
+            if not fs_entry then return nil end
+            return fs_entry.fs_type == 'file'
+                and vim.fn.fnamemodify(fs_entry.path, ':h')
+              or fs_entry.path
+          end
+
+          local create_picker_fn = function(picker_type)
+            return function()
+              local cwd = get_target_dir()
+              if cwd then
+                MiniFiles.close()
+                ar.pick(picker_type, { cwd = cwd })()
+              end
+            end
+          end
+
+          local find_in_dir = create_picker_fn('files')
+          local grep_in_dir = create_picker_fn('live_grep')
+
+          map('n', '<C-p>', find_in_dir, { buffer = buf_id })
+          map('n', '<C-g>', grep_in_dir, { buffer = buf_id })
           map('n', 'W', open_with_window_picker, { buffer = buf_id })
         end,
       })
