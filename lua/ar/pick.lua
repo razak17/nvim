@@ -76,4 +76,5 @@ end
 function M.config_files()
   return M.wrap('files', { cwd = vim.fn.stdpath('config') })
 end
+
 return M

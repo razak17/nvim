@@ -144,7 +144,6 @@ return {
         list = { selection = { preselect = false, auto_insert = true } },
       },
       sources = {
-        per_filetype = { lua = { inherit_defaults = true, 'lazydev' } },
         default = function()
           local node = vim.treesitter.get_node()
           local sources = {
@@ -483,6 +482,15 @@ return {
         }
       end
 
+      if ar.has('lazydev.nvim') then
+        opts.sources.per_filetype =
+          { lua = { inherit_defaults = true, 'lazydev' } }
+        opts.sources.providers.lazydev = {
+          name = 'LazyDev',
+          module = 'lazydev.integrations.blink',
+          score_offset = 100, -- show at a higher priority than lsp
+        }
+      end
       if show_index then
         table.insert(opts.completion.menu.draw.columns, 1, { 'item_idx' })
         table.insert(opts.completion.menu.draw.columns, 2, { 'seperator' })
