@@ -1,6 +1,5 @@
 local fn, v, api = vim.fn, vim.v, vim.api
 
-local is_avail = ar.is_available
 local minimal = ar.plugins.minimal
 local sep = ar.ui.icons.separators
 local icons, codicons = ar.ui.icons, ar.ui.codicons
@@ -67,7 +66,7 @@ return {
       vim_mode,
       { provider = ' Mason', bold = true },
       {
-        condition = function() return is_avail('mason.nvim') end,
+        condition = function() return ar.has('mason.nvim') end,
         init = function(self)
           self.mason_registry = nil
           local ok, registry = pcall(require, 'mason-registry')
@@ -192,7 +191,7 @@ return {
       {
         flexible = 3,
         {
-          condition = function() return is_avail('nvim-tinygit') and false end,
+          condition = function() return ar.has('nvim-tinygit') and false end,
           init = function(self)
             self.blame = require('tinygit.statusline').blame()
             self.branch_state = require('tinygit.statusline').branchState()
@@ -479,7 +478,7 @@ return {
         flexible = 4,
         {
           condition = function()
-            return ar.is_available('noice.nvim')
+            return ar.has('noice.nvim')
               ---@diagnostic disable-next-line: undefined-field
               and require('noice').api.status.command.has()
           end,
@@ -517,7 +516,7 @@ return {
         flexible = 1,
         {
           condition = function()
-            if not is_avail('nvim-dap') or true then return false end
+            if not ar.has('nvim-dap') or true then return false end
             local session = require('dap').session()
             return session ~= nil
           end,
@@ -608,7 +607,7 @@ return {
         flexible = 3,
         {
           update = { 'User', pattern = 'ClocStatusUpdated' },
-          condition = function() return is_avail('cloc.nvim') end,
+          condition = function() return ar.has('cloc.nvim') end,
           provider = function(_)
             local status = require('cloc').get_status()
             if status.statusCode == 'loading' then return 'Clocing...' end
@@ -730,7 +729,7 @@ return {
         flexible = 2,
         {
           condition = function()
-            return is_avail('ecolog.nvim')
+            return ar.has('ecolog.nvim')
               and ar_config.shelter.enable
               and ar_config.shelter.variant == 'ecolog'
           end,
@@ -760,7 +759,7 @@ return {
         {
           init = function(self) self.status = stl.copilot_status() end,
           condition = function()
-            return is_avail('copilot.lua')
+            return ar.has('copilot.lua')
               and ar.ai.enable
               and ar_config.ai.models.copilot
           end,
@@ -813,7 +812,7 @@ return {
       -- MCPHub
       {
         flexible = 2,
-        condition = function() return is_avail('mcphub.nvim') and ar.ai.enable end,
+        condition = function() return ar.has('mcphub.nvim') and ar.ai.enable end,
         {
           static = {
             active_servers = 0,
@@ -857,7 +856,7 @@ return {
         flexible = 3,
         {
           condition = function()
-            return is_avail('kulala.nvim') and vim.bo.ft == 'http'
+            return ar.has('kulala.nvim') and vim.bo.ft == 'http'
           end,
           {
             provider = function()
@@ -884,7 +883,7 @@ return {
       {
         flexible = 3,
         {
-          condition = function() return is_avail('buffalo.nvim') and false end,
+          condition = function() return ar.has('buffalo.nvim') and false end,
           provider = function()
             local buffers = require('buffalo').buffers()
             local tabpages = require('buffalo').tabpages()

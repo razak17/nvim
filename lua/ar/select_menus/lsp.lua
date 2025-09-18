@@ -1,6 +1,5 @@
 local api, fn = vim.api, vim.fn
 local diagnostic = vim.diagnostic
-local is_avail = ar.is_available
 local ts_lsp = ar_config.lsp.lang.typescript
 
 local bool2str = ar.bool2str
@@ -426,9 +425,9 @@ function M.apply_biome_fixes()
 end
 
 function M.organize_imports()
-  if is_avail('typescript-tools.nvim') then
+  if ar.has('typescript-tools.nvim') then
     vim.cmd('TSToolsOrganizeImports')
-  elseif is_avail('nvim-vtsls') then
+  elseif ar.has('nvim-vtsls') then
     vim.cmd('VtsExec organize_imports')
   elseif ts_lsp['ts_ls'] then
     vim.cmd('OrganizeImports')
@@ -436,9 +435,9 @@ function M.organize_imports()
 end
 
 function M.add_missing_imports()
-  if is_avail('typescript-tools.nvim') then
+  if ar.has('typescript-tools.nvim') then
     vim.cmd('TSToolsAddMissingImports')
-  elseif is_avail('nvim-vtsls') then
+  elseif ar.has('nvim-vtsls') then
     vim.cmd('VtsExec add_missing_imports')
   elseif ts_lsp['ts_ls'] then
     vim.cmd('AddMissingImports')
@@ -446,9 +445,9 @@ function M.add_missing_imports()
 end
 
 function M.remove_unused()
-  if is_avail('typescript-tools.nvim') then
+  if ar.has('typescript-tools.nvim') then
     vim.cmd('TSToolsRemoveUnused')
-  elseif is_avail('nvim-vtsls') then
+  elseif ar.has('nvim-vtsls') then
     vim.cmd('VtsExec remove_unused')
   elseif ts_lsp['ts_ls'] then
     vim.cmd('RemoveUnused')
@@ -456,17 +455,17 @@ function M.remove_unused()
 end
 
 function M.remove_unused_imports()
-  if is_avail('typescript-tools.nvim') then
+  if ar.has('typescript-tools.nvim') then
     vim.cmd('TSToolsRemoveUnusedImports')
-  elseif is_avail('nvim-vtsls') then
+  elseif ar.has('nvim-vtsls') then
     vim.cmd('VtsExec remove_unused_imports')
   end
 end
 
 function M.fix_all()
-  if is_avail('typescript-tools.nvim') then
+  if ar.has('typescript-tools.nvim') then
     vim.cmd('TSToolsFixAll')
-  elseif is_avail('nvim-vtsls') then
+  elseif ar.has('nvim-vtsls') then
     vim.cmd('VtsExec fix_all')
   end
 end

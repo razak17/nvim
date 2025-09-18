@@ -50,7 +50,7 @@ end
 ---@param ctx lsp.HandlerContext
 function M.on_publish_diagnostics(err, result, ctx, cb)
   for idx, entry in ipairs(result.diagnostics) do
-    if ar.is_available('ts-error-translator.nvim') then
+    if ar.has('ts-error-translator.nvim') then
       local translate = require('ts-error-translator').translate
       if translate then
         local translated = translate({

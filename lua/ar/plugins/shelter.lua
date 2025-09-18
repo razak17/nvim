@@ -1,6 +1,5 @@
 local minimal = ar.plugins.minimal
 local variant = ar_config.shelter.variant
-local is_avail = ar.is_available
 local is_fzf = ar_config.picker.variant == 'fzf-lua'
 local is_snacks = ar_config.picker.variant == 'snacks'
 local is_cmp = ar_config.completion.variant == 'cmp'
@@ -78,11 +77,11 @@ return {
       types = true,
       -- stylua: ignore
       integrations = {
-        telescope = function() return is_avail('telescope.nvim') end,
-        fzf = function () return is_fzf and is_avail('fzf-lua') end,
-        snacks = function () return is_snacks and is_avail('snacks.nvim') end,
-        nvim_cmp = function () return is_avail('blink.cmp') end,
-        blink_cmp = function() return is_blink and is_avail('blink.cmp') end,
+        telescope = function() return ar.has('telescope.nvim') end,
+        fzf = function () return is_fzf and ar.has('fzf-lua') end,
+        snacks = function () return is_snacks and ar.has('snacks.nvim') end,
+        nvim_cmp = function () return ar.has('blink.cmp') end,
+        blink_cmp = function() return is_blink and ar.has('blink.cmp') end,
         -- blink_cmp = true,
         omnifunc = { auto_setup = false },
         lspsaga = false,
@@ -95,8 +94,8 @@ return {
           files = true,
           peek = false,
           cmp = true,
-          telescope = is_avail('telescope.nvim'),
-          telescope_previewer = is_avail('telescope.nvim'),
+          telescope = ar.has('telescope.nvim'),
+          telescope_previewer = ar.has('telescope.nvim'),
           fzf = true,
           fzf_previewer = true,
           snacks_previewer = true,

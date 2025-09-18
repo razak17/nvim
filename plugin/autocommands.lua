@@ -2,7 +2,7 @@ local enabled = ar_config.plugin.main.autocommands.enable
 
 if not ar or ar.none or not enabled then return end
 
-local augroup, is_available = ar.augroup, ar.is_available
+local augroup = ar.augroup
 
 local fn, api, env, cmd, opt = vim.fn, vim.api, vim.env, vim.cmd, vim.opt
 local falsy = ar.falsy
@@ -170,7 +170,7 @@ augroup('Utilities', {
 --------------------------------------------------------------------------------
 -- Plugin specific
 --------------------------------------------------------------------------------
-if is_available('alpha-nvim') then
+if ar.has('alpha-nvim') then
   augroup('AlphaSettings', {
     event = { 'User' },
     pattern = { 'AlphaReady' },
@@ -188,7 +188,7 @@ if is_available('alpha-nvim') then
   })
 end
 
-if is_available('neo-tree.nvim') then
+if ar.has('neo-tree.nvim') then
   augroup('NeoTreeStart', {
     event = { 'BufEnter' },
     desc = 'Open Neo-Tree on startup with directory',
@@ -211,7 +211,7 @@ if is_available('neo-tree.nvim') then
   })
 end
 
-if is_available('mini.indentscope') then
+if ar.has('mini.indentscope') then
   augroup('MiniIndentscopeDisable', {
     event = { 'FileType' },
     desc = 'Disable indentscope for certain files',
@@ -238,7 +238,7 @@ augroup('CmpSourceCargo', {
   event = 'BufRead',
   pattern = 'Cargo.toml',
   command = function()
-    if is_available('crates.nvim') then
+    if ar.has('crates.nvim') then
       require('cmp').setup.buffer({
         sources = { { name = 'crates', priority = 3, group_index = 1 } },
       })
@@ -246,7 +246,7 @@ augroup('CmpSourceCargo', {
   end,
 })
 
-if is_available('persisted.nvim') then
+if ar.has('persisted.nvim') then
   augroup('PersistedEvents', {
     event = { 'User' },
     pattern = 'PersistedTelescopeLoadPre',
@@ -262,7 +262,7 @@ if is_available('persisted.nvim') then
   })
 end
 
-if is_available('nvim-ghost.nvim') then
+if ar.has('nvim-ghost.nvim') then
   api.nvim_create_augroup('NvimGhostUserAutocommands', { clear = false })
   api.nvim_create_autocmd('User', {
     group = 'NvimGhostUserAutocommands',
@@ -276,7 +276,7 @@ if is_available('nvim-ghost.nvim') then
   })
 end
 
-if is_available('smartcolumn.nvim') then
+if ar.has('smartcolumn.nvim') then
   augroup('SmartCol', {
     event = { 'BufEnter', 'CursorMoved', 'CursorMovedI', 'WinScrolled' },
     command = function(args)
@@ -306,11 +306,11 @@ local function float_resize_autocmd(autocmd_name, ft, command)
   })
 end
 
-if is_available('nvim-lspconfig') then
+if ar.has('nvim-lspconfig') then
   float_resize_autocmd('LspInfoResize', 'lspinfo', 'LspInfo')
 end
 
-if is_available('glow.nvim') then
+if ar.has('glow.nvim') then
   float_resize_autocmd('GlowResize', 'glowpreview', 'Glow')
 end
 

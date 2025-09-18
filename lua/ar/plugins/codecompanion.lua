@@ -122,7 +122,7 @@ return {
         adapters = {},
       }
 
-      if ar.is_available('mcphub.nvim') then
+      if ar.has('mcphub.nvim') then
         opts.extensions = {
           mcphub = {
             callback = 'mcphub.extensions.codecompanion',

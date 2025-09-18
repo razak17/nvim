@@ -1,7 +1,6 @@
-local is_available = ar.is_available
 local enabled = ar_config.plugin.custom.reload_plugin.enable
-local has_lazy = is_available('lazy.nvim')
-local has_telescope = is_available('telescope.nvim')
+local has_lazy = ar.has('lazy.nvim')
+local has_telescope = ar.has('telescope.nvim')
 local ar_picker = ar_config.picker.variant
 
 if

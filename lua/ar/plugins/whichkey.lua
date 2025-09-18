@@ -1,7 +1,7 @@
 ---Set up plugin-specific groups cleanly with the plugin config.
 ---@param spec wk.Spec
 vim.g.whichkey_add_spec = function(spec)
-  if not ar.is_available('which-key.nvim') then return end
+  if not ar.has('which-key.nvim') then return end
   local ok, _ = pcall(require, 'which-key')
   if not ok then return end
   -- Deferred to ensure spec is loaded after whichkey itself

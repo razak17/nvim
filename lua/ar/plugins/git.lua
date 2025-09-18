@@ -230,7 +230,9 @@ return {
       ar.add_to_select_menu('git', {
         ['Conflict Choose Base (Diffview)'] = diffview_conflict_choose('base'),
         ['Conflict Choose Ours (Diffview)'] = diffview_conflict_choose('ours'),
-        ['Conflict Choose Theirs (Diffview)'] = diffview_conflict_choose('theirs'),
+        ['Conflict Choose Theirs (Diffview)'] = diffview_conflict_choose(
+          'theirs'
+        ),
         ['Conflict Choose None (Diffview)'] = diffview_conflict_choose('none'),
         ['Conflict Choose Both (Diffview)'] = diffview_conflict_choose('all'),
         ['Conflict Show Base (Diffview)'] = diffview_conflict('base'),

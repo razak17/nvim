@@ -40,7 +40,7 @@ return {
     opts = {
       options = {
         custom_commentstring = function()
-          if ar.is_available('nvim-ts-context-commentstring') then
+          if ar.has('nvim-ts-context-commentstring') then
             return require('ts_context_commentstring.internal').calculate_commentstring()
           end
           return vim.bo.commentstring

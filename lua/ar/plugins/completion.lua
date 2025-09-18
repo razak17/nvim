@@ -9,14 +9,13 @@ local ai_icons = codicons.ai
 local is_cmp = ar_config.completion.variant == 'cmp'
 local ai_models = ar_config.ai.models
 local ai_cmp = ar_config.ai.completion
-local is_avail = ar.is_available
 local which_ai_cmp = ai_cmp.variant
 local is_copilot = ai_models.copilot
   and which_ai_cmp == 'copilot'
-  and is_avail('copilot.lua')
+  and ar.has('copilot.lua')
 local is_minuet = ai_models.gemini
   and which_ai_cmp == 'minuet'
-  and is_avail('minuet-ai.nvim')
+  and ar.has('minuet-ai.nvim')
 
 ar.completion.config = {
   format = {

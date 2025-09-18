@@ -57,7 +57,7 @@ local function paste_image_from_clipboard()
   if pasted_image then
     cmd('update')
     print('Image pasted and file saved')
-    if ar.is_available('image.nvim') then
+    if ar.has('image.nvim') then
       cmd([[lua require("image").clear()]])
     end
   else
@@ -77,7 +77,7 @@ local function delete_image_under_cursor()
         local success, _ = pcall(
           function() ar.trash_file(fn.fnameescape(absolute_image_path)) end
         )
-        if success and ar.is_available('image.nvim') then
+        if success and ar.has('image.nvim') then
           cmd([[lua require("image").clear()]])
           cmd('edit!')
         end
@@ -90,7 +90,7 @@ end
 
 -- @see: https://github.com/linkarzu/dotfiles-latest/blob/main/neovim/neobean/lua/config/keymaps.lua?plain=1#L524
 local function refresh_images()
-  if ar.is_available('image.nvim') then
+  if ar.has('image.nvim') then
     cmd([[lua require("image").clear()]])
     cmd('edit!')
   end

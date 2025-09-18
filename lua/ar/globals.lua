@@ -128,7 +128,7 @@ end
 ---@param opts { forward: boolean }
 ---@return function
 function ar.demicolon_jump(callback, opts)
-  if not ar.is_available('demicolon.nvim') then
+  if not ar.has('demicolon.nvim') then
     return function() return callback(opts) end
   end
   return function() require('demicolon.jump').repeatably_do(callback, opts) end
@@ -278,19 +278,16 @@ end
 --- when a plugin is not necessarily loaded yet.
 ---@param plugin string The plugin to search for.
 ---@return boolean available # Whether the plugin is available.
-function ar.is_available(plugin)
+function ar.has(plugin)
   local lazy_config_avail, lazy_config = pcall(require, 'lazy.core.config')
   if not lazy_config_avail then return false end
   return lazy_config.plugins[plugin] ~= nil
 end
 
----@param plugin string
-function ar.has(plugin) return ar.get_plugin(plugin) ~= nil end
-
 ---@param plugin string The plugin to search for.
 ---@return boolean available # Whether the plugin is available.
 function ar.plugin_available(plugin)
-  if not ar.is_available(plugin) then
+  if not ar.has(plugin) then
     vim.notify(
       fmt('%s is not available', plugin),
       L.INFO,
@@ -710,7 +707,7 @@ end
 ---@param command? 'split' | 'vsplit'
 local function use_window_picker(callback, set_current_win, command)
   local picked_window_id = api.nvim_get_current_win()
-  if ar.is_available('nvim-window-picker') then
+  if ar.has('nvim-window-picker') then
     picked_window_id = require('window-picker').pick_window({
       include_current_win = true,
     })

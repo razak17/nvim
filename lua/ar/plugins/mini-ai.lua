@@ -120,7 +120,7 @@ return {
         end
       end
 
-      if ar.is_available('which-key.nvim') then
+      if ar.has('which-key.nvim') then
         require('which-key').add(ret, { notify = false })
       end
 

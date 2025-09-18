@@ -3,8 +3,7 @@
 -- Language servers
 --------------------------------------------------------------------------------
 local function get_clangd_cmd()
-  local cmd = ar.is_available('mason.nvim')
-      and vim.fn.expand('$MASON') .. '/bin/clangd'
+  local cmd = ar.has('mason.nvim') and vim.fn.expand('$MASON') .. '/bin/clangd'
     or 'clangd'
   -- stylua: ignore
   return {

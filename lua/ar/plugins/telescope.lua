@@ -62,7 +62,6 @@ local fmt, ui = string.format, ar.ui
 local border = ui.border
 local datapath = vim.fn.stdpath('data')
 local minimal = ar.plugins.minimal
-local is_available = ar.is_available
 local enabled = not ar.plugin_disabled('telescope.nvim')
 local min_enabled = enabled and not minimal
 local is_telescope = ar_config.picker.variant == 'telescope'
@@ -147,7 +146,7 @@ local function extensions(name, prop)
   return function(opts)
     return function(more_opts)
       local o = vim.tbl_extend('force', opts or {}, more_opts or {})
-      if not is_available(extension_to_plugin(name)) then
+      if not ar.has(extension_to_plugin(name)) then
         vim.notify(fmt('%s is not available.', extension_to_plugin(name)))
         return
       end
@@ -407,7 +406,7 @@ end
 
 ---@param prompt_bufnr number
 local function send_files_to_grapple(prompt_bufnr)
-  if not ar.is_available('grapple.nvim') then
+  if not ar.has('grapple.nvim') then
     vim.notify('grapple.nvim is not available')
     return
   end
@@ -872,7 +871,7 @@ return {
         },
       }
 
-      if is_available(extension_to_plugin('frecency')) then
+      if ar.has(extension_to_plugin('frecency')) then
         opts.extensions['frecency'] = {
           db_root = join_paths(datapath, 'databases'),
           default_workspace = 'CWD',
@@ -894,7 +893,7 @@ return {
         }
       end
 
-      if is_available(extension_to_plugin('live_grep_args')) then
+      if ar.has(extension_to_plugin('live_grep_args')) then
         opts.extensions['live_grep_args'] = {
           auto_quoting = true,
           mappings = {
@@ -909,7 +908,7 @@ return {
         }
       end
 
-      if is_available(extension_to_plugin('smart_open')) then
+      if ar.has(extension_to_plugin('smart_open')) then
         opts.extensions['smart_open'] = {
           show_scores = true,
           ignore_patterns = {
@@ -923,7 +922,7 @@ return {
         }
       end
 
-      if is_available(extension_to_plugin('undo')) then
+      if ar.has(extension_to_plugin('undo')) then
         opts.extensions['undo'] = {
           mappings = {
             i = {
@@ -935,7 +934,7 @@ return {
         }
       end
 
-      if is_available(extension_to_plugin('lazy')) then
+      if ar.has(extension_to_plugin('lazy')) then
         opts.extensions['lazy'] = {
           show_icon = true,
           mappings = {
@@ -957,7 +956,7 @@ return {
 
       for name, ext in pairs(ar.telescope.extension_to_plugin) do
         if name ~= 'frecency' then
-          if is_available(ext) then l(name) end
+          if ar.has(ext) then l(name) end
         end
       end
 

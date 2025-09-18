@@ -12,6 +12,4 @@ opt.spellfile:prepend(
 )
 opt.spelllang = { 'en_gb', 'programming' }
 
-local is_available = ar.is_available
-
-if is_available('dial.nvim') and ar.lsp.enable then require('ar.lsp_dial') end
+if ar.has('dial.nvim') and ar.lsp.enable then require('ar.lsp_dial') end

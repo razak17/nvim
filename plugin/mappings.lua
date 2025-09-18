@@ -3,7 +3,6 @@ local enabled = ar_config.plugin.main.mappings.enable
 if not ar or ar.none or not enabled then return end
 
 local fn, api, fmt = vim.fn, vim.api, string.format
-local is_available = ar.is_available
 local command = ar.command
 
 local recursive_map = function(mode, lhs, rhs, opts)
@@ -328,11 +327,11 @@ cnoremap(';;', "<C-r>=fnameescape(expand('%:h'))<cr>/")
 -- even if the file isn't changed so that things like hot reload work
 nnoremap('<c-s>', '<Cmd>silent! write ++p<CR>')
 -- Buffer Management
-if not is_available('cybu.nvim') then
+if not ar.has('cybu.nvim') then
   nnoremap('gB', '<cmd>bprevious<CR>', { desc = 'previous buffer' })
   nnoremap('gP', '<cmd>bnext<CR>', { desc = 'next buffer' })
 end
-if not is_available('snacks.nvim') then
+if not ar.has('snacks.nvim') then
   nnoremap('<leader>qb', ':bdel<CR>', { desc = 'delete buffer' })
 end
 if not ar.plugins.enable then
@@ -433,7 +432,7 @@ map({ 'x' }, 'gl', '$h', { desc = 'go to end of line' })
 -- jk is escape, THEN move to the right to preserve the cursor position, unless
 -- at the first column.  <esc> will continue to work the default way.
 -- NOTE: this is a recursive mapping so anything bound (by a plugin) to <esc> still works
-if ar.plugins.minimal or not ar.is_available('better-escape.nvim') then
+if ar.plugins.minimal or not ar.has('better-escape.nvim') then
   imap('jk', [[col('.') == 1 ? '<esc>' : '<esc>l']], { expr = true })
   imap('kj', [[col('.') == 1 ? '<esc>' : '<esc>l']], { expr = true })
 end

@@ -121,7 +121,7 @@ return {
 
       ls.filetype_extend('NeogitCommitMessage', { 'gitcommit' })
 
-      if ar.treesitter.enable and ar.is_available('snips') then
+      if ar.treesitter.enable and ar.has('snips') then
         local snippets_list = get_snippets_list()
         for _, module_path in ipairs(snippets_list) do
           local ok, snip = pcall(require, module_path)

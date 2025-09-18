@@ -1,6 +1,5 @@
-local is_available = ar.is_available
 local enabled = ar_config.plugin.custom.surf_plugins.enable
-local has_lazy = is_available('lazy.nvim')
+local has_lazy = ar.has('lazy.nvim')
 local ar_picker = ar_config.picker.variant
 
 if

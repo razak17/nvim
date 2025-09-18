@@ -89,7 +89,7 @@ return {
       ar.augroup('Heirline', {
         event = 'ColorScheme',
         command = function()
-          if not ar.is_available('heirline.nvim') then return end
+          if not ar.has('heirline.nvim') then return end
           local utils = require('heirline.utils')
           utils.on_colorscheme(setup_colors)
         end,

@@ -1,5 +1,5 @@
 local enabled = ar_config.plugin.custom.remove_comments.enable
-local ts_avilable = ar.is_available('nvim-treesitter')
+local ts_avilable = ar.has('nvim-treesitter')
 
 if not ar or ar.none or not enabled or not ts_avilable then return end
 

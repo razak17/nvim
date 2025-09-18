@@ -4,17 +4,16 @@ local cmp_utils = require('ar.utils.cmp')
 local ui = ar.ui
 local border, lsp_hls = ui.current.border, ui.lsp.highlights
 local minimal = ar.plugins.minimal
-local is_avail = ar.is_available
 local is_blink = ar_config.completion.variant == 'blink'
 local ai_models = ar_config.ai.models
 local ai_cmp = ar_config.ai.completion
 local which_ai_cmp = ai_cmp.variant
 local is_copilot = ai_models.copilot
   and which_ai_cmp == 'copilot'
-  and is_avail('copilot.lua')
+  and ar.has('copilot.lua')
 local is_minuet = ai_models.gemini
   and which_ai_cmp == 'minuet'
-  and is_avail('minuet-ai.nvim')
+  and ar.has('minuet-ai.nvim')
 
 local show_index = false
 _G.auto_show = true
@@ -171,29 +170,27 @@ return {
                 table.insert(sources, 'avante_mentions')
                 table.insert(sources, 'avante_files')
               end
-              if is_avail('codecompanion.nvim') then
+              if ar.has('codecompanion.nvim') then
                 table.insert(sources, 'codecompanion')
               end
             end
             if not minimal then
-              if is_avail('blink-ripgrep.nvim') then
+              if ar.has('blink-ripgrep.nvim') then
                 table.insert(sources, 'ripgrep')
               end
-              if is_avail('blink-emoji.nvim') then
+              if ar.has('blink-emoji.nvim') then
                 table.insert(sources, 'emoji')
               end
-              if is_avail('blink-cmp-tmux') then
-                table.insert(sources, 'tmux')
-              end
-              if is_avail('nvim-px-to-rem') then
+              if ar.has('blink-cmp-tmux') then table.insert(sources, 'tmux') end
+              if ar.has('nvim-px-to-rem') then
                 table.insert(sources, 'nvim-px-to-rem')
               end
-              if is_avail('vim-dadbod-completion') then
+              if ar.has('vim-dadbod-completion') then
                 table.insert(sources, 'dadbod')
               end
               if
                 ar_config.shelter.variant == 'ecolog'
-                and is_avail('ecolog.nvim')
+                and ar.has('ecolog.nvim')
               then
                 table.insert(sources, 'ecolog')
               end
@@ -336,7 +333,7 @@ return {
       }, symbols)
 
       if not minimal then
-        if is_avail('blink-ripgrep.nvim') then
+        if ar.has('blink-ripgrep.nvim') then
           opts.sources.providers.ripgrep = {
             module = 'blink-ripgrep',
             name = '[RG]',
@@ -349,7 +346,7 @@ return {
             opts = { prefix_min_len = 5 },
           }
         end
-        if is_avail('blink-emoji.nvim') then
+        if ar.has('blink-emoji.nvim') then
           opts.sources.providers.emoji = {
             module = 'blink-emoji',
             name = '[EMOJI]',
@@ -358,7 +355,7 @@ return {
             opts = { insert = true },
           }
         end
-        if is_avail('blink-cmp-tmux') then
+        if ar.has('blink-cmp-tmux') then
           opts.sources.providers.tmux = {
             module = 'blink-cmp-tmux',
             name = '[TMUX]',
@@ -371,7 +368,7 @@ return {
           }
         end
 
-        if is_avail('LuaSnip') then
+        if ar.has('LuaSnip') then
           opts.snippets = {
             preset = 'luasnip',
             expand = function(snippet) require('luasnip').lsp_expand(snippet) end,
@@ -469,7 +466,7 @@ return {
           opts = {},
         }
       end
-      if is_avail('vim-dadbod-completion') then
+      if ar.has('vim-dadbod-completion') then
         opts.sources.providers.dadbod =
           { name = '[DB]', module = 'vim_dadbod_completion.blink' }
       end
@@ -477,7 +474,7 @@ return {
       if
         not minimal
         and ar_config.shelter.variant == 'ecolog'
-        and is_avail('ecolog.nvim')
+        and ar.has('ecolog.nvim')
       then
         opts.sources.providers.ecolog = {
           name = '[ECOLOG]',

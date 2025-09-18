@@ -46,7 +46,7 @@ if ar.is_git_repo() or ar.is_git_env() then
     ['Continue Merge'] = "lua require'ar.select_menus.git'.continue_merge()",
     ['List Branches'] = "lua require'ar.select_menus.git'.list_branches()",
   })
-  if ar.is_available('telescope.nvim') then
+  if ar.has('telescope.nvim') then
     ar.add_to_select_menu('git', {
       ['Browse Branches'] = "lua require'ar.select_menus.telescope_git'.browse_branches()",
       ['Browse Commits'] = "lua require'ar.select_menus.telescope_git'.browse_commits()",
@@ -91,7 +91,7 @@ if ar.lsp.enable then
     ['Remove Unused (ts)'] = "lua require'ar.select_menus.lsp'.remove_unused()",
     ['Fix All (ts)'] = "lua require'ar.select_menus.lsp'.fix_all()",
   })
-  if ar.is_available('telescope.nvim') then
+  if ar.has('telescope.nvim') then
     ar.add_to_select_menu('lsp', {
       ['LSP references'] = "lua require'ar.select_menus.lsp'.display_lsp_references()",
       ['Call Heirarchy'] = "lua require'ar.select_menus.lsp'.display_call_hierarchy()",
@@ -148,7 +148,7 @@ end
 --------------------------------------------------------------------------------
 -- w3m
 --------------------------------------------------------------------------------
-if ar.is_available('w3m.vim') then
+if ar.has('w3m.vim') then
   local w3m_menu = function()
     ar.create_select_menu(
       ar.select_menu['w3m'].title,

@@ -18,7 +18,10 @@ return {
       },
     },
     init = function()
-      ar.add_to_select_menu('command_palette', { ['Search And Replace'] = 'GrugFar' })
+      ar.add_to_select_menu(
+        'command_palette',
+        { ['Search And Replace'] = 'GrugFar' }
+      )
     end,
   },
   {

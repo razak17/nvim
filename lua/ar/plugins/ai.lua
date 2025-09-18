@@ -157,7 +157,7 @@ return {
           })()
         end,
       })
-      require("ar.copilot_indicator")()
+      require('ar.copilot_indicator')()
     end,
     keys = {
       { '<leader>app', '<Cmd>Copilot panel<CR>', desc = 'copilot: panel' },

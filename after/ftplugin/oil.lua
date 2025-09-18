@@ -8,7 +8,7 @@ opt.list = false
 opt.wrap = false
 opt.signcolumn = 'no'
 
-if not ar.is_available('oil.nvim') then return end
+if not ar.has('oil.nvim') then return end
 
 local oil = require('oil')
 local function find_files()

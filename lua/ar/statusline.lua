@@ -1,7 +1,6 @@
 local fn, api, env, fmt = vim.fn, vim.api, vim.env, string.format
 local falsy, icons, codicons = ar.falsy, ar.ui.icons, ar.ui.codicons
 local separator = icons.separators.dotted_thin_block
-local is_avail = ar.is_available
 local root_util = require('ar.utils.root')
 
 local M = {}
@@ -376,7 +375,7 @@ M.file_flags = {
 
 M.file_icon = {
   init = function(self)
-    if is_avail('nvim-web-devicons') or is_avail('mini.icons') then
+    if ar.has('nvim-web-devicons') or ar.has('mini.icons') then
       self.icon, self.icon_hl =
         require('nvim-web-devicons').get_icon(fn.expand('%:t'))
     end
@@ -579,7 +578,7 @@ function M.copilot_status()
     },
   }
   local clients = vim.lsp.get_clients({ name = 'copilot', bufnr = 0 })
-  if not ar.is_available('copilot.lua') and not (clients and #clients > 0) then
+  if not ar.has('copilot.lua') and not (clients and #clients > 0) then
     return { icon = opts.icons.unknown, hl = opts.hl.unknown }
   end
   local copilot = require('ar.copilot_status')

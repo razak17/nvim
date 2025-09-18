@@ -1,8 +1,7 @@
 local lsp = vim.lsp
-local is_available = ar.is_available
 local is_biome = ar_config.lsp.lang.web.biome
   or vim.tbl_contains(ar_config.lsp.override, 'biome')
-local conform = is_available('conform.nvim')
+local conform = ar.has('conform.nvim')
 
 local format_exclusions = {
   format_on_save = { 'zsh' },

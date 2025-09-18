@@ -11,8 +11,7 @@ if disabled then return end
 local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
 local L, S = lsp.log_levels, vim.diagnostic.severity
 local M = vim.lsp.protocol.Methods
-local is_available = ar.is_available
-local conform = is_available('conform.nvim')
+local conform = ar.has('conform.nvim')
 
 local diagnostic = vim.diagnostic
 local format = require('ar.lsp_format')
@@ -469,7 +468,7 @@ local ts_overrides = {
     end
   end,
   on_attach = function(client, bufnr)
-    if is_available('twoslash-queries.nvim') then
+    if ar.has('twoslash-queries.nvim') then
       require('twoslash-queries').attach(client, bufnr)
     end
     -- this is important, otherwise ts_ls will format ts/js
@@ -636,13 +635,13 @@ end
 ---@param client vim.lsp.Client
 ---@param bufnr number
 local function setup_lsp_plugins(client, bufnr)
-  if is_available('workspace-diagnostics.nvim') then
+  if ar.has('workspace-diagnostics.nvim') then
     require('workspace-diagnostics').populate_workspace_diagnostics(
       client,
       bufnr
     )
   end
-  if is_available('hierarchy.nvim') then
+  if ar.has('hierarchy.nvim') then
     ar.command(
       'FuncReferences',
       function()
@@ -887,7 +886,7 @@ diagnostic.handlers.virtual_text = {
 --   hide = hide_signs_handler,
 -- }
 
-if not ar.is_available('noice.nvim') then
+if not ar.has('noice.nvim') then
   local hover = lsp.buf.hover
   ---@diagnostic disable-next-line: duplicate-set-field
   lsp.buf.hover = function()
