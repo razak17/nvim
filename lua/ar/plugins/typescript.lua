@@ -16,6 +16,11 @@ end
 return {
   'dmmulroy/ts-error-translator.nvim',
   {
+    'yioneko/nvim-vtsls',
+    cond = function() return cond('vtsls', 'nvim-vtsls') end,
+    ft = filetypes,
+  },
+  {
     'pmizio/typescript-tools.nvim',
     ft = filetypes,
     cond = function() return cond('typescript-tools', 'typescript-tools.nvim') end,
