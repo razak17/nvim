@@ -75,6 +75,7 @@ return {
         go_to_definition = '<localleader>ld',
       },
     },
+    dependencies = { "MunifTanjim/nui.nvim" },
   },
   {
     'dmmulroy/tsc.nvim',
