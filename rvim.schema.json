@@ -426,11 +426,51 @@
           "properties": {
             "disabled": {
               "type": "array",
-              "items": { "type": "string" }
+              "items": {
+                "type": "string",
+                "enum": [
+                  "CopilotChat", "ai", "animation", "api", "avante", "blink", "buffers", "cmdline", 
+                  "code_runner", "codecompanion", "colorizer", "comment", "completion", "context", 
+                  "core", "cursor", "dashboard", "db", "debugger", "diff", "docs", "dropbar", 
+                  "editing", "experiments", "explorer", "file-operations", "fold", "fun", "games", 
+                  "git", "gitpad", "gp", "grapple", "heirline", "heirline_statuscolumn", "hydra", 
+                  "ibl", "incline", "lang", "leetcode", "log", "lsp", "lsp_code_actions", 
+                  "lsp_diagnostics", "lsp_inlay_hints", "lsp_lens", "lsp_preview", "lsp_symbols", 
+                  "markdown", "marks", "mini-ai", "mini-completion", "mini-indentscope", "mini-pairs", 
+                  "mini-pick", "mini-surround", "mini", "motion", "navigation", "noice", "notes", 
+                  "notify", "nvzone", "opencode", "picker", "pipe", "profile", "qf", "readline", 
+                  "replace", "rustaceanvim", "scratchpad", "session", "share", "shelter", "snacks", 
+                  "snacks_dashboard", "snacks_picker", "snacks_ui_select", "snippets", "surf", 
+                  "telescope-any", "telescope", "terminal", "testing", "theme", "time", "trailblazer", 
+                  "translate", "transparent", "treesitter-main", "treesitter", "typescript", "typr", 
+                  "ui", "undo", "url", "whichkey", "window", "wrap"
+                ]
+              }
+              }
             },
             "override": {
               "type": "array",
-              "items": { "type": "string" }
+              "items": {
+                "type": "string",
+                "enum": [
+                  "CopilotChat", "ai", "animation", "api", "avante", "blink", "buffers", "cmdline", 
+                  "code_runner", "codecompanion", "colorizer", "comment", "completion", "context", 
+                  "core", "cursor", "dashboard", "db", "debugger", "diff", "docs", "dropbar", 
+                  "editing", "experiments", "explorer", "file-operations", "fold", "fun", "games", 
+                  "git", "gitpad", "gp", "grapple", "heirline", "heirline_statuscolumn", "hydra", 
+                  "ibl", "incline", "lang", "leetcode", "log", "lsp", "lsp_code_actions", 
+                  "lsp_diagnostics", "lsp_inlay_hints", "lsp_lens", "lsp_preview", "lsp_symbols", 
+                  "markdown", "marks", "mini-ai", "mini-completion", "mini-indentscope", "mini-pairs", 
+                  "mini-pick", "mini-surround", "mini", "motion", "navigation", "noice", "notes", 
+                  "notify", "nvzone", "opencode", "picker", "pipe", "profile", "qf", "readline", 
+                  "replace", "rustaceanvim", "scratchpad", "session", "share", "shelter", "snacks", 
+                  "snacks_dashboard", "snacks_picker", "snacks_ui_select", "snippets", "surf", 
+                  "telescope-any", "telescope", "terminal", "testing", "theme", "time", "trailblazer", 
+                  "translate", "transparent", "treesitter-main", "treesitter", "typescript", "typr", 
+                  "ui", "undo", "url", "whichkey", "window", "wrap"
+                ]
+              }
+              }
             }
           },
           "additionalProperties": false
