@@ -446,7 +446,6 @@
                   "ui", "undo", "url", "whichkey", "window", "wrap"
                 ]
               }
-              }
             },
             "override": {
               "type": "array",
@@ -469,7 +468,6 @@
                   "translate", "transparent", "treesitter-main", "treesitter", "typescript", "typr", 
                   "ui", "undo", "url", "whichkey", "window", "wrap"
                 ]
-              }
               }
             }
           },
