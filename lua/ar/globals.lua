@@ -307,6 +307,68 @@ function ar.is_loaded(plugin)
   return lazy_config.plugins[plugin] and lazy_config.plugins[plugin]._.loaded
 end
 
+-- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util/init.lua?plain=1#L307local _defaults = {} ---@type table<string, boolean>
+
+local _defaults = {} ---@type table<string, boolean>
+
+-- Determines whether it's safe to set an option to a default value.
+--
+-- It will only set the option if:
+-- * it is the same as the global value
+-- * it's current value is a default value
+-- * it was last set by a script in $VIMRUNTIME
+---@param option string
+---@param value string|number|boolean
+---@return boolean was_set
+function ar.set_default(option, value)
+  local l = api.nvim_get_option_value(option, { scope = 'local' })
+  local g = api.nvim_get_option_value(option, { scope = 'global' })
+
+  _defaults[('%s=%s'):format(option, value)] = true
+  local key = ('%s=%s'):format(option, l)
+
+  local source = ''
+  if l ~= g and not _defaults[key] then
+    -- Option does not match global and is not a default value
+    -- Check if it was set by a script in $VIMRUNTIME
+    local info = vim.api.nvim_get_option_info2(option, { scope = 'local' })
+    local scriptinfo = vim.tbl_filter(
+      ---@param e vim.fn.getscriptinfo.ret
+      function(e) return e.sid == info.last_set_sid end,
+      vim.fn.getscriptinfo()
+    )
+    source = scriptinfo[1] and scriptinfo[1].name or ''
+    local by_rtp = #scriptinfo == 1
+      and vim.startswith(scriptinfo[1].name, vim.fn.expand('$VIMRUNTIME'))
+    if not by_rtp then
+      if ar_config.debug.enable then
+        vim.notify(
+          ('Not setting option `%s` to `%q` because it was changed by a plugin.'):format(
+            option,
+            value
+          ),
+          { title = 'rVim', once = true },
+          vim.log.levels.WARN
+        )
+      end
+      return false
+    end
+  end
+
+  if ar_config.debug.enable then
+    vim.notify({
+      ('Setting option `%s` to `%q`'):format(option, value),
+      ('Was: %q'):format(l),
+      ('Global: %q'):format(g),
+      source ~= '' and ('Last set by: %s'):format(source) or '',
+      'buf: ' .. api.nvim_buf_get_name(0),
+    }, { title = 'rVim', once = true }, vim.log.levels.ERROR)
+  end
+
+  api.nvim_set_option_value(option, value, { scope = 'local' })
+  return true
+end
+
 function ar.ts_extra_enabled()
   return ar.treesitter.enable and ar.treesitter.extra.enable
 end

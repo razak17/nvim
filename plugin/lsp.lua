@@ -671,6 +671,9 @@ local function setup_lsp_foldexpr(client)
   if client:supports_method(M.textDocument_foldingRange) then
     local win = api.nvim_get_current_win()
     vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+    if ar.set_default('foldmethod', 'expr') then
+      ar.set_default('foldexpr', 'v:lua.vim.lsp.foldexpr()')
+    end
   end
 end
 

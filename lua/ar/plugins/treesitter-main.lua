@@ -8,57 +8,23 @@ local ts = require('ar.utils.treesitter')
 -- https://github.com/chrisgrieser/.config/blob/15cc1b7ad2cfc187c3bc984144136648083e85ca/nvim/lua/plugin-specs/appearance/treesitter.lua?plain=1#L1
 -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/treesitter.lua?plain=1#L1
 
+        -- stylua: ignore
 local ensure_installed = {
   programming_langs = {
-    'c',
-    'cpp',
-    'bash',
-    'javascript',
-    'lua',
-    'python',
-    'ruby',
-    'rust',
-    'svelte',
-    'swift',
-    'typescript',
-    'vim',
+    'c', 'cpp', 'bash', 'javascript', 'lua', 'python', 'ruby', 'rust', 'svelte',
+    'swift', 'typescript', 'vim',
   },
-  data_formats = {
-    'json',
-    'json5',
-    'jsonc',
-    'toml',
-    'xml',
-    'yaml',
-  },
-  content = {
-    'css',
-    'html',
-    'markdown',
-    'markdown_inline',
+  data_formats = { 'json', 'json5', 'jsonc', 'toml', 'xml', 'yaml' },
+  content = { 'css', 'html', 'markdown', 'markdown_inline'
   },
   special_filetypes = {
-    'diff',
-    'dockerfile',
-    'editorconfig',
-    'git_config',
-    'git_rebase',
-    'gitcommit',
-    'gitattributes',
-    'gitignore',
-    'just',
-    'make',
-    'query', -- treesitter query files
+    'diff', 'dockerfile', 'editorconfig', 'git_config', 'git_rebase', 'gitcommit',
+    'gitattributes', 'gitignore', 'just', 'make', 'query', -- treesitter query files
     'requirements',
   },
   embedded_langs = {
-    'comment',
-    'graphql',
-    'jsdoc',
-    'luadoc',
-    'luap', -- lua patterns
-    'regex',
-    'rst', -- python reST
+    'comment', 'graphql', 'jsdoc', 'luadoc', 'luap', -- lua patterns
+    'regex', 'rst', -- python reST
     'vimdoc',
   },
 }
@@ -128,15 +94,21 @@ return {
         if vim.tbl_get(opts, 'indent', 'enable') ~= false then
           local disable = opts.indent.disable or {}
           if not vim.list_contains(disable, match) then
-            vim.bo[buf].indentexpr =
+            ar.set_default(
+              'indentexpr',
               "v:lua.require'ar.utils.treesitter'.indentexpr()"
+            )
           end
         end
 
         -- folds
         if vim.tbl_get(opts, 'folds', 'enable') ~= false then
-          vim.wo.foldmethod = 'expr'
-          vim.wo.foldexpr = "v:lua.require'ar.utils.treesitter'.foldexpr()"
+          if ar.set_default('foldmethod', 'expr') then
+            ar.set_default(
+              'foldexpr',
+              "v:lua.require'ar.utils.treesitter'.foldexpr()"
+            )
+          end
         end
       end
 
