@@ -374,26 +374,10 @@ local lsp_dir_servers = {
   gh_actions_ls = {},
 }
 
+-- mason-lspconfig doesn't enable these by default for some reason.. I have to enable them manually.
 ---@type table<string, vim.lsp.Config|{mason?:boolean, enabled?:boolean}|boolean>
 local manual_servers = {
-  tsgo = {
-    cmd = { 'tsgo', '--lsp', '--stdio' },
-    filetypes = {
-      'javascript',
-      'javascriptreact',
-      'javascript.jsx',
-      'typescript',
-      'typescriptreact',
-      'typescript.tsx',
-    },
-    root_markers = {
-      'tsconfig.json',
-      'jsconfig.json',
-      'package.json',
-      '.git',
-      'tsconfig.base.json',
-    },
-  },
+  tsgo = {},
 }
 
 ---@param name string

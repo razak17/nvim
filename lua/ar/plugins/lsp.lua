@@ -39,11 +39,15 @@ local function is_enabled(name)
   return true
 end
 
+---@param servers string[]
+local function get_enabled(servers) return vim.iter(servers):filter(is_enabled) end
+
 local function get_servers()
   local ar_servers = require('ar.servers')
-  local enabled_servers = vim
-    .iter(ar_servers.names())
-    :filter(is_enabled)
+  local default = get_enabled(ar_servers.names())
+  local lsp_dir = get_enabled(ar_servers.names('lsp_dir'))
+  local manual = get_enabled(ar_servers.names('manual'))
+  local enabled_servers = default
     :map(function(name)
       local config = ar_servers.get(name)
       if not config then return nil end -- skip if config missing
@@ -52,12 +56,8 @@ local function get_servers()
     end)
     :filter(function(x) return x ~= nil end)
     :totable()
-  local lsp_dir_servers = vim
-    .iter(ar_servers.names('lsp_dir'))
-    :filter(is_enabled)
-    :map(function(name) return name end)
-    :totable()
-  vim.list_extend(enabled_servers, lsp_dir_servers)
+  vim.list_extend(enabled_servers, lsp_dir:totable())
+  manual:each(function(name) vim.lsp.enable(name) end)
   return enabled_servers
 end
 
@@ -108,14 +108,6 @@ return {
       event = { 'BufReadPre' },
       config = function()
         require('mason-lspconfig').setup({ automatic_enable = get_servers() })
-        local manual_servers = require('ar.servers').names('manual')
-        vim.iter(manual_servers):filter(is_enabled):each(function(name)
-          local config = require('ar.servers').get(name, 'manual')
-          if config then
-            vim.lsp.config(name, config)
-            vim.lsp.enable(name)
-          end
-        end)
       end,
       dependencies = {
         {
