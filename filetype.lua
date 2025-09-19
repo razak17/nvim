@@ -24,6 +24,5 @@ vim.filetype.add({
     -- ['.*%.env%..*'] = 'config',
     ['.env%..*'] = 'config',
     ['req.*.txt'] = 'config',
-    ['.*/%.github[%w/]+workflows[%w/]+.*%.ya?ml'] = 'yaml.github',
   },
 })

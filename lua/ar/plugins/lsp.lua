@@ -41,9 +41,8 @@ end
 
 local function get_servers()
   local ar_servers = require('ar.servers')
-  local servers = ar_servers.names()
   local enabled_servers = vim
-    .iter(servers)
+    .iter(ar_servers.names())
     :filter(is_enabled)
     :map(function(name)
       local config = ar_servers.get(name)
@@ -53,6 +52,12 @@ local function get_servers()
     end)
     :filter(function(x) return x ~= nil end)
     :totable()
+  local lsp_dir_servers = vim
+    .iter(ar_servers.names('lsp_dir'))
+    :filter(is_enabled)
+    :map(function(name) return name end)
+    :totable()
+  vim.list_extend(enabled_servers, lsp_dir_servers)
   return enabled_servers
 end
 
@@ -103,9 +108,9 @@ return {
       event = { 'BufReadPre' },
       config = function()
         require('mason-lspconfig').setup({ automatic_enable = get_servers() })
-        local manual_servers = require('ar.servers').names({ manual = true })
+        local manual_servers = require('ar.servers').names('manual')
         vim.iter(manual_servers):filter(is_enabled):each(function(name)
-          local config = require('ar.servers').get(name, { manual = true })
+          local config = require('ar.servers').get(name, 'manual')
           if config then
             vim.lsp.config(name, config)
             vim.lsp.enable(name)
@@ -122,7 +127,7 @@ return {
           dependencies = {
             {
               'folke/lazydev.nvim',
-              cond = ar.lsp.enable and false,
+              cond = ar.lsp.enable,
               ft = 'lua',
               cmd = 'LazyDev',
               opts = {

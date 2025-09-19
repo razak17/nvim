@@ -119,34 +119,6 @@ local servers = {
     root_markers = { 'package.json', '.git' },
   },
   emmet_language_server = {},
-  -- https://github.com/jugarpeupv/dotfiles/blob/535e69fdfb0590fb5aeca5f7dc5f0f7decdee651/nvim/.config/nvim/lua/plugins/lspconfig.lua#L828
-  gh_actions_ls = {
-    handlers = {
-      ['actions/readFile'] = function(_, result)
-        if type(result.path) ~= 'string' then return nil, nil end
-        local file_path = vim.uri_to_fname(result.path)
-        if vim.fn.filereadable(file_path) == 1 then
-          local content = vim.fn.readfile(file_path)
-          local text = table.concat(content, '\n')
-          return text, nil
-        end
-        return nil, nil
-      end,
-    },
-    init_options = require('ar.gh_actions_init')(),
-    filetypes = { 'yaml.github' },
-    cmd = { 'gh-actions-language-server', '--stdio' },
-    settings = {
-      yaml = {
-        format = {
-          enable = true,
-        },
-        validate = {
-          enable = true,
-        },
-      },
-    },
-  },
   --- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
   gopls = {
     settings = {
@@ -397,6 +369,12 @@ local servers = {
   },
 }
 
+---@type table<string, vim.lsp.Config|{mason?:boolean, enabled?:boolean}|boolean>
+local lsp_dir_servers = {
+  gh_actions_ls = {},
+}
+
+---@type table<string, vim.lsp.Config|{mason?:boolean, enabled?:boolean}|boolean>
 local manual_servers = {
   tsgo = {
     cmd = { 'tsgo', '--lsp', '--stdio' },
@@ -450,25 +428,30 @@ local function capabilities(name, config)
   return config
 end
 
+---@alias WhichServers 'default' | 'manual' | 'lsp_dir'
+
 ---Get the configuration for a specific language server
 ---@param name string?
----@param opts? { manual?: boolean }
+---@param which? WhichServers
 ---@return table<string, any>?
-local function get(name, opts)
-  opts = opts or {}
+local function get(name, which)
+  which = which or 'default'
   local config = servers[name]
-  if opts.manual then config = manual_servers[name] end
+  if which == 'manual' then config = manual_servers[name] end
+  if which == 'lsp_dir' then config = manual_servers[name] end
   if not config then return {} end
   if type(config) == 'function' then config = config() end
   return capabilities(name, config)
 end
 
 ---Get the list of language servers
----@param opts? { manual?: boolean }
+---@param which? WhichServers
 ---@return string[]
-local function names(opts)
-  opts = opts or {}
-  local lsp_servers = opts.manual and manual_servers or servers
+local function names(which)
+  which = which or 'default'
+  local lsp_servers = servers
+  if which == 'manual' then lsp_servers = manual_servers end
+  if which == 'lsp_dir' then lsp_servers = lsp_dir_servers end
   return vim.tbl_keys(lsp_servers)
 end
 
