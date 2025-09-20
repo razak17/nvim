@@ -134,18 +134,48 @@ return {
 
       if ar_config.picker.variant == 'fzf-lua' then
         local fzf = require('fzf-lua')
-        fzf.register_ui_select(function(ui_opts, _)
-          ui_opts.prompt = ui_opts.prompt or 'Select one of'
-          return {
+        fzf.register_ui_select(function(fzf_opts, items)
+          fzf_opts.prompt = fzf_opts.prompt or 'Select one of'
+
+          return vim.tbl_deep_extend('force', fzf_opts, {
             prompt = prompt,
             winopts = {
-              title = ui_opts.prompt:gsub(':%s*$', ''),
               title_pos = 'center',
+              title = ' '
+                .. vim.trim((fzf_opts.prompt or 'Select'):gsub('%s*:%s*$', ''))
+                .. ' ',
               row = 0.5,
-              height = 0.30,
-              width = 0.55,
             },
-          }
+          }, fzf_opts.kind == 'codeaction' and {
+            winopts = {
+              layout = 'vertical',
+              -- height is number of items minus 15 lines for the preview, with a max of 80% screen height
+              height = math.floor(
+                math.min(vim.o.lines * 0.8 - 16, #items + 4) + 0.5
+              ) + 16,
+              width = 0.5,
+              preview = not vim.tbl_isempty(
+                    vim.lsp.get_clients({ bufnr = 0, name = 'vtsls' })
+                  )
+                  and {
+                    layout = 'vertical',
+                    vertical = 'down:15,border-top',
+                    hidden = 'hidden',
+                  }
+                or {
+                  layout = 'vertical',
+                  vertical = 'down:15,border-top',
+                },
+            },
+          } or {
+            winopts = {
+              width = 0.5,
+              -- height is number of items, with a max of 80% screen height
+              height = math.floor(
+                math.min(vim.o.lines * 0.35, #items + 4) + 0.5
+              ),
+            },
+          })
         end)
       end
     end,
