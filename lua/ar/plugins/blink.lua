@@ -23,6 +23,52 @@ ar.add_to_select_menu('command_palette', {
   ['Toggle Blink Auto Show'] = toggle_blink_auto_show,
 })
 
+local function get_sources()
+  local node = vim.treesitter.get_node()
+  local sources = {
+    'lsp',
+    'path',
+    'snippets',
+    'buffer',
+  }
+
+  if
+    node
+    and vim.tbl_contains(
+      { 'comment', 'line_comment', 'block_comment' },
+      node:type()
+    )
+  then
+    return { 'buffer' }
+  else
+    if ar.ai.enable then
+      if ai_models.copilot then
+        table.insert(sources, 'avante_commands')
+        table.insert(sources, 'avante_mentions')
+        table.insert(sources, 'avante_files')
+      end
+      if ar.has('codecompanion.nvim') then
+        table.insert(sources, 'codecompanion')
+      end
+    end
+    if not minimal then
+      if ar.has('blink-ripgrep.nvim') then table.insert(sources, 'ripgrep') end
+      if ar.has('blink-emoji.nvim') then table.insert(sources, 'emoji') end
+      if ar.has('blink-cmp-tmux') then table.insert(sources, 'tmux') end
+      if ar.has('nvim-px-to-rem') then
+        table.insert(sources, 'nvim-px-to-rem')
+      end
+      if ar.has('vim-dadbod-completion') then
+        table.insert(sources, 'dadbod')
+      end
+      if ar_config.shelter.variant == 'ecolog' and ar.has('ecolog.nvim') then
+        table.insert(sources, 'ecolog')
+      end
+    end
+    return sources
+  end
+end
+
 return {
   {
     'saghen/blink.cmp',
@@ -36,159 +82,162 @@ return {
       'cmdline.sources',
       'term.sources',
     },
-    ---@module 'blink.cmp'
-    ---@type blink.cmp.Config
-    opts = {
-      enabled = function()
-        local ignored_filetypes = {
-          'TelescopePrompt',
-          'minifiles',
-          'snacks_picker_input',
-          'neo-tree-popup',
-          'dropbar_menu_fzf',
-        }
-        local filetype = vim.bo[0].filetype
-        return not vim.tbl_contains(ignored_filetypes, filetype)
-      end,
-      appearance = {
-        use_nvim_cmp_as_default = true,
-        nerd_font_variant = 'mono',
-      },
-      signature = { window = { border = border } },
-      cmdline = {
-        keymap = {
-          preset = 'cmdline',
-          -- recommended, as the default keymap will only show and select the next item
-          ['<Tab>'] = { 'show', 'select_next' },
-          ['<S-Tab>'] = { 'show', 'select_prev' },
-          ['<CR>'] = { 'accept_and_enter', 'fallback' },
+
+    opts = function(_, opts)
+      local sources = get_sources()
+      opts = opts or {}
+      opts.sources = opts.sources or {}
+
+      ---@module 'blink.cmp'
+      ---@type blink.cmp.Config
+      opts = vim.tbl_extend('force', opts, {
+        enabled = function()
+          local ignored_filetypes = {
+            'TelescopePrompt',
+            'minifiles',
+            'snacks_picker_input',
+            'neo-tree-popup',
+            'dropbar_menu_fzf',
+          }
+          local filetype = vim.bo[0].filetype
+          return not vim.tbl_contains(ignored_filetypes, filetype)
+        end,
+        appearance = {
+          use_nvim_cmp_as_default = true,
+          nerd_font_variant = 'mono',
         },
-        enabled = true,
+        signature = { window = { border = border } },
+        cmdline = {
+          keymap = {
+            preset = 'cmdline',
+            -- recommended, as the default keymap will only show and select the next item
+            ['<Tab>'] = { 'show', 'select_next' },
+            ['<S-Tab>'] = { 'show', 'select_prev' },
+            ['<CR>'] = { 'accept_and_enter', 'fallback' },
+          },
+          enabled = true,
+          completion = {
+            ghost_text = { enabled = false },
+            list = { selection = { preselect = false, auto_insert = true } },
+            menu = {
+              auto_show = function(ctx)
+                local type = vim.fn.getcmdtype()
+                if ctx.mode == 'cmdline' then
+                  return type == ':' or type == '@'
+                end
+                return false
+              end,
+            },
+          },
+        },
         completion = {
+          accept = {
+            -- experimental auto-brackets support
+            auto_brackets = { enabled = true },
+          },
+          -- Recommended to avoid unnecessary request
+          trigger = { prefetch_on_insert = false },
+          menu = {
+            auto_show = function() return _G.auto_show end,
+            border = border,
+            winblend = 0,
+            winhighlight = 'NormalFloat:NormalFloat,CursorLine:PmenuSel,NormalFloat:NormalFloat',
+            draw = {
+              columns = {
+                { 'label', gap = 1 },
+                { 'kind_icon', gap = 2, 'source_name' },
+              },
+              components = {
+                kind_icon = {
+                  text = function(ctx)
+                    local data = ctx.source_id == 'codecompanion'
+                      and ctx.item.data
+                    if data then
+                      return data.type == 'variable' and ''
+                        or data.type == 'tool' and '󱁤'
+                        or '󰿠'
+                    end
+                    local icon = ctx.kind_icon
+                    if ctx.kind == 'Color' then
+                      icon = fmt('%s ', ui.icons.misc.block_medium)
+                    end
+                    return icon .. ctx.icon_gap
+                  end,
+                  highlight = function(ctx)
+                    local hl = 'BlinkCmpKind' .. ctx.kind
+                    local color_item = cmp_utils.get_color(
+                      ctx.item.documentation,
+                      { kind = ctx.kind }
+                    )
+                    if color_item and color_item.kind_hl_group then
+                      hl = color_item.kind_hl_group
+                    end
+                    return hl
+                  end,
+                },
+              },
+              treesitter = { 'lsp' },
+            },
+          },
+          documentation = {
+            auto_show = true,
+            auto_show_delay_ms = 200,
+            window = { border = border },
+          },
           ghost_text = { enabled = false },
           list = { selection = { preselect = false, auto_insert = true } },
-          menu = {
-            auto_show = function(ctx)
-              local type = vim.fn.getcmdtype()
-              if ctx.mode == 'cmdline' then
-                return type == ':' or type == '@'
-              end
-              return false
-            end,
+        },
+        keymap = {
+          preset = 'default',
+          ['<CR>'] = { 'accept', 'fallback' },
+          ['<C-n>'] = { 'select_next', 'show' },
+          ['<C-p>'] = { 'select_prev', 'show' },
+          ['<C-j>'] = { 'select_next', 'show' },
+          ['<C-k>'] = { 'select_prev', 'show' },
+          ['<C-space>'] = {
+            'show',
+            'show_documentation',
+            'hide_documentation',
+            'fallback',
           },
-        },
-      },
-      completion = {
-        accept = {
-          -- experimental auto-brackets support
-          auto_brackets = { enabled = true },
-        },
-        -- Recommended to avoid unnecessary request
-        trigger = { prefetch_on_insert = false },
-        menu = {
-          auto_show = function() return _G.auto_show end,
-          border = border,
-          winblend = 0,
-          winhighlight = 'NormalFloat:NormalFloat,CursorLine:PmenuSel,NormalFloat:NormalFloat',
-          draw = {
-            columns = {
-              { 'label', gap = 1 },
-              { 'kind_icon', gap = 2, 'source_name' },
-            },
-            components = {
-              kind_icon = {
-                text = function(ctx)
-                  local data = ctx.source_id == 'codecompanion'
-                    and ctx.item.data
-                  if data then
-                    return data.type == 'variable' and ''
-                      or data.type == 'tool' and '󱁤'
-                      or '󰿠'
-                  end
-                  local icon = ctx.kind_icon
-                  if ctx.kind == 'Color' then
-                    icon = fmt('%s ', ui.icons.misc.block_medium)
-                  end
-                  return icon .. ctx.icon_gap
-                end,
-                highlight = function(ctx)
-                  local hl = 'BlinkCmpKind' .. ctx.kind
-                  local color_item = cmp_utils.get_color(
-                    ctx.item.documentation,
-                    { kind = ctx.kind }
-                  )
-                  if color_item and color_item.kind_hl_group then
-                    hl = color_item.kind_hl_group
-                  end
-                  return hl
-                end,
-              },
-            },
-            treesitter = { 'lsp' },
-          },
-        },
-        documentation = {
-          auto_show = true,
-          auto_show_delay_ms = 200,
-          window = { border = border },
-        },
-        ghost_text = { enabled = false },
-        list = { selection = { preselect = false, auto_insert = true } },
-      },
-      sources = {
-        default = function()
-          local node = vim.treesitter.get_node()
-          local sources = {
-            'lsp',
-            'path',
-            'snippets',
-            'buffer',
-          }
-
-          if
-            node
-            and vim.tbl_contains(
-              { 'comment', 'line_comment', 'block_comment' },
-              node:type()
-            )
-          then
-            return { 'buffer' }
-          else
-            if ar.ai.enable then
-              if ai_models.copilot then
-                table.insert(sources, 'avante_commands')
-                table.insert(sources, 'avante_mentions')
-                table.insert(sources, 'avante_files')
-              end
-              if ar.has('codecompanion.nvim') then
-                table.insert(sources, 'codecompanion')
-              end
-            end
-            if not minimal then
-              if ar.has('blink-ripgrep.nvim') then
-                table.insert(sources, 'ripgrep')
-              end
-              if ar.has('blink-emoji.nvim') then
-                table.insert(sources, 'emoji')
-              end
-              if ar.has('blink-cmp-tmux') then table.insert(sources, 'tmux') end
-              if ar.has('nvim-px-to-rem') then
-                table.insert(sources, 'nvim-px-to-rem')
-              end
-              if ar.has('vim-dadbod-completion') then
-                table.insert(sources, 'dadbod')
-              end
+          ['<Tab>'] = {
+            'select_next',
+            'snippet_forward',
+            function(cmp)
               if
-                ar_config.shelter.variant == 'ecolog'
-                and ar.has('ecolog.nvim')
+                cmp_utils.has_words_before()
+                or api.nvim_get_mode().mode == 'c'
               then
-                table.insert(sources, 'ecolog')
+                return cmp.show()
               end
-            end
-            return sources
-          end
-        end,
-        providers = {
+            end,
+            'fallback',
+          },
+          ['<S-Tab>'] = {
+            'select_prev',
+            'snippet_backward',
+            function(cmp)
+              if api.nvim_get_mode().mode == 'c' then return cmp.show() end
+            end,
+            'fallback',
+          },
+          ['<A-1>'] = { function(cmp) cmp.accept({ index = 1 }) end },
+          ['<A-2>'] = { function(cmp) cmp.accept({ index = 2 }) end },
+          ['<A-3>'] = { function(cmp) cmp.accept({ index = 3 }) end },
+          ['<A-4>'] = { function(cmp) cmp.accept({ index = 4 }) end },
+          ['<A-5>'] = { function(cmp) cmp.accept({ index = 5 }) end },
+          ['<A-6>'] = { function(cmp) cmp.accept({ index = 6 }) end },
+          ['<A-7>'] = { function(cmp) cmp.accept({ index = 7 }) end },
+          ['<A-8>'] = { function(cmp) cmp.accept({ index = 8 }) end },
+          ['<A-9>'] = { function(cmp) cmp.accept({ index = 9 }) end },
+          ['<A-0>'] = { function(cmp) cmp.accept({ index = 10 }) end },
+        },
+      })
+
+      opts.sources.default =
+        vim.list_extend(opts.sources.default or {}, sources)
+      opts.sources.providers =
+        vim.tbl_extend('force', opts.sources.providers or {}, {
           lsp = {
             enabled = ar.lsp.enable,
             name = '[LSP]',
@@ -219,53 +268,10 @@ return {
             module = 'blink.cmp.sources.snippets',
             score_offset = 20,
           },
-        },
-      },
-      keymap = {
-        preset = 'default',
-        ['<CR>'] = { 'accept', 'fallback' },
-        ['<C-n>'] = { 'select_next', 'show' },
-        ['<C-p>'] = { 'select_prev', 'show' },
-        ['<C-j>'] = { 'select_next', 'show' },
-        ['<C-k>'] = { 'select_prev', 'show' },
-        ['<C-space>'] = {
-          'show',
-          'show_documentation',
-          'hide_documentation',
-          'fallback',
-        },
-        ['<Tab>'] = {
-          'select_next',
-          'snippet_forward',
-          function(cmp)
-            if
-              cmp_utils.has_words_before() or api.nvim_get_mode().mode == 'c'
-            then
-              return cmp.show()
-            end
-          end,
-          'fallback',
-        },
-        ['<S-Tab>'] = {
-          'select_prev',
-          'snippet_backward',
-          function(cmp)
-            if api.nvim_get_mode().mode == 'c' then return cmp.show() end
-          end,
-          'fallback',
-        },
-        ['<A-1>'] = { function(cmp) cmp.accept({ index = 1 }) end },
-        ['<A-2>'] = { function(cmp) cmp.accept({ index = 2 }) end },
-        ['<A-3>'] = { function(cmp) cmp.accept({ index = 3 }) end },
-        ['<A-4>'] = { function(cmp) cmp.accept({ index = 4 }) end },
-        ['<A-5>'] = { function(cmp) cmp.accept({ index = 5 }) end },
-        ['<A-6>'] = { function(cmp) cmp.accept({ index = 6 }) end },
-        ['<A-7>'] = { function(cmp) cmp.accept({ index = 7 }) end },
-        ['<A-8>'] = { function(cmp) cmp.accept({ index = 8 }) end },
-        ['<A-9>'] = { function(cmp) cmp.accept({ index = 9 }) end },
-        ['<A-0>'] = { function(cmp) cmp.accept({ index = 10 }) end },
-      },
-    },
+        })
+
+      return opts
+    end,
     config = function(_, opts)
       local hl_defs = vim
         .iter(lsp_hls)
@@ -392,24 +398,6 @@ return {
             end
             return items
           end,
-        }
-        opts.sources.providers.avante_commands = {
-          name = 'avante_commands',
-          module = 'blink.compat.source',
-          score_offset = 90, -- show at a higher priority than lsp
-          opts = {},
-        }
-        opts.sources.providers.avante_files = {
-          name = 'avante_files',
-          module = 'blink.compat.source',
-          score_offset = 100, -- show at a higher priority than lsp
-          opts = {},
-        }
-        opts.sources.providers.avante_mentions = {
-          name = 'avante_mentions',
-          module = 'blink.compat.source',
-          score_offset = 1000, -- show at a higher priority than lsp
-          opts = {},
         }
       end
       if ar.has('vim-dadbod-completion') then

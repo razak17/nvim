@@ -116,10 +116,13 @@ return {
     optional = true,
     opts = function(_, opts)
       if not get_cond() then return opts end
-      local default = opts.sources.default()
-      local sources = vim.list_extend(default, { 'minuet' })
-      opts.sources.default = function() return sources end
-      opts.keymap['<A-y>'] = require('minuet').make_blink_map()
+      opts = opts or {}
+      opts.sources = opts.sources or {}
+      opts.sources.default =
+        vim.list_extend(opts.sources.default or {}, { 'minuet' })
+      opts.keymap = vim.tbl_deep_extend('force', opts.keymap or {}, {
+        ['<A-y>'] = require('minuet').make_blink_map(),
+      })
       opts.sources.providers =
         vim.tbl_deep_extend('force', opts.sources.providers or {}, {
           minuet = {

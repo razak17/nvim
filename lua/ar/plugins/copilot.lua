@@ -72,8 +72,9 @@ return {
     dependencies = { 'fang2hou/blink-copilot', cond = get_cond },
     opts = function(_, opts)
       if not get_cond() then return opts end
-      local default = opts.sources.default()
-      local sources = vim.list_extend(default, { 'copilot' })
+      opts = opts or {}
+      opts.sources = opts.sources or {}
+      local sources = vim.list_extend(opts.sources.default or {}, { 'copilot' })
       opts.sources.default = function() return sources end
       opts.sources.providers =
         vim.tbl_deep_extend('force', opts.sources.providers or {}, {

@@ -34,6 +34,8 @@ local function toggle_action(action, opts)
   return function() require('avante.api').toggle[action](opts) end
 end
 
+local function get_cond() return ar.get_plugin_cond('avante.nvim', ar.ai.enable) end
+
 return {
   {
     'yetone/avante.nvim',
@@ -166,5 +168,40 @@ return {
         end,
       },
     },
+  },
+  {
+    'saghen/blink.cmp',
+    optional = true,
+    opts = function(_, opts)
+      if not get_cond() then return opts end
+      opts = opts or {}
+      opts.sources = opts.sources or {}
+      opts.sources.default = vim.list_extend(
+        opts.sources.default or {},
+        { 'avante_commands', 'avante_files', 'avante_mentions' }
+      )
+      opts.sources.providers =
+        vim.tbl_deep_extend('force', opts.sources.providers or {}, {
+          avante_commands = {
+            name = 'avante_commands',
+            module = 'blink.compat.source',
+            score_offset = 90, -- show at a higher priority than lsp
+            opts = {},
+          },
+          avante_files = {
+            name = 'avante_files',
+            module = 'blink.compat.source',
+            score_offset = 100, -- show at a higher priority than lsp
+            opts = {},
+          },
+          avante_mentions = {
+            name = 'avante_mentions',
+            module = 'blink.compat.source',
+            score_offset = 1000, -- show at a higher priority than lsp
+            opts = {},
+          },
+        })
+      return opts
+    end,
   },
 }
