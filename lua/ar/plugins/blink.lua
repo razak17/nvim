@@ -391,7 +391,7 @@ return {
         if is_copilot then
           opts.sources.providers.copilot = {
             name = '[CPL]',
-            module = 'blink-cmp-copilot',
+            module = 'blink-copilot',
             score_offset = 100,
             async = true,
             transform_items = function(_, items)
@@ -513,14 +513,8 @@ return {
       require('blink.cmp').setup(opts)
     end,
     dependencies = {
-      {
-        'giuxtaposition/blink-cmp-copilot',
-        cond = not minimal and is_copilot,
-      },
-      {
-        'saghen/blink.compat',
-        opts = {},
-      },
+      { 'fang2hou/blink-copilot', cond = not minimal and is_copilot },
+      { 'saghen/blink.compat', opts = {} },
     },
   },
 }
