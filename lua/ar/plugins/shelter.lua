@@ -113,19 +113,14 @@ return {
           local condition = cond and variant == 'ecolog'
           return ar.get_plugin_cond('ecolog.nvim', condition)
         end
-        if not get_cond() then return opts end
-        opts = opts or {}
-        opts.sources = opts.sources or {}
-        opts.sources.default =
-          vim.list_extend(opts.sources.default or {}, { 'ecolog' })
-        opts.sources.providers =
-          vim.tbl_deep_extend('force', opts.sources.providers or {}, {
-            ecolog = {
-              name = '[ECOLOG]',
-              module = 'ecolog.integrations.cmp.blink_cmp',
-            },
-          })
-        return opts
+        return get_cond()
+            and vim.g.blink_add_source({ 'ecolog' }, {
+              ecolog = {
+                name = '[ECOLOG]',
+                module = 'ecolog.integrations.cmp.blink_cmp',
+              },
+            }, opts)
+          or opts
       end,
     },
   },

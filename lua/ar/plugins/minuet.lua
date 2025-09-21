@@ -115,16 +115,8 @@ return {
     'saghen/blink.cmp',
     optional = true,
     opts = function(_, opts)
-      if not get_cond() then return opts end
-      opts = opts or {}
-      opts.sources = opts.sources or {}
-      opts.sources.default =
-        vim.list_extend(opts.sources.default or {}, { 'minuet' })
-      opts.keymap = vim.tbl_deep_extend('force', opts.keymap or {}, {
-        ['<A-y>'] = require('minuet').make_blink_map(),
-      })
-      opts.sources.providers =
-        vim.tbl_deep_extend('force', opts.sources.providers or {}, {
+      if get_cond() then
+        local blink_opts = vim.g.blink_add_source({ 'minuet' }, {
           minuet = {
             enabled = function()
               return not vim.tbl_contains(
@@ -146,7 +138,13 @@ return {
               return items
             end,
           },
-        })
+        }, opts)
+        blink_opts.keymap =
+          vim.tbl_deep_extend('force', blink_opts.keymap or {}, {
+            ['<A-y>'] = require('minuet').make_blink_map(),
+          })
+        return blink_opts
+      end
       return opts
     end,
   },

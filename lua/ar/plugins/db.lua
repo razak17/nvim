@@ -219,16 +219,11 @@ return {
       optional = true,
       opts = function(_, opts)
         local function get_cond() return ar.get_plugin_cond('vim-dadbod-ui') end
-        if not get_cond() then return opts end
-        opts = opts or {}
-        opts.sources = opts.sources or {}
-        opts.sources.default =
-          vim.list_extend(opts.sources.default or {}, { 'dadbod' })
-        opts.sources.providers =
-          vim.tbl_deep_extend('force', opts.sources.providers or {}, {
-            dadbod = { name = '[DB]', module = 'vim_dadbod_completion.blink' },
-          })
-        return opts
+        return get_cond()
+            and vim.g.blink_add_source({ 'dadbod' }, {
+              dadbod = { name = '[DB]', module = 'vim_dadbod_completion.blink' },
+            }, opts)
+          or opts
       end,
     },
   },

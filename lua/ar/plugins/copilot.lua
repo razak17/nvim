@@ -71,30 +71,26 @@ return {
     optional = true,
     dependencies = { 'fang2hou/blink-copilot', cond = get_cond },
     opts = function(_, opts)
-      if not get_cond() then return opts end
-      opts = opts or {}
-      opts.sources = opts.sources or {}
-      opts.sources.default = vim.list_extend(opts.sources.default or {}, { 'copilot' })
-      opts.sources.providers =
-        vim.tbl_deep_extend('force', opts.sources.providers or {}, {
-          copilot = {
-            name = '[CPL]',
-            module = 'blink-copilot',
-            score_offset = 100,
-            async = true,
-            transform_items = function(_, items)
-              local CompletionItemKind =
-                require('blink.cmp.types').CompletionItemKind
-              local kind_idx = #CompletionItemKind + 1
-              CompletionItemKind[kind_idx] = 'Copilot'
-              for _, item in ipairs(items) do
-                item.kind = kind_idx
-              end
-              return items
-            end,
-          },
-        })
-      return opts
+      return get_cond()
+          and vim.g.blink_add_source({ 'copilot' }, {
+            copilot = {
+              name = '[CPL]',
+              module = 'blink-copilot',
+              score_offset = 100,
+              async = true,
+              transform_items = function(_, items)
+                local CompletionItemKind =
+                  require('blink.cmp.types').CompletionItemKind
+                local kind_idx = #CompletionItemKind + 1
+                CompletionItemKind[kind_idx] = 'Copilot'
+                for _, item in ipairs(items) do
+                  item.kind = kind_idx
+                end
+                return items
+              end,
+            },
+          }, opts)
+        or opts
     end,
   },
 }

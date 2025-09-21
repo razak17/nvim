@@ -173,35 +173,32 @@ return {
     'saghen/blink.cmp',
     optional = true,
     opts = function(_, opts)
-      if not get_cond() then return opts end
-      opts = opts or {}
-      opts.sources = opts.sources or {}
-      opts.sources.default = vim.list_extend(
-        opts.sources.default or {},
-        { 'avante_commands', 'avante_files', 'avante_mentions' }
-      )
-      opts.sources.providers =
-        vim.tbl_deep_extend('force', opts.sources.providers or {}, {
-          avante_commands = {
-            name = 'avante_commands',
-            module = 'blink.compat.source',
-            score_offset = 90, -- show at a higher priority than lsp
-            opts = {},
-          },
-          avante_files = {
-            name = 'avante_files',
-            module = 'blink.compat.source',
-            score_offset = 100, -- show at a higher priority than lsp
-            opts = {},
-          },
-          avante_mentions = {
-            name = 'avante_mentions',
-            module = 'blink.compat.source',
-            score_offset = 1000, -- show at a higher priority than lsp
-            opts = {},
-          },
-        })
-      return opts
+      return get_cond()
+          and vim.g.blink_add_source(
+            { 'avante_commands', 'avante_files', 'avante_mentions' },
+            {
+              avante_commands = {
+                name = 'avante_commands',
+                module = 'blink.compat.source',
+                score_offset = 90, -- show at a higher priority than lsp
+                opts = {},
+              },
+              avante_files = {
+                name = 'avante_files',
+                module = 'blink.compat.source',
+                score_offset = 100, -- show at a higher priority than lsp
+                opts = {},
+              },
+              avante_mentions = {
+                name = 'avante_mentions',
+                module = 'blink.compat.source',
+                score_offset = 1000, -- show at a higher priority than lsp
+                opts = {},
+              },
+            },
+            opts
+          )
+        or opts
     end,
   },
 }

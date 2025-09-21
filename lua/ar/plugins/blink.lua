@@ -1,3 +1,15 @@
+---@param source table
+---@param provider table<string, blink.cmp.SourceConfig>
+---@param opts blink.cmp.Config?
+vim.g.blink_add_source = function(source, provider, opts)
+  opts = opts or {}
+  opts.sources = opts.sources or {}
+  opts.sources.default = vim.list_extend(opts.sources.default or {}, source)
+  opts.sources.providers =
+    vim.tbl_deep_extend('force', opts.sources.providers or {}, provider)
+  return opts
+end
+
 local api = vim.api
 local fmt = string.format
 local cmp_utils = require('ar.utils.cmp')
