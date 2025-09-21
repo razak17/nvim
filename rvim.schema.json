@@ -27,6 +27,10 @@
             "variant": {
               "type": "string",
               "enum": ["builtin", "copilot", "minuet"]
+            },
+            "suggestions": {
+              "type": "string",
+              "enum": ["ghost-text", "completion"]
             }
           },
           "additionalProperties": false
@@ -444,6 +448,7 @@
                   "comment",
                   "completion",
                   "context",
+                  "copilot",
                   "CopilotChat",
                   "core",
                   "cursor",
@@ -493,6 +498,7 @@
                   "mini-pairs",
                   "mini-pick",
                   "mini-surround",
+                  "minuet",
                   "motion",
                   "multicursor",
                   "navigation",
@@ -565,6 +571,7 @@
                   "comment",
                   "completion",
                   "context",
+                  "copilot",
                   "CopilotChat",
                   "core",
                   "cursor",
@@ -614,6 +621,7 @@
                   "mini-pairs",
                   "mini-pick",
                   "mini-surround",
+                  "minuet",
                   "motion",
                   "multicursor",
                   "navigation",

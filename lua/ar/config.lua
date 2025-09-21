@@ -24,6 +24,7 @@ local env = vim.env
 
 ---@alias ArAIModel 'claude' | 'gemini' | 'openai' | 'copilot'
 ---@alias ArAICompletion 'builtin' | 'copilot' | 'minuet'
+---@alias ArAISuggestions 'ghost-text' | 'completion'
 ---@alias ArExplorerRename 'local' | 'snacks'
 ---@alias ArWhichBuffers 'snacks'
 ---@alias ArCompletion 'cmp' | 'blink' | 'mini.completion' | 'omnifunc'
@@ -308,6 +309,8 @@ local config = {
       enable = false,
       ---@type ArAICompletion
       variant = 'builtin',
+      ---@type ArAISuggestions
+      suggestions = 'ghost-text',
     },
     ignored_filetypes = {
       'DressingInput',

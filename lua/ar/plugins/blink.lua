@@ -6,11 +6,6 @@ local border, lsp_hls = ui.current.border, ui.lsp.highlights
 local minimal = ar.plugins.minimal
 local is_blink = ar_config.completion.variant == 'blink'
 local ai_models = ar_config.ai.models
-local ai_cmp = ar_config.ai.completion
-local which_ai_cmp = ai_cmp.variant
-local is_minuet = ai_models.gemini
-  and which_ai_cmp == 'minuet'
-  and ar.has('minuet-ai.nvim')
 
 local show_index = false
 _G.auto_show = true
@@ -160,7 +155,6 @@ return {
             return { 'buffer' }
           else
             if ar.ai.enable then
-              if is_minuet then table.insert(sources, 'minuet') end
               if ai_models.copilot then
                 table.insert(sources, 'avante_commands')
                 table.insert(sources, 'avante_mentions')
@@ -384,31 +378,6 @@ return {
       end
 
       if ar.ai.enable then
-        if is_minuet then
-          opts.sources.providers.minuet = {
-            enabled = function()
-              return not vim.tbl_contains(
-                ar_config.ai.ignored_filetypes,
-                vim.bo.ft
-              )
-            end,
-            name = '[MINUET]',
-            module = 'minuet.blink',
-            score_offset = 100,
-            transform_items = function(_, items)
-              local CompletionItemKind =
-                require('blink.cmp.types').CompletionItemKind
-              local kind_idx = #CompletionItemKind + 1
-              CompletionItemKind[kind_idx] = 'Minuet'
-              for _, item in ipairs(items) do
-                item.kind = kind_idx
-              end
-              return items
-            end,
-          }
-          opts.keymap['<A-y>'] = require('minuet').make_blink_map()
-        end
-
         opts.sources.providers.codecompanion = {
           name = '[CC]',
           module = 'codecompanion.providers.completion.blink',

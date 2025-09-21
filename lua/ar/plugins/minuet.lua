@@ -1,16 +1,19 @@
 local models = ar_config.ai.models
 local cmp = ar_config.completion.variant
 local ai_cmp = ar_config.ai.completion.variant
-local ai_suggestions = ar_config.ai.completion.suggestions == 'ghost-text'
+local ai_suggestions = ar_config.ai.completion.suggestions
+
+local function get_cond(plugin)
+  local is_minuet = models.gemini and ai_cmp == 'minuet'
+  local condition = ar.ai.enable and is_minuet
+  if not plugin then return condition end
+  return ar.get_plugin_cond(plugin, condition)
+end
 
 return {
   {
     'milanglacier/minuet-ai.nvim',
-    cond = function()
-      local is_minuet = models.gemini and ai_cmp == 'minuet'
-      local condition = ar.ai.enable and is_minuet
-      return ar.get_plugin_cond('minuet-ai.nvim', condition)
-    end,
+    cond = function() return get_cond('minuet-ai.nvim') end,
     cmd = { 'Minuet' },
     event = 'InsertEnter',
     init = function()
@@ -34,12 +37,12 @@ return {
       notify = 'error',
       cmp = {
         enable_auto_complete = function()
-          return ai_suggestions and cmp == 'cmp'
+          return ai_suggestions == 'completion' and cmp == 'cmp'
         end,
       },
       blink = {
         enable_auto_complete = function()
-          return ai_suggestions and cmp == 'blink'
+          return ai_suggestions == 'completion' and cmp == 'blink'
         end,
       },
       provider_options = {
@@ -81,7 +84,7 @@ return {
         },
       },
       virtualtext = {
-        auto_trigger_ft = { '*' },
+        auto_trigger_ft = ai_suggestions == 'ghost-text' and { '*' } or {},
         auto_trigger_ignore_ft = ar_config.ai.ignored_filetypes,
         keymap = {
           accept = '<A-u>',
@@ -107,5 +110,41 @@ return {
       require('minuet').setup(opts)
     end,
     dependencies = { 'nvim-lua/plenary.nvim' },
+  },
+  {
+    'saghen/blink.cmp',
+    optional = true,
+    opts = function(_, opts)
+      if not get_cond() then return opts end
+      local default = opts.sources.default()
+      local sources = vim.list_extend(default, { 'minuet' })
+      opts.sources.default = function() return sources end
+      opts.keymap['<A-y>'] = require('minuet').make_blink_map()
+      opts.sources.providers =
+        vim.tbl_deep_extend('force', opts.sources.providers or {}, {
+          minuet = {
+            enabled = function()
+              return not vim.tbl_contains(
+                ar_config.ai.ignored_filetypes,
+                vim.bo.ft
+              )
+            end,
+            name = '[MINUET]',
+            module = 'minuet.blink',
+            score_offset = 100,
+            transform_items = function(_, items)
+              local CompletionItemKind =
+                require('blink.cmp.types').CompletionItemKind
+              local kind_idx = #CompletionItemKind + 1
+              CompletionItemKind[kind_idx] = 'Minuet'
+              for _, item in ipairs(items) do
+                item.kind = kind_idx
+              end
+              return items
+            end,
+          },
+        })
+      return opts
+    end,
   },
 }
