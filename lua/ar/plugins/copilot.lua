@@ -74,8 +74,7 @@ return {
       if not get_cond() then return opts end
       opts = opts or {}
       opts.sources = opts.sources or {}
-      local sources = vim.list_extend(opts.sources.default or {}, { 'copilot' })
-      opts.sources.default = function() return sources end
+      opts.sources.default = vim.list_extend(opts.sources.default or {}, { 'copilot' })
       opts.sources.providers =
         vim.tbl_deep_extend('force', opts.sources.providers or {}, {
           copilot = {

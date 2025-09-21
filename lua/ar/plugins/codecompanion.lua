@@ -2,12 +2,14 @@ local fmt = string.format
 local models = ar_config.ai.models
 local cmp = ar_config.completion.variant
 
+local function get_cond()
+  return ar.get_plugin_cond('codecompanion.nvim', ar.ai.enable)
+end
+
 return {
   {
     'olimorris/codecompanion.nvim',
-    cond = function()
-      return ar.get_plugin_cond('codecompanion.nvim', ar.ai.enable)
-    end,
+    cond = get_cond,
     -- stylua: ignore
     keys = {
       { '<leader>akk', '<Cmd>CodeCompanion<CR>', desc = 'codecompanion: prompt' },
@@ -207,5 +209,35 @@ return {
         opts = {},
       },
     },
+  },
+  {
+    'saghen/blink.cmp',
+    optional = true,
+    opts = function(_, opts)
+      if not get_cond() then return opts end
+      opts = opts or {}
+      opts.sources = opts.sources or {}
+      opts.sources.default =
+        vim.list_extend(opts.sources.default or {}, { 'codecompanion' })
+      opts.sources.providers =
+        vim.tbl_deep_extend('force', opts.sources.providers or {}, {
+          codecompanion = {
+            name = '[CC]',
+            module = 'codecompanion.providers.completion.blink',
+            score_offset = 100,
+            transform_items = function(_, items)
+              local CompletionItemKind =
+                require('blink.cmp.types').CompletionItemKind
+              local kind_idx = #CompletionItemKind + 1
+              CompletionItemKind[kind_idx] = 'CodeCompanion'
+              for _, item in ipairs(items) do
+                item.kind = kind_idx
+              end
+              return items
+            end,
+          },
+        })
+      return opts
+    end,
   },
 }

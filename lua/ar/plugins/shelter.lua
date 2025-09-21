@@ -2,7 +2,6 @@ local minimal = ar.plugins.minimal
 local variant = ar_config.shelter.variant
 local is_fzf = ar_config.picker.variant == 'fzf-lua'
 local is_snacks = ar_config.picker.variant == 'snacks'
-local is_cmp = ar_config.completion.variant == 'cmp'
 local is_blink = ar_config.completion.variant == 'blink'
 
 local cond = not minimal and ar_config.shelter.enable
@@ -27,11 +26,12 @@ return {
     opts = {},
   },
   {
-    'philosofonusus/ecolog.nvim',
-    cond = function()
-      local condition = cond and variant == 'ecolog'
-      return ar.get_plugin_cond('ecolog.nvim', condition)
-    end,
+    {
+      'philosofonusus/ecolog.nvim',
+      cond = function()
+        local condition = cond and variant == 'ecolog'
+        return ar.get_plugin_cond('ecolog.nvim', condition)
+      end,
     -- stylua: ignore
     keys = function()
       local keys = {
@@ -45,36 +45,36 @@ return {
       end
       return keys
     end,
-    init = function()
-      ar.add_to_select_menu('toggle', {
-        ['Toggle Ecolog Shelter'] = 'EcologShelterToggle',
-      })
-      ar.add_to_select_menu('command_palette', {
-        ['Ecolog Select'] = 'EcologSelect',
-        ['Ecolog Goto'] = 'EcologGoto',
-        ['Ecolog Goto Var'] = 'EcologGotoVar',
-      })
-      if ar_config.completion.variant == 'omnifunc' then
-        ar.augroup('EcologOmniFunc', {
-          event = { 'FileType' },
-          pattern = { 'javascript', 'typescript', 'python', 'lua' },
-          command = function(args)
-            vim.api.nvim_set_option_value(
-              'omnifunc',
-              "v:lua.require'ecolog.integrations.cmp.omnifunc'.complete",
-              { buf = args.buf }
-            )
-          end,
+      init = function()
+        ar.add_to_select_menu('toggle', {
+          ['Toggle Ecolog Shelter'] = 'EcologShelterToggle',
         })
-      end
-    end,
-    ft = { 'config' },
-    lazy = false,
-    opts = {
-      load_shell = true,
-      vim_env = true,
-      preferred_environment = 'local',
-      types = true,
+        ar.add_to_select_menu('command_palette', {
+          ['Ecolog Select'] = 'EcologSelect',
+          ['Ecolog Goto'] = 'EcologGoto',
+          ['Ecolog Goto Var'] = 'EcologGotoVar',
+        })
+        if ar_config.completion.variant == 'omnifunc' then
+          ar.augroup('EcologOmniFunc', {
+            event = { 'FileType' },
+            pattern = { 'javascript', 'typescript', 'python', 'lua' },
+            command = function(args)
+              vim.api.nvim_set_option_value(
+                'omnifunc',
+                "v:lua.require'ecolog.integrations.cmp.omnifunc'.complete",
+                { buf = args.buf }
+              )
+            end,
+          })
+        end
+      end,
+      ft = { 'config' },
+      lazy = false,
+      opts = {
+        load_shell = true,
+        vim_env = true,
+        preferred_environment = 'local',
+        types = true,
       -- stylua: ignore
       integrations = {
         telescope = function() return ar.has('telescope.nvim') end,
@@ -88,21 +88,45 @@ return {
         lsp = false, -- TODO: check this out later
         statusline = true,
       },
-      shelter = {
-        configuration = { partial_mode = true, mask_char = '*' },
-        modules = {
-          files = true,
-          peek = false,
-          cmp = true,
-          telescope = ar.has('telescope.nvim'),
-          telescope_previewer = ar.has('telescope.nvim'),
-          fzf = true,
-          fzf_previewer = true,
-          snacks_previewer = true,
-          snacks = true,
+        shelter = {
+          configuration = { partial_mode = true, mask_char = '*' },
+          modules = {
+            files = true,
+            peek = false,
+            cmp = true,
+            telescope = ar.has('telescope.nvim'),
+            telescope_previewer = ar.has('telescope.nvim'),
+            fzf = true,
+            fzf_previewer = true,
+            snacks_previewer = true,
+            snacks = true,
+          },
         },
+        path = vim.fn.getcwd(),
       },
-      path = vim.fn.getcwd(),
+    },
+    {
+      'saghen/blink.cmp',
+      optional = true,
+      opts = function(_, opts)
+        local function get_cond()
+          local condition = cond and variant == 'ecolog'
+          return ar.get_plugin_cond('ecolog.nvim', condition)
+        end
+        if not get_cond() then return opts end
+        opts = opts or {}
+        opts.sources = opts.sources or {}
+        opts.sources.default =
+          vim.list_extend(opts.sources.default or {}, { 'ecolog' })
+        opts.sources.providers =
+          vim.tbl_deep_extend('force', opts.sources.providers or {}, {
+            ecolog = {
+              name = '[ECOLOG]',
+              module = 'ecolog.integrations.cmp.blink_cmp',
+            },
+          })
+        return opts
+      end,
     },
   },
 }

@@ -24,11 +24,36 @@ return {
   -- Web Dev (Typescript)
   --------------------------------------------------------------------------------
   {
-    'jsongerber/nvim-px-to-rem',
-    cond = function()
-      local condition = ar.completion.enable and not minimal
-      return ar.get_plugin_cond('nvim-px-to-rem', condition)
-    end,
+    {
+      'jsongerber/nvim-px-to-rem',
+      cond = function()
+        local condition = ar.completion.enable and not minimal
+        return ar.get_plugin_cond('nvim-px-to-rem', condition)
+      end,
+    },
+    {
+      'saghen/blink.cmp',
+      optional = true,
+      opts = function(_, opts)
+        local function get_cond()
+          local condition = ar.completion.enable and not minimal
+          return ar.get_plugin_cond('nvim-px-to-rem', condition)
+        end
+        if not get_cond() then return opts end
+        opts = opts or {}
+        opts.sources = opts.sources or {}
+        opts.sources.default =
+          vim.list_extend(opts.sources.default or {}, { 'nvim-px-to-rem' })
+        opts.sources.providers =
+          vim.tbl_deep_extend('force', opts.sources.providers or {}, {
+            ['nvim-px-to-rem'] = {
+              module = 'nvim-px-to-rem.integrations.blink',
+              name = '[PX2REM]',
+            },
+          })
+        return opts
+      end,
+    },
   },
   {
     'Redoxahmii/json-to-types.nvim',

@@ -118,15 +118,47 @@ return {
           end,
           dependencies = {
             {
-              'folke/lazydev.nvim',
-              cond = ar.lsp.enable,
-              ft = 'lua',
-              cmd = 'LazyDev',
-              opts = {
-                library = {
-                  'lazy.nvim',
-                  { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+              {
+                'folke/lazydev.nvim',
+                cond = function()
+                  return ar.get_plugin_cond('lazydev.nvim', ar.lsp.enable)
+                end,
+                ft = 'lua',
+                cmd = 'LazyDev',
+                opts = {
+                  library = {
+                    'lazy.nvim',
+                    { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+                  },
                 },
+              },
+              {
+                'saghen/blink.cmp',
+                optional = true,
+                opts = function(_, opts)
+                  local function get_cond()
+                    return ar.get_plugin_cond('lazydev.nvim', ar.lsp.enable)
+                  end
+                  if not get_cond() then return opts end
+                  opts = opts or {}
+                  opts.sources = opts.sources or {}
+                  opts.sources.per_filetype = vim.tbl_deep_extend(
+                    'force',
+                    opts.sources.per_filetype or {},
+                    {
+                      { lua = { inherit_defaults = true, 'lazydev' } },
+                    }
+                  )
+                  opts.sources.providers =
+                    vim.tbl_deep_extend('force', opts.sources.providers or {}, {
+                      lazydev = {
+                        name = 'LazyDev',
+                        module = 'lazydev.integrations.blink',
+                        score_offset = 100, -- show at a higher priority than lsp
+                      },
+                    })
+                  return opts
+                end,
               },
             },
             {
