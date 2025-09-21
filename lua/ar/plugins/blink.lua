@@ -5,7 +5,6 @@ local ui = ar.ui
 local border, lsp_hls = ui.current.border, ui.lsp.highlights
 local minimal = ar.plugins.minimal
 local is_blink = ar_config.completion.variant == 'blink'
-local ai_models = ar_config.ai.models
 
 local show_index = false
 _G.auto_show = true
@@ -25,12 +24,7 @@ ar.add_to_select_menu('command_palette', {
 
 local function get_sources()
   local node = vim.treesitter.get_node()
-  local sources = {
-    'lsp',
-    'path',
-    'snippets',
-    'buffer',
-  }
+  local sources = { 'lsp', 'path', 'snippets', 'buffer' }
 
   if
     node
@@ -41,30 +35,6 @@ local function get_sources()
   then
     return { 'buffer' }
   else
-    if ar.ai.enable then
-      if ai_models.copilot then
-        table.insert(sources, 'avante_commands')
-        table.insert(sources, 'avante_mentions')
-        table.insert(sources, 'avante_files')
-      end
-      if ar.has('codecompanion.nvim') then
-        table.insert(sources, 'codecompanion')
-      end
-    end
-    if not minimal then
-      if ar.has('blink-ripgrep.nvim') then table.insert(sources, 'ripgrep') end
-      if ar.has('blink-emoji.nvim') then table.insert(sources, 'emoji') end
-      if ar.has('blink-cmp-tmux') then table.insert(sources, 'tmux') end
-      if ar.has('nvim-px-to-rem') then
-        table.insert(sources, 'nvim-px-to-rem')
-      end
-      if ar.has('vim-dadbod-completion') then
-        table.insert(sources, 'dadbod')
-      end
-      if ar_config.shelter.variant == 'ecolog' and ar.has('ecolog.nvim') then
-        table.insert(sources, 'ecolog')
-      end
-    end
     return sources
   end
 end
@@ -328,103 +298,6 @@ return {
         Deepseek = ai_icons.deepseek,
       }, symbols)
 
-      if not minimal then
-        if ar.has('blink-ripgrep.nvim') then
-          opts.sources.providers.ripgrep = {
-            module = 'blink-ripgrep',
-            name = '[RG]',
-            transform_items = function(_, items)
-              for _, item in ipairs(items) do
-                item.kind = require('blink.cmp.types').CompletionItemKind.Field
-              end
-              return items
-            end,
-            opts = { prefix_min_len = 5 },
-          }
-        end
-        if ar.has('blink-emoji.nvim') then
-          opts.sources.providers.emoji = {
-            module = 'blink-emoji',
-            name = '[EMOJI]',
-            score_offset = 15,
-            min_keyword_length = 2,
-            opts = { insert = true },
-          }
-        end
-        if ar.has('blink-cmp-tmux') then
-          opts.sources.providers.tmux = {
-            module = 'blink-cmp-tmux',
-            name = '[TMUX]',
-            opts = {
-              all_panes = false,
-              capture_history = false,
-              triggered_only = false,
-              trigger_chars = { '.' },
-            },
-          }
-        end
-
-        if ar.has('LuaSnip') then
-          opts.snippets = {
-            preset = 'luasnip',
-            expand = function(snippet) require('luasnip').lsp_expand(snippet) end,
-            active = function(filter)
-              if filter and filter.direction then
-                return require('luasnip').jumpable(filter.direction)
-              end
-              return require('luasnip').in_snippet()
-            end,
-            jump = function(direction) require('luasnip').jump(direction) end,
-          }
-        end
-        opts.sources.providers['nvim-px-to-rem'] = {
-          module = 'nvim-px-to-rem.integrations.blink',
-          name = '[PX2REM]',
-        }
-      end
-
-      if ar.ai.enable then
-        opts.sources.providers.codecompanion = {
-          name = '[CC]',
-          module = 'codecompanion.providers.completion.blink',
-          score_offset = 100,
-          transform_items = function(_, items)
-            local CompletionItemKind =
-              require('blink.cmp.types').CompletionItemKind
-            local kind_idx = #CompletionItemKind + 1
-            CompletionItemKind[kind_idx] = 'CodeCompanion'
-            for _, item in ipairs(items) do
-              item.kind = kind_idx
-            end
-            return items
-          end,
-        }
-      end
-      if ar.has('vim-dadbod-completion') then
-        opts.sources.providers.dadbod =
-          { name = '[DB]', module = 'vim_dadbod_completion.blink' }
-      end
-
-      if
-        not minimal
-        and ar_config.shelter.variant == 'ecolog'
-        and ar.has('ecolog.nvim')
-      then
-        opts.sources.providers.ecolog = {
-          name = '[ECOLOG]',
-          module = 'ecolog.integrations.cmp.blink_cmp',
-        }
-      end
-
-      if ar.has('lazydev.nvim') then
-        opts.sources.per_filetype =
-          { lua = { inherit_defaults = true, 'lazydev' } }
-        opts.sources.providers.lazydev = {
-          name = 'LazyDev',
-          module = 'lazydev.integrations.blink',
-          score_offset = 100, -- show at a higher priority than lsp
-        }
-      end
       if show_index then
         table.insert(opts.completion.menu.draw.columns, 1, { 'item_idx' })
         table.insert(opts.completion.menu.draw.columns, 2, { 'seperator' })
