@@ -8,9 +8,6 @@ local is_blink = ar_config.completion.variant == 'blink'
 local ai_models = ar_config.ai.models
 local ai_cmp = ar_config.ai.completion
 local which_ai_cmp = ai_cmp.variant
-local is_copilot = ai_models.copilot
-  and which_ai_cmp == 'copilot'
-  and ar.has('copilot.lua')
 local is_minuet = ai_models.gemini
   and which_ai_cmp == 'minuet'
   and ar.has('minuet-ai.nvim')
@@ -163,9 +160,8 @@ return {
             return { 'buffer' }
           else
             if ar.ai.enable then
-              if is_copilot then table.insert(sources, 'copilot') end
               if is_minuet then table.insert(sources, 'minuet') end
-              if is_copilot then
+              if ai_models.copilot then
                 table.insert(sources, 'avante_commands')
                 table.insert(sources, 'avante_mentions')
                 table.insert(sources, 'avante_files')
@@ -388,25 +384,6 @@ return {
       end
 
       if ar.ai.enable then
-        if is_copilot then
-          opts.sources.providers.copilot = {
-            name = '[CPL]',
-            module = 'blink-copilot',
-            score_offset = 100,
-            async = true,
-            transform_items = function(_, items)
-              local CompletionItemKind =
-                require('blink.cmp.types').CompletionItemKind
-              local kind_idx = #CompletionItemKind + 1
-              CompletionItemKind[kind_idx] = 'Copilot'
-              for _, item in ipairs(items) do
-                item.kind = kind_idx
-              end
-              return items
-            end,
-          }
-        end
-
         if is_minuet then
           opts.sources.providers.minuet = {
             enabled = function()
@@ -513,7 +490,6 @@ return {
       require('blink.cmp').setup(opts)
     end,
     dependencies = {
-      { 'fang2hou/blink-copilot', cond = not minimal and is_copilot },
       { 'saghen/blink.compat', opts = {} },
     },
   },
