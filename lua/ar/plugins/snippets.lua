@@ -59,13 +59,13 @@ return {
       cond = not minimal,
       event = 'InsertEnter',
       build = 'make install_jsregexp',
-    -- stylua: ignore
-    keys = {
-      { '<leader>S', function() require('luasnip.loaders').edit_snippet_files() end, desc = 'LuaSnip: edit snippet' },
-      { '<C-l>', expand_or_jump, desc = 'LuaSnip: expand or jump', mode = { 'i', 's' } },
-			{ '<C-b>', jump_prev, desc = 'LuaSnip: jump prev', mode = { 's' } },
-			{ '<C-/>', change_choice, desc = 'LuaSnip: change choice', mode = { 'i', 's' } },
-    },
+      -- stylua: ignore
+      keys = {
+        { '<leader>S', function() require('luasnip.loaders').edit_snippet_files() end, desc = 'LuaSnip: edit snippet' },
+        { '<C-l>', expand_or_jump, desc = 'LuaSnip: expand or jump', mode = { 'i', 's' } },
+        { '<C-b>', jump_prev, desc = 'LuaSnip: jump prev', mode = { 's' } },
+        { '<C-/>', change_choice, desc = 'LuaSnip: change choice', mode = { 'i', 's' } },
+      },
       config = function()
         local ls = require('luasnip')
         local types = require('luasnip.util.types')

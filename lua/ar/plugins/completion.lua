@@ -68,8 +68,8 @@ ar.completion.config = {
 return {
   {
     'hrsh7th/nvim-cmp',
-    cond = ar.completion.enable and is_cmp,
-    event = 'InsertEnter',
+    cond = ar.completion.enable and not minimal and is_cmp,
+    event = { 'InsertEnter', 'CmdlineEnter' },
     opts = function()
       local snippet = vim.snippet
       local cmp = require('cmp')
