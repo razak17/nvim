@@ -1,4 +1,4 @@
-local api, fn, fmt, k = vim.api, vim.fn, string.format, vim.keycode
+local api, fn, fmt = vim.api, vim.fn, string.format
 local cmp_utils = require('ar.utils.cmp')
 local ui, highlight = ar.ui, ar.highlight
 local border, lsp_hls, ellipsis =
@@ -7,15 +7,6 @@ local minimal = ar.plugins.minimal
 local codicons = ui.codicons
 local ai_icons = codicons.ai
 local is_cmp = ar_config.completion.variant == 'cmp'
-local ai_models = ar_config.ai.models
-local ai_cmp = ar_config.ai.completion
-local which_ai_cmp = ai_cmp.variant
-local is_copilot = ai_models.copilot
-  and which_ai_cmp == 'copilot'
-  and ar.has('copilot.lua')
-local is_minuet = ai_models.gemini
-  and which_ai_cmp == 'minuet'
-  and ar.has('minuet-ai.nvim')
 
 ar.completion.config = {
   format = {
@@ -150,12 +141,6 @@ return {
         end
       end
 
-      local function copilot()
-        local suggestion = require('copilot.suggestion')
-        if suggestion.is_visible() then return suggestion.accept() end
-        api.nvim_feedkeys(k('<Tab>'), 'n', false)
-      end
-
       local priority_map = {
         [types.lsp.CompletionItemKind.EnumMember] = 1,
         [types.lsp.CompletionItemKind.Variable] = 2,
@@ -228,7 +213,6 @@ return {
           end,
         },
         mapping = {
-          ['<C-]>'] = cmp.mapping(copilot),
           ['<C-k>'] = cmp.mapping.select_prev_item(),
           ['<C-j>'] = cmp.mapping.select_next_item(),
           ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
@@ -267,18 +251,8 @@ return {
               item.abbr = item.abbr:sub(1, MAX_MENU_WIDTH) .. ellipsis
             end
 
-            local custom_sources = {
-              'emoji',
-              'lab.quick_data',
-              'natdat',
-              'crates',
-              'copilot',
-              'nerdfonts',
-              'nvim_px_to_rem',
-            }
-
             if
-              not vim.tbl_contains(custom_sources, entry.source.name)
+              not ar.completion.config.format[entry.source.name]
               and item.kind ~= 'Color'
             then
               if ar_config.completion.icons == 'mini.icons' then
@@ -321,8 +295,6 @@ return {
           { name = 'nvim_lsp', priority = 1000, group_index = 1 },
           { name = 'luasnip', priority = 900, group_index = 1 },
           { name = 'snippets', priority = 900, group_index = 1 },
-          { name = 'copilot', priority = 100, group_index = 1 },
-          { name = 'minuet', priority = 100, group_index = 1 },
           { name = 'nvim_px_to_rem', priority = 11, group_index = 1 },
           {
             name = 'lab.quick_data',
@@ -368,22 +340,11 @@ return {
         },
       }
     end,
+    ---@param opts cmp.ConfigSchema
     config = function(_, opts)
       local cmp = require('cmp')
-      if ar.ai.enable and is_minuet then
-        opts.mapping['<A-y>'] = require('minuet').make_cmp_map()
-      end
 
       cmp.setup(opts)
-
-      cmp.event:on(
-        'menu_opened',
-        function() vim.b.copilot_suggestion_hidden = true end
-      )
-      cmp.event:on(
-        'menu_closed',
-        function() vim.b.copilot_suggestion_hidden = false end
-      )
 
       cmp.setup.cmdline({ '/', '?' }, {
         mapping = cmp.mapping.preset.cmdline(),
@@ -444,24 +405,6 @@ return {
           local en_dict =
             join_paths(fn.stdpath('data'), 'site', 'spell', 'en.dict')
           require('cmp_dictionary').setup({ paths = { en_dict } })
-        end,
-      },
-      {
-        'zbirenbaum/copilot-cmp',
-        cond = not minimal and is_copilot,
-        opts = {},
-        config = function(_, opts)
-          require('copilot_cmp').setup(opts)
-
-          ar.ftplugin_conf({
-            cmp = function(cmp)
-              cmp.setup.filetype('norg', {
-                sorting = {
-                  require('copilot_cmp.comparators').prioritize,
-                },
-              })
-            end,
-          })
         end,
       },
     },

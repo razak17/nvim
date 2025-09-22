@@ -93,4 +93,54 @@ return {
         or opts
     end,
   },
+  {
+    'hrsh7th/nvim-cmp',
+    optional = true,
+    dependencies = { -- this will only be evaluated if nvim-cmp is enabled
+      {
+        'zbirenbaum/copilot-cmp',
+        cond = get_cond,
+        opts = {},
+        config = function(_, opts)
+          local copilot_cmp = require('copilot_cmp')
+          copilot_cmp.setup(opts)
+          -- attach cmp source whenever copilot attaches
+          -- fixes lazy-loading issues with the copilot cmp source
+          vim.api.nvim_create_autocmd('LspAttach', {
+            callback = function(args)
+              local buffer = args.buf ---@type number
+              local client = vim.lsp.get_client_by_id(args.data.client_id)
+              if client and (client.name == 'copilot') then
+                return copilot_cmp._on_insert_enter(client, buffer)
+              end
+            end,
+          })
+        end,
+        specs = {
+          {
+            'hrsh7th/nvim-cmp',
+            optional = true,
+            ---@param opts cmp.ConfigSchema
+            opts = function(_, opts)
+              local cmp = require('cmp')
+
+              local function copilot()
+                local suggestion = require('copilot.suggestion')
+                if suggestion.is_visible() then return suggestion.accept() end
+                vim.api.nvim_feedkeys(vim.keycode('<Tab>'), 'n', false)
+              end
+              table.insert(opts.sources, 1, {
+                name = 'copilot',
+                group_index = 1,
+                priority = 100,
+              })
+              vim.tbl_extend('force', opts.mapping or {}, {
+                ['<C-]>'] = cmp.mapping(copilot),
+              })
+            end,
+          },
+        },
+      },
+    },
+  },
 }

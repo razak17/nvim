@@ -3,23 +3,22 @@ local cmp = ar_config.completion.variant
 local ai_cmp = ar_config.ai.completion.variant
 local ai_suggestions = ar_config.ai.completion.suggestions
 
-local function get_cond(plugin)
+local function get_cond()
   local is_minuet = models.gemini and ai_cmp == 'minuet'
   local condition = ar.ai.enable and is_minuet
-  if not plugin then return condition end
-  return ar.get_plugin_cond(plugin, condition)
+  return ar.get_plugin_cond('minuet-ai.nvim', condition)
 end
 
 return {
   {
     'milanglacier/minuet-ai.nvim',
-    cond = function() return get_cond('minuet-ai.nvim') end,
+    cond = function() return get_cond() end,
     cmd = { 'Minuet' },
     event = 'InsertEnter',
     init = function()
       ar.add_to_select_menu('ai', {
         ['Minuet'] = function()
-          ar.create_select_menu('Copilot', {
+          ar.create_select_menu('Minuet', {
             ['Toggle Minuet Completion'] = function()
               if cmp == 'blink' then vim.cmd('Minuet blink toggle') end
               if cmp == 'cmp' then vim.cmd('Minuet cmp toggle') end
@@ -146,6 +145,22 @@ return {
         return blink_opts
       end
       return opts
+    end,
+  },
+  {
+    'hrsh7th/nvim-cmp',
+    optional = true,
+    ---@param opts cmp.ConfigSchema
+    opts = function(_, opts)
+      if not get_cond() then return opts end
+      table.insert(opts.sources, 1, {
+        name = 'minuet',
+        group_index = 1,
+        priority = 100,
+      })
+      vim.tbl_extend('force', opts.mapping or {}, {
+        ['<A-y>'] = require('minuet').make_cmp_map(),
+      })
     end,
   },
 }
