@@ -135,7 +135,7 @@ return {
       'saghen/blink.cmp',
       optional = true,
       opts = function(_, opts)
-        if not minimal then return opts end
+        if minimal then return opts end
         opts = opts or {}
         opts.snippets = vim.tbl_deep_extend('force', opts.snippets or {}, {
           preset = 'luasnip',
