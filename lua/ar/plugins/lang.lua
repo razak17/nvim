@@ -220,6 +220,12 @@ return {
     },
     opts = {},
   },
+  {
+    'razak17/stringbreaker.nvim',
+    cmd = { 'BreakString', 'SaveString' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    config = function() require('string-breaker').setup() end,
+  },
   -- Python
   --------------------------------------------------------------------------------
   {
