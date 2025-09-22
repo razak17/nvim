@@ -10,6 +10,8 @@ return {
     {
       'jsongerber/nvim-px-to-rem',
       cond = get_cond,
+      cmd = { 'PxToRemCursor', 'PxToRemLine' },
+      opts = {},
     },
     {
       'saghen/blink.cmp',
