@@ -92,4 +92,24 @@ return {
       null_ls = { enabled = true, name = 'crates' },
     },
   },
+  {
+    'hrsh7th/nvim-cmp',
+    optional = true,
+    opts = function(_, opts)
+      vim.g.cmp_add_source(opts, {
+        source = {
+          name = 'luasnip',
+          priority = 900,
+          group_index = 1,
+        },
+        menu = { crates = '[CRT]' },
+        format = {
+          crates = {
+            icon = ar.ui.codicons.misc.package,
+            hl = 'CmpItemKindDynamic',
+          },
+        },
+      })
+    end,
+  },
 }

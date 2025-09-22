@@ -235,4 +235,25 @@ return {
         or opts
     end,
   },
+  {
+    'hrsh7th/nvim-cmp',
+    optional = true,
+    opts = function(_, opts)
+      local codicons = ar.ui.codicons
+      vim.g.cmp_add_source(opts, {
+        source = {
+          name = 'ecolog',
+          group_index = 1,
+        },
+        menu = {
+          codecompanion_tools = '[CC]',
+          codecompanion_slash_commands = '[CC]',
+        },
+        format = {
+          codecompanion_tools = { icon = codicons.misc.robot_alt },
+          codecompanion_slash_commands = { icon = codicons.misc.robot_alt },
+        },
+      })
+    end,
+  },
 }

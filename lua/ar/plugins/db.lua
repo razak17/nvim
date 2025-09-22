@@ -227,4 +227,13 @@ return {
       end,
     },
   },
+  {
+    'hrsh7th/nvim-cmp',
+    optional = true,
+    opts = function(_, opts)
+      vim.g.cmp_add_source(opts, {
+        menu = { ['vim-dadbod-completion'] = '[DB]' },
+      })
+    end,
+  },
 }

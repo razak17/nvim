@@ -135,6 +135,15 @@ return {
     end,
   },
   {
+    'hrsh7th/nvim-cmp',
+    optional = true,
+    opts = function(_, opts)
+      vim.g.cmp_add_source(opts, {
+        menu = { treesitter = '[TS]' },
+      })
+    end,
+  },
+  {
     'nvim-treesitter/nvim-treesitter-textobjects',
     cond = not minimal and ts_enabled,
     branch = 'main',

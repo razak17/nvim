@@ -157,6 +157,16 @@ return {
                   return opts
                 end,
               },
+              {
+                'hrsh7th/nvim-cmp',
+                optional = true,
+                opts = function(_, opts)
+                  vim.g.cmp_add_source(opts, {
+                    source = { name = 'lazydev', group_index = 0 },
+                    menu = { ['render-markdown'] = '[RMD]' },
+                  })
+                end,
+              },
             },
             {
               'folke/neoconf.nvim',
@@ -166,6 +176,32 @@ return {
                 local_settings = '.nvim.json',
                 global_settings = 'nvim.json',
               },
+            },
+          },
+        },
+      },
+    },
+    {
+      'hrsh7th/nvim-cmp',
+      optional = true,
+      dependencies = { -- this will only be evaluated if nvim-cmp is enabled
+        {
+          'hrsh7th/cmp-nvim-lsp',
+          cond = ar.lsp.enable,
+          specs = {
+            {
+              'hrsh7th/nvim-cmp',
+              optional = true,
+              opts = function(_, opts)
+                opts = vim.g.cmp_add_source(opts, {
+                  source = {
+                    name = 'nvim_lsp',
+                    priority = 1000,
+                    group_index = 1,
+                  },
+                  menu = { nvim_lsp = '[LSP]' },
+                })
+              end,
             },
           },
         },

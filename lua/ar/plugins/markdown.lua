@@ -196,68 +196,69 @@ return {
     },
   },
   {
-    'MeanderingProgrammer/render-markdown.nvim',
-    cond = function()
-      return ar.get_plugin_cond('render-markdown.nvim', not minimal)
-    end,
-    cmd = { 'RenderMarkdown' },
-    ft = { 'markdown', 'Avante', 'Avante', 'codecompanion' },
-    init = function()
-      ar.add_to_select_menu('command_palette', {
-        ['Toggle RenderMarkdown'] = 'RenderMarkdown toggle',
-      })
-    end,
-    opts = {
-      latex = { enabled = false },
-      completions = {
-        blink = { enabled = ar_config.completion.variant == 'blink' },
-        lsp = { enabled = ar.lsp.enable },
-      },
-      file_types = { 'markdown', 'Avante' },
-      heading = {
-        enabled = not ar.ts_extra_enabled,
-        sign = false, --  { '󰫎 ' }
-        icons = { '󰎤 ', '󰎧 ', '󰎪 ', '󰎭 ', '󰎱 ', '󰎳 ' },
-      },
-      checkbox = {
-        enabled = true,
-        -- position = 'inline',
-        unchecked = {
-          icon = '', -- 🔲
-          highlight = '@markup.list.unchecked',
+    {
+      'MeanderingProgrammer/render-markdown.nvim',
+      cond = function()
+        return ar.get_plugin_cond('render-markdown.nvim', not minimal)
+      end,
+      cmd = { 'RenderMarkdown' },
+      ft = { 'markdown', 'Avante', 'Avante', 'codecompanion' },
+      init = function()
+        ar.add_to_select_menu('command_palette', {
+          ['Toggle RenderMarkdown'] = 'RenderMarkdown toggle',
+        })
+      end,
+      opts = {
+        latex = { enabled = false },
+        completions = {
+          blink = { enabled = ar_config.completion.variant == 'blink' },
+          lsp = { enabled = ar.lsp.enable },
         },
-        checked = {
-          icon = '', -- ✅
-          highlight = '@markup.heading',
+        file_types = { 'markdown', 'Avante' },
+        heading = {
+          enabled = not ar.ts_extra_enabled,
+          sign = false, --  { '󰫎 ' }
+          icons = { '󰎤 ', '󰎧 ', '󰎪 ', '󰎭 ', '󰎱 ', '󰎳 ' },
+        },
+        checkbox = {
+          enabled = true,
+          -- position = 'inline',
+          unchecked = {
+            icon = '', -- 🔲
+            highlight = '@markup.list.unchecked',
+          },
+          checked = {
+            icon = '', -- ✅
+            highlight = '@markup.heading',
+          },
+        },
+        bullet = {
+          enabled = true,
+          icons = { '▶', '○', '●', '▷' }, --  '◆', '◇'
+          highlight = 'Directory',
+        },
+        code = {
+          enabled = true,
+          sign = false,
+          render_modes = false,
+          style = ar_config.ui.transparent.enable and 'language' or 'full', -- 'normal' | 'full' | 'language' | 'none'
+          highlight = 'CodeBlock',
+          language_icon = true,
+          language_name = true,
         },
       },
-      bullet = {
-        enabled = true,
-        icons = { '▶', '○', '●', '▷' }, --  '◆', '◇'
-        highlight = 'Directory',
-      },
-      code = {
-        enabled = true,
-        sign = false,
-        render_modes = false,
-        style = ar_config.ui.transparent.enable and 'language' or 'full', -- 'normal' | 'full' | 'language' | 'none'
-        highlight = 'CodeBlock',
-        language_icon = true,
-        language_name = true,
-      },
-    },
-    config = function(_, opts)
-      require('render-markdown').setup(opts)
+      config = function(_, opts)
+        require('render-markdown').setup(opts)
 
-      local color1_bg = '#f265b5'
-      local color2_bg = '#37f499'
-      local color3_bg = '#04d1f9'
-      local color4_bg = '#a48cf2'
-      local color5_bg = '#f1fc79'
-      local color6_bg = '#f7c67f'
-      local color_fg = '#323449'
+        local color1_bg = '#f265b5'
+        local color2_bg = '#37f499'
+        local color3_bg = '#04d1f9'
+        local color4_bg = '#a48cf2'
+        local color5_bg = '#f1fc79'
+        local color6_bg = '#f7c67f'
+        local color_fg = '#323449'
 
-      highlight.plugin('render-markdown', {
+        highlight.plugin('render-markdown', {
         -- stylua: ignore
         theme = {
           ['onedark'] = {
@@ -278,7 +279,18 @@ return {
             { RenderMarkdownH6 = { fg = color6_bg, cterm = 'bold', gui = 'bold' } },
           },
         },
-      })
-    end,
+        })
+      end,
+    },
+    {
+      'hrsh7th/nvim-cmp',
+      optional = true,
+      opts = function(_, opts)
+        vim.g.cmp_add_source(opts, {
+          source = { name = 'render-markdown', group_index = 2 },
+          menu = { ['render-markdown'] = '[RMD]' },
+        })
+      end,
+    },
   },
 }

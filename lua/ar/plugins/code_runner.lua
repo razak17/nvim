@@ -57,31 +57,54 @@ return {
     },
   },
   {
-    'razak17/lab.nvim',
-    event = { 'InsertEnter' },
-    cond = not minimal
-      and ar.completion.enable
-      and ar_config.completion.variant == 'cmp',
-    keys = {
-      { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
-      { '<leader>rq', ':Lab code stop<CR>', desc = 'lab: stop' },
-      -- { '<leader>rp', ':Lab code panel<CR>', desc = 'lab: panel' },
-    },
-    build = 'cd js && npm ci',
-    config = function()
-      highlight.plugin('lab', {
-        theme = {
-          ['onedark'] = {
-            { LabCodeRun = { link = 'DiagnosticVirtualTextInfo' } },
+    {
+      'razak17/lab.nvim',
+      event = { 'InsertEnter' },
+      cond = not minimal
+        and ar.completion.enable
+        and ar_config.completion.variant == 'cmp',
+      keys = {
+        { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
+        { '<leader>rq', ':Lab code stop<CR>', desc = 'lab: stop' },
+        -- { '<leader>rp', ':Lab code panel<CR>', desc = 'lab: panel' },
+      },
+      build = 'cd js && npm ci',
+      config = function()
+        highlight.plugin('lab', {
+          theme = {
+            ['onedark'] = {
+              { LabCodeRun = { link = 'DiagnosticVirtualTextInfo' } },
+            },
           },
-        },
-      })
-      require('lab').setup({
-        quick_data = {
-          enabled = ar.completion.enable,
-        },
-      })
-    end,
+        })
+        require('lab').setup({
+          quick_data = {
+            enabled = ar.completion.enable,
+          },
+        })
+      end,
+    },
+    {
+      'hrsh7th/nvim-cmp',
+      optional = true,
+      opts = function(_, opts)
+        opts = vim.g.cmp_add_source(opts, {
+          source = {
+            name = 'lab.quick_data',
+            priority = 6,
+            max_item_count = 10,
+            group_index = 1,
+          },
+          menu = { ['lab.quick_data'] = '[LAB]' },
+          format = {
+            ['lab.quick_data'] = {
+              icon = ui.icons.misc.beaker,
+              hl = 'CmpItemKindLab',
+            },
+          },
+        })
+      end,
+    },
   },
   {
     -- 'google/executor.nvim',

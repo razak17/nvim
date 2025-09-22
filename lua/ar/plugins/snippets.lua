@@ -159,10 +159,13 @@ return {
         opts.snippet = {
           expand = function(args) require('luasnip').lsp_expand(args.body) end,
         }
-        table.insert(opts.sources, {
-          name = 'luasnip',
-          priority = 900,
-          group_index = 1,
+        vim.g.cmp_add_source(opts, {
+          source = {
+            name = 'luasnip',
+            priority = 900,
+            group_index = 1,
+          },
+          menu = { luasnip = '[LSNIP]' },
         })
       end,
     },

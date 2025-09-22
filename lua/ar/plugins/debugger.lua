@@ -475,4 +475,27 @@ return {
     cmd = { 'DapInstall', 'DapUninstall' },
     opts = {},
   },
+  {
+    'hrsh7th/nvim-cmp',
+    optional = true,
+    dependencies = { -- this will only be evaluated if nvim-cmp is enabled
+      {
+        'rcarriga/cmp-dap',
+        ft = { 'dap-repl', 'dapui_watches' },
+        cond = function() return ar.get_plugin_cond('nvim-dap', not minimal) end,
+        specs = {
+          {
+            'hrsh7th/nvim-cmp',
+            optional = true,
+            opts = function()
+              ---@diagnostic disable: redundant-parameter
+              require('cmp').setup.filetype({ 'dap-repl', 'dapui_watches' }, {
+                sources = { { name = 'dap' } },
+              })
+            end,
+          },
+        },
+      },
+    },
+  },
 }

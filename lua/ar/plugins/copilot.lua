@@ -141,10 +141,19 @@ return {
                 if suggestion.is_visible() then return suggestion.accept() end
                 vim.api.nvim_feedkeys(vim.keycode('<Tab>'), 'n', false)
               end
-              table.insert(opts.sources, 1, {
-                name = 'copilot',
-                group_index = 1,
-                priority = 100,
+              opts = vim.g.cmp_add_source(opts, {
+                source = {
+                  name = 'minuet',
+                  group_index = 1,
+                  priority = 100,
+                },
+                menu = { copilot = '[CPL]' },
+                format = {
+                  copilot = {
+                    icon = ar.ui.codicons.misc.octoface,
+                    hl = 'CmpItemKindCopilot',
+                  },
+                },
               })
               vim.tbl_extend('force', opts.mapping or {}, {
                 ['<C-]>'] = cmp.mapping(copilot),

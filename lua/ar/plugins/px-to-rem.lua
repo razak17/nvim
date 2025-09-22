@@ -9,6 +9,16 @@ return {
   {
     {
       'jsongerber/nvim-px-to-rem',
+      ft = {
+        'css',
+        'scss',
+        'less',
+        'html',
+        'javascript',
+        'typescript',
+        'javascriptreact',
+        'typescriptreact',
+      },
       cond = get_cond,
       cmd = { 'PxToRemCursor', 'PxToRemLine' },
       opts = {},
@@ -30,13 +40,20 @@ return {
     {
       'hrsh7th/nvim-cmp',
       optional = true,
-      ---@param opts cmp.ConfigSchema
       opts = function(_, opts)
-        if not get_cond() then return opts end
-        table.insert(opts.sources, 1, {
-          name = 'nvim_px_to_rem',
-          group_index = 1,
-          priority = 100,
+        vim.g.cmp_add_source(opts, {
+          source = {
+            name = 'nvim_px_to_rem',
+            group_index = 1,
+            priority = 100,
+          },
+          menu = { nvim_px_to_rem = '[PX2REM]' },
+          format = {
+            nvim_px_to_rem = {
+              icon = ar.ui.codicons.misc.hash,
+              hl = 'CmpItemKindNerdFont',
+            },
+          },
         })
       end,
     },

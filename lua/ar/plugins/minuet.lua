@@ -153,10 +153,26 @@ return {
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
       if not get_cond() then return opts end
-      table.insert(opts.sources, 1, {
-        name = 'minuet',
-        group_index = 1,
-        priority = 100,
+      local ai_icons = ar.ui.codicons.ai
+      opts = vim.g.cmp_add_source(opts, {
+        source = {
+          name = 'minuet',
+          group_index = 1,
+          priority = 100,
+        },
+        menu = { minuet = '[MINUET]' },
+        format = {
+          minuet = { icon = ai_icons.minuet, hl = 'CmpItemKindDynamic' },
+          claude = { icon = ai_icons.claude },
+          codestral = { icon = ai_icons.codestral },
+          gemini = { icon = ai_icons.gemini },
+          openai = { icon = ai_icons.openai },
+          Groq = { icon = ai_icons.groq },
+          Openrouter = { icon = ai_icons.open_router },
+          Ollama = { icon = ai_icons.ollama },
+          ['Llama.cpp'] = { icon = ai_icons.llama },
+          Deepseek = { icon = ai_icons.deepseek },
+        },
       })
       vim.tbl_extend('force', opts.mapping or {}, {
         ['<A-y>'] = require('minuet').make_cmp_map(),

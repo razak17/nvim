@@ -1,69 +1,36 @@
-local api, fn, fmt = vim.api, vim.fn, string.format
+---@param opts table
+---@param config table
+vim.g.cmp_add_source = function(opts, config)
+  opts = opts or {}
+  opts.sources = opts.sources or {}
+  if config.source then table.insert(opts.sources, 1, config.source) end
+  if config.menu then
+    local menu = ar.completion.config.menu
+    ar.completion.config.menu = vim.tbl_extend('force', menu, config.menu)
+  end
+  if config.format then
+    local format = ar.completion.config.format
+    ar.completion.config.format = vim.tbl_extend('force', format, config.format)
+  end
+  return opts
+end
+
+local fmt = string.format
 local cmp_utils = require('ar.utils.cmp')
 local ui, highlight = ar.ui, ar.highlight
 local border, lsp_hls, ellipsis =
   ui.current.border, ui.lsp.highlights, ui.icons.misc.ellipsis
 local minimal = ar.plugins.minimal
-local codicons = ui.codicons
-local ai_icons = codicons.ai
 local is_cmp = ar_config.completion.variant == 'cmp'
 
-ar.completion.config = {
+ar.completion.config = vim.tbl_extend('force', ar.completion.config or {}, {
   format = {
-    emoji = { icon = codicons.misc.smiley, hl = 'CmpItemKindEmoji' },
-    ['lab.quick_data'] = { icon = ui.icons.misc.beaker, hl = 'CmpItemKindLab' },
-    natdat = { icon = codicons.misc.calendar, hl = 'CmpItemKindDynamic' },
-    crates = { icon = codicons.misc.package, hl = 'CmpItemKindDynamic' },
-    copilot = { icon = codicons.misc.octoface, hl = 'CmpItemKindCopilot' },
-    codecompanion_tools = { icon = codicons.misc.robot_alt },
-    codecompanion_slash_commands = { icon = codicons.misc.robot_alt },
-    nerdfonts = { icon = codicons.misc.nerd_font, hl = 'CmpItemKindNerdFont' },
-    minuet = { icon = ai_icons.minuet, hl = 'CmpItemKindDynamic' },
-    nvim_px_to_rem = { icon = codicons.misc.hash, hl = 'CmpItemKindNerdFont' },
     Color = { icon = ui.icons.misc.block_medium },
-    claude = { icon = ai_icons.claude },
-    codestral = { icon = ai_icons.codestral },
-    gemini = { icon = ai_icons.gemini },
-    openai = { icon = ai_icons.openai },
-    Groq = { icon = ai_icons.groq },
-    Openrouter = { icon = ai_icons.open_router },
-    Ollama = { icon = ai_icons.ollama },
-    ['Llama.cpp'] = { icon = ai_icons.llama },
-    Deepseek = { icon = ai_icons.deepseek },
   },
   menu = {
     Color = '[COLOR]',
-    copilot = '[CPL]',
-    minuet = '[MINUET]',
-    nvim_lsp = '[LSP]',
-    luasnip = '[LSNIP]',
-    snippets = '[SNIP]',
-    emoji = '[EMOJI]',
-    path = '[PATH]',
-    async_path = '[PATH]',
-    neorg = '[NEORG]',
-    buffer = '[BUF]',
-    spell = '[SPELL]',
-    dictionary = '[DICT]',
-    rg = '[RG]',
-    norg = '[NORG]',
-    ['render-markdown'] = '[RMD]',
-    cmdline = '[CMD]',
-    cmdline_history = '[HIST]',
-    crates = '[CRT]',
-    treesitter = '[TS]',
-    ['buffer-lines'] = '[BUFL]',
-    ['lab.quick_data'] = '[LAB]',
-    nerdfonts = '[NF]',
-    natdat = '[NATDAT]',
-    nvim_px_to_rem = '[PX2REM]',
-    ['vim-dadbod-completion'] = '[DB]',
-    dotenv = '[DOTENV]',
-    ecolog = '[ECOLOG]',
-    codecompanion_tools = '[CC]',
-    codecompanion_slash_commands = '[CC]',
   },
-}
+})
 
 return {
   {
@@ -204,9 +171,6 @@ return {
           disallow_partial_matching = true,
           disallow_prefix_unmatching = false,
         },
-        -- snippet = {
-        --   expand = function(args) vim.snippet.expand(args.body) end,
-        -- },
         mapping = {
           ['<C-k>'] = cmp.mapping.select_prev_item(),
           ['<C-j>'] = cmp.mapping.select_next_item(),
@@ -237,7 +201,7 @@ return {
           format = function(entry, item)
             item.menu = (ar.completion.config.menu)[entry.source.name]
 
-            local label, length = item.abbr, api.nvim_strwidth(item.abbr)
+            local label, length = item.abbr, vim.api.nvim_strwidth(item.abbr)
             local function format_icon(icon) return fmt('%s ', icon) end
             vim.o.pumblend = 0
 
@@ -288,51 +252,15 @@ return {
             return item
           end,
         },
-        sources = {
-          { name = 'nvim_lsp', priority = 1000, group_index = 1 },
-          { name = 'snippets', priority = 900, group_index = 1 },
-          {
-            name = 'lab.quick_data',
-            priority = 6,
-            max_item_count = 10,
-            group_index = 1,
-          },
-          { name = 'path', priority = 5, group_index = 1 },
-          { name = 'async_path', priority = 5, group_index = 1 },
-          {
-            name = 'buffer',
-            priority = 4,
-            options = {
-              get_bufnrs = function() return api.nvim_list_bufs() end,
-            },
-            group_index = 1,
-          },
-          {
-            name = 'rg',
-            priority = 4,
-            keyword_length = ar.lsp.enable and 8 or 4,
-            option = { additional_arguments = '--max-depth 8' },
-            group_index = 1,
-          },
-          { name = 'emoji', priority = 3, group_index = 1 },
-          {
-            name = 'natdat',
-            priority = 3,
-            keyword_length = 3,
-            group_index = 1,
-          },
-          {
-            name = 'spell',
-            max_item_count = 10,
-            group_index = 2,
-          },
-          { name = 'norg', group_index = 2 },
-          { name = 'render-markdown', group_index = 2 },
-          { name = 'nerdfonts', group_index = 3 },
-          { name = 'dotenv', group_index = 4 },
-          { name = 'ecolog', group_index = 1 },
-          { name = 'lazydev', group_index = 0 },
+      })
+
+      opts = vim.g.cmp_add_source(opts, {
+        source = {
+          name = 'snippets',
+          priority = 900,
+          group_index = 1,
         },
+        menu = { snippets = '[SNIP]' },
       })
 
       if opts.snippet == nil then
@@ -340,88 +268,14 @@ return {
           expand = function(args) vim.snippet.expand(args.body) end,
         }
       end
+
       return opts
     end,
     config = function(_, opts)
       local cmp = require('cmp')
-
-      cmp.setup(opts)
-
-      cmp.setup.cmdline({ '/', '?' }, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          sources = cmp.config.sources(
-            { { name = 'nvim_lsp_document_symbol' } },
-            { { name = 'buffer' } },
-            { { name = 'buffer-lines' } }
-          ),
-        },
-      })
-
-      cmp.setup.cmdline(':', {
-        sources = cmp.config.sources({
-          { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
-          { name = 'path' },
-          -- { name = 'cmdline_history', priority = 10, max_item_count = 5 },
-        }),
-      })
-
-      cmp.setup.filetype({ 'dap-repl', 'dapui_watches' }, {
-        sources = { { name = 'dap' } },
-      })
-
-      require('cmp').setup.filetype({ 'c', 'cpp' }, {
-        sources = {
-          { name = 'buffer-lines' },
-        },
-      })
-
-      vim.api.nvim_create_user_command(
-        'CmpInfo',
-        function() cmp.status() end,
-        {}
-      )
+      require('cmp').setup(opts)
+      ar.command('CmpInfo', function() cmp.status() end, {})
     end,
-    dependencies = {
-      -- 'razak17/lab.nvim',
-      'razak17/lspkind.nvim',
-      -- 'dmitmel/cmp-cmdline-history',
-      -- 'hrsh7th/cmp-path',
-      'https://codeberg.org/FelipeLema/cmp-async-path',
-      'hrsh7th/cmp-buffer',
-      'lukas-reineke/cmp-rg',
-      { 'hrsh7th/cmp-emoji', cond = not minimal },
-      { 'fazibear/cmp-nerdfonts', cond = not minimal },
-      { 'SergioRibera/cmp-dotenv', cond = not minimal and false },
-      { 'ryo33/nvim-cmp-rust', ft = { 'rust' } },
-      { 'Gelio/cmp-natdat', opts = {} },
-      { 'hrsh7th/cmp-nvim-lsp', cond = ar.lsp.enable },
-      { 'hrsh7th/cmp-cmdline', config = function() vim.o.wildmode = '' end },
-      { 'hrsh7th/cmp-nvim-lsp-document-symbol', cond = ar.lsp.enable },
-      {
-        'uga-rosa/cmp-dictionary',
-        cond = not minimal and ar.plugins.overrides.dict.enable,
-        config = function()
-          local en_dict =
-            join_paths(fn.stdpath('data'), 'site', 'spell', 'en.dict')
-          require('cmp_dictionary').setup({ paths = { en_dict } })
-        end,
-      },
-    },
-  },
-  {
-    'f3fora/cmp-spell',
-    cond = ar.completion.enable and not minimal and is_cmp,
-    ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' },
-  },
-  {
-    'rcarriga/cmp-dap',
-    cond = ar.completion.enable and not minimal and is_cmp,
-    ft = { 'dap-repl', 'dapui_watches' },
-  },
-  {
-    'amarakon/nvim-cmp-buffer-lines',
-    cond = ar.completion.enable and not minimal and is_cmp,
-    ft = { 'c', 'cpp' },
+    dependencies = { 'razak17/lspkind.nvim' },
   },
 }

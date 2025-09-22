@@ -124,4 +124,17 @@ return {
       end,
     },
   },
+  {
+    'hrsh7th/nvim-cmp',
+    optional = true,
+    opts = function(_, opts)
+      vim.g.cmp_add_source(opts, {
+        source = {
+          name = 'ecolog',
+          group_index = 1,
+        },
+        menu = { ecolog = '[ECOLOG]' },
+      })
+    end,
+  },
 }
