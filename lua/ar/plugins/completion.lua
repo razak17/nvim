@@ -210,8 +210,8 @@ return {
         mapping = {
           ['<C-k>'] = cmp.mapping.select_prev_item(),
           ['<C-j>'] = cmp.mapping.select_next_item(),
-          ['<C-n>'] = cmp.mapping(tab, { 'i', 's', 'c' }),
-          ['<C-p>'] = cmp.mapping(shift_tab, { 'i', 's', 'c' }),
+          ['<C-n>'] = cmp.mapping(tab, { 'i', 's' }),
+          ['<C-p>'] = cmp.mapping(shift_tab, { 'i', 's' }),
           ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
           ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
           ['<Tab>'] = cmp.mapping(tab, { 'i', 's', 'c' }),
