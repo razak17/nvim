@@ -151,6 +151,21 @@ return {
         return opts
       end,
     },
+    {
+      'hrsh7th/nvim-cmp',
+      optional = true,
+      dependencies = { 'saadparwaiz1/cmp_luasnip' },
+      opts = function(_, opts)
+        opts.snippet = {
+          expand = function(args) require('luasnip').lsp_expand(args.body) end,
+        }
+        table.insert(opts.sources, {
+          name = 'luasnip',
+          priority = 900,
+          group_index = 1,
+        })
+      end,
+    },
   },
   {
     'benfowler/telescope-luasnip.nvim',

@@ -36,7 +36,7 @@ ar.completion.config = {
     copilot = '[CPL]',
     minuet = '[MINUET]',
     nvim_lsp = '[LSP]',
-    luasnip = '[SNIP]',
+    luasnip = '[LSNIP]',
     snippets = '[SNIP]',
     emoji = '[EMOJI]',
     path = '[PATH]',
@@ -70,7 +70,7 @@ return {
     'hrsh7th/nvim-cmp',
     cond = ar.completion.enable and not minimal and is_cmp,
     event = { 'InsertEnter', 'CmdlineEnter' },
-    opts = function()
+    opts = function(_, opts)
       local snippet = vim.snippet
       local cmp = require('cmp')
       local types = require('cmp.types')
@@ -164,7 +164,8 @@ return {
         end
       end
 
-      return {
+      ---@type cmp.ConfigSchema
+      opts = vim.tbl_extend('force', opts, {
         performance = {
           debounce = 0,
           throttle = 0,
@@ -203,15 +204,9 @@ return {
           disallow_partial_matching = true,
           disallow_prefix_unmatching = false,
         },
-        snippet = {
-          expand = function(args)
-            if luasnip_avail then
-              luasnip.lsp_expand(args.body)
-            else
-              vim.snippet.expand(args.body)
-            end
-          end,
-        },
+        -- snippet = {
+        --   expand = function(args) vim.snippet.expand(args.body) end,
+        -- },
         mapping = {
           ['<C-k>'] = cmp.mapping.select_prev_item(),
           ['<C-j>'] = cmp.mapping.select_next_item(),
@@ -295,7 +290,6 @@ return {
         },
         sources = {
           { name = 'nvim_lsp', priority = 1000, group_index = 1 },
-          { name = 'luasnip', priority = 900, group_index = 1 },
           { name = 'snippets', priority = 900, group_index = 1 },
           {
             name = 'lab.quick_data',
@@ -339,9 +333,15 @@ return {
           { name = 'ecolog', group_index = 1 },
           { name = 'lazydev', group_index = 0 },
         },
-      }
+      })
+
+      if opts.snippet == nil then
+        opts.snippet = {
+          expand = function(args) vim.snippet.expand(args.body) end,
+        }
+      end
+      return opts
     end,
-    ---@param opts cmp.ConfigSchema
     config = function(_, opts)
       local cmp = require('cmp')
 
@@ -390,7 +390,6 @@ return {
       'https://codeberg.org/FelipeLema/cmp-async-path',
       'hrsh7th/cmp-buffer',
       'lukas-reineke/cmp-rg',
-      'saadparwaiz1/cmp_luasnip',
       { 'hrsh7th/cmp-emoji', cond = not minimal },
       { 'fazibear/cmp-nerdfonts', cond = not minimal },
       { 'SergioRibera/cmp-dotenv', cond = not minimal and false },
