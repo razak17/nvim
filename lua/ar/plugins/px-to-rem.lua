@@ -1,0 +1,29 @@
+local minimal = ar.plugins.minimal
+
+local function get_cond()
+  local condition = ar.completion.enable and not minimal
+  return ar.get_plugin_cond('nvim-px-to-rem', condition)
+end
+
+return {
+  {
+    {
+      'jsongerber/nvim-px-to-rem',
+      cond = get_cond,
+    },
+    {
+      'saghen/blink.cmp',
+      optional = true,
+      opts = function(_, opts)
+        return get_cond()
+            and vim.g.blink_add_source({ 'nvim-px-to-rem' }, {
+              ['nvim-px-to-rem'] = {
+                module = 'nvim-px-to-rem.integrations.blink',
+                name = '[PX2REM]',
+              },
+            }, opts)
+          or opts
+      end,
+    },
+  },
+}
