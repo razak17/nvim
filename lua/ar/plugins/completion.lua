@@ -297,7 +297,6 @@ return {
           { name = 'nvim_lsp', priority = 1000, group_index = 1 },
           { name = 'luasnip', priority = 900, group_index = 1 },
           { name = 'snippets', priority = 900, group_index = 1 },
-          { name = 'nvim_px_to_rem', priority = 11, group_index = 1 },
           {
             name = 'lab.quick_data',
             priority = 6,

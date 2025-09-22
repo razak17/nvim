@@ -27,5 +27,18 @@ return {
           or opts
       end,
     },
+    {
+      'hrsh7th/nvim-cmp',
+      optional = true,
+      ---@param opts cmp.ConfigSchema
+      opts = function(_, opts)
+        if not get_cond() then return opts end
+        table.insert(opts.sources, 1, {
+          name = 'nvim_px_to_rem',
+          group_index = 1,
+          priority = 100,
+        })
+      end,
+    },
   },
 }
