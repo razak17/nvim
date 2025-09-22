@@ -64,6 +64,18 @@ return {
       server_opts_overrides = {
         settings = { advanced = { inlineSuggestCount = 3 } },
       },
+      nes = {
+        enabled = true,
+        keymap = {
+          accept_and_goto = '<leader>aP',
+          accept = false,
+          dismiss = '<Esc>',
+        },
+      },
+    },
+    dependencies = {
+      'copilotlsp-nvim/copilot-lsp',
+      init = function() vim.g.copilot_nes_debounce = 500 end,
     },
   },
   {
