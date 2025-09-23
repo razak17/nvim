@@ -490,6 +490,7 @@ return {
   },
   {
     'nvim-telescope/telescope.nvim',
+    event = { 'VeryLazy' },
     cond = min_enabled,
     -- NOTE: usind cmd causes issues with dressing and frecency
     cmd = { 'Telescope' },
@@ -642,7 +643,7 @@ return {
 
       return mappings
     end,
-    config = function()
+    opts = function(_, opts)
       local previewers = require('telescope.previewers')
       local sorters = require('telescope.sorters')
       local actions = require('telescope.actions')
@@ -656,27 +657,27 @@ return {
       table.insert(vimgrep_arguments, '!**/.git/*')
 
       local ignore_preview = { '.*%.csv', '.*%.java' }
-      local previewer_maker = function(filepath, bufnr, opts)
-        opts = opts or {}
-        opts.use_ft_detect = opts.use_ft_detect or true
+      local previewer_maker = function(filepath, bufnr, o)
+        o = o or {}
+        o.use_ft_detect = o.use_ft_detect or true
         -- if the file is too large, don't use the ft detect
         local max_filesize = 100 * 1024 -- 100 KB
         local ok, stats = pcall(vim.uv.fs_stat, filepath)
         if ok and stats and stats.size > max_filesize then
-          opts.use_ft_detect = false
+          o.use_ft_detect = false
         end
         -- if the file is in the ignore list, don't use the ft detect
         vim.iter(ignore_preview):map(function(item)
           if filepath:match(item) then
-            opts.use_ft_detect = false
+            o.use_ft_detect = false
             return
           end
         end)
         filepath = fn.expand(filepath)
-        previewers.buffer_previewer_maker(filepath, bufnr, opts)
+        previewers.buffer_previewer_maker(filepath, bufnr, o)
       end
 
-      local opts = {
+      opts = vim.tbl_extend('force', opts or {}, {
         defaults = {
           prompt_prefix = fmt(' %s  ', ui.codicons.misc.search_alt),
           selection_caret = fmt(' %s', ui.icons.misc.separator),
@@ -859,17 +860,18 @@ return {
             additional_args = { '--trim' },
           },
         },
-        extensions = {
-          fzf = {},
-          persisted = dropdown(),
-          menufacture = {
-            mappings = { main_menu = { [{ 'i', 'n' }] = '<A-m>' } },
-          },
-          helpgrep = {
-            ignore_paths = { fn.stdpath('state') .. '/lazy/readme' },
-          },
+      })
+
+      opts.extensions = vim.tbl_extend('force', opts.extensions or {}, {
+        fzf = {},
+        persisted = dropdown(),
+        menufacture = {
+          mappings = { main_menu = { [{ 'i', 'n' }] = '<A-m>' } },
         },
-      }
+        helpgrep = {
+          ignore_paths = { fn.stdpath('state') .. '/lazy/readme' },
+        },
+      })
 
       if ar.has(extension_to_plugin('frecency')) then
         opts.extensions['frecency'] = {
@@ -950,9 +952,16 @@ return {
         }
       end
 
+      return opts
+    end,
+    config = function(_, opts)
       require('telescope').setup(opts)
 
       local l = require('telescope').load_extension
+
+      vim.iter(opts.extensions):each(function(_, config)
+        if config.name then require('telescope').load_extension(config.name) end
+      end)
 
       for name, ext in pairs(ar.telescope.extension_to_plugin) do
         if name ~= 'frecency' then
