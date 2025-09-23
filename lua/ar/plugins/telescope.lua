@@ -984,49 +984,6 @@ return {
     end,
   },
   {
-    'FabianWirth/search.nvim',
-    cond = picker_enabled and false,
-    keys = {
-      { '<C-p>', function() require('search').open() end, desc = 'find files' },
-    },
-    opts = {
-      tabs = {
-        { 'Files', smart_open },
-        { 'Grep', live_grep },
-        { 'Find Word', b('grep_string') },
-        { 'Egrepify', egrepify },
-      },
-      collections = {
-        git = {
-          initial_tab = 1, -- Git branches
-          tabs = {
-            { name = 'Branches', tele_func = b('git_branches') },
-            { name = 'Commits', tele_func = b('git_commits') },
-            { name = 'Stashes', tele_func = b('git_stash') },
-            { name = 'File History', tele_func = git_file_history },
-          },
-        },
-        grep = {
-          initial_tab = 1,
-          tabs = {
-            { name = 'Grep', tele_func = b('git_branches') },
-            { name = 'Egrepify', tele_func = egrepify },
-            { name = 'Find Word', tele_func = b('grep_string') },
-          },
-        },
-        others = {
-          initial_tab = 1,
-          tabs = {
-            { name = 'Highlights', tele_func = b('highlights') },
-            { name = 'Keymaps', tele_func = b('keymaps') },
-            { name = 'Colorschemes', tele_func = b('colorscheme') },
-            { name = 'Helpgrep', tele_func = helpgrep },
-          },
-        },
-      },
-    },
-  },
-  {
     'nvim-telescope/telescope-fzf-native.nvim',
     build = 'make',
     cond = min_enabled,
