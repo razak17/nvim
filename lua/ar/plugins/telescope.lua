@@ -57,6 +57,17 @@ if ar_config.picker.variant == 'telescope' then
   ar.pick.register(picker_config)
 end
 
+ar.telescope = {}
+
+vim.g.telescope_add_extension = function(extension, opts, config)
+  ar.telescope.extensions =
+    vim.list_extend(ar.telescope.extensions or {}, extension)
+  if config then
+    opts.extensions = vim.tbl_extend('force', opts.extensions or {}, config)
+  end
+  return opts
+end
+
 local api, env, fn = vim.api, vim.env, vim.fn
 local fmt, ui = string.format, ar.ui
 local border = ui.border
@@ -187,47 +198,10 @@ local function plugins()
   })
 end
 
-local function file_browser(opts)
-  opts = vim.tbl_extend('keep', opts or {}, {
-    hidden = true,
-    no_ignore = true,
-    sort_mru = true,
-    sort_lastused = true,
-  })
-  extensions('file_browser')(opts)()
-end
-
-local function egrepify() extensions('egrepify')({})() end
 local function ecolog() extensions('ecolog', 'env')(ar.telescope.minimal_ui())() end
-local function helpgrep() extensions('helpgrep')({})() end
-local function frecency(opts)
-  opts = vim.tbl_extend('keep', opts or {}, { workspace = 'CWD' })
-  extensions('frecency')(opts)()
-end
 local function luasnips() extensions('luasnip')({})() end
 local function notifications() extensions('notify')({})() end
-local function undo() extensions('undo')({})() end
 local function projects() extensions('projects')(ar.telescope.minimal_ui())() end
-local function smart_open()
-  extensions('smart_open')({
-    cwd_only = true,
-    no_ignore = true,
-    show_scores = false,
-  })()
-end
-local function directory_files()
-  extensions('directory')({ feature = 'find_files' })()
-end
-local function directory_search()
-  extensions('directory')({
-    feature = 'live_grep',
-    feature_opts = { hidden = true, no_ignore = true },
-    hidden = true,
-    no_ignore = true,
-  })()
-end
-local function git_file_history() extensions('git_file_history')({})() end
-local function lazy() extensions('lazy')({})() end
 local function aerial() extensions('aerial')({})() end
 local function harpoon()
   extensions('harpoon', 'marks')({ prompt_title = 'Harpoon Marks' })()
@@ -235,45 +209,9 @@ end
 local function textcase()
   extensions('textcase', 'normal_mode')(ar.telescope.minimal_ui())()
 end
-local function whop() extensions('whop')(ar.telescope.minimal_ui())() end
-local function node_modules() extensions('node_modules', 'list')({})() end
-local function monorepo() extensions('monorepo')({})() end
 local function live_grep(opts)
   return extensions('menufacture', 'live_grep')(opts)()
 end
-local function live_grep_args()
-  extensions('live_grep_args')({
-    vimgrep_arguments = {
-      'rg',
-      '--color=never',
-      '--no-heading',
-      '--with-filename',
-      '--line-number',
-      '--column',
-      '--smart-case',
-    },
-  })()
-end
-local function live_grep_args_word()
-  local ok, lga_shortcuts = pcall(require, 'telescope-live-grep-args.shortcuts')
-  if not ok then
-    vim.notify('telescope-live-grep-args.nvim is not installed')
-    return
-  end
-  lga_shortcuts.grep_word_under_cursor()
-end
-local function live_grep_args_selection()
-  local ok, lga_shortcuts = pcall(require, 'telescope-live-grep-args.shortcuts')
-  if not ok then
-    vim.notify('telescope-live-grep-args.nvim is not installed')
-    return
-  end
-  lga_shortcuts.grep_visual_selection()
-end
-local function software_licenses()
-  extensions('software-licenses', 'find')(ar.telescope.horizontal())()
-end
-local function spell_errors() extensions('spell_errors')({})() end
 
 local function visual_grep_string()
   local search = ar.get_visual_text()
@@ -428,39 +366,18 @@ local function send_files_to_grapple(prompt_bufnr)
   actions.close(prompt_bufnr)
 end
 
-ar.telescope = {
+ar.telescope = vim.tbl_extend('force', ar.telescope, {
   extension_to_plugin = {
     ['aerial'] = 'aerial.nvim',
-    ['cmdline'] = 'telescope-cmdline.nvim',
-    ['directory'] = 'telescope-directory.nvim',
-    -- ['dir'] = 'dir-telescope.nvim',
-    ['egrepify'] = 'telescope-egrepify.nvim',
     ['ecolog'] = 'ecolog.nvim',
-    ['file_browser'] = 'telescope-file-browser.nvim',
-    ['frecency'] = 'telescope-frecency.nvim',
     ['fzf'] = 'telescope-fzf-native.nvim',
-    ['git_branch'] = 'telescope-git-branch.nvim',
-    ['git_file_history'] = 'telescope-git-file-history.nvim',
     ['harpoon'] = 'harpoon',
-    ['heading'] = 'telescope-heading.nvim',
-    ['helpgrep'] = 'telescope-helpgrep.nvim',
-    ['lazy'] = 'telescope-lazy.nvim',
-    ['live_grep_args'] = 'telescope-live-grep-args.nvim',
     ['luasnip'] = 'telescope-luasnip.nvim',
     ['menufacture'] = 'telescope-menufacture',
-    ['monorepo'] = 'monorepo.nvim',
-    ['node_modules'] = 'telescope-node-modules.nvim',
     ['notify'] = 'nvim-notify',
     ['persisted'] = 'persisted.nvim',
     ['projects'] = 'project.nvim',
-    -- ['smart_history'] = 'telescope-smart-history.nvim',
-    ['smart_open'] = 'smart-open.nvim',
-    ['software-licenses'] = 'telescope-software-licenses.nvim',
-    ['telescope-yaml'] = 'telescope-yaml.nvim',
     ['textcase'] = 'text-case.nvim',
-    ['undo'] = 'telescope-undo.nvim',
-    ['whop'] = 'whop.nvim',
-    ['spell_errors'] = 'telescope-spell-errors.nvim',
   },
   cursor = cursor,
   dropdown = dropdown,
@@ -480,79 +397,18 @@ ar.telescope = {
     vim.tbl_extend('keep', opts, { previewer = false })
     return dropdown(opts)
   end,
-}
+})
 
 return {
   {
-    'nvim-telescope/telescope-frecency.nvim',
-    cond = is_telescope,
-    lazy = false,
-  },
-  {
     'nvim-telescope/telescope.nvim',
-    event = { 'VeryLazy' },
     cond = min_enabled,
     -- NOTE: usind cmd causes issues with dressing and frecency
     cmd = { 'Telescope' },
-    -- event = 'VeryLazy',
-    init = function()
-      local function get_params(with_children)
-        local folder = vim.fn.expand('%:h')
-        local params = {}
-        if with_children then
-          params.search_dirs = { folder }
-        else
-          params.find_command =
-            { 'rg', '--files', '--max-depth', '1', '--files', folder }
-        end
-        return params
-      end
-
-      --- Find files or word or grep in current directory
-      ---@param which string
-      ---@param with_children boolean
-      local function fuzzy_in_cur_dir(which, with_children)
-        return function()
-          local params = get_params(with_children)
-          local which_map = {
-            ['files'] = 'find_files',
-            ['grep'] = 'live_grep',
-            ['word'] = 'grep_string',
-          }
-          require('telescope.builtin')[which_map[which]](params)
-        end
-      end
-
-      ar.add_to_select_menu('command_palette', {
-        ['Command History'] = 'Telescope command_history',
-        ['Commands'] = 'Telescope commands',
-        ['Find Files'] = 'Telescope find_files',
-        ['Autocommands'] = 'Telescope autocommands',
-        ['Highlights'] = 'Telescope highlights',
-        ['Vim Options'] = 'Telescope vim_options',
-        ['Registers'] = 'Telescope registers',
-        ['Colorschemes'] = 'Telescope colorscheme',
-        ['Keymaps'] = 'Telescope keymaps',
-        ['Live Grep'] = 'Telescope live_grep',
-        ['Seach History'] = 'Telescope search_history',
-        ['Telescope Buffers'] = 'Telescope buffers',
-        ['Telescope Marks'] = 'Telescope marks',
-        ['Telescope Projects'] = 'Telescope projects',
-        ['Telescope Resume'] = 'Telescope resume',
-        ['Telescope Undo'] = 'Telescope undo',
-        ['Recently Closed Buffers'] = 'Telescope oldfiles cwd_only=true',
-        ['Find Files In Dir'] = fuzzy_in_cur_dir('files', false),
-        ['Find Files In Dir & Children'] = fuzzy_in_cur_dir('files', true),
-        ['Live Grep In Dir'] = fuzzy_in_cur_dir('grep', true),
-        ['Find Word In Dir'] = fuzzy_in_cur_dir('word', true),
-      })
-    end,
+    event = 'VeryLazy',
     keys = function()
       local mappings = {}
 
-      if ar_config.picker.files == 'smart-open' then
-        table.insert(mappings, { '<C-p>', smart_open, desc = 'find files' })
-      end
       if ar_config.picker.files == 'telescope' then
         table.insert(mappings, { '<C-p>', find_files, desc = 'find files' })
       end
@@ -560,30 +416,17 @@ return {
         -- stylua: ignore
         local telescope_mappings = {
           { '<M-space>', b('buffers'), desc = 'buffers' },
-          { '<leader>f,', file_browser, desc = 'file browser (root)' },
-          { '<leader>f.', function() file_browser({ path = '%:p:h', select_buffer = 'true' }) end, desc = 'file browser (curr dir)', },
           { '<leader>f?', b('help_tags'), desc = 'help tags' },
           -- { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer', },
           { '<leader>fc', nvim_config, desc = 'nvim config' },
           { '<leader>fd', aerial, desc = 'aerial' },
-          { '<leader>fe', egrepify, desc = 'egrepify' },
           { '<leader>f;', ecolog, desc = 'ecolog' },
-          { '<leader>fga', live_grep_args, desc = 'live-grep-args: grep' },
-          { '<leader>fgw', live_grep_args_word, desc = 'live-grep-args: word' },
-          { '<leader>fgs', live_grep_args_selection, desc = 'live-grep-args: selection', mode = { 'x' } },
-          { '<leader>fgf', directory_files, desc = 'directory for find files' },
-          { '<leader>fgg', directory_search, desc = 'directory for live grep' },
-          { '<leader>fgh', git_file_history, desc = 'git file history' },
           { '<leader>ff', find_files, desc = 'find files' },
-          { '<leader>fh', frecency, desc = 'Most (f)recently used files' },
-          { '<leader>fH', helpgrep, desc = 'helpgrep' },
           { '<leader>fI', b('builtin'), desc = 'builtins', },
           { '<leader>fJ', b('jumplist'), desc = 'jumplist', },
           { '<leader>fk', b('keymaps'), desc = 'keymaps' },
-          { '<leader>fl', lazy, desc = 'surf plugins' },
-          { '<leader>fL', luasnips, desc = 'luasnip: available snippets' },
+          { '<leader>fS', luasnips, desc = 'luasnip: available snippets' },
           { '<leader>fn', notifications, desc = 'notify: notifications' },
-          { '<leader>fN', node_modules, desc = 'node_modules' },
           { '<leader>fo', b('pickers'), desc = 'pickers' },
           { '<leader>fO', notes, desc = 'notes' },
           -- { '<leader>fO', b('oldfiles'), desc = 'oldfiles' },
@@ -600,11 +443,9 @@ return {
           { '<leader>fr', b('resume'), desc = 'resume last picker' },
           { '<leader>fs', live_grep, desc = 'find string' },
           { '<leader>fs', visual_grep_string, desc = 'find word', mode = 'x' },
-          { '<leader>fu', undo, desc = 'undo' },
           { '<leader>fm', harpoon, desc = 'harpoon' },
           { '<leader>ft', textcase, desc = 'textcase', mode = { 'n', 'v' } },
           { '<leader>fw', b('grep_string'), desc = 'find word' },
-          { '<leader>fW', whop, desc = 'whop' },
           { '<leader>fva', b('autocommands'), desc = 'autocommands' },
           { '<leader>fvc', b('commands'), desc = 'commands' },
           { '<leader>fvh', b('highlights'), desc = 'highlights' },
@@ -613,29 +454,7 @@ return {
           { '<leader>fvk', b('command_history'), desc = 'command history' },
           { '<leader>fK', b('colorscheme'), desc = 'colorscheme' },
           { '<leader>fY', b('spell_suggest'), desc = 'spell suggest' },
-          { '<leader>fy', '<Cmd>Telescope telescope-yaml<CR>', desc = 'yaml' },
-          { '<localleader>ro', monorepo, desc = 'monorepo' },
-          { '<leader>fL', software_licenses, desc = 'software licenses' },
-          { '<leader>fX', spell_errors, desc = 'spell errors' },
         }
-        -- stylua: ignore
-        if ar.lsp.enable then
-          ar.list_insert(telescope_mappings, {
-            { '<leader>le', b('diagnostics', { bufnr = 0 }), desc = 'telescope: buffer diagnostics', },
-            { '<leader>lI', b('lsp_implementations'), desc = 'telescope: search implementation', },
-            { '<leader>lr', b('lsp_references'), desc = 'telescope: show references', },
-            { '<leader>lw', b('diagnostics'), desc = 'telescope: workspace diagnostics', },
-            { '<leader>ly', b('lsp_type_definitions'), desc = 'telescope: type definitions' },
-          })
-          -- stylua: ignore
-          if ar_config.lsp.symbols.enable and ar_config.lsp.symbols.variant == 'picker' then
-            ar.list_insert(telescope_mappings, {
-              { '<leader>lsd', b('lsp_document_symbols'), desc = 'telescope: document symbols', },
-              { '<leader>lsl', b('lsp_dynamic_workspace_symbols'), desc = 'telescope: live workspace symbols' },
-              { '<leader>lsw', b('lsp_workspace_symbols'), desc = 'telescope: workspace symbols', },
-            })
-          end
-        end
         vim
           .iter(telescope_mappings)
           :each(function(m) table.insert(mappings, m) end)
@@ -863,94 +682,12 @@ return {
       })
 
       opts.extensions = vim.tbl_extend('force', opts.extensions or {}, {
-        fzf = {},
+        fzf = { fuzzy = true },
         persisted = dropdown(),
         menufacture = {
           mappings = { main_menu = { [{ 'i', 'n' }] = '<A-m>' } },
         },
-        helpgrep = {
-          ignore_paths = { fn.stdpath('state') .. '/lazy/readme' },
-        },
       })
-
-      if ar.has(extension_to_plugin('frecency')) then
-        opts.extensions['frecency'] = {
-          db_root = join_paths(datapath, 'databases'),
-          default_workspace = 'CWD',
-          show_filter_column = false,
-          show_scores = true,
-          show_unindexed = true,
-          db_safe_mode = false,
-          auto_validate = true,
-          db_validate_threshold = 20,
-          ignore_patterns = {
-            '*/tmp/*',
-            '*node_modules/*',
-            '*vendor/*',
-          },
-          workspaces = {
-            conf = vim.g.dotfiles,
-            project = vim.g.projects_dir,
-          },
-        }
-      end
-
-      if ar.has(extension_to_plugin('live_grep_args')) then
-        opts.extensions['live_grep_args'] = {
-          auto_quoting = true,
-          mappings = {
-            i = {
-              ['<c-y>'] = require('telescope-live-grep-args.actions').quote_prompt(),
-              ['<c-i>'] = require('telescope-live-grep-args.actions').quote_prompt({
-                postfix = ' --iglob ',
-              }),
-              ['<C-r>'] = require('telescope-live-grep-args.actions').to_fuzzy_refine,
-            },
-          },
-        }
-      end
-
-      if ar.has(extension_to_plugin('smart_open')) then
-        opts.extensions['smart_open'] = {
-          show_scores = true,
-          ignore_patterns = {
-            '*.git/*',
-            '*/tmp/*',
-            '*vendor/*',
-            '*node_modules/*',
-          },
-          match_algorithm = 'fzf',
-          disable_devicons = false,
-        }
-      end
-
-      if ar.has(extension_to_plugin('undo')) then
-        opts.extensions['undo'] = {
-          mappings = {
-            i = {
-              ['<C-a>'] = require('telescope-undo.actions').yank_additions,
-              ['<C-d>'] = require('telescope-undo.actions').yank_deletions,
-              ['<C-u>'] = require('telescope-undo.actions').restore,
-            },
-          },
-        }
-      end
-
-      if ar.has(extension_to_plugin('lazy')) then
-        opts.extensions['lazy'] = {
-          show_icon = true,
-          mappings = {
-            open_in_float = '<C-o>',
-            open_in_browser = '<C-b>',
-            open_in_file_browser = '<M-b>',
-            open_in_find_files = '<C-f>',
-            open_in_live_grep = '<C-g>',
-            -- open_plugins_picker = '<C-b>',
-            open_lazy_root_find_files = '<C-r>f',
-            open_lazy_root_live_grep = '<C-r>g',
-          },
-        }
-      end
 
       return opts
     end,
@@ -959,14 +696,12 @@ return {
 
       local l = require('telescope').load_extension
 
-      vim.iter(opts.extensions):each(function(_, config)
-        if config.name then require('telescope').load_extension(config.name) end
+      vim.iter(ar.telescope.extensions):each(function(name)
+        if name then l(name) end
       end)
 
       for name, ext in pairs(ar.telescope.extension_to_plugin) do
-        if name ~= 'frecency' then
-          if ar.has(ext) then l(name) end
-        end
+        if ar.has(ext) then l(name) end
       end
 
       api.nvim_exec_autocmds(
@@ -989,87 +724,4 @@ return {
     cond = min_enabled,
   },
   { 'molecule-man/telescope-menufacture', cond = picker_enabled },
-  { 'biozz/whop.nvim', cond = picker_enabled, opts = {} },
-  { 'nvim-telescope/telescope-node-modules.nvim', cond = picker_enabled },
-  { 'nvim-telescope/telescope-smart-history.nvim', cond = picker_enabled },
-  { 'fdschmidt93/telescope-egrepify.nvim', cond = picker_enabled },
-  { 'debugloop/telescope-undo.nvim', cond = picker_enabled },
-  { 'nvim-telescope/telescope-file-browser.nvim', cond = picker_enabled },
-  { 'catgoose/telescope-helpgrep.nvim', cond = picker_enabled },
-  { 'razak17/telescope-lazy.nvim', cond = picker_enabled },
-  { 'fbuchlak/telescope-directory.nvim', cond = picker_enabled, opts = {} },
-  { 'princejoogie/dir-telescope.nvim', cond = false, opts = {} },
-  { 'dapc11/telescope-yaml.nvim', cond = picker_enabled },
-  { 'crispgm/telescope-heading.nvim', cond = picker_enabled },
-  { 'chip/telescope-software-licenses.nvim', cond = picker_enabled },
-  { 'isak102/telescope-git-file-history.nvim', cond = picker_enabled },
-  { 'matkrin/telescope-spell-errors.nvim', cond = picker_enabled },
-  {
-    'danielfalk/smart-open.nvim',
-    cond = picker_enabled and ar_config.picker.files == 'smart-open',
-  },
-  {
-    'mrloop/telescope-git-branch.nvim',
-    cond = picker_enabled,
-    -- stylua: ignore
-    keys = {
-      { mode = { 'n', 'v' }, '<leader>gf', function() require('git_branch').files() end, desc = 'git branch' },
-    },
-  },
-  {
-    'nvim-telescope/telescope-live-grep-args.nvim',
-    cond = picker_enabled,
-    version = '^1.0.0',
-  },
-  {
-    'Myzel394/jsonfly.nvim',
-    cond = picker_enabled,
-    ft = { 'json' },
-    keys = {
-      { '<leader>fj', '<Cmd>Telescope jsonfly<cr>', desc = 'Open json(fly)' },
-    },
-  },
-  {
-    'imNel/monorepo.nvim',
-    cond = picker_enabled,
-    opts = {},
-    init = function()
-      vim.g.whichkey_add_spec({ '<localleader>r', group = 'Monorepo' })
-    end,
-    -- stylua: ignore
-    keys = {
-      { '<localleader>ra', ':lua require("monorepo").add_project()<CR>', desc = 'monorepo: add' },
-      { '<localleader>rr', ':lua require("monorepo").remove_project()<CR>', desc = 'monorepo: remove' },
-      { '<localleader>rt', ':lua require("monorepo").toggle_project()<CR>', desc = 'monorepo: toggle' },
-      { '<localleader>rp', ':lua require("monorepo").previous_project()<CR>', desc = 'monorepo: previous' },
-      { '<localleader>rn', ':lua require("monorepo").next_project()<CR>', desc = 'monorepo: next' },
-    },
-  },
-  {
-    'dimaportenko/project-cli-commands.nvim',
-    cond = picker_enabled and false,
-    init = function()
-      vim.g.whichkey_add_spec({
-        '<leader><localleader>P',
-        group = 'Project cli commands',
-      })
-    end,
-    -- stylua: ignore
-    keys = {
-      { '<leader><localleader>Po', ':Telescope project_cli_commands open<CR>', desc = 'project-cli-commands: open' },
-      { '<leader><localleader>Ps', ':Telescope project_cli_commands running<CR>', desc = 'project-cli-commands: running' },
-    },
-    config = function() require('project_cli_commands').setup({}) end,
-  },
-  --------------------------------------------------------------------------------
-  -- Disabled
-  --------------------------------------------------------------------------------
-  {
-    'jonarrien/telescope-cmdline.nvim',
-    enabled = false,
-    cond = picker_enabled and false,
-    keys = {
-      { ':', '<cmd>Telescope cmdline<cr>', desc = 'Cmdline' },
-    },
-  },
 }
