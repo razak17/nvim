@@ -917,7 +917,7 @@ return {
             '*vendor/*',
             '*node_modules/*',
           },
-          match_algorithm = 'fzy',
+          match_algorithm = 'fzf',
           disable_devicons = false,
         }
       end
@@ -1041,7 +1041,6 @@ return {
   {
     'danielfalk/smart-open.nvim',
     cond = picker_enabled and ar_config.picker.files == 'smart-open',
-    dependencies = { 'nvim-telescope/telescope-fzy-native.nvim' },
   },
   {
     'mrloop/telescope-git-branch.nvim',
