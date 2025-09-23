@@ -99,22 +99,6 @@ function M.open_file_in_centered_popup()
   ar.open_buf_centered_popup(bufnr)
 end
 
-function M.generate_lsp_servers()
-  local lsp_servers = require('ar.servers').names('all')
-  local file_content = {
-    '## 🚀 LSP Servers',
-    '',
-  }
-  for _, server in ipairs(lsp_servers) do
-    table.insert(file_content, '- ' .. server)
-  end
-  local file, err = io.open(fn.stdpath('config') .. '/SERVERS.md', 'w')
-  if not file then error(err) end
-  file:write(table.concat(file_content, '\n'))
-  file:close()
-  vim.notify('SERVERS.md generated.')
-end
-
 function M.generate_plugin_modules()
   local plugin_dir = fn.stdpath('config') .. '/lua/ar/plugins'
   local files = {}

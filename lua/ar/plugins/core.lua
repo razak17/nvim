@@ -15,4 +15,5 @@ return {
     'razak17/lspkind.nvim',
     config = function() require('lspkind').init({ preset = 'codicons' }) end,
   },
+  { 'rosstang/lunajson.nvim' },
 }
