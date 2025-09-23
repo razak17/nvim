@@ -697,10 +697,11 @@ local function setup_inline_completion(client, bufnr)
   if client:supports_method(M.textDocument_inlineCompletion) then
     vim.opt.completeopt =
       { 'menuone', 'noselect', 'noinsert', 'fuzzy', 'popup' }
-    lsp.inline_completion.enable(true)
+    lsp.inline_completion.enable(true, { buffer = bufnr })
     map('i', '<A-u>', function()
       if not lsp.inline_completion.get() then return '<A-u>' end
     end, {
+      buffer = bufnr,
       replace_keycodes = true,
       expr = true,
       desc = 'current inline completion',
