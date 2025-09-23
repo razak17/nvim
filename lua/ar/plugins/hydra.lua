@@ -62,9 +62,7 @@ return {
     local pcmd = require('hydra.keymap-util').pcmd
     local hint_opts = { position = 'bottom', border = border, type = 'window' }
 
-    local splits = ar.reqcall('smart-splits')
     local bufdelete = ar.reqcall('snacks.bufdelete')
-    local textcase = ar.reqcall('textcase')
 
     local base_config = function(opts)
       opts = opts or {}
@@ -107,15 +105,52 @@ return {
         { 'H', '<Cmd>tabprev<CR>', { desc = 'prev tab' } },
         { 'l', '<Cmd>e #<CR>', { desc = 'last buffer' } },
         { 'L', '<Cmd>tabnext<CR>', { desc = 'next tab' } },
-        { 'n', '<Plug>(CybuNext)', { desc = 'next buffer' } },
+        {
+          'n',
+          function()
+            if ar.has('cybu.nvim') then
+              vim.cmd('CybuNext')
+            else
+              vim.cmd('bnext')
+            end
+          end,
+          { desc = 'next buffer' },
+        },
         {
           'N',
-          '<Plug>(buf-surf-forward)',
+          function()
+            if ar.has('vim-bufsurf') then
+              vim.cmd('BufSurfForward')
+            else
+              vim.cmd('bnext')
+            end
+          end,
           { desc = 'next buffer (in history)' },
         },
         { 'o', function() bufdelete.other() end, { desc = 'delete others' } },
-        { 'p', '<Plug>(CybuPrev)', { desc = 'prev buffer' } },
-        { 'P', '<Plug>(buf-surf-back)', { desc = 'prev buffer (in history)' } },
+        {
+          'p',
+          function()
+            if ar.has('cybu.nvim') then
+              vim.cmd('CybuPrev')
+            else
+              vim.cmd('bprev')
+            end
+          end,
+          { desc = 'prev buffer' },
+        },
+        {
+          'P',
+          '<Plug>(buf-surf-back)',
+          function()
+            if ar.has('vim-bufsurf') then
+              vim.cmd('BufSurfBack')
+            else
+              vim.cmd('bnext')
+            end
+          end,
+          { desc = 'prev buffer (in history)' },
+        },
         {
           'r',
           function()
@@ -147,6 +182,22 @@ return {
       },
     })
 
+    local splits = ar.reqcall('smart-splits')
+
+    local function split(what, count)
+      return function()
+        if not ar.has('smart-splits.nvim') then
+          vim.notify('smart-splits.nvim is not installed')
+          return
+        end
+        if count == nil then
+          splits[what]()
+        else
+          splits[what](count)
+        end
+      end
+    end
+
     Hydra({
       name = 'Window management',
       hint = window_hint,
@@ -165,10 +216,10 @@ return {
         { 'o', '<C-w>o', { exit = true, desc = 'remain only' } },
         { '<C-o>', '<C-w>o', { exit = true, desc = false } },
         -- Resize
-        { '<C-h>', function() splits.resize_left(2) end },
-        { '<C-j>', function() splits.resize_down(2) end },
-        { '<C-k>', function() splits.resize_up(2) end },
-        { '<C-l>', function() splits.resize_right(2) end },
+        { '<C-h>', split('resize_left', 2) },
+        { '<C-j>', split('resize_down', 2) },
+        { '<C-k>', split('resize_up', 2) },
+        { '<C-l>', split('resize_right', 2) },
         { '=', '<C-w>=', { desc = 'equalize' } },
         -- Split
         { 's', pcmd('split', 'E36') },
@@ -176,10 +227,10 @@ return {
         { 'v', pcmd('vsplit', 'E36') },
         { '<C-v>', pcmd('vsplit', 'E36'), { desc = false } },
         -- Size
-        { 'H', function() splits.swap_buf_left() end },
-        { 'J', function() splits.swap_buf_down() end },
-        { 'K', function() splits.swap_buf_up() end },
-        { 'L', function() splits.swap_buf_right() end },
+        { 'H', split('swap_buf_left') },
+        { 'J', split('swap_buf_down') },
+        { 'K', split('swap_buf_up') },
+        { 'L', split('swap_buf_right') },
 
         -- { 'c', pcmd('close', 'E444') },
         { 'q', pcmd('close', 'E444'), { desc = 'close window' } },
@@ -190,32 +241,40 @@ return {
       },
     })
 
-    local function change_case(word)
-      return function() textcase.current_word(word) end
-    end
+    if ar.has('text-case.nvim') then
+      local textcase = ar.reqcall('textcase')
 
-    Hydra({
-      name = 'TextCase',
-      hint = text_case_hint,
-      mode = 'n',
-      body = '<localleader>w',
-      color = 'chartreuse',
-      config = base_config({ hint = { position = 'top' } }),
-      heads = {
-        { '-', change_case('to_dash_case'), { desc = 'to dashcase' } },
-        { '/', change_case('to_path_case'), { desc = 'to pathcase' } },
-        { '.', change_case('to_dot_case'), { desc = 'to dotcase' } },
-        { 'c', change_case('to_camel_case'), { desc = 'to camelcase' } },
-        { 'C', change_case('to_constant_case'), { desc = 'to constantcase' } },
-        { 'l', change_case('to_lower_case'), { desc = 'to lowercase' } },
-        { 'p', change_case('to_pascal_case'), { desc = 'to pascalcase' } },
-        { 's', change_case('to_snake_case'), { desc = 'to snakecase' } },
-        { 't', change_case('to_title_case'), { desc = 'to titlecase' } },
-        { 'u', change_case('to_upper_case'), { desc = 'to uppercase' } },
-        { 'q', nil, { exit = true, desc = 'Quit' } },
-        { '<Esc>', nil, { exit = true, desc = 'Quit' } },
-      },
-    })
+      local function change_case(word)
+        return function() textcase.current_word(word) end
+      end
+
+      Hydra({
+        name = 'TextCase',
+        hint = text_case_hint,
+        mode = 'n',
+        body = '<localleader>w',
+        color = 'chartreuse',
+        config = base_config({ hint = { position = 'top' } }),
+        heads = {
+          { '-', change_case('to_dash_case'), { desc = 'to dashcase' } },
+          { '/', change_case('to_path_case'), { desc = 'to pathcase' } },
+          { '.', change_case('to_dot_case'), { desc = 'to dotcase' } },
+          { 'c', change_case('to_camel_case'), { desc = 'to camelcase' } },
+          {
+            'C',
+            change_case('to_constant_case'),
+            { desc = 'to constantcase' },
+          },
+          { 'l', change_case('to_lower_case'), { desc = 'to lowercase' } },
+          { 'p', change_case('to_pascal_case'), { desc = 'to pascalcase' } },
+          { 's', change_case('to_snake_case'), { desc = 'to snakecase' } },
+          { 't', change_case('to_title_case'), { desc = 'to titlecase' } },
+          { 'u', change_case('to_upper_case'), { desc = 'to uppercase' } },
+          { 'q', nil, { exit = true, desc = 'Quit' } },
+          { '<Esc>', nil, { exit = true, desc = 'Quit' } },
+        },
+      })
+    end
 
     Hydra({
       name = 'Wrap',
