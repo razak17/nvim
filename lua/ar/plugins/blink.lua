@@ -76,6 +76,7 @@ return {
         enabled = function()
           local ignored_filetypes = {
             'TelescopePrompt',
+            'telescopeprompt',
             'minifiles',
             'snacks_picker_input',
             'neo-tree-popup',
