@@ -696,9 +696,11 @@ return {
 
       local l = require('telescope').load_extension
 
-      vim.iter(ar.telescope.extensions):each(function(name)
-        if name then l(name) end
-      end)
+      if not ar.falsy(ar.telescope.extensions) then
+        vim.iter(ar.telescope.extensions):each(function(name)
+          if name then l(name) end
+        end)
+      end
 
       for name, ext in pairs(ar.telescope.extension_to_plugin) do
         if ar.has(ext) then l(name) end
