@@ -3,9 +3,33 @@ local get_cond = ar.get_plugin_cond
 
 return {
   {
-    'johmsalas/text-case.nvim',
-    cond = function() return get_cond('text-case.nvim', not minimal) end,
-    opts = { default_keymappings_enabled = false },
+    {
+      'johmsalas/text-case.nvim',
+      cond = function() return get_cond('text-case.nvim', not minimal) end,
+      opts = { default_keymappings_enabled = false },
+    },
+    {
+      'nvim-telescope/telescope.nvim',
+      optional = true,
+      keys = function(_, keys)
+        if get_cond('text-case.nvim', not minimal) then
+          table.insert(keys or {}, {
+            '<leader>ft',
+            function()
+              require('telescope').extensions.textcase.normal_mode(
+                ar.telescope.minimal_ui()
+              )
+            end,
+            desc = 'textcase',
+          })
+        end
+      end,
+      opts = function(_, opts)
+        return get_cond('text-case.nvim', not minimal)
+            and vim.g.telescope_add_extension({ 'textcase' }, opts)
+          or opts
+      end,
+    },
   },
   {
     'gbprod/yanky.nvim',

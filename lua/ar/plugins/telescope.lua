@@ -198,17 +198,7 @@ local function plugins()
   })
 end
 
-local function ecolog() extensions('ecolog', 'env')(ar.telescope.minimal_ui())() end
-local function luasnips() extensions('luasnip')({})() end
-local function notifications() extensions('notify')({})() end
 local function projects() extensions('projects')(ar.telescope.minimal_ui())() end
-local function aerial() extensions('aerial')({})() end
-local function harpoon()
-  extensions('harpoon', 'marks')({ prompt_title = 'Harpoon Marks' })()
-end
-local function textcase()
-  extensions('textcase', 'normal_mode')(ar.telescope.minimal_ui())()
-end
 local function live_grep(opts)
   return extensions('menufacture', 'live_grep')(opts)()
 end
@@ -368,16 +358,7 @@ end
 
 ar.telescope = vim.tbl_extend('force', ar.telescope, {
   extension_to_plugin = {
-    ['aerial'] = 'aerial.nvim',
-    ['ecolog'] = 'ecolog.nvim',
-    ['fzf'] = 'telescope-fzf-native.nvim',
-    ['harpoon'] = 'harpoon',
-    ['luasnip'] = 'telescope-luasnip.nvim',
-    ['menufacture'] = 'telescope-menufacture',
-    ['notify'] = 'nvim-notify',
-    ['persisted'] = 'persisted.nvim',
     ['projects'] = 'project.nvim',
-    ['textcase'] = 'text-case.nvim',
   },
   cursor = cursor,
   dropdown = dropdown,
@@ -406,8 +387,8 @@ return {
     -- NOTE: usind cmd causes issues with dressing and frecency
     cmd = { 'Telescope' },
     event = 'VeryLazy',
-    keys = function()
-      local mappings = {}
+    keys = function(_, keys)
+      local mappings = keys or {}
 
       if ar_config.picker.files == 'telescope' then
         table.insert(mappings, { '<C-p>', find_files, desc = 'find files' })
@@ -419,14 +400,10 @@ return {
           { '<leader>f?', b('help_tags'), desc = 'help tags' },
           -- { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer', },
           { '<leader>fc', nvim_config, desc = 'nvim config' },
-          { '<leader>fd', aerial, desc = 'aerial' },
-          { '<leader>f;', ecolog, desc = 'ecolog' },
           { '<leader>ff', find_files, desc = 'find files' },
           { '<leader>fI', b('builtin'), desc = 'builtins', },
           { '<leader>fJ', b('jumplist'), desc = 'jumplist', },
           { '<leader>fk', b('keymaps'), desc = 'keymaps' },
-          { '<leader>fS', luasnips, desc = 'luasnip: available snippets' },
-          { '<leader>fn', notifications, desc = 'notify: notifications' },
           { '<leader>fo', b('pickers'), desc = 'pickers' },
           { '<leader>fO', notes, desc = 'notes' },
           -- { '<leader>fO', b('oldfiles'), desc = 'oldfiles' },
@@ -443,8 +420,6 @@ return {
           { '<leader>fr', b('resume'), desc = 'resume last picker' },
           { '<leader>fs', live_grep, desc = 'find string' },
           { '<leader>fs', visual_grep_string, desc = 'find word', mode = 'x' },
-          { '<leader>fm', harpoon, desc = 'harpoon' },
-          { '<leader>ft', textcase, desc = 'textcase', mode = { 'n', 'v' } },
           { '<leader>fw', b('grep_string'), desc = 'find word' },
           { '<leader>fva', b('autocommands'), desc = 'autocommands' },
           { '<leader>fvc', b('commands'), desc = 'commands' },
@@ -681,14 +656,6 @@ return {
         },
       })
 
-      opts.extensions = vim.tbl_extend('force', opts.extensions or {}, {
-        fzf = { fuzzy = true },
-        persisted = dropdown(),
-        menufacture = {
-          mappings = { main_menu = { [{ 'i', 'n' }] = '<A-m>' } },
-        },
-      })
-
       return opts
     end,
     config = function(_, opts)
@@ -719,11 +686,34 @@ return {
         end,
       })
     end,
+    dependencies = {
+      {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        build = 'make',
+        specs = {
+          'nvim-telescope/telescope.nvim',
+          optional = true,
+          opts = function(_, opts)
+            vim.g.telescope_add_extension({ 'fzf' }, opts, {
+              fzf = { fuzzy = true },
+            })
+          end,
+        },
+      },
+      {
+        'molecule-man/telescope-menufacture',
+        specs = {
+          'nvim-telescope/telescope.nvim',
+          optional = true,
+          opts = function(_, opts)
+            vim.g.telescope_add_extension({ 'menufacture' }, opts, {
+              menufacture = {
+                mappings = { main_menu = { [{ 'i', 'n' }] = '<A-m>' } },
+              },
+            })
+          end,
+        },
+      },
+    },
   },
-  {
-    'nvim-telescope/telescope-fzf-native.nvim',
-    build = 'make',
-    cond = min_enabled,
-  },
-  { 'molecule-man/telescope-menufacture', cond = picker_enabled },
 }

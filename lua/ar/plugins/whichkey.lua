@@ -65,7 +65,6 @@ return {
           { '<localleader>g', group = 'Git' },
           { '<localleader>go', group = 'Open' },
           { '<localleader>gy', group = 'Yank' },
-          { '<localleader>h', group = 'Harpoon' },
           { '<localleader>l', group = 'LSP' },
           { '<localleader>lc', group = 'Call Hierarchy' },
           { '<localleader>lr', group = 'Rulebook' },

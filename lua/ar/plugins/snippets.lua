@@ -40,6 +40,8 @@ local function get_snippets_list()
     :totable()
 end
 
+local function get_cond() return ar.get_plugin_cond('LuaSnip', not minimal) end
+
 return {
   {
     'rafamadriz/friendly-snippets',
@@ -56,7 +58,7 @@ return {
   {
     {
       'L3MON4D3/LuaSnip',
-      cond = not minimal,
+      cond = get_cond,
       event = 'InsertEnter',
       build = 'make install_jsregexp',
       -- stylua: ignore
@@ -171,8 +173,27 @@ return {
     },
   },
   {
-    'benfowler/telescope-luasnip.nvim',
-    cond = not ar.plugins.minimal,
-    config = function() require('telescope').load_extension('luasnip') end,
+    'nvim-telescope/telescope.nvim',
+    optional = true,
+    dependencies = {
+      {
+        'benfowler/telescope-luasnip.nvim',
+        cond = get_cond,
+        keys = {
+          {
+            '<leader>fS',
+            function() require('telescope').extensions.luasnip.luasnip({}) end,
+            desc = 'luasnip: available snippets',
+          },
+        },
+        specs = {
+          'nvim-telescope/telescope.nvim',
+          optional = true,
+          opts = function(_, opts)
+            vim.g.telescope_add_extension({ 'luasnip' }, opts)
+          end,
+        },
+      },
+    },
   },
 }

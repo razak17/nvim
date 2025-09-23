@@ -6,6 +6,11 @@ local is_blink = ar_config.completion.variant == 'blink'
 
 local cond = not minimal and ar_config.shelter.enable
 
+local function get_ecolog_cond()
+  local condition = cond and variant == 'ecolog'
+  return ar.get_plugin_cond('ecolog.nvim', condition)
+end
+
 return {
   {
     'ck-zhang/obfuscate.nvim',
@@ -28,23 +33,20 @@ return {
   {
     {
       'philosofonusus/ecolog.nvim',
-      cond = function()
-        local condition = cond and variant == 'ecolog'
-        return ar.get_plugin_cond('ecolog.nvim', condition)
+      cond = get_ecolog_cond,
+      -- stylua: ignore
+      keys = function()
+        local keys = {
+          { '<leader>ep', '<Cmd>EcologPeek<CR>', desc = 'ecolog: peek variable' },
+          { '<leader>el', '<Cmd>EcologShelterLinePeek<CR>', desc = 'ecolog: peek line' },
+        }
+        if ar_config.picker.variant == 'snacks' then
+          table.insert(keys, { '<leader>f;', '<Cmd>EcologSnacks<CR>', desc = 'snacks: ecolog' })
+        elseif ar_config.picker.variant == 'fzf-lua' then
+          table.insert(keys, { '<leader>f;', '<Cmd>EcologFzf<CR>', desc = 'picker: ecolog' })
+        end
+        return keys
       end,
-    -- stylua: ignore
-    keys = function()
-      local keys = {
-        { '<leader>ep', '<Cmd>EcologPeek<CR>', desc = 'ecolog: peek variable' },
-        { '<leader>el', '<Cmd>EcologShelterLinePeek<CR>', desc = 'ecolog: peek line' },
-      }
-      if ar_config.picker.variant == 'snacks' then
-        table.insert(keys, { '<leader>f;', '<Cmd>EcologSnacks<CR>', desc = 'snacks: ecolog' })
-      elseif ar_config.picker.variant == 'fzf-lua' then
-        table.insert(keys, { '<leader>f;', '<Cmd>EcologFzf<CR>', desc = 'picker: ecolog' })
-      end
-      return keys
-    end,
       init = function()
         ar.add_to_select_menu('toggle', {
           ['Toggle Ecolog Shelter'] = 'EcologShelterToggle',
@@ -75,19 +77,19 @@ return {
         vim_env = true,
         preferred_environment = 'local',
         types = true,
-      -- stylua: ignore
-      integrations = {
-        telescope = function() return ar.has('telescope.nvim') end,
-        fzf = function () return is_fzf and ar.has('fzf-lua') end,
-        snacks = function () return is_snacks and ar.has('snacks.nvim') end,
-        nvim_cmp = function () return ar.has('blink.cmp') end,
-        blink_cmp = function() return is_blink and ar.has('blink.cmp') end,
-        -- blink_cmp = true,
-        omnifunc = { auto_setup = false },
-        lspsaga = false,
-        lsp = false, -- TODO: check this out later
-        statusline = true,
-      },
+        -- stylua: ignore
+        integrations = {
+          telescope = function() return ar.has('telescope.nvim') end,
+          fzf = function () return is_fzf and ar.has('fzf-lua') end,
+          snacks = function () return is_snacks and ar.has('snacks.nvim') end,
+          nvim_cmp = function () return ar.has('blink.cmp') end,
+          blink_cmp = function() return is_blink and ar.has('blink.cmp') end,
+          -- blink_cmp = true,
+          omnifunc = { auto_setup = false },
+          lspsaga = false,
+          lsp = false, -- TODO: check this out later
+          statusline = true,
+        },
         shelter = {
           configuration = { partial_mode = true, mask_char = '*' },
           modules = {
@@ -109,17 +111,35 @@ return {
       'saghen/blink.cmp',
       optional = true,
       opts = function(_, opts)
-        local function get_cond()
-          local condition = cond and variant == 'ecolog'
-          return ar.get_plugin_cond('ecolog.nvim', condition)
-        end
-        return get_cond()
+        return get_ecolog_cond()
             and vim.g.blink_add_source({ 'ecolog' }, {
               ecolog = {
                 name = '[ECOLOG]',
                 module = 'ecolog.integrations.cmp.blink_cmp',
               },
             }, opts)
+          or opts
+      end,
+    },
+    {
+      'nvim-telescope/telescope.nvim',
+      optional = true,
+      keys = function(_, keys)
+        if get_ecolog_cond() then
+          table.insert(keys or {}, {
+            '<leader>f;',
+            function()
+              require('telescope').extensions.ecolog.env(
+                ar.telescope.minimal_ui()
+              )
+            end,
+            desc = 'ecolog',
+          })
+        end
+      end,
+      opts = function(_, opts)
+        return get_ecolog_cond()
+            and vim.g.telescope_add_extension({ 'ecolog' }, opts)
           or opts
       end,
     },

@@ -141,7 +141,6 @@ return {
         },
         {
           'P',
-          '<Plug>(buf-surf-back)',
           function()
             if ar.has('vim-bufsurf') then
               vim.cmd('BufSurfBack')

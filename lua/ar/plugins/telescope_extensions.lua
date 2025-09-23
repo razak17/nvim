@@ -30,7 +30,7 @@ return {
           optional = true,
           opts = function(_, opts)
             local datapath = vim.fn.stdpath('data')
-            vim.g.telescope_add_extension({ 'cmdline' }, opts, {
+            vim.g.telescope_add_extension({ 'frecency' }, opts, {
               frecency = {
                 db_root = join_paths(datapath, 'databases'),
                 default_workspace = 'CWD',
