@@ -175,6 +175,8 @@ ar.add_to_select_menu('command_palette', {
   ['Copy File Home Path'] = "lua require'ar.select_menus.command_palette'.copy_path('home_path')",
   ['Format Code'] = "lua require'ar.select_menus.command_palette'.format_buf()",
   ['Generate Plugins'] = 'lua require"ar.select_menus.command_palette".generate_plugins()',
+  ['Generate LSP Servers'] = 'lua require"ar.select_menus.command_palette".generate_lsp_servers()',
+  ['Generate Plugin Modules'] = 'lua require"ar.select_menus.command_palette".generate_plugin_modules()',
   ['Open Buffer in Float'] = 'lua require"ar.select_menus.command_palette".open_file_in_centered_popup()',
   ['Close Invalid Buffers'] = 'lua require"ar.select_menus.command_palette".close_nonvisible_buffers()',
   ['Toggle Autosave'] = "lua require'ar.select_menus.command_palette'.toggle_autosave()",

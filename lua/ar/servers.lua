@@ -412,7 +412,7 @@ local function capabilities(name, config)
   return config
 end
 
----@alias WhichServers 'default' | 'manual' | 'lsp_dir'
+---@alias WhichServers 'default' | 'all' | 'manual' | 'lsp_dir'
 
 ---Get the configuration for a specific language server
 ---@param name string?
@@ -420,6 +420,7 @@ end
 ---@return table<string, any>?
 local function get(name, which)
   which = which or 'default'
+  if which == 'all' then return capabilities() end
   local config = servers[name]
   if which == 'manual' then config = manual_servers[name] end
   if which == 'lsp_dir' then config = manual_servers[name] end
@@ -436,6 +437,13 @@ local function names(which)
   local lsp_servers = servers
   if which == 'manual' then lsp_servers = manual_servers end
   if which == 'lsp_dir' then lsp_servers = lsp_dir_servers end
+  if which == 'all' then
+    local all = vim.tbl_keys(
+      vim.tbl_extend('force', servers, manual_servers, lsp_dir_servers)
+    )
+    table.sort(all)
+    return all
+  end
   return vim.tbl_keys(lsp_servers)
 end
 

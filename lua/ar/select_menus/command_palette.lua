@@ -99,6 +99,64 @@ function M.open_file_in_centered_popup()
   ar.open_buf_centered_popup(bufnr)
 end
 
+function M.generate_lsp_servers()
+  local lsp_servers = require('ar.servers').names('all')
+  local file_content = {
+    '## 🚀 LSP Servers',
+    '',
+  }
+  for _, server in ipairs(lsp_servers) do
+    table.insert(file_content, '- ' .. server)
+  end
+  local file, err = io.open(fn.stdpath('config') .. '/SERVERS.md', 'w')
+  if not file then error(err) end
+  file:write(table.concat(file_content, '\n'))
+  file:close()
+  vim.notify('SERVERS.md generated.')
+end
+
+function M.generate_plugin_modules()
+  local plugin_dir = fn.stdpath('config') .. '/lua/ar/plugins'
+  local files = {}
+  local ok, scan = pcall(require, 'plenary.scandir')
+  if ok then
+    files = scan.scan_dir(plugin_dir, { depth = 1, add_dirs = false })
+  else
+    -- fallback to vim.loop
+    local luv = vim.loop
+    local handle = luv.fs_scandir(plugin_dir)
+    if handle then
+      while true do
+        local name, t = luv.fs_scandir_next(handle)
+        if not name then break end
+        if t == 'file' then table.insert(files, plugin_dir .. '/' .. name) end
+      end
+    end
+  end
+
+  local file_names = {}
+  for _, f in ipairs(files) do
+    local fname = f:match('([^/]+)$')
+    table.insert(file_names, '- ' .. fname)
+  end
+  table.sort(file_names, function(a, b) return a:lower() < b:lower() end)
+
+  local file_content = {
+    '## 📦 Plugin Modules',
+    '',
+  }
+  for _, name in ipairs(file_names) do
+    table.insert(file_content, name)
+  end
+
+  local out_path = fn.stdpath('config') .. '/PLUGIN_MODULES.md'
+  local file, err = io.open(out_path, 'w')
+  if not file then error(err) end
+  file:write(table.concat(file_content, '\n'))
+  file:close()
+  vim.notify('PLUGIN_MODULES.md generated.')
+end
+
 function M.close_nonvisible_buffers()
   local visible_bufs = {}
   for _, w in pairs(api.nvim_list_wins()) do
