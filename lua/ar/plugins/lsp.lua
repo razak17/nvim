@@ -142,7 +142,7 @@ return {
                   if get_cond() then
                     local blink_opts = vim.g.blink_add_source({ 'lazydev' }, {
                       lazydev = {
-                        name = 'LazyDev',
+                        name = '[LAZYDEV]',
                         module = 'lazydev.integrations.blink',
                         score_offset = 100, -- show at a higher priority than lsp
                       },
@@ -163,7 +163,7 @@ return {
                 opts = function(_, opts)
                   vim.g.cmp_add_source(opts, {
                     source = { name = 'lazydev', group_index = 0 },
-                    menu = { ['render-markdown'] = '[RMD]' },
+                    menu = { ['lazydev'] = '[LAZYDEV]' },
                   })
                 end,
               },
