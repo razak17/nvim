@@ -99,10 +99,7 @@ local servers = {
     },
   },
   denols = {
-    root_dir = require('lspconfig.util').root_pattern(
-      'deno.json',
-      'deno.jsonc'
-    ),
+    root_markers = { 'deno.json', 'deno.jsonc', '.git' },
   },
   docker_compose_language_service = {
     root_markers = { 'docker-compose.yaml', 'docker-compose.yml' },
@@ -148,11 +145,17 @@ local servers = {
     },
   },
   graphql = {
-    root_dir = require('lspconfig.util').root_pattern(
-      '.graphqlrc*',
-      '.graphql.config.*',
-      'graphql.config.*'
-    ),
+    root_dir = function(bufnr, on_dir)
+      local util = require('lspconfig.util')
+      local fname = vim.api.nvim_buf_get_name(bufnr)
+      on_dir(
+        util.root_pattern(
+          '.graphqlrc*',
+          '.graphql.config.*',
+          'graphql.config.*'
+        )(fname)
+      )
+    end,
   },
   -- jdtls = {},
   jedi_language_server = {},
@@ -165,8 +168,8 @@ local servers = {
               description = 'ArConfig',
               fileMatch = { '.rvim.json' },
               name = '.rvim.json',
-              url = 'https://raw.githubusercontent.com/razak17/nvim/refs/heads/main/rvim.schema.json',
-              -- url = 'file:///home/razak/.config/rvim/rvim.schema.json',
+              -- url = 'https://raw.githubusercontent.com/razak17/nvim/refs/heads/main/rvim.schema.json',
+              url = 'file:///home/razak/.config/rvim/rvim.schema.json',
             },
           },
         }),
