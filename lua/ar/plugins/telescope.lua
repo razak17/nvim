@@ -198,7 +198,6 @@ local function plugins()
   })
 end
 
-local function projects() extensions('projects')(ar.telescope.minimal_ui())() end
 local function live_grep(opts)
   return extensions('menufacture', 'live_grep')(opts)()
 end
@@ -358,7 +357,6 @@ end
 
 ar.telescope = vim.tbl_extend('force', ar.telescope, {
   extension_to_plugin = {
-    ['projects'] = 'project.nvim',
   },
   cursor = cursor,
   dropdown = dropdown,
@@ -407,7 +405,6 @@ return {
           { '<leader>fo', b('pickers'), desc = 'pickers' },
           { '<leader>fO', notes, desc = 'notes' },
           -- { '<leader>fO', b('oldfiles'), desc = 'oldfiles' },
-          { '<leader>fp', projects, desc = 'projects' },
           { '<leader>fP', plugins, desc = 'plugins' },
           {
             '<leader>fq',

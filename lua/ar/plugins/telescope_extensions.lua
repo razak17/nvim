@@ -433,6 +433,47 @@ return {
         },
       },
       {
+        'ahmedkhalf/project.nvim',
+        config = function()
+          require('project_nvim').setup({
+            active = true,
+            manual_mode = false,
+            detection_methods = { 'pattern', 'lsp' },
+            patterns = {
+              '.git',
+              '.hg',
+              '.svn',
+              'Makefile',
+              'package.json',
+              '.luacheckrc',
+              '.stylua.toml',
+            },
+            show_hidden = false,
+            silent_chdir = true,
+            ignore_lsp = { 'null-ls' },
+            datapath = vim.fn.stdpath('data'),
+          })
+        end,
+        keys = {
+          {
+            '<leader>fp',
+            function()
+              require('telescope').extensions.projects.projects(
+                ar.telescope.minimal_ui()
+              )
+            end,
+            desc = 'projects',
+          },
+        },
+        specs = {
+          'nvim-telescope/telescope.nvim',
+          optional = true,
+          opts = function(_, opts)
+            vim.g.telescope_add_extension({ 'projects' }, opts)
+          end,
+        },
+      },
+      {
         'dapc11/telescope-yaml.nvim',
         cond = get_cond('telescope-yaml.nvim'),
         keys = {
