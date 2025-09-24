@@ -135,12 +135,6 @@ local function vertical(opts)
   return opts
 end
 
----@param name string
----@return string
-local function extension_to_plugin(name)
-  return ar.telescope.extension_to_plugin[name]
-end
-
 ---@param opts? table
 ---@return function
 local function b(picker, opts)
@@ -157,10 +151,6 @@ local function extensions(name, prop)
   return function(opts)
     return function(more_opts)
       local o = vim.tbl_extend('force', opts or {}, more_opts or {})
-      if not ar.has(extension_to_plugin(name)) then
-        vim.notify(fmt('%s is not available.', extension_to_plugin(name)))
-        return
-      end
       require('telescope').extensions[name][prop or name](o)
     end
   end
@@ -356,8 +346,6 @@ local function send_files_to_grapple(prompt_bufnr)
 end
 
 ar.telescope = vim.tbl_extend('force', ar.telescope, {
-  extension_to_plugin = {
-  },
   cursor = cursor,
   dropdown = dropdown,
   horizontal = function(opts)
@@ -664,10 +652,6 @@ return {
         vim.iter(ar.telescope.extensions):each(function(name)
           if name then l(name) end
         end)
-      end
-
-      for name, ext in pairs(ar.telescope.extension_to_plugin) do
-        if ar.has(ext) then l(name) end
       end
 
       api.nvim_exec_autocmds(
