@@ -65,7 +65,7 @@ return {
         settings = { advanced = { inlineSuggestCount = 3 } },
       },
       nes = {
-        enabled = true,
+        enabled = false,
         keymap = {
           accept_and_goto = '<leader>aP',
           accept = false,
