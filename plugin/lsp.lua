@@ -393,18 +393,29 @@ local function setup_mappings(client, bufnr)
     },
     {
       'i',
+      '<M-u>',
+      lsp.inline_completion.get,
+      desc = 'current inline completion',
+      capability = M.textDocument_inlineCompletion,
+      disabled = not ar_config.ai.enable
+        or ar_config.ai.completion.variant ~= 'builtin',
+    },
+    {
+      'i',
       '<M-]>',
-      function() vim.lsp.inline_completion.select({ count = 1 }) end,
+      function() lsp.inline_completion.select({ count = 1 }) end,
       desc = 'previous copilot suggestion',
       capability = M.textDocument_inlineCompletion,
-      disabled = ar_config.ai.completion.variant ~= 'builtin',
+      disabled = not ar_config.ai.enable
+        or ar_config.ai.completion.variant ~= 'builtin',
     },
     {
       'i',
       '<M-[>',
-      function() vim.lsp.inline_completion.select({ count = -1 }) end,
+      function() lsp.inline_completion.select({ count = -1 }) end,
       desc = 'next Copilot suggestion',
-      disabled = ar_config.ai.completion.variant ~= 'builtin',
+      disabled = not ar_config.ai.enable
+        or ar_config.ai.completion.variant ~= 'builtin',
     },
     {
       'n',
@@ -710,17 +721,7 @@ end
 ---@param bufnr number
 local function setup_inline_completion(client, bufnr)
   if client:supports_method(M.textDocument_inlineCompletion) then
-    vim.opt.completeopt =
-      { 'menuone', 'noselect', 'noinsert', 'fuzzy', 'popup' }
     lsp.inline_completion.enable(true, { buffer = bufnr })
-    map('i', '<A-u>', function()
-      if not lsp.inline_completion.get() then return '<A-u>' end
-    end, {
-      buffer = bufnr,
-      replace_keycodes = true,
-      expr = true,
-      desc = 'current inline completion',
-    })
   end
 end
 
