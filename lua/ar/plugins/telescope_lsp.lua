@@ -3,6 +3,10 @@ return {
     'nvim-telescope/telescope.nvim',
     optional = true,
     keys = function(_, keys)
+      if not ar.lsp.enable or ar_config.picker.variant ~= 'telescope' then
+        return keys
+      end
+
       keys = keys or {}
 
       local mappings = {}
