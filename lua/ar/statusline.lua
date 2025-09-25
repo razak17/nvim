@@ -560,23 +560,41 @@ function M.copilot_indicator()
   return vim.tbl_isempty(client.requests) and 'idle' or 'pending'
 end
 
+local copilot_opts = {
+  icons = {
+    enabled = '',
+    sleep = '',
+    disabled = '',
+    warning = '',
+    unknown = '',
+  },
+  hl = {
+    pending = '#50FA7B',
+    sleep = '#636DA6',
+    warning = '#FFB86C',
+    unknown = '#FF5555',
+  },
+}
+
+function M.copilot_native_status()
+  local opts = copilot_opts
+  local clients = vim.lsp.get_clients({ name = 'copilot', bufnr = 0 })
+  if not (clients and #clients > 0) then
+    return { icon = opts.icons.unknown, hl = opts.hl.unknown }
+  end
+  local status = ar_config.ai.completion.status
+  if ar.falsy(status) then
+    return { icon = opts.icons.sleep, hl = opts.hl.sleep }
+  elseif status[1] == 'pending' then
+    return { icon = opts.icons.enabled, hl = opts.hl.pending }
+  else
+    return { icon = opts.icons.enabled, hl = opts.hl.sleep }
+  end
+end
+
 -- Ref: https://github.com/AndreM222/copilot-lualine/blob/6bc29ba1fcf8f0f9ba1f0eacec2f178d9be49333/lua/lualine/components/copilot.lua?plain=1#L7
 function M.copilot_status()
-  local opts = {
-    icons = {
-      enabled = '',
-      sleep = '',
-      disabled = '',
-      warning = '',
-      unknown = '',
-    },
-    hl = {
-      pending = '#50FA7B',
-      sleep = '#636DA6',
-      warning = '#FFB86C',
-      unknown = '#FF5555',
-    },
-  }
+  local opts = copilot_opts
   local clients = vim.lsp.get_clients({ name = 'copilot', bufnr = 0 })
   if not ar.has('copilot.lua') and not (clients and #clients > 0) then
     return { icon = opts.icons.unknown, hl = opts.hl.unknown }

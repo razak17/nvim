@@ -757,23 +757,49 @@ return {
       {
         flexible = 2,
         {
-          init = function(self) self.status = stl.copilot_status() end,
-          condition = function()
-            return ar.has('copilot.lua')
-              and ar.ai.enable
-              and ar_config.ai.models.copilot
-          end,
+          -- Copilot Native
           {
-            condition = function(self)
-              return self.status.icon and self.status.hl
+            init = function(self) self.status = stl.copilot_native_status() end,
+            condition = function()
+              return ar.lsp.enable
+                and ar.ai.enable
+                and ar_config.ai.completion.variant == 'builtin'
             end,
-            provider = function(self) return ' ' .. self.status.icon end,
-            hl = function(self) return { fg = self.status.hl, bold = true } end,
-            on_click = {
-              callback = function()
-                vim.defer_fn(function() vim.cmd('copilot panel') end, 100)
+            {
+              condition = function(self)
+                return self.status.icon and self.status.hl
               end,
-              name = 'copilot_status',
+              provider = function(self) return ' ' .. self.status.icon end,
+              hl = function(self) return { fg = self.status.hl, bold = true } end,
+              on_click = {
+                callback = function()
+                  vim.defer_fn(function() vim.cmd('copilot panel') end, 100)
+                end,
+                name = 'copilot_status',
+              },
+            },
+          },
+          -- Copilot plugin
+          {
+
+            init = function(self) self.status = stl.copilot_status() end,
+            condition = function()
+              return ar.has('copilot.lua')
+                and ar.ai.enable
+                and ar_config.ai.models.copilot
+            end,
+            {
+              condition = function(self)
+                return self.status.icon and self.status.hl
+              end,
+              provider = function(self) return ' ' .. self.status.icon end,
+              hl = function(self) return { fg = self.status.hl, bold = true } end,
+              on_click = {
+                callback = function()
+                  vim.defer_fn(function() vim.cmd('copilot panel') end, 100)
+                end,
+                name = 'copilot_status',
+              },
             },
           },
           { provider = ' ' .. separator, hl = { bold = true } },
