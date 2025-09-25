@@ -392,6 +392,21 @@ local function setup_mappings(client, bufnr)
       capability = M.textDocument_definition,
     },
     {
+      'i',
+      '<M-]>',
+      function() vim.lsp.inline_completion.select({ count = 1 }) end,
+      desc = 'previous copilot suggestion',
+      capability = M.textDocument_inlineCompletion,
+      disabled = ar_config.ai.completion.variant ~= 'builtin',
+    },
+    {
+      'i',
+      '<M-[>',
+      function() vim.lsp.inline_completion.select({ count = -1 }) end,
+      desc = 'next Copilot suggestion',
+      disabled = ar_config.ai.completion.variant ~= 'builtin',
+    },
+    {
       'n',
       '<leader>lc',
       lsp.codelens.run,
