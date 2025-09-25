@@ -94,6 +94,21 @@ local servers = {
     },
   },
   copilot = {
+    on_init = function()
+      ar_config.ai.completion.status = {} ---@type table<number, "ok" | "error" | "pending">
+    end,
+    handlers = {
+      didChangeStatus = function(err, res, ctx)
+        if err then return end
+        ar_config.ai.completion.status[ctx.client_id] = res.kind ~= 'Normal'
+            and 'error'
+          or res.busy and 'pending'
+          or 'ok'
+        if res.status == 'Error' then
+          vim.notify('Please use `:LspCopilotSignIn` to sign in to Copilot')
+        end
+      end,
+    },
     settings = {
       telemetry = { telemetryLevel = 'off' },
     },
