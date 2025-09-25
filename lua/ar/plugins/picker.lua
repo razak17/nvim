@@ -202,7 +202,7 @@ return {
           { '<leader>fw', fzf_lua.grep_cword, desc = 'grep cword' },
           { '<leader>fva', fzf_lua.autocmds, desc = 'autocommands' },
           { '<leader>fvh', fzf_lua.highlights, desc = 'highlights' },
-          { '<leader>fvk', fzf_lua.keymaps, desc = 'keymaps' },
+          { '<leader>fk', fzf_lua.keymaps, desc = 'keymaps' },
           { '<leader>fvr', fzf_lua.registers, desc = 'Registers' },
           { '<leader>fvc', fzf_lua.commands, desc = 'Commands' },
           { '<leader>fgb', fzf_lua.git_branches, desc = 'branches' },
