@@ -8,6 +8,7 @@ return {
   'kevinhwang91/promise-async',
   'kkharji/sqlite.lua',
   'tpope/vim-rhubarb',
+  'rosstang/lunajson.nvim',
   { 'godlygeek/tabular', cmd = { 'Tabularize' } },
   { 'Rasukarusan/nvim-block-paste', cmd = { 'Block' } },
   { 'meznaric/key-analyzer.nvim', cmd = { 'KeyAnalyzer' }, opts = {} },
@@ -15,5 +16,4 @@ return {
     'razak17/lspkind.nvim',
     config = function() require('lspkind').init({ preset = 'codicons' }) end,
   },
-  { 'rosstang/lunajson.nvim' },
 }
