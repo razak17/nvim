@@ -151,7 +151,7 @@ return {
               layout = 'vertical',
               -- height is number of items minus 15 lines for the preview, with a max of 80% screen height
               height = math.floor(
-                math.min(vim.o.lines * 0.8 - 16, #items + 4) + 0.5
+                math.min(vim.o.lines * 0.4 - 16, #items + 4) + 0.5
               ) + 16,
               width = 0.5,
               preview = not vim.tbl_isempty(
@@ -172,7 +172,7 @@ return {
               width = 0.5,
               -- height is number of items, with a max of 80% screen height
               height = math.floor(
-                math.min(vim.o.lines * 0.35, #items + 4) + 0.5
+                math.min(vim.o.lines * 0.4, #items + 4) + 0.5
               ),
             },
           })
