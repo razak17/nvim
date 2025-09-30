@@ -25,9 +25,11 @@ local ts_priority_overrides = {
   ['Update import from'] = 8,
   ['Add import from'] = 8,
   ['Remove unused declaration for'] = 8,
+  ['Remove import from'] = 8,
 }
 
 local biome_overrides = {
+  ['Remove the unused imports.'] = 8,
   ['Organize Imports (Biome)'] = 8,
   ['Use a template literal.'] = 8,
 }
@@ -50,6 +52,12 @@ local function format_title(title)
   local prefix, quoted_single = title:match("^(.-):%s*'([^']+)'$")
   local is_remove_declaration = prefix and quoted_single
   if is_remove_declaration then title = string.match(title, '^(.-):') end
+  -- Match actions such as Remove import from '../foo'
+  local before_s, quoted_s = title:match("^(.+)%s+'([^']+)'$")
+  local is_import_export_s = before_s and quoted_s
+  if is_import_export_s then title = title:match("^(.-)'"):gsub('%s+$', '') end
+  -- Trim any trailing whitespace
+  title = title:gsub('%s+$', '')
   return title
 end
 
@@ -185,8 +193,15 @@ local function on_code_action_results(results)
     end)
     :totable()
 
-  -- sort by priority, then by title
+  -- sort by priority, then by source, then by title
   table.sort(items, function(a, b)
+    if a.priority == b.priority and a.ctx and b.ctx then
+      local a_client = lsp.get_client_by_id(a.ctx.client_id)
+      local b_client = lsp.get_client_by_id(b.ctx.client_id)
+      if a_client and b_client and a_client.name ~= b_client.name then
+        return a_client.name < b_client.name
+      end
+    end
     if a.priority == b.priority then return a.action.title < b.action.title end
     return a.priority > b.priority
   end)
