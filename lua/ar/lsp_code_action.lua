@@ -201,7 +201,9 @@ local function on_code_action_results(results)
 
       if #clients == 1 then return title end
 
-      if item.ctx.client_id == nil then return title end
+      if item.ctx.client_id == nil then
+        return ('%s [default]'):format(title)
+      end
 
       if item.action.disabled then title = title .. ' (disabled)' end
 
