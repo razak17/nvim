@@ -728,6 +728,7 @@ end
 ---@param client vim.lsp.Client
 ---@param bufnr number
 local function setup_type_formatting(client, bufnr)
+  if client.name == 'lua_ls' then return end
   if client:supports_method(M.textDocument_onTypeFormatting) then
     lsp.on_type_formatting.enable(
       true,
