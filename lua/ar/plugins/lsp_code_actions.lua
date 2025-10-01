@@ -10,6 +10,53 @@ return {
     },
   },
   {
+    desc = 'A Neovim plugin that provides a simple way to run and visualize code actions with Telescope.',
+    'rachartier/tiny-code-action.nvim',
+    cond = function()
+      return ar.lsp.enable
+        and ar_config.lsp.code_actions.variant == 'tiny-code-action'
+    end,
+    event = { 'LspAttach' },
+    init = function()
+      ar.augroup('TinyCodeActions', {
+        event = { 'LspAttach' },
+        command = function(args)
+          map(
+            'n',
+            '<leader>laa',
+            function() require('tiny-code-action').code_action() end,
+            {
+              buffer = args.buf,
+              noremap = true,
+              silent = true,
+              desc = 'tiny-code-action: code action',
+            }
+          )
+        end,
+      })
+    end,
+    config = function()
+      require('tiny-code-action').setup({
+        backend = 'delta',
+        -- picker = 'snacks',
+        picker = {
+          'buffer',
+          opts = {
+            hotkeys = true,
+            auto_preview = false,
+            hotkeys_mode = 'text_diff_based',
+          },
+        },
+        backend_opts = {
+          delta = {
+            args = { '--config=' .. vim.env.HOME .. '/gitconfig' },
+          },
+        },
+      })
+    end,
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
+  {
     desc = 'Fully customizable previewer for LSP code actions.',
     'aznhe21/actions-preview.nvim',
     cond = ar.lsp.enable,

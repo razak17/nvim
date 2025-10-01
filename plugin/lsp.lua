@@ -334,6 +334,7 @@ local function setup_mappings(client, bufnr)
       end,
       desc = 'code action',
       capability = M.textDocument_codeAction,
+      disabled = ar_config.lsp.code_actions.variant ~= 'builtin',
     },
     {
       { 'n', 'x' },

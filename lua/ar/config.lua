@@ -35,6 +35,7 @@ local env = vim.env
 ---@alias ArWhichIcon 'nvim-web-devicons' | 'mini.icons'
 ---@alias ArWhichImage 'image.nvim' | 'snacks'
 ---@alias ArWhichIndentline 'mini.indentscope' | 'ibl' | 'snacks' | 'indentmini'
+---@alias ArWhichLspCodeAction 'builtin' | 'tiny-code-action'
 ---@alias ArWhichLspProgress 'builtin' | 'noice' | 'snacks'
 ---@alias ArWhichLspRename 'builtin' | 'inc-rename'
 ---@alias ArWhichLspSymbols 'builtin' | 'picker' | 'namu'
@@ -116,6 +117,10 @@ local env = vim.env
 ---@field enable boolean
 ---@field variant ArWhichWinbar
 
+---@class ArLspCodeAction
+---@field enable boolean
+---@field variant ArWhichLspCodeAction
+
 ---@class ArLspRename
 ---@field enable boolean
 ---@field variant ArWhichLspRename
@@ -145,6 +150,7 @@ local env = vim.env
 ---@field progress ArLspProgress
 ---@field rename ArLspRename
 ---@field signs ArCond
+---@field code_actions ArLspCodeAction
 ---@field symbols ArLspSymbols
 ---@field virtual_lines ArLspVirtualLines
 ---@field virtual_text ArLspVirtualText
@@ -434,6 +440,7 @@ local config = {
     rename = { enable = true, variant = 'inc-rename' },
     signs = { enable = false },
     symbols = { enable = true, variant = 'namu' },
+    code_actions = { enable = true, variant = 'builtin' },
     virtual_text = { enable = false },
     virtual_lines = { enable = false, variant = 'tiny-inline' },
     workspace_diagnostics = { enable = false },

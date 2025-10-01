@@ -651,6 +651,17 @@
           },
           "additionalProperties": false
         },
+        "code_actions": {
+          "type": "object",
+          "properties": {
+            "variant": {
+              "type": "string",
+              "enum": ["builtin", "tiny-code-action"]
+            },
+            "enable": { "type": "boolean" }
+          },
+          "additionalProperties": false
+        },
         "hover_diagnostics": {
           "type": "object",
           "properties": {
