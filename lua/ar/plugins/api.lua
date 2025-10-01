@@ -23,6 +23,12 @@ return {
     },
     opts = { default_env = 'local' },
   },
+  {
+    'zerochae/endpoint.nvim',
+    cond = not minimal,
+    cmd = { 'Endpoint', 'EndpointRefresh' },
+    opts = {},
+  },
   --------------------------------------------------------------------------------
   -- Disabled
   --------------------------------------------------------------------------------
