@@ -579,9 +579,7 @@ local copilot_opts = {
 function M.copilot_native_status()
   local opts = copilot_opts
   local clients = vim.lsp.get_clients({ name = 'copilot', bufnr = 0 })
-  if not (clients and #clients > 0) then
-    return { icon = opts.icons.unknown, hl = opts.hl.unknown }
-  end
+  if not (clients and #clients > 0) then return '' end
   local status = ar_config.ai.completion.status
   if ar.falsy(status) then
     return { icon = opts.icons.sleep, hl = opts.hl.sleep }
