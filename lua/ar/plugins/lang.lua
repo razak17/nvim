@@ -170,18 +170,6 @@ return {
     opts = { auto_set_keys = false, notify = false },
   },
   {
-    'Diogo-ss/five-server.nvim',
-    cond = function()
-      return ar.get_plugin_cond('five-server.nvim', not minimal)
-    end,
-    cmd = { 'FiveServer' },
-    build = function() require('fs.utils.install')() end,
-    opts = {
-      notify = true,
-      bin = 'five-server',
-    },
-  },
-  {
     -- 'fabridamicelli/cronex.nvim',
     'razak17/cronex.nvim',
     cond = function() return ar.get_plugin_cond('cronex.nvim', not minimal) end,
