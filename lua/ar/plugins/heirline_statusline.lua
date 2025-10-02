@@ -777,6 +777,7 @@ return {
                 end,
                 name = 'copilot_status',
               },
+              { provider = ' ' .. separator, hl = { bold = true } },
             },
           },
           -- Copilot plugin
@@ -801,8 +802,8 @@ return {
                 name = 'copilot_status',
               },
             },
+            { provider = ' ' .. separator, hl = { bold = true } },
           },
-          { provider = ' ' .. separator, hl = { bold = true } },
         },
         empty_component,
       },
