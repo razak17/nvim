@@ -135,6 +135,7 @@ xnoremap('/', '<esc>/\\%V', { desc = 'search inside selection' }) -- `:h /\%V`
 local function modify_line_end_delimiter(character)
   local delimiters = { ',', ';' }
   return function()
+    if not vim.bo.modifiable then return end
     local line = api.nvim_get_current_line()
     local last_char = line:sub(-1)
     if last_char == character then
