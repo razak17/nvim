@@ -18,21 +18,7 @@ return {
     cond = function()
       return ar.get_plugin_cond('whatthejump.nvim', not minimal)
     end,
-    keys = { '<C-o>', '<C-i>', '<M-o>', '<M-i>' },
-    -- event = { 'BufRead', 'BufNewFile' },
+    keys = { '<C-o>', '<C-i>' },
     opts = { winblend = 0 },
-    config = function(_, opts)
-      require('whatthejump').setup(opts)
-
-      map('n', '<M-o>', function()
-        require('whatthejump').show_jumps(false)
-        return '<C-o>'
-      end, { expr = true })
-
-      map('n', '<M-i>', function()
-        require('whatthejump').show_jumps(true)
-        return '<C-i>'
-      end, { expr = true })
-    end,
   },
 }
