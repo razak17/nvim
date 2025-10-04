@@ -146,6 +146,23 @@ return {
     },
   },
   {
+    'MeanderingProgrammer/treesitter-modules.nvim',
+    cond = not minimal and ts_enabled,
+    event = { 'BufRead' },
+    opts = {
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = '<A-o>',
+          node_incremental = '<A-o>',
+          scope_incremental = '<A-O>',
+          node_decremental = '<A-i>',
+        },
+      },
+    },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  },
+  {
     'nvim-treesitter/nvim-treesitter-textobjects',
     cond = not minimal and ts_enabled,
     branch = 'main',
