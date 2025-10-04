@@ -1,4 +1,4 @@
-local lsp = vim.lsp
+local api, lsp = vim.api, vim.lsp
 local is_biome = ar_config.lsp.lang.web.biome
   or vim.tbl_contains(ar_config.lsp.override, 'biome')
 local conform = ar.has('conform.nvim')
@@ -63,7 +63,7 @@ local function conform_format(opts)
 end
 
 ---@param opts {bufnr: integer, async: boolean, filter: fun(lsp.Client): boolean}
-return function(opts)
+local function format(opts)
   opts = opts or {}
   if is_biome then
     biome_format()
@@ -79,3 +79,27 @@ return function(opts)
     filter = formatting_filter,
   })
 end
+
+-- https://www.reddit.com/r/neovim/comments/1nx21rx/keymap_for_formatting_visually_selected_lines/
+local function format_visual_selected_range()
+  local esc = api.nvim_replace_termcodes('<Esc>', true, false, true)
+  api.nvim_feedkeys(esc, 'x', false)
+
+  local start_row, _ = unpack(api.nvim_buf_get_mark(0, '<'))
+  local end_row, _ = unpack(api.nvim_buf_get_mark(0, '>'))
+
+  lsp.buf.format({
+    range = {
+      ['start'] = { start_row, 0 },
+      ['end'] = { end_row, 0 },
+    },
+    async = true,
+  })
+
+  vim.notify('Formatted range (' .. start_row .. ',' .. end_row .. ')')
+end
+
+return {
+  format = format,
+  visual_format = format_visual_selected_range,
+}

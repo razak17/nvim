@@ -351,8 +351,15 @@ local function setup_mappings(client, bufnr)
     {
       'n',
       '<leader>lf',
-      format,
+      format.format,
       desc = 'format buffer',
+      capability = not conform and M.textDocument_formatting or nil,
+    },
+    {
+      'v',
+      '<leader>lf',
+      format.visual_format,
+      desc = 'format selection',
       capability = not conform and M.textDocument_formatting or nil,
     },
     {
