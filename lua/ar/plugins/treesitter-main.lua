@@ -31,117 +31,119 @@ local ensure_installed = {
 
 return {
   {
-    'nvim-treesitter/nvim-treesitter',
-    cond = ts_enabled,
-    branch = 'main',
-    lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
-    event = { 'VeryLazy' },
-    cmd = { 'TSUpdate', 'TSInstall', 'TSLog', 'TSUninstall' },
-    build = function()
-      local TS = require('nvim-treesitter')
-      ts.ensure_treesitter_cli(
-        function() TS.update(nil, { summary = true }) end
-      )
-    end,
-    enabled = true,
-    opts = {
-      indent = {
-        enable = true,
-        disable = { 'bash', 'zsh', 'markdown', 'javascript' },
+    {
+      'nvim-treesitter/nvim-treesitter',
+      cond = ts_enabled,
+      branch = 'main',
+      lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
+      event = { 'VeryLazy' },
+      cmd = { 'TSUpdate', 'TSInstall', 'TSLog', 'TSUninstall' },
+      build = function()
+        local TS = require('nvim-treesitter')
+        ts.ensure_treesitter_cli(
+          function() TS.update(nil, { summary = true }) end
+        )
+      end,
+      enabled = true,
+      opts = {
+        indent = {
+          enable = true,
+          disable = { 'bash', 'zsh', 'markdown', 'javascript' },
+        },
+        highlight = { enable = true },
+        folds = { enable = true },
+        ensure_installed = ensure_installed,
+        install_dir = vim.fn.stdpath('data') .. '/treesitter',
       },
-      highlight = { enable = true },
-      folds = { enable = true },
-      ensure_installed = ensure_installed,
-      install_dir = vim.fn.stdpath('data') .. '/treesitter',
-    },
-    config = function(_, opts)
-      local TS = require('nvim-treesitter')
-      TS.setup(opts)
+      config = function(_, opts)
+        local TS = require('nvim-treesitter')
+        TS.setup(opts)
 
-      vim.treesitter.language.register('bash', 'zsh')
+        vim.treesitter.language.register('bash', 'zsh')
 
-      -- initialize the installed langs
-      ts.get_installed(true)
+        -- initialize the installed langs
+        ts.get_installed(true)
 
-      local to_install =
-        vim.iter(vim.tbl_values(opts.ensure_installed)):flatten():totable()
+        local to_install =
+          vim.iter(vim.tbl_values(opts.ensure_installed)):flatten():totable()
 
-      -- flatten ensure_installed
-      local install = vim.tbl_filter(
-        function(lang) return not ts.have(lang) end,
-        to_install
-      )
+        -- flatten ensure_installed
+        local install = vim.tbl_filter(
+          function(lang) return not ts.have(lang) end,
+          to_install
+        )
 
-      -- install missing parsers
-      if #install > 0 then
-        ts.ensure_treesitter_cli(function()
-          TS.install(install, { summary = true }):await(function()
-            ts.get_installed(true) -- refresh the installed langs
-          end)
-        end)
-      end
-
-      -- start treesitter
-      local function start(match, buf)
-        if not ts.have(match) then return end
-
-        -- highlighting
-        if vim.tbl_get(opts, 'highlight', 'enable') ~= false then
-          pcall(vim.treesitter.start)
-        end
-
-        -- indents
-        if vim.tbl_get(opts, 'indent', 'enable') ~= false then
-          local disable = opts.indent.disable or {}
-          if not vim.list_contains(disable, match) then
-            ar.set_default(
-              'indentexpr',
-              "v:lua.require'ar.utils.treesitter'.indentexpr()"
-            )
-          end
-        end
-
-        -- folds
-        if vim.tbl_get(opts, 'folds', 'enable') ~= false then
-          if ar.set_default('foldmethod', 'expr') then
-            ar.set_default(
-              'foldexpr',
-              "v:lua.require'ar.utils.treesitter'.foldexpr()"
-            )
-          end
-        end
-      end
-
-      ar.augroup('ar_treesitter', {
-        event = 'FileType',
-        command = function(ev)
-          local parser_name = vim.treesitter.language.get_lang(ev.match)
-          if not parser_name then return end
-
-          -- auto install
-          if not ts.have(ev.match) then
-            ts.ensure_treesitter_cli(function()
-              TS.install({ parser_name }, { summary = true }):await(function()
-                ts.get_installed(true) -- refresh the installed langs
-                start(ev.match, ev.buf)
-              end)
+        -- install missing parsers
+        if #install > 0 then
+          ts.ensure_treesitter_cli(function()
+            TS.install(install, { summary = true }):await(function()
+              ts.get_installed(true) -- refresh the installed langs
             end)
-            return
+          end)
+        end
+
+        -- start treesitter
+        local function start(match, buf)
+          if not ts.have(match) then return end
+
+          -- highlighting
+          if vim.tbl_get(opts, 'highlight', 'enable') ~= false then
+            pcall(vim.treesitter.start)
           end
 
-          start(ev.match, ev.buf)
-        end,
-      })
-    end,
-  },
-  {
-    'hrsh7th/nvim-cmp',
-    optional = true,
-    opts = function(_, opts)
-      vim.g.cmp_add_source(opts, {
-        menu = { treesitter = '[TS]' },
-      })
-    end,
+          -- indents
+          if vim.tbl_get(opts, 'indent', 'enable') ~= false then
+            local disable = opts.indent.disable or {}
+            if not vim.list_contains(disable, match) then
+              ar.set_default(
+                'indentexpr',
+                "v:lua.require'ar.utils.treesitter'.indentexpr()"
+              )
+            end
+          end
+
+          -- folds
+          if vim.tbl_get(opts, 'folds', 'enable') ~= false then
+            if ar.set_default('foldmethod', 'expr') then
+              ar.set_default(
+                'foldexpr',
+                "v:lua.require'ar.utils.treesitter'.foldexpr()"
+              )
+            end
+          end
+        end
+
+        ar.augroup('ar_treesitter', {
+          event = 'FileType',
+          command = function(ev)
+            local parser_name = vim.treesitter.language.get_lang(ev.match)
+            if not parser_name then return end
+
+            -- auto install
+            if not ts.have(ev.match) then
+              ts.ensure_treesitter_cli(function()
+                TS.install({ parser_name }, { summary = true }):await(function()
+                  ts.get_installed(true) -- refresh the installed langs
+                  start(ev.match, ev.buf)
+                end)
+              end)
+              return
+            end
+
+            start(ev.match, ev.buf)
+          end,
+        })
+      end,
+    },
+    {
+      'hrsh7th/nvim-cmp',
+      optional = true,
+      opts = function(_, opts)
+        vim.g.cmp_add_source(opts, {
+          menu = { treesitter = '[TS]' },
+        })
+      end,
+    },
   },
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
