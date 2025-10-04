@@ -473,6 +473,13 @@ local function setup_mappings(client, bufnr)
     },
   }
 
+  vim.g.whichkey_add_spec({
+    { '<leader>l', group = 'LSP', mode = { 'n', 'x' } },
+    { '<localleader>l', group = 'LSP', mode = { 'n', 'x' } },
+    { '<leader>la', group = 'Code Actions', mode = { 'n', 'x' } },
+    { '<leader>lw', group = 'Workspace', mode = { 'n', 'x' } },
+  })
+
   vim.iter(mappings):each(function(m)
     if
       (not m.exclude or not vim.tbl_contains(m.exclude, vim.bo[bufnr].ft))
