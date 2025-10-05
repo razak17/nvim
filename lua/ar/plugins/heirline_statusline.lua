@@ -167,6 +167,17 @@ return {
       align,
     }
 
+    local inactive_statusline = {
+        hl = { bg = 'NONE', fg = 'fg' },
+      condition = function(self)
+        return conditions.buffer_matches({
+          filetype = self.force_inactive_filetypes,
+        }) or vim.bo.ft == ''
+      end,
+      { provider = ' ' },
+      align,
+    }
+
     local statusline = {
       -- Mode
       vim_mode,
@@ -1060,6 +1071,7 @@ return {
         lazy_statusline,
         terminal_statusline,
         minimal_statusline,
+        inactive_statusline,
         statusline,
       }),
     })
