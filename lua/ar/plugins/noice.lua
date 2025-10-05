@@ -6,6 +6,7 @@ return {
   'folke/noice.nvim',
   cond = function()
     return ar.get_plugin_cond('noice.nvim', not ar.plugins.minimal)
+      and ar_config.ui.cmdline.variant == 'noice'
   end,
   event = 'VeryLazy',
   lazy = false,

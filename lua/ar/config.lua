@@ -27,6 +27,7 @@ local env = vim.env
 ---@alias ArAISuggestions 'ghost-text' | 'completion'
 ---@alias ArExplorerRename 'local' | 'snacks'
 ---@alias ArWhichBuffers 'snacks'
+---@alias ArWhichCmdline 'builtin' | 'noice' | 'telescope-cmdline'
 ---@alias ArCompletion 'cmp' | 'blink' | 'mini.completion' | 'omnifunc'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
 ---@alias ArWhichDashboard 'builtin' | 'alpha' | 'snacks'
@@ -64,6 +65,10 @@ local env = vim.env
 ---@class ArBuffers
 ---@field enable boolean
 ---@field variant ArWhichBuffers
+
+---@class ArCmdline
+---@field enable boolean
+---@field variant ArWhichCmdline
 
 ---@class ArDashboard
 ---@field enable boolean
@@ -519,6 +524,8 @@ local config = {
     variant = 'ecolog',
   },
   ui = {
+  ---@type ArCmdline
+  cmdline = { enable = true, variant = 'builtin' },
     ---@type ArIndentline
     indentline = { enable = true, variant = 'snacks' },
     ---@type ArStatuscolumn

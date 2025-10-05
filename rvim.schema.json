@@ -427,6 +427,17 @@
     "ui": {
       "type": "object",
       "properties": {
+        "cmdline": {
+          "type": "object",
+          "properties": {
+            "variant": {
+              "type": "string",
+              "enum": ["builtin", "noice", "telescope-cmdline"]
+            },
+            "enable": { "type": "boolean" }
+          },
+          "additionalProperties": false
+        },
         "indentline": {
           "type": "object",
           "properties": {

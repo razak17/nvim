@@ -56,7 +56,10 @@ return {
       },
       {
         'jonarrien/telescope-cmdline.nvim',
-        cond = get_cond('telescope-cmdline.nvim'),
+        cond = function()
+          local condition = ar_config.ui.cmdline.variant == 'telescope-cmdline'
+          return ar.get_plugin_cond('telescope-cmdline.nvim', condition)
+        end,
         keys = {
           { ':', '<Cmd>Telescope cmdline<CR>', desc = 'Cmdline' },
         },
@@ -137,6 +140,7 @@ return {
       },
       {
         'debugloop/telescope-undo.nvim',
+        cond = function() return ar.get_plugin_cond('telescope-cmdline.nvim') end,
         keys = {
           {
             '<leader>fu',
