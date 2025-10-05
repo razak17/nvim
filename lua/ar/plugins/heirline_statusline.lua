@@ -150,6 +150,28 @@ return {
         end,
         hl = { fg = 'blue', bold = true },
       },
+      -- Sidekick Status
+      {
+        init = function(self) self.status = stl.sidekick_status() end,
+        condition = function()
+          return ar.has('sidekick.nvim')
+            and ar.ai.enable
+            and ar_config.ai.models.copilot
+            and vim.bo.filetype == 'sidekick_terminal'
+        end,
+        {
+          condition = function(self) return self.status.icon and self.status.hl end,
+          provider = function(self) return ' ' .. self.status.icon end,
+          hl = function(self) return { fg = self.status.hl, bold = true } end,
+          on_click = {
+            callback = function()
+              vim.defer_fn(function() vim.cmd('checkhealth sidekick') end, 100)
+            end,
+            name = 'sidekick_status',
+          },
+          { provider = ' ' .. separator, hl = { bold = true } },
+        },
+      },
       align,
     }
 

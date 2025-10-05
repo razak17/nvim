@@ -576,6 +576,26 @@ local copilot_opts = {
   },
 }
 
+function M.sidekick_status()
+  local status = require('sidekick.status').get()
+  if status == nil then return '' end
+  local opts = copilot_opts
+  if status.busy then
+    return { icon = opts.icons.enabled, hl = opts.hl.pending }
+  end
+  if status.kind == 'Normal' then
+    return { icon = opts.icons.enabled, hl = opts.hl.sleep }
+  elseif status.kind == 'Warning' then
+    return { icon = opts.icons.warning, hl = opts.hl.warning }
+  elseif status.kind == 'Inactive' then
+    return { icon = opts.icons.sleep, hl = opts.hl.sleep }
+  elseif status.kind == 'Error' then
+    return { icon = opts.icons.sleep, hl = opts.hl.unknown }
+  else
+    return { icon = opts.icons.enabled, hl = opts.hl.sleep }
+  end
+end
+
 function M.copilot_native_status()
   local opts = copilot_opts
   local clients = vim.lsp.get_clients({ name = 'copilot', bufnr = 0 })
