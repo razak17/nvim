@@ -7,6 +7,7 @@ local left_block = icons.separators.left_block
 
 local minimal = ar.plugins.minimal
 local is_git = ar.is_git_repo() or ar.is_git_env()
+local statuscolumn_enabled = ar_config.ui.statuscolumn.enable
 
 local git_cond = function(plugin)
   local condition = ar.git.enable and is_git
@@ -394,8 +395,14 @@ return {
     end,
     opts = {
       signs = {
-        add = { highlight = 'GitSignsAdd', text = left_block },
-        change = { highlight = 'GitSignsChange', text = left_block },
+        add = {
+          highlight = 'GitSignsAdd',
+          text = statuscolumn_enabled and left_block or ' ' .. left_block,
+        },
+        change = {
+          highlight = 'GitSignsChange',
+          text = statuscolumn_enabled and left_block or ' ' .. left_block,
+        },
         delete = {
           highlight = 'GitSignsDelete',
           text = icons.misc.separator,

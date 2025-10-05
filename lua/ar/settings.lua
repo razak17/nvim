@@ -40,12 +40,13 @@ o.eadirection = 'both'
 o.switchbuf = 'useopen,uselast'
 opt.fillchars = {
   fold = ' ',
+  foldinner = ' ',
   foldopen = '▽', -- ▼ 
   foldclose = '▷', -- ▶ 
   eob = ' ', -- suppress ~ at EndOfBuffer
   diff = '╱', -- alternatives = ⣿ ░ ─
   msgsep = ' ', -- alternatives: ‾ ─
-  foldsep = '│',
+  foldsep = ' ',
 }
 --------------------------------------------------------------------------------
 -- Diff {{{1
@@ -88,7 +89,7 @@ o.foldlevel = 99
 opt.foldmethod = 'expr'
 opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 if not ar_config.plugin.custom.custom_fold.enable then opt.foldtext = '' end
-opt.foldcolumn = '0'
+opt.foldcolumn = ar_config.ui.statuscolumn.enable and '0' or '2'
 opt.foldnestmax = 10
 --------------------------------------------------------------------------------
 -- Grepprg {{{1
