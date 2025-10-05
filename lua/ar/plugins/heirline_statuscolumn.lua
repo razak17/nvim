@@ -7,8 +7,12 @@ return {
   desc = 'heirline statuscolumn',
   recommended = true,
   'rebelot/heirline.nvim',
-  cond = not minimal,
   opts = function(_, opts)
+    local cond = ar_config.ui.statuscolumn.enable
+      and ar_config.ui.statuscolumn.variant == 'plugin'
+
+    if not cond or minimal then return opts end
+
     local conditions = require('heirline.conditions')
     local is_git_repo = conditions.is_git_repo
     local align = { provider = '%=' }

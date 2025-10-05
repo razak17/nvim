@@ -122,31 +122,31 @@ return {
         --   return decs.ft == true or decs.fname == true
         -- end,
       })
-      opts.statuscolumn =
-        vim.tbl_deep_extend('force', opts.statuscolumn or {}, {
-          condition = function()
-            if
-              not ar_config.ui.statuscolumn.enable
-              or ar_config.ui.statuscolumn.variant ~= 'plugin'
-            then
-              return false
-            end
-            local win = api.nvim_get_current_win()
-            local buf = api.nvim_win_get_buf(win)
-            local decs = decor.get({
-              ft = bo[buf].ft,
-              fname = fn.bufname(buf),
-              setting = 'statuscolumn',
-            })
-            if not decs or ar.falsy(decs) then
-              return not conditions.buffer_matches({
-                buftype = buftypes,
-                filetype = force_inactive_filetypes,
+
+      if
+        ar_config.ui.statuscolumn.enable
+        and ar_config.ui.statuscolumn.variant == 'plugin'
+      then
+        opts.statuscolumn =
+          vim.tbl_deep_extend('force', opts.statuscolumn or {}, {
+            condition = function()
+              local win = api.nvim_get_current_win()
+              local buf = api.nvim_win_get_buf(win)
+              local decs = decor.get({
+                ft = bo[buf].ft,
+                fname = fn.bufname(buf),
+                setting = 'statuscolumn',
               })
-            end
-            return decs.ft == true or decs.fname == true
-          end,
-        })
+              if not decs or ar.falsy(decs) then
+                return not conditions.buffer_matches({
+                  buftype = buftypes,
+                  filetype = force_inactive_filetypes,
+                })
+              end
+              return decs.ft == true or decs.fname == true
+            end,
+          })
+      end
 
       require('heirline').setup(opts)
 
