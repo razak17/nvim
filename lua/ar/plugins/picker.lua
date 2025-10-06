@@ -92,10 +92,17 @@ local function list_sessions()
     })
   )
 end
+
 local function lazy()
   fzf_lua.files({
     cwd = fn.stdpath('data') .. '/lazy',
     cmd = 'fd --exact-depth 2 --ignore-case readme.md',
+  })
+end
+
+local function plugin_spec()
+  fzf_lua.files({
+    cwd = fn.stdpath('config') .. '/lua/ar/plugins',
   })
 end
 
@@ -210,6 +217,7 @@ return {
           { '<leader>fgc', fzf_lua.git_commits, desc = 'commits' },
           { '<leader>fc', function() find_files(fn.stdpath('config')) end, desc = 'nvim config' },
           { '<leader>fla', lazy, desc = 'all plugins' },
+          { '<leader>fP', plugin_spec, desc = 'search for plugin spec' },
           { '<leader>fO', notes, desc = 'notes' },
         }
         -- stylua: ignore
