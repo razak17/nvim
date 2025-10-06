@@ -146,8 +146,7 @@ end
 ---@param name string
 ---@param prop string?
 ---@return nil | fun(opts: table?): function
-local function extensions(name, prop)
-  if not picker_enabled then return end
+local function extension(name, prop)
   return function(opts)
     return function(more_opts)
       local o = vim.tbl_extend('force', opts or {}, more_opts or {})
@@ -156,7 +155,7 @@ local function extensions(name, prop)
   end
 end
 
-local function find_files(opts) extensions('menufacture', 'find_files')(opts)() end
+local function find_files(opts) extension('menufacture', 'find_files')(opts)() end
 
 local function nvim_config()
   find_files({
@@ -189,7 +188,7 @@ local function plugins()
 end
 
 local function live_grep(opts)
-  return extensions('menufacture', 'live_grep')(opts)()
+  return extension('menufacture', 'live_grep')(opts)()
 end
 
 local function visual_grep_string()
