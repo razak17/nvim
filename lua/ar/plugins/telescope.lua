@@ -157,14 +157,14 @@ end
 
 local function find_files(opts)
   if ar.has('telescope-menufacture') then
-  return extension('menufacture', 'find_files')(opts)()
+    return extension('menufacture', 'find_files')(opts)()
   end
   b('find_files', opts)()
 end
 
 local function live_grep(opts)
   if ar.has('telescope-menufacture') then
-  return extension('menufacture', 'live_grep')(opts)()
+    return extension('menufacture', 'live_grep')(opts)()
   end
   b('live_grep', opts)()
 end
@@ -509,7 +509,11 @@ return {
           color_devicons = true,
           dynamic_preview_title = true,
           results_title = false,
-          layout_config = { horizontal = { preview_width = 0.55 } },
+          layout_config = {
+            height = ar_config.picker.win.fullscreen and 100 or 0.95,
+            width = ar_config.picker.win.fullscreen and 400 or 0.9,
+            horizontal = { preview_width = 0.55 },
+          },
           winblend = 0,
           history = {
             limit = 100,

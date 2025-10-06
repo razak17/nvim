@@ -283,6 +283,8 @@ return {
         winopts = {
           border = ar_config.picker.win.show_border and ui.current.border
             or ui.border.empty,
+          height = ar_config.picker.win.fullscreen and 100 or 0.9,
+          width = ar_config.picker.win.fullscreen and 400 or 0.9,
           preview = {
             wrap = 'nowrap',
             hidden = show_preview and 'nohidden' or 'hidden',

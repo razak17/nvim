@@ -27,8 +27,8 @@ local picker_layouts = {
     layout = {
       box = 'horizontal',
       backdrop = false,
-      width = 0.8,
-      height = 0.9,
+      height = ar_config.picker.win.fullscreen and 100 or 0.9,
+      width = ar_config.picker.win.fullscreen and 400 or 0.9,
       border = 'none',
       {
         box = 'vertical',
