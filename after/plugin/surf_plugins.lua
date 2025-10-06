@@ -1,13 +1,11 @@
 local enabled = ar_config.plugin.custom.surf_plugins.enable
 local has_lazy = ar.has('lazy.nvim')
-local ar_picker = ar_config.picker.variant
 
 if
   not ar
   or ar.none
   or not ar.plugins.enable
   or not enabled and not has_lazy
-  or ar_picker == 'telescope'
 then
   return
 end
