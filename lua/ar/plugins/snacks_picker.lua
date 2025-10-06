@@ -98,6 +98,10 @@ local picker_layouts = {
 ---@return function
 local function p(source, opts)
   opts = opts or {}
+  opts.layout = vim.tbl_extend('force', opts.layout or {}, {
+    preview = show_preview,
+    cycle = true,
+  })
   return function() Snacks.picker[source](opts) end
 end
 
