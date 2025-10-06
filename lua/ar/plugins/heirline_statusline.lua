@@ -60,6 +60,85 @@ return {
         hl = function(self) return { fg = self.mode_color } end,
       },
     }
+    local location =
+      { provider = function() return stl.location() .. stl.progress() end }
+
+    local scrollbar = {
+      init = function(self)
+        self.mode = fn.mode(1)
+        self.mode_color = mode_colors[self.mode:sub(1, 1)]
+      end,
+      provider = function()
+        local current_line = fn.line('.')
+        local total_lines = fn.line('$')
+        local chars = icons.scrollbars.thin
+        local line_ratio = current_line / total_lines
+        local index = math.ceil(line_ratio * #chars)
+        return ' ' .. chars[index]
+      end,
+      hl = function(self) return { fg = self.mode_color } end,
+    }
+
+    local gp_statusline = {
+      condition = function()
+        if
+          not ar.ai.enable
+          or not ar.has('gp.nvim')
+          or vim.bo.ft ~= 'markdown'
+        then
+          return false
+        end
+        local buf = api.nvim_get_current_buf()
+        local file_name = api.nvim_buf_get_name(buf)
+        return require('gp').not_chat(0, file_name) == nil
+      end,
+      vim_mode,
+      { provider = ' ' .. 'Gp', bold = true },
+      {
+        flexible = 4,
+        {
+          init = function(self)
+            local bufnr = vim.api.nvim_get_current_buf()
+            self.topic = stl.gp_extract_topic_from_buffer(bufnr)
+          end,
+          provider = function(self) return ' ' .. 'Topic: ' .. self.topic end,
+          hl = { fg = 'blue' },
+        },
+        empty_component,
+      },
+      {
+        flexible = 3,
+        {
+          { provider = separator, hl = { fg = 'comment', bold = true } },
+          {
+            init = function(self)
+              self.agent = require('gp').get_chat_agent().name
+            end,
+            provider = function(self)
+              return ' ' .. 'Current Agent: ' .. '[' .. self.agent .. ']'
+            end,
+            hl = { fg = 'yellowgreen' },
+          },
+        },
+        empty_component,
+      },
+      {
+        flexible = 2,
+        {
+          { provider = separator, hl = { fg = 'comment', bold = true } },
+          {
+            provider = function() return ' ' .. stl.word_count() end,
+            hl = { fg = 'comment', italic = true },
+          },
+        },
+        empty_component,
+      },
+      align,
+      -- Ruler
+      { flexible = 1, location, empty_component },
+      -- Scroll Bar
+      { flexible = 1, scrollbar, empty_component },
+    }
 
     local mason_statusline = {
       condition = function() return vim.bo.filetype == 'mason' end,
@@ -190,7 +269,7 @@ return {
     }
 
     local inactive_statusline = {
-        hl = { bg = 'NONE', fg = 'fg' },
+      hl = { bg = 'NONE', fg = 'fg' },
       condition = function(self)
         return conditions.buffer_matches({
           filetype = self.force_inactive_filetypes,
@@ -1056,37 +1135,16 @@ return {
         empty_component,
       },
       -- Ruler
-      {
-        flexible = 6,
-        { provider = function() return stl.location() .. stl.progress() end },
-        empty_component,
-      },
+      { flexible = 6, location, empty_component },
       -- Scroll Bar
-      {
-        flexible = 7,
-        {
-          init = function(self)
-            self.mode = fn.mode(1)
-            self.mode_color = mode_colors[self.mode:sub(1, 1)]
-          end,
-          provider = function()
-            local current_line = fn.line('.')
-            local total_lines = fn.line('$')
-            local chars = icons.scrollbars.thin
-            local line_ratio = current_line / total_lines
-            local index = math.ceil(line_ratio * #chars)
-            return ' ' .. chars[index]
-          end,
-          hl = function(self) return { fg = self.mode_color } end,
-        },
-        empty_component,
-      },
+      { flexible = 7, scrollbar, empty_component },
     }
 
     return vim.tbl_extend('force', opts or {}, {
       statusline = vim.tbl_extend('force', opts.statusline or {}, {
         hl = { bg = 'bg_dark', fg = 'fg' },
         fallthrough = false,
+        gp_statusline,
         mason_statusline,
         explorer_statusline,
         help_statusline,

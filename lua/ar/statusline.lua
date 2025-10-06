@@ -687,4 +687,11 @@ end
 
 function M.word_count() return '' .. tostring(fn.wordcount().words) .. ' words' end
 
+function M.gp_extract_topic_from_buffer(bufnr)
+  bufnr = bufnr or vim.api.nvim_get_current_buf()
+  local first_line = vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1]
+  if not first_line then return nil end
+  local topic = first_line:match('^#%s*topic:%s*(.+)$')
+  return topic
+end
 return M
