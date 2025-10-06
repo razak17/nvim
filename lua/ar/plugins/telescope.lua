@@ -448,6 +448,7 @@ return {
       local themes = require('telescope.themes')
       local config = require('telescope.config')
       local vimgrep_arguments = { unpack(config.values.vimgrep_arguments) }
+      local show_preview = ar_config.picker.win.show_preview
 
       table.insert(vimgrep_arguments, '--hidden')
       table.insert(vimgrep_arguments, '--glob')
@@ -593,6 +594,7 @@ return {
           oldfiles = dropdown({ previewer = false }),
           spell_suggest = dropdown({ previewer = false }),
           find_files = {
+            previewer = show_preview,
             -- https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#file-and-text-search-in-hidden-files-and-directories
             find_command = {
               'rg',
@@ -606,9 +608,11 @@ return {
           colorscheme = { enable_preview = true },
           keymaps = dropdown({ layout_config = { height = 18, width = 0.5 } }),
           git_commits = {
+            previewer = show_preview,
             layout_config = { horizontal = { preview_width = 0.55 } },
           },
           git_bcommits = {
+            previewer = show_preview,
             layout_config = { horizontal = { preview_width = 0.55 } },
           },
           current_buffer_fuzzy_find = dropdown({
@@ -619,7 +623,7 @@ return {
             wrap_results = true,
             borderchars = { preview = border.ivy },
           }),
-          builtin = { include_extensions = true },
+          builtin = { previewer = show_preview, include_extensions = true },
           buffers = dropdown({
             initial_mode = 'normal',
             sort_mru = true,
@@ -635,6 +639,7 @@ return {
             },
           }),
           grep_string = {
+            previewer = show_preview,
             file_ignore_patterns = {
               '%.svg',
               '%.lock',
@@ -646,6 +651,7 @@ return {
             max_results = 2000,
           },
           live_grep = {
+            previewer = show_preview,
             file_ignore_patterns = {
               '%.svg',
               '%.lock',

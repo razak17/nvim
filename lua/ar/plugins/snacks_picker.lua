@@ -18,7 +18,7 @@ if ar_config.picker.variant == 'snacks' then ar.pick.register(picker_config) end
 local fn = vim.fn
 local fmt = string.format
 local diag_icons = ar.ui.codicons.lsp
-local show_preview = ar_config.picker.preview
+local show_preview = ar_config.picker.win.show_preview
 
 local picker_layouts = {
   telescope = {
@@ -98,7 +98,7 @@ local picker_layouts = {
 ---@return function
 local function p(source, opts)
   opts = opts or {}
-  opts.layout = vim.tbl_extend('force', opts.layout or {}, {
+  opts.layout = vim.tbl_extend('keep', opts.layout or {}, {
     preview = show_preview,
     cycle = true,
   })
@@ -116,7 +116,7 @@ local function find_files()
     format = 'file',
     show_empty = true,
     supports_live = true,
-    layout = { preview = show_preview, cycle = true, preset = 'select' },
+    layout = { preview = false, cycle = true, preset = 'select' },
       -- stylua: ignore start
     args = {
       '--exclude', '**/.git/**',

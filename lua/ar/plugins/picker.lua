@@ -247,6 +247,7 @@ return {
     config = function()
       local lsp_kind = require('lspkind')
       local fzf = require('fzf-lua')
+      local show_preview = ar_config.picker.win.show_preview
 
       fzf.setup({
         prompt = prompt,
@@ -279,7 +280,16 @@ return {
           border = 'FloatBorder',
           preview_border = 'FzfLuaPreviewBorder',
         },
-        winopts = { border = ui.current.border },
+        winopts = {
+          border = ui.current.border,
+          preview = {
+            wrap = 'nowrap',
+            hidden = show_preview and 'nohidden' or 'hidden',
+            vertical = 'up:50%',
+            horizontal = show_preview and 'right:55%' or 'right:0%',
+            winopts = { number = true, relativenumber = false },
+          },
+        },
         keymap = {
           builtin = {
             true,
