@@ -55,6 +55,7 @@ local env = vim.env
 ---@alias ArTailwindLang { tailwindcss: boolean, tailwind-tools: boolean, }
 ---@alias ArTypescriptLang { ts_ls: boolean, typescript-tools: boolean, vtsls: boolean, tsgo: boolean, }
 ---@alias ArWebLang { biome: boolean,  eslint: boolean, emmet_language_server: boolean, }
+---@alias ArPickerWin { show_preview: boolean,  show_border: boolean, fullscreen: boolean, }
 
 ---@class ArAIModels
 ---@field claude boolean
@@ -92,9 +93,9 @@ local env = vim.env
 
 ---@class ArPicker
 ---@field enable boolean
----@field preview boolean
 ---@field files ArWhichFilesPicker
 ---@field variant ArWhichPicker
+---@field win ArPickerWin
 
 ---@class ArSession
 ---@field enable boolean
@@ -456,9 +457,9 @@ local config = {
   ---@type ArPicker
   picker = {
     enable = true,
-    preview = false,
     files = 'snacks',
     variant = 'snacks',
+    win = { show_preview = false, show_border = true, fullscreen = false },
   },
   plugin = {
     custom = {
@@ -524,8 +525,8 @@ local config = {
     variant = 'ecolog',
   },
   ui = {
-  ---@type ArCmdline
-  cmdline = { enable = true, variant = 'builtin' },
+    ---@type ArCmdline
+    cmdline = { enable = true, variant = 'builtin' },
     ---@type ArIndentline
     indentline = { enable = true, variant = 'snacks' },
     ---@type ArStatuscolumn

@@ -281,7 +281,8 @@ return {
           preview_border = 'FzfLuaPreviewBorder',
         },
         winopts = {
-          border = ui.current.border,
+          border = ar_config.picker.win.show_border and ui.current.border
+            or ui.border.empty,
           preview = {
             wrap = 'nowrap',
             hidden = show_preview and 'nohidden' or 'hidden',

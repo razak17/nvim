@@ -14,7 +14,16 @@
           "type": "string",
           "enum": ["smart-open", "snacks", "telescope", "fzf-lua", "mini.pick"]
         },
-        "enable": { "type": "boolean" }
+        "enable": { "type": "boolean" },
+        "win": {
+          "type": "object",
+          "properties": {
+            "show_preview": { "type": "boolean" },
+            "show_border": { "type": "boolean" },
+            "fullscreen": { "type": "boolean" }
+          },
+          "additionalProperties": false
+        }
       },
       "additionalProperties": false
     },

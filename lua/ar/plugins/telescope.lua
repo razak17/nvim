@@ -503,7 +503,8 @@ return {
           sorting_strategy = 'ascending',
           layout_strategy = 'flex',
           set_env = { ['TERM'] = env.TERM },
-          borderchars = border.common,
+          borderchars = ar_config.picker.win.show_border and border.common
+            or border.empty,
           file_browser = { hidden = true },
           color_devicons = true,
           dynamic_preview_title = true,
