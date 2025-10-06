@@ -155,7 +155,13 @@ local function extension(name, prop)
   end
 end
 
-local function find_files(opts) extension('menufacture', 'find_files')(opts)() end
+local function find_files(opts)
+  return extension('menufacture', 'find_files')(opts)()
+end
+
+local function live_grep(opts)
+  return extension('menufacture', 'live_grep')(opts)()
+end
 
 local function nvim_config()
   find_files({
@@ -188,7 +194,11 @@ local function plugins()
 end
 
 local function live_grep(opts)
+  if ar.has('telescope-menufacture') then
   return extension('menufacture', 'live_grep')(opts)()
+  else
+    b('live_grep', opts)()
+  end
 end
 
 local function visual_grep_string()
@@ -555,7 +565,7 @@ return {
               ['<A-j>'] = actions.cycle_history_next,
               ['<A-k>'] = actions.cycle_history_prev,
               ['<C-f>'] = send_find_files_to_live_grep,
-              ['<A-;>'] = focus_preview,
+              ['<A-w>'] = focus_preview,
             },
             n = {
               ['<C-n>'] = actions.move_selection_next,
