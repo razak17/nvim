@@ -191,11 +191,14 @@ local function notes()
   })
 end
 
-local function plugins()
+local function lazy()
   find_files({
     prompt_title = '~ Plugins ~',
     cwd = fn.stdpath('data') .. '/lazy',
-    file_ignore_patterns = { '.git/.*', 'dotbot/.*', 'zsh/plugins/.*' },
+    find_command = function()
+      -- stylua: ignore
+      return { 'fd', '--exact-depth', '2', '--ignore-case', 'readme.md' }
+    end,
   })
 end
 
@@ -404,6 +407,7 @@ return {
           { '<leader>fI', b('builtin'), desc = 'builtins', },
           { '<leader>fJ', b('jumplist'), desc = 'jumplist', },
           { '<leader>fk', b('keymaps'), desc = 'keymaps' },
+          { '<leader>fla', lazy, desc = 'all plugins' },
           { '<leader>fo', b('pickers'), desc = 'pickers' },
           { '<leader>fO', notes, desc = 'notes' },
           -- { '<leader>fO', b('oldfiles'), desc = 'oldfiles' },
