@@ -199,12 +199,11 @@ local function plugins()
   })
 end
 
-local function live_grep(opts)
-  if ar.has('telescope-menufacture') then
-  return extension('menufacture', 'live_grep')(opts)()
-  else
-    b('live_grep', opts)()
-  end
+local function plugin_spec()
+  find_files({
+    prompt_title = '~ Plugins ~',
+    cwd = fn.stdpath('config') .. '/lua/ar/plugins',
+  })
 end
 
 local function visual_grep_string()
@@ -408,7 +407,7 @@ return {
           { '<leader>fo', b('pickers'), desc = 'pickers' },
           { '<leader>fO', notes, desc = 'notes' },
           -- { '<leader>fO', b('oldfiles'), desc = 'oldfiles' },
-          { '<leader>fP', plugins, desc = 'plugins' },
+          { '<leader>fP', plugin_spec, desc = 'search for plugin spec' },
           {
             '<leader>fq',
             function()
