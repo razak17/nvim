@@ -459,7 +459,7 @@ local config = {
     enable = true,
     files = 'snacks',
     variant = 'snacks',
-    win = { show_preview = false, show_border = true, fullscreen = false },
+    win = { show_preview = false, show_border = true, fullscreen = true },
   },
   plugin = {
     custom = {
