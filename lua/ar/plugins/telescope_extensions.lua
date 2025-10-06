@@ -430,7 +430,7 @@ return {
         cond = get_cond('jsonfly.nvim'),
         keys = {
           {
-            '<leader>fj',
+            '<leader>fJ',
             '<Cmd>Telescope jsonfly<CR>',
             desc = 'Open json(fly)',
           },

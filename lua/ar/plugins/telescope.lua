@@ -405,7 +405,7 @@ return {
           { '<leader>fc', nvim_config, desc = 'nvim config' },
           { '<leader>ff', find_files, desc = 'find files' },
           { '<leader>fI', b('builtin'), desc = 'builtins', },
-          { '<leader>fJ', b('jumplist'), desc = 'jumplist', },
+          { '<leader>fj', b('jumplist'), desc = 'jumplist', },
           { '<leader>fk', b('keymaps'), desc = 'keymaps' },
           { '<leader>fla', lazy, desc = 'all plugins' },
           { '<leader>fo', b('pickers'), desc = 'pickers' },

@@ -201,6 +201,7 @@ return {
           { '<leader>fb', fzf_lua.grep_curbuf, desc = 'current buffer fuzzy find' },
           { '<leader>ff', fzf_lua.files, desc = 'find files' },
           { '<leader>fh', fzf_lua.oldfiles, desc = 'Most (f)recently used files' },
+          { '<leader>fj', fzf_lua.jumps, desc = 'jumplist' },
           { '<leader>fm', fzf_lua.changes, desc = 'changes' },
           { '<leader>fp', fzf_lua.global, desc = 'global' },
           { '<leader>fr', fzf_lua.resume, desc = 'resume picker' },
@@ -364,9 +365,12 @@ return {
             previewer = 'codeaction_native',
           },
         },
-        jumps = dropdown({
-          winopts = { title = '  Jumps ', preview = { hidden = 'nohidden' } },
-        }),
+        jumps = {
+          winopts = {
+            title = '  Jumps ',
+            preview = { hidden = 'nohidden' },
+          },
+        },
         changes = dropdown({
           prompt = '',
           winopts = {
