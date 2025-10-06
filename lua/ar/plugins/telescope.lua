@@ -578,6 +578,7 @@ return {
             },
             n = {
               ['<C-n>'] = actions.move_selection_next,
+              ['<C-e>'] = layout_actions.toggle_preview,
               ['<C-p>'] = actions.move_selection_previous,
               ['<M-CR>'] = open_with_window_picker,
             },
