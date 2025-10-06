@@ -158,17 +158,15 @@ end
 local function find_files(opts)
   if ar.has('telescope-menufacture') then
   return extension('menufacture', 'find_files')(opts)()
-  else
-    b('find_files', opts)()
   end
+  b('find_files', opts)()
 end
 
 local function live_grep(opts)
   if ar.has('telescope-menufacture') then
   return extension('menufacture', 'live_grep')(opts)()
-  else
-    b('live_grep', opts)()
   end
+  b('live_grep', opts)()
 end
 
 local function nvim_config()
