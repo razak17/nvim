@@ -204,7 +204,7 @@ return {
     priority = get_priority({ 'night-owl' }),
     event = get_event({ 'night-owl' }),
     cond = get_cond({ 'night-owl' }),
-    opts = { underline = false },
+    -- opts = { underline = false },
   },
   {
     'atmosuwiryo/vim-winteriscoming',
