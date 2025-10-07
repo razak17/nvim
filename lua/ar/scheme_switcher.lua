@@ -105,9 +105,16 @@ function M.colorscheme_menu()
   vim.wo[win].scrolloff = 3
   vim.wo[win].winhighlight = 'Normal:NormalFloat,FloatBorder:FloatBorder'
 
+  -- create namespace for highlights
+  local ns = api.nvim_create_namespace('scheme_switcher_highlights')
+
   -- highlight header lines
   for i = 0, #metalines - 1 do
-    pcall(api.nvim_buf_add_highlight, buf, -1, 'Title', i, 0, -1)
+    pcall(api.nvim_buf_set_extmark, buf, ns, i, 0, {
+      end_row = i + 1,
+      end_col = 0,
+      hl_group = 'Title',
+    })
   end
 
   -- highlight the current scheme in the list (if present)
@@ -120,7 +127,11 @@ function M.colorscheme_menu()
   end
   if current_index then
     local line = #metalines + (current_index - 1)
-    pcall(api.nvim_buf_add_highlight, buf, -1, 'DiffAdd', line, 0, -1)
+    pcall(api.nvim_buf_set_extmark, buf, ns, line, 0, {
+      end_row = line + 1,
+      end_col = 0,
+      hl_group = 'DiffAdd',
+    })
     -- move cursor to current scheme
     api.nvim_win_set_cursor(win, { line + 1, 0 })
   end
@@ -172,7 +183,12 @@ function M.colorscheme_menu()
   map('n', 'q', on_esc, { buffer = buf })
 end
 
-api.nvim_create_user_command('SwitchColorScheme', M.colorscheme_menu, {})
-api.nvim_create_user_command('SwitchColor', M.colorscheme_menu, {})
+ar.command('SwitchColorScheme', M.colorscheme_menu, {})
+ar.command('SwitchColor', M.colorscheme_menu, {})
+
+ar.add_to_select_menu(
+  'command_palette',
+  { ['Color Switcher'] = M.colorscheme_menu }
+)
 
 return M
