@@ -49,6 +49,24 @@ return {
     },
   },
   {
+    'joelazar/blink-calc',
+    {
+      'saghen/blink.cmp',
+      optional = true,
+      opts = function(_, opts)
+        return get_cond('blink-calc')
+            and vim.g.blink_add_source({ 'calc' }, {
+              calc = {
+                module = 'blink-calc',
+                name = '[CALC]',
+                score_offset = 30,
+              },
+            }, opts)
+          or opts
+      end,
+    },
+  },
+  {
     'mgalliou/blink-cmp-tmux',
     {
       'saghen/blink.cmp',
