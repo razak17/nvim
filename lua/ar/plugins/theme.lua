@@ -42,10 +42,10 @@ return {
   },
   {
     'vague2k/vague.nvim',
-    cond = ar_config.colorscheme == 'vague',
+    cond = get_cond({ 'vague' }),
     priority = get_priority({ 'vague' }),
     event = get_event({ 'vague' }),
-    opts = { transparent = true },
+    opts = { transparent = ar_config.ui.transparent.enable },
   },
   ------------------------------------------------------------------------------
   -- Monochrome
