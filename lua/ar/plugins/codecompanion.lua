@@ -121,7 +121,9 @@ return {
           system_prompt = function() return ar_config.ai.prompts.beast_mode end,
         },
         extensions = {},
-        adapters = {},
+        adapters = {
+          http = {},
+        },
       }
 
       if ar.has('mcphub.nvim') then
@@ -144,7 +146,7 @@ return {
       end
 
       local function set_adapter_and_strategy(adapter, model)
-        opts.adapters[adapter] = function()
+        opts.adapters.http[adapter] = function()
           return require('codecompanion.adapters').extend(adapter, {
             schema = { model = { default = model } },
           })
