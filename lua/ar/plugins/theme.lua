@@ -392,5 +392,11 @@ return {
     priority = get_priority({ 'makurai' }),
     event = get_event({ 'makurai' }),
   },
+  {
+    'ribru17/bamboo.nvim',
+    cond = get_cond({ 'bamboo' }),
+    priority = get_priority({ 'bamboo' }),
+    event = get_event({ 'bamboo' }),
+  },
   -- }}}
 }
