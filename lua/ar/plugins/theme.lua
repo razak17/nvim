@@ -60,6 +60,12 @@ return {
     priority = get_priority({ 'kanagawa' }),
     event = get_event({ 'kanagawa' }),
   },
+  {
+    'edeneast/nightfox.nvim',
+    cond = get_cond({ 'nightfox' }),
+    priority = get_priority({ 'nightfox' }),
+    event = get_event({ 'nightfox' }),
+  },
   ------------------------------------------------------------------------------
   -- Warm
   {
@@ -79,6 +85,12 @@ return {
     cond = get_cond({ 'zenburn' }),
     priority = get_priority({ 'zenburn' }),
     event = get_event({ 'zenburn' }),
+  },
+  {
+    'darianmorat/gruvdark.nvim',
+    cond = get_cond({ 'gruvdark' }),
+    priority = get_priority({ 'gruvdark' }),
+    event = get_event({ 'gruvdark' }),
   },
   ------------------------------------------------------------------------------
   -- Monochrome
