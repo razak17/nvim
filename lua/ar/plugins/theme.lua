@@ -63,6 +63,25 @@ return {
   ------------------------------------------------------------------------------
   -- Monochrome
   {
+    'webhooked/kanso.nvim',
+    cond = get_cond({ 'kanso' }),
+    priority = get_priority({ 'kanso' }),
+    event = get_event({ 'kanso' }),
+  },
+  {
+    'zenbones-theme/zenbones.nvim',
+    cond = get_cond({ 'zenbones' }),
+    priority = get_priority({ 'zenbones' }),
+    event = get_event({ 'zenbones' }),
+    dependencies = 'rktjmp/lush.nvim',
+  },
+  {
+    'stevedylandev/darkmatter-nvim',
+    cond = get_cond({ 'darkmatter' }),
+    priority = get_priority({ 'darkmatter' }),
+    event = get_event({ 'darkmatter' }),
+  },
+  {
     'cdmill/neomodern.nvim',
     -- enabled = false,
     cond = get_cond({ 'neomodern' }),
@@ -223,6 +242,25 @@ return {
   },
   ------------------------------------------------------------------------------
   -- Mild
+  {
+    'rose-pine/neovim',
+    name = 'rose-pine',
+    cond = get_cond({ 'rose-pine' }),
+    priority = get_priority({ 'rose-pine' }),
+    event = get_event({ 'rose-pine' }),
+  },
+  {
+    'darianmorat/gruvdark.nvim',
+    cond = get_cond({ 'gruvdark' }),
+    priority = get_priority({ 'gruvdark' }),
+    event = get_event({ 'gruvdark' }),
+  },
+  {
+    'danilo-augusto/vim-afterglow',
+    cond = get_cond({ 'afterglow' }),
+    priority = get_priority({ 'afterglow' }),
+    event = get_event({ 'afterglow' }),
+  },
   {
     -- NOTE: Double underlines markdown headings
     'oxfist/night-owl.nvim',
