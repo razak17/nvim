@@ -196,6 +196,18 @@ return {
     priority = get_priority({ 'melange' }),
     event = get_event({ 'melange' }),
   },
+  {
+    'morhetz/gruvbox',
+    cond = get_cond({ 'gruvbox' }),
+    priority = get_priority({ 'gruvbox' }),
+    event = get_event({ 'gruvbox' }),
+  },
+  {
+    'jnurmine/Zenburn',
+    cond = get_cond({ 'zenburn' }),
+    priority = get_priority({ 'zenburn' }),
+    event = get_event({ 'zenburn' }),
+  },
   ------------------------------------------------------------------------------
   -- Mild
   {
