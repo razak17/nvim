@@ -240,6 +240,12 @@ return {
     priority = get_priority({ 'oh-lucy', 'oh-lucy-evening' }),
     event = get_event({ 'oh-lucy', 'oh-lucy-evening' }),
   },
+  {
+    'mitch1000/backpack.nvim',
+    cond = get_cond({ 'backpack' }),
+    priority = get_priority({ 'backpack' }),
+    event = get_event({ 'backpack' }),
+  },
   ------------------------------------------------------------------------------
   -- Mild
   {
