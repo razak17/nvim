@@ -67,6 +67,39 @@ return {
     event = get_event({ 'nightfox' }),
   },
   ------------------------------------------------------------------------------
+  -- Dark
+  {
+    'biisal/blackhole',
+    cond = get_cond({ 'blackhole' }),
+    priority = get_priority({ 'blackhole' }),
+    event = get_event({ 'blackhole' }),
+  },
+  {
+    'bettervim/yugen.nvim',
+    cond = get_cond({ 'yugen' }),
+    priority = get_priority({ 'yugen' }),
+    event = get_event({ 'yugen' }),
+  },
+  {
+    'bluz71/vim-moonfly-colors',
+    name = 'moonfly',
+    cond = get_cond({ 'moonfly' }),
+    priority = get_priority({ 'moonfly' }),
+    event = get_event({ 'moonfly' }),
+  },
+  {
+    'cooperuser/glowbeam.nvim',
+    cond = get_cond({ 'glowbeam' }),
+    priority = get_priority({ 'glowbeam' }),
+    event = get_event({ 'glowbeam' }),
+  },
+  {
+    'danilo-augusto/vim-afterglow',
+    cond = get_cond({ 'afterglow' }),
+    priority = get_priority({ 'afterglow' }),
+    event = get_event({ 'afterglow' }),
+  },
+  ------------------------------------------------------------------------------
   -- Warm
   {
     'savq/melange-nvim',
