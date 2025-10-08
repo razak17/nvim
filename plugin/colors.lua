@@ -233,7 +233,9 @@ ar.augroup('UserHighlights', {
   end,
 })
 
-ar.load_colorscheme(ar_config.colorscheme)
-
-local scheme_switcher = require('ar.scheme_switcher')
-scheme_switcher.set_colorscheme(scheme_switcher.get_current_colorscheme())
+if ar.plugins.niceties then
+  local scheme_switcher = require('ar.scheme_switcher')
+  scheme_switcher.set_colorscheme(scheme_switcher.get_current_colorscheme())
+else
+  ar.load_colorscheme(ar_config.colorscheme)
+end
