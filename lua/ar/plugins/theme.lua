@@ -47,6 +47,19 @@ return {
     event = get_event({ 'vague' }),
     opts = { transparent = ar_config.ui.transparent.enable },
   },
+  {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    cond = get_cond({ 'catppuccin' }),
+    priority = get_priority({ 'catppuccin' }),
+    event = get_event({ 'catppuccin' }),
+  },
+  {
+    'rebelot/kanagawa.nvim',
+    cond = get_cond({ 'kanagawa' }),
+    priority = get_priority({ 'kanagawa' }),
+    event = get_event({ 'kanagawa' }),
+  },
   ------------------------------------------------------------------------------
   -- Monochrome
   {
