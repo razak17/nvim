@@ -99,7 +99,7 @@ function M.colorscheme_menu()
   -- buffer/window appearance
   vim.bo[buf].modifiable = false
   vim.bo[buf].bufhidden = 'wipe'
-  vim.bo[buf].filetype = 'scheme-switcher'
+  vim.bo[buf].filetype = 'scheme_switcher'
   vim.wo[win].number = false
   vim.wo[win].relativenumber = false
   vim.wo[win].cursorline = true

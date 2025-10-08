@@ -18,6 +18,7 @@ local filetypes = {
   '^NvimTree$',
   'snacks_dashboard',
   'snacks_picker_*',
+  'scheme_switcher',
   '^toggleterm$',
   'FloatermSidebar',
   'VoltWindow',

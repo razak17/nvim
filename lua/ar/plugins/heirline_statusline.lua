@@ -60,6 +60,7 @@ return {
         hl = function(self) return { fg = self.mode_color } end,
       },
     }
+
     local location =
       { provider = function() return stl.location() .. stl.progress() end }
 
@@ -250,6 +251,45 @@ return {
           },
           { provider = ' ' .. separator, hl = { bold = true } },
         },
+      },
+      align,
+    }
+
+    local scheme_switcher_statusline = {
+      condition = function()
+        return conditions.buffer_matches({ filetype = { 'scheme_switcher' } })
+      end,
+      vim_mode,
+      { provider = ' ' .. 'Scheme Switcher', bold = true },
+      {
+        init = function(self)
+          local scheme_switcher = require('ar.scheme_switcher')
+          self.current = scheme_switcher.get_current_colorscheme()
+          self.total = #scheme_switcher.get_colorschemes()
+        end,
+        {
+          { provider = separator, hl = { fg = 'blue', bold = true } },
+          {
+            provider = function() return ' ' .. 'Current: ' end,
+            hl = { fg = 'blue', bold = true },
+          },
+        },
+        {
+          provider = function(self) return self.current end,
+          hl = { fg = 'blue' },
+        },
+        {
+          { provider = separator, hl = { fg = 'blue', bold = true } },
+          {
+            provider = function() return ' ' .. 'Total: ' end,
+            hl = { fg = 'yellowgreen', bold = true },
+          },
+        },
+        {
+          provider = function(self) return self.total end,
+          hl = { fg = 'yellowgreen' },
+        },
+        empty_component,
       },
       align,
     }
@@ -1150,6 +1190,7 @@ return {
         help_statusline,
         lazy_statusline,
         terminal_statusline,
+        scheme_switcher_statusline,
         minimal_statusline,
         inactive_statusline,
         statusline,
