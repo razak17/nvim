@@ -160,7 +160,7 @@ return {
         set_adapter_and_strategy('anthropic')
       elseif models.copilot then
         -- https://docs.github.com/en/copilot/reference/ai-models/supported-models
-        set_adapter_and_strategy('copilot', 'gpt-4.1')
+        set_adapter_and_strategy('copilot', 'claude-sonnet-4.5')
       elseif models.openai then
         -- https://platform.openai.com/docs/models
         set_adapter_and_strategy('openai', 'gpt-4.1')
