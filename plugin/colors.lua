@@ -209,12 +209,19 @@ local function colorscheme_overrides()
       { Comment = { fg = { from = 'Comment', alter = -0.3 } } },
       { LineNr = { fg = { from = 'Comment' } } },
       { NonText = { fg = { from = 'Comment' } } },
-      { VertSplit = {
-        fg = { from = 'NonText', alter = -0.2 },
-        bg = { from = 'NormalFloat' },
-      } },
+      {
+        VertSplit = {
+          fg = { from = 'NonText', alter = -0.2 },
+          bg = { from = 'Normal' },
+        },
+      },
       { WinSeparator = { link = 'VertSplit' } },
-      { FloatBorder = { link = 'VertSplit' } },
+      {
+        FloatBorder = {
+          fg = { from = 'NonText', alter = -0.2 },
+          bg = { from = 'NormalFloat' },
+        },
+      },
       { IndentBlanklineChar = { link = 'VertSplit' } },
       { IndentBlanklineContextChar = { link = 'VertSplit' } },
     },
