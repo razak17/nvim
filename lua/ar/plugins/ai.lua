@@ -62,10 +62,15 @@ return {
         desc = 'sidekick: select prompt',
       },
       {
+        '<leader>af',
+        function() require('sidekick.cli').send({ msg = '{file}' }) end,
+        desc = 'sidekick: send file',
+      },
+      {
         '<c-.>',
-        function() require('sidekick.cli').focus() end,
-        mode = { 'n', 'x', 'i', 't' },
-        desc = 'sidekick: switch focus',
+        function() require('sidekick.cli').toggle() end,
+        mode = { 'n', 't', 'i', 'x' },
+        desc = 'sidekick: toggle',
       },
     },
     config = function(_, opts)
