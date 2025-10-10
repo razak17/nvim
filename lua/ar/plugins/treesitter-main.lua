@@ -8,15 +8,14 @@ local ts = require('ar.utils.treesitter')
 -- https://github.com/chrisgrieser/.config/blob/15cc1b7ad2cfc187c3bc984144136648083e85ca/nvim/lua/plugin-specs/appearance/treesitter.lua?plain=1#L1
 -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/treesitter.lua?plain=1#L1
 
-        -- stylua: ignore
+-- stylua: ignore
 local ensure_installed = {
   programming_langs = {
     'c', 'cpp', 'bash', 'javascript', 'lua', 'python', 'ruby', 'rust', 'svelte',
     'swift', 'typescript', 'vim',
   },
   data_formats = { 'json', 'json5', 'jsonc', 'toml', 'xml', 'yaml' },
-  content = { 'css', 'html', 'markdown', 'markdown_inline'
-  },
+  content = { 'css', 'html', 'markdown', 'markdown_inline' },
   special_filetypes = {
     'diff', 'dockerfile', 'editorconfig', 'git_config', 'git_rebase', 'gitcommit',
     'gitattributes', 'gitignore', 'just', 'make', 'query', -- treesitter query files
@@ -45,6 +44,8 @@ return {
         )
       end,
       enabled = true,
+      ---@alias ar.TSFeat { enable?: boolean, disable?: string[] }
+      ---@class ar.TSConfig: TSConfig
       opts = {
         indent = {
           enable = true,
@@ -82,28 +83,37 @@ return {
           end)
         end
 
+        ---@param feat string
+        ---@param query string
+        ---@param ft string
+        local function enabled(feat, query, ft)
+          local lang = vim.treesitter.language.get_lang(ft)
+          local f = opts[feat] or {} ---@type ar.TSFeat
+          return f.enable ~= false
+            and not vim.tbl_contains(f.disable or {}, lang)
+            and ts.have(ft, query)
+        end
+
         -- start treesitter
-        local function start(match, buf)
-          if not ts.have(match) then return end
+        ---@param ft string
+        local function start(ft)
+          if not ts.have(ft) then return end
 
           -- highlighting
-          if vim.tbl_get(opts, 'highlight', 'enable') ~= false then
+          if enabled('highlight', 'highlights', ft) then
             pcall(vim.treesitter.start)
           end
 
           -- indents
-          if vim.tbl_get(opts, 'indent', 'enable') ~= false then
-            local disable = opts.indent.disable or {}
-            if not vim.list_contains(disable, match) then
-              ar.set_default(
-                'indentexpr',
-                "v:lua.require'ar.utils.treesitter'.indentexpr()"
-              )
-            end
+          if enabled('indent', 'indents', ft) then
+            ar.set_default(
+              'indentexpr',
+              "v:lua.require'ar.utils.treesitter'.indentexpr()"
+            )
           end
 
           -- folds
-          if vim.tbl_get(opts, 'folds', 'enable') ~= false then
+          if enabled('folds', 'folds', ft) then
             if ar.set_default('foldmethod', 'expr') then
               ar.set_default(
                 'foldexpr',
@@ -124,13 +134,13 @@ return {
               ts.ensure_treesitter_cli(function()
                 TS.install({ parser_name }, { summary = true }):await(function()
                   ts.get_installed(true) -- refresh the installed langs
-                  start(ev.match, ev.buf)
+                  start(ev.match)
                 end)
               end)
               return
             end
 
-            start(ev.match, ev.buf)
+            start(ev.match)
           end,
         })
       end,

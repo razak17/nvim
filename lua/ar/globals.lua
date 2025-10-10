@@ -333,7 +333,7 @@ function ar.set_default(option, value)
     -- Check if it was set by a script in $VIMRUNTIME
     local info = vim.api.nvim_get_option_info2(option, { scope = 'local' })
     local scriptinfo = vim.tbl_filter(
-      ---@param e vim.fn.getscriptinfo.ret
+    ---@param e vim.fn.getscriptinfo.ret
       function(e) return e.sid == info.last_set_sid end,
       vim.fn.getscriptinfo()
     )
