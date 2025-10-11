@@ -117,10 +117,6 @@ local function todos()
   fzf_lua.grep({ search = 'TODO|HACK|PERF|NOTE|FIX|WARN', no_esc = true })
 end
 
-local function frecency()
-  require('fzf-lua-frecency').frecency({ cwd_only = true })
-end
-
 ar.fzf = { dropdown = dropdown, cursor_dropdown = cursor_dropdown }
 
 return {
@@ -188,10 +184,6 @@ return {
     end,
     keys = function()
       local mappings = {}
-
-      if ar_config.picker.files == 'fzf-lua' then
-        table.insert(mappings, { '<C-p>', frecency, desc = 'find files' })
-      end
       if ar_config.picker.variant == 'fzf-lua' then
         -- stylua: ignore
         local fzf_mappings = {
@@ -432,7 +424,25 @@ return {
 
       ar.command('SessionList', list_sessions)
     end,
-    dependencies = { 'elanmed/fzf-lua-frecency.nvim' },
+  },
+  {
+    'elanmed/fzf-lua-frecency.nvim',
+    specs = {
+      'ibhagwan/fzf-lua',
+      optional = true,
+      keys = function(_, keys)
+        local mappings = keys or {}
+
+        if ar_config.picker.files == 'fzf-lua' then
+          local function frecency()
+            require('fzf-lua-frecency').frecency({ cwd_only = true })
+          end
+
+          table.insert(mappings, { '<C-p>', frecency, desc = 'find files' })
+        end
+        return mappings
+      end,
+    },
   },
   {
     'piersolenski/import.nvim',
