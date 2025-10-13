@@ -1,3 +1,10 @@
+vim.g.codecompanion_add_extension = function(extension, opts)
+  opts = opts or {}
+  opts.extensions =
+    vim.tbl_deep_extend('force', opts.extensions or {}, extension)
+  return opts
+end
+
 local fmt = string.format
 local models = ar_config.ai.models
 local cmp = ar_config.completion.variant
@@ -127,7 +134,7 @@ return {
       }
 
       if ar.has('mcphub.nvim') then
-        opts.extensions = {
+        vim.g.codecompanion_add_extension({
           mcphub = {
             callback = 'mcphub.extensions.codecompanion',
             opts = {
@@ -142,7 +149,7 @@ return {
               make_slash_commands = true, -- Add MCP prompts as /slash commands
             },
           },
-        }
+        }, opts)
       end
 
       local function set_adapter_and_strategy(adapter, model)
