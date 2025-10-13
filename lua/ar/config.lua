@@ -501,6 +501,7 @@ local config = {
       filetypes = { enable = true },
       mappings = { enable = true },
       numbers = { enable = true },
+      pack = { enable = true },
       rooter = { enable = true },
       select_menu = { enable = true },
       tmux = { enable = true },
