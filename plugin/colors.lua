@@ -250,7 +250,6 @@ local function colorscheme_overrides()
     ['lunar'] = {
       { VertSplit = { fg = { from = 'Comment', alter = -0.4 } } },
       { WinSeparator = { link = 'VertSplit' } },
-      { FloatBorder = { link = 'VertSplit' } },
       { IndentBlanklineChar = { link = 'VertSplit' } },
       { IndentBlanklineContextChar = { link = 'VertSplit' } },
       { NeogitDiffAdd = { link = 'DiffAdd' } },
