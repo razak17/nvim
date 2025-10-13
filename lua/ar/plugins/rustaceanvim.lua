@@ -91,7 +91,13 @@ return {
     event = 'BufRead Cargo.toml',
     opts = {
       popup = { autofocus = true, border = border },
-      null_ls = { enabled = true, name = 'crates' },
+      -- TODO: lsp integration seems to have issues
+      lsp = {
+        enabled = ar.lsp.enable,
+        actions = true,
+        completion = true,
+        hover = true,
+      },
     },
   },
   {
