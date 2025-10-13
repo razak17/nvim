@@ -85,7 +85,9 @@ return {
     init = function()
       vim.g.whichkey_add_spec({ '<leader><localleader>c', group = 'Crates' })
     end,
-    cond = not ar.plugins.minimal,
+    cond = function()
+      return ar.get_plugin_cond('crates.nvim', not ar.plugins.minimal)
+    end,
     event = 'BufRead Cargo.toml',
     opts = {
       popup = { autofocus = true, border = border },

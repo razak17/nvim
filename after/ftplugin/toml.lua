@@ -2,7 +2,7 @@ if not ar or ar.none then return end
 
 if not ar.plugins.enable or ar.plugins.minimal then return end
 
-if vim.fn.expand('%:t') == 'Cargo.toml' then
+if vim.fn.expand('%:t') == 'Cargo.toml' and ar.has("crates.nvim") then
   local fmt = string.format
 
   require('cmp').setup.buffer({ sources = { { name = 'crates' } } })
