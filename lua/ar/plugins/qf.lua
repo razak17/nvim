@@ -21,8 +21,8 @@ return {
       ar.highlight.plugin('bqf', {
         theme = {
           ['onedark'] = {
-            { BqfPreviewFloat = { link = 'NormalFloat' } },
-            { BqfPreviewBorder = { link = 'FloatBorder' } },
+            { BqfPreviewFloat = { link = 'Normal' } },
+            { BqfPreviewBorder = { link = 'VertSplit' } },
           },
         },
       })
