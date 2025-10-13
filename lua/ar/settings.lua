@@ -195,6 +195,7 @@ o.smartindent = true
 --------------------------------------------------------------------------------
 o.pumheight = 15
 o.confirm = true -- make vim prompt me to save before doing destructive things
+if ar_config.completion.variant == 'omnifunc' then o.complete = 'o' end
 opt.completeopt = { 'menuone', 'noselect', 'popup' }
 if fn.has('nvim-0.11') then
   opt.completeopt:append('fuzzy') -- Use fuzzy matching for built-in completion
