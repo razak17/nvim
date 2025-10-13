@@ -129,6 +129,16 @@ return {
   -- Monochrome
   {
     'webhooked/kanso.nvim',
+    init = function()
+      ar.highlight.plugin('Kanso', {
+        theme = {
+          ['kanso'] = {
+            { FloatBorder = { link = 'VertSplit' } },
+            { PmenuBorder = { link = 'NormalFloat' } },
+          },
+        },
+      })
+    end,
     cond = get_cond({ 'kanso' }),
     priority = get_priority({ 'kanso' }),
     event = get_event({ 'kanso' }),
