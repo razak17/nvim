@@ -110,4 +110,43 @@ return {
       })
     end,
   },
+  {
+    desc = 'A cosmetic buffers indicator & picker ',
+    'ahkohd/buffer-sticks.nvim',
+    event = { 'VeryLazy' },
+    cond = function()
+      return ar.get_plugin_cond('buffer-sticks.nvim', not minimal)
+    end,
+    keys = {
+      {
+        '<leader><leader>o',
+        function() BufferSticks.jump() end,
+        desc = 'jump to buffer',
+      },
+      {
+        '<leader><leader>q',
+        function() BufferSticks.close() end,
+        desc = 'close buffer',
+      },
+      {
+        '<leader><leader>p',
+        function()
+          BufferSticks.list({
+            action = function(buffer, leave)
+              print('Selected: ' .. buffer.name)
+              leave()
+            end,
+          })
+        end,
+        desc = 'buffer picker',
+      },
+    },
+    opts = {
+      highlights = {
+        label = { link = 'CursorLineNr' },
+        active = { link = 'CursorLineNr' },
+        inactive = { link = 'Comment' },
+      },
+    },
+  },
 }
