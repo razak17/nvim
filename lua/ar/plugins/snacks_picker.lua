@@ -462,6 +462,7 @@ return {
               ['<A-l>'] = { 'preview_scroll_right', mode = { 'i', 'n' } },
               ['<A-w>'] = { 'cycle_win', mode = { 'i', 'n' } },
               ['<A-BS>'] = { 'parent', mode = { 'i', 'n' } },
+              ['<C-w>'] = { 'toggle_help_input', mode = { 'i', 'n' } },
             },
           },
         },
