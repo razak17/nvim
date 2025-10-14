@@ -112,7 +112,7 @@ return {
   },
   {
     desc = 'A cosmetic buffers indicator & picker ',
-    'ahkohd/buffer-sticks.nvim',
+    'razak17/buffer-sticks.nvim',
     event = { 'VeryLazy' },
     cond = function()
       return ar.get_plugin_cond('buffer-sticks.nvim', not minimal)
