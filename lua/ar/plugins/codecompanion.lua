@@ -152,14 +152,8 @@ return {
       end
 
       local function set_adapter_and_strategy(adapter, model)
-        opts.adapters.http[adapter] = function()
-          return require('codecompanion.adapters').extend(adapter, {
-            schema = { model = { default = model } },
-          })
-        end
-        opts.strategies.chat.adapter = adapter
-        opts.strategies.cmd.adapter = adapter
-        opts.strategies.inline.adapter = adapter
+        opts.strategies.chat.adapter = { name = adapter, model = model }
+        opts.strategies.inline.adapter = { name = adapter, model = model }
       end
 
       if models.claude then
