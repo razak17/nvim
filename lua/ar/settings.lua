@@ -193,6 +193,8 @@ o.softtabstop = -1
 o.cindent = true -- Increase indent on line after opening brace
 o.smartindent = true
 --------------------------------------------------------------------------------
+-- LSP autocompletion
+o.pumborder = 'single'
 o.pumheight = 15
 o.confirm = true -- make vim prompt me to save before doing destructive things
 if ar_config.completion.variant == 'omnifunc' then o.complete = 'o' end
