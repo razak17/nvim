@@ -23,7 +23,6 @@ return {
       { '<leader>ako', '<Cmd>CodeCompanionChat<CR>', desc = 'codecompanion: toggle' },
       { '<leader>aka', '<Cmd>CodeCompanionActions<CR>', desc = 'codecompanion: actions' },
       { '<leader>aka', ':CodeCompanion simplify<CR>', desc = 'codecompanion: simplify' },
-      { 'ga', '<Cmd>CodeCompanionAdd<CR>', desc = 'codecompanion: add' },
     },
     init = function()
       local visual_cmd = ar.visual_cmd
