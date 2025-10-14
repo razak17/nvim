@@ -99,6 +99,17 @@ return {
           cmd = {},
           inline = {},
         },
+        memory = {
+          opts = {
+            chat = {
+              enabled = true,
+            },
+          },
+          default = {
+            description = 'Common memory files',
+            files = {},
+          },
+        },
         display = {
           action_palette = {
             width = 95,
