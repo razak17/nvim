@@ -222,6 +222,34 @@ return {
   desc = 'snacks picker',
   recommended = true,
   'folke/snacks.nvim',
+  init = function()
+    if ar_config.picker.variant == 'snacks' then
+      local function fuzzy_in_cur_dir(source, recursive)
+        return function()
+          local current_file = vim.api.nvim_buf_get_name(0)
+          local current_dir = vim.fn.fnamemodify(current_file, ':h')
+          p(source, {
+            title = fmt(
+              '%s In Dir%s',
+              source == 'files' and 'Find Files' or source == 'Live Grep',
+              recursive and ' & Children' or ''
+            ),
+            cwd = current_dir,
+            cmd = source == 'files' and 'rg' or 'rg',
+            args = recursive and { '--files', current_dir }
+              or { '--max-depth', '1', '--files', current_dir },
+          })()
+        end
+      end
+
+      ar.add_to_select_menu('command_palette', {
+        ['Find Files In Dir'] = fuzzy_in_cur_dir('files', false),
+        ['Find Files In Dir & Children'] = fuzzy_in_cur_dir('files', true),
+        ['Live Grep In Dir'] = fuzzy_in_cur_dir('grep', true),
+        ['Find Word In Dir'] = fuzzy_in_cur_dir('word', true),
+      })
+    end
+  end,
   keys = function(_, keys)
     keys = keys or {}
     if ar_config.picker.files == 'snacks' then

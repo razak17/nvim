@@ -10,7 +10,7 @@ return {
           params.search_dirs = { folder }
         else
           params.find_command =
-            { 'rg', '--files', '--max-depth', '1', '--files', folder }
+            { 'rg', '--max-depth', '1', '--files', folder }
         end
         return params
       end
