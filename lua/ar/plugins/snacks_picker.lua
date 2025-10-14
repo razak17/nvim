@@ -117,7 +117,7 @@ local function find_files()
     format = 'file',
     show_empty = true,
     supports_live = true,
-    layout = { preview = false, cycle = true, preset = 'select' },
+    layout = { preview = false, cycle = true, preset = 'custom_select' },
       -- stylua: ignore start
     args = {
       '--exclude', '**/.git/**',
@@ -155,7 +155,7 @@ local function buffers()
     hidden = false,
     unloaded = true,
     sort_lastused = true,
-    layout = { preview = false, preset = 'select' },
+    layout = { preview = false, preset = 'custom_select' },
     win = {
       input = {
         keys = {
@@ -303,11 +303,14 @@ return {
   opts = function(_, opts)
     return vim.tbl_deep_extend('force', opts or {}, {
       picker = {
-        layouts = vim.tbl_deep_extend('force', picker_layouts or {}, {
+        layouts = {
+          custom_default = picker_layouts.default,
+          custom_telescope = picker_layouts.telescope,
+          custom_select = picker_layouts.select,
           sidebar = {
             layout = { layout = { position = 'right' } },
           },
-        }),
+        },
         prompt = fmt('%s ', ar.ui.icons.misc.chevron_right),
         sources = {
           files = {
@@ -409,9 +412,7 @@ return {
         },
         layout = {
           cycle = true,
-          preset = function()
-            return vim.o.columns >= 120 and 'telescope' or 'vertical'
-          end,
+          preset = 'custom_telescope',
         },
         matcher = { frecency = true },
         icons = {
