@@ -218,6 +218,16 @@ local function window_picker_action(picker, _, action)
   end
 end
 
+local function visual_grep_string()
+  -- Get visual selection
+  vim.cmd('noau normal! "vy"')
+  local text = vim.fn.getreg('v')
+  p('grep', {
+    layout = { preview = show_preview, cycle = true },
+    search = text,
+  })()
+end
+
 return {
   desc = 'snacks picker',
   recommended = true,
@@ -286,6 +296,7 @@ return {
         { '<leader>fP', p('lazy'), desc = 'search for plugin spec' },
         { '<leader>fr', p('resume'), desc = 'resume' },
         { '<leader>fs', grep_string, desc = 'grep' },
+        { '<leader>fs', visual_grep_string, desc = 'grep visual selection', mode = 'x' },
         { '<leader>fS', p('grep_buffers'), desc = 'grep open buffers' },
         { '<leader>fql', p('loclist'), desc = 'location list' },
         { '<leader>fqq', p('qflist'), desc = 'quickfix List' },
