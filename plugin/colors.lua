@@ -369,6 +369,54 @@ local function colorscheme_overrides()
       },
       { StatusLine = { bg = 'NONE', reverse = false } },
     },
+    ['slate'] = {
+      { NormalFloat = { bg = { from = 'Normal' } } },
+      {
+        VertSplit = {
+          fg = { from = 'Comment', alter = -0.3 },
+          bg = { from = 'Normal' },
+        },
+      },
+      { FloatBorder = { link = 'VertSplit' } },
+      { FloatTitle = { bg = { from = 'CursorLine', alter = 0.05 } } },
+      { IndentBlanklineChar = { link = 'VertSplit' } },
+      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+      { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
+      {
+        Pmenu = {
+          bg = { from = 'NormalFloat' },
+          fg = { from = 'Normal', alter = -0.25 },
+        },
+      },
+      { PmenuBorder = { link = 'FloatBorder' } },
+      { PmenuExtra = { link = 'Pmenu' } },
+      { PmenuKind = { fg = { from = 'Comment', alter = -0.1 } } },
+      { PmenuMatch = { link = 'Normal' } },
+      { PmenuSel = { link = 'CursorLine' } },
+      { PmenuExtraSel = { link = 'PmenuSel' } },
+      { PmenuKindSel = { link = 'PmenuSel' } },
+      { PmenuMatchSel = { link = 'PmenuSel' } },
+      { SnacksPickerTitle = { link = 'FloatTitle' } },
+      {
+        SnacksPickerCursorLine = {
+          bg = { from = 'CursorLine', alter = 0.2 },
+        },
+      },
+      { SnacksPickerListCursorLine = { link = 'SnacksPickerCursorLine' } },
+      {
+        SnacksPickerToggleHidden = {
+          bg = { from = 'FloatTitle' },
+          fg = { from = 'Special' },
+        },
+      },
+      {
+        SnacksPickerToggleIgnored = {
+          bg = { from = 'FloatTitle' },
+          fg = { from = 'Debug' },
+        },
+      },
+      { StatusLine = { bg = 'NONE' } },
+    },
     ['vague'] = {
       { VertSplit = { fg = { from = 'Comment', alter = -0.4 } } },
       { WinSeparator = { link = 'VertSplit' } },

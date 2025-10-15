@@ -98,6 +98,21 @@ return {
             },
             { NeogitDiffAddHighlight = { fg = { from = 'Normal' } } },
           },
+          ['slate'] = {
+            {
+              NeogitDiffAdd = {
+                bg = { from = 'DiffAdd', alter = -0.4 },
+                fg = { from = 'Normal' },
+              },
+            },
+            {
+              NeogitDiffDelete = {
+                bg = { from = 'DiffDelete', alter = -0.5 },
+                fg = { from = 'Normal' },
+              },
+            },
+            { NeogitDiffAddHighlight = { fg = { from = 'Normal' } } },
+          },
           ['onedark'] = {
             { NeogitHunkHeader = { inherit = 'Headline2', bold = true } },
             { NeogitDiffHeader = { inherit = 'Headline2', bold = true } },
