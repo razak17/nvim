@@ -281,6 +281,55 @@ local function colorscheme_overrides()
       { PmenuMatchSel = { link = 'PmenuSel' } },
       { StatusLine = { bg = 'NONE' } },
     },
+    ['retrobox'] = {
+      { NormalFloat = { bg = { from = 'NormalFloat', alter = -0.35 } } },
+      {
+        FloatBorder = {
+          bg = { from = 'NormalFloat' },
+          fg = { from = 'NormalFloat', attr = 'bg' },
+        },
+      },
+      { FloatTitle = { bg = { from = 'NormalFloat' } } },
+      { LspReferenceRead = { link = 'CursorLine' } },
+      {
+        Pmenu = {
+          bg = { from = 'NormalFloat' },
+          fg = { from = 'Comment', alter = 0.2 },
+        },
+      },
+      { PmenuBorder = { link = 'FloatBorder' } },
+      { PmenuExtra = { link = 'Pmenu' } },
+      { PmenuKind = { link = 'Comment' } },
+      { PmenuMatch = { link = 'NormalFloat' } },
+      { PmenuSel = { link = 'CursorLine' } },
+      { PmenuExtraSel = { link = 'PmenuSel' } },
+      { PmenuKindSel = { link = 'PmenuSel' } },
+      { PmenuMatchSel = { link = 'PmenuSel' } },
+      { IndentBlanklineChar = { link = 'NonText' } },
+      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+      {
+        SnacksPickerCursorLine = {
+          bg = { from = 'CursorLine', alter = 0.2 },
+        },
+      },
+      { SnacksPickerListCursorLine = { link = 'SnacksPickerCursorLine' } },
+      { SnacksPickerDir = { link = 'Comment' } },
+      { SnacksPickerTotals = { link = 'Debug' } },
+      { SnacksPickerTitle = { link = 'FloatTitle' } },
+      {
+        SnacksPickerToggleHidden = {
+          bg = { from = 'NormalFloat' },
+          fg = { from = 'Special' },
+        },
+      },
+      {
+        SnacksPickerToggleIgnored = {
+          bg = { from = 'NormalFloat' },
+          fg = { from = 'Debug' },
+        },
+      },
+      { StatusLine = { bg = 'NONE', reverse = false } },
+    },
     ['habamax'] = {
       { Normal = { bg = { from = 'Normal', alter = -0.15 } } },
       { NormalFloat = { bg = { from = 'Normal', alter = -0.1 } } },

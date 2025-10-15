@@ -88,6 +88,16 @@ return {
     config = function(_, opts)
       ar.highlight.plugin('neogit', {
         theme = {
+          ['retrobox'] = {
+            {
+              NeogitDiffAdd = {
+                bg = { from = 'DiffChange', attr = 'fg', alter = -0.3 },
+                fg = { from = 'Normal' },
+                reverse = false,
+              },
+            },
+            { NeogitDiffAddHighlight = { fg = { from = 'Normal' } } },
+          },
           ['onedark'] = {
             { NeogitHunkHeader = { inherit = 'Headline2', bold = true } },
             { NeogitDiffHeader = { inherit = 'Headline2', bold = true } },
