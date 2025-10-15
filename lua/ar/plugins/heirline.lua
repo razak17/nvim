@@ -88,6 +88,13 @@ local function setup_colors()
       dark_orange = hl.get('WarningMsg', 'fg'),
     })
   end
+  if vim.g.colors_name == 'habamax' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.2),
+      blue = hl.get('DiagnosticInfo', 'fg'),
+      dark_orange = hl.get('WarningMsg', 'fg'),
+    })
+  end
   if vim.g.colors_name == 'onedark' then P = require('onedark.palette') end
   return P
 end

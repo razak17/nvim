@@ -242,6 +242,45 @@ local function colorscheme_overrides()
       { IndentBlanklineChar = { link = 'VertSplit' } },
       { IndentBlanklineContextChar = { link = 'VertSplit' } },
     },
+    ['habamax'] = {
+      { Normal = { bg = { from = 'Normal', alter = -0.15 } } },
+      { NormalFloat = { bg = { from = 'Normal', alter = -0.1 } } },
+      { FloatTitle = { bg = { from = 'NormalFloat', alter = -0.05 } } },
+      {
+        VertSplit = {
+          bg = { from = 'Normal' },
+          fg = { from = 'NonText', alter = -0.2 },
+        },
+      },
+      { Visual = { bg = { from = 'Search', alter = -0.3 } } },
+      { LspReferenceRead = { link = 'CursorLine' } },
+      {
+        Pmenu = {
+          bg = { from = 'NormalFloat' },
+          fg = { from = 'Comment', alter = 0.2 },
+        },
+      },
+      { PmenuBorder = { link = 'FloatBorder' } },
+      { PmenuExtra = { link = 'Pmenu' } },
+      {
+        PmenuKind = {
+          bg = 'NONE',
+          fg = { from = 'Comment', alter = -0.3 },
+        },
+      },
+      {
+        PmenuMatch = {
+          bg = 'NONE',
+          fg = { from = 'Normal', alter = 0.4 },
+        },
+      },
+      { PmenuSel = { link = 'CursorLine' } },
+      { PmenuExtraSel = { link = 'PmenuSel' } },
+      { PmenuKindSel = { link = 'PmenuSel' } },
+      { PmenuMatchSel = { link = 'PmenuSel' } },
+      { IndentBlanklineChar = { link = 'VertSplit' } },
+      { IndentBlanklineContextChar = { link = 'NonText' } },
+    },
     ['peachpuff'] = {
       { NormalFloat = { link = 'Normal' } },
       {
@@ -329,20 +368,6 @@ local function colorscheme_overrides()
         },
       },
       { StatusLine = { bg = 'NONE', reverse = false } },
-    },
-    ['habamax'] = {
-      { Normal = { bg = { from = 'Normal', alter = -0.15 } } },
-      { NormalFloat = { bg = { from = 'Normal', alter = -0.1 } } },
-      { FloatTitle = { bg = { from = 'NormalFloat', alter = -0.05 } } },
-      { Visual = { bg = { from = 'Search', alter = -0.3 } } },
-      { IndentBlanklineChar = { link = 'VertSplit' } },
-      { IndentBlanklineContextChar = { link = 'NonText' } },
-      {
-        VertSplit = {
-          bg = { from = 'Normal' },
-          fg = { from = 'NonText', alter = -0.2 },
-        },
-      },
     },
     ['vague'] = {
       { VertSplit = { fg = { from = 'Comment', alter = -0.4 } } },
