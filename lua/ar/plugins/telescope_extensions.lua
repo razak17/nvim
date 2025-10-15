@@ -140,7 +140,7 @@ return {
       },
       {
         'debugloop/telescope-undo.nvim',
-        cond = function() return ar.get_plugin_cond('telescope-cmdline.nvim') end,
+        cond = get_cond('telescope-undo.nvim'),
         keys = {
           {
             '<leader>fu',
@@ -438,6 +438,7 @@ return {
       },
       {
         'ahmedkhalf/project.nvim',
+        cond = get_cond('project.nvim'),
         config = function()
           require('project_nvim').setup({
             active = true,
