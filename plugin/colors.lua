@@ -89,7 +89,7 @@ local function general_overrides()
     { ['@illuminate'] = { link = 'LspReferenceText' } },
     { DevIconDefault = { link = 'Comment' } },
     { NotifyBackground = { link = 'NormalFloat' } },
-    { statusline = { bg = 'NONE' } },
+    { statusLine = { bg = 'NONE' } },
   })
 end
 
@@ -224,6 +224,26 @@ local function colorscheme_overrides()
       { IndentBlanklineChar = { link = 'VertSplit' } },
       { IndentBlanklineContextChar = { link = 'VertSplit' } },
     },
+    ['peachpuff'] = {
+      { NormalFloat = { link = 'Normal' } },
+      {
+        VertSplit = {
+          fg = { from = 'LineNr', alter = 0.5 },
+          bg = { from = 'Normal' },
+        },
+      },
+      { WinSeparator = { link = 'VertSplit' } },
+      {
+        FloatBorder = {
+          bg = { from = 'NormalFloat' },
+          fg = { from = 'VertSplit' },
+        },
+      },
+      { FloatTitle = { link = 'CursorLine' } },
+      { IndentBlanklineChar = { link = 'VertSplit' } },
+      { IndentBlanklineContextChar = { link = 'VertSplit' } },
+      { StatusLine = { bg = 'NONE' } },
+    },
     ['habamax'] = {
       { Normal = { bg = { from = 'Normal', alter = -0.15 } } },
       { NormalFloat = { bg = { from = 'Normal', alter = -0.1 } } },
@@ -244,7 +264,7 @@ local function colorscheme_overrides()
       { FloatBorder = { link = 'VertSplit' } },
       { IndentBlanklineChar = { link = 'VertSplit' } },
       { IndentBlanklineContextChar = { link = 'VertSplit' } },
-      { Statusline = { bg = 'NONE' } },
+      { StatusLine = { bg = 'NONE' } },
     },
     ['conifer'] = {
       { VertSplit = { bg = { from = 'Normal' }, fg = { from = 'LineNr' } } },

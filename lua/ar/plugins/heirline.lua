@@ -53,7 +53,7 @@ local function setup_colors()
     forest_green = hl.get('DiffAdd', 'fg'),
     lightgreen = hl.get('DiagnosticVirtualTextHint', 'bg'),
   }
-  if ar_config.colorscheme == 'default' then
+  if vim.g.colors_name == 'default' then
     return vim.tbl_deep_extend('force', P, {
       blue = hl.get('DiagnosticInfo', 'fg'),
       dark_orange = hl.get('DiagnosticWarn', 'fg'),
@@ -64,7 +64,22 @@ local function setup_colors()
       lightgreen = hl.get('DiagnosticVirtualTextHint', 'fg'),
     })
   end
-  if ar_config.colorscheme == 'onedark' then P = require('onedark.palette') end
+  if vim.g.colors_name == 'peachpuff' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.get('CursorLine', 'bg'),
+      fg = hl.get('Comment', 'fg'),
+      blue = hl.tint(hl.get('Visual', 'bg'), -0.4),
+      yellowgreen = hl.get('String', 'fg'),
+      dark_orange = hl.tint(hl.get('WarningMsg', 'fg'), -0.2),
+      error_red = hl.tint(hl.get('Error', 'fg'), -0.4),
+      pale_red = hl.tint(hl.get('Error', 'fg'), 0.2),
+      pale_blue = hl.tint(hl.get('DiagnosticInfo', 'fg'), -0.2),
+      forest_green = hl.tint(hl.get('DiffAdd', 'bg'), -0.3),
+      lightgreen = hl.tint(hl.get('DiagnosticVirtualTextHint', 'fg'), -0.2),
+      orange = hl.get('Constant', 'fg'),
+    })
+  end
+  if vim.g.colors_name == 'onedark' then P = require('onedark.palette') end
   return P
 end
 

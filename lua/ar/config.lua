@@ -289,7 +289,6 @@ local namespace = {
         'morning.vim',
         'murphy.vim',
         'pablo.vim',
-        'peachpuff.vim',
         'quiet.vim',
         'retrobox.vim',
         'ron.vim',
