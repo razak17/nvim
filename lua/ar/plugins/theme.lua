@@ -151,6 +151,13 @@ return {
     dependencies = 'rktjmp/lush.nvim',
   },
   {
+    'lucasadelino/conifer.nvim',
+    cond = get_cond({ 'conifer' }),
+    priority = get_priority({ 'conifer' }),
+    event = get_event({ 'conifer' }),
+    opts = { transparent = ar_config.ui.transparent.enable },
+  },
+  {
     'stevedylandev/darkmatter-nvim',
     cond = get_cond({ 'darkmatter' }),
     priority = get_priority({ 'darkmatter' }),

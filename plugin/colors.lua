@@ -251,6 +251,14 @@ local function colorscheme_overrides()
       { IndentBlanklineContextChar = { link = 'VertSplit' } },
       { Statusline = { bg = 'NONE' } },
     },
+    ['conifer'] = {
+      { VertSplit = { bg = { from = 'Normal' }, fg = { from = 'LineNr' } } },
+      { WinSeparator = { link = 'VertSplit' } },
+      { FloatBorder = { link = 'VertSplit' } },
+      { IndentBlanklineChar = { link = 'LineNr' } },
+      { IndentBlanklineContextChar = { link = 'VertSplit' } },
+      { PmenuBorder = { link = 'NormalFloat' } },
+    },
     ['lunar'] = {
       { VertSplit = { fg = { from = 'Comment', alter = -0.4 } } },
       { WinSeparator = { link = 'VertSplit' } },
