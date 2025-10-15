@@ -40,9 +40,9 @@ return {
           { '<leader>ep', '<Cmd>EcologPeek<CR>', desc = 'ecolog: peek variable' },
           { '<leader>el', '<Cmd>EcologShelterLinePeek<CR>', desc = 'ecolog: peek line' },
         }
-        if ar_config.picker.variant == 'snacks' then
+        if is_snacks then
           table.insert(keys, { '<leader>f;', '<Cmd>EcologSnacks<CR>', desc = 'snacks: ecolog' })
-        elseif ar_config.picker.variant == 'fzf-lua' then
+        elseif is_fzf then
           table.insert(keys, { '<leader>f;', '<Cmd>EcologFzf<CR>', desc = 'picker: ecolog' })
         end
         return keys
@@ -98,10 +98,10 @@ return {
             cmp = true,
             telescope = ar.has('telescope.nvim'),
             telescope_previewer = ar.has('telescope.nvim'),
-            fzf = true,
-            fzf_previewer = true,
-            snacks_previewer = true,
-            snacks = true,
+            fzf = is_fzf,
+            fzf_previewer = is_fzf,
+            snacks = is_snacks,
+            snacks_previewer = is_snacks,
           },
         },
         path = vim.fn.getcwd(),
