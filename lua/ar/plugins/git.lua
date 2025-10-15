@@ -113,6 +113,19 @@ return {
             },
             { NeogitDiffAddHighlight = { fg = { from = 'Normal' } } },
           },
+          ['wildcharm'] = {
+            {
+              NeogitDiffAdd = {
+                bg = { from = 'DiffAdd', attr = 'bg' },
+              },
+            },
+            {
+              NeogitDiffDelete = {
+                bg = { from = 'Error', attr = 'fg', alter = -0.3 },
+              },
+            },
+            { NeogitDiffAddHighlight = { fg = { from = 'Normal' } } },
+          },
           ['onedark'] = {
             { NeogitHunkHeader = { inherit = 'Headline2', bold = true } },
             { NeogitDiffHeader = { inherit = 'Headline2', bold = true } },

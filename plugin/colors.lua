@@ -209,11 +209,7 @@ local function colorscheme_overrides()
       { Conceal = { bg = { from = 'NormalFloat' } } },
       { CursorLine = { bg = { from = 'CursorLine', alter = -0.5 } } },
       { Folded = { bg = { from = 'CursorLine', alter = -0.15 } } },
-      {
-        LspReferenceRead = {
-          bg = { from = 'CursorLine', attr = 'bg', alter = 0.1 },
-        },
-      },
+      { LspReferenceRead = { bg = { from = 'CursorLine', alter = 0.1 } } },
       {
         Pmenu = {
           bg = { from = 'NormalFloat' },
@@ -416,6 +412,53 @@ local function colorscheme_overrides()
         },
       },
       { StatusLine = { bg = 'NONE' } },
+    },
+    ['wildcharm'] = {
+      { NormalFloat = { bg = { from = 'Normal', alter = 0.3 } } },
+      { FloatTitle = { bg = { from = 'CursorLine', alter = 0.05 } } },
+      { VertSplit = { fg = { from = 'VertSplit', alter = -0.3 } } },
+      { IndentBlanklineChar = { link = 'VertSplit' } },
+      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+      {
+        LspReferenceText = {
+          bg = 'NONE',
+          underline = true,
+          reverse = false,
+          sp = { from = 'Directory', attr = 'fg', alter = -0.6 },
+        },
+      },
+      {
+        LspReferenceRead = {
+          bg = { from = 'CursorLine', alter = 0.1 },
+          reverse = false,
+        },
+      },
+      {
+        LspReferenceWrite = {
+          inherit = 'LspReferenceText',
+          bold = false,
+          reverse = false,
+        },
+      },
+      {
+        Pmenu = {
+          bg = { from = 'NormalFloat' },
+          fg = { from = 'Normal', alter = -0.25 },
+        },
+      },
+      { PmenuBorder = { link = 'FloatBorder' } },
+      { PmenuExtra = { link = 'Pmenu' } },
+      { PmenuKind = { link = 'Dim' } },
+      { PmenuMatch = { link = 'Normal' } },
+      { PmenuSel = { link = 'CursorLine' } },
+      { PmenuExtraSel = { link = 'PmenuSel' } },
+      { PmenuKindSel = { link = 'PmenuSel' } },
+      { PmenuMatchSel = { link = 'PmenuSel' } },
+      { SnacksPickerCursorLine = { bg = { from = 'Folded' } } },
+      { SnacksPickerListCursorLine = { link = 'SnacksPickerCursorLine' } },
+      { SnacksPickerToggleHidden = { bg = { from = 'FloatTitle' } } },
+      { SnacksPickerToggleIgnored = { bg = { from = 'FloatTitle' } } },
+      { StatusLine = { bg = 'NONE', reverse = false } },
     },
     ['vague'] = {
       { VertSplit = { fg = { from = 'Comment', alter = -0.4 } } },
