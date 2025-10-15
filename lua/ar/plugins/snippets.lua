@@ -178,7 +178,11 @@ return {
     dependencies = {
       {
         'benfowler/telescope-luasnip.nvim',
-        cond = get_cond,
+        cond = function()
+          local picker = ar_config.picker.variant
+          local condition = picker == 'telescope' and get_cond()
+          return ar.get_plugin_cond('telescope-luasnip.nvim', condition)
+        end,
         keys = {
           {
             '<leader>fS',
