@@ -209,6 +209,25 @@ local function colorscheme_overrides()
       { Conceal = { bg = { from = 'NormalFloat' } } },
       { CursorLine = { bg = { from = 'CursorLine', alter = -0.5 } } },
       { Folded = { bg = { from = 'CursorLine', alter = -0.15 } } },
+      {
+        LspReferenceRead = {
+          bg = { from = 'CursorLine', attr = 'bg', alter = 0.1 },
+        },
+      },
+      {
+        Pmenu = {
+          bg = { from = 'NormalFloat' },
+          fg = { from = 'Comment', alter = 0.2 },
+        },
+      },
+      { PmenuBorder = { link = 'FloatBorder' } },
+      { PmenuExtra = { link = 'Pmenu' } },
+      { PmenuKind = { link = 'Comment' } },
+      { PmenuMatch = { link = 'NormalFloat' } },
+      { PmenuSel = { link = 'CursorLine' } },
+      { PmenuExtraSel = { link = 'PmenuSel' } },
+      { PmenuKindSel = { link = 'PmenuSel' } },
+      { PmenuMatchSel = { link = 'PmenuSel' } },
       { Comment = { fg = { from = 'Comment', alter = -0.3 } } },
       { LineNr = { fg = { from = 'Comment' } } },
       { NonText = { fg = { from = 'Comment' } } },
@@ -241,6 +260,25 @@ local function colorscheme_overrides()
       { FloatTitle = { link = 'CursorLine' } },
       { IndentBlanklineChar = { link = 'VertSplit' } },
       { IndentBlanklineContextChar = { link = 'VertSplit' } },
+      {
+        LspReferenceRead = {
+          bg = { from = 'CursorLine', attr = 'bg', alter = -0.1 },
+        },
+      },
+      {
+        Pmenu = {
+          bg = { from = 'NormalFloat' },
+          fg = { from = 'Comment', alter = 0.2 },
+        },
+      },
+      { PmenuBorder = { link = 'FloatBorder' } },
+      { PmenuExtra = { link = 'Pmenu' } },
+      { PmenuKind = { link = 'Comment' } },
+      { PmenuMatch = { link = 'NormalFloat' } },
+      { PmenuSel = { link = 'CursorLine' } },
+      { PmenuExtraSel = { link = 'PmenuSel' } },
+      { PmenuKindSel = { link = 'PmenuSel' } },
+      { PmenuMatchSel = { link = 'PmenuSel' } },
       { StatusLine = { bg = 'NONE' } },
     },
     ['habamax'] = {
