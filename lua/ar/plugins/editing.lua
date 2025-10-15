@@ -363,10 +363,8 @@ return {
   },
   {
     'subnut/nvim-ghost.nvim',
-    cond = function()
-      return get_cond('nvim-ghost.nvim', ar.plugins.overrides.ghost_text.enable)
-    end,
-    lazy = not ar.plugins.overrides.ghost_text.enable,
+    cond = function() return vim.env.RVIM_GHOST_ENABLED == '1' end,
+    lazy = false,
   },
   {
     'max397574/better-escape.nvim',

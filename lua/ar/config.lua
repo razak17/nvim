@@ -267,7 +267,6 @@ local namespace = {
     niceties = env.RVIM_NICETIES_ENABLED == '1',
     overrides = {
       dict = { enable = env.RVIM_DICT_ENABLED == '1' },
-      ghost_text = { enable = env.RVIM_GHOST_ENABLED == '1' },
     },
   },
   completion = { enable = env.RVIM_COMPLETION_ENABLED == '1' },
