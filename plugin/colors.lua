@@ -205,7 +205,7 @@ local function colorscheme_overrides()
     },
     ['vim'] = {
       { Normal = { bg = '#24283b' } },
-      { NormalFloat = { bg = { from = 'Normal', alter = 0.15 } } },
+      { NormalFloat = { link = 'Normal' } },
       { StatusLine = { inherit = 'NormalFloat' } },
       { Conceal = { bg = { from = 'NormalFloat' } } },
       { CursorLine = { bg = { from = 'CursorLine', alter = -0.5 } } },
@@ -213,19 +213,14 @@ local function colorscheme_overrides()
       { Comment = { fg = { from = 'Comment', alter = -0.3 } } },
       { LineNr = { fg = { from = 'Comment' } } },
       { NonText = { fg = { from = 'Comment' } } },
-      {
-        VertSplit = {
-          fg = { from = 'NonText', alter = -0.2 },
-          bg = { from = 'Normal' },
-        },
-      },
+      { VertSplit = { fg = { from = 'NonText', alter = -0.2 } } },
       { WinSeparator = { link = 'VertSplit' } },
-      {
-        FloatBorder = {
-          fg = { from = 'NonText', alter = -0.2 },
-          bg = { from = 'NormalFloat' },
-        },
-      },
+      { Visual = { link = 'CursorLine' } },
+      { Search = { bg = { from = 'Search', alter = -0.2 } } },
+      { FloatTitle = { link = 'CursorLine' } },
+      { IncSearch = { link = 'Search' } },
+      { StatusLine = { inherit = 'Normal' } },
+      { FloatBorder = { fg = { from = 'NonText', alter = -0.2 } } },
       { IndentBlanklineChar = { link = 'VertSplit' } },
       { IndentBlanklineContextChar = { link = 'VertSplit' } },
     },
@@ -298,7 +293,7 @@ ar.augroup('UserHighlights', {
 
 if ar.plugins.niceties then
   local scheme_switcher = require('ar.scheme_switcher')
-  scheme_switcher.set_colorscheme(scheme_switcher.get_current_colorscheme())
+  ar.load_colorscheme(scheme_switcher.get_current_colorscheme())
 else
   ar.load_colorscheme(ar_config.colorscheme)
 end
