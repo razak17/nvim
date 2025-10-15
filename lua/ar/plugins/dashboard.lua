@@ -215,6 +215,22 @@ return {
     config = function(_, dashboard)
       require('alpha').setup(dashboard.opts)
 
+      ar.augroup('AlphaSettings', {
+        event = { 'User' },
+        pattern = { 'AlphaReady' },
+        command = function(args)
+          -- opt.foldenable = false
+          vim.opt.colorcolumn = ''
+          vim.o.laststatus = 0
+          map('n', 'q', '<Cmd>q<CR>', { buffer = args.buf, nowait = true })
+
+          vim.api.nvim_create_autocmd('BufUnload', {
+            buffer = args.buf,
+            callback = function() vim.o.laststatus = 3 end,
+          })
+        end,
+      })
+
       ar.augroup('AlphaStats', {
         event = 'User',
         once = true,

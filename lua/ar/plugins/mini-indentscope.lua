@@ -41,6 +41,27 @@ return {
         },
       })
       require('mini.indentscope').setup(opts)
+
+      ar.augroup('MiniIndentscopeDisable', {
+        event = { 'FileType' },
+        desc = 'Disable indentscope for certain files',
+        command = function()
+          -- stylua: ignore
+          local ignored_filetypes = {
+            'aerial', 'dashboard', 'help', 'lazy', 'leetcode.nvim', 'mason', 'neo-tree',
+            'NvimTree', 'neogitstatus', 'notify', 'startify', 'toggleterm', 'Trouble',
+            'fzf', 'alpha', 'starter', 'dbout', 'neo-tree-popup', 'log', 'gitcommit', 'txt', 'git',
+            'flutterToolsOutline', 'undotree', 'markdown', 'norg', 'org', 'orgagenda',
+          }
+          local ignored_buftypes = { 'nofile', 'terminal' }
+          if
+            vim.tbl_contains(ignored_filetypes, vim.bo.filetype)
+            or vim.tbl_contains(ignored_buftypes, vim.bo.buftype)
+          then
+            vim.b.miniindentscope_disable = true
+          end
+        end,
+      })
     end,
   },
 }

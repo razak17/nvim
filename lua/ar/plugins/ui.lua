@@ -36,6 +36,23 @@ return {
       return ar.get_plugin_cond('smartcolumn.nvim', not minimal)
     end,
     event = { 'BufRead', 'BufNewFile' },
+    init = function()
+      local decor = ar.ui.decorations
+      ar.augroup('SmartCol', {
+        event = { 'BufEnter', 'CursorMoved', 'CursorMovedI', 'WinScrolled' },
+        command = function(args)
+          decor.set_colorcolumn(
+            args.buf,
+            function(colorcolumn)
+              require('smartcolumn').setup_buffer(
+                args.buf,
+                { colorcolumn = colorcolumn }
+              )
+            end
+          )
+        end,
+      })
+    end,
     opts = {
       colorcolumn = '0',
       custom_autocommand = true,

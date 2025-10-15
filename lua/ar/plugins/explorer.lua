@@ -346,6 +346,27 @@ return {
         },
       })
       require('neo-tree').setup(opts)
+
+      ar.augroup('NeoTreeStart', {
+        event = { 'BufEnter' },
+        desc = 'Open Neo-Tree on startup with directory',
+        command = function(args)
+          if package.loaded['neo-tree'] then
+            return true
+          else
+            local stats = vim.uv.fs_stat(api.nvim_buf_get_name(args.buf))
+            if stats and stats.type == 'directory' then
+              require('lazy').load({ plugins = { 'neo-tree.nvim' } })
+              pcall(
+                api.nvim_exec_autocmds,
+                'BufEnter',
+                { group = 'NeoTree_NetrwDeferred', buffer = args.buf }
+              )
+              return true
+            end
+          end
+        end,
+      })
     end,
     dependencies = {
       'MunifTanjim/nui.nvim',
