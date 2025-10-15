@@ -41,19 +41,6 @@ local force_inactive_filetypes = {
 
 local function setup_colors()
   local hl = ar.highlight
-  -- TODO: Overriding statusline highlight twice (also in colors overrides)
-  hl.plugin('heirline', {
-    theme = {
-      ['default'] = {
-        {
-          StatusLine = {
-            bg = { from = 'StatusLine', alter = -0.85 },
-            fg = { from = 'Normal' },
-          },
-        },
-      },
-    },
-  })
   local P = {
     bg_dark = hl.get('StatusLine', 'bg'),
     fg = hl.get('Normal', 'fg'),
@@ -100,7 +87,6 @@ return {
       local conditions = require('heirline.conditions')
       local stl = require('ar.statusline')
 
-      opts.colors = setup_colors
       opts.statusline = vim.tbl_deep_extend('force', opts.statusline or {}, {
         static = {
           filetypes = filetypes,
