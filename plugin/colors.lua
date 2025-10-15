@@ -153,6 +153,15 @@ end
 
 local function colorscheme_overrides()
   local overrides = {
+    ['onedark'] = {
+      { Dim = { inherit = 'VertSplit' } },
+      { NeorgContext = { inherit = 'Normal' } },
+      -- { ['@variable'] = { fg = { from = '@none' } } },
+      { dmapWin = { inherit = 'Normal' } },
+      { Strict = { link = 'DiffDeleteAlt' } },
+      { Pmenu = { link = 'NormalFloat' } },
+      { PmenuBorder = { link = 'FloatBorder' } },
+    },
     ['default'] = {
       {
         NormalFloat = {
@@ -192,15 +201,6 @@ local function colorscheme_overrides()
         },
       },
       { SnacksPickerToggleIgnored = { link = 'SnacksPickerToggleHidden' } },
-    },
-    ['onedark'] = {
-      { Dim = { inherit = 'VertSplit' } },
-      { NeorgContext = { inherit = 'Normal' } },
-      -- { ['@variable'] = { fg = { from = '@none' } } },
-      { dmapWin = { inherit = 'Normal' } },
-      { Strict = { link = 'DiffDeleteAlt' } },
-      { Pmenu = { link = 'NormalFloat' } },
-      { PmenuBorder = { link = 'FloatBorder' } },
     },
     ['vim'] = {
       { Normal = { bg = '#24283b' } },
