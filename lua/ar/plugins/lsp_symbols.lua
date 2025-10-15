@@ -132,7 +132,7 @@ return {
   },
   {
     'SmiteshP/nvim-navbuddy',
-    cond = not minimal,
+    cond = function() return not minimal and ar.lsp.enable end,
     cmd = { 'Navbuddy' },
     lazy = false,
     keys = {
