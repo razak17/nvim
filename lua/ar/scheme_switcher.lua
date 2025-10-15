@@ -162,7 +162,7 @@ function M.colorscheme_menu()
     local scheme_index, _ = unpack(api.nvim_win_get_cursor(win))
     scheme_index = scheme_index - #metalines
     if scheme_index >= 1 and scheme_index <= #schemes then
-      M.set_colorscheme(schemes[scheme_index])
+      vim.schedule(function() M.set_colorscheme(schemes[scheme_index]) end)
     end
   end
 
@@ -181,6 +181,7 @@ function M.colorscheme_menu()
 
   map('n', '<CR>', on_enter, { buffer = buf })
   map('n', '<Esc>', on_esc, { buffer = buf })
+  -- map('n', 'P', on_line_change, { buffer = buf })
   map('n', 'q', on_esc, { buffer = buf })
 end
 
