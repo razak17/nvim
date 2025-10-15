@@ -55,6 +55,8 @@ local function setup_colors()
   }
   if vim.g.colors_name == 'default' then
     return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.3),
+      fg = hl.get('Normal', 'fg'),
       blue = hl.get('DiagnosticInfo', 'fg'),
       dark_orange = hl.get('DiagnosticWarn', 'fg'),
       error_red = hl.get('ExtraWhitespace', 'fg'),
