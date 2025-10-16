@@ -148,6 +148,13 @@ return {
     opts = { transparent = ar_config.ui.transparent.enable },
   },
   {
+    'KijitoraFinch/nanode.nvim',
+    cond = get_cond({ 'nanode' }),
+    priority = get_priority({ 'nanode' }),
+    event = get_event({ 'nanode' }),
+    -- opts = { transparent = ar_config.ui.transparent.enable },
+  },
+  {
     'stevedylandev/darkmatter-nvim',
     cond = get_cond({ 'darkmatter' }),
     priority = get_priority({ 'darkmatter' }),
