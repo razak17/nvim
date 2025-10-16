@@ -50,7 +50,6 @@ return {
     cond = not minimal and niceties,
     event = { 'WinNew' },
     opts = function()
-      local P = require('onedark.palette')
       return {
         no_exec_files = {
           'NeogitCommitMessage',
@@ -67,11 +66,10 @@ return {
           'fzf',
           'fugitive',
         },
-        highlight = {
-          bg = ar_config.ui.transparent.enable and 'NONE'
-            or ar.highlight.get('Normal', 'bg'),
-          fg = P.cursor,
-        },
+        highlight = ar.highlight.tint(
+          ar.highlight.get('WinSeparator', 'fg'),
+          0.4
+        ),
       }
     end,
   },
