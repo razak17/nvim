@@ -497,6 +497,7 @@ local function colorscheme_overrides()
       { TelescopePreviewBorder = { link = 'FloatBorder' } },
       { TelescopeResultsBorder = { link = 'FloatBorder' } },
       { Winbar = { link = 'Variable' } },
+      { WinbarNC = { link = 'LineNr' } },
       { PmenuBorder = { link = 'NormalFloat' } },
       { IndentBlanklineChar = { link = 'Dim' } },
       { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
