@@ -713,6 +713,7 @@ return {
       },
       {
         'molecule-man/telescope-menufacture',
+        cond = picker_enabled,
         specs = {
           'nvim-telescope/telescope.nvim',
           optional = true,
