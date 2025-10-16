@@ -503,7 +503,7 @@ local config = {
     },
   },
   plugins = {
-    disabled = {},
+    disabled = { 'VectorCode' },
     modules = {
       disabled = { 'treesitter', 'incline' },
       override = {},
