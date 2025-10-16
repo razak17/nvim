@@ -476,6 +476,10 @@ local function colorscheme_overrides()
       { IndentBlanklineContextChar = { link = 'VertSplit' } },
       { PmenuBorder = { link = 'NormalFloat' } },
     },
+    ['kanso'] = {
+      { FloatBorder = { link = 'VertSplit' } },
+      { PmenuBorder = { link = 'NormalFloat' } },
+    },
     ['lunar'] = {
       { VertSplit = { fg = { from = 'Comment', alter = -0.4 } } },
       { WinSeparator = { link = 'VertSplit' } },
