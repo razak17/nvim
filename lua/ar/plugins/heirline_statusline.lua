@@ -988,6 +988,22 @@ return {
         },
         empty_component,
       },
+      -- VectorCode
+      {
+        flexible = 2,
+        condition = function() return ar.has('VectorCode') and ar.ai.enable end,
+        {
+          init = function(self)
+            local vectorcode_component =
+              require('vectorcode.integrations').heirline({
+                show_job_count = true,
+              })
+            self.provider = vectorcode_component.provider
+          end,
+          provider = function(self) return self.provider() end,
+        },
+        empty_component,
+      },
       -- MCPHub
       {
         flexible = 2,

@@ -3,6 +3,14 @@ local tiny_diags_disabled_by_nes = false
 
 return {
   {
+    'Davidyz/VectorCode',
+    cond = function() return ar.get_plugin_cond('VectorCode', ar.ai.enable) end,
+    version = '*',
+    build = 'uv tool upgrade vectorcode',
+    cmd = 'VectorCode',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
+  {
     'folke/sidekick.nvim',
     cond = false,
     lazy = true,

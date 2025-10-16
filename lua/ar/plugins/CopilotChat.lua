@@ -127,6 +127,31 @@ return {
     },
     config = function(_, opts)
       local chat = require('CopilotChat')
+
+      if ar.has('VectorCode') then
+        opts.contexts = opts.contexts or {}
+        local vectorcode_ctx =
+          require('vectorcode.integrations.copilotchat').make_context_provider({
+            prompt_header = 'Here are relevant files from the repository:', -- Customize header text
+            prompt_footer = '\nConsider this context when answering:', -- Customize footer text
+            skip_empty = true, -- Skip adding context when no files are retrieved
+          })
+        opts.contexts.vectorcode = vectorcode_ctx
+
+        opts.prompts = vim
+          .iter(opts.prompts or {})
+          :fold({}, function(acc, key, prompt)
+            prompt.context = { 'selection', 'vectorcode' } -- Add vectorcode to the context
+            acc[key] = prompt
+            return acc
+          end)
+
+        opts.sticky = {
+          'Using the model $claude-sonnet-4.5',
+          '#vectorcode', -- Automatically includes repository context in every conversation
+        }
+      end
+
       chat.setup(opts)
 
       local select = require('CopilotChat.select')
