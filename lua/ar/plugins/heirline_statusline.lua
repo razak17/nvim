@@ -998,9 +998,9 @@ return {
               require('vectorcode.integrations').heirline({
                 show_job_count = true,
               })
-            self.provider = vectorcode_component.provider
+            self.component = vectorcode_component.provider
           end,
-          provider = function(self) return self.provider() end,
+          provider = function(self) return ' ' .. self.component() end,
         },
         empty_component,
       },
