@@ -661,7 +661,7 @@ return {
     },
   },
   {
-    'emmanueltouzery/agitator.nvim',
+    'razak17/agitator.nvim',
     cond = function() return git_cond('agitator.nvim') end,
     init = function()
       local function time_machine()
