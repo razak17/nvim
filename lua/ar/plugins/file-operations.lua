@@ -59,7 +59,7 @@ return {
     },
   },
   {
-    'razak17/readonly.nvim',
+    'bgaillard/readonly.nvim',
     cond = function()
       local condition = not minimal and niceties
       return ar.get_plugin_cond('readonly.nvim', condition)
