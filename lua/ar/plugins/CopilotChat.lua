@@ -107,7 +107,7 @@ return {
     end,
     ---@type CopilotChat.config.shared
     opts = {
-      model = 'gpt-4.1',
+      model = 'claude-sonnet-4.5',
       agent = 'copilot',
       prompts = prompts,
       auto_follow_cursor = false,
