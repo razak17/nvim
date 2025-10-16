@@ -1,5 +1,5 @@
 local ui, highlight = ar.ui, ar.highlight
-local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
+local minimal = ar.plugins.minimal
 
 -- Example for configuring Neovim to load user-installed installed Lua rocks:
 local rocks_dir = vim.env.HOME .. '/.luarocks/share/lua/5.1'
