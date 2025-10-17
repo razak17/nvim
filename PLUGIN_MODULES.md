@@ -23,6 +23,7 @@
 - dashboard
 - db
 - debugger
+- dial
 - diff
 - docs
 - dropbar
@@ -106,6 +107,7 @@
 - testing
 - theme
 - time
+- tips
 - tools
 - trailblazer
 - translate
@@ -117,6 +119,7 @@
 - ui
 - undo
 - url
+- vectorcode
 - whichkey
 - window
 - window_picker

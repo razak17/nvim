@@ -133,6 +133,7 @@ function M.update()
 
   local ok, err = pcall(function()
     local lsp_servers = require('ar.servers').names('all')
+    vim.list_extend(lsp_servers, { 'typescript-tools' })
     local plugin_modules = generate_plugin_modules()
 
     write_md('SERVERS.md', '🚀 LSP Servers', lsp_servers)

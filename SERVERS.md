@@ -40,3 +40,4 @@
 - vtsls
 - vue_ls
 - yamlls
+- typescript-tools
