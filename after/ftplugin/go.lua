@@ -54,6 +54,8 @@ if ar.lsp.enable then
   map('n', '<localleader>gie', '<Cmd>GoIfErr<CR>', with_desc('if err'))
 end
 
+if not ar.has('nvim-dap') then return end
+
 local dap = require('dap')
 local dlv_path = ar.get_pkg_path('delve', 'dlv')
 
