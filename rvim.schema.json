@@ -54,12 +54,12 @@
       "additionalProperties": false,
       "properties": {
         "overrides": {
-          "type": "object",
           "additionalProperties": {
             "additionalProperties": false,
             "properties": { "enable": { "type": "boolean" } },
             "type": "object"
-          }
+          },
+          "type": "object"
         },
         "modules": {
           "additionalProperties": false,
@@ -102,6 +102,7 @@
                   "fold",
                   "fun",
                   "games",
+                  "ghost",
                   "git",
                   "gitpad",
                   "gp",
@@ -238,6 +239,7 @@
                   "fold",
                   "fun",
                   "games",
+                  "ghost",
                   "git",
                   "gitpad",
                   "gp",
@@ -346,21 +348,6 @@
     "ai": {
       "additionalProperties": false,
       "properties": {
-        "models": {
-          "additionalProperties": false,
-          "properties": {
-            "claude": { "type": "boolean" },
-            "openai": { "type": "boolean" },
-            "gemini": { "type": "boolean" },
-            "copilot": { "type": "boolean" }
-          },
-          "type": "object"
-        },
-        "ignored_filetypes": { "items": { "type": "string" }, "type": "array" },
-        "prompts": {
-          "type": "object",
-          "additionalProperties": { "type": "string" }
-        },
         "completion": {
           "additionalProperties": false,
           "properties": {
@@ -376,6 +363,21 @@
             "auto_trigger": { "type": "boolean" }
           },
           "type": "object"
+        },
+        "ignored_filetypes": { "items": { "type": "string" }, "type": "array" },
+        "prompts": {
+          "additionalProperties": { "type": "string" },
+          "type": "object"
+        },
+        "models": {
+          "additionalProperties": false,
+          "properties": {
+            "claude": { "type": "boolean" },
+            "openai": { "type": "boolean" },
+            "gemini": { "type": "boolean" },
+            "copilot": { "type": "boolean" }
+          },
+          "type": "object"
         }
       },
       "type": "object"
@@ -384,11 +386,11 @@
     "completion": {
       "additionalProperties": false,
       "properties": {
+        "icons": { "enum": ["lspkind", "mini.icons"], "type": "string" },
         "variant": {
           "enum": ["cmp", "blink", "mini.completion", "omnifunc"],
           "type": "string"
-        },
-        "icons": { "enum": ["lspkind", "mini.icons"], "type": "string" }
+        }
       },
       "type": "object"
     },
@@ -507,12 +509,46 @@
           "properties": { "enable": { "type": "boolean" } },
           "type": "object"
         },
-        "hover_diagnostics": {
-          "additionalProperties": true,
+        "lang": {
+          "additionalProperties": false,
           "properties": {
-            "go_to": { "type": "boolean" },
-            "scope": { "type": "string" },
-            "enable": { "type": "boolean" }
+            "tailwind": {
+              "additionalProperties": false,
+              "properties": {
+                "tailwind-tools": { "type": "boolean" },
+                "tailwindcss": { "type": "boolean" }
+              },
+              "type": "object"
+            },
+            "typescript": {
+              "additionalProperties": false,
+              "properties": {
+                "vtsls": { "type": "boolean" },
+                "typescript-tools": { "type": "boolean" },
+                "ts_ls": { "type": "boolean" },
+                "tsgo": { "type": "boolean" }
+              },
+              "type": "object"
+            },
+            "web": {
+              "additionalProperties": false,
+              "properties": {
+                "emmet_language_server": { "type": "boolean" },
+                "biome": { "type": "boolean" },
+                "eslint": { "type": "boolean" }
+              },
+              "type": "object"
+            },
+            "python": {
+              "additionalProperties": false,
+              "properties": {
+                "ty": { "type": "boolean" },
+                "basedpyright": { "type": "boolean" },
+                "ruff": { "type": "boolean" },
+                "pyright": { "type": "boolean" }
+              },
+              "type": "object"
+            }
           },
           "type": "object"
         },
@@ -527,20 +563,20 @@
           },
           "type": "object"
         },
-        "code_actions": {
+        "format_on_save": {
+          "additionalProperties": false,
+          "properties": { "enable": { "type": "boolean" } },
+          "type": "object"
+        },
+        "symbols": {
           "additionalProperties": false,
           "properties": {
             "enable": { "type": "boolean" },
             "variant": {
-              "enum": ["builtin", "tiny-code-action"],
+              "enum": ["builtin", "picker", "namu"],
               "type": "string"
             }
           },
-          "type": "object"
-        },
-        "foldexpr": {
-          "additionalProperties": false,
-          "properties": { "enable": { "type": "boolean" } },
           "type": "object"
         },
         "override": {
@@ -622,7 +658,6 @@
           "additionalProperties": false,
           "properties": {
             "directories": { "items": { "type": "string" }, "type": "array" },
-            "filetypes": { "items": { "type": "string" }, "type": "array" },
             "servers": {
               "items": {
                 "enum": [
@@ -671,67 +706,9 @@
                 "type": "string"
               },
               "type": "array"
-            }
-          },
-          "type": "object"
-        },
-        "lang": {
-          "additionalProperties": false,
-          "properties": {
-            "tailwind": {
-              "additionalProperties": false,
-              "properties": {
-                "tailwind-tools": { "type": "boolean" },
-                "tailwindcss": { "type": "boolean" }
-              },
-              "type": "object"
             },
-            "python": {
-              "additionalProperties": false,
-              "properties": {
-                "ty": { "type": "boolean" },
-                "basedpyright": { "type": "boolean" },
-                "ruff": { "type": "boolean" },
-                "pyright": { "type": "boolean" }
-              },
-              "type": "object"
-            },
-            "web": {
-              "additionalProperties": false,
-              "properties": {
-                "emmet_language_server": { "type": "boolean" },
-                "biome": { "type": "boolean" },
-                "eslint": { "type": "boolean" }
-              },
-              "type": "object"
-            },
-            "typescript": {
-              "additionalProperties": false,
-              "properties": {
-                "vtsls": { "type": "boolean" },
-                "typescript-tools": { "type": "boolean" },
-                "ts_ls": { "type": "boolean" },
-                "tsgo": { "type": "boolean" }
-              },
-              "type": "object"
-            }
+            "filetypes": { "items": { "type": "string" }, "type": "array" }
           },
-          "type": "object"
-        },
-        "symbols": {
-          "additionalProperties": false,
-          "properties": {
-            "enable": { "type": "boolean" },
-            "variant": {
-              "enum": ["builtin", "picker", "namu"],
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "format_on_save": {
-          "additionalProperties": false,
-          "properties": { "enable": { "type": "boolean" } },
           "type": "object"
         },
         "virtual_lines": {
@@ -742,6 +719,31 @@
               "enum": ["builtin", "lsp_lines", "tiny-inline"],
               "type": "string"
             }
+          },
+          "type": "object"
+        },
+        "foldexpr": {
+          "additionalProperties": false,
+          "properties": { "enable": { "type": "boolean" } },
+          "type": "object"
+        },
+        "code_actions": {
+          "additionalProperties": false,
+          "properties": {
+            "enable": { "type": "boolean" },
+            "variant": {
+              "enum": ["builtin", "tiny-code-action"],
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "hover_diagnostics": {
+          "additionalProperties": true,
+          "properties": {
+            "go_to": { "type": "boolean" },
+            "scope": { "type": "string" },
+            "enable": { "type": "boolean" }
           },
           "type": "object"
         },
@@ -756,11 +758,28 @@
       },
       "type": "object"
     },
-    "session": {
+    "plugin": {
       "additionalProperties": false,
       "properties": {
-        "enable": { "type": "boolean" },
-        "variant": { "enum": ["persisted", "persistence"], "type": "string" }
+        "main": {
+          "additionalProperties": {
+            "additionalProperties": false,
+            "properties": { "enable": { "type": "boolean" } },
+            "type": "object"
+          },
+          "type": "object"
+        },
+        "custom": {
+          "additionalProperties": {
+            "additionalProperties": false,
+            "properties": {
+              "config": { "additionalProperties": true, "type": "object" },
+              "enable": { "type": "boolean" }
+            },
+            "type": "object"
+          },
+          "type": "object"
+        }
       },
       "type": "object"
     },
@@ -788,28 +807,11 @@
       },
       "type": "object"
     },
-    "plugin": {
+    "session": {
       "additionalProperties": false,
       "properties": {
-        "main": {
-          "type": "object",
-          "additionalProperties": {
-            "additionalProperties": false,
-            "properties": { "enable": { "type": "boolean" } },
-            "type": "object"
-          }
-        },
-        "custom": {
-          "type": "object",
-          "additionalProperties": {
-            "additionalProperties": false,
-            "properties": {
-              "config": { "type": "object", "additionalProperties": true },
-              "enable": { "type": "boolean" }
-            },
-            "type": "object"
-          }
-        }
+        "enable": { "type": "boolean" },
+        "variant": { "enum": ["persisted", "persistence"], "type": "string" }
       },
       "type": "object"
     },

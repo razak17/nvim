@@ -35,6 +35,7 @@
 - fold
 - fun
 - games
+- ghost
 - git
 - gitpad
 - gp
