@@ -118,19 +118,6 @@ local function find_files()
     show_empty = true,
     supports_live = true,
     layout = { preview = false, cycle = true, preset = 'custom_select' },
-      -- stylua: ignore start
-    args = {
-      '--exclude', '**/.git/**',
-      '--exclude', '**/.next/**',
-      '--exclude', '**/node_modules/**',
-      '--exclude', '**/build/**',
-      '--exclude', '**/tmp/**',
-      '--exclude', '**/env/**',
-      '--exclude', '**/__pycache__/**',
-      '--exclude', '**/.mypy_cache/**',
-      '--exclude', '**/.pytest_cache/**',
-    },
-    -- stylua: ignore end
   })()
 end
 
@@ -194,12 +181,7 @@ local function notes()
   p('files', {
     matcher = { frecency = true },
     cwd = ar.sync_dir('obsidian'),
-    -- stylua: ignore
-    args = {
-      '--glob', '*.md',
-      '--exclude', '**/.git/**',
-      '--exclude', '**/node_modules/**',
-    },
+    args = { '--glob', '*.md' },
   })()
 end
 
@@ -359,11 +341,16 @@ return {
             exclude = {
               '.luarc.json',
               'node_modules',
+              'env',
+              '__pycache__',
+              '.mypy_cache',
+              '.pytest_cache',
               '.git',
               'tags',
               'dist',
               '.DS_Store',
               'build',
+              'tmp',
               'out',
               '.next',
               'vim-sessions',
