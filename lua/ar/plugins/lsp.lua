@@ -10,6 +10,7 @@ local server_langs = {
   ts_ls = 'typescript',
   ['typescript-tools'] = 'typescript',
   tsgo = 'typescript',
+  denols = 'typescript',
   vtsls = 'typescript',
   ty = 'python',
   ruff = 'python',

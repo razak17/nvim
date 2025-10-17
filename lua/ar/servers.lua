@@ -68,6 +68,7 @@ local servers = {
   clangd = { cmd = get_clangd_cmd() },
   cmake = {},
   cssls = {},
+  denols = {},
   dockerls = {},
   -- golangci_lint_ls = {},
   marksman = {},
@@ -112,9 +113,6 @@ local servers = {
     settings = {
       telemetry = { telemetryLevel = 'off' },
     },
-  },
-  denols = {
-    root_markers = { 'deno.json', 'deno.jsonc', '.git' },
   },
   docker_compose_language_service = {
     root_markers = { 'docker-compose.yaml', 'docker-compose.yml' },

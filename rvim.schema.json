@@ -666,7 +666,8 @@
                 "tsgo": { "type": "boolean" },
                 "vtsls": { "type": "boolean" },
                 "typescript-tools": { "type": "boolean" },
-                "ts_ls": { "type": "boolean" }
+                "ts_ls": { "type": "boolean" },
+                "denols": { "type": "boolean" }
               },
               "additionalProperties": false,
               "type": "object"

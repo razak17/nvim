@@ -427,6 +427,7 @@ local config = {
         ['typescript-tools'] = false,
         vtsls = true,
         tsgo = false,
+        denols = false,
       },
       web = {
         biome = false,
