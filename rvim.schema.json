@@ -4,662 +4,721 @@
   "additionalProperties": false,
   "type": "object",
   "properties": {
-    "$schema": { "type": "string" },
-    "picker": {
+    "debug": {
+      "properties": { "enable": { "type": "boolean" } },
       "additionalProperties": false,
-      "properties": {
-        "win": {
-          "additionalProperties": false,
-          "properties": {
-            "fullscreen": { "type": "boolean" },
-            "show_border": { "type": "boolean" },
-            "show_preview": { "type": "boolean" }
-          },
-          "type": "object"
-        },
-        "variant": {
-          "enum": ["snacks", "telescope", "fzf-lua", "mini.pick"],
-          "type": "string"
-        },
-        "enable": { "type": "boolean" },
-        "files": {
-          "enum": ["smart-open", "snacks", "telescope", "fzf-lua", "mini.pick"],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "image": {
-      "additionalProperties": false,
-      "properties": {
-        "enable": { "type": "boolean" },
-        "variant": { "enum": ["image.nvim", "snacks"], "type": "string" }
-      },
       "type": "object"
     },
     "notifier": {
-      "additionalProperties": false,
       "properties": {
         "enable": { "type": "boolean" },
-        "variant": { "enum": ["nvim-notify", "snacks"], "type": "string" }
+        "variant": { "type": "string", "enum": ["nvim-notify", "snacks"] }
       },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "$schema": { "type": "string" },
+    "gx": {
+      "properties": {
+        "enable": { "type": "boolean" },
+        "variant": { "type": "string", "enum": ["local", "plugin"] }
+      },
+      "additionalProperties": false,
       "type": "object"
     },
     "animation": {
-      "additionalProperties": false,
       "properties": { "enable": { "type": "boolean" } },
-      "type": "object"
-    },
-    "plugins": {
       "additionalProperties": false,
-      "properties": {
-        "overrides": {
-          "additionalProperties": {
-            "additionalProperties": false,
-            "properties": { "enable": { "type": "boolean" } },
-            "type": "object"
-          },
-          "type": "object"
-        },
-        "modules": {
-          "additionalProperties": false,
-          "properties": {
-            "disabled": {
-              "items": {
-                "enum": [
-                  "ai",
-                  "animation",
-                  "api",
-                  "autopair",
-                  "avante",
-                  "blink",
-                  "blink_sources",
-                  "buffers",
-                  "cmdline",
-                  "cmp_sources",
-                  "code_block",
-                  "code_runner",
-                  "codecompanion",
-                  "colorizer",
-                  "comment",
-                  "completion",
-                  "context",
-                  "copilot",
-                  "CopilotChat",
-                  "core",
-                  "cursor",
-                  "dashboard",
-                  "db",
-                  "debugger",
-                  "dial",
-                  "diff",
-                  "docs",
-                  "dropbar",
-                  "editing",
-                  "experiments",
-                  "explorer",
-                  "file-operations",
-                  "fold",
-                  "fun",
-                  "games",
-                  "ghost",
-                  "git",
-                  "gitpad",
-                  "gp",
-                  "grapple",
-                  "heirline",
-                  "heirline_statuscolumn",
-                  "heirline_statusline",
-                  "hydra",
-                  "ibl",
-                  "icons",
-                  "incline",
-                  "init",
-                  "lang",
-                  "leetcode",
-                  "log",
-                  "lsp",
-                  "lsp_code_actions",
-                  "lsp_diagnostics",
-                  "lsp_extra",
-                  "lsp_inlay_hints",
-                  "lsp_lens",
-                  "lsp_preview",
-                  "lsp_symbols",
-                  "markdown",
-                  "marks",
-                  "mcphub",
-                  "mini",
-                  "mini-ai",
-                  "mini-completion",
-                  "mini-indentscope",
-                  "mini-pairs",
-                  "mini-pick",
-                  "mini-surround",
-                  "minuet",
-                  "motion",
-                  "multicursor",
-                  "navigation",
-                  "noice",
-                  "notes",
-                  "notify",
-                  "nvzone",
-                  "opencode",
-                  "picker",
-                  "pipe",
-                  "profile",
-                  "px-to-rem",
-                  "qf",
-                  "readline",
-                  "replace",
-                  "rustaceanvim",
-                  "scratch",
-                  "session",
-                  "share",
-                  "shelter",
-                  "snacks",
-                  "snacks_dashboard",
-                  "snacks_indent",
-                  "snacks_notifier",
-                  "snacks_picker",
-                  "snacks_ui_select",
-                  "snippets",
-                  "sort",
-                  "surf",
-                  "swap",
-                  "tailwind",
-                  "telescope",
-                  "telescope-any",
-                  "telescope_extensions",
-                  "telescope_lsp",
-                  "telescope_menu",
-                  "telescope_ui_select",
-                  "terminal",
-                  "testing",
-                  "theme",
-                  "time",
-                  "tips",
-                  "toggle",
-                  "tools",
-                  "trailblazer",
-                  "translate",
-                  "transparent",
-                  "treesitter",
-                  "treesitter-main",
-                  "typescript",
-                  "typr",
-                  "ui",
-                  "undo",
-                  "url",
-                  "vectorcode",
-                  "whichkey",
-                  "window",
-                  "window_picker",
-                  "wrap"
-                ],
-                "type": "string"
-              },
-              "type": "array"
-            },
-            "override": {
-              "items": {
-                "enum": [
-                  "ai",
-                  "animation",
-                  "api",
-                  "autopair",
-                  "avante",
-                  "blink",
-                  "blink_sources",
-                  "buffers",
-                  "cmdline",
-                  "cmp_sources",
-                  "code_block",
-                  "code_runner",
-                  "codecompanion",
-                  "colorizer",
-                  "comment",
-                  "completion",
-                  "context",
-                  "copilot",
-                  "CopilotChat",
-                  "core",
-                  "cursor",
-                  "dashboard",
-                  "db",
-                  "debugger",
-                  "dial",
-                  "diff",
-                  "docs",
-                  "dropbar",
-                  "editing",
-                  "experiments",
-                  "explorer",
-                  "file-operations",
-                  "fold",
-                  "fun",
-                  "games",
-                  "ghost",
-                  "git",
-                  "gitpad",
-                  "gp",
-                  "grapple",
-                  "heirline",
-                  "heirline_statuscolumn",
-                  "heirline_statusline",
-                  "hydra",
-                  "ibl",
-                  "icons",
-                  "incline",
-                  "init",
-                  "lang",
-                  "leetcode",
-                  "log",
-                  "lsp",
-                  "lsp_code_actions",
-                  "lsp_diagnostics",
-                  "lsp_extra",
-                  "lsp_inlay_hints",
-                  "lsp_lens",
-                  "lsp_preview",
-                  "lsp_symbols",
-                  "markdown",
-                  "marks",
-                  "mcphub",
-                  "mini",
-                  "mini-ai",
-                  "mini-completion",
-                  "mini-indentscope",
-                  "mini-pairs",
-                  "mini-pick",
-                  "mini-surround",
-                  "minuet",
-                  "motion",
-                  "multicursor",
-                  "navigation",
-                  "noice",
-                  "notes",
-                  "notify",
-                  "nvzone",
-                  "opencode",
-                  "picker",
-                  "pipe",
-                  "profile",
-                  "px-to-rem",
-                  "qf",
-                  "readline",
-                  "replace",
-                  "rustaceanvim",
-                  "scratch",
-                  "session",
-                  "share",
-                  "shelter",
-                  "snacks",
-                  "snacks_dashboard",
-                  "snacks_indent",
-                  "snacks_notifier",
-                  "snacks_picker",
-                  "snacks_ui_select",
-                  "snippets",
-                  "sort",
-                  "surf",
-                  "swap",
-                  "tailwind",
-                  "telescope",
-                  "telescope-any",
-                  "telescope_extensions",
-                  "telescope_lsp",
-                  "telescope_menu",
-                  "telescope_ui_select",
-                  "terminal",
-                  "testing",
-                  "theme",
-                  "time",
-                  "tips",
-                  "toggle",
-                  "tools",
-                  "trailblazer",
-                  "translate",
-                  "transparent",
-                  "treesitter",
-                  "treesitter-main",
-                  "typescript",
-                  "typr",
-                  "ui",
-                  "undo",
-                  "url",
-                  "vectorcode",
-                  "whichkey",
-                  "window",
-                  "window_picker",
-                  "wrap"
-                ],
-                "type": "string"
-              },
-              "type": "array"
-            }
-          },
-          "type": "object"
-        },
-        "disabled": { "items": { "type": "string" }, "type": "array" }
-      },
       "type": "object"
     },
     "ai": {
-      "additionalProperties": false,
       "properties": {
-        "completion": {
-          "additionalProperties": false,
-          "properties": {
-            "enable": { "type": "boolean" },
-            "variant": {
-              "enum": ["builtin", "copilot", "minuet"],
-              "type": "string"
-            },
-            "suggestions": {
-              "enum": ["ghost-text", "completion"],
-              "type": "string"
-            },
-            "auto_trigger": { "type": "boolean" }
-          },
-          "type": "object"
-        },
-        "ignored_filetypes": { "items": { "type": "string" }, "type": "array" },
-        "prompts": {
-          "additionalProperties": { "type": "string" },
-          "type": "object"
-        },
+        "ignored_filetypes": { "type": "array", "items": { "type": "string" } },
         "models": {
-          "additionalProperties": false,
           "properties": {
             "claude": { "type": "boolean" },
             "openai": { "type": "boolean" },
             "gemini": { "type": "boolean" },
             "copilot": { "type": "boolean" }
           },
+          "additionalProperties": false,
+          "type": "object"
+        },
+        "prompts": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "completion": {
+          "properties": {
+            "enable": { "type": "boolean" },
+            "variant": {
+              "type": "string",
+              "enum": ["builtin", "copilot", "minuet"]
+            },
+            "auto_trigger": { "type": "boolean" },
+            "suggestions": {
+              "type": "string",
+              "enum": ["ghost-text", "completion"]
+            }
+          },
+          "additionalProperties": false,
           "type": "object"
         }
       },
+      "additionalProperties": false,
       "type": "object"
     },
-    "colorscheme": { "type": "string" },
+    "colorscheme": {
+      "type": "string",
+      "enum": [
+        "afterglow",
+        "alabaster",
+        "ashen",
+        "backpack",
+        "bamboo",
+        "blackhole",
+        "catppuccin",
+        "conifer",
+        "cyberdream",
+        "darcubox",
+        "darkmatter",
+        "darkvoid",
+        "doom-one",
+        "eldritch",
+        "everforest",
+        "evergarden",
+        "flexoki",
+        "github_dark",
+        "glowbeam",
+        "gruvbox",
+        "gruvdark",
+        "horizon",
+        "jellybeans",
+        "kanagawa",
+        "kanso",
+        "lackluster",
+        "lavish",
+        "lunar",
+        "makurai",
+        "melange",
+        "mono-jade",
+        "monoglow",
+        "moonfly",
+        "morta",
+        "nanode",
+        "naysayer",
+        "naysayer.nvim",
+        "neomodern",
+        "night-owl",
+        "nightfox",
+        "no-clown-fiesta",
+        "oh-lucy",
+        "oh-lucy-evening",
+        "oldworld",
+        "onedark",
+        "poimandres",
+        "rasmus",
+        "ronny",
+        "rose-pine",
+        "serene",
+        "serenity",
+        "shadow",
+        "tokyonight",
+        "vague",
+        "WinterIsComing-dark-color-theme",
+        "yugen",
+        "zenbones",
+        "zenburn"
+      ]
+    },
     "completion": {
-      "additionalProperties": false,
       "properties": {
-        "icons": { "enum": ["lspkind", "mini.icons"], "type": "string" },
+        "icons": { "type": "string", "enum": ["lspkind", "mini.icons"] },
         "variant": {
-          "enum": ["cmp", "blink", "mini.completion", "omnifunc"],
-          "type": "string"
+          "type": "string",
+          "enum": ["cmp", "blink", "mini.completion", "omnifunc"]
         }
       },
+      "additionalProperties": false,
       "type": "object"
     },
-    "ui": {
-      "additionalProperties": false,
+    "plugins": {
       "properties": {
-        "winbar": {
-          "additionalProperties": false,
+        "modules": {
           "properties": {
-            "enable": { "type": "boolean" },
-            "variant": { "enum": ["local", "plugin"], "type": "string" }
-          },
-          "type": "object"
-        },
-        "statuscolumn": {
-          "additionalProperties": false,
-          "properties": {
-            "enable": { "type": "boolean" },
-            "variant": { "enum": ["local", "plugin"], "type": "string" }
-          },
-          "type": "object"
-        },
-        "indentline": {
-          "additionalProperties": false,
-          "properties": {
-            "enable": { "type": "boolean" },
-            "variant": {
-              "enum": ["mini.indentscope", "ibl", "snacks", "indentmini"],
-              "type": "string"
+            "override": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "ai",
+                  "animation",
+                  "api",
+                  "autopair",
+                  "avante",
+                  "blink",
+                  "blink_sources",
+                  "buffers",
+                  "cmdline",
+                  "cmp_sources",
+                  "code_block",
+                  "code_runner",
+                  "codecompanion",
+                  "colorizer",
+                  "comment",
+                  "completion",
+                  "context",
+                  "copilot",
+                  "CopilotChat",
+                  "core",
+                  "cursor",
+                  "dashboard",
+                  "db",
+                  "debugger",
+                  "dial",
+                  "diff",
+                  "docs",
+                  "dropbar",
+                  "editing",
+                  "experiments",
+                  "explorer",
+                  "file-operations",
+                  "fold",
+                  "fun",
+                  "games",
+                  "ghost",
+                  "git",
+                  "gitpad",
+                  "gp",
+                  "grapple",
+                  "heirline",
+                  "heirline_statuscolumn",
+                  "heirline_statusline",
+                  "hydra",
+                  "ibl",
+                  "icons",
+                  "incline",
+                  "init",
+                  "lang",
+                  "leetcode",
+                  "log",
+                  "lsp",
+                  "lsp_code_actions",
+                  "lsp_diagnostics",
+                  "lsp_extra",
+                  "lsp_inlay_hints",
+                  "lsp_lens",
+                  "lsp_preview",
+                  "lsp_symbols",
+                  "markdown",
+                  "marks",
+                  "mcphub",
+                  "mini",
+                  "mini-ai",
+                  "mini-completion",
+                  "mini-indentscope",
+                  "mini-pairs",
+                  "mini-pick",
+                  "mini-surround",
+                  "minuet",
+                  "motion",
+                  "multicursor",
+                  "navigation",
+                  "noice",
+                  "notes",
+                  "notify",
+                  "nvzone",
+                  "opencode",
+                  "picker",
+                  "pipe",
+                  "profile",
+                  "px-to-rem",
+                  "qf",
+                  "readline",
+                  "replace",
+                  "rustaceanvim",
+                  "scratch",
+                  "session",
+                  "share",
+                  "shelter",
+                  "snacks",
+                  "snacks_dashboard",
+                  "snacks_indent",
+                  "snacks_notifier",
+                  "snacks_picker",
+                  "snacks_ui_select",
+                  "snippets",
+                  "sort",
+                  "surf",
+                  "swap",
+                  "tailwind",
+                  "telescope",
+                  "telescope-any",
+                  "telescope_extensions",
+                  "telescope_lsp",
+                  "telescope_menu",
+                  "telescope_ui_select",
+                  "terminal",
+                  "testing",
+                  "theme",
+                  "time",
+                  "tips",
+                  "toggle",
+                  "tools",
+                  "trailblazer",
+                  "translate",
+                  "transparent",
+                  "treesitter",
+                  "treesitter-main",
+                  "typescript",
+                  "typr",
+                  "ui",
+                  "undo",
+                  "url",
+                  "vectorcode",
+                  "whichkey",
+                  "window",
+                  "window_picker",
+                  "wrap"
+                ]
+              }
+            },
+            "disabled": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "ai",
+                  "animation",
+                  "api",
+                  "autopair",
+                  "avante",
+                  "blink",
+                  "blink_sources",
+                  "buffers",
+                  "cmdline",
+                  "cmp_sources",
+                  "code_block",
+                  "code_runner",
+                  "codecompanion",
+                  "colorizer",
+                  "comment",
+                  "completion",
+                  "context",
+                  "copilot",
+                  "CopilotChat",
+                  "core",
+                  "cursor",
+                  "dashboard",
+                  "db",
+                  "debugger",
+                  "dial",
+                  "diff",
+                  "docs",
+                  "dropbar",
+                  "editing",
+                  "experiments",
+                  "explorer",
+                  "file-operations",
+                  "fold",
+                  "fun",
+                  "games",
+                  "ghost",
+                  "git",
+                  "gitpad",
+                  "gp",
+                  "grapple",
+                  "heirline",
+                  "heirline_statuscolumn",
+                  "heirline_statusline",
+                  "hydra",
+                  "ibl",
+                  "icons",
+                  "incline",
+                  "init",
+                  "lang",
+                  "leetcode",
+                  "log",
+                  "lsp",
+                  "lsp_code_actions",
+                  "lsp_diagnostics",
+                  "lsp_extra",
+                  "lsp_inlay_hints",
+                  "lsp_lens",
+                  "lsp_preview",
+                  "lsp_symbols",
+                  "markdown",
+                  "marks",
+                  "mcphub",
+                  "mini",
+                  "mini-ai",
+                  "mini-completion",
+                  "mini-indentscope",
+                  "mini-pairs",
+                  "mini-pick",
+                  "mini-surround",
+                  "minuet",
+                  "motion",
+                  "multicursor",
+                  "navigation",
+                  "noice",
+                  "notes",
+                  "notify",
+                  "nvzone",
+                  "opencode",
+                  "picker",
+                  "pipe",
+                  "profile",
+                  "px-to-rem",
+                  "qf",
+                  "readline",
+                  "replace",
+                  "rustaceanvim",
+                  "scratch",
+                  "session",
+                  "share",
+                  "shelter",
+                  "snacks",
+                  "snacks_dashboard",
+                  "snacks_indent",
+                  "snacks_notifier",
+                  "snacks_picker",
+                  "snacks_ui_select",
+                  "snippets",
+                  "sort",
+                  "surf",
+                  "swap",
+                  "tailwind",
+                  "telescope",
+                  "telescope-any",
+                  "telescope_extensions",
+                  "telescope_lsp",
+                  "telescope_menu",
+                  "telescope_ui_select",
+                  "terminal",
+                  "testing",
+                  "theme",
+                  "time",
+                  "tips",
+                  "toggle",
+                  "tools",
+                  "trailblazer",
+                  "translate",
+                  "transparent",
+                  "treesitter",
+                  "treesitter-main",
+                  "typescript",
+                  "typr",
+                  "ui",
+                  "undo",
+                  "url",
+                  "vectorcode",
+                  "whichkey",
+                  "window",
+                  "window_picker",
+                  "wrap"
+                ]
+              }
             }
           },
+          "additionalProperties": false,
           "type": "object"
         },
-        "cmdline": {
-          "additionalProperties": false,
-          "properties": {
-            "enable": { "type": "boolean" },
-            "variant": {
-              "enum": ["builtin", "noice", "telescope-cmdline"],
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "transparent": {
-          "additionalProperties": false,
-          "properties": { "enable": { "type": "boolean" } },
-          "type": "object"
+        "disabled": { "type": "array", "items": { "type": "string" } },
+        "overrides": {
+          "type": "object",
+          "additionalProperties": {
+            "properties": { "enable": { "type": "boolean" } },
+            "additionalProperties": false,
+            "type": "object"
+          }
         }
       },
+      "additionalProperties": false,
       "type": "object"
     },
-    "shelter": {
-      "additionalProperties": false,
+    "session": {
       "properties": {
         "enable": { "type": "boolean" },
-        "variant": { "enum": ["cloak", "ecolog"], "type": "string" }
+        "variant": { "type": "string", "enum": ["persisted", "persistence"] }
       },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "plugin": {
+      "properties": {
+        "custom": {
+          "type": "object",
+          "additionalProperties": {
+            "properties": {
+              "enable": { "type": "boolean" },
+              "config": { "type": "object", "additionalProperties": true }
+            },
+            "additionalProperties": false,
+            "type": "object"
+          }
+        },
+        "main": {
+          "type": "object",
+          "additionalProperties": {
+            "properties": { "enable": { "type": "boolean" } },
+            "additionalProperties": false,
+            "type": "object"
+          }
+        }
+      },
+      "additionalProperties": false,
       "type": "object"
     },
     "icons": {
-      "additionalProperties": false,
       "properties": {
         "enable": { "type": "boolean" },
         "variant": {
-          "enum": ["nvim-web-devicons", "mini.icons"],
-          "type": "string"
+          "type": "string",
+          "enum": ["nvim-web-devicons", "mini.icons"]
         }
       },
-      "type": "object"
-    },
-    "debug": {
       "additionalProperties": false,
-      "properties": { "enable": { "type": "boolean" } },
       "type": "object"
     },
     "frecency": {
-      "additionalProperties": false,
       "properties": { "enable": { "type": "boolean" } },
+      "additionalProperties": false,
       "type": "object"
     },
     "flatten": {
-      "additionalProperties": false,
       "properties": { "enable": { "type": "boolean" } },
+      "additionalProperties": false,
       "type": "object"
     },
     "explorer": {
-      "additionalProperties": false,
       "properties": {
-        "rename": { "enum": ["local", "snacks"], "type": "string" },
         "variant": {
-          "enum": ["neo-tree", "snacks", "mini.files", "oil", "fyler"],
-          "type": "string"
-        }
+          "type": "string",
+          "enum": ["neo-tree", "snacks", "mini.files", "oil", "fyler"]
+        },
+        "rename": { "type": "string", "enum": ["local", "snacks"] }
       },
+      "additionalProperties": false,
       "type": "object"
     },
     "dashboard": {
-      "additionalProperties": false,
       "properties": {
         "enable": { "type": "boolean" },
-        "variant": { "enum": ["alpha", "snacks"], "type": "string" }
+        "variant": { "type": "string", "enum": ["alpha", "snacks"] }
       },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "ui": {
+      "properties": {
+        "cmdline": {
+          "properties": {
+            "enable": { "type": "boolean" },
+            "variant": {
+              "type": "string",
+              "enum": ["builtin", "noice", "telescope-cmdline"]
+            }
+          },
+          "additionalProperties": false,
+          "type": "object"
+        },
+        "transparent": {
+          "properties": { "enable": { "type": "boolean" } },
+          "additionalProperties": false,
+          "type": "object"
+        },
+        "winbar": {
+          "properties": {
+            "enable": { "type": "boolean" },
+            "variant": { "type": "string", "enum": ["local", "plugin"] }
+          },
+          "additionalProperties": false,
+          "type": "object"
+        },
+        "statuscolumn": {
+          "properties": {
+            "enable": { "type": "boolean" },
+            "variant": { "type": "string", "enum": ["local", "plugin"] }
+          },
+          "additionalProperties": false,
+          "type": "object"
+        },
+        "indentline": {
+          "properties": {
+            "enable": { "type": "boolean" },
+            "variant": {
+              "type": "string",
+              "enum": ["mini.indentscope", "ibl", "snacks", "indentmini"]
+            }
+          },
+          "additionalProperties": false,
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "image": {
+      "properties": {
+        "enable": { "type": "boolean" },
+        "variant": { "type": "string", "enum": ["image.nvim", "snacks"] }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "picker": {
+      "properties": {
+        "enable": { "type": "boolean" },
+        "variant": {
+          "type": "string",
+          "enum": ["snacks", "telescope", "fzf-lua", "mini.pick"]
+        },
+        "files": {
+          "type": "string",
+          "enum": ["smart-open", "snacks", "telescope", "fzf-lua", "mini.pick"]
+        },
+        "win": {
+          "properties": {
+            "show_preview": { "type": "boolean" },
+            "fullscreen": { "type": "boolean" },
+            "show_border": { "type": "boolean" }
+          },
+          "additionalProperties": false,
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "buffers": {
+      "properties": {
+        "enable": { "type": "boolean" },
+        "variant": { "type": "string", "enum": ["snacks"] }
+      },
+      "additionalProperties": false,
       "type": "object"
     },
     "lsp": {
-      "additionalProperties": false,
       "properties": {
         "workspace_diagnostics": {
-          "additionalProperties": false,
           "properties": { "enable": { "type": "boolean" } },
+          "additionalProperties": false,
           "type": "object"
         },
-        "inlay_hint": {
+        "virtual_lines": {
+          "properties": {
+            "enable": { "type": "boolean" },
+            "variant": {
+              "type": "string",
+              "enum": ["builtin", "lsp_lines", "tiny-inline"]
+            }
+          },
           "additionalProperties": false,
-          "properties": { "enable": { "type": "boolean" } },
+          "type": "object"
+        },
+        "virtual_text": {
+          "properties": {
+            "enable": { "type": "boolean" },
+            "variant": {
+              "type": "string",
+              "enum": ["builtin", "lsp_lines", "tiny-inline"]
+            }
+          },
+          "additionalProperties": false,
+          "type": "object"
+        },
+        "code_actions": {
+          "properties": {
+            "enable": { "type": "boolean" },
+            "variant": {
+              "type": "string",
+              "enum": ["builtin", "tiny-code-action"]
+            }
+          },
+          "additionalProperties": false,
+          "type": "object"
+        },
+        "symbols": {
+          "properties": {
+            "enable": { "type": "boolean" },
+            "variant": {
+              "type": "string",
+              "enum": ["builtin", "picker", "namu"]
+            }
+          },
+          "additionalProperties": false,
+          "type": "object"
+        },
+        "hover_diagnostics": {
+          "properties": {
+            "enable": { "type": "boolean" },
+            "go_to": { "type": "boolean" },
+            "scope": { "type": "string" }
+          },
+          "additionalProperties": true,
           "type": "object"
         },
         "lang": {
-          "additionalProperties": false,
           "properties": {
-            "tailwind": {
-              "additionalProperties": false,
-              "properties": {
-                "tailwind-tools": { "type": "boolean" },
-                "tailwindcss": { "type": "boolean" }
-              },
-              "type": "object"
-            },
             "typescript": {
-              "additionalProperties": false,
               "properties": {
+                "tsgo": { "type": "boolean" },
                 "vtsls": { "type": "boolean" },
                 "typescript-tools": { "type": "boolean" },
-                "ts_ls": { "type": "boolean" },
-                "tsgo": { "type": "boolean" }
+                "ts_ls": { "type": "boolean" }
               },
+              "additionalProperties": false,
               "type": "object"
             },
             "web": {
-              "additionalProperties": false,
               "properties": {
                 "emmet_language_server": { "type": "boolean" },
                 "biome": { "type": "boolean" },
                 "eslint": { "type": "boolean" }
               },
+              "additionalProperties": false,
               "type": "object"
             },
             "python": {
-              "additionalProperties": false,
               "properties": {
+                "pyright": { "type": "boolean" },
                 "ty": { "type": "boolean" },
                 "basedpyright": { "type": "boolean" },
-                "ruff": { "type": "boolean" },
-                "pyright": { "type": "boolean" }
+                "ruff": { "type": "boolean" }
               },
+              "additionalProperties": false,
+              "type": "object"
+            },
+            "tailwind": {
+              "properties": {
+                "tailwindcss": { "type": "boolean" },
+                "tailwind-tools": { "type": "boolean" }
+              },
+              "additionalProperties": false,
               "type": "object"
             }
           },
-          "type": "object"
-        },
-        "virtual_text": {
           "additionalProperties": false,
-          "properties": {
-            "enable": { "type": "boolean" },
-            "variant": {
-              "enum": ["builtin", "lsp_lines", "tiny-inline"],
-              "type": "string"
-            }
-          },
           "type": "object"
         },
         "format_on_save": {
-          "additionalProperties": false,
           "properties": { "enable": { "type": "boolean" } },
+          "additionalProperties": false,
           "type": "object"
         },
-        "symbols": {
-          "additionalProperties": false,
-          "properties": {
-            "enable": { "type": "boolean" },
-            "variant": {
-              "enum": ["builtin", "picker", "namu"],
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "override": {
-          "items": {
-            "enum": [
-              "astro",
-              "basedpyright",
-              "bashls",
-              "biome",
-              "clangd",
-              "cmake",
-              "copilot",
-              "cssls",
-              "denols",
-              "docker_compose_language_service",
-              "dockerls",
-              "elixirls",
-              "emmet_language_server",
-              "emmet_ls",
-              "eslint",
-              "gh_actions_ls",
-              "gopls",
-              "graphql",
-              "jedi_language_server",
-              "jsonls",
-              "lemminx",
-              "lua_ls",
-              "marksman",
-              "prismals",
-              "prosemd_lsp",
-              "pyrefly",
-              "pyright",
-              "ruff",
-              "sqls",
-              "svelte",
-              "tailwindcss",
-              "taplo",
-              "tinymist",
-              "ts_ls",
-              "tsgo",
-              "ty",
-              "vimls",
-              "vtsls",
-              "vue_ls",
-              "yamlls",
-              "typescript-tools"
-            ],
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "signs": {
-          "additionalProperties": false,
+        "foldexpr": {
           "properties": { "enable": { "type": "boolean" } },
-          "type": "object"
-        },
-        "progress": {
           "additionalProperties": false,
-          "properties": {
-            "enable": { "type": "boolean" },
-            "variant": {
-              "enum": ["builtin", "noice", "snacks"],
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "omnifunc": {
-          "additionalProperties": false,
-          "properties": { "enable": { "type": "boolean" } },
-          "type": "object"
-        },
-        "null_ls": {
-          "additionalProperties": false,
-          "properties": { "enable": { "type": "boolean" } },
           "type": "object"
         },
         "disabled": {
-          "additionalProperties": false,
           "properties": {
-            "directories": { "items": { "type": "string" }, "type": "array" },
+            "filetypes": { "type": "array", "items": { "type": "string" } },
             "servers": {
+              "type": "array",
               "items": {
+                "type": "string",
                 "enum": [
                   "astro",
                   "basedpyright",
@@ -697,134 +756,137 @@
                   "ts_ls",
                   "tsgo",
                   "ty",
+                  "typescript-tools",
                   "vimls",
                   "vtsls",
                   "vue_ls",
-                  "yamlls",
-                  "typescript-tools"
-                ],
-                "type": "string"
-              },
-              "type": "array"
+                  "yamlls"
+                ]
+              }
             },
-            "filetypes": { "items": { "type": "string" }, "type": "array" }
+            "directories": { "type": "array", "items": { "type": "string" } }
           },
+          "additionalProperties": false,
           "type": "object"
         },
-        "virtual_lines": {
-          "additionalProperties": false,
-          "properties": {
-            "enable": { "type": "boolean" },
-            "variant": {
-              "enum": ["builtin", "lsp_lines", "tiny-inline"],
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "foldexpr": {
-          "additionalProperties": false,
+        "omnifunc": {
           "properties": { "enable": { "type": "boolean" } },
+          "additionalProperties": false,
           "type": "object"
         },
-        "code_actions": {
+        "null_ls": {
+          "properties": { "enable": { "type": "boolean" } },
           "additionalProperties": false,
+          "type": "object"
+        },
+        "override": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "astro",
+              "basedpyright",
+              "bashls",
+              "biome",
+              "clangd",
+              "cmake",
+              "copilot",
+              "cssls",
+              "denols",
+              "docker_compose_language_service",
+              "dockerls",
+              "elixirls",
+              "emmet_language_server",
+              "emmet_ls",
+              "eslint",
+              "gh_actions_ls",
+              "gopls",
+              "graphql",
+              "jedi_language_server",
+              "jsonls",
+              "lemminx",
+              "lua_ls",
+              "marksman",
+              "prismals",
+              "prosemd_lsp",
+              "pyrefly",
+              "pyright",
+              "ruff",
+              "sqls",
+              "svelte",
+              "tailwindcss",
+              "taplo",
+              "tinymist",
+              "ts_ls",
+              "tsgo",
+              "ty",
+              "typescript-tools",
+              "vimls",
+              "vtsls",
+              "vue_ls",
+              "yamlls"
+            ]
+          }
+        },
+        "progress": {
           "properties": {
             "enable": { "type": "boolean" },
             "variant": {
-              "enum": ["builtin", "tiny-code-action"],
-              "type": "string"
+              "type": "string",
+              "enum": ["builtin", "noice", "snacks"]
             }
           },
+          "additionalProperties": false,
           "type": "object"
         },
-        "hover_diagnostics": {
-          "additionalProperties": true,
-          "properties": {
-            "go_to": { "type": "boolean" },
-            "scope": { "type": "string" },
-            "enable": { "type": "boolean" }
-          },
+        "signs": {
+          "properties": { "enable": { "type": "boolean" } },
+          "additionalProperties": false,
+          "type": "object"
+        },
+        "inlay_hint": {
+          "properties": { "enable": { "type": "boolean" } },
+          "additionalProperties": false,
           "type": "object"
         },
         "rename": {
-          "additionalProperties": false,
           "properties": {
             "enable": { "type": "boolean" },
-            "variant": { "enum": ["builtin", "inc-rename"], "type": "string" }
+            "variant": { "type": "string", "enum": ["builtin", "inc-rename"] }
           },
+          "additionalProperties": false,
           "type": "object"
         }
       },
-      "type": "object"
-    },
-    "plugin": {
       "additionalProperties": false,
-      "properties": {
-        "main": {
-          "additionalProperties": {
-            "additionalProperties": false,
-            "properties": { "enable": { "type": "boolean" } },
-            "type": "object"
-          },
-          "type": "object"
-        },
-        "custom": {
-          "additionalProperties": {
-            "additionalProperties": false,
-            "properties": {
-              "config": { "additionalProperties": true, "type": "object" },
-              "enable": { "type": "boolean" }
-            },
-            "type": "object"
-          },
-          "type": "object"
-        }
-      },
-      "type": "object"
-    },
-    "gx": {
-      "additionalProperties": false,
-      "properties": {
-        "enable": { "type": "boolean" },
-        "variant": { "enum": ["local", "plugin"], "type": "string" }
-      },
-      "type": "object"
-    },
-    "buffers": {
-      "additionalProperties": false,
-      "properties": {
-        "enable": { "type": "boolean" },
-        "variant": { "enum": ["snacks"], "type": "string" }
-      },
       "type": "object"
     },
     "autosave": {
-      "additionalProperties": false,
-      "properties": {
-        "current": { "type": "boolean" },
-        "enable": { "type": "boolean" }
-      },
-      "type": "object"
-    },
-    "session": {
-      "additionalProperties": false,
       "properties": {
         "enable": { "type": "boolean" },
-        "variant": { "enum": ["persisted", "persistence"], "type": "string" }
+        "current": { "type": "boolean" }
       },
+      "additionalProperties": false,
       "type": "object"
     },
     "apps": {
-      "additionalProperties": false,
       "properties": {
-        "audio": { "type": "string" },
-        "video": { "type": "string" },
+        "pdf": { "type": "string" },
         "image": { "type": "string" },
         "explorer": { "type": "string" },
         "web": { "type": "string" },
-        "pdf": { "type": "string" }
+        "audio": { "type": "string" },
+        "video": { "type": "string" }
       },
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "shelter": {
+      "properties": {
+        "enable": { "type": "boolean" },
+        "variant": { "type": "string", "enum": ["cloak", "ecolog"] }
+      },
+      "additionalProperties": false,
       "type": "object"
     }
   }

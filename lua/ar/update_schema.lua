@@ -62,7 +62,12 @@ local function generate_plugin_modules()
   return file_names
 end
 
-local function update_schema(schema_path, lsp_servers, plugin_modules)
+local function update_schema(
+  schema_path,
+  lsp_servers,
+  plugin_modules,
+  colorschemes
+)
   local lunajson = require('lunajson')
   local json = assert(io.open(schema_path, 'r')):read('*a')
   local schema = assert(lunajson.decode(json))
@@ -112,6 +117,13 @@ local function update_schema(schema_path, lsp_servers, plugin_modules)
     update_json_enum(schema, keys, plugin_modules)
   end
 
+  -- Update colorscheme enum
+  update_json_enum(
+    schema,
+    { 'properties', 'colorscheme', 'enum' },
+    colorschemes
+  )
+
   local out = assert(io.open(schema_path, 'w'))
   out:write(lunajson.encode(schema, { indent = true }))
   out:close()
@@ -134,21 +146,26 @@ function M.update()
   local ok, err = pcall(function()
     local lsp_servers = require('ar.servers').names('all')
     vim.list_extend(lsp_servers, { 'typescript-tools' })
+    table.sort(lsp_servers, function(a, b) return a:lower() < b:lower() end)
     local plugin_modules = generate_plugin_modules()
+    local colorschemes = ar.ui.colorscheme.list
+    table.sort(colorschemes, function(a, b) return a:lower() < b:lower() end)
 
     write_md('SERVERS.md', '🚀 LSP Servers', lsp_servers)
     write_md('PLUGIN_MODULES.md', '📦 Plugin Modules', plugin_modules)
+    write_md('COLORSCHEMES.md', '🎨 Colorschemes', colorschemes)
 
     update_schema(
       config_path .. '/rvim.schema.json',
       lsp_servers,
-      plugin_modules
+      plugin_modules,
+      colorschemes
     )
   end)
 
   if ok then
     vim.notify(
-      'Updated SERVERS.md, PLUGIN_MODULES.md, and rvim.schema.json from canonical lists.',
+      'Updated SERVERS.md, PLUGIN_MODULES.md, COLORSCHEMES.md, and rvim.schema.json from canonical lists.',
       L.INFO
     )
   else

@@ -36,8 +36,8 @@
 - ts_ls
 - tsgo
 - ty
+- typescript-tools
 - vimls
 - vtsls
 - vue_ls
 - yamlls
-- typescript-tools

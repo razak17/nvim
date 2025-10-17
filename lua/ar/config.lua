@@ -298,6 +298,7 @@ local namespace = {
         'zaibatsu.vim',
         'zellner.vim',
       },
+      list = {},
     },
   },
 }
