@@ -1,4 +1,21 @@
+local niceties = ar.plugins.niceties
+local get_cond = ar.get_plugin_cond
+
 return {
+  ------------------------------------------------------------------------------
+  -- Scratch Pads
+  ------------------------------------------------------------------------------
+  {
+    'LintaoAmons/scratch.nvim',
+    cmd = { 'Scratch', 'ScratchPad', 'ScratchOpen' },
+    keys = { { '<c-w>O', ':Scratch<cr>', desc = 'scratch: new' } },
+  },
+  {
+    'carbon-steel/detour.nvim',
+    cond = function() return get_cond('detour.nvim', niceties) end,
+    cmd = { 'Detour' },
+    keys = { { '<c-w><enter>', ':Detour<cr>', desc = 'detour: toggle' } },
+  },
   {
     'yarospace/lua-console.nvim',
     keys = { { '<leader>ok', desc = 'lua-console: toggle' } },

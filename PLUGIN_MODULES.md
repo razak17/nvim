@@ -10,6 +10,7 @@
 - buffers
 - cmdline
 - cmp_sources
+- code_block
 - code_runner
 - codecompanion
 - colorizer
@@ -84,7 +85,7 @@
 - readline
 - replace
 - rustaceanvim
-- scratchpad
+- scratch
 - session
 - share
 - shelter
@@ -95,7 +96,9 @@
 - snacks_picker
 - snacks_ui_select
 - snippets
+- sort
 - surf
+- swap
 - tailwind
 - telescope
 - telescope-any
@@ -108,6 +111,7 @@
 - theme
 - time
 - tips
+- toggle
 - tools
 - trailblazer
 - translate

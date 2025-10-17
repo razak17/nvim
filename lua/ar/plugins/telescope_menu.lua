@@ -9,8 +9,7 @@ return {
         if with_children then
           params.search_dirs = { folder }
         else
-          params.find_command =
-            { 'rg', '--max-depth', '1', '--files', folder }
+          params.find_command = { 'rg', '--max-depth', '1', '--files', folder }
         end
         return params
       end
