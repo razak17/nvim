@@ -159,19 +159,7 @@ local servers = {
       },
     },
   },
-  graphql = {
-    root_dir = function(bufnr, on_dir)
-      local util = require('lspconfig.util')
-      local fname = vim.api.nvim_buf_get_name(bufnr)
-      on_dir(
-        util.root_pattern(
-          '.graphqlrc*',
-          '.graphql.config.*',
-          'graphql.config.*'
-        )(fname)
-      )
-    end,
-  },
+  graphql = {},
   -- jdtls = {},
   jedi_language_server = {},
   jsonls = {
