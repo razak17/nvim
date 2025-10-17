@@ -4,6 +4,7 @@ local function is_colorscheme(name) return ar_config.colorscheme == name end
 ---@param names table
 ---@return boolean
 local function get_cond(names)
+  vim.list_extend(ar.ui.colorscheme.list, names)
   if ar.plugins.niceties then return true end
   return not ar.plugins.minimal
     and vim.tbl_contains(names, ar_config.colorscheme)
@@ -313,18 +314,6 @@ return {
     cond = get_cond({ 'rose-pine' }),
     priority = get_priority({ 'rose-pine' }),
     event = get_event({ 'rose-pine' }),
-  },
-  {
-    'darianmorat/gruvdark.nvim',
-    cond = get_cond({ 'gruvdark' }),
-    priority = get_priority({ 'gruvdark' }),
-    event = get_event({ 'gruvdark' }),
-  },
-  {
-    'danilo-augusto/vim-afterglow',
-    cond = get_cond({ 'afterglow' }),
-    priority = get_priority({ 'afterglow' }),
-    event = get_event({ 'afterglow' }),
   },
   {
     -- NOTE: Double underlines markdown headings
