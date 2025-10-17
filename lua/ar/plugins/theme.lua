@@ -5,7 +5,9 @@ local function is_colorscheme(name) return ar_config.colorscheme == name end
 ---@return boolean
 local function get_cond(names)
   vim.list_extend(ar.ui.colorscheme.list, names)
-  if ar.plugins.niceties then return true end
+  if ar.plugins.niceties or vim.list_contains(names, ar_config.colorscheme) then
+    return true
+  end
   return not ar.plugins.minimal
     and vim.tbl_contains(names, ar_config.colorscheme)
 end
@@ -36,7 +38,7 @@ return {
   ------------------------------------------------------------------------------
   {
     'razak17/onedark.nvim',
-    cond = ar_config.colorscheme == 'onedark',
+    cond = get_cond({ 'onedark' }),
     priority = get_priority({ 'onedark' }),
     event = get_event({ 'onedark' }),
     opts = { variant = 'fill' },
