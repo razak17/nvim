@@ -33,3 +33,11 @@
 (scissor) @comment
 
 (ERROR) @error
+
+; Capture all nodes that start with semicolon as comments
+((_) @comment
+ (#match? @comment "^;.*"))
+
+; Makes markdown like headers starting with # highlighted
+((_) @function
+ (#match? @function "^#.*"))

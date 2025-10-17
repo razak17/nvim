@@ -73,6 +73,7 @@ settings({
       spell = true,
       spelllang = { 'en_gb', 'programming' },
     },
+    function() vim.bo.commentstring = '; %s' end,
   },
   graphql = {
     function()
