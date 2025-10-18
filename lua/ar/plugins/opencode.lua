@@ -1,6 +1,10 @@
-local function oc(which, opts)
-  opts = opts or nil
-  return function() require('opencode')[which](opts) end
+local function oc(which, what, opts)
+  what = what or nil
+  opts = {
+    clear = opts and opts.clear or false,
+    submit = opts and opts.submit or true,
+  }
+  return function() require('opencode')[which](what, opts) end
 end
 
 return {
