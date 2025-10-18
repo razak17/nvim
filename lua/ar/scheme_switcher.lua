@@ -58,7 +58,7 @@ function M.colorscheme_menu()
   local original_scheme = M.get_current_colorscheme()
   local buf = api.nvim_create_buf(false, true)
 
-  local win_w, win_h = api.nvim_win_get_width(0), api.nvim_win_get_height(0)
+  local win_w, win_h = vim.o.columns, vim.o.lines
 
   -- compute width based on longest scheme name and cap it
   local max_name = 0
