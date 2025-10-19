@@ -17,7 +17,8 @@ local function prev_failed() neotest().jump.next({ status = 'failed' }) end
 local function toggle_summary() neotest().summary.toggle() end
 local function cancel() neotest().run.stop({ interactive = true }) end
 local function run_last() neotest().run.run_last() end
-local function debug_nearest() require('neotest').run.run({ strategy = 'dap' }) end
+local function debug_nearest() neotest().run.run({ strategy = 'dap' }) end
+local function attach() neotest().run.attach() end
 
 local testing_menu = function()
   ar.create_select_menu(
@@ -60,6 +61,7 @@ return {
       })
     end,
     keys = {
+      { '<leader>tna', attach, desc = 'neotest: attach to test' },
       { '<leader>tns', toggle_summary, desc = 'neotest: toggle summary' },
       { '<leader>tno', open, desc = 'neotest: output' },
       { '<leader>tnn', nearest, desc = 'neotest: run' },
