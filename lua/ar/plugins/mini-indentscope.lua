@@ -23,7 +23,7 @@ return {
       filetype_exclude = {
         'lazy', 'fzf', 'alpha', 'dbout', 'neo-tree-popup', 'log', 'gitcommit',
         'txt', 'help', 'NvimTree', 'git', 'flutterToolsOutline', 'undotree',
-        'markdown', 'norg', 'org', 'orgagenda', 'snacks_dashboard',
+        'markdown', 'norg', 'org', 'orgagenda', 'snacks_dashboard', 'sidekick_terminal',
         '', -- for all buffers without a file type
       },
     },
