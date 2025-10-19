@@ -70,6 +70,12 @@ return {
     priority = get_priority({ 'nightfox' }),
     event = get_event({ 'nightfox' }),
   },
+  {
+    'stefanvanburen/rams.vim',
+    cond = get_cond({ 'rams' }),
+    priority = get_priority({ 'rams' }),
+    event = get_event({ 'rams' }),
+  },
   ------------------------------------------------------------------------------
   -- Dark
   {

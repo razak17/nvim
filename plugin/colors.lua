@@ -526,6 +526,57 @@ local function colorscheme_overrides()
       },
       { SnacksPickerToggleIgnored = { link = 'SnacksPickerToggleHidden' } },
     },
+    ['rams'] = {
+      {
+        NormalFloat = {
+          bg = { from = 'Normal' },
+          fg = { from = 'Normal', alter = -0.15 },
+        },
+      },
+      { CursorLine = { bg = { from = 'Comment', attr = 'fg', alter = -0.7 } } },
+      {
+        Visual = { bg = { from = 'CursorLine', alter = 0.2 }, reverse = false },
+      },
+      { DiffAdd = { bg = { from = 'DiffAdd', alter = -0.65 } } },
+      { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
+      { LineNr = { fg = { from = 'Comment', alter = -0.2 } } },
+      {
+        WinSeparator = {
+          fg = { from = 'Comment', alter = -0.6 },
+          bg = 'NONE',
+        },
+      },
+      { VertSplit = { link = 'WinSeparator' } },
+      { FloatBorder = { link = 'VertSplit' } },
+      { FloatTitle = { link = 'CursorLine' } },
+      { Winbar = { link = 'Variable' } },
+      { WinbarNC = { link = 'LineNr' } },
+      { IndentBlanklineChar = { link = 'WinSeparator' } },
+      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+      {
+        GitSignsAdd = {
+          fg = { from = 'DiffAdd', attr = 'bg', alter = 1.1 },
+        },
+      },
+      { Pmenu = { link = 'NormalFloat' } },
+      { PmenuBorder = { link = 'FloatBorder' } },
+      { PmenuKind = { fg = { from = 'Comment' } } },
+      { PmenuSel = { link = 'CursorLine' } },
+      { PmenuKindSel = { fg = { from = 'Comment' } } },
+      { PmenuThumb = { link = 'CurSearch' } },
+      { PmenuSbar = { link = 'Pmenu' } },
+      { SnacksPickerDir = { link = 'Comment' } },
+      { SnacksPickerCursorLine = { bg = { from = 'Folded' } } },
+      { SnacksPickerListCursorLine = { link = 'SnacksPickerCursorLine' } },
+      {
+        SnacksPickerToggleHidden = {
+          bg = { from = 'FloatTitle' },
+          fg = { from = 'Directory' },
+          italic = true,
+        },
+      },
+      { SnacksPickerToggleIgnored = { link = 'SnacksPickerToggleHidden' } },
+    },
     ['nanode'] = {
       { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.2 } } },
       { CursorLine = { bg = { from = 'CursorLine', alter = 0.8 } } },
