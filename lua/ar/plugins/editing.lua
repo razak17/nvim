@@ -12,9 +12,12 @@ return {
       'nvim-telescope/telescope.nvim',
       optional = true,
       keys = function(_, keys)
-        if get_cond('text-case.nvim', not minimal) then
+        if
+          get_cond('text-case.nvim', not minimal)
+          and ar_config.picker.variant == 'telescope'
+        then
           table.insert(keys or {}, {
-            '<leader>ft',
+            '<leader>fW',
             function()
               require('telescope').extensions.textcase.normal_mode(
                 ar.telescope.minimal_ui()

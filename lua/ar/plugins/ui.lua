@@ -179,35 +179,6 @@ return {
     end,
   },
   {
-    'folke/todo-comments.nvim',
-    cond = function()
-      return ar.get_plugin_cond('todo-comments.nvim', not minimal)
-    end,
-    event = 'BufReadPost',
-    cmd = { 'TodoTelescope', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
-    init = function()
-      vim.g.whichkey_add_spec({ '<localleader>t', group = 'TODO' })
-    end,
-    -- stylua: ignore
-    keys = {
-      -- { '<localleader>tt', '<cmd>TodoDots<CR>', desc = 'todo: dotfiles todos' },
-      { '<localleader>tt', function() Snacks.picker.todo_comments() end, desc = 'Todo' },
-      { '<leader>sT', function () Snacks.picker.todo_comments({ keywords = { 'TODO', 'FIX', 'FIXME' } }) end, desc = 'Todo/Fix/Fixme' },
-      { '<localleader>tj', function() require('todo-comments').jump_next() end, desc = 'todo-comments: next todo', },
-      { '<localleader>tk', function() require('todo-comments').jump_prev() end, desc = 'todo-comments: prev todo', },
-    },
-    config = function()
-      require('todo-comments').setup({ highlight = { after = '' } })
-      ar.command(
-        'TodoDots',
-        string.format(
-          'TodoTelescope cwd=%s keywords=TODO,FIXME',
-          vim.fn.stdpath('config')
-        )
-      )
-    end,
-  },
-  {
     'LudoPinelli/comment-box.nvim',
     cond = function() return ui_cond('comment-box.nvim') end,
     init = function()

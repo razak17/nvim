@@ -113,10 +113,6 @@ local function notes()
   })
 end
 
-local function todos()
-  fzf_lua.grep({ search = 'TODO|HACK|PERF|NOTE|FIX|WARN', no_esc = true })
-end
-
 ar.fzf = { dropdown = dropdown, cursor_dropdown = cursor_dropdown }
 
 return {
@@ -198,7 +194,6 @@ return {
           { '<leader>fp', fzf_lua.global, desc = 'global' },
           { '<leader>fr', fzf_lua.resume, desc = 'resume picker' },
           { '<leader>fs', fzf_lua.live_grep, desc = 'live grep' },
-          { '<leader>ft', todos, desc = 'todos' },
           { '<leader>fw', fzf_lua.grep_cword, desc = 'grep cword' },
           { '<leader>fva', fzf_lua.autocmds, desc = 'autocommands' },
           { '<leader>fvh', fzf_lua.highlights, desc = 'highlights' },
@@ -468,6 +463,28 @@ return {
         end,
         desc = 'Open file picker',
       },
+    },
+    {
+      'folke/todo-comments.nvim',
+      optional = true,
+      opts = function()
+        if ar_config.picker.variant == 'fzf-lua' then
+          local todos = require('todo-comments.fzf').todo
+          local function todos_fixes()
+            todos({ keywords = { 'TODO', 'FIX', 'FIXME' } })
+          end
+          local function config_todos()
+            todos({
+              keywords = { 'TODO', 'FIX', 'FIXME' },
+              cwd = fn.stdpath('config'),
+            })
+          end
+
+          map('n', '<leader>ft', todos, { desc = 'todos' })
+          map('n', '<leader>fF', todos_fixes, { desc = 'todo/fixme' })
+          map('n', '<leader>fC', config_todos, { desc = 'config todo/fixme' })
+        end
+      end,
     },
   },
 }

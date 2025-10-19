@@ -728,4 +728,38 @@ return {
       },
     },
   },
+  {
+    'folke/todo-comments.nvim',
+    optional = true,
+    opts = function()
+      if ar_config.picker.variant == 'telescope' then
+        local ivy = require('telescope.themes').get_ivy({
+          wrap_results = true,
+          borderchars = { preview = border.ivy },
+        })
+        local todos = function()
+          extension('todo-comments', 'todo')({
+            prompt_title = 'All Todos',
+          })(ivy)
+        end
+        local function todos_fixes()
+          extension('todo-comments', 'todo')({
+            keywords = 'TODO,FIX,FIXME',
+            prompt_title = 'TODO/FIXME Todos',
+          })(ivy)
+        end
+        local function config_todos()
+          extension('todo-comments', 'todo')({
+            keywords = 'TODO,FIX,FIXME',
+            cwd = vim.fn.stdpath('config'),
+            prompt_title = 'Config Todos',
+          })(ivy)
+        end
+
+        map('n', '<leader>ft', todos, { desc = 'todos' })
+        map('n', '<leader>fF', todos_fixes, { desc = 'todo/fixme' })
+        map('n', '<leader>fC', config_todos, { desc = 'config todo/fixme' })
+      end
+    end,
+  },
 }
