@@ -114,6 +114,9 @@ return {
       auto_follow_cursor = false,
       show_help = true,
       allow_insecure = false, -- Allow insecure server connections
+      window = {
+        width = 0.4,
+      },
       mappings = {
         complete = {
           detail = 'Use @<Tab> or /<Tab> for options.',
