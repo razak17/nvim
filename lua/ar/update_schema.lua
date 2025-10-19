@@ -148,7 +148,7 @@ function M.update()
     vim.list_extend(lsp_servers, { 'typescript-tools' })
     table.sort(lsp_servers, function(a, b) return a:lower() < b:lower() end)
     local plugin_modules = generate_plugin_modules()
-    local colorschemes = ar.ui.colorscheme.list
+    local colorschemes = fn.getcompletion('', 'color')
     table.sort(colorschemes, function(a, b) return a:lower() < b:lower() end)
 
     write_md('SERVERS.md', '🚀 LSP Servers', lsp_servers)
