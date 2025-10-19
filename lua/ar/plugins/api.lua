@@ -22,7 +22,7 @@ return {
       { '<leader>rkp', ':lua require("kulala").jump_prev()<CR>', desc = 'kulala: prev', ft = "http" },
       { '<leader>rkq', ':lua require("kulala").close()<CR>', desc = 'kulala: close window', ft = "http" },
       { '<leader>rkr', ':lua require("kulala").replay()<CR>', desc = 'kulala: replay the last request', ft = "http" },
-      { '<leader>rks', ':lua require("kulala").scratchpad()<CR>', desc = 'kulala: scratchpad', ft = "http" },
+      { '<leader>rks', ':lua require("kulala").scratchpad()<CR>', desc = 'kulala: scratchpad' },
       { '<leader>rkt', ':lua require("kulala").toggle_view()<CR>', desc = 'kulala: toggle view', ft = "http" },
     },
     opts = { default_env = 'local' },
