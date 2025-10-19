@@ -117,6 +117,11 @@ return {
       window = {
         width = 0.4,
       },
+      headers = {
+        user = '  me',
+        assistant = '  Copilot ',
+        tool = '󰊳  Tool ',
+      },
       mappings = {
         complete = {
           detail = 'Use @<Tab> or /<Tab> for options.',
