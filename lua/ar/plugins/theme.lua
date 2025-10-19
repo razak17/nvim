@@ -393,6 +393,12 @@ return {
     priority = get_priority({ 'naysayer' }),
     event = get_event({ 'naysayer' }),
   },
+  {
+    'jpwol/thorn.nvim',
+    cond = get_cond({ 'thorn' }),
+    priority = get_priority({ 'thorn' }),
+    event = get_event({ 'thorn' }),
+  },
   ------------------------------------------------------------------------------
   -- Clown show
   {

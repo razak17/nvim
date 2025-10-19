@@ -480,6 +480,52 @@ local function colorscheme_overrides()
       { FloatBorder = { link = 'VertSplit' } },
       { PmenuBorder = { link = 'NormalFloat' } },
     },
+    ['thorn'] = {
+      {
+        NormalFloat = {
+          bg = { from = 'Normal' },
+          fg = { from = 'Normal', alter = -0.15 },
+        },
+      },
+      {
+        Search = {
+          bg = { from = 'Search', alter = -0.65 },
+          fg = { from = 'Normal' },
+        },
+      },
+      { WinSeparator = { fg = { from = 'LineNr' } } },
+      { VertSplit = { link = 'WinSeparator' } },
+      { FloatBorder = { link = 'VertSplit' } },
+      {
+        FloatTitle = {
+          bg = { from = 'CursorLine', alter = 0.05 },
+          fg = { from = 'Normal' },
+        },
+      },
+      { IndentBlanklineChar = { link = 'LineNr' } },
+      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+      { Pmenu = { link = 'NormalFloat' } },
+      { PmenuBorder = { link = 'FloatBorder' } },
+      { PmenuExtra = { link = 'Pmenu' } },
+      { PmenuKind = { fg = { from = 'Comment' } } },
+      { PmenuMatch = { link = 'Normal' } },
+      { PmenuSel = { link = 'Search' } },
+      { PmenuExtraSel = { link = 'PmenuSel' } },
+      { PmenuKindSel = { fg = { from = 'Comment' } } },
+      { PmenuMatchSel = { link = 'PmenuSel' } },
+      { PmenuThumb = { link = 'CurSearch' } },
+      { PmenuSbar = { link = 'Pmenu' } },
+      { SnacksPickerDir = { link = 'Comment' } },
+      { SnacksPickerTotals = { link = 'Debug' } },
+      {
+        SnacksPickerToggleHidden = {
+          bg = { from = 'FloatTitle' },
+          fg = { from = 'Directory' },
+          italic = true,
+        },
+      },
+      { SnacksPickerToggleIgnored = { link = 'SnacksPickerToggleHidden' } },
+    },
     ['nanode'] = {
       { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.2 } } },
       { CursorLine = { bg = { from = 'CursorLine', alter = 0.8 } } },

@@ -134,6 +134,7 @@
 - shadow
 - slate
 - terafox
+- thorn
 - tokyobones
 - tokyonight
 - tokyonight-day
