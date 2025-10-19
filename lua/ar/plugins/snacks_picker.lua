@@ -95,7 +95,7 @@ local picker_layouts = {
 }
 
 ---@param source string
----@param opts? table
+---@param opts? snacks.picker.proc.Config
 ---@return function
 local function p(source, opts)
   opts = opts or {}
@@ -117,19 +117,29 @@ local function find_files()
     format = 'file',
     show_empty = true,
     supports_live = true,
-    layout = { preview = false, cycle = true, preset = 'custom_select' },
+    layout = { preview = 'main', cycle = true, preset = 'custom_select' },
   })()
 end
 
 local function grep_string()
   p('grep', {
-    layout = { preview = show_preview, cycle = true },
+    layout = { preview = 'main', cycle = true, preset = 'custom_select' },
+  })()
+end
+
+local function visual_grep_string()
+  -- Get visual selection
+  vim.cmd('noau normal! "vy"')
+  local text = vim.fn.getreg('v')
+  p('grep', {
+    layout = { preview = 'main', cycle = true, preset = 'custom_select' },
+    search = text,
   })()
 end
 
 local function grep_word()
   p('grep_word', {
-    layout = { preview = show_preview, cycle = true },
+    layout = { preview = 'main', cycle = true, preset = 'custom_select' },
   })()
 end
 
@@ -142,7 +152,7 @@ local function buffers()
     hidden = false,
     unloaded = true,
     sort_lastused = true,
-    layout = { preview = false, preset = 'custom_select' },
+    layout = { preview = 'main', preset = 'custom_select' },
     win = {
       input = {
         keys = {
@@ -198,16 +208,6 @@ local function window_picker_action(picker, _, action)
       )
     end, 100)
   end
-end
-
-local function visual_grep_string()
-  -- Get visual selection
-  vim.cmd('noau normal! "vy"')
-  local text = vim.fn.getreg('v')
-  p('grep', {
-    layout = { preview = show_preview, cycle = true },
-    search = text,
-  })()
 end
 
 return {
