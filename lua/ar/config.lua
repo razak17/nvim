@@ -381,7 +381,7 @@ local config = {
       variant = 'minimal',
     },
   },
-  colorscheme = ar.plugins.minimal and 'default' or 'onedark',
+  colorscheme = '',
   ---@type ArDashboard
   dashboard = { enable = true, variant = 'builtin' },
   debug = { enable = false },

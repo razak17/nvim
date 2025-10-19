@@ -9,23 +9,10 @@ local set_colorscheme_file_path = vim.fn.stdpath('data') .. '/.set_colorscheme'
 local M = {}
 
 function M.get_current_colorscheme()
-  if ar.plugins.minimal then return 'default' end
-  if not ar.plugins.niceties then return ar_config.colorscheme end
   local file = io.open(set_colorscheme_file_path, 'r')
-  if not file then
-    -- create a default file and return default
-    if M and M.save_current_colorscheme then
-      M.save_current_colorscheme(ar_config.colorscheme)
-    else
-      -- fallback to writing directly
-      local f = io.open(set_colorscheme_file_path, 'w')
-      if f then
-        f:write('default')
-        f:close()
-      end
-    end
-    return 'default'
-  else
+  if not file or ar.plugins.minimal then return 'default' end
+  if ar_config.colorscheme ~= '' then return ar_config.colorscheme end
+  if file then
     local ccs = file:read('*l')
     file:close()
     if not ccs or ccs == '' then return 'default' end
@@ -45,9 +32,6 @@ function M.save_current_colorscheme(colorscheme)
   file:close()
   return true
 end
-
--- backward compatible name (preserve existing calls)
-M.save_current_colorscheme = M.save_current_colorscheme
 
 function M.get_colorschemes() return fn.getcompletion('', 'color') end
 

@@ -1,15 +1,17 @@
-local function is_colorscheme(name) return ar_config.colorscheme == name end
+local scheme_switcher = require('ar.scheme_switcher')
+local colorscheme = scheme_switcher.get_current_colorscheme()
+
+local function is_colorscheme(name) return name == colorscheme end
 
 --- Get colorscheme cond
 ---@param names table
 ---@return boolean
 local function get_cond(names)
   vim.list_extend(ar.ui.colorscheme.list, names)
-  if ar.plugins.niceties or vim.list_contains(names, ar_config.colorscheme) then
+  if ar.plugins.niceties or vim.list_contains(names, colorscheme) then
     return true
   end
-  return not ar.plugins.minimal
-    and vim.tbl_contains(names, ar_config.colorscheme)
+  return not ar.plugins.minimal and vim.tbl_contains(names, colorscheme)
 end
 
 ---@param names table
@@ -175,9 +177,7 @@ return {
     },
     config = function(_, opts)
       require('neomodern').setup(opts)
-      if ar_config.colorscheme == 'neomodern' then
-        require('neomodern').load()
-      end
+      if colorscheme == 'neomodern' then require('neomodern').load() end
     end,
   },
   {

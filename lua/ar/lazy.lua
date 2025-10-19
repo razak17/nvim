@@ -18,6 +18,8 @@ if not vim.uv.fs_stat(lazy_path) then
   end
 end
 vim.opt.rtp:prepend(lazy_path)
+local scheme_switcher = require('ar.scheme_switcher')
+local colorscheme = scheme_switcher.get_current_colorscheme()
 require('lazy').setup({
   spec = require('ar.plugins'),
   defaults = { lazy = true },
@@ -29,7 +31,7 @@ require('lazy').setup({
     patterns = { 'razak17' },
     fallback = true,
   },
-  install = { colorscheme = { ar_config.colorscheme, 'habamax' } },
+  install = { colorscheme = { colorscheme, 'habamax' } },
   -- ui = { border = ar.ui.current.border },
   checker = {
     enabled = true,

@@ -1,6 +1,8 @@
 ---@diagnostic disable: undefined-field
 local api, opt_l = vim.api, vim.opt_local
 local l = vim.log.levels
+local scheme_switcher = require('ar.scheme_switcher')
+local colorscheme = scheme_switcher.get_current_colorscheme()
 local M = {}
 
 local config = {
@@ -81,7 +83,7 @@ function M.alpha_green()
   local enabled = config.alpha_green.enabled
   vim.cmd('hi clear')
   if enabled then
-    vim.cmd.colorscheme(ar_config.colorscheme or 'default')
+    vim.cmd.colorscheme(colorscheme or 'default')
   else
     local hl = config.alpha_green.highlights
     for hl_group, attrs in pairs(vim.api.nvim_get_hl(0, {})) do
@@ -100,7 +102,7 @@ function M.color_my_pencils()
   local enabled = config.color_my_pencils.enabled
   vim.cmd('hi clear')
   if enabled then
-    vim.cmd.colorscheme(ar_config.colorscheme or 'default')
+    vim.cmd.colorscheme(colorscheme or 'default')
   else
     for hl, value in pairs(config.color_my_pencils.highlights) do
       if value.fg then api.nvim_set_hl(0, hl, { fg = value.fg }) end
