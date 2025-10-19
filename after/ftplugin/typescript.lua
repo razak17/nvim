@@ -78,7 +78,8 @@ then
   ts_cmd('RemoveUnused', action(sources.remove_unused), 'Remove unused')
   ts_cmd('FixAll', action(sources.fix_all), 'Fix All')
   ts_cmd('GotoSourceDefinition', function()
-    local params = vim.lsp.util.make_position_params()
+    local win = vim.api.nvim_get_current_win()
+    local params = vim.lsp.util.make_position_params(win, 'utf-16')
     execute({
       command = 'typescript.goToSourceDefinition',
       arguments = { params.textDocument.uri, params.position },
