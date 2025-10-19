@@ -123,7 +123,7 @@ end
 
 local function grep_string()
   p('grep', {
-    layout = { preview = 'main', cycle = true, preset = 'custom_select' },
+    layout = { preview = 'main', cycle = true, preset = 'ivy' },
   })()
 end
 
@@ -132,14 +132,14 @@ local function visual_grep_string()
   vim.cmd('noau normal! "vy"')
   local text = vim.fn.getreg('v')
   p('grep', {
-    layout = { preview = 'main', cycle = true, preset = 'custom_select' },
+    layout = { preview = 'main', cycle = true, preset = 'ivy' },
     search = text,
   })()
 end
 
 local function grep_word()
   p('grep_word', {
-    layout = { preview = 'main', cycle = true, preset = 'custom_select' },
+    layout = { preview = 'main', cycle = true, preset = 'ivy' },
   })()
 end
 
@@ -335,6 +335,8 @@ return {
         },
         prompt = fmt('%s ', ar.ui.icons.misc.chevron_right),
         sources = {
+            lsp_definitions = { layout = { preview = 'main', preset = 'ivy' } },
+            lsp_references = { layout = { preview = 'main', preset = 'ivy' } },
           files = {
             hidden = true,
             ignored = true,
