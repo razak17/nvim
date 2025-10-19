@@ -5,7 +5,7 @@ vim.g.neovide_cursor_vfx_mode = 'railgun'
 vim.o.guifont = 'Operator Mono SSm Lig Book:h8' -- text below applies for VimScript
 vim.g.neovide_input_macos_alt_is_meta = true
 vim.g.transparency = 0
-vim.g.neovide_transparency = 0.8
+vim.g.neovide_opacity = 0.8
 vim.opt.linespace = 0
 
 vim.api.nvim_set_keymap(
