@@ -107,6 +107,7 @@ return {
     end,
     ---@type CopilotChat.config.shared
     opts = {
+      auto_insert_mode = false,
       model = 'claude-sonnet-4.5',
       agent = 'copilot',
       prompts = prompts,
