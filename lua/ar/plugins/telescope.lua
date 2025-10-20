@@ -401,9 +401,12 @@ return {
         local telescope_mappings = {
           { '<M-space>', b('buffers'), desc = 'buffers' },
           { '<leader>f?', b('help_tags'), desc = 'help tags' },
-          -- { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer', },
+          { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer', },
           { '<leader>fc', nvim_config, desc = 'nvim config' },
           { '<leader>ff', find_files, desc = 'find files' },
+          { '<leader>fgc', b('git_commits'), desc = 'find git commits' },
+          { '<leader>fgo', b('git_status'), desc = 'git status' },
+          { '<leader>fgS', b('git_stash'), desc = 'git stash' },
           { '<leader>fI', b('builtin'), desc = 'builtins', },
           { '<leader>fj', b('jumplist'), desc = 'jumplist', },
           { '<leader>fk', b('keymaps'), desc = 'keymaps' },
@@ -430,6 +433,7 @@ return {
           { '<leader>fvo', b('vim_options'), desc = 'vim options' },
           { '<leader>fvr', b('registers'), desc = 'registers' },
           { '<leader>fvk', b('command_history'), desc = 'command history' },
+          { '<leader>fvs', b('search_history'), desc = 'search history' },
           { '<leader>fK', b('colorscheme'), desc = 'colorscheme' },
           { '<leader>fY', b('spell_suggest'), desc = 'spell suggest' },
         }
