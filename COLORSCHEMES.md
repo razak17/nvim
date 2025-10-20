@@ -104,6 +104,7 @@
 - neomodern-day
 - night-owl
 - nightfox
+- nightgem
 - no-clown-fiesta
 - no-clown-fiesta-dark
 - no-clown-fiesta-dim

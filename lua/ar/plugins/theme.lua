@@ -135,6 +135,12 @@ return {
     priority = get_priority({ 'gruvdark' }),
     event = get_event({ 'gruvdark' }),
   },
+  {
+    'alexkotusenko/nightgem.nvim',
+    cond = get_cond({ 'nightgem' }),
+    priority = get_priority({ 'nightgem' }),
+    event = get_event({ 'nightgem' }),
+  },
   ------------------------------------------------------------------------------
   -- Monochrome
   {

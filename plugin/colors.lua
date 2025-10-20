@@ -178,7 +178,6 @@ local function colorscheme_overrides()
         },
       },
       { FloatTitle = { bg = { from = 'CursorLine', alter = 0.05 } } },
-      { IndentBlanklineContextChar = { link = 'Comment' } },
       { Pmenu = { link = 'NormalFloat' } },
       { PmenuBorder = { link = 'FloatBorder' } },
       { PmenuExtra = { link = 'Pmenu' } },
@@ -190,6 +189,7 @@ local function colorscheme_overrides()
       { WinSeparator = { link = 'VertSplit' } },
       { FloatBorder = { link = 'VertSplit' } },
       { IndentBlanklineChar = { link = 'VertSplit' } },
+      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       { Winbar = { link = 'Variable' } },
       { WinbarNC = { link = 'LineNr' } },
       { Folded = { bg = { from = 'CursorLine', alter = -0.2 } } },
@@ -236,7 +236,7 @@ local function colorscheme_overrides()
       { StatusLine = { inherit = 'Normal' } },
       { FloatBorder = { fg = { from = 'NonText', alter = -0.2 } } },
       { IndentBlanklineChar = { link = 'VertSplit' } },
-      { IndentBlanklineContextChar = { link = 'VertSplit' } },
+      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
     },
     ['habamax'] = {
       { Normal = { bg = { from = 'Normal', alter = -0.15 } } },
@@ -275,7 +275,7 @@ local function colorscheme_overrides()
       { PmenuKindSel = { link = 'PmenuSel' } },
       { PmenuMatchSel = { link = 'PmenuSel' } },
       { IndentBlanklineChar = { link = 'VertSplit' } },
-      { IndentBlanklineContextChar = { link = 'NonText' } },
+      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
     },
     ['peachpuff'] = {
       { NormalFloat = { link = 'Normal' } },
@@ -294,7 +294,7 @@ local function colorscheme_overrides()
       },
       { FloatTitle = { link = 'CursorLine' } },
       { IndentBlanklineChar = { link = 'VertSplit' } },
-      { IndentBlanklineContextChar = { link = 'VertSplit' } },
+      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       {
         LspReferenceRead = {
           bg = { from = 'CursorLine', attr = 'bg', alter = -0.1 },
@@ -465,7 +465,7 @@ local function colorscheme_overrides()
       { WinSeparator = { link = 'VertSplit' } },
       { FloatBorder = { link = 'VertSplit' } },
       { IndentBlanklineChar = { link = 'VertSplit' } },
-      { IndentBlanklineContextChar = { link = 'VertSplit' } },
+      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       { StatusLine = { bg = 'NONE' } },
     },
     ['conifer'] = {
@@ -473,8 +473,24 @@ local function colorscheme_overrides()
       { WinSeparator = { link = 'VertSplit' } },
       { FloatBorder = { link = 'VertSplit' } },
       { IndentBlanklineChar = { link = 'LineNr' } },
-      { IndentBlanklineContextChar = { link = 'VertSplit' } },
+      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       { PmenuBorder = { link = 'NormalFloat' } },
+    },
+    ['nightgem'] = {
+      { WinSeparator = { fg = { from = 'Comment' }, bg = 'NONE' } },
+      { VertSplit = { link = 'WinSeparator' } },
+      { FloatBorder = { link = 'VertSplit' } },
+      { FloatTitle = { link = 'CursorLine' } },
+      { IndentBlanklineChar = { link = 'VertSplit' } },
+      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+      { PmenuBorder = { link = 'NormalFloat' } },
+      { TelescopeBorder = { link = 'FloatBorder' } },
+      {
+        TelescopeTitle = {
+          bg = { from = 'FloatTitle' },
+          fg = { from = 'Normal', alter = -0.15 },
+        },
+      },
     },
     ['kanso'] = {
       { FloatBorder = { link = 'VertSplit' } },
@@ -609,7 +625,7 @@ local function colorscheme_overrides()
       { VertSplit = { fg = { from = 'Comment', alter = -0.4 } } },
       { WinSeparator = { link = 'VertSplit' } },
       { IndentBlanklineChar = { link = 'VertSplit' } },
-      { IndentBlanklineContextChar = { link = 'VertSplit' } },
+      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       { Folded = { bg = { from = 'CursorLine', alter = -0.1 } } },
       { Pmenu = { link = 'NormalFloat' } },
       { PmenuBorder = { link = 'FloatBorder' } },
