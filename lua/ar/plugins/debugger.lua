@@ -8,7 +8,7 @@ local minimal = ar.plugins.minimal
 -- For further explanation, see https://www.youtube.com/watch?v=Ul_WPhS2bis
 
 -- stylua: ignore
-local js_based_languages = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'vue', 'svelte' }
+local js_filetypes = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'vue', 'svelte' }
 
 ---@param config {args?:string[]|fun():string[]?}
 local function get_args(config)
@@ -37,11 +37,11 @@ ar.debugger = {
     LogPoint = { '󰃷', 'DiagnosticInfo' },
   },
   filetypes = {
-    ['chrome'] = js_based_languages,
-    ['node'] = js_based_languages,
-    ['pwa-node'] = js_based_languages,
-    ['pwa-chrome'] = js_based_languages,
-    ['node-terminal'] = js_based_languages,
+    ['chrome'] = js_filetypes,
+    ['node'] = js_filetypes,
+    ['pwa-node'] = js_filetypes,
+    ['pwa-chrome'] = js_filetypes,
+    ['node-terminal'] = js_filetypes,
   },
 }
 
@@ -116,18 +116,6 @@ return {
         })
       end
 
-      -- setup dap config by VsCode launch.json file
-      local dap_vscode = require('dap.ext.vscode')
-      local json = require('plenary.json')
-      ---@diagnostic disable-next-line: duplicate-set-field
-      dap_vscode.json_decode = function(str)
-        return vim.json.decode(json.json_strip_comments(str, {}))
-      end
-      local _filetypes = require('mason-nvim-dap.mappings.filetypes')
-      local filetypes =
-        vim.tbl_deep_extend('force', _filetypes, ar.debugger.filetypes)
-      dap_vscode.type_to_filetypes = filetypes
-
       -- Lua configurations.
       -- 1. Open a Neovim instance (instance A)
       -- 2. Launch the DAP server with (A) >
@@ -185,203 +173,232 @@ return {
         },
       }
 
-      for _, adapter in pairs({ 'node', 'chrome' }) do
-        local pwa_adapter = 'pwa-' .. adapter
-        -- Handle launch.json configurations
-        -- which specify type as "node" or "chrome"
-        -- Inspired by https://github.com/StevanFreeborn/nvim-config/blob/main/lua/plugins/debugging.lua#L111-L123
-        dap.adapters[pwa_adapter] = {
-          type = 'server',
-          host = 'localhost',
-          port = '${port}',
-          executable = {
-            command = 'node',
-            args = {
-              ar.get_pkg_path(
-                'js-debug-adapter',
-                'js-debug/src/dapDebugServer.js'
-              ),
-              '${port}',
+      for _, adapterType in ipairs({ 'node', 'chrome', 'msedge' }) do
+        local pwaType = 'pwa-' .. adapterType
+
+        if not dap.adapters[pwaType] then
+          dap.adapters[pwaType] = {
+            type = 'server',
+            host = 'localhost',
+            port = '${port}',
+            executable = {
+              command = 'js-debug-adapter',
+              args = { '${port}' },
             },
-          },
-          enrich_config = function(config, on_config)
-            -- Under the hood, always use the main adapter
-            config.type = pwa_adapter
-            on_config(config)
-          end,
-        }
-        dap.adapters[adapter] = dap.adapters[pwa_adapter]
+          }
+        end
+
+        -- Define adapters without the "pwa-" prefix for VSCode compatibility
+        if not dap.adapters[adapterType] then
+          dap.adapters[adapterType] = function(cb, config)
+            local nativeAdapter = dap.adapters[pwaType]
+
+            config.type = pwaType
+
+            if type(nativeAdapter) == 'function' then
+              nativeAdapter(cb, config)
+            else
+              cb(nativeAdapter)
+            end
+          end
+        end
       end
 
-      for _, language in ipairs(js_based_languages) do
-        dap.configurations[language] = {
-          {
-            type = 'pwa-node',
-            request = 'launch',
-            name = 'Launch current file (pwa-node)',
-            program = '${file}',
-            cwd = '${workspaceFolder}',
-            sourceMaps = true,
-          },
-          {
-            type = 'pwa-node',
-            request = 'attach',
-            name = 'Attach program (pwa-node, select pid)',
-            cwd = '${workspaceFolder}/src',
-            processId = require('dap.utils').pick_process,
-            sourceMaps = true,
-            resolveSourceMapLocations = {
-              '${workspaceFolder}/**',
-              '!**/node_modules/**',
+      local vscode = require('dap.ext.vscode')
+      vscode.type_to_filetypes['node'] = js_filetypes
+      vscode.type_to_filetypes['pwa-node'] = js_filetypes
+
+      for _, language in ipairs(js_filetypes) do
+        if not dap.configurations[language] then
+          local runtimeExecutable = nil
+          if language:find('typescript') then
+            runtimeExecutable = vim.fn.executable('tsx') == 1 and 'tsx'
+              or 'ts-node'
+          end
+          dap.configurations[language] = {
+            {
+              type = 'pwa-node',
+              request = 'launch',
+              name = 'Launch current file (pwa-node)',
+              program = '${file}',
+              cwd = '${workspaceFolder}',
+              sourceMaps = true,
+              runtimeExecutable = runtimeExecutable,
+              skipFiles = {
+                '<node_internals>/**',
+                'node_modules/**',
+              },
+              resolveSourceMapLocations = {
+                '${workspaceFolder}/**',
+                '!**/node_modules/**',
+              },
             },
-            skipFiles = {
-              '<node_internals>/**',
-              '${workspaceFolder}/node_modules/**/*.js',
+            {
+              type = 'pwa-node',
+              request = 'attach',
+              name = 'Attach program (pwa-node, select pid)',
+              cwd = '${workspaceFolder}/src',
+              processId = require('dap.utils').pick_process,
+              sourceMaps = true,
+              runtimeExecutable = runtimeExecutable,
+              resolveSourceMapLocations = {
+                '${workspaceFolder}/**',
+                '!**/node_modules/**',
+              },
+              skipFiles = {
+                '<node_internals>/**',
+                '${workspaceFolder}/node_modules/**/*.js',
+              },
             },
-          },
-          {
-            type = 'pwa-node',
-            request = 'launch',
-            name = 'Launch current file (pwa-node with ts-node)',
-            cwd = fn.getcwd(),
-            runtimeArgs = { '--loader', 'ts-node/esm' },
-            runtimeExecutable = 'node',
-            args = { '${file}' },
-            sourceMaps = true,
-            protocol = 'inspector',
-            skipFiles = { '<node_internals>/**', 'node_modules/**' },
-            resolveSourceMapLocations = {
-              '${workspaceFolder}/**',
-              '!**/node_modules/**',
+            {
+              type = 'pwa-node',
+              request = 'launch',
+              name = 'Launch current file (pwa-node with ts-node)',
+              cwd = fn.getcwd(),
+              runtimeArgs = { '--loader', 'ts-node/esm' },
+              runtimeExecutable = 'node',
+              args = { '${file}' },
+              sourceMaps = true,
+              protocol = 'inspector',
+              skipFiles = { '<node_internals>/**', 'node_modules/**' },
+              resolveSourceMapLocations = {
+                '${workspaceFolder}/**',
+                '!**/node_modules/**',
+              },
             },
-          },
-          {
-            type = 'pwa-node',
-            request = 'launch',
-            name = 'Launch current file (pwa-node with deno)',
-            runtimeExecutable = 'deno',
-            runtimeArgs = {
-              'run',
-              '--inspect-wait',
-              '--allow-all',
+            {
+              type = 'pwa-node',
+              request = 'launch',
+              name = 'Launch current file (pwa-node with deno)',
+              runtimeExecutable = 'deno',
+              runtimeArgs = {
+                'run',
+                '--inspect-wait',
+                '--allow-all',
+              },
+              program = '${file}',
+              cwd = '${workspaceFolder}',
+              attachSimplePort = 9229,
             },
-            program = '${file}',
-            cwd = '${workspaceFolder}',
-            attachSimplePort = 9229,
-          },
-          {
-            type = 'pwa-node',
-            request = 'launch',
-            name = 'Launch test current file (pwa-node with jest)',
-            cwd = fn.getcwd(),
-            runtimeArgs = {
-              -- '${workspaceFolder}/node_modules/.bin/jest',
-              './node_modules/jest/bin/jest.js',
-              '--runInBand',
+            {
+              type = 'pwa-node',
+              request = 'launch',
+              name = 'Launch test current file (pwa-node with jest)',
+              cwd = fn.getcwd(),
+              runtimeArgs = {
+                -- '${workspaceFolder}/node_modules/.bin/jest',
+                './node_modules/jest/bin/jest.js',
+                '--runInBand',
+              },
+              runtimeExecutable = 'node',
+              args = { '${file}', '--coverage', 'false' },
+              rootPath = '${workspaceFolder}',
+              sourceMaps = true,
+              console = 'integratedTerminal',
+              internalConsoleOptions = 'neverOpen',
+              skipFiles = { '<node_internals>/**', 'node_modules/**' },
             },
-            runtimeExecutable = 'node',
-            args = { '${file}', '--coverage', 'false' },
-            rootPath = '${workspaceFolder}',
-            sourceMaps = true,
-            console = 'integratedTerminal',
-            internalConsoleOptions = 'neverOpen',
-            skipFiles = { '<node_internals>/**', 'node_modules/**' },
-          },
-          {
-            type = 'pwa-node',
-            request = 'launch',
-            name = 'Launch test current file (pwa-node with vitest)',
-            cwd = fn.getcwd(),
-            program = '${workspaceFolder}/node_modules/vitest/vitest.mjs',
-            args = { 'run', '${file}' },
-            autoAttachChildProcesses = true,
-            smartStep = true,
-            skipFiles = { '<node_internals>/**', 'node_modules/**' },
-          },
-          {
-            type = 'pwa-node',
-            request = 'launch',
-            name = 'Launch test current file (pwa-node with vitest)',
-            cwd = fn.getcwd(),
-            program = '${workspaceFolder}/node_modules/vitest/vitest.mjs',
-            args = { '--inspect-brk', '--threads', 'false', 'run', '${file}' },
-            autoAttachChildProcesses = true,
-            smartStep = true,
-            console = 'integratedTerminal',
-            skipFiles = { '<node_internals>/**', 'node_modules/**' },
-          },
-          {
-            type = 'pwa-node',
-            request = 'launch',
-            name = 'Launch test current file (pwa-node with deno)',
-            cwd = fn.getcwd(),
-            runtimeArgs = { 'test', '--inspect-brk', '--allow-all', '${file}' },
-            runtimeExecutable = 'deno',
-            attachSimplePort = 9229,
-          },
-          {
-            type = 'pwa-chrome',
-            name = 'Launch Chrome to debug client',
-            request = 'launch',
-            url = 'http://localhost:5173',
-            sourceMaps = true,
-            protocol = 'inspector',
-            port = 9222,
-            webRoot = '${workspaceFolder}/src',
-            -- skip files from vite's hmr
-            skipFiles = {
-              '**/node_modules/**/*',
-              '**/@vite/*',
-              '**/src/client/*',
-              '**/src/*',
+            {
+              type = 'pwa-node',
+              request = 'launch',
+              name = 'Launch test current file (pwa-node with vitest)',
+              cwd = fn.getcwd(),
+              program = '${workspaceFolder}/node_modules/vitest/vitest.mjs',
+              args = { 'run', '${file}' },
+              autoAttachChildProcesses = true,
+              smartStep = true,
+              skipFiles = { '<node_internals>/**', 'node_modules/**' },
             },
-          },
-          -- Debug web applications (client side)
-          {
-            type = 'pwa-chrome',
-            name = 'Launch & Debug Chrome',
-            request = 'launch',
-            url = function()
-              local co = coroutine.running()
-              return coroutine.create(function()
-                vim.ui.input(
-                  { prompt = 'Enter URL: ', default = 'http://localhost:3000' },
-                  function(url)
+            {
+              type = 'pwa-node',
+              request = 'launch',
+              name = 'Launch test current file (pwa-node with vitest)',
+              cwd = fn.getcwd(),
+              program = '${workspaceFolder}/node_modules/vitest/vitest.mjs',
+              args = { '--inspect-brk', '--threads', 'false', 'run', '${file}' },
+              autoAttachChildProcesses = true,
+              smartStep = true,
+              console = 'integratedTerminal',
+              skipFiles = { '<node_internals>/**', 'node_modules/**' },
+            },
+            {
+              type = 'pwa-node',
+              request = 'launch',
+              name = 'Launch test current file (pwa-node with deno)',
+              cwd = fn.getcwd(),
+              runtimeArgs = {
+                'test',
+                '--inspect-brk',
+                '--allow-all',
+                '${file}',
+              },
+              runtimeExecutable = 'deno',
+              attachSimplePort = 9229,
+            },
+            {
+              type = 'pwa-chrome',
+              name = 'Launch Chrome to debug client',
+              request = 'launch',
+              url = 'http://localhost:5173',
+              sourceMaps = true,
+              protocol = 'inspector',
+              port = 9222,
+              webRoot = '${workspaceFolder}/src',
+              -- skip files from vite's hmr
+              skipFiles = {
+                '**/node_modules/**/*',
+                '**/@vite/*',
+                '**/src/client/*',
+                '**/src/*',
+              },
+            },
+            -- Debug web applications (client side)
+            {
+              type = 'pwa-chrome',
+              name = 'Launch & Debug Chrome',
+              request = 'launch',
+              url = function()
+                local co = coroutine.running()
+                return coroutine.create(function()
+                  vim.ui.input({
+                    prompt = 'Enter URL: ',
+                    default = 'http://localhost:3000',
+                  }, function(url)
                     if url == nil or url == '' then
                       return
                     else
                       coroutine.resume(co, url)
                     end
-                  end
-                )
-              end)
-            end,
-            sourceMaps = true,
-            protocol = 'inspector',
-            webRoot = fn.getcwd(),
-            userDataDir = false,
-            resolveSourceMapLocations = {
-              '${workspaceFolder}/**',
-              '!**/node_modules/**',
-            },
+                  end)
+                end)
+              end,
+              sourceMaps = true,
+              protocol = 'inspector',
+              webRoot = fn.getcwd(),
+              userDataDir = false,
+              resolveSourceMapLocations = {
+                '${workspaceFolder}/**',
+                '!**/node_modules/**',
+              },
 
-            -- From https://github.com/lukas-reineke/dotfiles/blob/master/vim/lua/plugins/dap.lua
-            -- To test how it behaves
-            rootPath = '${workspaceFolder}',
-            cwd = '${workspaceFolder}',
-            console = 'integratedTerminal',
-            internalConsoleOptions = 'neverOpen',
-            sourceMapPathOverrides = {
-              ['./*'] = '${workspaceFolder}/src/*',
+              -- From https://github.com/lukas-reineke/dotfiles/blob/master/vim/lua/plugins/dap.lua
+              -- To test how it behaves
+              rootPath = '${workspaceFolder}',
+              cwd = '${workspaceFolder}',
+              console = 'integratedTerminal',
+              internalConsoleOptions = 'neverOpen',
+              sourceMapPathOverrides = {
+                ['./*'] = '${workspaceFolder}/src/*',
+              },
             },
-          },
-          -- Divider for the launch.json derived configs
-          {
-            name = '----- ↓ launch.json configs (if available) ↓ -----',
-            type = '',
-            request = 'launch',
-          },
-        }
+            -- Divider for the launch.json derived configs
+            {
+              name = '----- ↓ launch.json configs (if available) ↓ -----',
+              type = '',
+              request = 'launch',
+            },
+          }
+        end
       end
     end,
     dependencies = {
