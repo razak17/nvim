@@ -159,9 +159,7 @@ return {
             default = vim.tbl_deep_extend('force', opts.default or {}, {
               embed_image_as_base64 = false,
               prompt_for_file_name = false,
-              drag_and_drop = {
-                insert_mode = true,
-              },
+              drag_and_drop = { insert_mode = true },
               use_absolute_path = true,
             }),
           })
@@ -172,33 +170,14 @@ return {
   {
     'saghen/blink.cmp',
     optional = true,
-    opts = function(_, opts)
-      return get_cond()
-          and vim.g.blink_add_source(
-            { 'avante_commands', 'avante_files', 'avante_mentions' },
-            {
-              avante_commands = {
-                name = 'avante_commands',
-                module = 'blink.compat.source',
-                score_offset = 90, -- show at a higher priority than lsp
-                opts = {},
-              },
-              avante_files = {
-                name = 'avante_files',
-                module = 'blink.compat.source',
-                score_offset = 100, -- show at a higher priority than lsp
-                opts = {},
-              },
-              avante_mentions = {
-                name = 'avante_mentions',
-                module = 'blink.compat.source',
-                score_offset = 1000, -- show at a higher priority than lsp
-                opts = {},
-              },
-            },
-            opts
-          )
-        or opts
-    end,
+    specs = { 'Kaiser-Yang/blink-cmp-avante' },
+    opts = {
+      sources = {
+        default = { 'avante' },
+        providers = {
+          avante = { module = 'blink-cmp-avante', name = '[AVANTE]' },
+        },
+      },
+    },
   },
 }
