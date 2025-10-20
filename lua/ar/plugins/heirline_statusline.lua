@@ -374,11 +374,9 @@ return {
           update = {
             'User',
             pattern = { 'GitSignsUpdate', 'GitSignsChanged' },
-            callback = function() vim.schedule(vim.cmd.redrawstatus) end,
           },
           {
             condition = function(self) return not ar.falsy(self.ahead_hehind) end,
-            update = { 'User', pattern = 'git_statusChanged' },
             {
               condition = function(self) return self.ahead_hehind.error end,
               provider = function(self) return ' ' .. self.ahead_hehind.error end,
@@ -416,7 +414,6 @@ return {
           },
           {
             condition = function(self) return self.git_status ~= nil and false end,
-            update = { 'User', pattern = 'git_statusChanged' },
             {
               condition = function(self)
                 return self.git_status.status == 'pending'
