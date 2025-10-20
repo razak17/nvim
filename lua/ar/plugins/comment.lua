@@ -6,7 +6,11 @@ return {
     'folke/ts-comments.nvim',
     cond = not minimal and false,
     event = 'VeryLazy',
-    opts = {},
+    opts = {
+      lang = {
+        typst = { '// %s', '/* %s */' },
+      },
+    },
   },
   {
     'JoosepAlviste/nvim-ts-context-commentstring',

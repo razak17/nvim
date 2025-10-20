@@ -259,6 +259,7 @@ local servers = {
   sqls = {},
   tailwindcss = {},
   tinymist = {
+    single_file_support = true, -- Fixes LSP attachment in non-Git directories
     settings = {
       formatterMode = 'typstyle',
       exportPdf = 'onType',

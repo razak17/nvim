@@ -229,6 +229,7 @@ return {
           or not ar.lsp.enable and { 'black', 'yapf' }
           or {},
         http = { 'kulala-fmt' },
+        typst = { 'typstyle', lsp_format = 'prefer' },
       },
       log_level = vim.log.levels.DEBUG,
       format_on_save = false,
