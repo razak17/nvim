@@ -428,6 +428,9 @@ function ar.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
 function ar.reload_all()
   cmd('checktime')
   cmd('Gitsigns refresh')
+  vim.schedule(
+    function() require('ar.statusline').update_ahead_behind(true) end
+  )
 end
 
 -- Ref: https://github.com/serranomorante/dotfiles/blob/main/nvim/dot-config/nvim/lua/serranomorante/utils.lua?plain=1#L186

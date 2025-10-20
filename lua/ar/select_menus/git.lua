@@ -17,6 +17,23 @@ function M.abort_merge() ar.run_command('git', { 'merge', '--abort' }) end
 
 function M.continue_merge() ar.run_command('git', { 'merge', '--continue' }) end
 
+local function revert_commit(commit_hash)
+  commit_hash = commit_hash or 'HEAD'
+  ar.run_command('git', { 'revert', '--no-edit', commit_hash }, ar.reload_all)
+end
+
+function M.revert_last_commit() revert_commit() end
+
+function M.revert_specific_commit()
+  vim.ui.input({ prompt = 'Enter commit hash to revert: ' }, function(input)
+    if input ~= nil and input ~= '' then revert_commit(input) end
+  end)
+end
+
+function M.undo_last_commit()
+  ar.run_command('git', { 'reset', 'HEAD~1' }, ar.reload_all)
+end
+
 -- https://github.com/olimorris/dotfiles/blob/main/.config/nvim/lua/config/functions.lua#L11
 function M.list_branches()
   local branches = fn.systemlist([[git branch 2>/dev/null]])

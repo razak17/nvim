@@ -44,6 +44,9 @@ if ar.is_git_repo() or ar.is_git_env() then
     ['Fetch Orign'] = "lua require'ar.select_menus.git'.fetch_origin()",
     ['Abort Merge'] = "lua require'ar.select_menus.git'.abort_merge()",
     ['Continue Merge'] = "lua require'ar.select_menus.git'.continue_merge()",
+    ['Revert Commit'] = "lua require'ar.select_menus.git'.revert_specific_commit()",
+    ['Revert Last Commit'] = "lua require'ar.select_menus.git'.revert_last_commit()",
+    ['Undo Last Commit'] = "lua require'ar.select_menus.git'.undo_last_commit()",
     ['List Branches'] = "lua require'ar.select_menus.git'.list_branches()",
   })
   if ar.has('telescope.nvim') then
