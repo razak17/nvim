@@ -226,6 +226,13 @@ return {
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function() require('string-breaker').setup() end,
   },
+  {
+    'Kenzo-Wada/boundary.nvim',
+    cond = function() return ar.get_plugin_cond('boundary.nvim', not minimal) end,
+    cmd = { 'BoundaryRefresh' },
+    ft = { 'javascriptreact', 'typescriptreact' },
+    opts = {},
+  },
   -- Python
   --------------------------------------------------------------------------------
   {
