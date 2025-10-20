@@ -116,6 +116,7 @@
 - onedark
 - peachpuff
 - poimandres
+- rams
 - randombones
 - randombones_dark
 - randombones_light
