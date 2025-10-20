@@ -143,7 +143,7 @@ return {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     cond = not minimal and ar.lsp.enable,
     cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
-    config = function()
+    opts = function(_, opts)
       local packages = get_lsp_servers()
       if not ar_config.lsp.null_ls.enable then
         local linters = get_linters()
@@ -160,12 +160,12 @@ return {
           vim.list_extend(packages, formatters)
         end
       end
-
-      require('mason-tool-installer').setup({
-        ensure_installed = packages,
-        run_on_start = false,
-      })
+      opts.run_on_start = false
+      opts.ensure_installed = opts.ensure_installed or {}
+      table.insert(opts.ensure_installed, packages)
+      return opts
     end,
+    config = function(_, opts) require('mason-tool-installer').setup(opts) end,
   },
   {
     'stevearc/conform.nvim',

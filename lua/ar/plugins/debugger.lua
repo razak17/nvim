@@ -490,7 +490,23 @@ return {
     end,
     dependencies = 'mason.nvim',
     cmd = { 'DapInstall', 'DapUninstall' },
-    opts = {},
+    opts = {
+      -- chrome adapter is deprecated, use js-debug-adapter instead
+      automatic_installation = { exclude = { 'chrome' } },
+    },
+  },
+  {
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    optional = true,
+    opts = function(_, opts)
+      opts.ensure_installed = opts.ensure_installed or {}
+      table.insert(opts.ensure_installed, {
+        'js-debug-adapter',
+        'delve',
+        'codelldb',
+        'debugpy',
+      })
+    end,
   },
   {
     'hrsh7th/nvim-cmp',
