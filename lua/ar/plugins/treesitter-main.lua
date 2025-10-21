@@ -96,12 +96,12 @@ return {
 
         -- start treesitter
         ---@param ft string
-        local function start(ft)
+        local function start(ft, bufnr)
           if not ts.have(ft) then return end
 
           -- highlighting
           if enabled('highlight', 'highlights', ft) then
-            pcall(vim.treesitter.start)
+            pcall(vim.treesitter.start, bufnr)
           end
 
           -- indents
@@ -134,13 +134,13 @@ return {
               ts.ensure_treesitter_cli(function()
                 TS.install({ parser_name }, { summary = true }):await(function()
                   ts.get_installed(true) -- refresh the installed langs
-                  start(ev.match)
+                  start(ev.match, ev.buf)
                 end)
               end)
               return
             end
 
-            start(ev.match)
+            start(ev.match, ev.buf)
           end,
         })
       end,
