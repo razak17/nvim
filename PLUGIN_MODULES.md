@@ -90,6 +90,7 @@
 - session
 - share
 - shelter
+- sidekick
 - snacks
 - snacks_dashboard
 - snacks_indent

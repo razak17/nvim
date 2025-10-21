@@ -153,6 +153,7 @@
 - WinterIsComing-dark-color-theme
 - WinterIsComing-light-color-no-italics-theme
 - WinterIsComing-light-color-theme
+- yoda
 - yugen
 - zenbones
 - zenburn

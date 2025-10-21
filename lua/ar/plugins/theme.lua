@@ -109,6 +109,12 @@ return {
     priority = get_priority({ 'afterglow' }),
     event = get_event({ 'afterglow' }),
   },
+  {
+    'kuri-sun/yoda.nvim',
+    cond = get_cond({ 'yoda' }),
+    priority = get_priority({ 'yoda' }),
+    event = get_event({ 'yoda' }),
+  },
   ------------------------------------------------------------------------------
   -- Warm
   {

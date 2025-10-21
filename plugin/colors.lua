@@ -496,6 +496,15 @@ local function colorscheme_overrides()
       { FloatBorder = { link = 'VertSplit' } },
       { PmenuBorder = { link = 'NormalFloat' } },
     },
+    ['yoda'] = {
+      { CursorLine = { bg = { from = 'Comment', attr = 'fg', alter = -0.7 } } },
+      { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
+      { FloatBorder = { link = 'VertSplit' } },
+      { FloatTitle = { link = 'CursorLine' } },
+      { PmenuBorder = { link = 'NormalFloat' } },
+      { IndentBlanklineChar = { link = 'VertSplit' } },
+      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+    },
     ['thorn'] = {
       {
         NormalFloat = {
