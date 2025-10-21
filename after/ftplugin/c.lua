@@ -9,11 +9,14 @@ bo.softtabstop = 4
 bo.commentstring = '// %s'
 vim.cmd([[setlocal path+=/usr/include/**,/usr/local/include/**]])
 
-if not ar.plugins.enable or ar.plugins.minimal then return end
+if not ar.plugins.enable or ar.plugins.minimal or not ar.has('nvim-dap') then
+  return
+end
 
+local dap = require('dap')
 local codelldb_path = ar.get_pkg_path('codelldb', 'extension/adapter/codelldb')
 
-require('dap').adapters.codelldb = {
+dap.adapters.codelldb = {
   type = 'server',
   port = '${port}',
   executable = {
@@ -23,7 +26,7 @@ require('dap').adapters.codelldb = {
 }
 
 for _, language in ipairs({ 'c', 'cpp' }) do
-  require('dap').configurations[language] = {
+  dap.configurations[language] = {
     {
       name = 'Launch file',
       type = 'codelldb',

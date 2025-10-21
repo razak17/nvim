@@ -7,11 +7,7 @@ bo.softtabstop = 4
 bo.shiftwidth = 4
 opt.spell = true
 
-if
-  not ar.plugins.enable
-  or ar.plugins.minimal
-  or not ar.has('nvim-dap')
-then
+if not ar.plugins.enable or ar.plugins.minimal or not ar.has('nvim-dap') then
   return
 end
 
@@ -51,6 +47,7 @@ dap.adapters.python = function(cb, config)
     })
   end
 end
+
 dap.configurations.python = {
   {
     type = 'python',
