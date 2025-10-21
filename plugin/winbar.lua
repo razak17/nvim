@@ -44,7 +44,7 @@ function ar.ui.winbar.render()
   local left = '%#Debug#%m '
   local buf_count = '%#Directory#(' .. buffer_count .. ') '
   local file_path = '%#Normal#' .. home_replaced .. '%*%='
-  if config.pretty_path then
+  if config.pretty_path and pretty_path ~= '' then
     file_path = '%#Normal#' .. pretty_path.dir .. pretty_path.name .. '%*%='
   end
   local hostname = '%#Normal#' .. host
