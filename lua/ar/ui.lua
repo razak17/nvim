@@ -324,6 +324,7 @@ local filetypes = ar.p_table({
   ['buffer_manager'] = presets.tool_panel:with({ number = true }),
   ['cheatsheet'] = presets.tool_panel,
   ['checkhealth'] = presets.tool_panel,
+  ['cmd'] = presets.tool_panel,
   ['codecompanion'] = presets.statusline_only,
   ['compile'] = presets.statusline_only,
   ['dap-repl'] = presets.tool_panel:with({ winbar = 'ignore' }),
@@ -347,6 +348,7 @@ local filetypes = ar.p_table({
   ['list'] = presets.tool_panel,
   ['log'] = presets.tool_panel,
   ['man'] = presets.minimal_editing,
+  ['msg'] = presets.tool_panel,
   -- ['markdown'] = presets.minimal_editing,
   ['neo-tree'] = presets.tool_panel:with({
     winbar = 'ignore',
@@ -363,6 +365,7 @@ local filetypes = ar.p_table({
   ['oil'] = presets.tool_panel,
   ['org'] = presets.minimal_editing:with({ winbar = false }),
   ['orgagenda'] = presets.minimal_editing:with({ winbar = false }),
+  ['pager'] = presets.tool_panel,
   ['qf'] = presets.tool_panel,
   -- ['query'] = presets.tool_panel,
   ['scheme_switcher'] = presets.tool_panel,
