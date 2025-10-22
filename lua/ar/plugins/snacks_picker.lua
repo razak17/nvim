@@ -369,7 +369,7 @@ return {
               layout = { layout = { position = 'right' } },
             },
           },
-          prompt = fmt('%s ', ar.ui.icons.misc.chevron_right),
+          prompt = fmt('%s ', ar.ui.icons.misc.chevron_right_alt),
           sources = {
             buffers = {
               layout = { preview = 'main', preset = 'custom_select' },
