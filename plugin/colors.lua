@@ -493,6 +493,16 @@ local function colorscheme_overrides()
         },
       },
     },
+    ['alabaster'] = {
+      { Normal = { bg = { from = 'Normal', alter = 0.2 } } },
+      { FloatTitle = { link = 'NormalFloat' } },
+      { WinSeparator = { fg = { from = 'NonText', alter = -0.4 } } },
+      { VertSplit = { link = 'WinSeparator' } },
+      { MsgSeparator = { inherit = 'VertSplit' } },
+      { IndentBlanklineChar = { link = 'VertSplit' } },
+      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+      { StatusColFold = { fg = { from = 'Comment', alter = -0.5 } } },
+    },
     ['nightingale'] = {
       {
         NormalFloat = {
