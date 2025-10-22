@@ -212,7 +212,7 @@ end
 
 return {
   {
-    'folke/todo-comments.nvim',
+    'razak17/todo-comments.nvim',
     optional = true,
     opts = function()
       if ar_config.picker.variant == 'snacks' then

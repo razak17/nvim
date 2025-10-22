@@ -2,7 +2,7 @@ local minimal = ar.plugins.minimal
 
 return {
   {
-    'folke/todo-comments.nvim',
+    'razak17/todo-comments.nvim',
     cond = function()
       return ar.get_plugin_cond('todo-comments.nvim', not minimal)
     end,
