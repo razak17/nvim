@@ -493,6 +493,29 @@ local function colorscheme_overrides()
         },
       },
     },
+    ['nightingale'] = {
+      {
+        NormalFloat = {
+          bg = { from = 'Normal' },
+          fg = { from = 'Normal', alter = -0.15 },
+        },
+      },
+      { FloatBorder = { link = 'VertSplit' } },
+      {
+        FloatTitle = { bg = { from = 'CursorLine' }, fg = { from = 'Normal' } },
+      },
+      {
+        SnacksPickerToggleHidden = {
+          bg = { from = 'FloatTitle' },
+          fg = { from = 'Directory' },
+          italic = true,
+        },
+      },
+      { SnacksPickerToggleIgnored = { link = 'SnacksPickerToggleHidden' } },
+      { TelescopePromptTitle = { link = 'FloatTitle' } },
+      { TelescopePreviewTitle = { link = 'FloatTitle' } },
+      { TelescopeResultsTitle = { link = 'FloatTitle' } },
+    },
     ['kanso'] = {
       { FloatBorder = { link = 'VertSplit' } },
       {

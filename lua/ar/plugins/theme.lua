@@ -147,6 +147,12 @@ return {
     priority = get_priority({ 'nightgem' }),
     event = get_event({ 'nightgem' }),
   },
+  {
+    'xeind/nightingale.nvim',
+    cond = get_cond({ 'nightingale' }),
+    priority = get_priority({ 'nightingale' }),
+    event = get_event({ 'nightingale' }),
+  },
   ------------------------------------------------------------------------------
   -- Monochrome
   {

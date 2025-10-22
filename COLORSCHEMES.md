@@ -105,6 +105,7 @@
 - night-owl
 - nightfox
 - nightgem
+- nightingale
 - no-clown-fiesta
 - no-clown-fiesta-dark
 - no-clown-fiesta-dim
