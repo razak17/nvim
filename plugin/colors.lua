@@ -154,6 +154,7 @@ end
 local function colorscheme_overrides()
   local overrides = {
     ['onedark'] = {
+      { MsgSeparator = { inherit = 'VertSplit' } },
       { Dim = { inherit = 'VertSplit' } },
       { NeorgContext = { inherit = 'Normal' } },
       -- { ['@variable'] = { fg = { from = '@none' } } },
@@ -494,14 +495,44 @@ local function colorscheme_overrides()
     },
     ['kanso'] = {
       { FloatBorder = { link = 'VertSplit' } },
-      { PmenuBorder = { link = 'NormalFloat' } },
+      {
+        Pmenu = {
+          bg = { from = 'NormalFloat' },
+          fg = { from = 'Comment', alter = -0.4 },
+        },
+      },
+      { PmenuBorder = { link = 'FloatBorder' } },
+      { PmenuExtra = { link = 'Pmenu' } },
+      { PmenuKind = { fg = { from = 'Comment' } } },
+      { PmenuMatch = { link = 'Normal' } },
+      { PmenuSel = { link = 'CursorLine' } },
+      { PmenuExtraSel = { link = 'PmenuSel' } },
+      { PmenuKindSel = { fg = { from = 'Comment' } } },
+      { PmenuMatchSel = { link = 'PmenuSel' } },
+      { PmenuThumb = { link = 'CurSearch' } },
+      { PmenuSbar = { link = 'Pmenu' } },
     },
     ['yoda'] = {
       { CursorLine = { bg = { from = 'Comment', attr = 'fg', alter = -0.7 } } },
       { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
       { FloatBorder = { link = 'VertSplit' } },
       { FloatTitle = { link = 'CursorLine' } },
-      { PmenuBorder = { link = 'NormalFloat' } },
+      {
+        Pmenu = {
+          bg = { from = 'NormalFloat' },
+          fg = { from = 'Comment', alter = 0.5 },
+        },
+      },
+      { PmenuBorder = { link = 'FloatBorder' } },
+      { PmenuExtra = { link = 'Pmenu' } },
+      { PmenuKind = { fg = { from = 'Comment' } } },
+      { PmenuMatch = { link = 'Normal' } },
+      { PmenuSel = { link = 'CursorLine' } },
+      { PmenuExtraSel = { link = 'PmenuSel' } },
+      { PmenuKindSel = { fg = { from = 'Comment' } } },
+      { PmenuMatchSel = { link = 'PmenuSel' } },
+      { PmenuThumb = { link = 'CurSearch' } },
+      { PmenuSbar = { link = 'Pmenu' } },
       { IndentBlanklineChar = { link = 'VertSplit' } },
       { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
     },
