@@ -24,7 +24,8 @@ local function general_overrides()
     { SignColumn = { bg = 'NONE' } },
     { EndOfBuffer = { bg = 'NONE' } },
     { GitSignsCurrentLineBlame = { link = 'Comment' } },
-    { StatusColSep = { link = 'Comment' } },
+    { StatusColSep = { link = 'Dim' } },
+    { StatusColFold = { link = 'Comment' } },
     ----------------------------------------------------------------------------
     --  Semantic tokens
     ----------------------------------------------------------------------------
@@ -501,6 +502,7 @@ local function colorscheme_overrides()
       { MsgSeparator = { inherit = 'VertSplit' } },
       { IndentBlanklineChar = { link = 'VertSplit' } },
       { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+      { StatusColSep = { link = 'VertSplit' } },
       { StatusColFold = { fg = { from = 'Comment', alter = -0.5 } } },
     },
     ['nightingale'] = {

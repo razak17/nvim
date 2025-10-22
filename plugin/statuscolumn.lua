@@ -16,7 +16,7 @@ local separators = ui.icons.separators
 
 local left_thin_block = separators.left_thin_block
 
-local sep = { text = left_thin_block, texthl = 'IndentBlanklineChar' }
+local sep = { text = left_thin_block, texthl = 'StatusColSep' }
 
 ar.ui.statuscolumn = {}
 

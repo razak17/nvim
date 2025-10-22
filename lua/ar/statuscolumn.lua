@@ -145,10 +145,10 @@ function M.get_fold(lnum)
     fold = { text = M.space(), texthl = 'Comment' }
     -- Line is a closed fold (I know second condition feels unnecessary but I will still add it)
   elseif foldclosed ~= -1 and foldclosed == lnum then
-    fold = { text = fcs.foldclose or icons.chevron_right, texthl = 'Comment' }
+    fold = { text = fcs.foldclose or icons.chevron_right, texthl = 'StatusColFold' }
     -- I didn't use ~= because it couldn't make a nested fold have a lower level than it's parent fold and it's not something I would use
   elseif foldlevel > foldlevel_before then
-    fold = { text = fcs.foldopen or icons.chevron_down, texthl = 'Comment' }
+    fold = { text = fcs.foldopen or icons.chevron_down, texthl = 'StatusColFold' }
     -- The line is the last line in the fold
   elseif foldlevel > foldlevel_after then
     fold = { text = M.space(), texthl = 'IndentBlanklineChar' } --  ╰
