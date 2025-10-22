@@ -19,6 +19,7 @@ local filetypes = {
   'snacks_dashboard',
   'snacks_picker_*',
   'scheme_switcher',
+  '^TelescopePrompt$',
   '^toggleterm$',
   'FloatermSidebar',
   'VoltWindow',
@@ -35,7 +36,6 @@ local force_inactive_filetypes = {
   '^lazyterm$',
   '^netrw$',
   '^oil$',
-  '^TelescopePrompt$',
   '^undotree$',
 }
 
