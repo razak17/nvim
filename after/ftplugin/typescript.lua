@@ -87,15 +87,17 @@ then
   end, 'Goto Source Definition')
   ts_cmd(
     'FileReferences',
-    execute({
-      command = 'typescript.findAllFileReferences',
-      arguments = { vim.uri_from_bufnr(0) },
-    }),
+    function()
+      execute({
+        command = 'typescript.findAllFileReferences',
+        arguments = { vim.uri_from_bufnr(0) },
+      })
+    end,
     'File References'
   )
   ts_cmd(
     'SelectWorkspaceVersion',
-    execute({ command = 'typescript.selectTypeScriptVersion' }),
+    function() execute({ command = 'typescript.selectTypeScriptVersion' }) end,
     'Select TS workspace version'
   )
 end
