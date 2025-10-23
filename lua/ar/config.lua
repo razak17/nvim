@@ -439,7 +439,7 @@ local config = {
     null_ls = { enable = false },
     omnifunc = { enable = true },
     override = {},
-    progress = { enable = true, variant = 'noice' },
+    progress = { enable = true, variant = 'builtin' },
     rename = { enable = true, variant = 'inc-rename' },
     signs = { enable = false },
     symbols = { enable = true, variant = 'namu' },
