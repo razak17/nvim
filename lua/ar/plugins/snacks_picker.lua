@@ -294,6 +294,7 @@ return {
           { '<leader>fgb', p('git_branches'), desc = 'find git branches' },
           { '<leader>fgc', p('git_log'), desc = 'find git commits' },
           { '<leader>fgd', p('git_diff'), desc = 'git diff (hunks)' },
+          { '<leader>fgD', p('git_diff', { base = 'origin' }), desc = 'git diff (origin)' },
           { '<leader>fgf', p('git_log_file'), desc = 'git log file' },
           { '<leader>fgF', p('git_grep'), desc = 'git grep' },
           { '<leader>fgg', p('git_files'), desc = 'find git files' },
