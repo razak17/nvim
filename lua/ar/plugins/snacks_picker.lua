@@ -346,6 +346,8 @@ return {
             { '<leader>lr', p('lsp_references'), nowait = true, desc = 'snacks: references' },
             { '<leader>lw', p('diagnostics'), desc = 'snacks: workspace diagnostics' },
             { '<leader>ly', p('lsp_type_definitions'), desc = 'snacks: goto t[y]pe definition' },
+            { 'gai', p('lsp_incoming_calls'), desc = 'c[a]lls incoming' },
+            { 'gao', p('lsp_outgoing_calls'), desc = 'c[a]lls outgoing' },
           })
           -- stylua: ignore
           if ar_config.lsp.symbols.enable and ar_config.lsp.symbols.variant == 'picker' then
