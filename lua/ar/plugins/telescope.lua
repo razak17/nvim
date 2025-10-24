@@ -719,45 +719,6 @@ return {
             { TelescopeTitle = { link = 'FloatTitle' } },
             { TelescopeBorder = { link = 'FloatBorder' } },
           },
-          -- Third-party colorschemes
-          ['flexoki'] = {
-            { TelescopeTitle = { link = 'FloatTitle' } },
-            { TelescopeBorder = { link = 'FloatBorder' } },
-          },
-          ['morta'] = {
-            { TelescopeNormal = { link = 'NormalFloat' } },
-            { TelescopeBorder = { link = 'FloatBorder' } },
-            { TelescopePromptBorder = { link = 'FloatBorder' } },
-            { TelescopePreviewBorder = { link = 'FloatBorder' } },
-          },
-          ['nanode'] = {
-            { TelescopeBorder = { link = 'FloatBorder' } },
-            { TelescopePreviewBorder = { link = 'FloatBorder' } },
-            { TelescopePromptBorder = { link = 'FloatBorder' } },
-            { TelescopeResultsBorder = { link = 'FloatBorder' } },
-            { TelescopeSelection = { bg = { from = 'Folded' } } },
-            { TelescopePromptTitle = { link = 'FloatTitle' } },
-            { TelescopePreviewTitle = { link = 'FloatTitle' } },
-            { TelescopeResultsTitle = { link = 'FloatTitle' } },
-          },
-          ['nightgem'] = {
-            { TelescopeBorder = { link = 'FloatBorder' } },
-            {
-              TelescopeTitle = {
-                bg = { from = 'FloatTitle' },
-                fg = { from = 'Normal', alter = -0.15 },
-              },
-            },
-          },
-          ['nightingale'] = {
-            { TelescopePromptTitle = { link = 'FloatTitle' } },
-            { TelescopePreviewTitle = { link = 'FloatTitle' } },
-            { TelescopeResultsTitle = { link = 'FloatTitle' } },
-          },
-          ['thorn'] = {
-            { TelescopeNormal = { link = 'NormalFloat' } },
-            { TelescopeBorder = { link = 'FloatBorder' } },
-          },
         },
       })
 
