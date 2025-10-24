@@ -992,9 +992,9 @@ return {
   },
   {
     'judaew/ronny.nvim',
-    cond = get_cond({ 'ronny' }),
+    cond = function() return colorscheme == 'ronny' end,
     priority = get_priority({ 'ronny' }),
-    -- event = get_event({'ronny'}),
+    event = get_event({ 'ronny' }),
     opts = {},
   },
   {
