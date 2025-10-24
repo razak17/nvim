@@ -48,6 +48,10 @@ function ar.ui.statuscolumn.render()
   }, '')
 end
 
+ar.highlight.plugin('statuscolumn', {
+  { StatusColSep = { link = 'VertSplit' } },
+})
+
 opt.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
 
 ar.augroup('StatusCol', {
