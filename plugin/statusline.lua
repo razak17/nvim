@@ -87,7 +87,7 @@ local function python_env()
 
   for _, client in pairs(buf_clients) do
     if client.name == 'pyright' or client.name == 'pylance' then
-      local virtual_env = os.getenv('VIRTUAL_ENV_PROMPT')
+      local virtual_env = vim.env.VIRTUAL_ENV_PROMPT
       if virtual_env == nil then return '' end
 
       virtual_env = virtual_env:gsub('%s+', '')

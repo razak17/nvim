@@ -75,7 +75,7 @@ return {
     keys = {
       {
         '<localleader>o/',
-        "<Cmd>lua require('surface').open(os.getenv('SHELL'), 'center')<CR>",
+        "<Cmd>lua require('surface').open(vim.env.SHELL, 'center')<CR>",
         desc = 'surface: open shell',
       },
     },

@@ -7,7 +7,7 @@ return {
     cond = function() return ar.get_plugin_cond('profile.nvim', not minimal) end,
     lazy = false,
     init = function()
-      local should_profile = os.getenv('NVIM_PROFILE')
+      local should_profile = vim.env.NVIM_PROFILE
       if should_profile then
         require('profile').instrument_autocmds()
         if should_profile:lower():match('^start') then
