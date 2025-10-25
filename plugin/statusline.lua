@@ -322,7 +322,7 @@ StatusLine.inactive = function()
   })
 end
 
-local redeable_filetypes = {
+local readeable_filetypes = {
   ['qf'] = true,
   ['help'] = true,
   ['tsplayground'] = true,
@@ -340,7 +340,7 @@ StatusLine.active = function()
     })
   end
 
-  if redeable_filetypes[vim.bo.filetype] or vim.o.modifiable == false then
+  if readeable_filetypes[vim.bo.filetype] or vim.o.modifiable == false then
     return table.concat({
       formatted_filetype('StatusLineMode'),
       '%=',
@@ -381,15 +381,21 @@ StatusLine.active = function()
   return table.concat(statusline)
 end
 
-vim.opt.statusline = '%!v:lua.StatusLine.active()'
+StatusLine.render = function()
+  if vim.bo.ft == '' then
+    return StatusLine.inactive()
+  else
+    return StatusLine.active()
+  end
+end
+
+vim.opt.statusline = '%!v:lua.StatusLine.render()'
 
 vim.api.nvim_create_autocmd(
   { 'WinEnter', 'BufEnter', 'FileType', 'VimEnter' },
   {
     group = statusline_augroup,
-    pattern = {
-      '*',
-    },
+    pattern = { '*' },
     callback = function(args)
       -- vim.opt_local.statusline = '%!v:lua.StatusLine.inactive()'
       local decs = ar.ui.decorations.get({
