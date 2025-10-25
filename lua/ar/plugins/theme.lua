@@ -301,7 +301,7 @@ return {
   },
   {
     'razak17/mapledark.nvim',
-    cond = get_cond({ 'mapledark' }),
+    cond = function() return colorscheme == 'mapledark' end,
     priority = get_priority({ 'mapledark' }),
     event = get_event({ 'mapledark' }),
     init = function()
