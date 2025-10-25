@@ -299,6 +299,63 @@ return {
       })
     end,
   },
+  {
+    'razak17/mapledark.nvim',
+    cond = get_cond({ 'mapledark' }),
+    priority = get_priority({ 'mapledark' }),
+    event = get_event({ 'mapledark' }),
+    init = function()
+      apply_overrides('mapledark', {
+        {
+          NormalFloat = {
+            bg = { from = 'Normal' },
+            fg = { from = 'Normal', alter = -0.15 },
+          },
+        },
+        {
+          FloatTitle = {
+            bg = { from = 'CursorLine' },
+            fg = { from = 'Normal' },
+          },
+        },
+        { FloatBorder = { link = 'VertSplit' } },
+        { StatusLine = { bg = 'NONE' } },
+        {
+          LspReferenceText = {
+            bg = 'NONE',
+            underline = true,
+            sp = { from = 'Error', attr = 'fg', alter = -0.2 },
+          },
+        },
+        {
+          LspReferenceRead = {
+            bg = { from = 'Visual', attr = 'bg', alter = 0.1 },
+          },
+        },
+        { LspReferenceWrite = { link = 'LspReferenceText', bold = false } },
+        { LspReferenceTarget = { inherit = 'Dim', bold = true } },
+        { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
+        { VertSplit = { link = 'WinSeparator' } },
+        { IndentBlanklineChar = { link = 'VertSplit' } },
+        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+        { Winbar = { link = 'Variable' } },
+        { WinbarNC = { link = 'LineNr' } },
+        {
+          SnacksPickerToggle = {
+            bg = { from = 'FloatTitle' },
+            fg = { from = 'DiagnosticVirtualTextInfo' },
+            italic = true,
+          },
+        },
+        { TelescopeTitle = { link = 'FloatTitle' } },
+        { TelescopeBorder = { link = 'FloatBorder' } },
+      })
+    end,
+    opts = {
+      disable_plugin_highlights = false,
+      plugins = { 'lazy' },
+    },
+  },
   ------------------------------------------------------------------------------
   -- Warm
   {
@@ -433,6 +490,7 @@ return {
         },
         { StatusLine = { bg = 'NONE' } },
         { Folded = { bg = { from = 'Folded', alter = -0.2 } } },
+        { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.2 } } },
         { Winbar = { link = 'Variable' } },
         { WinbarNC = { link = 'LineNr' } },
         { WinSeparator = { fg = { from = 'VertSplit', alter = -0.35 } } },
