@@ -65,20 +65,6 @@ local function general_overrides()
     { LspInlayHint = { inherit = 'Comment', italic = true } },
     { LspCodeLens = { inherit = 'Comment', bold = true, italic = false } },
     { LspCodeLensSeparator = { bold = false, italic = false } },
-    {
-      LspReferenceText = {
-        bg = 'NONE',
-        underline = true,
-        sp = { from = 'Directory', attr = 'fg', alter = -0.6 },
-      },
-    },
-    {
-      LspReferenceRead = {
-        bg = { from = 'CursorLine', attr = 'bg', alter = 0.2 },
-      },
-    },
-    { LspReferenceWrite = { inherit = 'LspReferenceText', bold = false } },
-    { LspReferenceTarget = { inherit = 'Dim', bold = true } },
     { LspSignatureActiveParameter = { link = 'Visual' } },
     { DiagnosticFloatTitle = { inherit = 'FloatTitle', bold = true } },
     {

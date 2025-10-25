@@ -63,6 +63,20 @@ return {
         -- { ['@variable'] = { fg = { from = '@none' } } },
         { dmapWin = { inherit = 'Normal' } },
         { Strict = { link = 'DiffDeleteAlt' } },
+        {
+          LspReferenceText = {
+            bg = 'NONE',
+            underline = true,
+            sp = { from = 'Directory', attr = 'fg', alter = -0.6 },
+          },
+        },
+        {
+          LspReferenceRead = {
+            bg = { from = 'CursorLine', attr = 'bg', alter = 0.2 },
+          },
+        },
+        { LspReferenceWrite = { inherit = 'LspReferenceText', bold = false } },
+        { LspReferenceTarget = { inherit = 'Dim', bold = true } },
         { Pmenu = { link = 'NormalFloat' } },
         { PmenuBorder = { link = 'FloatBorder' } },
         { PmenuKind = { fg = { from = 'Comment' } } },
@@ -429,6 +443,20 @@ return {
         { PmenuMatch = { fg = { from = 'Normal' } } },
         { PmenuSel = { fg = { from = 'CursorLine', alter = 0.1 } } },
         { PmenuKindSel = { fg = { from = 'PmenuKind' } } },
+        {
+          LspReferenceText = {
+            bg = 'NONE',
+            underline = true,
+            sp = { from = 'Comment', attr = 'fg', alter = -0.2 },
+          },
+        },
+        {
+          LspReferenceRead = {
+            bg = { from = 'Visual', attr = 'bg', alter = -0.1 },
+          },
+        },
+        { LspReferenceWrite = { link = 'LspReferenceText', bold = false } },
+        { LspReferenceTarget = { inherit = 'Dim', bold = true } },
         { FloatBorder = { link = 'VertSplit' } },
         { IndentBlanklineChar = { link = 'FloatBorder' } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
