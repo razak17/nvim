@@ -10,7 +10,9 @@ local M = {}
 
 function M.get_current_colorscheme()
   local file = io.open(set_colorscheme_file_path, 'r')
-  if not file or ar.plugins.minimal then return 'default' end
+  if not file or not ar.plugins.enable or ar.plugins.minimal then
+    return 'default'
+  end
   if ar_config.colorscheme ~= '' then return ar_config.colorscheme end
   if file then
     local ccs = file:read('*l')
