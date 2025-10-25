@@ -90,6 +90,7 @@
 - makurai_autumn
 - makurai_dark
 - makurai_light
+- mapledark
 - melange
 - mono-jade
 - monoglow
@@ -124,6 +125,7 @@
 - randombones_light
 - rasmus
 - retrobox
+- ronny
 - rose-pine
 - rose-pine-dawn
 - rose-pine-main
