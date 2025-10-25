@@ -385,12 +385,15 @@ return {
   },
   {
     'zenbones-theme/zenbones.nvim',
-    cond = get_cond({ 'zenwritten' }),
-    priority = get_priority({ 'zenwritten' }),
-    event = get_event({ 'zenwritten' }),
+    cond = get_cond({ 'zenbones' }),
+    priority = get_priority({ 'zenbones' }),
+    event = get_event({ 'zenbones' }),
     init = function()
-      apply_overrides('zenwritten', {
+      apply_overrides('zenbones', {
         { StatusLine = { bg = 'NONE' } },
+        { Folded = { bg = { from = 'Folded', alter = -0.2 } } },
+        { Winbar = { link = 'Variable' } },
+        { WinbarNC = { link = 'LineNr' } },
         { WinSeparator = { fg = { from = 'VertSplit', alter = -0.35 } } },
         { VertSplit = { link = 'WinSeparator' } },
         { NormalFloat = { bg = { from = 'Normal' } } },
