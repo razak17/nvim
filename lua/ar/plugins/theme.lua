@@ -397,6 +397,12 @@ return {
         { WinSeparator = { fg = { from = 'VertSplit', alter = -0.35 } } },
         { VertSplit = { link = 'WinSeparator' } },
         { NormalFloat = { bg = { from = 'Normal' } } },
+        { Pmenu = { link = 'NormalFloat' } },
+        { PmenuBorder = { link = 'FloatBorder' } },
+        { FloatBorder = { link = 'VertSplit' } },
+        { IndentBlanklineChar = { link = 'FloatBorder' } },
+        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+        { BlinkCmpDocBorder = { link = 'FloatBorder' } },
         {
           SnacksPickerToggle = {
             bg = { from = 'FloatTitle' },
@@ -404,9 +410,6 @@ return {
             italic = true,
           },
         },
-        { FloatBorder = { link = 'VertSplit' } },
-        { IndentBlanklineChar = { link = 'FloatBorder' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
         { SnacksPickerBorder = { link = 'FloatBorder' } },
         { TelescopeTitle = { link = 'FloatTitle' } },
         { TelescopeBorder = { link = 'FloatBorder' } },

@@ -53,6 +53,13 @@ local function setup_colors()
     forest_green = hl.get('DiffAdd', 'fg'),
     lightgreen = hl.get('DiagnosticVirtualTextHint', 'bg'),
   }
+  if vim.g.colors_name == 'zenbones' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.1),
+      blue = hl.get('DiagnosticInfo', 'fg'),
+      dark_orange = hl.get('WarningMsg', 'fg'),
+    })
+  end
   if vim.g.colors_name == 'default' then
     return vim.tbl_deep_extend('force', P, {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.3),
