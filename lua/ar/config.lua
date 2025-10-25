@@ -192,11 +192,8 @@ local namespace = {
     enable = env.RVIM_AI_ENABLED == '1',
     copilot_models = {
       ['claude-3.5-sonnet'] = {},
-      ['claude-3.7-sonnet'] = {},
-      ['claude-3.7-sonnet-thought'] = { max_tokens = 8192 },
       ['claude-sonnet-4'] = { max_tokens = 128000 },
       ['claude-sonnet-4.5'] = { max_tokens = 128000 },
-      ['gemini-2.0-flash-001'] = {},
       ['gemini-2.5-pro'] = { max_tokens = 128000 },
       ['grok-code-fast-1'] = { max_tokens = 128000 },
       ['gpt-5'] = { max_tokens = 128000 },
@@ -205,9 +202,6 @@ local namespace = {
       ['gpt-4.1'] = { max_tokens = 128000 },
       ['gpt-4o-2024-11-20'] = { max_tokens = 64000 },
       ['gpt-4o-mini'] = { max_tokens = 12288 },
-      ['o1'] = { max_tokens = 64000 },
-      ['o3-mini'] = { max_tokens = 64000 },
-      ['o4-mini'] = { max_tokens = 128000 },
     },
   },
   ---@type ArMedia
