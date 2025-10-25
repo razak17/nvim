@@ -65,6 +65,27 @@ return {
         { Strict = { link = 'DiffDeleteAlt' } },
         { Pmenu = { link = 'NormalFloat' } },
         { PmenuBorder = { link = 'FloatBorder' } },
+        { PmenuKind = { fg = { from = 'Comment' } } },
+        { BlinkCmpDocBorder = { link = 'PmenuBorder' } },
+        {
+          BlinkCmpSource = {
+            fg = { from = 'Comment' },
+            italic = true,
+            bold = true,
+          },
+        },
+        { BlinkCmpLabelDescription = { fg = { from = 'MsgSeparator' } } },
+        {
+          BlinkCmpLabelDeprecated = {
+            strikethrough = true,
+            inherit = 'Comment',
+          },
+        },
+        {
+          BlinkCmpLabelMatch = { fg = { from = 'WildMenu' }, bold = true },
+        },
+        { BlinkCmpLabelDetail = { fg = { from = 'WildMenu' } } },
+        { BlinkCmpLabel = { fg = { from = 'StatusLine' } } },
       })
     end,
   },
@@ -390,19 +411,35 @@ return {
     event = get_event({ 'zenbones' }),
     init = function()
       apply_overrides('zenbones', {
+        {
+          NormalFloat = {
+            bg = { from = 'Normal' },
+            fg = { from = 'Normal', alter = -0.15 },
+          },
+        },
         { StatusLine = { bg = 'NONE' } },
         { Folded = { bg = { from = 'Folded', alter = -0.2 } } },
         { Winbar = { link = 'Variable' } },
         { WinbarNC = { link = 'LineNr' } },
         { WinSeparator = { fg = { from = 'VertSplit', alter = -0.35 } } },
         { VertSplit = { link = 'WinSeparator' } },
-        { NormalFloat = { bg = { from = 'Normal' } } },
         { Pmenu = { link = 'NormalFloat' } },
         { PmenuBorder = { link = 'FloatBorder' } },
+        { PmenuKind = { fg = { from = 'Comment' }, italic = false } },
+        { PmenuMatch = { fg = { from = 'Normal' } } },
+        { PmenuSel = { fg = { from = 'CursorLine', alter = 0.1 } } },
+        { PmenuKindSel = { fg = { from = 'PmenuKind' } } },
         { FloatBorder = { link = 'VertSplit' } },
         { IndentBlanklineChar = { link = 'FloatBorder' } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-        { BlinkCmpDocBorder = { link = 'FloatBorder' } },
+        { BlinkCmpDocBorder = { link = 'PmenuBorder' } },
+        {
+          BlinkCmpSource = {
+            fg = { from = 'Comment' },
+            italic = true,
+            bold = true,
+          },
+        },
         {
           SnacksPickerToggle = {
             bg = { from = 'FloatTitle' },

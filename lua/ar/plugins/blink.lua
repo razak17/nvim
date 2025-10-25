@@ -267,33 +267,6 @@ return {
         )
         :totable()
 
-      ar.highlight.plugin('BlinkCmp', {
-        theme = {
-          ['onedark'] = vim.tbl_extend('force', hl_defs, {
-            { BlinkCmpDocBorder = { link = 'FloatBorder' } },
-            { BlinkCmpLabelDescription = { fg = { from = 'MsgSeparator' } } },
-            {
-              BlinkCmpLabelDeprecated = {
-                strikethrough = true,
-                inherit = 'Comment',
-              },
-            },
-            {
-              BlinkCmpLabelMatch = { fg = { from = 'WildMenu' }, bold = true },
-            },
-            { BlinkCmpLabelDetail = { fg = { from = 'WildMenu' } } },
-            { BlinkCmpLabel = { fg = { from = 'StatusLine' } } },
-            {
-              BlinkCmpSource = {
-                fg = { from = 'Comment' },
-                italic = true,
-                bold = true,
-              },
-            },
-          }),
-        },
-      })
-
       local symbols = require('lspkind').symbol_map
       local ai_icons = ar.ui.codicons.ai
       opts.appearance = opts.appearance or {}
