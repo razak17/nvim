@@ -108,7 +108,7 @@ return {
     ---@type CopilotChat.config.shared
     opts = {
       auto_insert_mode = false,
-      model = 'claude-sonnet-4.5',
+      model = 'claude-haiku-4.5',
       agent = 'copilot',
       prompts = prompts,
       auto_follow_cursor = false,
@@ -156,7 +156,7 @@ return {
           end)
 
         opts.sticky = {
-          'Using the model $claude-sonnet-4.5',
+          'Using the model $claude-haiku-4.5',
           '#vectorcode', -- Automatically includes repository context in every conversation
         }
       end
