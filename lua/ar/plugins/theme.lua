@@ -1,5 +1,6 @@
 local scheme_switcher = require('ar.scheme_switcher')
 local colorscheme = scheme_switcher.get_current_colorscheme()
+local variant = ar_config.colorscheme.variant
 
 local function is_colorscheme(name) return name == colorscheme end
 
@@ -33,15 +34,156 @@ local function get_event(names)
   return { 'VeryLazy' }
 end
 
-local function apply_overrides(theme, overrides)
+local function generate_popup_overrides()
+  local overrides = {
+    {
+      FloatTitle = {
+        bg = { from = 'CursorLine' },
+        fg = { from = 'Normal' },
+      },
+    },
+  }
+
+  if variant == 'fill' then
+    ar.list_insert(overrides, {
+      {
+        NormalFloat = {
+          bg = { from = 'Normal', alter = 0.25 },
+          fg = { from = 'Normal', alter = -0.15 },
+        },
+      },
+      {
+        FloatBorder = {
+          bg = { from = 'Normal', alter = 0.25 },
+          fg = { from = 'Normal', attr = 'bg', alter = 0.25 },
+        },
+      },
+    })
+  end
+
+  if variant == 'outline' then
+    ar.list_insert(overrides, {
+      {
+        NormalFloat = {
+          bg = { from = 'Normal' },
+          fg = { from = 'Normal', alter = -0.15 },
+        },
+      },
+      { FloatBorder = { link = 'VertSplit' } },
+    })
+  end
+  return overrides
+end
+
+local function generate_completion_overrides()
+  local overrides = {
+    { Pmenu = { link = 'NormalFloat' } },
+    { PmenuBorder = { link = 'FloatBorder' } },
+    {
+      PmenuKind = {
+        bg = 'NONE',
+        fg = { from = 'NonText' },
+        italic = true,
+        bold = true,
+      },
+    },
+    { PmenuMatch = { fg = { from = 'Normal' }, bold = true } },
+    { PmenuExtra = { fg = { from = 'NonText' } } },
+    { PmenuSel = { bg = { from = 'Visual' }, fg = 'NONE' } },
+    {
+      PmenuKindSel = {
+        bg = { from = 'PmenuSel' },
+        fg = { from = 'PmenuKind' },
+        italic = true,
+        bold = true,
+      },
+    },
+    { PmenuThumb = { bg = { from = 'PmenuThumb', alter = -0.4 } } },
+    { BlinkCmpDocBorder = { link = 'PmenuBorder' } },
+    { BlinkCmpSource = { link = 'PmenuKind' } },
+    { BlinkCmpLabel = { fg = { from = 'Pmenu' } } },
+    { BlinkCmpLabelDetail = { link = 'PmenuExtra' } },
+    { BlinkCmpLabelMatch = { link = 'PmenuMatch' } },
+    { BlinkCmpLabelDescription = { link = 'PmenuExtra' } },
+    { BlinkCmpLabelDeprecated = { strikethrough = true, link = 'Comment' } },
+  }
+
+  return overrides
+end
+
+local function generate_picker_ovverides()
+  local overrides = {
+    {
+      SnacksPickerToggle = {
+        bg = { from = 'FloatTitle' },
+        fg = { from = 'DiagnosticVirtualTextInfo' },
+        italic = true,
+      },
+    },
+  }
+
+  if variant == 'fill' then
+    ar.list_insert(overrides, {
+      {
+        SnacksPickerPreview = {
+          bg = { from = 'NormalFloat', alter = -0.1 },
+        },
+      },
+      {
+        SnacksPickerPreviewBorder = {
+          bg = { from = 'SnacksPickerPreview' },
+          fg = { from = 'SnacksPickerPreview', attr = 'bg' },
+        },
+      },
+    })
+  end
+
+  if variant == 'outline' then
+    ar.list_insert(overrides, {
+      { SnacksPickerPreview = { bg = { from = 'NormalFloat' } } },
+      { SnacksPickerPreviewBorder = { fg = { from = 'FloatBorder' } } },
+    })
+  end
+
+  ar.list_insert(overrides, {
+    { SnacksPickerBorder = { link = 'FloatBorder' } },
+    { SnacksPickerTitle = { link = 'FloatTitle' } },
+    { FzfLuaNormal = { link = 'SnacksPicker' } },
+    { FzfLuaTitle = { link = 'SnacksPickerTitle' } },
+    { FzfLuaBorder = { link = 'SnacksPickerBorder' } },
+    { FzfLuaPreviewNormal = { link = 'SnacksPickerPreview' } },
+    { FzfLuaPreviewBorder = { link = 'SnacksPickerPreviewBorder' } },
+    { TelescopeNormal = { link = 'SnacksPicker' } },
+    { TelescopeTitle = { link = 'SnacksPickerTitle' } },
+    { TelescopeBorder = { link = 'SnacksPickerBorder' } },
+    { TelescopePreviewNormal = { link = 'SnacksPickerPreview' } },
+    { TelescopePreviewBorder = { link = 'SnacksPickerPreviewBorder' } },
+  })
+
+  return overrides
+end
+
+---@param overrides table
+---@return table
+local function generate_overrides(overrides)
+  local generated_overrides = {}
+  ar.list_insert(generated_overrides, generate_popup_overrides())
+  ar.list_insert(generated_overrides, overrides)
+  ar.list_insert(generated_overrides, generate_completion_overrides())
+  ar.list_insert(generated_overrides, generate_picker_ovverides())
+  return generated_overrides
+end
+
+---@param theme string
+---@param overrides table
+---@param should_generate boolean
+local function apply_overrides(theme, overrides, should_generate)
+  local theme_overrides = overrides
+  if should_generate then theme_overrides = generate_overrides(overrides) end
   ar.augroup(theme .. '-theme', {
     event = { 'ColorScheme' },
     pattern = { theme },
-    command = function()
-      ar.highlight.plugin(theme, {
-        theme = { [theme] = overrides },
-      })
-    end,
+    command = function() ar.highlight.all(theme_overrides) end,
   })
 end
 
@@ -56,8 +198,7 @@ return {
     event = get_event({ 'onedark' }),
     opts = { variant = 'fill' },
     init = function()
-      apply_overrides('onedark', {
-        { MsgSeparator = { link = 'VertSplit' } },
+      local overrides = {
         { Dim = { inherit = 'VertSplit' } },
         { NeorgContext = { inherit = 'Normal' } },
         -- { ['@variable'] = { fg = { from = '@none' } } },
@@ -70,37 +211,12 @@ return {
             sp = { from = 'Directory', attr = 'fg', alter = -0.6 },
           },
         },
-        {
-          LspReferenceRead = {
-            bg = { from = 'CursorLine', attr = 'bg', alter = 0.2 },
-          },
-        },
+        { LspReferenceRead = { bg = { from = 'Visual', alter = -0.1 } } },
         { LspReferenceWrite = { inherit = 'LspReferenceText', bold = false } },
         { LspReferenceTarget = { inherit = 'Dim', bold = true } },
-        { Pmenu = { link = 'NormalFloat' } },
-        { PmenuBorder = { link = 'FloatBorder' } },
-        { PmenuKind = { fg = { from = 'Comment' } } },
-        { BlinkCmpDocBorder = { link = 'PmenuBorder' } },
-        {
-          BlinkCmpSource = {
-            fg = { from = 'Comment' },
-            italic = true,
-            bold = true,
-          },
-        },
-        { BlinkCmpLabelDescription = { fg = { from = 'MsgSeparator' } } },
-        {
-          BlinkCmpLabelDeprecated = {
-            strikethrough = true,
-            inherit = 'Comment',
-          },
-        },
-        {
-          BlinkCmpLabelMatch = { fg = { from = 'WildMenu' }, bold = true },
-        },
-        { BlinkCmpLabelDetail = { fg = { from = 'WildMenu' } } },
-        { BlinkCmpLabel = { fg = { from = 'StatusLine' } } },
-      })
+      }
+      ar.list_insert(overrides, generate_completion_overrides())
+      apply_overrides('onedark', overrides)
     end,
   },
   {
@@ -115,7 +231,6 @@ return {
     init = function()
       apply_overrides('vague', {
         { StatusLine = { bg = 'NONE' } },
-        { MsgSeparator = { link = 'VertSplit' } },
         { FloatBorder = { link = 'VertSplit' } },
         { IndentBlanklineChar = { link = 'VertSplit' } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
@@ -306,50 +421,24 @@ return {
     event = get_event({ 'mapledark' }),
     init = function()
       apply_overrides('mapledark', {
-        {
-          NormalFloat = {
-            bg = { from = 'Normal' },
-            fg = { from = 'Normal', alter = -0.15 },
-          },
-        },
-        {
-          FloatTitle = {
-            bg = { from = 'CursorLine' },
-            fg = { from = 'Normal' },
-          },
-        },
-        { FloatBorder = { link = 'VertSplit' } },
         { StatusLine = { bg = 'NONE' } },
-        {
-          LspReferenceText = {
-            bg = 'NONE',
-            underline = true,
-            sp = { from = 'Error', attr = 'fg', alter = -0.2 },
-          },
-        },
-        {
-          LspReferenceRead = {
-            bg = { from = 'Visual', attr = 'bg', alter = 0.1 },
-          },
-        },
-        { LspReferenceWrite = { link = 'LspReferenceText', bold = false } },
-        { LspReferenceTarget = { inherit = 'Dim', bold = true } },
+        { Winbar = { link = 'Variable' } },
+        { WinbarNC = { link = 'LineNr' } },
         { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
         { VertSplit = { link = 'WinSeparator' } },
         { IndentBlanklineChar = { link = 'VertSplit' } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-        { Winbar = { link = 'Variable' } },
-        { WinbarNC = { link = 'LineNr' } },
         {
-          SnacksPickerToggle = {
-            bg = { from = 'FloatTitle' },
-            fg = { from = 'DiagnosticVirtualTextInfo' },
-            italic = true,
+          LspReferenceText = {
+            bg = 'NONE',
+            underline = true,
+            sp = { from = 'Comment', attr = 'fg', alter = -0.2 },
           },
         },
-        { TelescopeTitle = { link = 'FloatTitle' } },
-        { TelescopeBorder = { link = 'FloatBorder' } },
-      })
+        { LspReferenceRead = { bg = { from = 'Visual', alter = 0.1 } } },
+        { LspReferenceWrite = { link = 'LspReferenceText', bold = false } },
+        { LspReferenceTarget = { inherit = 'Dim', bold = true } },
+      }, true)
     end,
     opts = {
       disable_plugin_highlights = false,
@@ -481,38 +570,7 @@ return {
     priority = get_priority({ 'zenbones' }),
     event = get_event({ 'zenbones' }),
     init = function()
-      local variant = ar_config.colorscheme.variant
-      local overrides = {}
-
-      if variant == 'fill' then
-        ar.list_insert(overrides, {
-          {
-            NormalFloat = {
-              bg = { from = 'Normal', alter = 0.25 },
-              fg = { from = 'Normal', alter = -0.15 },
-            },
-          },
-          {
-            FloatBorder = {
-              bg = { from = 'Normal', alter = 0.25 },
-              fg = { from = 'Normal', attr = 'bg', alter = 0.25 },
-            },
-          },
-        })
-      end
-
-      if variant == 'outline' then
-        ar.list_insert(overrides, {
-          {
-            NormalFloat = {
-              bg = { from = 'Normal' },
-              fg = { from = 'Normal', alter = -0.15 },
-            },
-          },
-        })
-      end
-
-      ar.list_insert(overrides, {
+      apply_overrides('zenbones', {
         { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.2 } } },
         { CursorLine = { bg = { from = 'CursorLine', alter = 0.1 } } },
         { Folded = { bg = { from = 'Folded', alter = -0.2 } } },
@@ -521,12 +579,8 @@ return {
         { WinbarNC = { link = 'LineNr' } },
         { WinSeparator = { fg = { from = 'VertSplit', alter = -0.35 } } },
         { VertSplit = { link = 'WinSeparator' } },
-        { Pmenu = { link = 'NormalFloat' } },
-        { PmenuBorder = { link = 'FloatBorder' } },
-        { PmenuKind = { fg = { from = 'Comment' }, italic = false } },
-        { PmenuMatch = { fg = { from = 'Normal' } } },
-        { PmenuKindSel = { fg = { from = 'PmenuKind' } } },
-        { PmenuThumb = { bg = { from = 'PmenuThumb', alter = -0.4 } } },
+        { IndentBlanklineChar = { link = 'VertSplit' } },
+        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
         {
           LspReferenceText = {
             bg = 'NONE',
@@ -537,65 +591,7 @@ return {
         { LspReferenceRead = { bg = { from = 'Visual', alter = -0.1 } } },
         { LspReferenceWrite = { link = 'LspReferenceText', bold = false } },
         { LspReferenceTarget = { inherit = 'Dim', bold = true } },
-        { FloatBorder = { link = 'VertSplit' } },
-        { IndentBlanklineChar = { link = 'VertSplit' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-        { BlinkCmpDocBorder = { link = 'PmenuBorder' } },
-        {
-          BlinkCmpSource = {
-            fg = { from = 'Comment' },
-            italic = true,
-            bold = true,
-          },
-        },
-        {
-          SnacksPickerToggle = {
-            bg = { from = 'FloatTitle' },
-            fg = { from = 'DiagnosticVirtualTextInfo' },
-            italic = true,
-          },
-        },
-      })
-
-      if variant == 'fill' then
-        ar.list_insert(overrides, {
-          {
-            SnacksPickerPreview = {
-              bg = { from = 'NormalFloat', alter = -0.1 },
-            },
-          },
-          {
-            SnacksPickerPreviewBorder = {
-              bg = { from = 'SnacksPickerPreview' },
-              fg = { from = 'SnacksPickerPreview', attr = 'bg' },
-            },
-          },
-        })
-      end
-
-      if variant == 'outline' then
-        ar.list_insert(overrides, {
-          { SnacksPickerPreview = { bg = { from = 'NormalFloat' } } },
-          { SnacksPickerPreviewBorder = { fg = { from = 'FloatBorder' } } },
-        })
-      end
-
-      ar.list_insert(overrides, {
-        { SnacksPickerBorder = { link = 'FloatBorder' } },
-        { SnacksPickerTitle = { link = 'FloatTitle' } },
-        { FzfLuaNormal = { link = 'SnacksPicker' } },
-        { FzfLuaTitle = { link = 'SnacksPickerTitle' } },
-        { FzfLuaBorder = { link = 'SnacksPickerBorder' } },
-        { FzfLuaPreviewNormal = { link = 'SnacksPickerPreview' } },
-        { FzfLuaPreviewBorder = { link = 'SnacksPickerPreviewBorder' } },
-        { TelescopeNormal = { link = 'SnacksPicker' } },
-        { TelescopeTitle = { link = 'SnacksPickerTitle' } },
-        { TelescopeBorder = { link = 'SnacksPickerBorder' } },
-        { TelescopePreviewNormal = { link = 'SnacksPickerPreview' } },
-        { TelescopePreviewBorder = { link = 'SnacksPickerPreviewBorder' } },
-      })
-
-      apply_overrides('zenbones', overrides)
+      }, true)
     end,
     dependencies = 'rktjmp/lush.nvim',
   },
@@ -840,7 +836,6 @@ return {
         { FloatTitle = { link = 'NormalFloat' } },
         { WinSeparator = { fg = { from = 'NonText', alter = -0.4 } } },
         { VertSplit = { link = 'WinSeparator' } },
-        { MsgSeparator = { inherit = 'VertSplit' } },
         { IndentBlanklineChar = { bg = 'NONE', fg = { from = 'VertSplit' } } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
         { StatusColFold = { fg = { from = 'Comment', alter = -0.5 } } },

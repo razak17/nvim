@@ -1160,6 +1160,9 @@ function ar.p_table(map)
   })
 end
 
+--- Insert values from one list into another if they do not already exist
+---@param list table
+---@param tbl table
 function ar.list_insert(list, tbl)
   if not list or not tbl then return end
   if type(list) ~= 'table' or type(tbl) ~= 'table' then return end
