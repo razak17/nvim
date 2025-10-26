@@ -209,7 +209,7 @@ return {
     cond = get_cond({ 'onedark' }),
     priority = get_priority({ 'onedark' }),
     event = get_event({ 'onedark' }),
-    opts = { variant = 'fill' },
+    opts = { variant = variant },
     init = function()
       local overrides = {
         { Dim = { inherit = 'VertSplit' } },
