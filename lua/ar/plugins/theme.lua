@@ -340,45 +340,27 @@ return {
     priority = get_priority({ 'yoda' }),
     event = get_event({ 'yoda' }),
     init = function()
-      apply_overrides('yoda', {
-        { NormalFloat = { bg = { from = 'Normal' } } },
-        {
-          CursorLine = { bg = { from = 'Comment', attr = 'fg', alter = -0.7 } },
-        },
-        { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
-        { FloatBorder = { link = 'VertSplit' } },
-        { FloatTitle = { link = 'CursorLine' } },
-        {
-          Pmenu = {
-            bg = { from = 'NormalFloat' },
-            fg = { from = 'Comment', alter = 0.5 },
-          },
-        },
-        {
-          SnacksPickerToggle = {
-            bg = { from = 'FloatTitle' },
-            fg = { from = 'DiagnosticVirtualTextInfo' },
-            italic = true,
-          },
-        },
-        { PmenuBorder = { link = 'FloatBorder' } },
-        { PmenuExtra = { link = 'Pmenu' } },
-        { PmenuKind = { fg = { from = 'Comment' } } },
-        { PmenuMatch = { link = 'Normal' } },
-        { PmenuSel = { link = 'CursorLine' } },
-        { PmenuExtraSel = { link = 'PmenuSel' } },
-        { PmenuKindSel = { fg = { from = 'Comment' } } },
-        { PmenuMatchSel = { link = 'PmenuSel' } },
-        { PmenuThumb = { link = 'CurSearch' } },
-        { PmenuSbar = { link = 'Pmenu' } },
-        { IndentBlanklineChar = { link = 'VertSplit' } },
+      local overrides = {
+        { CursorLine = { bg = { from = 'Normal', alter = 2.7 } } },
+        { Folded = { bg = { from = 'CursorLine', alter = 0.2 } } },
+        { Visual = { bg = { from = 'CursorLine', alter = 0.3 } } },
+        { WinSeparator = { fg = { from = 'LineNr', alter = -0.1 } } },
+        { VertSplit = { link = 'WinSeparator' } },
+        { IndentBlanklineChar = { link = 'WinSeparator' } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-        { TelescopeNormal = { link = 'NormalFloat' } },
+      }
+      ar.list_insert(overrides, generate_popup_overrides())
+      ar.list_insert(overrides, generate_completion_overrides())
+      ar.list_insert(overrides, generate_lsp_overrides())
+      ar.list_insert(overrides, generate_picker_overrides())
+      ar.list_insert(overrides, {
         { TelescopePromptNormal = { link = 'TelescopeNormal' } },
-        { TelescopePromptTitle = { bg = { from = 'FloatTitle' } } },
+        { TelescopePromptTitle = { bg = { from = 'TelescopeTitle' } } },
         { TelescopePreviewTitle = { link = 'TelescopePromptTitle' } },
-        { TelescopeBorder = { link = 'FloatBorder' } },
+        { TelescopeBorder = { link = 'SnacksPickerBorder' } },
+        { TelescopePromptBorder = { link = 'SnacksPickerBorder' } },
       })
+      apply_overrides('yoda', overrides)
     end,
   },
   {
