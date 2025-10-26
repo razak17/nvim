@@ -481,16 +481,42 @@ return {
     priority = get_priority({ 'zenbones' }),
     event = get_event({ 'zenbones' }),
     init = function()
-      apply_overrides('zenbones', {
-        {
-          NormalFloat = {
-            bg = { from = 'Normal' },
-            fg = { from = 'Normal', alter = -0.15 },
+      local variant = ar_config.colorscheme.variant
+      local overrides = {}
+
+      if variant == 'fill' then
+        ar.list_insert(overrides, {
+          {
+            NormalFloat = {
+              bg = { from = 'Normal', alter = 0.25 },
+              fg = { from = 'Normal', alter = -0.15 },
+            },
           },
-        },
-        { StatusLine = { bg = 'NONE' } },
-        { Folded = { bg = { from = 'Folded', alter = -0.2 } } },
+          {
+            FloatBorder = {
+              bg = { from = 'Normal', alter = 0.25 },
+              fg = { from = 'Normal', attr = 'bg', alter = 0.25 },
+            },
+          },
+        })
+      end
+
+      if variant == 'outline' then
+        ar.list_insert(overrides, {
+          {
+            NormalFloat = {
+              bg = { from = 'Normal' },
+              fg = { from = 'Normal', alter = -0.15 },
+            },
+          },
+        })
+      end
+
+      ar.list_insert(overrides, {
         { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.2 } } },
+        { CursorLine = { bg = { from = 'CursorLine', alter = 0.1 } } },
+        { Folded = { bg = { from = 'Folded', alter = -0.2 } } },
+        { StatusLine = { bg = 'NONE' } },
         { Winbar = { link = 'Variable' } },
         { WinbarNC = { link = 'LineNr' } },
         { WinSeparator = { fg = { from = 'VertSplit', alter = -0.35 } } },
@@ -499,8 +525,8 @@ return {
         { PmenuBorder = { link = 'FloatBorder' } },
         { PmenuKind = { fg = { from = 'Comment' }, italic = false } },
         { PmenuMatch = { fg = { from = 'Normal' } } },
-        { PmenuSel = { fg = { from = 'CursorLine', alter = 0.1 } } },
         { PmenuKindSel = { fg = { from = 'PmenuKind' } } },
+        { PmenuThumb = { bg = { from = 'PmenuThumb', alter = -0.4 } } },
         {
           LspReferenceText = {
             bg = 'NONE',
@@ -508,15 +534,11 @@ return {
             sp = { from = 'Comment', attr = 'fg', alter = -0.2 },
           },
         },
-        {
-          LspReferenceRead = {
-            bg = { from = 'Visual', attr = 'bg', alter = -0.1 },
-          },
-        },
+        { LspReferenceRead = { bg = { from = 'Visual', alter = -0.1 } } },
         { LspReferenceWrite = { link = 'LspReferenceText', bold = false } },
         { LspReferenceTarget = { inherit = 'Dim', bold = true } },
         { FloatBorder = { link = 'VertSplit' } },
-        { IndentBlanklineChar = { link = 'FloatBorder' } },
+        { IndentBlanklineChar = { link = 'VertSplit' } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
         { BlinkCmpDocBorder = { link = 'PmenuBorder' } },
         {
@@ -533,10 +555,47 @@ return {
             italic = true,
           },
         },
-        { SnacksPickerBorder = { link = 'FloatBorder' } },
-        { TelescopeTitle = { link = 'FloatTitle' } },
-        { TelescopeBorder = { link = 'FloatBorder' } },
       })
+
+      if variant == 'fill' then
+        ar.list_insert(overrides, {
+          {
+            SnacksPickerPreview = {
+              bg = { from = 'NormalFloat', alter = -0.1 },
+            },
+          },
+          {
+            SnacksPickerPreviewBorder = {
+              bg = { from = 'SnacksPickerPreview' },
+              fg = { from = 'SnacksPickerPreview', attr = 'bg' },
+            },
+          },
+        })
+      end
+
+      if variant == 'outline' then
+        ar.list_insert(overrides, {
+          { SnacksPickerPreview = { bg = { from = 'NormalFloat' } } },
+          { SnacksPickerPreviewBorder = { fg = { from = 'FloatBorder' } } },
+        })
+      end
+
+      ar.list_insert(overrides, {
+        { SnacksPickerBorder = { link = 'FloatBorder' } },
+        { SnacksPickerTitle = { link = 'FloatTitle' } },
+        { FzfLuaNormal = { link = 'SnacksPicker' } },
+        { FzfLuaTitle = { link = 'SnacksPickerTitle' } },
+        { FzfLuaBorder = { link = 'SnacksPickerBorder' } },
+        { FzfLuaPreviewNormal = { link = 'SnacksPickerPreview' } },
+        { FzfLuaPreviewBorder = { link = 'SnacksPickerPreviewBorder' } },
+        { TelescopeNormal = { link = 'SnacksPicker' } },
+        { TelescopeTitle = { link = 'SnacksPickerTitle' } },
+        { TelescopeBorder = { link = 'SnacksPickerBorder' } },
+        { TelescopePreviewNormal = { link = 'SnacksPickerPreview' } },
+        { TelescopePreviewBorder = { link = 'SnacksPickerPreviewBorder' } },
+      })
+
+      apply_overrides('zenbones', overrides)
     end,
     dependencies = 'rktjmp/lush.nvim',
   },
