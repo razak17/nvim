@@ -71,7 +71,7 @@ local function generate_popup_overrides()
 end
 
 local function generate_completion_overrides()
-  local overrides = {
+  return {
     { Pmenu = { link = 'NormalFloat' } },
     { PmenuBorder = { link = 'FloatBorder' } },
     {
@@ -102,8 +102,21 @@ local function generate_completion_overrides()
     { BlinkCmpLabelDescription = { link = 'PmenuExtra' } },
     { BlinkCmpLabelDeprecated = { strikethrough = true, link = 'Comment' } },
   }
+end
 
-  return overrides
+local function generate_lsp_overrides()
+  return {
+    {
+      LspReferenceText = {
+        bg = 'NONE',
+        underline = true,
+        sp = { from = 'Comment', attr = 'fg', alter = -0.2 },
+      },
+    },
+    { LspReferenceRead = { bg = { from = 'Visual', alter = -0.1 } } },
+    { LspReferenceWrite = { link = 'LspReferenceText', bold = false } },
+    { LspReferenceTarget = { inherit = 'Dim', bold = true } },
+  }
 end
 
 local function generate_picker_overrides()
@@ -169,6 +182,7 @@ local function generate_overrides(overrides)
   ar.list_insert(generated_overrides, generate_popup_overrides())
   ar.list_insert(generated_overrides, overrides)
   ar.list_insert(generated_overrides, generate_completion_overrides())
+  ar.list_insert(generated_overrides, generate_lsp_overrides())
   ar.list_insert(generated_overrides, generate_picker_overrides())
   return generated_overrides
 end
@@ -203,18 +217,9 @@ return {
         -- { ['@variable'] = { fg = { from = '@none' } } },
         { dmapWin = { inherit = 'Normal' } },
         { Strict = { link = 'DiffDeleteAlt' } },
-        {
-          LspReferenceText = {
-            bg = 'NONE',
-            underline = true,
-            sp = { from = 'Directory', attr = 'fg', alter = -0.6 },
-          },
-        },
-        { LspReferenceRead = { bg = { from = 'Visual', alter = -0.1 } } },
-        { LspReferenceWrite = { inherit = 'LspReferenceText', bold = false } },
-        { LspReferenceTarget = { inherit = 'Dim', bold = true } },
       }
       ar.list_insert(overrides, generate_completion_overrides())
+      ar.list_insert(overrides, generate_lsp_overrides())
       apply_overrides('onedark', overrides)
     end,
   },
@@ -237,21 +242,12 @@ return {
         { IndentBlanklineChar = { link = 'VertSplit' } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
         {
-          LspReferenceText = {
-            bg = 'NONE',
-            underline = true,
-            sp = { from = 'Comment', attr = 'fg', alter = -0.2 },
-          },
-        },
-        { LspReferenceRead = { bg = { from = 'Visual', alter = -0.1 } } },
-        { LspReferenceWrite = { link = 'LspReferenceText', bold = false } },
-        { LspReferenceTarget = { inherit = 'Dim', bold = true } },
-        {
           SnacksPickerToggle = { bg = { from = 'FloatTitle' }, italic = true },
         },
         { TelescopeTitle = { link = 'FloatTitle' } },
       }
       ar.list_insert(overrides, generate_completion_overrides())
+      ar.list_insert(overrides, generate_lsp_overrides())
       apply_overrides('vague', overrides)
     end,
   },
@@ -427,22 +423,9 @@ return {
         { VertSplit = { link = 'WinSeparator' } },
         { IndentBlanklineChar = { link = 'VertSplit' } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-        {
-          LspReferenceText = {
-            bg = 'NONE',
-            underline = true,
-            sp = { from = 'Comment', attr = 'fg', alter = -0.2 },
-          },
-        },
-        { LspReferenceRead = { bg = { from = 'Visual', alter = 0.1 } } },
-        { LspReferenceWrite = { link = 'LspReferenceText', bold = false } },
-        { LspReferenceTarget = { inherit = 'Dim', bold = true } },
       }, true)
     end,
-    opts = {
-      disable_plugin_highlights = false,
-      plugins = { 'lazy' },
-    },
+    opts = { disable_plugin_highlights = false, plugins = { 'lazy' } },
   },
   ------------------------------------------------------------------------------
   -- Warm
@@ -577,16 +560,6 @@ return {
         { VertSplit = { link = 'WinSeparator' } },
         { IndentBlanklineChar = { link = 'VertSplit' } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-        {
-          LspReferenceText = {
-            bg = 'NONE',
-            underline = true,
-            sp = { from = 'Comment', attr = 'fg', alter = -0.2 },
-          },
-        },
-        { LspReferenceRead = { bg = { from = 'Visual', alter = -0.1 } } },
-        { LspReferenceWrite = { link = 'LspReferenceText', bold = false } },
-        { LspReferenceTarget = { inherit = 'Dim', bold = true } },
       }, true)
     end,
     dependencies = 'rktjmp/lush.nvim',
