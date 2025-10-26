@@ -111,7 +111,7 @@ local function generate_completion_overrides()
   return overrides
 end
 
-local function generate_picker_ovverides()
+local function generate_picker_overrides()
   local overrides = {
     {
       SnacksPickerToggle = {
@@ -170,7 +170,7 @@ local function generate_overrides(overrides)
   ar.list_insert(generated_overrides, generate_popup_overrides())
   ar.list_insert(generated_overrides, overrides)
   ar.list_insert(generated_overrides, generate_completion_overrides())
-  ar.list_insert(generated_overrides, generate_picker_ovverides())
+  ar.list_insert(generated_overrides, generate_picker_overrides())
   return generated_overrides
 end
 
