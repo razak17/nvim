@@ -84,7 +84,7 @@ local function generate_completion_overrides()
     },
     { PmenuMatch = { fg = { from = 'Normal' }, bold = true } },
     { PmenuExtra = { fg = { from = 'NonText' } } },
-    { PmenuSel = { bg = { from = 'Visual' }, fg = 'NONE' } },
+    { PmenuSel = { bg = { from = 'Visual' }, fg = 'NONE', reverse = false } },
     {
       PmenuKindSel = {
         bg = { from = 'PmenuSel' },
@@ -277,59 +277,26 @@ return {
     event = get_event({ 'rams' }),
     init = function()
       apply_overrides('rams', {
-        {
-          NormalFloat = {
-            bg = { from = 'Normal' },
-            fg = { from = 'Normal', alter = -0.15 },
-          },
-        },
-        {
-          CursorLine = { bg = { from = 'Comment', attr = 'fg', alter = -0.7 } },
-        },
+        { CursorLine = { bg = { from = 'Normal', alter = 0.9 } } },
+        { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
+        { LineNr = { fg = { from = 'LineNr', alter = -0.4 } } },
         {
           Visual = {
-            bg = { from = 'CursorLine', alter = 0.2 },
+            bg = { from = 'CursorLine', alter = 0.3 },
             reverse = false,
           },
         },
         { DiffAdd = { bg = { from = 'DiffAdd', alter = -0.65 } } },
-        { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
-        { LineNr = { fg = { from = 'Comment', alter = -0.2 } } },
-        {
-          WinSeparator = {
-            fg = { from = 'Comment', alter = -0.6 },
-            bg = 'NONE',
-          },
-        },
-        { VertSplit = { link = 'WinSeparator' } },
-        { FloatBorder = { link = 'VertSplit' } },
-        { FloatTitle = { link = 'CursorLine' } },
-        { IndentBlanklineChar = { link = 'WinSeparator' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
         {
           GitSignsAdd = {
             fg = { from = 'DiffAdd', attr = 'bg', alter = 1.1 },
           },
         },
-        { Pmenu = { link = 'NormalFloat' } },
-        { PmenuBorder = { link = 'FloatBorder' } },
-        { PmenuKind = { fg = { from = 'Comment' } } },
-        { PmenuSel = { link = 'CursorLine' } },
-        { PmenuKindSel = { fg = { from = 'Comment' } } },
-        { PmenuThumb = { link = 'CurSearch' } },
-        { PmenuSbar = { link = 'Pmenu' } },
-        { Visual = { link = 'CursorLine' } },
-        { NonText = { link = 'Comment' } },
-        {
-          SnacksPickerToggle = {
-            bg = { from = 'FloatTitle' },
-            fg = { from = 'DiagnosticVirtualTextInfo' },
-            italic = true,
-          },
-        },
-        { TelescopeTitle = { link = 'FloatTitle' } },
-        { TelescopeBorder = { link = 'FloatBorder' } },
-      })
+        { WinSeparator = { fg = { from = 'LineNr', alter = -0.6 } } },
+        { VertSplit = { link = 'WinSeparator' } },
+        { IndentBlanklineChar = { link = 'WinSeparator' } },
+        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+      }, true)
     end,
   },
   ------------------------------------------------------------------------------
