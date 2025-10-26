@@ -155,7 +155,9 @@ local function generate_picker_overrides()
 
   ar.list_insert(overrides, {
     { SnacksPickerBorder = { link = 'FloatBorder' } },
-    { SnacksPickerTitle = { link = 'FloatTitle' } },
+    { SnacksTitle = { link = 'FloatTitle' } },
+    { SnacksInputTitle = { link = 'SnacksTitle' } },
+    { SnacksPickerTitle = { link = 'SnacksTitle' } },
     { FzfLuaNormal = { link = 'SnacksPicker' } },
     { FzfLuaTitle = { link = 'SnacksPickerTitle' } },
     { FzfLuaBorder = { link = 'SnacksPickerBorder' } },
