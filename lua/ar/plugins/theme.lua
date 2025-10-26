@@ -36,12 +36,7 @@ end
 
 local function generate_popup_overrides()
   local overrides = {
-    {
-      FloatTitle = {
-        bg = { from = 'CursorLine' },
-        fg = { from = 'Normal' },
-      },
-    },
+    { FloatTitle = { bg = { from = 'Visual' }, fg = { from = 'Normal' } } },
   }
 
   if variant == 'fill' then
@@ -54,8 +49,8 @@ local function generate_popup_overrides()
       },
       {
         FloatBorder = {
-          bg = { from = 'Normal', alter = 0.25 },
-          fg = { from = 'Normal', attr = 'bg', alter = 0.25 },
+          bg = { from = 'NormalFloat' },
+          fg = { from = 'NormalFloat', attr = 'bg' },
         },
       },
     })
