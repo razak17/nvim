@@ -226,26 +226,31 @@ return {
       colors = { floatBorder = '#252530' },
     },
     init = function()
-      apply_overrides('vague', {
+      local overrides = {
         { StatusLine = { bg = 'NONE' } },
         { FloatBorder = { link = 'VertSplit' } },
+        { FloatTitle = { bg = { from = 'Visual' }, fg = { from = 'Normal' } } },
+        { Winbar = { link = 'Variable' } },
+        { WinbarNC = { link = 'LineNr' } },
         { IndentBlanklineChar = { link = 'VertSplit' } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
         {
-          FloatTitle = {
-            bg = { from = 'CursorLine' },
-            fg = { from = 'Normal' },
+          LspReferenceText = {
+            bg = 'NONE',
+            underline = true,
+            sp = { from = 'Comment', attr = 'fg', alter = -0.2 },
           },
         },
+        { LspReferenceRead = { bg = { from = 'Visual', alter = -0.1 } } },
+        { LspReferenceWrite = { link = 'LspReferenceText', bold = false } },
+        { LspReferenceTarget = { inherit = 'Dim', bold = true } },
         {
-          SnacksPickerToggle = {
-            bg = { from = 'FloatTitle' },
-            fg = { from = 'DiagnosticVirtualTextInfo' },
-            italic = true,
-          },
+          SnacksPickerToggle = { bg = { from = 'FloatTitle' }, italic = true },
         },
         { TelescopeTitle = { link = 'FloatTitle' } },
-      })
+      }
+      ar.list_insert(overrides, generate_completion_overrides())
+      apply_overrides('vague', overrides)
     end,
   },
   {
