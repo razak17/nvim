@@ -163,6 +163,8 @@ end
 local function generate_overrides(overrides)
   local generated_overrides = {
     { StatusLine = { bg = 'NONE' } },
+    { Winbar = { link = 'Variable' } },
+    { WinbarNC = { link = 'LineNr' } },
   }
   ar.list_insert(generated_overrides, generate_popup_overrides())
   ar.list_insert(generated_overrides, overrides)
@@ -306,8 +308,6 @@ return {
         { VertSplit = { link = 'WinSeparator' } },
         { FloatBorder = { link = 'VertSplit' } },
         { FloatTitle = { link = 'CursorLine' } },
-        { Winbar = { link = 'Variable' } },
-        { WinbarNC = { link = 'LineNr' } },
         { IndentBlanklineChar = { link = 'WinSeparator' } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
         {
@@ -423,8 +423,6 @@ return {
     event = get_event({ 'mapledark' }),
     init = function()
       apply_overrides('mapledark', {
-        { Winbar = { link = 'Variable' } },
-        { WinbarNC = { link = 'LineNr' } },
         { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
         { VertSplit = { link = 'WinSeparator' } },
         { IndentBlanklineChar = { link = 'VertSplit' } },
@@ -575,8 +573,6 @@ return {
         { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.2 } } },
         { CursorLine = { bg = { from = 'CursorLine', alter = 0.1 } } },
         { Folded = { bg = { from = 'Folded', alter = -0.2 } } },
-        { Winbar = { link = 'Variable' } },
-        { WinbarNC = { link = 'LineNr' } },
         { WinSeparator = { fg = { from = 'VertSplit', alter = -0.35 } } },
         { VertSplit = { link = 'WinSeparator' } },
         { IndentBlanklineChar = { link = 'VertSplit' } },
