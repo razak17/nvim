@@ -13,7 +13,7 @@ function M.get_current_colorscheme()
   if not file or not ar.plugins.enable or ar.plugins.minimal then
     return 'default'
   end
-  if ar_config.colorscheme ~= '' then return ar_config.colorscheme end
+  if ar_config.colorscheme.name ~= '' then return ar_config.colorscheme.name end
   if file then
     local ccs = file:read('*l')
     file:close()

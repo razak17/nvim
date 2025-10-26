@@ -376,7 +376,11 @@ local config = {
       variant = 'minimal',
     },
   },
-  colorscheme = '',
+  colorscheme = {
+    name = '',
+      ---@type 'fill' | 'outline'
+    variant = 'outline',
+  },
   ---@type ArDashboard
   dashboard = { enable = true, variant = 'builtin' },
   debug = { enable = false },

@@ -120,7 +120,7 @@ local function update_schema(
   -- Update colorscheme enum
   update_json_enum(
     schema,
-    { 'properties', 'colorscheme', 'enum' },
+    { 'properties', 'colorscheme', 'properties', 'name', 'enum' },
     colorschemes
   )
 
