@@ -166,7 +166,9 @@ end
 ---@param overrides table
 ---@return table
 local function generate_overrides(overrides)
-  local generated_overrides = {}
+  local generated_overrides = {
+    { StatusLine = { bg = 'NONE' } },
+  }
   ar.list_insert(generated_overrides, generate_popup_overrides())
   ar.list_insert(generated_overrides, overrides)
   ar.list_insert(generated_overrides, generate_completion_overrides())
@@ -421,7 +423,6 @@ return {
     event = get_event({ 'mapledark' }),
     init = function()
       apply_overrides('mapledark', {
-        { StatusLine = { bg = 'NONE' } },
         { Winbar = { link = 'Variable' } },
         { WinbarNC = { link = 'LineNr' } },
         { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
@@ -574,7 +575,6 @@ return {
         { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.2 } } },
         { CursorLine = { bg = { from = 'CursorLine', alter = 0.1 } } },
         { Folded = { bg = { from = 'Folded', alter = -0.2 } } },
-        { StatusLine = { bg = 'NONE' } },
         { Winbar = { link = 'Variable' } },
         { WinbarNC = { link = 'LineNr' } },
         { WinSeparator = { fg = { from = 'VertSplit', alter = -0.35 } } },
