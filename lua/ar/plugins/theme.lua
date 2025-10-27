@@ -333,7 +333,7 @@ return {
     priority = get_priority({ 'lackluster' }),
     event = get_event({ 'lackluster' }),
     init = function()
-      local overrides = {
+      theming.apply_overrides('lackluster', {
         { Winbar = { link = 'Variable' } },
         { WinbarNC = { link = 'LineNr' } },
         { CursorLine = { bg = { from = 'CursorLine', alter = 0.2 } } },
@@ -343,22 +343,7 @@ return {
         { VertSplit = { link = 'WinSeparator' } },
         { IndentBlanklineChar = { link = 'VertSplit' } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-      }
-      ar.list_insert(
-        overrides,
-        theming.generate_popup_overrides({
-          {
-            FloatTitle = {
-              bg = { from = 'CursorLine' },
-              fg = { from = 'Normal' },
-            },
-          },
-        })
-      )
-      ar.list_insert(overrides, theming.generate_completion_overrides())
-      ar.list_insert(overrides, theming.generate_lsp_overrides())
-      ar.list_insert(overrides, theming.generate_picker_overrides())
-      theming.apply_overrides('lackluster', overrides)
+      }, true)
     end,
     opts = function()
       local lackluster = require('lackluster')
