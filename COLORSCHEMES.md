@@ -146,6 +146,7 @@
 - tokyonight-moon
 - tokyonight-night
 - tokyonight-storm
+- two-firewatch
 - vague
 - vim
 - vimbones

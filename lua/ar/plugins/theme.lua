@@ -873,6 +873,22 @@ return {
       }, true)
     end,
   },
+  {
+    'rakr/vim-two-firewatch',
+    cond = get_cond({ 'two-firewatch' }),
+    priority = get_priority({ 'two-firewatch' }),
+    event = get_event({ 'two-firewatch' }),
+    init = function()
+      apply_overrides('two-firewatch', {
+        { Folded = { bg = { from = 'Folded', alter = -0.35 } } },
+        { Visual = { bg = { from = 'CursorLine', alter = 0.3 } } },
+        { WinSeparator = { fg = { from = 'LineNr', alter = -0.3 } } },
+        { VertSplit = { link = 'WinSeparator' } },
+        { IndentBlanklineChar = { link = 'WinSeparator' } },
+        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+      }, true)
+    end,
+  },
   ------------------------------------------------------------------------------
   -- Clown show
   {
