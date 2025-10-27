@@ -1,5 +1,6 @@
 local scheme_switcher = require('ar.scheme_switcher')
 local colorscheme = scheme_switcher.get_current_colorscheme()
+local theming = require('ar.theming')
 local variant = ar_config.colorscheme.variant
 
 local function is_colorscheme(name) return name == colorscheme end
@@ -34,198 +35,6 @@ local function get_event(names)
   return { 'VeryLazy' }
 end
 
-local function generate_popup_overrides(opts)
-  local overrides = {
-    { FloatTitle = { bg = { from = 'Visual' }, fg = { from = 'Normal' } } },
-  }
-  ar.list_insert(overrides, opts)
-
-  if variant == 'fill' then
-    ar.list_insert(overrides, {
-      {
-        NormalFloat = {
-          bg = { from = 'Normal', alter = 0.25 },
-          fg = { from = 'Normal', alter = -0.15 },
-        },
-      },
-      {
-        FloatBorder = {
-          bg = { from = 'NormalFloat' },
-          fg = { from = 'NormalFloat', attr = 'bg' },
-        },
-      },
-    })
-  end
-
-  if variant == 'outline' then
-    ar.list_insert(overrides, {
-      {
-        NormalFloat = {
-          bg = { from = 'Normal' },
-          fg = { from = 'Normal', alter = -0.15 },
-        },
-      },
-      { FloatBorder = { link = 'VertSplit' } },
-    })
-  end
-  return overrides
-end
-
-local function generate_completion_overrides()
-  return {
-    { Pmenu = { link = 'NormalFloat' } },
-    { PmenuBorder = { link = 'FloatBorder' } },
-    {
-      PmenuKind = {
-        bg = 'NONE',
-        fg = { from = 'NonText' },
-        italic = true,
-        bold = true,
-      },
-    },
-    { PmenuMatch = { fg = { from = 'Normal' }, bold = true } },
-    { PmenuExtra = { fg = { from = 'NonText' } } },
-    { PmenuSel = { bg = { from = 'Visual' }, fg = 'NONE', reverse = false } },
-    {
-      PmenuKindSel = {
-        bg = { from = 'PmenuSel' },
-        fg = { from = 'PmenuKind' },
-        italic = true,
-        bold = true,
-      },
-    },
-    { PmenuThumb = { bg = { from = 'PmenuThumb', alter = -0.4 } } },
-    { BlinkCmpDocBorder = { link = 'PmenuBorder' } },
-    { BlinkCmpSource = { link = 'PmenuKind' } },
-    { BlinkCmpLabel = { fg = { from = 'Pmenu' } } },
-    { BlinkCmpLabelDetail = { link = 'PmenuExtra' } },
-    { BlinkCmpLabelMatch = { link = 'PmenuMatch' } },
-    { BlinkCmpLabelDescription = { link = 'PmenuExtra' } },
-    { BlinkCmpLabelDeprecated = { strikethrough = true, link = 'Comment' } },
-  }
-end
-
-local function generate_lsp_overrides()
-  return {
-    {
-      LspReferenceText = {
-        bg = 'NONE',
-        underline = true,
-        sp = { from = 'Comment', attr = 'fg', alter = -0.2 },
-      },
-    },
-    { LspReferenceRead = { bg = { from = 'Visual', alter = -0.1 } } },
-    { LspReferenceWrite = { link = 'LspReferenceText', bold = false } },
-    { LspReferenceTarget = { inherit = 'Dim', bold = true } },
-  }
-end
-
-local function generate_picker_overrides()
-  local overrides = {
-    { PickerNormal = { link = 'NormalFloat' } },
-    { PickerTitle = { link = 'FloatTitle' } },
-    { PickerBorder = { link = 'FloatBorder' } },
-    {
-      PickerToggle = {
-        bg = { from = 'FloatTitle' },
-        fg = { from = 'DiagnosticVirtualTextInfo' },
-        italic = true,
-      },
-    },
-  }
-
-  if variant == 'fill' then
-    ar.list_insert(overrides, {
-      { PickerPreview = { bg = { from = 'NormalFloat', alter = -0.1 } } },
-      {
-        PickerPreviewBorder = {
-          bg = { from = 'PickerPreview' },
-          fg = { from = 'PickerPreview', attr = 'bg' },
-        },
-      },
-      { PickerPrompt = { bg = { from = 'NormalFloat', alter = 0.15 } } },
-      {
-        PickerPromptBorder = {
-          bg = { from = 'PickerPrompt' },
-          fg = { from = 'PickerPrompt', attr = 'bg' },
-        },
-      },
-    })
-  end
-
-  if variant == 'outline' then
-    ar.list_insert(overrides, {
-      { PickerPreview = { bg = { from = 'NormalFloat' } } },
-      { PickerPreviewBorder = { fg = { from = 'FloatBorder' } } },
-      { PickerPrompt = { bg = { from = 'NormalFloat' } } },
-      { PickerPromptBorder = { fg = { from = 'FloatBorder' } } },
-    })
-  end
-
-  ar.list_insert(overrides, {
-    { SnacksTitle = { link = 'PickerTitle' } },
-    { SnacksInputNormal = { link = 'PickerPrompt' } },
-    { SnacksInputTitle = { link = 'PickerTitle' } },
-    { SnacksInputBorder = { link = 'PickerPromptBorder' } },
-    { SnacksPickerToggle = { link = 'PickerToggle' } },
-    { SnacksPicker = { link = 'PickerNormal' } },
-    { SnacksPickerTitle = { link = 'PickerTitle' } },
-    { SnacksPickerBorder = { link = 'PickerBorder' } },
-    -- { SnacksPickerInput = { link = 'PickerPrompt' } },
-    -- { SnacksPickerInputBorder = { link = 'PickerPromptBorder' } },
-    { SnacksPickerPreview = { link = 'PickerPreview' } },
-    { SnacksPickerPreviewBorder = { link = 'PickerPreviewBorder' } },
-    { FzfLuaNormal = { link = 'PickerNormal' } },
-    { FzfLuaTitle = { link = 'PickerTitle' } },
-    { FzfLuaBorder = { link = 'PickerBorder' } },
-    { FzfLuaPreviewNormal = { link = 'PickerPreview' } },
-    { FzfLuaPreviewBorder = { link = 'PickerPreviewBorder' } },
-    { TelescopeNormal = { link = 'PickerNormal' } },
-    { TelescopeTitle = { link = 'PickerTitle' } },
-    { TelescopeBorder = { link = 'PickerBorder' } },
-    { TelescopeResultsNormal = { link = 'PickerNormal' } },
-    { TelescopeResultsTitle = { link = 'PickerTitle' } },
-    { TelescopeResultsBorder = { link = 'PickerBorder' } },
-    { TelescopePromptNormal = { link = 'PickerPrompt' } },
-    { TelescopePromptTitle = { link = 'PickerTitle' } },
-    { TelescopePromptBorder = { link = 'PickerPromptBorder' } },
-    { TelescopePreviewNormal = { link = 'PickerPreview' } },
-    { TelescopePreviewTitle = { link = 'PickerTitle' } },
-    { TelescopePreviewBorder = { link = 'PickerPreviewBorder' } },
-  })
-
-  return overrides
-end
-
----@param overrides table
----@return table
-local function generate_overrides(overrides)
-  local generated_overrides = {
-    { StatusLine = { bg = 'NONE' } },
-    { Winbar = { link = 'Variable' } },
-    { WinbarNC = { link = 'LineNr' } },
-  }
-  ar.list_insert(generated_overrides, generate_popup_overrides())
-  ar.list_insert(generated_overrides, overrides)
-  ar.list_insert(generated_overrides, generate_completion_overrides())
-  ar.list_insert(generated_overrides, generate_lsp_overrides())
-  ar.list_insert(generated_overrides, generate_picker_overrides())
-  return generated_overrides
-end
-
----@param theme string
----@param overrides table
----@param should_generate boolean
-local function apply_overrides(theme, overrides, should_generate)
-  local theme_overrides = overrides
-  if should_generate then theme_overrides = generate_overrides(overrides) end
-  ar.augroup(theme .. '-theme', {
-    event = { 'ColorScheme' },
-    pattern = { theme },
-    command = function() ar.highlight.all(theme_overrides) end,
-  })
-end
-
 return {
   ------------------------------------------------------------------------------
   -- Themes {{{1
@@ -245,9 +54,9 @@ return {
         { dmapWin = { inherit = 'Normal' } },
         { Strict = { link = 'DiffDeleteAlt' } },
       }
-      ar.list_insert(overrides, generate_completion_overrides())
-      ar.list_insert(overrides, generate_lsp_overrides())
-      apply_overrides('onedark', overrides)
+      ar.list_insert(overrides, theming.generate_completion_overrides())
+      ar.list_insert(overrides, theming.generate_lsp_overrides())
+      theming.apply_overrides('onedark', overrides)
     end,
   },
   ------------------------------------------------------------------------------
@@ -258,7 +67,7 @@ return {
     priority = get_priority({ 'rams' }),
     event = get_event({ 'rams' }),
     init = function()
-      apply_overrides('rams', {
+      theming.apply_overrides('rams', {
         { CursorLine = { bg = { from = 'Normal', alter = 0.9 } } },
         { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
         { LineNr = { fg = { from = 'LineNr', alter = -0.4 } } },
@@ -287,7 +96,7 @@ return {
     priority = get_priority({ 'yoda' }),
     event = get_event({ 'yoda' }),
     init = function()
-      apply_overrides('yoda', {
+      theming.apply_overrides('yoda', {
         { CursorLine = { bg = { from = 'Normal', alter = 2.7 } } },
         { Folded = { bg = { from = 'CursorLine', alter = 0.2 } } },
         { Visual = { bg = { from = 'CursorLine', alter = 0.3 } } },
@@ -304,7 +113,7 @@ return {
     priority = get_priority({ 'mapledark' }),
     event = get_event({ 'mapledark' }),
     init = function()
-      apply_overrides('mapledark', {
+      theming.apply_overrides('mapledark', {
         { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
         { VertSplit = { link = 'WinSeparator' } },
         { IndentBlanklineChar = { link = 'VertSplit' } },
@@ -336,9 +145,9 @@ return {
         },
         { TelescopeTitle = { link = 'FloatTitle' } },
       }
-      ar.list_insert(overrides, generate_completion_overrides())
-      ar.list_insert(overrides, generate_lsp_overrides())
-      apply_overrides('vague', overrides)
+      ar.list_insert(overrides, theming.generate_completion_overrides())
+      ar.list_insert(overrides, theming.generate_lsp_overrides())
+      theming.apply_overrides('vague', overrides)
     end,
   },
   {
@@ -387,7 +196,7 @@ return {
     priority = get_priority({ 'nightgem' }),
     event = get_event({ 'nightgem' }),
     init = function()
-      apply_overrides('nightgem', {
+      theming.apply_overrides('nightgem', {
         { CursorLine = { bg = { from = 'CursorLine', alter = -0.2 } } },
         { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
         { Visual = { bg = { from = 'CursorLine', alter = 0.1 } } },
@@ -410,7 +219,7 @@ return {
     priority = get_priority({ 'nightingale' }),
     event = get_event({ 'nightingale' }),
     init = function()
-      apply_overrides('nightingale', {
+      theming.apply_overrides('nightingale', {
         { IndentBlanklineChar = { link = 'WinSeparator' } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       }, true)
@@ -448,7 +257,7 @@ return {
     priority = get_priority({ 'kanso' }),
     event = get_event({ 'kanso' }),
     init = function()
-      apply_overrides('kanso', {
+      theming.apply_overrides('kanso', {
         { IndentBlanklineChar = { link = 'VertSplit' } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       }, true)
@@ -460,7 +269,7 @@ return {
     priority = get_priority({ 'zenbones' }),
     event = get_event({ 'zenbones' }),
     init = function()
-      apply_overrides('zenbones', {
+      theming.apply_overrides('zenbones', {
         { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.2 } } },
         { CursorLine = { bg = { from = 'CursorLine', alter = 0.1 } } },
         { Folded = { bg = { from = 'Folded', alter = -0.2 } } },
@@ -479,7 +288,7 @@ return {
     event = get_event({ 'conifer' }),
     opts = { transparent = ar_config.ui.transparent.enable },
     init = function()
-      apply_overrides('conifer', {
+      theming.apply_overrides('conifer', {
         { DiffAdd = { bg = { from = 'DiffAdd', alter = 3.15 } } },
         { GitSignsAdd = { fg = { from = 'DiffAdd', attr = 'bg' } } },
         { WinSeparator = { fg = { from = 'LineNr' } } },
@@ -496,7 +305,7 @@ return {
     event = get_event({ 'nanode' }),
     opts = { transparent = ar_config.ui.transparent.enable },
     init = function()
-      apply_overrides('nanode', {
+      theming.apply_overrides('nanode', {
         { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.2 } } },
         { Comment = { fg = { from = 'Comment', alter = -0.3 } } },
         { CursorLine = { bg = { from = 'CursorLine', alter = 0.8 } } },
@@ -537,7 +346,7 @@ return {
       }
       ar.list_insert(
         overrides,
-        generate_popup_overrides({
+        theming.generate_popup_overrides({
           {
             FloatTitle = {
               bg = { from = 'CursorLine' },
@@ -546,10 +355,10 @@ return {
           },
         })
       )
-      ar.list_insert(overrides, generate_completion_overrides())
-      ar.list_insert(overrides, generate_lsp_overrides())
-      ar.list_insert(overrides, generate_picker_overrides())
-      apply_overrides('lackluster', overrides)
+      ar.list_insert(overrides, theming.generate_completion_overrides())
+      ar.list_insert(overrides, theming.generate_lsp_overrides())
+      ar.list_insert(overrides, theming.generate_picker_overrides())
+      theming.apply_overrides('lackluster', overrides)
     end,
     opts = function()
       local lackluster = require('lackluster')
@@ -566,7 +375,7 @@ return {
     priority = get_priority({ 'oldworld' }),
     event = get_event({ 'oldworld' }),
     init = function()
-      apply_overrides('oldworld', {
+      theming.apply_overrides('oldworld', {
         { Winbar = { link = 'Variable' } },
         { WinbarNC = { link = 'LineNr' } },
         { DiffAdd = { bg = { from = 'DiffAdd', alter = 1.5 } } },
@@ -588,7 +397,7 @@ return {
     priority = get_priority({ 'alabaster' }),
     event = get_event({ 'alabaster' }),
     init = function()
-      apply_overrides('alabaster', {
+      theming.apply_overrides('alabaster', {
         { WinSeparator = { fg = { from = 'NonText', alter = -0.4 } } },
         { VertSplit = { link = 'WinSeparator' } },
         { IndentBlanklineChar = { fg = { from = 'VertSplit' } } },
@@ -623,7 +432,7 @@ return {
     priority = get_priority({ 'monoglow-z' }),
     event = get_event({ 'monoglow-z' }),
     init = function()
-      apply_overrides('monoglow-z', {
+      theming.apply_overrides('monoglow-z', {
         { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
         { Visual = { bg = { from = 'CursorLine', alter = 0.35 } } },
         { DiffAdd = { bg = { from = 'DiffAdd', alter = -0.15 } } },
@@ -656,7 +465,7 @@ return {
     priority = get_priority({ 'backpack' }),
     event = get_event({ 'backpack' }),
     init = function()
-      apply_overrides('backpack', {
+      theming.apply_overrides('backpack', {
         { Visual = { link = 'CursorLine' } },
         { Folded = { bg = { from = 'Folded', alter = 0.1 } } },
         { IndentBlanklineChar = { link = 'VertSplit' } },
@@ -729,7 +538,7 @@ return {
     priority = get_priority({ 'flexoki' }),
     event = get_event({ 'flexoki' }),
     init = function()
-      apply_overrides('flexoki', {
+      theming.apply_overrides('flexoki', {
         { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.35 } } },
         { VertSplit = { link = 'WinSeparator' } },
         { IndentBlanklineChar = { link = 'VertSplit' } },
@@ -744,7 +553,7 @@ return {
     priority = get_priority({ 'lunar' }),
     event = get_event({ 'lunar' }),
     init = function()
-      apply_overrides('lunar', {
+      theming.apply_overrides('lunar', {
         { Winbar = { link = 'Variable' } },
         { WinbarNC = { link = 'LineNr' } },
         { ColorColumn = { bg = { from = 'CursorLine', alter = 0.3 } } },
@@ -772,7 +581,7 @@ return {
     priority = get_priority({ 'morta' }),
     event = get_event({ 'morta' }),
     init = function()
-      apply_overrides('morta', {
+      theming.apply_overrides('morta', {
         { Winbar = { link = 'Variable' } },
         { WinbarNC = { link = 'NonText' } },
         { NonText = { fg = { from = 'Comment', alter = -0.15 } } },
@@ -789,7 +598,7 @@ return {
     priority = get_priority({ 'thorn' }),
     event = get_event({ 'thorn' }),
     init = function()
-      apply_overrides('thorn', {
+      theming.apply_overrides('thorn', {
         { NonText = { link = 'Comment' } },
         { WinSeparator = { fg = { from = 'LineNr' } } },
         { VertSplit = { link = 'WinSeparator' } },
@@ -804,7 +613,7 @@ return {
     priority = get_priority({ 'two-firewatch' }),
     event = get_event({ 'two-firewatch' }),
     init = function()
-      apply_overrides('two-firewatch', {
+      theming.apply_overrides('two-firewatch', {
         { Folded = { bg = { from = 'Folded', alter = -0.35 } } },
         { Visual = { bg = { from = 'CursorLine', alter = 0.3 } } },
         { WinSeparator = { fg = { from = 'LineNr', alter = -0.3 } } },
