@@ -122,8 +122,11 @@ end
 
 local function generate_picker_overrides()
   local overrides = {
+    { PickerNormal = { link = 'NormalFloat' } },
+    { PickerTitle = { link = 'FloatTitle' } },
+    { PickerBorder = { link = 'FloatBorder' } },
     {
-      SnacksPickerToggle = {
+      PickerToggle = {
         bg = { from = 'FloatTitle' },
         fg = { from = 'DiagnosticVirtualTextInfo' },
         italic = true,
@@ -133,15 +136,18 @@ local function generate_picker_overrides()
 
   if variant == 'fill' then
     ar.list_insert(overrides, {
+      { PickerPreview = { bg = { from = 'NormalFloat', alter = -0.1 } } },
       {
-        SnacksPickerPreview = {
-          bg = { from = 'NormalFloat', alter = -0.1 },
+        PickerPreviewBorder = {
+          bg = { from = 'PickerPreview' },
+          fg = { from = 'PickerPreview', attr = 'bg' },
         },
       },
+      { PickerPrompt = { bg = { from = 'NormalFloat', alter = 0.15 } } },
       {
-        SnacksPickerPreviewBorder = {
-          bg = { from = 'SnacksPickerPreview' },
-          fg = { from = 'SnacksPickerPreview', attr = 'bg' },
+        PickerPromptBorder = {
+          bg = { from = 'PickerPrompt' },
+          fg = { from = 'PickerPrompt', attr = 'bg' },
         },
       },
     })
@@ -149,26 +155,43 @@ local function generate_picker_overrides()
 
   if variant == 'outline' then
     ar.list_insert(overrides, {
-      { SnacksPickerPreview = { bg = { from = 'NormalFloat' } } },
-      { SnacksPickerPreviewBorder = { fg = { from = 'FloatBorder' } } },
+      { PickerPreview = { bg = { from = 'NormalFloat' } } },
+      { PickerPreviewBorder = { fg = { from = 'FloatBorder' } } },
+      { PickerPrompt = { bg = { from = 'NormalFloat' } } },
+      { PickerPromptBorder = { fg = { from = 'FloatBorder' } } },
     })
   end
 
   ar.list_insert(overrides, {
-    { SnacksPickerBorder = { link = 'FloatBorder' } },
-    { SnacksTitle = { link = 'FloatTitle' } },
-    { SnacksInputTitle = { link = 'SnacksTitle' } },
-    { SnacksPickerTitle = { link = 'SnacksTitle' } },
-    { FzfLuaNormal = { link = 'SnacksPicker' } },
-    { FzfLuaTitle = { link = 'SnacksPickerTitle' } },
-    { FzfLuaBorder = { link = 'SnacksPickerBorder' } },
-    { FzfLuaPreviewNormal = { link = 'SnacksPickerPreview' } },
-    { FzfLuaPreviewBorder = { link = 'SnacksPickerPreviewBorder' } },
-    { TelescopeNormal = { link = 'SnacksPicker' } },
-    { TelescopeTitle = { link = 'SnacksPickerTitle' } },
-    { TelescopeBorder = { link = 'SnacksPickerBorder' } },
-    { TelescopePreviewNormal = { link = 'SnacksPickerPreview' } },
-    { TelescopePreviewBorder = { link = 'SnacksPickerPreviewBorder' } },
+    { SnacksTitle = { link = 'PickerTitle' } },
+    { SnacksInputNormal = { link = 'PickerPrompt' } },
+    { SnacksInputTitle = { link = 'PickerTitle' } },
+    { SnacksInputBorder = { link = 'PickerPromptBorder' } },
+    { SnacksPickerToggle = { link = 'PickerToggle' } },
+    { SnacksPicker = { link = 'PickerNormal' } },
+    { SnacksPickerTitle = { link = 'PickerTitle' } },
+    { SnacksPickerBorder = { link = 'PickerBorder' } },
+    -- { SnacksPickerInput = { link = 'PickerPrompt' } },
+    -- { SnacksPickerInputBorder = { link = 'PickerPromptBorder' } },
+    { SnacksPickerPreview = { link = 'PickerPreview' } },
+    { SnacksPickerPreviewBorder = { link = 'PickerPreviewBorder' } },
+    { FzfLuaNormal = { link = 'PickerNormal' } },
+    { FzfLuaTitle = { link = 'PickerTitle' } },
+    { FzfLuaBorder = { link = 'PickerBorder' } },
+    { FzfLuaPreviewNormal = { link = 'PickerPreview' } },
+    { FzfLuaPreviewBorder = { link = 'PickerPreviewBorder' } },
+    { TelescopeNormal = { link = 'PickerNormal' } },
+    { TelescopeTitle = { link = 'PickerTitle' } },
+    { TelescopeBorder = { link = 'PickerBorder' } },
+    { TelescopeResultsNormal = { link = 'PickerNormal' } },
+    { TelescopeResultsTitle = { link = 'PickerTitle' } },
+    { TelescopeResultsBorder = { link = 'PickerBorder' } },
+    { TelescopePromptNormal = { link = 'PickerPrompt' } },
+    { TelescopePromptTitle = { link = 'PickerTitle' } },
+    { TelescopePromptBorder = { link = 'PickerPromptBorder' } },
+    { TelescopePreviewNormal = { link = 'PickerPreview' } },
+    { TelescopePreviewTitle = { link = 'PickerTitle' } },
+    { TelescopePreviewBorder = { link = 'PickerPreviewBorder' } },
   })
 
   return overrides
@@ -342,7 +365,7 @@ return {
     priority = get_priority({ 'yoda' }),
     event = get_event({ 'yoda' }),
     init = function()
-      local overrides = {
+      apply_overrides('yoda', {
         { CursorLine = { bg = { from = 'Normal', alter = 2.7 } } },
         { Folded = { bg = { from = 'CursorLine', alter = 0.2 } } },
         { Visual = { bg = { from = 'CursorLine', alter = 0.3 } } },
@@ -350,19 +373,7 @@ return {
         { VertSplit = { link = 'WinSeparator' } },
         { IndentBlanklineChar = { link = 'WinSeparator' } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-      }
-      ar.list_insert(overrides, generate_popup_overrides())
-      ar.list_insert(overrides, generate_completion_overrides())
-      ar.list_insert(overrides, generate_lsp_overrides())
-      ar.list_insert(overrides, generate_picker_overrides())
-      ar.list_insert(overrides, {
-        { TelescopePromptNormal = { link = 'TelescopeNormal' } },
-        { TelescopePromptTitle = { bg = { from = 'TelescopeTitle' } } },
-        { TelescopePreviewTitle = { link = 'TelescopePromptTitle' } },
-        { TelescopeBorder = { link = 'SnacksPickerBorder' } },
-        { TelescopePromptBorder = { link = 'SnacksPickerBorder' } },
-      })
-      apply_overrides('yoda', overrides)
+      }, true)
     end,
   },
   {
@@ -594,7 +605,7 @@ return {
     priority = get_priority({ 'monoglow-z' }),
     event = get_event({ 'monoglow-z' }),
     init = function()
-      local overrides = {
+      apply_overrides('monoglow-z', {
         { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
         { Visual = { bg = { from = 'CursorLine', alter = 0.35 } } },
         { DiffAdd = { bg = { from = 'DiffAdd', alter = -0.15 } } },
@@ -605,16 +616,7 @@ return {
         },
         { IndentBlanklineChar = { link = 'VertSplit' } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-      }
-      ar.list_insert(overrides, generate_popup_overrides())
-      ar.list_insert(overrides, generate_completion_overrides())
-      ar.list_insert(overrides, generate_lsp_overrides())
-      ar.list_insert(overrides, generate_picker_overrides())
-      ar.list_insert(overrides, {
-        { TelescopePromptTitle = { bg = { from = 'SnacksPickerTitle' } } },
-        { TelescopePromptBorder = { link = 'SnacksPickerBorder' } },
-      })
-      apply_overrides('monoglow-z', overrides)
+      }, true)
     end,
   },
   {
@@ -630,23 +632,14 @@ return {
     priority = get_priority({ 'oldworld' }),
     event = get_event({ 'oldworld' }),
     init = function()
-      local overrides = {
+      apply_overrides('oldworld', {
         { Winbar = { link = 'Variable' } },
         { WinbarNC = { link = 'LineNr' } },
         { DiffAdd = { bg = { from = 'DiffAdd', alter = 1.5 } } },
         { GitSignsAdd = { fg = { from = 'DiffAdd', attr = 'bg' } } },
         { IndentBlanklineChar = { link = 'VertSplit' } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-      }
-      ar.list_insert(overrides, generate_popup_overrides())
-      ar.list_insert(overrides, generate_completion_overrides())
-      ar.list_insert(overrides, generate_lsp_overrides())
-      ar.list_insert(overrides, generate_picker_overrides())
-      ar.list_insert(overrides, {
-        { TelescopePromptTitle = { bg = { from = 'TelescopeTitle' } } },
-        { TelescopePromptBorder = { link = 'SnacksPickerBorder' } },
-      })
-      apply_overrides('oldworld', overrides)
+      }, true)
     end,
   },
   {
@@ -814,7 +807,7 @@ return {
     priority = get_priority({ 'lunar' }),
     event = get_event({ 'lunar' }),
     init = function()
-      local overrides = {
+      apply_overrides('lunar', {
         { Winbar = { link = 'Variable' } },
         { WinbarNC = { link = 'LineNr' } },
         { ColorColumn = { bg = { from = 'CursorLine', alter = 0.3 } } },
@@ -828,20 +821,11 @@ return {
           NeogitDiffAdd = {
             bg = { from = 'DiffAdd', alter = 1.4 },
             fg = { from = 'DiffAdd', attr = 'bg', alter = -0.65 },
-            reverse = true
+            reverse = true,
           },
         },
         { NeogitDiffDelete = { link = 'DiffDelete' } },
-      }
-      ar.list_insert(overrides, generate_popup_overrides())
-      ar.list_insert(overrides, generate_completion_overrides())
-      ar.list_insert(overrides, generate_lsp_overrides())
-      ar.list_insert(overrides, generate_picker_overrides())
-      ar.list_insert(overrides, {
-        { TelescopePromptTitle = { bg = { from = 'SnacksPickerTitle' } } },
-        { TelescopePreviewTitle = { bg = { from = 'SnacksPickerTitle' } } },
-      })
-      apply_overrides('lunar', overrides)
+      }, true)
     end,
   },
   {
@@ -851,7 +835,7 @@ return {
     priority = get_priority({ 'morta' }),
     event = get_event({ 'morta' }),
     init = function()
-      local overrides = {
+      apply_overrides('morta', {
         { Winbar = { link = 'Variable' } },
         { WinbarNC = { link = 'NonText' } },
         { NonText = { fg = { from = 'Comment', alter = -0.15 } } },
@@ -859,24 +843,7 @@ return {
         { VertSplit = { link = 'WinSeparator' } },
         { IndentBlanklineChar = { link = 'VertSplit' } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-      }
-      ar.list_insert(overrides, generate_popup_overrides())
-      ar.list_insert(overrides, generate_completion_overrides())
-      ar.list_insert(overrides, generate_lsp_overrides())
-      ar.list_insert(overrides, generate_picker_overrides())
-      ar.list_insert(overrides, {
-        { TelescopePromptTitle = { link = 'SnacksPickerTitle' } },
-        { TelescopePromptTitle = { link = 'SnacksPickerTitle' } },
-        { TelescopePreviewTitle = { link = 'SnacksPickerTitle' } },
-        { TelescopeResultsTitle = { link = 'SnacksPickerTitle' } },
-        { TelescopePromptNormal = { link = 'SnacksPicker' } },
-        { TelescopePreviewNormal = { link = 'SnacksPicker' } },
-        { TelescopeResultsNormal = { link = 'SnacksPicker' } },
-        { TelescopePromptBorder = { link = 'SnacksPickerBorder' } },
-        { TelescopePreviewBorder = { link = 'SnacksPickerBorder' } },
-        { TelescopeResultsBorder = { link = 'SnacksPickerBorder' } },
-      })
-      apply_overrides('morta', overrides)
+      }, true)
     end,
   },
   {
@@ -897,22 +864,13 @@ return {
     priority = get_priority({ 'thorn' }),
     event = get_event({ 'thorn' }),
     init = function()
-      local overrides = {
+      apply_overrides('thorn', {
         { NonText = { link = 'Comment' } },
         { WinSeparator = { fg = { from = 'LineNr' } } },
         { VertSplit = { link = 'WinSeparator' } },
         { IndentBlanklineChar = { link = 'LineNr' } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-      }
-      ar.list_insert(overrides, generate_popup_overrides())
-      ar.list_insert(overrides, generate_completion_overrides())
-      ar.list_insert(overrides, generate_lsp_overrides())
-      ar.list_insert(overrides, generate_picker_overrides())
-      ar.list_insert(overrides, {
-        { TelescopePromptTitle = { link = 'SnacksPickerTitle' } },
-        { TelescopePromptBorder = { link = 'SnacksPickerBorder' } },
-      })
-      apply_overrides('thorn', overrides)
+      }, true)
     end,
   },
   ------------------------------------------------------------------------------
