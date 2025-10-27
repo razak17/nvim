@@ -378,7 +378,7 @@ local config = {
   },
   colorscheme = {
     name = '',
-      ---@type 'fill' | 'outline'
+    ---@type 'fill' | 'outline'
     variant = 'outline',
   },
   ---@type ArDashboard

@@ -7,7 +7,13 @@ return {
       return ar.get_plugin_cond('todo-comments.nvim', not minimal)
     end,
     event = 'BufReadPost',
-    cmd = { 'TodoTelescope','TodoFzfLua', 'TodoTrouble', 'TodoQuickFix', 'TodoDots' },
+    cmd = {
+      'TodoTelescope',
+      'TodoFzfLua',
+      'TodoTrouble',
+      'TodoQuickFix',
+      'TodoDots',
+    },
     init = function()
       vim.g.whichkey_add_spec({ '<localleader>t', group = 'TODO' })
     end,
