@@ -1,12 +1,10 @@
 local variant = ar_config.colorscheme.variant
 
----@param opts table
 ---@return table
-local function generate_popup_overrides(opts)
+local function generate_popup_overrides()
   local overrides = {
-    { FloatTitle = { bg = { from = 'Visual' }, fg = { from = 'Normal' } } },
+    { FloatTitle = { bg = { from = 'Visual' }, fg = { from = 'Type' } } },
   }
-  ar.list_insert(overrides, opts)
 
   if variant == 'fill' then
     ar.list_insert(overrides, {
@@ -168,20 +166,25 @@ local function generate_picker_overrides()
   return overrides
 end
 
----@param overrides table
+---@param override table
 ---@return table
-local function generate_overrides(overrides)
-  local generated_overrides = {
+local function generate_overrides(override)
+  local overrides = {}
+  if not ar.falsy(override) then ar.list_insert(overrides, override) end
+  ar.list_insert(overrides, {
     { StatusLine = { bg = 'NONE' } },
     { Winbar = { link = 'Variable' } },
-    { WinbarNC = { link = 'LineNr' } },
-  }
-  ar.list_insert(generated_overrides, generate_popup_overrides())
-  ar.list_insert(generated_overrides, overrides)
-  ar.list_insert(generated_overrides, generate_completion_overrides())
-  ar.list_insert(generated_overrides, generate_lsp_overrides())
-  ar.list_insert(generated_overrides, generate_picker_overrides())
-  return generated_overrides
+    { WinbarNC = { link = 'NonText' } },
+    { MsgSeparator = { link = 'WinSeparator' } },
+    { VertSplit = { link = 'WinSeparator' } },
+    { IndentBlanklineChar = { link = 'VertSplit' } },
+    { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+  })
+  ar.list_insert(overrides, generate_popup_overrides())
+  ar.list_insert(overrides, generate_completion_overrides())
+  ar.list_insert(overrides, generate_lsp_overrides())
+  ar.list_insert(overrides, generate_picker_overrides())
+  return overrides
 end
 
 ---@param theme string

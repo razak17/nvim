@@ -139,117 +139,34 @@ local function on_sidebar_enter()
 end
 
 local function colorscheme_overrides()
+  local theming = require('ar.theming')
   local overrides = {
     -- builtin colorschemes
-    ['default'] = {
-      {
-        NormalFloat = {
-          bg = { from = 'Normal', alter = -0.1 },
-          fg = { from = 'Normal' },
-        },
-      },
+    ['default'] = theming.generate_overrides({
       {
         StatusLine = {
           bg = { from = 'StatusLine', alter = -0.85 },
           fg = { from = 'Normal' },
         },
       },
-      {
-        VertSplit = {
-          bg = 'NONE',
-          fg = { from = 'NonText', alter = -0.2 },
-        },
-      },
-      { WinSeparator = { link = 'VertSplit' } },
-      { FloatBorder = { link = 'VertSplit' } },
-      { IndentBlanklineChar = { link = 'VertSplit' } },
-      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-      { Comment = { fg = { from = 'Comment', alter = -0.2 } } },
-      { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.3 } } },
-      { FloatTitle = { bg = { from = 'CursorLine', alter = 0.05 } } },
-      {
-        DiagnosticVirtualTextInfo = {
-          bg = { from = 'FloatTitle' },
-          fg = { from = 'Directory' },
-          italic = true,
-        },
-      },
       { CurSearch = { link = 'WildMenu' } },
       { Folded = { bg = { from = 'CursorLine', alter = -0.2 } } },
-      { Winbar = { link = 'Variable' } },
-      { WinbarNC = { link = 'LineNr' } },
-      { Pmenu = { link = 'NormalFloat' } },
-      { PmenuBorder = { link = 'FloatBorder' } },
-      { PmenuExtra = { link = 'Pmenu' } },
-      { PmenuSel = { bg = { from = 'Search' }, reverse = false } },
-      { PmenuExtraSel = { link = 'PmenuSel' } },
-      { PmenuThumb = { link = 'CurSearch' } },
-    },
-    ['habamax'] = {
-      { Normal = { bg = { from = 'Normal', alter = -0.15 } } },
-      { NormalFloat = { bg = { from = 'Normal', alter = -0.1 } } },
-      { LspReferenceRead = { link = 'CursorLine' } },
-      {
-        FloatTitle = {
-          bg = { from = 'CursorLine' },
-          fg = { from = 'Normal' },
-        },
-      },
-      {
-        DiagnosticVirtualTextInfo = {
-          bg = { from = 'FloatTitle' },
-          fg = { from = 'DiagnosticVirtualTextInfo' },
-          italic = true,
-        },
-      },
+      { Comment = { fg = { from = 'Comment', alter = -0.2 } } },
+      { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.3 } } },
+      { Dim = { link = 'NonText' } },
+      { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.2 } } },
+    }),
+    ['habamax'] = theming.generate_overrides({
       {
         Visual = {
           bg = { from = 'Visual', alter = 0.5 },
           reverse = false,
         },
       },
-      {
-        VertSplit = {
-          bg = { from = 'Normal' },
-          fg = { from = 'NonText', alter = -0.2 },
-        },
-      },
-      { FloatBorder = { link = 'VertSplit' } },
-      { IndentBlanklineChar = { link = 'VertSplit' } },
-      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-      {
-        Pmenu = {
-          bg = { from = 'NormalFloat' },
-          fg = { from = 'Comment', alter = 0.2 },
-        },
-      },
-      { PmenuBorder = { link = 'FloatBorder' } },
-      { PmenuExtra = { link = 'Pmenu' } },
-      {
-        PmenuKind = {
-          bg = 'NONE',
-          fg = { from = 'Comment', alter = -0.3 },
-        },
-      },
-      {
-        PmenuMatch = {
-          bg = 'NONE',
-          fg = { from = 'Normal', alter = 0.4 },
-        },
-      },
-      { PmenuSel = { link = 'CursorLine' } },
-      { PmenuExtraSel = { link = 'PmenuSel' } },
-      { PmenuKindSel = { link = 'PmenuSel' } },
-      { PmenuMatchSel = { link = 'PmenuSel' } },
-    },
-    ['peachpuff'] = {
-      { NormalFloat = { link = 'Normal' } },
-      {
-        FloatTitle = {
-          bg = { from = 'CursorLine' },
-          fg = { from = 'NormalFloat' },
-        },
-      },
+      { Dim = { link = 'NonText' } },
+      { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.2 } } },
+    }),
+    ['peachpuff'] = theming.generate_overrides({
       {
         DiagnosticVirtualTextInfo = {
           bg = { from = 'FloatTitle' },
@@ -257,228 +174,43 @@ local function colorscheme_overrides()
           italic = true,
         },
       },
-      {
-        VertSplit = {
-          fg = { from = 'LineNr', alter = 0.5 },
-          bg = { from = 'Normal' },
-        },
-      },
-      { WinSeparator = { link = 'VertSplit' } },
-      { IndentBlanklineChar = { link = 'WinSeparator' } },
-      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-      {
-        FloatBorder = {
-          bg = { from = 'NormalFloat' },
-          fg = { from = 'VertSplit' },
-        },
-      },
-      {
-        LspReferenceRead = {
-          bg = { from = 'CursorLine', attr = 'bg', alter = -0.1 },
-        },
-      },
-      {
-        Pmenu = {
-          bg = { from = 'NormalFloat' },
-          fg = { from = 'Comment', alter = 0.2 },
-        },
-      },
-      { PmenuBorder = { link = 'FloatBorder' } },
-      { PmenuExtra = { link = 'Pmenu' } },
-      { PmenuKind = { link = 'Comment' } },
-      { PmenuMatch = { link = 'NormalFloat' } },
-      { PmenuSel = { link = 'CursorLine' } },
-      { PmenuExtraSel = { link = 'PmenuSel' } },
-      { PmenuKindSel = { link = 'PmenuSel' } },
-      { PmenuMatchSel = { link = 'PmenuSel' } },
-      { StatusLine = { bg = 'NONE' } },
-    },
-    ['retrobox'] = {
-      { NormalFloat = { bg = { from = 'NormalFloat', alter = -0.35 } } },
+      { Dim = { link = 'LineNr' } },
+      { WinSeparator = { fg = { from = 'Dim', alter = 0.5 }, bg = 'NONE' } },
+    }),
+    ['retrobox'] = theming.generate_overrides({
       { ColorColumn = { bg = { from = 'CursorLine', alter = 0.1 } } },
-      { FloatTitle = { bg = { from = 'NormalFloat' } } },
       { Folded = { bg = { from = 'CursorLine', alter = -0.1 } } },
       { CursorLine = { link = 'CursorLine' } },
       { NonText = { fg = { from = 'NonText', alter = 0.4 } } },
-      { LspReferenceRead = { link = 'CursorLine' } },
       { StatusLine = { bg = 'NONE', reverse = false } },
-      {
-        Visual = {
-          bg = { from = 'CursorLine', alter = 0.2 },
-          fg = 'NONE',
-        },
-      },
-      {
-        FloatBorder = {
-          bg = { from = 'NormalFloat' },
-          fg = { from = 'NormalFloat', attr = 'bg' },
-        },
-      },
-      {
-        DiagnosticVirtualTextInfo = {
-          bg = { from = 'FloatTitle' },
-          fg = { from = 'Directory' },
-          italic = true,
-        },
-      },
-      {
-        Pmenu = {
-          bg = { from = 'NormalFloat' },
-          fg = { from = 'Comment', alter = 0.2 },
-        },
-      },
-      { PmenuBorder = { link = 'FloatBorder' } },
-      { PmenuExtra = { link = 'Pmenu' } },
-      { PmenuKind = { link = 'Comment' } },
-      { PmenuMatch = { link = 'NormalFloat' } },
-      { PmenuSel = { link = 'CursorLine' } },
-      { PmenuExtraSel = { link = 'PmenuSel' } },
-      { PmenuKindSel = { link = 'PmenuSel' } },
-      { PmenuMatchSel = { link = 'PmenuSel' } },
-      { IndentBlanklineChar = { link = 'NonText' } },
-      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-    },
-    ['slate'] = {
-      { NormalFloat = { bg = { from = 'Normal' } } },
-      { Visual = { link = 'CursorLine' } },
-      { StatusLine = { bg = 'NONE' } },
-      {
-        VertSplit = {
-          bg = 'NONE',
-          fg = { from = 'Comment', alter = -0.3 },
-        },
-      },
-      { FloatBorder = { link = 'VertSplit' } },
-      { FloatTitle = { bg = { from = 'CursorLine', alter = 0.05 } } },
-      { IndentBlanklineChar = { link = 'VertSplit' } },
-      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+      { Visual = { bg = { from = 'CursorLine', alter = 0.2 }, fg = 'NONE' } },
+      { WinSeparator = { fg = { from = 'VertSplit' }, bg = 'NONE' } },
+    }),
+    ['slate'] = theming.generate_overrides({
       { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
-      {
-        DiagnosticVirtualTextInfo = {
-          bg = { from = 'FloatTitle' },
-          fg = { from = 'DiagnosticVirtualTextInfo' },
-          italic = true,
-        },
-      },
-      {
-        Pmenu = {
-          bg = { from = 'NormalFloat' },
-          fg = { from = 'Normal', alter = -0.25 },
-        },
-      },
-      { PmenuBorder = { link = 'FloatBorder' } },
-      { PmenuExtra = { link = 'Pmenu' } },
-      { PmenuKind = { fg = { from = 'Comment', alter = -0.1 } } },
-      { PmenuMatch = { link = 'Normal' } },
-      { PmenuSel = { link = 'CursorLine' } },
-      { PmenuExtraSel = { link = 'PmenuSel' } },
-      { PmenuKindSel = { link = 'PmenuSel' } },
-      { PmenuMatchSel = { link = 'PmenuSel' } },
-    },
-    ['vim'] = {
+      { Dim = { link = 'Comment' } },
+      { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.3 } } },
+    }),
+    ['vim'] = theming.generate_overrides({
       { Normal = { bg = '#24283b' } },
-      { NormalFloat = { link = 'Normal' } },
-      { StatusLine = { inherit = 'NormalFloat' } },
-      { Conceal = { bg = { from = 'NormalFloat' } } },
-      { CursorLine = { bg = { from = 'CursorLine', alter = -0.5 } } },
-      { Folded = { bg = { from = 'CursorLine', alter = -0.15 } } },
-      { LspReferenceRead = { bg = { from = 'CursorLine', alter = 0.1 } } },
-      {
-        FloatTitle = {
-          bg = { from = 'CursorLine' },
-          fg = { from = 'FloatTitle', alter = 0.5 },
-        },
-      },
-      {
-        DiagnosticVirtualTextInfo = {
-          bg = { from = 'FloatTitle' },
-          fg = { from = 'Directory' },
-          italic = true,
-        },
-      },
-      {
-        Pmenu = {
-          bg = { from = 'NormalFloat' },
-          fg = { from = 'Comment', alter = 0.2 },
-        },
-      },
-      { PmenuBorder = { link = 'FloatBorder' } },
-      { PmenuExtra = { link = 'Pmenu' } },
-      { PmenuKind = { link = 'Comment' } },
-      { PmenuMatch = { link = 'NormalFloat' } },
-      { PmenuSel = { link = 'CursorLine' } },
-      { PmenuExtraSel = { link = 'PmenuSel' } },
-      { PmenuKindSel = { link = 'PmenuSel' } },
-      { PmenuMatchSel = { link = 'PmenuSel' } },
       { Comment = { fg = { from = 'Comment', alter = -0.3 } } },
+      { Title = { fg = { from = 'Title', alter = 0.4 } } },
       { LineNr = { fg = { from = 'Comment' } } },
       { NonText = { fg = { from = 'Comment' } } },
-      { VertSplit = { fg = { from = 'NonText', alter = -0.2 } } },
-      { FloatBorder = { link = 'VertSplit' } },
-      { IndentBlanklineChar = { link = 'VertSplit' } },
-      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-      { WinSeparator = { link = 'VertSplit' } },
-      { Visual = { link = 'CursorLine' } },
+      { StatusLine = { reverse = false } },
+      { CursorLine = { bg = { from = 'CursorLine', alter = -0.5 } } },
+      { Conceal = { bg = { from = 'CursorLine' } } },
+      { Folded = { bg = { from = 'CursorLine', alter = 0.15 } } },
+      { Visual = { fg = { from = 'CursorLine', alter = 0.1 } } },
       { Search = { bg = { from = 'Search', alter = -0.2 } } },
       { IncSearch = { link = 'Search' } },
-      { StatusLine = { inherit = 'Normal' } },
-    },
-    ['wildcharm'] = {
-      { NormalFloat = { bg = { from = 'Normal', alter = 0.3 } } },
-      { StatusLine = { bg = 'NONE', reverse = false } },
+      { WinSeparator = { fg = { from = 'NonText', alter = -0.2 } } },
+    }),
+    ['wildcharm'] = theming.generate_overrides({
+      { StatusLine = { reverse = false } },
       { Visual = { link = 'CursorLine' } },
-      { VertSplit = { fg = { from = 'VertSplit', alter = -0.3 } } },
-      { IndentBlanklineChar = { link = 'VertSplit' } },
-      { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-      {
-        LspReferenceText = {
-          bg = 'NONE',
-          underline = true,
-          reverse = false,
-          sp = { from = 'Directory', attr = 'fg', alter = -0.6 },
-        },
-      },
-      {
-        LspReferenceRead = {
-          bg = { from = 'CursorLine', alter = 0.1 },
-          reverse = false,
-        },
-      },
-      {
-        LspReferenceWrite = {
-          inherit = 'LspReferenceText',
-          bold = false,
-          reverse = false,
-        },
-      },
-      {
-        FloatTitle = {
-          bg = { from = 'CursorLine', alter = 0.05 },
-          fg = { from = 'Normal' },
-        },
-      },
-      {
-        DiagnosticVirtualTextInfo = {
-          bg = { from = 'FloatTitle' },
-          fg = { from = 'DiagnosticVirtualTextInfo' },
-          italic = true,
-        },
-      },
-      {
-        Pmenu = {
-          bg = { from = 'NormalFloat' },
-          fg = { from = 'Normal', alter = -0.25 },
-        },
-      },
-      { PmenuBorder = { link = 'FloatBorder' } },
-      { PmenuExtra = { link = 'Pmenu' } },
-      { PmenuKind = { link = 'Dim' } },
-      { PmenuMatch = { link = 'Normal' } },
-      { PmenuSel = { link = 'CursorLine' } },
-      { PmenuExtraSel = { link = 'PmenuSel' } },
-      { PmenuKindSel = { link = 'PmenuSel' } },
-      { PmenuMatchSel = { link = 'PmenuSel' } },
-    },
+      { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.45 } } },
+    }),
   }
   local hls = overrides[vim.g.colors_name]
   if hls then highlight.all(hls) end

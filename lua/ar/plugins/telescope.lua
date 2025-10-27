@@ -688,40 +688,6 @@ return {
         end)
       end
 
-      ar.highlight.plugin('telescope', {
-        theme = {
-          -- builtin colorschemes
-          ['default'] = {
-            { TelescopeTitle = { link = 'FloatTitle' } },
-            { TelescopeBorder = { link = 'FloatBorder' } },
-          },
-          ['habamax'] = {
-            { TelescopeTitle = { link = 'FloatTitle' } },
-            { TelescopeBorder = { link = 'FloatBorder' } },
-          },
-          ['peachpuff'] = {
-            { TelescopeTitle = { link = 'FloatTitle' } },
-            { TelescopeBorder = { link = 'FloatBorder' } },
-          },
-          ['retrobox'] = {
-            { TelescopeTitle = { link = 'FloatTitle' } },
-            { TelescopeBorder = { fg = { from = 'VertSplit' } } },
-          },
-          ['slate'] = {
-            { TelescopeTitle = { link = 'FloatTitle' } },
-            { TelescopeBorder = { link = 'FloatBorder' } },
-          },
-          ['vim'] = {
-            { TelescopeTitle = { link = 'FloatTitle' } },
-            { TelescopeBorder = { link = 'FloatBorder' } },
-          },
-          ['wildcharm'] = {
-            { TelescopeTitle = { link = 'FloatTitle' } },
-            { TelescopeBorder = { link = 'FloatBorder' } },
-          },
-        },
-      })
-
       api.nvim_exec_autocmds(
         'User',
         { pattern = 'TelescopeConfigComplete', modeline = false }
