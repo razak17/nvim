@@ -491,7 +491,7 @@ return {
   },
   {
     'KijitoraFinch/nanode.nvim',
-    cond = get_cond({ 'nanode' }),
+    cond = function() return colorscheme == 'nanode' end,
     priority = get_priority({ 'nanode' }),
     event = get_event({ 'nanode' }),
     opts = { transparent = ar_config.ui.transparent.enable },
