@@ -215,6 +215,7 @@ return {
     opts = { variant = variant },
     init = function()
       local overrides = {
+        { MsgSeparator = { link = 'VertSplit' } },
         { Dim = { inherit = 'VertSplit' } },
         { NeorgContext = { inherit = 'Normal' } },
         -- { ['@variable'] = { fg = { from = '@none' } } },
