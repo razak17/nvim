@@ -250,6 +250,69 @@ return {
       apply_overrides('onedark', overrides)
     end,
   },
+  ------------------------------------------------------------------------------
+  -- Dark
+  {
+    'stefanvanburen/rams.vim',
+    cond = get_cond({ 'rams' }),
+    priority = get_priority({ 'rams' }),
+    event = get_event({ 'rams' }),
+    init = function()
+      apply_overrides('rams', {
+        { CursorLine = { bg = { from = 'Normal', alter = 0.9 } } },
+        { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
+        { LineNr = { fg = { from = 'LineNr', alter = -0.4 } } },
+        {
+          Visual = {
+            bg = { from = 'CursorLine', alter = 0.3 },
+            reverse = false,
+          },
+        },
+        { DiffAdd = { bg = { from = 'DiffAdd', alter = -0.65 } } },
+        {
+          GitSignsAdd = {
+            fg = { from = 'DiffAdd', attr = 'bg', alter = 1.1 },
+          },
+        },
+        { WinSeparator = { fg = { from = 'LineNr', alter = -0.6 } } },
+        { VertSplit = { link = 'WinSeparator' } },
+        { IndentBlanklineChar = { link = 'VertSplit' } },
+        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+      }, true)
+    end,
+  },
+  {
+    'kuri-sun/yoda.nvim',
+    cond = get_cond({ 'yoda' }),
+    priority = get_priority({ 'yoda' }),
+    event = get_event({ 'yoda' }),
+    init = function()
+      apply_overrides('yoda', {
+        { CursorLine = { bg = { from = 'Normal', alter = 2.7 } } },
+        { Folded = { bg = { from = 'CursorLine', alter = 0.2 } } },
+        { Visual = { bg = { from = 'CursorLine', alter = 0.3 } } },
+        { WinSeparator = { fg = { from = 'LineNr', alter = -0.1 } } },
+        { VertSplit = { link = 'WinSeparator' } },
+        { IndentBlanklineChar = { link = 'WinSeparator' } },
+        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+      }, true)
+    end,
+  },
+  {
+    'razak17/mapledark.nvim',
+    cond = function() return colorscheme == 'mapledark' end,
+    priority = get_priority({ 'mapledark' }),
+    event = get_event({ 'mapledark' }),
+    init = function()
+      apply_overrides('mapledark', {
+        { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
+        { VertSplit = { link = 'WinSeparator' } },
+        { IndentBlanklineChar = { link = 'VertSplit' } },
+        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+      }, true)
+    end,
+    opts = { disable_plugin_highlights = false, plugins = { 'lazy' } },
+  },
   {
     'vague2k/vague.nvim',
     cond = get_cond({ 'vague' }),
@@ -286,49 +349,6 @@ return {
     event = get_event({ 'catppuccin' }),
   },
   {
-    'rebelot/kanagawa.nvim',
-    cond = get_cond({ 'kanagawa' }),
-    priority = get_priority({ 'kanagawa' }),
-    event = get_event({ 'kanagawa' }),
-  },
-  {
-    'edeneast/nightfox.nvim',
-    cond = get_cond({ 'nightfox' }),
-    priority = get_priority({ 'nightfox' }),
-    event = get_event({ 'nightfox' }),
-  },
-  {
-    'stefanvanburen/rams.vim',
-    cond = get_cond({ 'rams' }),
-    priority = get_priority({ 'rams' }),
-    event = get_event({ 'rams' }),
-    init = function()
-      apply_overrides('rams', {
-        { CursorLine = { bg = { from = 'Normal', alter = 0.9 } } },
-        { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
-        { LineNr = { fg = { from = 'LineNr', alter = -0.4 } } },
-        {
-          Visual = {
-            bg = { from = 'CursorLine', alter = 0.3 },
-            reverse = false,
-          },
-        },
-        { DiffAdd = { bg = { from = 'DiffAdd', alter = -0.65 } } },
-        {
-          GitSignsAdd = {
-            fg = { from = 'DiffAdd', attr = 'bg', alter = 1.1 },
-          },
-        },
-        { WinSeparator = { fg = { from = 'LineNr', alter = -0.6 } } },
-        { VertSplit = { link = 'WinSeparator' } },
-        { IndentBlanklineChar = { link = 'VertSplit' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-      }, true)
-    end,
-  },
-  ------------------------------------------------------------------------------
-  -- Dark
-  {
     'biisal/blackhole',
     cond = get_cond({ 'blackhole' }),
     priority = get_priority({ 'blackhole' }),
@@ -359,64 +379,8 @@ return {
     priority = get_priority({ 'afterglow' }),
     event = get_event({ 'afterglow' }),
   },
-  {
-    'kuri-sun/yoda.nvim',
-    cond = get_cond({ 'yoda' }),
-    priority = get_priority({ 'yoda' }),
-    event = get_event({ 'yoda' }),
-    init = function()
-      apply_overrides('yoda', {
-        { CursorLine = { bg = { from = 'Normal', alter = 2.7 } } },
-        { Folded = { bg = { from = 'CursorLine', alter = 0.2 } } },
-        { Visual = { bg = { from = 'CursorLine', alter = 0.3 } } },
-        { WinSeparator = { fg = { from = 'LineNr', alter = -0.1 } } },
-        { VertSplit = { link = 'WinSeparator' } },
-        { IndentBlanklineChar = { link = 'WinSeparator' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-      }, true)
-    end,
-  },
-  {
-    'razak17/mapledark.nvim',
-    cond = function() return colorscheme == 'mapledark' end,
-    priority = get_priority({ 'mapledark' }),
-    event = get_event({ 'mapledark' }),
-    init = function()
-      apply_overrides('mapledark', {
-        { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
-        { VertSplit = { link = 'WinSeparator' } },
-        { IndentBlanklineChar = { link = 'VertSplit' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-      }, true)
-    end,
-    opts = { disable_plugin_highlights = false, plugins = { 'lazy' } },
-  },
   ------------------------------------------------------------------------------
   -- Warm
-  {
-    'savq/melange-nvim',
-    cond = get_cond({ 'melange' }),
-    priority = get_priority({ 'melange' }),
-    event = get_event({ 'melange' }),
-  },
-  {
-    'morhetz/gruvbox',
-    cond = get_cond({ 'gruvbox' }),
-    priority = get_priority({ 'gruvbox' }),
-    event = get_event({ 'gruvbox' }),
-  },
-  {
-    'jnurmine/Zenburn',
-    cond = get_cond({ 'zenburn' }),
-    priority = get_priority({ 'zenburn' }),
-    event = get_event({ 'zenburn' }),
-  },
-  {
-    'darianmorat/gruvdark.nvim',
-    cond = get_cond({ 'gruvdark' }),
-    priority = get_priority({ 'gruvdark' }),
-    event = get_event({ 'gruvdark' }),
-  },
   {
     'alexkotusenko/nightgem.nvim',
     cond = get_cond({ 'nightgem' }),
@@ -451,6 +415,30 @@ return {
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       }, true)
     end,
+  },
+  {
+    'savq/melange-nvim',
+    cond = get_cond({ 'melange' }),
+    priority = get_priority({ 'melange' }),
+    event = get_event({ 'melange' }),
+  },
+  {
+    'morhetz/gruvbox',
+    cond = get_cond({ 'gruvbox' }),
+    priority = get_priority({ 'gruvbox' }),
+    event = get_event({ 'gruvbox' }),
+  },
+  {
+    'jnurmine/Zenburn',
+    cond = get_cond({ 'zenburn' }),
+    priority = get_priority({ 'zenburn' }),
+    event = get_event({ 'zenburn' }),
+  },
+  {
+    'darianmorat/gruvdark.nvim',
+    cond = get_cond({ 'gruvdark' }),
+    priority = get_priority({ 'gruvdark' }),
+    event = get_event({ 'gruvdark' }),
   },
   ------------------------------------------------------------------------------
   -- Monochrome
@@ -531,33 +519,6 @@ return {
     end,
   },
   {
-    'stevedylandev/darkmatter-nvim',
-    cond = get_cond({ 'darkmatter' }),
-    priority = get_priority({ 'darkmatter' }),
-    event = get_event({ 'darkmatter' }),
-  },
-  {
-    'cdmill/neomodern.nvim',
-    -- enabled = false,
-    cond = get_cond({ 'neomodern' }),
-    priority = get_priority({ 'neomodern' }),
-    event = get_event({ 'neomodern' }),
-    opts = {
-      theme = 'iceclimber', -- 'iceclimber' | 'gyokuro' | 'hojicha' | 'roseprime'
-      variant = 'dark', -- 'light' | 'dark', or set via vim.o.background
-    },
-    config = function(_, opts)
-      require('neomodern').setup(opts)
-      if colorscheme == 'neomodern' then require('neomodern').load() end
-    end,
-  },
-  {
-    'ficcdaf/ashen.nvim',
-    cond = get_cond({ 'ashen' }),
-    priority = get_priority({ 'ashen' }),
-    event = get_event({ 'ashen' }),
-  },
-  {
     'slugbyte/lackluster.nvim',
     cond = get_cond({ 'lackluster' }),
     priority = get_priority({ 'lackluster' }),
@@ -600,6 +561,63 @@ return {
     end,
   },
   {
+    'dgox16/oldworld.nvim',
+    cond = get_cond({ 'oldworld' }),
+    priority = get_priority({ 'oldworld' }),
+    event = get_event({ 'oldworld' }),
+    init = function()
+      apply_overrides('oldworld', {
+        { Winbar = { link = 'Variable' } },
+        { WinbarNC = { link = 'LineNr' } },
+        { DiffAdd = { bg = { from = 'DiffAdd', alter = 1.5 } } },
+        { GitSignsAdd = { fg = { from = 'DiffAdd', attr = 'bg' } } },
+        { IndentBlanklineChar = { link = 'VertSplit' } },
+        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+      }, true)
+    end,
+  },
+  {
+    'stevedylandev/darkmatter-nvim',
+    cond = get_cond({ 'darkmatter' }),
+    priority = get_priority({ 'darkmatter' }),
+    event = get_event({ 'darkmatter' }),
+  },
+  {
+    'https://git.sr.ht/~p00f/alabaster.nvim',
+    cond = get_cond({ 'alabaster' }),
+    priority = get_priority({ 'alabaster' }),
+    event = get_event({ 'alabaster' }),
+    init = function()
+      apply_overrides('alabaster', {
+        { WinSeparator = { fg = { from = 'NonText', alter = -0.4 } } },
+        { VertSplit = { link = 'WinSeparator' } },
+        { IndentBlanklineChar = { fg = { from = 'VertSplit' } } },
+        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+      }, true)
+    end,
+  },
+  {
+    'cdmill/neomodern.nvim',
+    -- enabled = false,
+    cond = get_cond({ 'neomodern' }),
+    priority = get_priority({ 'neomodern' }),
+    event = get_event({ 'neomodern' }),
+    opts = {
+      theme = 'iceclimber', -- 'iceclimber' | 'gyokuro' | 'hojicha' | 'roseprime'
+      variant = 'dark', -- 'light' | 'dark', or set via vim.o.background
+    },
+    config = function(_, opts)
+      require('neomodern').setup(opts)
+      if colorscheme == 'neomodern' then require('neomodern').load() end
+    end,
+  },
+  {
+    'ficcdaf/ashen.nvim',
+    cond = get_cond({ 'ashen' }),
+    priority = get_priority({ 'ashen' }),
+    event = get_event({ 'ashen' }),
+  },
+  {
     'wnkz/monoglow.nvim',
     cond = get_cond({ 'monoglow-z' }),
     priority = get_priority({ 'monoglow-z' }),
@@ -627,26 +645,24 @@ return {
     opts = {},
   },
   {
-    'dgox16/oldworld.nvim',
-    cond = get_cond({ 'oldworld' }),
-    priority = get_priority({ 'oldworld' }),
-    event = get_event({ 'oldworld' }),
-    init = function()
-      apply_overrides('oldworld', {
-        { Winbar = { link = 'Variable' } },
-        { WinbarNC = { link = 'LineNr' } },
-        { DiffAdd = { bg = { from = 'DiffAdd', alter = 1.5 } } },
-        { GitSignsAdd = { fg = { from = 'DiffAdd', attr = 'bg' } } },
-        { IndentBlanklineChar = { link = 'VertSplit' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-      }, true)
-    end,
-  },
-  {
     'kvrohit/rasmus.nvim',
     cond = get_cond({ 'rasmus' }),
     priority = get_priority({ 'rasmus' }),
     event = get_event({ 'rasmus' }),
+  },
+  {
+    'mitch1000/backpack.nvim',
+    cond = get_cond({ 'backpack' }),
+    priority = get_priority({ 'backpack' }),
+    event = get_event({ 'backpack' }),
+    init = function()
+      apply_overrides('backpack', {
+        { Visual = { link = 'CursorLine' } },
+        { Folded = { bg = { from = 'Folded', alter = 0.1 } } },
+        { IndentBlanklineChar = { link = 'VertSplit' } },
+        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+      }, true)
+    end,
   },
   {
     'samharju/serene.nvim',
@@ -666,20 +682,6 @@ return {
     cond = get_cond({ 'darcubox' }),
     priority = get_priority({ 'darcubox' }),
     event = get_event({ 'darcubox' }),
-  },
-  {
-    'https://git.sr.ht/~p00f/alabaster.nvim',
-    cond = get_cond({ 'alabaster' }),
-    priority = get_priority({ 'alabaster' }),
-    event = get_event({ 'alabaster' }),
-    init = function()
-      apply_overrides('alabaster', {
-        { WinSeparator = { fg = { from = 'NonText', alter = -0.4 } } },
-        { VertSplit = { link = 'WinSeparator' } },
-        { IndentBlanklineChar = { fg = { from = 'VertSplit' } } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-      }, true)
-    end,
   },
   {
     'masar3141/mono-jade',
@@ -718,67 +720,8 @@ return {
     priority = get_priority({ 'oh-lucy', 'oh-lucy-evening' }),
     event = get_event({ 'oh-lucy', 'oh-lucy-evening' }),
   },
-  {
-    'mitch1000/backpack.nvim',
-    cond = get_cond({ 'backpack' }),
-    priority = get_priority({ 'backpack' }),
-    event = get_event({ 'backpack' }),
-    init = function()
-      apply_overrides('backpack', {
-        { Visual = { link = 'CursorLine' } },
-        { Folded = { bg = { from = 'Folded', alter = 0.1 } } },
-        { IndentBlanklineChar = { link = 'VertSplit' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-      }, true)
-    end,
-  },
   ------------------------------------------------------------------------------
   -- Mild
-  {
-    'rose-pine/neovim',
-    name = 'rose-pine',
-    cond = get_cond({ 'rose-pine' }),
-    priority = get_priority({ 'rose-pine' }),
-    event = get_event({ 'rose-pine' }),
-  },
-  {
-    -- NOTE: Double underlines markdown headings
-    'oxfist/night-owl.nvim',
-    priority = get_priority({ 'night-owl' }),
-    event = get_event({ 'night-owl' }),
-    cond = get_cond({ 'night-owl' }),
-    -- opts = { underline = false },
-  },
-  {
-    'atmosuwiryo/vim-winteriscoming',
-    cond = get_cond({ 'WinterIsComing-dark-color-theme' }),
-    priority = get_priority({ 'WinterIsComing-dark-color-theme' }),
-    event = get_event({ 'WinterIsComing-dark-color-theme' }),
-  },
-  {
-    'projekt0n/github-nvim-theme',
-    cond = get_cond({ 'github_dark' }),
-    priority = get_priority({ 'github_dark' }),
-    event = get_event({ 'github_dark' }),
-  },
-  {
-    'NTBBloodbath/doom-one.nvim',
-    cond = get_cond({ 'doom-one' }),
-    priority = get_priority({ 'doom-one' }),
-    event = get_event({ 'doom-one' }),
-    config = function()
-      vim.g.doom_one_pumblend_enable = true
-      vim.g.doom_one_pumblend_transparency = 3
-    end,
-  },
-  {
-    'neanias/everforest-nvim',
-    cond = get_cond({ 'everforest' }),
-    priority = get_priority({ 'everforest' }),
-    event = get_event({ 'everforest' }),
-    opts = {},
-    config = function(_, opts) require('everforest').setup(opts) end,
-  },
   {
     'nuvic/flexoki-nvim',
     name = 'flexoki',
@@ -794,12 +737,6 @@ return {
         { WhichKeyBorder = { link = 'FloatBorder' } },
       }, true)
     end,
-  },
-  {
-    'aliqyan-21/darkvoid.nvim',
-    cond = get_cond({ 'darkvoid' }),
-    priority = get_priority({ 'darkvoid' }),
-    event = get_event({ 'darkvoid' }),
   },
   {
     'lunarvim/lunar.nvim',
@@ -847,18 +784,6 @@ return {
     end,
   },
   {
-    'rjshkhr/shadow.nvim',
-    cond = get_cond({ 'shadow' }),
-    priority = get_priority({ 'shadow' }),
-    event = get_event({ 'shadow' }),
-  },
-  {
-    'RostislavArts/naysayer.nvim',
-    cond = get_cond({ 'naysayer', 'naysayer.nvim' }),
-    priority = get_priority({ 'naysayer' }),
-    event = get_event({ 'naysayer' }),
-  },
-  {
     'jpwol/thorn.nvim',
     cond = get_cond({ 'thorn' }),
     priority = get_priority({ 'thorn' }),
@@ -888,6 +813,69 @@ return {
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       }, true)
     end,
+  },
+  {
+    'rose-pine/neovim',
+    name = 'rose-pine',
+    cond = get_cond({ 'rose-pine' }),
+    priority = get_priority({ 'rose-pine' }),
+    event = get_event({ 'rose-pine' }),
+  },
+  {
+    -- NOTE: Double underlines markdown headings
+    'oxfist/night-owl.nvim',
+    priority = get_priority({ 'night-owl' }),
+    event = get_event({ 'night-owl' }),
+    cond = get_cond({ 'night-owl' }),
+    -- opts = { underline = false },
+  },
+  {
+    'atmosuwiryo/vim-winteriscoming',
+    cond = get_cond({ 'WinterIsComing-dark-color-theme' }),
+    priority = get_priority({ 'WinterIsComing-dark-color-theme' }),
+    event = get_event({ 'WinterIsComing-dark-color-theme' }),
+  },
+  {
+    'projekt0n/github-nvim-theme',
+    cond = get_cond({ 'github_dark' }),
+    priority = get_priority({ 'github_dark' }),
+    event = get_event({ 'github_dark' }),
+  },
+  {
+    'NTBBloodbath/doom-one.nvim',
+    cond = get_cond({ 'doom-one' }),
+    priority = get_priority({ 'doom-one' }),
+    event = get_event({ 'doom-one' }),
+    config = function()
+      vim.g.doom_one_pumblend_enable = true
+      vim.g.doom_one_pumblend_transparency = 3
+    end,
+  },
+  {
+    'neanias/everforest-nvim',
+    cond = get_cond({ 'everforest' }),
+    priority = get_priority({ 'everforest' }),
+    event = get_event({ 'everforest' }),
+    opts = {},
+    config = function(_, opts) require('everforest').setup(opts) end,
+  },
+  {
+    'aliqyan-21/darkvoid.nvim',
+    cond = get_cond({ 'darkvoid' }),
+    priority = get_priority({ 'darkvoid' }),
+    event = get_event({ 'darkvoid' }),
+  },
+  {
+    'rjshkhr/shadow.nvim',
+    cond = get_cond({ 'shadow' }),
+    priority = get_priority({ 'shadow' }),
+    event = get_event({ 'shadow' }),
+  },
+  {
+    'RostislavArts/naysayer.nvim',
+    cond = get_cond({ 'naysayer', 'naysayer.nvim' }),
+    priority = get_priority({ 'naysayer' }),
+    event = get_event({ 'naysayer' }),
   },
   ------------------------------------------------------------------------------
   -- Clown show
@@ -924,6 +912,18 @@ return {
     priority = get_priority({ 'tokyonight' }),
     event = get_event({ 'tokyonight' }),
     opts = {},
+  },
+  {
+    'edeneast/nightfox.nvim',
+    cond = get_cond({ 'nightfox' }),
+    priority = get_priority({ 'nightfox' }),
+    event = get_event({ 'nightfox' }),
+  },
+  {
+    'rebelot/kanagawa.nvim',
+    cond = get_cond({ 'kanagawa' }),
+    priority = get_priority({ 'kanagawa' }),
+    event = get_event({ 'kanagawa' }),
   },
   {
     'wtfox/jellybeans.nvim',
