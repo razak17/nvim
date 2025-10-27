@@ -166,7 +166,7 @@ local function generate_picker_overrides()
   return overrides
 end
 
----@param override table
+---@param override? table
 ---@return table
 local function generate_overrides(override)
   local overrides = {}
@@ -191,7 +191,7 @@ end
 ---@param overrides table
 ---@param should_generate boolean
 local function apply_overrides(theme, overrides, should_generate)
-  local theme_overrides = overrides
+  local theme_overrides = overrides or {}
   if should_generate then theme_overrides = generate_overrides(overrides) end
   ar.augroup(theme .. '-theme', {
     event = { 'ColorScheme' },

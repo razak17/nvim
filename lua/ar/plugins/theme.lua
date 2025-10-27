@@ -84,9 +84,6 @@ return {
           },
         },
         { WinSeparator = { fg = { from = 'LineNr', alter = -0.6 } } },
-        { VertSplit = { link = 'WinSeparator' } },
-        { IndentBlanklineChar = { link = 'VertSplit' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       }, true)
     end,
   },
@@ -101,9 +98,6 @@ return {
         { Folded = { bg = { from = 'CursorLine', alter = 0.2 } } },
         { Visual = { bg = { from = 'CursorLine', alter = 0.3 } } },
         { WinSeparator = { fg = { from = 'LineNr', alter = -0.1 } } },
-        { VertSplit = { link = 'WinSeparator' } },
-        { IndentBlanklineChar = { link = 'WinSeparator' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       }, true)
     end,
   },
@@ -115,9 +109,6 @@ return {
     init = function()
       theming.apply_overrides('mapledark', {
         { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
-        { VertSplit = { link = 'WinSeparator' } },
-        { IndentBlanklineChar = { link = 'VertSplit' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       }, true)
     end,
     opts = { disable_plugin_highlights = false, plugins = { 'lazy' } },
@@ -207,9 +198,6 @@ return {
           },
         },
         { WinSeparator = { fg = { from = 'Comment' } } },
-        { VertSplit = { link = 'WinSeparator' } },
-        { IndentBlanklineChar = { link = 'VertSplit' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       }, true)
     end,
   },
@@ -218,12 +206,7 @@ return {
     cond = get_cond({ 'nightingale' }),
     priority = get_priority({ 'nightingale' }),
     event = get_event({ 'nightingale' }),
-    init = function()
-      theming.apply_overrides('nightingale', {
-        { IndentBlanklineChar = { link = 'WinSeparator' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-      }, true)
-    end,
+    init = function() theming.apply_overrides('nightingale', {}, true) end,
   },
   {
     'savq/melange-nvim',
@@ -256,12 +239,7 @@ return {
     cond = get_cond({ 'kanso' }),
     priority = get_priority({ 'kanso' }),
     event = get_event({ 'kanso' }),
-    init = function()
-      theming.apply_overrides('kanso', {
-        { IndentBlanklineChar = { link = 'VertSplit' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-      }, true)
-    end,
+    init = function() theming.apply_overrides('kanso', {}, true) end,
   },
   {
     'zenbones-theme/zenbones.nvim',
@@ -274,9 +252,6 @@ return {
         { CursorLine = { bg = { from = 'CursorLine', alter = 0.1 } } },
         { Folded = { bg = { from = 'Folded', alter = -0.2 } } },
         { WinSeparator = { fg = { from = 'VertSplit', alter = -0.35 } } },
-        { VertSplit = { link = 'WinSeparator' } },
-        { IndentBlanklineChar = { link = 'VertSplit' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       }, true)
     end,
     dependencies = 'rktjmp/lush.nvim',
@@ -292,9 +267,6 @@ return {
         { DiffAdd = { bg = { from = 'DiffAdd', alter = 3.15 } } },
         { GitSignsAdd = { fg = { from = 'DiffAdd', attr = 'bg' } } },
         { WinSeparator = { fg = { from = 'LineNr' } } },
-        { VertSplit = { link = 'WinSeparator' } },
-        { IndentBlanklineChar = { link = 'VertSplit' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       }, true)
     end,
   },
@@ -321,9 +293,6 @@ return {
         { DiffChange = { bg = { from = 'DiffChange', alter = 0.85 } } },
         { GitSignsChange = { fg = { from = 'DiffChange', attr = 'bg' } } },
         { WinSeparator = { fg = { from = 'LineNr', alter = -0.4 } } },
-        { VertSplit = { link = 'WinSeparator' } },
-        { IndentBlanklineChar = { link = 'VertSplit' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       }, true)
     end,
   },
@@ -340,9 +309,6 @@ return {
         { Folded = { bg = { from = 'CursorLine', alter = 0.2 } } },
         { Visual = { link = 'CursorLine' } },
         { WinSeparator = { fg = { from = 'LineNr', alter = -0.4 } } },
-        { VertSplit = { link = 'WinSeparator' } },
-        { IndentBlanklineChar = { link = 'VertSplit' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       }, true)
     end,
     opts = function()
@@ -365,8 +331,6 @@ return {
         { WinbarNC = { link = 'LineNr' } },
         { DiffAdd = { bg = { from = 'DiffAdd', alter = 1.5 } } },
         { GitSignsAdd = { fg = { from = 'DiffAdd', attr = 'bg' } } },
-        { IndentBlanklineChar = { link = 'VertSplit' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       }, true)
     end,
   },
@@ -384,9 +348,6 @@ return {
     init = function()
       theming.apply_overrides('alabaster', {
         { WinSeparator = { fg = { from = 'NonText', alter = -0.4 } } },
-        { VertSplit = { link = 'WinSeparator' } },
-        { IndentBlanklineChar = { fg = { from = 'VertSplit' } } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       }, true)
     end,
   },
@@ -426,8 +387,6 @@ return {
             fg = { from = 'DiffAdd', attr = 'bg', alter = -0.15 },
           },
         },
-        { IndentBlanklineChar = { link = 'VertSplit' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       }, true)
     end,
   },
@@ -453,8 +412,6 @@ return {
       theming.apply_overrides('backpack', {
         { Visual = { link = 'CursorLine' } },
         { Folded = { bg = { from = 'Folded', alter = 0.1 } } },
-        { IndentBlanklineChar = { link = 'VertSplit' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       }, true)
     end,
   },
@@ -525,9 +482,6 @@ return {
     init = function()
       theming.apply_overrides('flexoki', {
         { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.35 } } },
-        { VertSplit = { link = 'WinSeparator' } },
-        { IndentBlanklineChar = { link = 'VertSplit' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
         { WhichKeyBorder = { link = 'FloatBorder' } },
       }, true)
     end,
@@ -545,9 +499,6 @@ return {
         { Folded = { bg = { from = 'CursorLine', alter = -0.1 } } },
         { Todo = { link = 'Constant' } },
         { WinSeparator = { fg = { from = 'Comment', alter = -0.4 } } },
-        { VertSplit = { link = 'WinSeparator' } },
-        { IndentBlanklineChar = { link = 'VertSplit' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
         {
           NeogitDiffAdd = {
             bg = { from = 'DiffAdd', alter = 1.4 },
@@ -571,9 +522,6 @@ return {
         { WinbarNC = { link = 'NonText' } },
         { NonText = { fg = { from = 'Comment', alter = -0.15 } } },
         { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.75 } } },
-        { VertSplit = { link = 'WinSeparator' } },
-        { IndentBlanklineChar = { link = 'VertSplit' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       }, true)
     end,
   },
@@ -586,9 +534,6 @@ return {
       theming.apply_overrides('thorn', {
         { NonText = { link = 'Comment' } },
         { WinSeparator = { fg = { from = 'LineNr' } } },
-        { VertSplit = { link = 'WinSeparator' } },
-        { IndentBlanklineChar = { link = 'LineNr' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       }, true)
     end,
   },
@@ -602,9 +547,6 @@ return {
         { Folded = { bg = { from = 'Folded', alter = -0.35 } } },
         { Visual = { bg = { from = 'CursorLine', alter = 0.3 } } },
         { WinSeparator = { fg = { from = 'LineNr', alter = -0.3 } } },
-        { VertSplit = { link = 'WinSeparator' } },
-        { IndentBlanklineChar = { link = 'WinSeparator' } },
-        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
       }, true)
     end,
   },
