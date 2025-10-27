@@ -39,6 +39,9 @@ return {
         'PickerPreviewNormal',
         'PickerPreviewBorder',
         'PickerSelection',
+        'PickerPrompt',
+        'PickerPromptBorder',
+        'PickerPreviewBorder',
       },
     },
     config = function(_, opts)
