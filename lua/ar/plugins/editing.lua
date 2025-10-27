@@ -46,10 +46,11 @@ return {
     cond = function() return get_cond('yanky.nvim', not minimal) end,
     -- stylua: ignore
     keys = {
-      { 'p', '<Plug>(YankyPutAfter)', mode = { 'n', 'x' }, desc = 'yanky: put after', },
-      { 'P', '<Plug>(YankyPutBefore)', mode = { 'n', 'x' }, desc = 'yanky: put before', },
-      { '<localleader>yp', '<Plug>(YankyGPutAfter)', mode = { 'n', 'x' }, desc = 'yanky: gput after', },
-      { '<localleader>yP', '<Plug>(YankyGPutBefore)', mode = { 'n', 'x' }, desc = 'yanky: gput before', },
+      { mode = { 'n', 'x' }, 'p', '<Plug>(YankyPutAfter)', desc = 'yanky: put after', },
+      { mode = { 'n', 'x' }, 'P', '<Plug>(YankyPutBefore)', desc = 'yanky: put before', },
+      { mode = { 'n', 'x' }, '<localleader>yp', '<Plug>(YankyGPutAfter)', desc = 'yanky: gput after', },
+      { mode = { 'n', 'x' }, '<localleader>yP', '<Plug>(YankyGPutBefore)', desc = 'yanky: gput before', },
+      { '<localleader>yy', '<Plug>(YankyYank)', desc = 'yanky: yank Text' },
       { '<localleader>yn', '<Plug>(YankyCycleForward)', desc = 'yanky: cycle forward' },
       { '<localleader>yb', '<Plug>(YankyCycleBackward)', desc = 'yanky: cycle backward' },
       { '<localleader>yo', '<Cmd>YankyRingHistory<CR>', desc = 'yanky: open yank history', },
