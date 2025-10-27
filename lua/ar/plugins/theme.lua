@@ -824,7 +824,13 @@ return {
         { VertSplit = { link = 'WinSeparator' } },
         { IndentBlanklineChar = { link = 'VertSplit' } },
         { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-        { NeogitDiffAdd = { link = 'DiffAdd' } },
+        {
+          NeogitDiffAdd = {
+            bg = { from = 'DiffAdd', alter = 1.4 },
+            fg = { from = 'DiffAdd', attr = 'bg', alter = -0.65 },
+            reverse = true
+          },
+        },
         { NeogitDiffDelete = { link = 'DiffDelete' } },
       }
       ar.list_insert(overrides, generate_popup_overrides())
