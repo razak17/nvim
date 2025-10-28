@@ -144,6 +144,7 @@ local function generate_picker_overrides()
     -- { SnacksPickerInputBorder = { link = 'PickerPromptBorder' } },
     { SnacksPickerPreview = { link = 'PickerPreview' } },
     { SnacksPickerPreviewBorder = { link = 'PickerPreviewBorder' } },
+    { FzfLuaTitleFlags = { link = 'PickerToggle' } },
     { FzfLuaNormal = { link = 'PickerNormal' } },
     { FzfLuaTitle = { link = 'PickerTitle' } },
     { FzfLuaBorder = { link = 'PickerBorder' } },
