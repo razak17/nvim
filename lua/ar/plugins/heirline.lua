@@ -55,7 +55,7 @@ local function setup_colors()
   }
   if vim.g.colors_name == 'zenbones' then
     return vim.tbl_deep_extend('force', P, {
-      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.1),
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.1),
       blue = hl.get('DiagnosticInfo', 'fg'),
       dark_orange = hl.get('WarningMsg', 'fg'),
     })
