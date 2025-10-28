@@ -14,27 +14,23 @@ local function get_lsp_items()
   local results = lsp.buf_request_sync(0, ms.textDocument_completion, params)
   local items = {}
   if results and not vim.tbl_isempty(results) then
-    for _, obj in ipairs(results) do
-      local result = obj.result
-      if result then
-        items = vim
-          .iter(result.items)
-          :filter(
-            function(item)
-              return item.kind == lsp.protocol.CompletionItemKind.EnumMember
-            end
-          )
-          :totable()
-      end
-
-      if not vim.tbl_isempty(items) then break end
+    local result = results[2].result
+    if result then
+      items = vim
+        .iter(result.items)
+        :filter(
+          function(item)
+            return item.kind == lsp.protocol.CompletionItemKind.EnumMember
+          end
+        )
+        :totable()
     end
   end
   return items
 end
 
--- @param text string
--- @param inc? boolean
+---@param text string
+---@param inc? boolean
 local function get_enum_index(text, inc)
   local items = get_lsp_items()
 
