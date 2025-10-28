@@ -1,25 +1,47 @@
 local minimal = ar.plugins.minimal
 
+local function f(which)
+  return function() require('flash')[which]() end
+end
+
 return {
   {
     'folke/flash.nvim',
     cond = not minimal,
-    -- stylua: ignore
     keys = {
-      { 's', function() require('flash').jump() end, mode = { 'n', 'x' } },
-      { 'S', function() require('flash').treesitter() end, mode = { 'n' }, },
-      { 'r', function() require('flash').remote() end, mode = 'o', desc = 'remote flash', },
-      { '<c-s>', function() require('flash').toggle() end, mode = { 'c' }, desc = 'toggle flash search', },
-      { 'R', function() require('flash').treesitter_search() end, mode = { 'o', 'x' }, desc = 'Flash Treesitter Search', },
+      { mode = { 'n', 'x' }, 's', f('jump') },
+      { 'S', f('treesitter') },
+      { mode = { 'o' }, 'r', f('remote') },
+      { mode = { 'x' }, '<c-s>', f('toggle') },
+      { mode = { 'o', 'x' }, 'R', f('treesitter_search') },
     },
     opts = {
       modes = {
         char = {
+          char_actions = function()
+            return {
+              [';'] = 'next',
+              ['F'] = 'left',
+              ['f'] = 'right',
+            }
+          end,
+          enabled = true,
           keys = { 'f', 'F', 't', 'T', ';' }, -- remove "," from keys
+          highlight = { backdrop = false },
+          jump_labels = false,
+          multi_line = true,
         },
-        search = { enabled = false },
+        search = {
+          enabled = true,
+          highlight = { backdrop = false },
+          jump = { autojump = false },
+        },
       },
-      jump = { nohlsearch = true },
+      jump = { autojump = true, nohlsearch = true },
+      highlight = { backdrop = false },
+      labels = 'asdfqwerzxcv', -- Limit labels to left side of the keyboard
+      prompt = { win_config = { border = 'none' } },
+      search = { wrap = true },
     },
     init = function()
       ar.highlight.plugin('flash', {
@@ -37,7 +59,7 @@ return {
     cond = not minimal,
     -- stylua: ignore
     keys = {
-      { '<C-\\>', function() require('in-and-out').in_and_out() end, mode = 'i' },
+      { mode = 'i', '<C-\\>', function() require('in-and-out').in_and_out() end },
     },
   },
 }
