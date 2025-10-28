@@ -23,6 +23,7 @@ return {
   },
   -- Web Dev (Typescript)
   --------------------------------------------------------------------------------
+  { 'brianhuster/live-preview.nvim', cmd = { 'LivePreview' } },
   {
     'Redoxahmii/json-to-types.nvim',
     cond = function()
