@@ -41,6 +41,7 @@ return {
         'PickerSelection',
         'PickerPrompt',
         'PickerPromptBorder',
+        'PickerPreview',
         'PickerPreviewBorder',
       },
     },
