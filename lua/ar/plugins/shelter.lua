@@ -6,14 +6,15 @@ local is_blink = ar_config.completion.variant == 'blink'
 
 local cond = not minimal and ar_config.shelter.enable
 
-local function get_ecolog_cond()
-  local condition = cond and variant == 'ecolog'
-  return ar.get_plugin_cond('ecolog.nvim', condition)
+local function get_cond(plugin, which)
+  local condition = cond and variant == which
+  return ar.get_plugin_cond(plugin, condition)
 end
 
 return {
   {
     'ck-zhang/obfuscate.nvim',
+    cond = function() return ar.get_plugin_cond('obfuscate.nvim', not minimal) end,
     init = function()
       ar.add_to_select_menu(
         'toggle',
@@ -23,7 +24,7 @@ return {
   },
   {
     'laytan/cloak.nvim',
-    cond = cond and variant == 'cloak',
+    cond = function() return get_cond('cloak.nvim', 'cloak') end,
     event = 'VeryLazy',
     init = function()
       ar.add_to_select_menu('toggle', { ['Toggle Cloak'] = 'CloakToggle' })
@@ -33,7 +34,7 @@ return {
   {
     {
       'philosofonusus/ecolog.nvim',
-      cond = get_ecolog_cond,
+      cond = function() return get_cond('ecolog.nvim', 'ecolog') end,
       -- stylua: ignore
       keys = function()
         local keys = {
@@ -111,7 +112,7 @@ return {
       'saghen/blink.cmp',
       optional = true,
       opts = function(_, opts)
-        return get_ecolog_cond()
+        return get_cond()
             and vim.g.blink_add_source({ 'ecolog' }, {
               ecolog = {
                 name = '[ECOLOG]',
@@ -125,7 +126,7 @@ return {
       'nvim-telescope/telescope.nvim',
       optional = true,
       keys = function(_, keys)
-        if get_ecolog_cond() then
+        if get_cond() then
           table.insert(keys or {}, {
             '<leader>f;',
             function()
@@ -138,8 +139,7 @@ return {
         end
       end,
       opts = function(_, opts)
-        return get_ecolog_cond()
-            and vim.g.telescope_add_extension({ 'ecolog' }, opts)
+        return get_cond() and vim.g.telescope_add_extension({ 'ecolog' }, opts)
           or opts
       end,
     },
