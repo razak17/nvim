@@ -761,7 +761,7 @@
           "type": "boolean"
         },
         "variant": {
-          "enum": ["nvim-notify", "snacks"],
+          "enum": ["native", "nvim-notify", "snacks"],
           "type": "string"
         }
       },

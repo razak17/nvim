@@ -42,7 +42,7 @@ local env = vim.env
 ---@alias ArWhichLspSymbols 'builtin' | 'picker' | 'namu'
 ---@alias ArWhichLspVirtualLines 'builtin' | 'lsp_lines' | 'tiny-inline'
 ---@alias ArWhichLspVirtualText 'builtin' | 'lsp_lines' | 'tiny-inline'
----@alias ArWhichNotifier 'nvim-notify' | 'snacks'
+---@alias ArWhichNotifier 'native' | 'nvim-notify' | 'snacks'
 ---@alias ArWhichPicker 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick'
 ---@alias ArWhichSession 'persisted' | 'persistence'
 ---@alias ArWhichFilesPicker 'smart-open' | 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick'
@@ -448,7 +448,7 @@ local config = {
     workspace_diagnostics = { enable = false },
   },
   ---@type ArNotifier
-  notifier = { enable = true, variant = 'snacks' },
+  notifier = { enable = true, variant = 'native' },
   ---@type ArPicker
   picker = {
     enable = true,
