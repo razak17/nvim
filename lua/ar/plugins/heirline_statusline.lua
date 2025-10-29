@@ -373,7 +373,11 @@ return {
           end,
           update = {
             'User',
-            pattern = { 'GitSignsUpdate', 'GitSignsChanged' },
+            pattern = {
+              'GitStatusChanged',
+              'GitSignsUpdate',
+              'GitSignsChanged',
+            },
           },
           {
             condition = function(self) return not ar.falsy(self.ahead_hehind) end,

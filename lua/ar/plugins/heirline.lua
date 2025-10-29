@@ -202,20 +202,16 @@ return {
       ar.augroup('HeirlineGitRemote', {
         event = { 'VimEnter' },
         command = function()
-          if not ar.is_git_repo() then return end
-          -- ar.set_timeout(stl.git_remote_sync, 0, 120000)
-          -- vim.schedule(function() stl.git_remote_sync() end)
-          vim.schedule(function() stl.update_ahead_behind(true) end)
+          local function update() stl.update_ahead_behind(true, true) end
+          ar.set_timeout(update, 0, 120000)
         end,
+      }, {
+        event = { 'TermLeave' },
+        command = function() stl.update_ahead_behind(true) end,
       }, {
         event = { 'User' },
         pattern = { 'Neogit*' },
-        command = function()
-          if not ar.is_git_repo() then return end
-          -- ar.set_timeout(stl.git_remote_sync, 0, 120000)
-          -- vim.schedule(function() stl.git_remote_sync() end)
-          vim.schedule(function() stl.update_ahead_behind(true) end)
-        end,
+        command = function() stl.update_ahead_behind(true) end,
       })
     end,
   },
