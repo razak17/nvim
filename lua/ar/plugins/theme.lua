@@ -416,6 +416,22 @@ return {
     end,
   },
   {
+    'olivercederborg/poimandres.nvim',
+    cond = get_cond({ 'poimandres' }), -- NOTE: clears highlighting on init
+    priority = get_priority({ 'poimandres' }),
+    event = get_event({ 'poimandres' }),
+    init = function()
+      theming.apply_overrides('poimandres', {
+        { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.55 } } },
+        { Folded = { bg = { from = 'Folded', alter = 0.7 } } },
+        { Visual = { bg = { from = 'Visual', alter = -0.25 }, fg = 'NONE' } },
+        { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.75 } } },
+        { NeogitDiffAdd = { link = 'DiffAdd' } },
+        { NeogitDiffDelete = { link = 'DiffDelete' } },
+      }, true)
+    end,
+  },
+  {
     'samharju/serene.nvim',
     cond = get_cond({ 'serene' }),
     priority = get_priority({ 'serene' }),
@@ -457,13 +473,6 @@ return {
       variant = 'medium', -- 'hard'|'medium'|'soft'
       overrides = {},
     },
-  },
-  {
-    'olivercederborg/poimandres.nvim',
-    cond = get_cond({ 'poimandres' }), -- NOTE: clears highlighting on init
-    priority = get_priority({ 'poimandres' }),
-    event = get_event({ 'poimandres' }),
-    opts = {},
   },
   {
     'Yazeed1s/oh-lucy.nvim',
