@@ -36,52 +36,52 @@ function M.list_branches()
   end)
 end
 
-function M.git_remote_sync()
-  local cmd = 'git'
-  local fetch_args = { 'fetch' }
-  local upstream_args =
-    { 'rev-list', '--left-right', '--count', 'HEAD...@{upstream}' }
-
-  if ar.falsy(fn.executable(cmd)) then
-    vim.notify('Git is not installed or not in PATH', vim.log.levels.ERROR)
-    return
-  end
-
-  -- Fetch the remote repository
-  ar.run_command(
-    cmd,
-    fetch_args,
-    function() M.git_status.status = 'done' end,
-    function() M.git_status.status = 'pending' end
-  )
-
-  local function on_status_change()
-    vim.schedule(
-      function()
-        api.nvim_exec_autocmds('User', { pattern = 'git_statusChanged' })
-      end
-    )
-  end
-
-  -- Compare local repository to upstream
-  local function on_exit(job)
-    local res = job:result()[1]
-    if type(res) ~= 'string' then
-      M.git_status = { ahead = 0, behind = 0, status = 'error' }
-      return
-    end
-    local _, ahead, behind = pcall(string.match, res, '(%d+)%s*(%d+)')
-    M.git_status =
-      { ahead = tonumber(ahead), behind = tonumber(behind), status = 'done' }
-    on_status_change()
-  end
-  local function on_start()
-    M.git_status.status = 'pending'
-    on_status_change()
-  end
-  ar.run_command(cmd, upstream_args, on_exit, on_start)
-end
-ar.command('GitRemoteSync', M.git_remote_sync)
+-- function M.git_remote_sync()
+--   local cmd = 'git'
+--   local fetch_args = { 'fetch' }
+--   local upstream_args =
+--     { 'rev-list', '--left-right', '--count', 'HEAD...@{upstream}' }
+--
+--   if ar.falsy(fn.executable(cmd)) then
+--     vim.notify('Git is not installed or not in PATH', vim.log.levels.ERROR)
+--     return
+--   end
+--
+--   -- Fetch the remote repository
+--   ar.run_command(
+--     cmd,
+--     fetch_args,
+--     function() M.git_status.status = 'done' end,
+--     function() M.git_status.status = 'pending' end
+--   )
+--
+--   local function on_status_change()
+--     vim.schedule(
+--       function()
+--         api.nvim_exec_autocmds('User', { pattern = 'git_statusChanged' })
+--       end
+--     )
+--   end
+--
+--   -- Compare local repository to upstream
+--   local function on_exit(job)
+--     local res = job:result()[1]
+--     if type(res) ~= 'string' then
+--       M.git_status = { ahead = 0, behind = 0, status = 'error' }
+--       return
+--     end
+--     local _, ahead, behind = pcall(string.match, res, '(%d+)%s*(%d+)')
+--     M.git_status =
+--       { ahead = tonumber(ahead), behind = tonumber(behind), status = 'done' }
+--     on_status_change()
+--   end
+--   local function on_start()
+--     M.git_status.status = 'pending'
+--     on_status_change()
+--   end
+--   ar.run_command(cmd, upstream_args, on_exit, on_start)
+-- end
+-- ar.command('GitRemoteSync', M.git_remote_sync)
 
 -- https://github.com/matthis-k/nvim-flake/blob/main/lua/ui/statusline.lua?plain=1#L100
 local git_cache = {}
