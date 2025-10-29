@@ -23,6 +23,7 @@ return {
       return vim.list_extend(mappings, keys)
     end,
     opts = {
+      n_lines = 50,
       mappings = {
         add = 'gsa', -- Add surrounding in Normal and Visual modes
         delete = 'gsd', -- Delete surrounding
