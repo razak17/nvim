@@ -1156,14 +1156,15 @@ function ar.p_table(map)
   })
 end
 
---- Insert values from one list into another if they do not already exist
+--- Insert values from one list into another
 ---@param list table
----@param tbl table
-function ar.list_insert(list, tbl)
+---@param ... table
+function ar.list_insert(list, ...)
+  local tbl = vim.iter({ ... }):flatten():totable()
   if not list or not tbl then return end
   if type(list) ~= 'table' or type(tbl) ~= 'table' then return end
   for _, v in pairs(tbl) do
-    if not vim.tbl_contains(list, v) then table.insert(list, v) end
+    table.insert(list, v)
   end
 end
 
