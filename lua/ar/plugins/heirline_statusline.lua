@@ -373,11 +373,10 @@ return {
           end,
           update = {
             'User',
-            pattern = {
-              'GitStatusChanged',
-              'GitSignsUpdate',
-              'GitSignsChanged',
-            },
+            pattern = { 'GitStatusChanged' },
+            callback = vim.schedule_wrap(
+              function() vim.cmd('redrawstatus') end
+            ),
           },
           {
             condition = function(self) return not ar.falsy(self.ahead_hehind) end,

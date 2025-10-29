@@ -113,6 +113,9 @@ local function update_git_root(git, refetch)
 
   git_cache[git.root] = get_ahead_behind(git)
   fetched[git.root] = true
+  vim.schedule(
+    function() api.nvim_exec_autocmds('User', { pattern = 'GitStatusChanged' }) end
+  )
   return true
 end
 
@@ -130,6 +133,7 @@ function M.update_ahead_behind(refetch, fast)
     end
   end
 end
+ar.command('GitRemoteSync', function() M.update_ahead_behind(true) end)
 
 function M.remote_counter()
   local gs = vim.b[vim.api.nvim_get_current_buf()].gitsigns_status_dict
@@ -212,7 +216,7 @@ local function git_push_pull(action, _)
       ar.run_command(
         'git',
         { action, 'origin', branch },
-        function() ar.GitRemoteSync() end
+        function() vim.cmd('GitRemoteSync') end
       )
     end
   end)

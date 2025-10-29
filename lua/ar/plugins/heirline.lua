@@ -201,16 +201,17 @@ return {
 
       ar.augroup('HeirlineGitRemote', {
         event = { 'VimEnter' },
+        once = true,
         command = function()
           local function update() stl.update_ahead_behind(true, true) end
-          ar.set_timeout(update, 0, 120000)
+          ar.set_timeout(0, 10000, update)
         end,
       }, {
         event = { 'TermLeave' },
         command = function() stl.update_ahead_behind(true) end,
       }, {
         event = { 'User' },
-        pattern = { 'Neogit*' },
+        pattern = { 'Neogit*', 'GitSigns*' },
         command = function() stl.update_ahead_behind(true) end,
       })
     end,

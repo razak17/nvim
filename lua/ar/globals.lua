@@ -427,25 +427,21 @@ function ar.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
 
 function ar.reload_all()
   cmd('checktime')
-  cmd('Gitsigns refresh')
-  vim.schedule(
-    function() require('ar.statusline').update_ahead_behind(true) end
-  )
+  vim.schedule(function()
+    api.nvim_exec_autocmds('User', { pattern = 'GitStatusChanged' })
+    require('ar.statusline').update_ahead_behind(true)
+  end)
 end
 
 -- Ref: https://github.com/serranomorante/dotfiles/blob/main/nvim/dot-config/nvim/lua/serranomorante/utils.lua?plain=1#L186
 ---Simple setTimeout wrapper
----@param callback function
 ---@param timeout integer
----@param ms integer
-function ar.set_timeout(callback, timeout, ms)
+---@param interval integer
+---@param callback function
+function ar.set_timeout(timeout, interval, callback)
   local timer = vim.uv.new_timer()
-  if timer == nil then return end
-  timer:start(timeout, ms, function()
-    timer:stop()
-    timer:close()
-    if callback then callback() end
-  end)
+  if not timer then return end
+  timer:start(timeout, interval, vim.schedule_wrap(callback))
   return timer
 end
 
