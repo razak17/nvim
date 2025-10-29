@@ -167,6 +167,14 @@ local function generate_picker_overrides()
   return overrides
 end
 
+---@return table
+local function generate_plugin_overrides()
+  local overrides = {
+    { SnacksNotifierHistory = { link = 'PickerNormal' } },
+  }
+  return overrides
+end
+
 ---@param override? table
 ---@return table
 local function generate_overrides(override)
@@ -181,10 +189,12 @@ local function generate_overrides(override)
     { IndentBlanklineChar = { link = 'VertSplit' } },
     { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
   })
+  -- Order matters here
   ar.list_insert(overrides, generate_popup_overrides())
   ar.list_insert(overrides, generate_completion_overrides())
   ar.list_insert(overrides, generate_lsp_overrides())
   ar.list_insert(overrides, generate_picker_overrides())
+  ar.list_insert(overrides, generate_plugin_overrides())
   return overrides
 end
 
