@@ -403,9 +403,18 @@ local function telescope_branches_mappings(prompt_bufnr, map)
               if #line > 0 then table.insert(cmd_output, line) end
             end
           end),
-          on_exit = vim.schedule_wrap(
-            function() vim.notify(cmd_output[3] or cmd_output[2]) end
-          ),
+          on_exit = vim.schedule_wrap(function()
+            vim.notify(cmd_output[3] or cmd_output[2])
+            if string.find(vim.fn.join(cmd_output, '\n'), 'CONFLICT') then
+              local hide_conflict_notif = vim.notify(
+                { 'The merge produced a conflict' },
+                vim.log.levels.ERROR,
+                { dont_hide = true }
+              )
+              if not hide_conflict_notif then return end
+              vim.defer_fn(function() hide_conflict_notif() end, 7000)
+            end
+          end),
         })
       end,
       desc = 'merge another branch',
