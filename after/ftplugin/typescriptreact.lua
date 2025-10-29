@@ -22,3 +22,25 @@ map(
   toggle_use_client,
   { buffer = 0, desc = 'toggle use client' }
 )
+
+-- https://github.com/emmanueltouzery/nvim_config/commit/dd12dad78f7663d7851cd26adea93808acc18995
+-- https://github.com/nvim-mini/mini.nvim/discussions/2079
+
+if not ar.has('mini.surround') then return end
+
+-- Set specific surrounding in 'mini.surround'
+local ts_input = require('mini.surround').gen_spec.input.treesitter
+vim.b.minisurround_config = {
+  custom_surroundings = {
+    t = {
+      input = ts_input({ outer = '@tag.outer', inner = '@tag.inner' }),
+    },
+    T = {
+      input = ts_input({ outer = '@tag_name.outer', inner = '@tag_name.inner' }),
+      output = function()
+        local tag_name = MiniSurround.user_input('Tag name')
+        return { left = tag_name, right = tag_name }
+      end,
+    },
+  },
+}
