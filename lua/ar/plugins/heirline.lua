@@ -153,22 +153,22 @@ return {
           filetypes = filetypes,
           force_inactive_filetypes = force_inactive_filetypes,
         },
-        -- condition = function()
-        --   local win = api.nvim_get_current_win()
-        --   local buf = api.nvim_win_get_buf(win)
-        --   local decs = decor.get({
-        --     ft = bo[buf].ft,
-        --     fname = fn.bufname(buf),
-        --     setting = 'statusline',
-        --   })
-        --   if not decs or ar.falsy(decs) then
-        --     return not conditions.buffer_matches({
-        --       buftype = buftypes,
-        --       filetype = force_inactive_filetypes,
-        --     })
-        --   end
-        --   return decs.ft == true or decs.fname == true
-        -- end,
+        condition = function()
+          local win = api.nvim_get_current_win()
+          local buf = api.nvim_win_get_buf(win)
+          local decs = decor.get({
+            ft = bo[buf].ft,
+            fname = fn.bufname(buf),
+            setting = 'statusline',
+          })
+          if not decs or ar.falsy(decs) then
+            return not conditions.buffer_matches({
+              buftype = buftypes,
+              filetype = force_inactive_filetypes,
+            })
+          end
+          return decs.ft == true or decs.fname == true
+        end,
       })
 
       if
