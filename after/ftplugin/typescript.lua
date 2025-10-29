@@ -1,21 +1,21 @@
 vim.bo.textwidth = 100
 vim.opt.spell = true
 
-local interface_to_type = require('ar.interface_to_type').interface_to_type
-
+local interface_to_type = require('ar.ts_interface_to_type').interface_to_type
 map(
   'n',
   '<leader><leader>ti',
   interface_to_type,
   { buffer = true, desc = 'interface to type' }
 )
-map('i', 't', require('ar.async_func').add, { buffer = true })
 
-ar.command('InterfaceToType', interface_to_type, {})
+ar.command('InterfaceToType', interface_to_type)
 
 ar.add_to_select_menu('command_palette', {
   ['Interface to Type'] = interface_to_type,
 })
+
+map('i', 't', require('ar.ts_async_func').add, { buffer = true })
 
 if not ar.lsp.enable then return end
 

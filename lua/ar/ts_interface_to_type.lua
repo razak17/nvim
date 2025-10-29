@@ -51,7 +51,7 @@ function M.interface_to_type()
   local type_declaration =
     string.format('type %s = {%s}', interface_name, type_body)
 
-  local start_row, start_col, end_row, end_col = interface_node:range()
+  local start_row, _, end_row, _ = interface_node:range()
 
   -- Split the type declaration into lines
   local lines = vim.split(type_declaration, '\n')
