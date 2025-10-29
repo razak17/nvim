@@ -147,7 +147,6 @@ return {
     end,
     config = function(_, opts)
       local conditions = require('heirline.conditions')
-      local stl = require('ar.statusline')
 
       opts.statusline = vim.tbl_deep_extend('force', opts.statusline or {}, {
         static = {
@@ -198,22 +197,6 @@ return {
       end
 
       require('heirline').setup(opts)
-
-      ar.augroup('HeirlineGitRemote', {
-        event = { 'VimEnter' },
-        once = true,
-        command = function()
-          local function update() stl.update_ahead_behind(true, true) end
-          ar.set_timeout(0, 10000, update)
-        end,
-      }, {
-        event = { 'TermLeave' },
-        command = function() stl.update_ahead_behind(true) end,
-      }, {
-        event = { 'User' },
-        pattern = { 'Neogit*', 'GitSigns*' },
-        command = function() stl.update_ahead_behind(true) end,
-      })
     end,
   },
 }
