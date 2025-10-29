@@ -17,6 +17,14 @@ ar.add_to_select_menu('command_palette', {
 
 map('i', 't', require('ar.ts_async_func').add, { buffer = true })
 
+-- tool for exploratory type programming. Extract a type T that can be explored with the LSP hover, K
+map(
+  'n',
+  '<localleader>lt',
+  function() require('ar.ts_extract_type').extract_type() end,
+  { buffer = true, desc = 'extract type for K exploration' }
+)
+
 if not ar.lsp.enable then return end
 
 local falsy = ar.falsy
