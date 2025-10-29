@@ -60,6 +60,11 @@ local function setup_colors()
       dark_orange = hl.get('WarningMsg', 'fg'),
     })
   end
+  if vim.g.colors_name == 'poimandres' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.25),
+    })
+  end
   if vim.g.colors_name == 'default' then
     return vim.tbl_deep_extend('force', P, {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.3),
