@@ -504,7 +504,7 @@ local config = {
     },
   },
   plugins = {
-    disabled = { 'VectorCode' },
+    disabled = { 'VectorCode', 'lazydev.nvim' },
     modules = {
       disabled = { 'treesitter', 'incline' },
       override = {},
