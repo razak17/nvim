@@ -224,24 +224,61 @@ return {
     cond = get_cond({ 'melange' }),
     priority = get_priority({ 'melange' }),
     event = get_event({ 'melange' }),
+    init = function()
+      theming.apply_overrides('melange', {
+        { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
+      }, true)
+    end,
   },
   {
     'morhetz/gruvbox',
     cond = get_cond({ 'gruvbox' }),
     priority = get_priority({ 'gruvbox' }),
     event = get_event({ 'gruvbox' }),
+    init = function()
+      theming.apply_overrides('gruvbox', {
+        { GruvboxRedSign = { bg = 'NONE' } },
+        { GruvboxGreenSign = { bg = 'NONE' } },
+        { GruvboxAquaSign = { bg = 'NONE' } },
+        { Operator = { link = '@method' } },
+        { ErrorMsg = { link = 'Error' } },
+        {
+          Visual = {
+            bg = { from = 'Visual', alter = -0.25 },
+            fg = 'NONE',
+            reverse = false,
+          },
+        },
+        { NonText = { fg = { from = 'NonText', alter = 0.3 } } },
+        { Dim = { link = 'WinSeparator' } },
+        { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.6 } } },
+      }, true)
+    end,
   },
   {
     'jnurmine/Zenburn',
     cond = get_cond({ 'zenburn' }),
     priority = get_priority({ 'zenburn' }),
     event = get_event({ 'zenburn' }),
+    init = function()
+      theming.apply_overrides('zenburn', {
+        { NonText = { fg = { from = 'NonText', alter = 0.3 } } },
+        { Visual = { bg = { from = 'Visual', alter = 0.65 } } },
+        { Dim = { link = 'Comment' } },
+        { WinSeparator = { fg = { from = 'Dim', alter = -0.3 } } },
+      }, true)
+    end,
   },
   {
     'darianmorat/gruvdark.nvim',
     cond = get_cond({ 'gruvdark' }),
     priority = get_priority({ 'gruvdark' }),
     event = get_event({ 'gruvdark' }),
+    init = function()
+      theming.apply_overrides('gruvdark', {
+        { Comment = { fg = { from = 'Comment', alter = 0.25 } } },
+      }, true)
+    end,
   },
   ------------------------------------------------------------------------------
   -- Monochrome

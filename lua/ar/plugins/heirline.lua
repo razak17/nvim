@@ -53,18 +53,6 @@ local function setup_colors()
     forest_green = hl.get('DiffAdd', 'fg'),
     lightgreen = hl.get('DiagnosticVirtualTextHint', 'bg'),
   }
-  if vim.g.colors_name == 'zenbones' then
-    return vim.tbl_deep_extend('force', P, {
-      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.1),
-      blue = hl.get('DiagnosticInfo', 'fg'),
-      dark_orange = hl.get('WarningMsg', 'fg'),
-    })
-  end
-  if vim.g.colors_name == 'poimandres' then
-    return vim.tbl_deep_extend('force', P, {
-      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.25),
-    })
-  end
   if vim.g.colors_name == 'default' then
     return vim.tbl_deep_extend('force', P, {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.3),
@@ -124,6 +112,37 @@ local function setup_colors()
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.6),
       blue = hl.get('DiagnosticInfo', 'fg'),
       dark_orange = hl.get('WarningMsg', 'fg'),
+    })
+  end
+  if vim.g.colors_name == 'zenbones' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.1),
+      blue = hl.get('DiagnosticInfo', 'fg'),
+      dark_orange = hl.get('WarningMsg', 'fg'),
+    })
+  end
+  if vim.g.colors_name == 'poimandres' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.25),
+    })
+  end
+  if vim.g.colors_name == 'gruvbox' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('Normal', 'bg'), 0.25),
+      blue = hl.tint(hl.get('Changed', 'fg'), -0.1),
+      dark_orange = hl.tint(hl.get('WarningMsg', 'fg'), -0.2),
+      forest_green = hl.tint(hl.get('DiffAdd', 'bg'), -0.3),
+      lightgreen = hl.tint(hl.get('DiagnosticVirtualTextHint', 'fg'), -0.2),
+    })
+  end
+  if vim.g.colors_name == 'zenburn' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('Normal', 'bg'), 0.25),
+      blue = hl.tint(hl.get('Changed', 'fg'), -0.1),
+      dark_orange = hl.tint(hl.get('WarningMsg', 'fg'), -0.3),
+      pale_blue = hl.tint(hl.get('DiagnosticInfo', 'fg'), -0.2),
+      forest_green = hl.tint(hl.get('DiffAdd', 'bg'), -0.3),
+      lightgreen = hl.tint(hl.get('DiagnosticVirtualTextHint', 'fg'), -0.2),
     })
   end
   if vim.g.colors_name == 'onedark' then P = require('onedark.palette') end
