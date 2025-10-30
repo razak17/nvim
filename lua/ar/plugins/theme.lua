@@ -425,7 +425,8 @@ return {
         { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.55 } } },
         { Folded = { bg = { from = 'Folded', alter = 0.7 } } },
         { Visual = { bg = { from = 'Visual', alter = -0.25 }, fg = 'NONE' } },
-        { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.75 } } },
+        { Dim = { inherit = 'WinSeparator' } },
+        { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.7 } } },
         { NeogitDiffAdd = { link = 'DiffAdd' } },
         { NeogitDiffDelete = { link = 'DiffDelete' } },
       }, true)
