@@ -722,7 +722,15 @@ end
 ---@param bufnr number
 local function setup_completion(client, bufnr)
   if client:supports_method(M.textDocument_completion) then
-    lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
+    lsp.completion.enable(true, client.id, bufnr, {
+      autotrigger = true,
+      convert = function(item)
+        return {
+          abbr = item.label:gsub('%b()', ''),
+          kind = lsp.protocol.CompletionItemKind[item.kind] or 'Text',
+        }
+      end,
+    })
     require('ar.compl')(client, bufnr)
     -- api.nvim_set_option_value(
     --   'omnifunc',
