@@ -209,6 +209,17 @@ return {
     init = function() theming.apply_overrides('nightingale', {}, true) end,
   },
   {
+    'maccoda/irises.nvim',
+    cond = get_cond({ 'irises' }),
+    priority = get_priority({ 'irises' }),
+    event = get_event({ 'irises' }),
+    init = function()
+      theming.apply_overrides('irises', {
+        { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.7 } } },
+      }, true)
+    end,
+  },
+  {
     'savq/melange-nvim',
     cond = get_cond({ 'melange' }),
     priority = get_priority({ 'melange' }),
