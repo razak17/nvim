@@ -23,7 +23,7 @@ ar.ui.statuscolumn = {}
 function ar.ui.statuscolumn.render()
   local win = vim.g.statusline_winid
 
-  if wo[win].signcolumn == 'no' then return '' end
+  if wo[win].signcolumn == 'no' or vim.bo.ft == '' then return '' end
 
   local lnum, relnum, virtnum = v.lnum, v.relnum, v.virtnum
   local buf = api.nvim_win_get_buf(win)
