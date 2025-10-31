@@ -614,6 +614,13 @@ local function dump()
 end
 nnoremap('<localleader>mm', dump, { desc = 'dump messages' })
 --------------------------------------------------------------------------------
+-- Run code
+nnoremap(
+  '<leader>rn',
+  function() require('ar.lint_project').run_code() end,
+  { desc = 'run code', silent = true }
+)
+--------------------------------------------------------------------------------
 -- Commands
 --------------------------------------------------------------------------------
 command('ClearRegisters', function()
