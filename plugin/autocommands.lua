@@ -74,6 +74,13 @@ augroup('UpdateVim', {
   event = { 'VimResized' },
   pattern = { '*' },
   command = 'wincmd =',
+}, {
+  event = { 'FileChangedShellPost' },
+  desc = 'Notify when file is reloaded',
+  command = function()
+    local L = vim.log.levels
+    vim.notify('File reloaded automatically', L.INFO, { title = 'nvim' })
+  end,
 })
 
 augroup('WinBehavior', {
@@ -142,7 +149,7 @@ augroup('Utilities', {
   end,
 }, {
   event = 'FileType',
-  command = 'setlocal formatoptions-=cro',
+  command = function() opt.formatoptions:remove({ 'c', 'r', 'o' }) end,
 }, {
   event = { 'BufHidden' },
   desc = 'Delete [No Name] buffers',
