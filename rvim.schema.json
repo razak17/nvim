@@ -28,6 +28,19 @@
           },
           "type": "object"
         },
+        "opencode": {
+          "additionalProperties": false,
+          "properties": {
+            "enable": {
+              "type": "boolean"
+            },
+            "variant": {
+              "enum": ["tui", "frontend"],
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
         "ignored_filetypes": {
           "items": {
             "type": "string"

@@ -25,6 +25,7 @@ local env = vim.env
 ---@alias ArAIModel 'claude' | 'gemini' | 'openai' | 'copilot'
 ---@alias ArAICompletion 'builtin' | 'copilot' | 'minuet'
 ---@alias ArAISuggestions 'ghost-text' | 'completion'
+---@alias ArAIWhichOpencode 'tui' | 'frontend'
 ---@alias ArExplorerRename 'local' | 'snacks'
 ---@alias ArWhichBuffers 'snacks'
 ---@alias ArWhichCmdline 'builtin' | 'noice' | 'telescope-cmdline'
@@ -314,6 +315,11 @@ local config = {
       variant = 'builtin',
       ---@type ArAISuggestions
       suggestions = 'ghost-text',
+    },
+    opencode = {
+      enable = true,
+      ---@type ArAIWhichOpencode
+      variant = 'tui',
     },
     ignored_filetypes = {
       'DressingInput',

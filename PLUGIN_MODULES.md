@@ -49,6 +49,7 @@
 - incline
 - init
 - lang
+- lazydev
 - leetcode
 - log
 - lsp
