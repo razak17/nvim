@@ -21,6 +21,12 @@ return {
     end,
   },
   {
+    'XXiaoA/atone.nvim',
+    cond = function() return ar.get_plugin_cond('atone.nvim', not minimal) end,
+    cmd = 'Atone',
+    opts = {},
+  },
+  {
     'kevinhwang91/nvim-fundo',
     cond = function() return ar.get_plugin_cond('nvim-fundo', not minimal) end,
     event = { 'BufRead', 'BufNewFile' },

@@ -314,6 +314,7 @@ local filetypes = ar.p_table({
   ['agitator'] = presets.tool_panel,
   ['alpha'] = presets.tool_panel:with({ statusline = false }),
   ['arena'] = presets.tool_panel:with({ number = true }),
+  ['atone'] = presets.tool_panel,
   ['Avante'] = presets.tool_panel,
   ['blame'] = presets.tool_panel,
   ['bufexplorer'] = presets.tool_panel,
