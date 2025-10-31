@@ -79,7 +79,7 @@ local function generate_lsp_overrides()
       LspReferenceText = {
         bg = 'NONE',
         underline = true,
-        sp = { from = 'Comment', attr = 'fg', alter = -0.2 },
+        sp = { from = 'Comment', attr = 'fg', alter = -0.45 },
       },
     },
     { LspReferenceRead = { bg = { from = 'Visual', alter = -0.1 } } },
@@ -181,7 +181,7 @@ local function generate_overrides(override)
   local overrides = {}
   if not ar.falsy(override) then ar.list_insert(overrides, override) end
   ar.list_insert(overrides, {
-    { StatusLine = { bg = 'NONE' } },
+    { StatusLine = { bg = 'NONE', reverse = false } },
     { Winbar = { link = 'Variable' } },
     { WinbarNC = { link = 'NonText' } },
     { MsgSeparator = { link = 'WinSeparator' } },
