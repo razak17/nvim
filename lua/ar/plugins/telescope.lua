@@ -693,8 +693,18 @@ return {
         { pattern = 'TelescopeConfigComplete', modeline = false }
       )
 
-      ar.augroup('MiniFilesClose', {
+      local augroup = ar.augroup
+
+      augroup('TelescopePreviewNumbers', {
         event = 'User',
+        desc = 'Show line numbers in telescope previewer',
+        pattern = 'TelescopePreviewerLoaded',
+        command = function() vim.opt_local.number = true end,
+      })
+
+      augroup('MiniFilesClose', {
+        event = 'User',
+        desc = 'Close MiniFiles when opening telescope',
         pattern = 'TelescopeFindPre',
         command = function()
           if _G.MiniFiles then _G.MiniFiles.close() end
