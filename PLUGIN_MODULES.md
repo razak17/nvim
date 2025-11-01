@@ -1,5 +1,6 @@
 ## 📦 Plugin Modules
 
+- aerial
 - ai
 - animation
 - api

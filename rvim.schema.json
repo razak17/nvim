@@ -28,19 +28,6 @@
           },
           "type": "object"
         },
-        "opencode": {
-          "additionalProperties": false,
-          "properties": {
-            "enable": {
-              "type": "boolean"
-            },
-            "variant": {
-              "enum": ["tui", "frontend"],
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
         "ignored_filetypes": {
           "items": {
             "type": "string"
@@ -61,6 +48,19 @@
             },
             "openai": {
               "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "opencode": {
+          "additionalProperties": false,
+          "properties": {
+            "enable": {
+              "type": "boolean"
+            },
+            "variant": {
+              "enum": ["tui", "frontend"],
+              "type": "string"
             }
           },
           "type": "object"
@@ -168,6 +168,7 @@
             "duskfox",
             "eldritch",
             "eldritch-dark",
+            "eldritch-minimal",
             "everforest",
             "evergarden",
             "evergarden-fall",
@@ -198,6 +199,7 @@
             "hojicha",
             "horizon",
             "iceclimber",
+            "irises",
             "jellybeans",
             "jellybeans-default",
             "jellybeans-light",
@@ -843,6 +845,7 @@
             "disabled": {
               "items": {
                 "enum": [
+                  "aerial",
                   "ai",
                   "animation",
                   "api",
@@ -892,6 +895,7 @@
                   "incline",
                   "init",
                   "lang",
+                  "lazydev",
                   "leetcode",
                   "log",
                   "lsp",
@@ -982,6 +986,7 @@
             "override": {
               "items": {
                 "enum": [
+                  "aerial",
                   "ai",
                   "animation",
                   "api",
@@ -1031,6 +1036,7 @@
                   "incline",
                   "init",
                   "lang",
+                  "lazydev",
                   "leetcode",
                   "log",
                   "lsp",
