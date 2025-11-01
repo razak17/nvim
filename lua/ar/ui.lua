@@ -66,6 +66,7 @@ ar.ui.icons = {
     dap_red = '🛑',
     double_chevron_right = '»',
     ellipsis = '…',
+    gh = ' ',
     ghost = '󰊠',
     test_tube = '󰙨',
     lightbulb = '',
