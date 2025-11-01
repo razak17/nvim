@@ -254,7 +254,10 @@ return {
   },
   {
     'startup-nvim/startup.nvim',
-    cond = minimal and niceties,
+    cond = function()
+      local condition = minimal and niceties
+      return ar.get_plugin_cond('startup.nvim', condition)
+    end,
     lazy = false,
     opts = function()
       local header = {
@@ -346,7 +349,10 @@ return {
   },
   {
     'letieu/btw.nvim',
-    cond = minimal and not niceties and false,
+    cond = function()
+      local condition = minimal and niceties
+      return ar.get_plugin_cond('btw.nvim', condition)
+    end,
     lazy = false,
     opts = {},
   },

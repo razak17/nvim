@@ -9,9 +9,10 @@ return {
   {
     'nvimdev/indentmini.nvim',
     cond = function()
-      return not minimal
+      local condition = not minimal
         and indentline_enable
         and indentline_variant == 'indentmini'
+      return ar.get_plugin_cond('indentmini.nvim', condition)
     end,
     event = 'UIEnter',
     opts = {
@@ -39,7 +40,10 @@ return {
   {
     'lukas-reineke/indent-blankline.nvim',
     cond = function()
-      return not minimal and indentline_enable and indentline_variant == 'ibl'
+      local condition = not minimal
+        and indentline_enable
+        and indentline_variant == 'ibl'
+      return ar.get_plugin_cond('nvim-ufo', condition)
     end,
     event = 'UIEnter',
     main = 'ibl',
@@ -73,8 +77,7 @@ return {
   },
   {
     'shellRaining/hlchunk.nvim',
-    enabled = false,
-    cond = not minimal and false,
+    cond = function() return ar.get_plugin_cond('hlchunk.nvim', not minimal) end,
     event = 'BufRead',
     config = function()
       require('hlchunk').setup({

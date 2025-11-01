@@ -36,7 +36,6 @@ return {
     cond = function()
       local condition = not ar_config.plugin.custom.custom_fold.enable
         and not minimal
-        and false
       return ar.get_plugin_cond('nvim-ufo', condition)
     end,
     event = 'UIEnter', -- needed for folds to load in time and comments being closed
@@ -151,7 +150,7 @@ return {
   },
   {
     'gh-liu/fold_line.nvim',
-    cond = false,
+    cond = function() return ar.get_plugin_cond('fold_line.nvim', not minimal) end,
     event = 'VeryLazy',
     config = function()
       ar.highlight.plugin('fold_line', {

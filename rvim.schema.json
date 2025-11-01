@@ -360,15 +360,6 @@
       },
       "type": "object"
     },
-    "flatten": {
-      "additionalProperties": false,
-      "properties": {
-        "enable": {
-          "type": "boolean"
-        }
-      },
-      "type": "object"
-    },
     "frecency": {
       "additionalProperties": false,
       "properties": {
@@ -751,15 +742,6 @@
             "variant": {
               "enum": ["builtin", "lsp_lines", "tiny-inline"],
               "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "workspace_diagnostics": {
-          "additionalProperties": false,
-          "properties": {
-            "enable": {
-              "type": "boolean"
             }
           },
           "type": "object"

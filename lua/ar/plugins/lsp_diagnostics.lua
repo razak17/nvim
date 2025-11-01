@@ -5,7 +5,10 @@ return {
   {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
     -- 'ErichDonGubler/lsp_lines.nvim',
-    cond = ar.lsp.enable and virtual_lines_variant == 'lsp_lines',
+    cond = function()
+      local condition = ar.lsp.enable and virtual_lines_variant == 'lsp_lines'
+      return ar.get_plugin_cond('lsp_lines.nvim', condition)
+    end,
     event = 'LspAttach',
     config = function() require('lsp_lines').setup() end,
   },
@@ -71,7 +74,9 @@ return {
   },
   {
     'artemave/workspace-diagnostics.nvim',
-    cond = ar.lsp.enable and ar_config.lsp.workspace_diagnostics.enable,
+    cond = function()
+      return ar.get_plugin_cond('workspace-diagnostics.nvim', ar.lsp.enable)
+    end,
     opts = {},
   },
 }

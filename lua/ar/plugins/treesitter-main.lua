@@ -308,7 +308,10 @@ return {
   {
     'andymass/vim-matchup',
     event = { 'BufReadPre', 'BufNewFile' },
-    cond = not minimal and ts_extra_enabled and false,
+    cond = function()
+      local condition = not minimal and ts_extra_enabled
+      return ar.get_plugin_cond('vim-matchup', condition)
+    end,
     keys = {
       { '[[', '<plug>(matchup-[%)', mode = { 'n', 'x' } },
       { ']]', '<plug>(matchup-]%)', mode = { 'n', 'x' } },

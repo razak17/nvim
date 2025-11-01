@@ -4,7 +4,9 @@ return {
   -- BUG: Disable until this issue is fixed: https://github.com/folke/ts-comments.nvim/issues/72
   {
     'folke/ts-comments.nvim',
-    cond = not minimal and false,
+    cond = function()
+      return ar.get_plugin_cond('ts-comments.nvim', not minimal)
+    end,
     event = 'VeryLazy',
     opts = {
       lang = {

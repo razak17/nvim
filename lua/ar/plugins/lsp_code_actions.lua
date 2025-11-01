@@ -13,8 +13,10 @@ return {
     desc = 'A Neovim plugin that provides a simple way to run and visualize code actions with Telescope.',
     'rachartier/tiny-code-action.nvim',
     cond = function()
-      return ar.lsp.enable
+      local condition = ar.lsp.enable
         and ar_config.lsp.code_actions.variant == 'tiny-code-action'
+
+      return ar.get_plugin_cond('tiny-code-action.nvim', condition)
     end,
     event = { 'LspAttach' },
     init = function()
@@ -69,7 +71,9 @@ return {
   },
   {
     'yarospace/dev-tools.nvim',
-    cond = ar.lsp.enable and false,
+    cond = function()
+      return ar.get_plugin_cond('dev-tools.nvim', ar.lsp.enable)
+    end,
     event = 'LspAttach',
     dependencies = {
       'nvim-treesitter/nvim-treesitter', -- code manipulation in buffer, required

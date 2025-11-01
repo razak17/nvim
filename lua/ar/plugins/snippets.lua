@@ -46,8 +46,9 @@ return {
   {
     'rafamadriz/friendly-snippets',
     cond = function()
-      return not minimal
+      local cond = not minimal
         and ar_config.completion.snippets.variant == 'friendly-snippets'
+      return ar.get_plugin_cond('friendly-snippets', cond)
     end,
   },
   {

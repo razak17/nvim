@@ -38,8 +38,7 @@ return {
   --------------------------------------------------------------------------------
   {
     'rest-nvim/rest.nvim',
-    enabled = false,
-    cond = not minimal and false, -- archived
+    cond = function() return ar.get_plugin_cond('rest.nvim', not minimal) end,
     ft = { 'http', 'json' },
     init = function() vim.g.whichkey_add_spec({ '<leader>rr', group = 'Rest' }) end,
     -- stylua: ignore

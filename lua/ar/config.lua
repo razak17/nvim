@@ -161,7 +161,6 @@ local env = vim.env
 ---@field symbols ArLspSymbols
 ---@field virtual_lines ArLspVirtualLines
 ---@field virtual_text ArLspVirtualText
----@field workspace_diagnostics ArCond
 
 ---@class ArPluginItem
 ---@field enable boolean
@@ -392,7 +391,6 @@ local config = {
   debug = { enable = false },
   ---@type ArExplorer
   explorer = { rename = 'snacks', variant = 'snacks' },
-  flatten = { enable = true },
   frecency = { enable = true },
   ---@type ArGx
   gx = { enable = true, variant = 'local' },
@@ -451,7 +449,6 @@ local config = {
     code_actions = { enable = true, variant = 'builtin' },
     virtual_text = { enable = false },
     virtual_lines = { enable = false, variant = 'tiny-inline' },
-    workspace_diagnostics = { enable = false },
   },
   ---@type ArNotifier
   notifier = { enable = true, variant = 'native' },
@@ -459,7 +456,7 @@ local config = {
   picker = {
     enable = true,
     files = 'snacks',
-    variant = 'snacks',
+    variant = 'telescope',
     win = { show_preview = false, show_border = true, fullscreen = true },
   },
   plugin = {
@@ -510,14 +507,33 @@ local config = {
     },
   },
   plugins = {
-    disabled = { 'VectorCode', 'lazydev.nvim' },
+    disabled = {
+      'VectorCode',
+      'lazydev.nvim',
+      'btw.nvim',
+      'conflict.nvim',
+      'dev-tools.nvim',
+      'flatten.nvim',
+      'fold_line.nvim',
+      'garbage-day.nvim',
+      'git-conflict.nvim',
+      'nvim-ufo',
+      'hlchunk.nvim',
+      'cmp-path',
+      'inlayhint-filler.nvim',
+      'neoconf.nvim',
+      'rest.nvim',
+      'persistent-breakpoints.nvim',
+      'ts-comments.nvim',
+      'vim-footprints',
+      'vim-matchup',
+      'telescope-smart-history.nvim',
+    },
     modules = {
       disabled = { 'treesitter', 'incline' },
       override = {},
     },
-    overrides = {
-      garbage_day = { enable = false },
-    },
+    overrides = {},
   },
   ---@type ArSession
   session = { enable = true, variant = 'persisted' },

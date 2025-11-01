@@ -468,7 +468,9 @@ return {
       {
         'Weissle/persistent-breakpoints.nvim',
         event = { 'BufReadPost' },
-        cond = false,
+        cond = function()
+          return ar.get_plugin_cond('persistent-breakpoints.nvim')
+        end,
         -- stylua: ignore
         keys = {
           { '<localleader>dbp', pbp('toggle_breakpoint'), desc = 'dap: toggle breakpoint', },

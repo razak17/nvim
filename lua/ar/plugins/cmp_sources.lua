@@ -9,7 +9,7 @@ return {
     dependencies = {
       {
         'hrsh7th/cmp-path',
-        cond = false,
+        cond = function() return ar.get_plugin_cond('cmp-path') end,
         specs = {
           {
             'hrsh7th/nvim-cmp',
@@ -246,7 +246,7 @@ return {
       },
       {
         'SergioRibera/cmp-dotenv',
-        cond = false,
+        cond = function() return ar.get_plugin_cond('cmp-dotenv') end,
         specs = {
           {
             'hrsh7th/nvim-cmp',
@@ -344,7 +344,10 @@ return {
       },
       {
         'uga-rosa/cmp-dictionary',
-        cond = ar.plugins.overrides.dict.enable,
+        cond = function()
+          local condition = ar.plugins.overrides.dict.enable
+          return ar.get_plugin_cond('cmp-dictionary', condition)
+        end,
         config = function()
           local en_dict =
             join_paths(vim.fn.stdpath('data'), 'site', 'spell', 'en.dict')

@@ -1196,21 +1196,21 @@ return {
       { flexible = 7, scrollbar, empty_component },
     }
 
-      ar.augroup('HeirlineGitRemote', {
-        event = { 'VimEnter' },
-        once = true,
-        command = function()
-          local function update() stl.update_ahead_behind(true, true) end
-          ar.set_timeout(0, 10000, update)
-        end,
-      }, {
-        event = { 'TermLeave' },
-        command = function() stl.update_ahead_behind(true) end,
-      }, {
-        event = { 'User' },
-        pattern = { 'Neogit*', 'GitSigns*' },
-        command = function() stl.update_ahead_behind(true) end,
-      })
+    ar.augroup('HeirlineGitRemote', {
+      event = { 'VimEnter' },
+      once = true,
+      command = function()
+        local function update() stl.update_ahead_behind(true, true) end
+        ar.set_timeout(0, 10000, update)
+      end,
+    }, {
+      event = { 'TermLeave' },
+      command = function() stl.update_ahead_behind(true) end,
+    }, {
+      event = { 'User' },
+      pattern = { 'Neogit*', 'GitSigns*' },
+      command = function() stl.update_ahead_behind(true) end,
+    })
 
     return vim.tbl_extend('force', opts or {}, {
       statusline = vim.tbl_extend('force', opts.statusline or {}, {

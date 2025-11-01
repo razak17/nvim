@@ -60,9 +60,12 @@ return {
     {
       'razak17/lab.nvim',
       event = { 'InsertEnter' },
-      cond = not minimal
-        and ar.completion.enable
-        and ar_config.completion.variant == 'cmp',
+      cond = function()
+        local condition = not minimal
+          and ar.completion.enable
+          and ar_config.completion.variant == 'cmp'
+        return ar.get_plugin_cond('lab.nvim', condition)
+      end,
       keys = {
         { '<leader>rl', ':Lab code run<CR>', desc = 'lab: run' },
         { '<leader>rq', ':Lab code stop<CR>', desc = 'lab: stop' },
@@ -193,13 +196,13 @@ return {
       mode = 'float',
       filetype = {
         v = 'v run',
-        tex = function(...)
+        tex = function()
           require('code_runner.hooks.tectonic').build(
             preview_cmd,
             { '--keep-logs' }
           )
         end,
-        markdown = function(...)
+        markdown = function()
           local hook = require('code_runner.hooks.preview_pdf')
           require('code_runner.hooks.ui').select({
             Marp = function()
@@ -234,7 +237,7 @@ return {
         javascript = 'node',
         java = 'cd $dir && javac $fileName && java $fileNameWithoutExt',
         kotlin = 'cd $dir && kotlinc-native $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt.kexe',
-        c = function(...)
+        c = function()
           local c_base = {
             'cd $dir &&',
             'gcc $fileName -o',
@@ -264,7 +267,7 @@ return {
         typescriptreact = 'yarn dev$end',
         rust = 'cd $dir && rustc $fileName && $dir$fileNameWithoutExt',
         dart = 'dart',
-        cs = function(...)
+        cs = function()
           local root_dir =
             require('null-ls.utils').root_pattern('*.csproj')(vim.uv.cwd())
           return 'cd ' .. root_dir .. ' && dotnet run$end'

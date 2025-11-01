@@ -76,7 +76,10 @@ has_parser = ar.memoize(has_parser)
 return {
   {
     'nvimtools/none-ls.nvim',
-    cond = not minimal and ar_config.lsp.null_ls.enable,
+    cond = function()
+      local condition = not minimal and ar_config.lsp.null_ls.enable
+      return ar.get_plugin_cond('none-ls.nvim', condition)
+    end,
     event = { 'VeryLazy' },
     keys = function()
       local mappings = {

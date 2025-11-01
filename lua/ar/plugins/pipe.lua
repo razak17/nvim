@@ -9,9 +9,8 @@ return {
   {
     'willothy/flatten.nvim',
     lazy = false,
-    enabled = false,
     cond = function()
-      local condition = not minimal and ar_config.flatten.enable
+      local condition = not minimal
       return ar.get_plugin_cond('flatten.nvim', condition)
     end,
     priority = 1001,

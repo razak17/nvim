@@ -2,17 +2,18 @@ local api = vim.api
 local ui = ar.ui
 local codicons = ui.codicons
 
-local function get_cond()
-  return not ar.plugins.minimal
+local function get_cond(plugin)
+  local condition = not ar.plugins.minimal
     and ar_config.notifier.enable
     and ar_config.notifier.variant == 'nvim-notify'
+  return ar.get_plugin_cond(plugin, condition)
 end
 
 return {
   {
     'rcarriga/nvim-notify',
     event = 'BufRead',
-    cond = get_cond,
+    cond = function() get_cond('nvim-notify') end,
     -- stylua: ignore
     keys = {
       { '<leader>nn', '<cmd>Notifications<CR>', desc = 'notify: show' },
@@ -57,7 +58,7 @@ return {
     'nvim-telescope/telescope.nvim',
     optional = true,
     keys = function(_, keys)
-      if get_cond() then
+      if get_cond('nvim-notify') then
         table.insert(keys or {}, {
           '<leader>fn',
           function() require('telescope').extensions.notify.notify() end,
@@ -66,7 +67,8 @@ return {
       end
     end,
     opts = function(_, opts)
-      return get_cond() and vim.g.telescope_add_extension({ 'notify' }, opts)
+      return get_cond('nvim-notify')
+          and vim.g.telescope_add_extension({ 'notify' }, opts)
         or opts
     end,
   },

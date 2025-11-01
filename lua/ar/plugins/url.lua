@@ -3,9 +3,12 @@ local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 return {
   {
     'chrishrb/gx.nvim',
-    cond = ar_config.gx.enable
-      and ar_config.gx.variant == 'plugin'
-      and not minimal,
+    cond = function()
+      local condition = ar_config.gx.enable
+        and ar_config.gx.variant == 'plugin'
+        and not minimal
+      return ar.get_plugin_cond('gx.nvim', condition)
+    end,
     keys = { { 'gx', '<Cmd>Browse<cr>', mode = { 'n', 'x' } } },
     cmd = { 'Browse' },
     init = function() vim.g.netrw_nogx = 1 end,
@@ -15,7 +18,7 @@ return {
   {
     'axieax/urlview.nvim',
     cmd = { 'UrlView' },
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('urlview.nvim', not minimal) end,
     init = function()
       vim.g.whichkey_add_spec({ '<localleader>u', group = 'URL' })
     end,

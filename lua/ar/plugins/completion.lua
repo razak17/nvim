@@ -35,7 +35,10 @@ ar.completion.config = vim.tbl_extend('force', ar.completion.config or {}, {
 return {
   {
     'hrsh7th/nvim-cmp',
-    cond = ar.completion.enable and not minimal and is_cmp,
+    cond = function()
+      local condition = ar.completion.enable and not minimal and is_cmp
+      return ar.get_plugin_cond('nvim-cmp', condition)
+    end,
     event = { 'InsertEnter', 'CmdlineEnter' },
     opts = function(_, opts)
       local snippet = vim.snippet

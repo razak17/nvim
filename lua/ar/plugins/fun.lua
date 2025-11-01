@@ -50,7 +50,6 @@ return {
   {
     desc = 'Vim plugin: footprints. Highlight last edited lines.',
     'axlebedev/vim-footprints',
-    enabled = false,
     cond = function() return ar.get_plugin_cond('vim-footprints', not minimal) end,
     lazy = false,
     cmd = {

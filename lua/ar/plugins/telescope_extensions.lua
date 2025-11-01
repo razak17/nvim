@@ -168,7 +168,9 @@ return {
       },
       {
         'nvim-telescope/telescope-smart-history.nvim',
-        cond = false,
+        cond = function()
+          return ar.get_plugin_cond('telescope-smart-history.nvim')
+        end,
         specs = {
           'nvim-telescope/telescope.nvim',
           optional = true,

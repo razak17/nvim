@@ -21,7 +21,10 @@ end
 return {
   {
     'A7Lavinraj/fyler.nvim',
-    cond = function() return ar_config.explorer.variant == 'fyler' end,
+    cond = function()
+      local condition = ar_config.explorer.variant == 'fyler'
+      return ar.get_plugin_cond('fyler.nvim', condition)
+    end,
     branch = 'stable',
     cmd = { 'Fyler' },
     keys = {
@@ -69,7 +72,9 @@ return {
   },
   {
     'nvim-neo-tree/neo-tree.nvim',
-    cond = function() return ar_config.explorer.variant == 'neo-tree' end,
+    cond = function()
+      return ar.get_plugin_cond('neo-tree.nvim', ar_config.explorer.variant)
+    end,
     branch = 'v3.x',
     cmd = { 'Neotree' },
     keys = {
@@ -376,7 +381,12 @@ return {
   },
   {
     'nvim-mini/mini.files',
-    cond = ar_config.explorer.variant == 'mini.files',
+    cond = function()
+      return ar.get_plugin_cond(
+        'mini.files',
+        ar_config.explorer.variant == 'mini.files'
+      )
+    end,
     keys = {
       {
         '<leader>ee',
@@ -461,7 +471,10 @@ return {
   },
   {
     'stevearc/oil.nvim',
-    cond = ar_config.explorer.variant == 'oil',
+    cond = function()
+      local condition = ar_config.explorer.variant == 'oil'
+      return ar.get_plugin_cond('oil.nvim', condition)
+    end,
     keys = {
       {
         '<C-n>',

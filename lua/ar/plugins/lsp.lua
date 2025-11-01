@@ -120,7 +120,9 @@ return {
           dependencies = {
             {
               'folke/neoconf.nvim',
-              cond = ar.lsp.enable and false,
+              cond = function()
+                return ar.get_plugin_cond('neoconf.nvim', ar.lsp.enable)
+              end,
               cmd = { 'Neoconf' },
               opts = {
                 local_settings = '.nvim.json',

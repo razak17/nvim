@@ -18,7 +18,7 @@ return {
   -- FIX: Causes performance issues in large folds (~1000+ lines)
   {
     'TungstnBallon/conflict.nvim',
-    cond = function() return git_cond('conflict.nvim') and false end,
+    cond = function() return git_cond('conflict.nvim') end,
     event = { 'BufReadPre', 'BufNewFile' },
     keys = {
       { '<leader>g?n', '<Plug>ConflictJumpToNext', desc = 'next conflict' },
@@ -781,7 +781,7 @@ return {
   },
   {
     'akinsho/git-conflict.nvim',
-    cond = git_cond('git-conflict.nvim') and false,
+    cond = git_cond('git-conflict.nvim'),
     event = 'BufReadPre',
     opts = {
       disable_diagnostics = true,

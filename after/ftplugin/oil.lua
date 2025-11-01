@@ -42,12 +42,12 @@ api.nvim_buf_create_user_command(
 api.nvim_buf_create_user_command(
   0,
   'EmptyTrash',
-  function(params) oil.empty_trash() end,
+  function() oil.empty_trash() end,
   { desc = 'Empty the trash directory' }
 )
 api.nvim_buf_create_user_command(
   0,
   'OpenTerminal',
-  function(params) require('oil.adapters.ssh').open_terminal() end,
+  function() require('oil.adapters.ssh').open_terminal() end,
   { desc = 'Open the debug terminal for ssh connections' }
 )

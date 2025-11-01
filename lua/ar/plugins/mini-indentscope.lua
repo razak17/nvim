@@ -7,9 +7,10 @@ return {
     cond = function()
       local indentline_enable = ar_config.ui.indentline.enable
       local indentline_variant = ar_config.ui.indentline.variant
-      return not minimal
+      local condition = not minimal
         and indentline_enable
         and indentline_variant == 'mini.indentscope'
+      return ar.get_plugin_cond('mini.indentscope', condition)
     end,
     event = 'UIEnter',
     opts = {

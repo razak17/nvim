@@ -1,13 +1,15 @@
-local function get_cond(plugin)
+local function get_cond(plugin, variant)
   return function()
-    return ar_config.session.enable and ar_config.session.variant == plugin
+    local condition = ar_config.session.enable
+      and ar_config.session.variant == variant
+    return ar.get_plugin_cond(plugin, condition)
   end
 end
 
 return {
   {
     'folke/persistence.nvim',
-    cond = get_cond('persistence'),
+    cond = get_cond('persistence.nvim', 'persistence'),
     event = 'BufReadPre',
     opts = {},
     -- stylua: ignore
@@ -21,7 +23,7 @@ return {
   {
     {
       'olimorris/persisted.nvim',
-      cond = get_cond('persisted'),
+      cond = get_cond('persisted.nvim', 'persisted'),
       event = 'BufReadPre',
       cmd = { 'SessionLoad', 'SessionLoadLast', 'SessionSelect', 'SessionStop' },
       init = function()

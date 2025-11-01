@@ -12,7 +12,9 @@ return {
   {
     'Davidyz/inlayhint-filler.nvim',
     -- NOTE: Doesn't work when nvim-lsp-endhints is enabled
-    cond = ar.lsp.enable and false,
+    cond = function()
+      return ar.get_plugin_cond('inlayhint-filler.nvim', ar.lsp.enable)
+    end,
     keys = {
       {
         '<leader>lH',

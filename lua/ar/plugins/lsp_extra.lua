@@ -51,7 +51,10 @@ return {
   },
   {
     'zeioth/garbage-day.nvim',
-    cond = ar.lsp.enable and ar_config.plugins.overrides.garbage_day.enable,
+    cond = function()
+      local condition = ar.lsp.enable
+      return ar.get_plugin_cond('garbage-day.nvim', condition)
+    end,
     event = 'LspAttach',
     opts = {
       grace_period = 60 * 15,
