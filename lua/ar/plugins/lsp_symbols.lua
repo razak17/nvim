@@ -132,7 +132,10 @@ return {
   },
   {
     'SmiteshP/nvim-navbuddy',
-    cond = function() return not minimal and ar.lsp.enable end,
+    cond = function()
+      local condition = not minimal and ar.lsp.enable
+      return ar.get_plugin_cond('nvim-navbuddy', condition)
+    end,
     cmd = { 'Navbuddy' },
     lazy = false,
     keys = {

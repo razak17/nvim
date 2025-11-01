@@ -184,7 +184,9 @@ return {
   },
   {
     'antosha417/nvim-lsp-file-operations',
-    cond = ar.lsp.enable,
+    cond = function()
+      return ar.get_plugin_cond('nvim-lsp-file-operations', ar.lsp.enable)
+    end,
     event = 'LspAttach',
     opts = {},
   },

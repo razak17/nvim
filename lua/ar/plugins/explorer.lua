@@ -73,7 +73,7 @@ return {
   {
     'nvim-neo-tree/neo-tree.nvim',
     cond = function()
-      return ar.get_plugin_cond('neo-tree.nvim', ar_config.explorer.variant)
+      return ar.get_plugin_cond('neo-tree.nvim', ar_config.explorer.variant == 'neo-tree')
     end,
     branch = 'v3.x',
     cmd = { 'Neotree' },

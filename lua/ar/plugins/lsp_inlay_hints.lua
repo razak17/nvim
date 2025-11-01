@@ -1,7 +1,9 @@
 return {
   {
     'chrisgrieser/nvim-lsp-endhints',
-    cond = ar.lsp.enable,
+    cond = function()
+      return ar.get_plugin_cond('nvim-lsp-endhints', ar.lsp.enable)
+    end,
     event = 'LspAttach',
     opts = {
       icons = { type = '󰜁 ', parameter = '󰏪 ' },

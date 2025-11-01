@@ -14,9 +14,12 @@ return {
   },
   {
     'rachartier/tiny-inline-diagnostic.nvim',
-    cond = not ar_config.lsp.virtual_text.enable
-      and ar.lsp.enable
-      and virtual_lines_variant == 'tiny-inline',
+    cond = function()
+      local condition = not ar_config.lsp.virtual_text.enable
+        and ar.lsp.enable
+        and virtual_lines_variant == 'tiny-inline'
+      return ar.get_plugin_cond('tiny-inline-diagnostic.nvim', condition)
+    end,
     event = 'LspAttach',
     priority = 1000,
     opts = {

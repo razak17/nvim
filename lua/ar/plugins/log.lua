@@ -27,7 +27,7 @@ return {
   {
     'chrisgrieser/nvim-chainsaw',
     ft = 'lua', -- in lua, load directly for `Chainsaw` global
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('nvim-chainsaw', not minimal) end,
     opts = {
       marker = '🪲',
       visuals = { icon = '' },

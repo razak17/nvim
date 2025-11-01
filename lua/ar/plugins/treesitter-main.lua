@@ -157,7 +157,10 @@ return {
   },
   {
     'MeanderingProgrammer/treesitter-modules.nvim',
-    cond = not minimal and ts_enabled,
+    cond = function()
+      local condition = not minimal and ts_enabled
+      return ar.get_plugin_cond('treesitter-modules.nvim', condition)
+    end,
     event = { 'BufRead' },
     opts = {
       incremental_selection = {
