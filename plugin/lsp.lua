@@ -673,10 +673,20 @@ local function setup_lsp_stop_detached()
   })
 end
 
+local workspace_diagnostics_exclusions = {
+  'kulala',
+  'render-markdown',
+  'injected',
+  'dev-tools',
+  'copilot'
+}
+
 ---@param client vim.lsp.Client
 ---@param bufnr number
 local function setup_lsp_plugins(client, bufnr)
-  if ar.has('workspace-diagnostics.nvim') then
+  local name = vim.lsp.get_client_by_id(client.id).name
+  local excluded = vim.tbl_contains(workspace_diagnostics_exclusions, name)
+  if ar.has('workspace-diagnostics.nvim') and not excluded then
     require('workspace-diagnostics').populate_workspace_diagnostics(
       client,
       bufnr
