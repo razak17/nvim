@@ -62,7 +62,7 @@ return {
   {
     'nabekou29/pair-lens.nvim',
     cond = function()
-      local condition = not minimal and ar.ts_extra_enabled and false
+      local condition = not minimal and ar.ts_extra_enabled
       return ar.get_plugin_cond('pair-lens.nvim', condition)
     end,
     event = { 'BufReadPre', 'BufNewFile' },

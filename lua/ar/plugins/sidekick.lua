@@ -5,7 +5,7 @@ return {
   {
     'folke/sidekick.nvim',
     cond = function()
-      local condition = not minimal and ar.ai.enable and false
+      local condition = not minimal and ar.ai.enable
       return ar.get_plugin_cond('sidekick.nvim', condition)
     end,
     lazy = true,
