@@ -1,7 +1,7 @@
 -- ref: https://github.com/rockyzhang24/dotfiles/blob/master/.config/nvim/lua/rockyz/lsp/progress.lua
 
 local api, o = vim.api, vim.o
-local border = ar.ui.current.border
+-- local border = ar.ui.current.border
 
 local M = {
   icons = {
@@ -48,7 +48,7 @@ end
 
 -- Get the row position of the current floating window. If it is the first one, it is placed just
 -- right above the statuslien; if not, it is placed on top of others.
-local function get_win_row(pos) return o.lines - o.cmdheight - 1 - pos * 3 end
+local function get_win_row(pos) return o.lines - o.cmdheight - pos * 3 end
 
 -- Update the window config
 local function win_update_config(client)
