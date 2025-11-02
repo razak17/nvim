@@ -190,11 +190,14 @@ local function generate_overrides(override)
     { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
   })
   -- Order matters here
-  ar.list_insert(overrides, generate_popup_overrides())
-  ar.list_insert(overrides, generate_completion_overrides())
-  ar.list_insert(overrides, generate_lsp_overrides())
-  ar.list_insert(overrides, generate_picker_overrides())
-  ar.list_insert(overrides, generate_plugin_overrides())
+  ar.list_insert(
+    overrides,
+    generate_popup_overrides(),
+    generate_completion_overrides(),
+    generate_lsp_overrides(),
+    generate_picker_overrides(),
+    generate_plugin_overrides()
+  )
   return overrides
 end
 
