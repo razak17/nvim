@@ -56,7 +56,7 @@ end
 return {
   {
     'NickvanDyke/opencode.nvim',
-    cond = function() get_cond('opencode.nvim', 'tui') end,
+    cond = function() return get_cond('opencode.nvim', 'tui') end,
     init = function()
       vim.g.whichkey_add_spec({
         '<leader>ao',
@@ -90,7 +90,7 @@ return {
   },
   {
     'sudo-tee/opencode.nvim',
-    cond = function() get_cond('opencode.nvim', 'frontend') end,
+    cond = function() return  get_cond('opencode.nvim', 'frontend') end,
     name = 'opencode-frontend.nvim',
     event = 'VeryLazy',
     init = function()
