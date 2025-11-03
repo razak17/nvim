@@ -27,17 +27,63 @@ end
 
 -- https://github.com/chrisgrieser/.config/blob/main/nvim/after/ftplugin/typescript.lua?plain=1#L13
 local function biome_format()
-  local actions = { 'source.fixAll.biome' }
-  for i = 1, #actions do
-    vim.defer_fn(function()
-      lsp.buf.code_action({
-        ---@diagnostic disable-next-line: missing-fields, assign-type-mismatch
-        context = { only = { actions[i] } },
-        apply = true,
-      })
-    end, i * 60)
+  local bufnr = api.nvim_get_current_buf()
+  local client = lsp.get_clients({ bufnr = bufnr, name = 'biome' })[1]
+
+  -- format client filter, to only format items for one single client, so a format operation for biome doesn't drag tsserver in.
+  local client_filter = function(formatter) return formatter.name == client.name end
+
+  -- Step 1: Apply fixAll synchronously
+  local win = api.nvim_get_current_win()
+  local params = lsp.util.make_range_params(win, client.offset_encoding)
+  params.context = {
+    only = { 'source.fixAll.biome' },
+    diagnostics = {},
+  }
+
+  local fixall_results = lsp.buf_request_sync(
+    bufnr,
+    'textDocument/codeAction',
+    params,
+    1000 -- 1 second timeout
+  )
+
+  if fixall_results then
+    -- Don't need client id, since only biome is running this action
+    for _, result in pairs(fixall_results) do
+      if result.result then
+        for _, action in ipairs(result.result) do
+          if action.edit then
+            lsp.util.apply_workspace_edit(action.edit, client.offset_encoding)
+          elseif action.command then
+            client:exec_cmd(action.command)
+          end
+        end
+      end
+    end
   end
-  vim.defer_fn(lsp.buf.format, (#actions + 2) * 60)
+
+  -- Step 2: Wait a tiny bit for edits to settle
+  vim.cmd('redraw')
+
+  -- Step 3: Format synchronously
+  lsp.buf.format({
+    async = false,
+    filter = client_filter,
+    timeout_ms = 3000,
+  })
+
+  -- local actions = { 'source.fixAll.biome' }
+  -- for i = 1, #actions do
+  --   vim.defer_fn(function()
+  --     lsp.buf.code_action({
+  --       ---@diagnostic disable-next-line: missing-fields, assign-type-mismatch
+  --       context = { only = { actions[i] } },
+  --       apply = true,
+  --     })
+  --   end, i * 60)
+  -- end
+  -- vim.defer_fn(lsp.buf.format, (#actions + 2) * 60)
 end
 
 ---@param opts {bufnr: integer, async: boolean, filter: fun(lsp.Client): boolean}

@@ -678,7 +678,7 @@ local workspace_diagnostics_exclusions = {
   'render-markdown',
   'injected',
   'dev-tools',
-  'copilot'
+  'copilot',
 }
 
 ---@param client vim.lsp.Client
