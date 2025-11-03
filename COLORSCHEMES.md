@@ -29,8 +29,11 @@
 - doom-one
 - duckbones
 - duskfox
+- earthsong
+- earthsong-mute
 - eldritch
 - eldritch-dark
+- eldritch-minimal
 - everforest
 - evergarden
 - evergarden-fall
@@ -61,6 +64,7 @@
 - hojicha
 - horizon
 - iceclimber
+- irises
 - jellybeans
 - jellybeans-default
 - jellybeans-light

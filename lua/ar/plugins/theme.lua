@@ -322,6 +322,19 @@ return {
       }, true)
     end,
   },
+  {
+    'guillermodotn/nvim-earthsong',
+    name = 'earthsong',
+    cond = get_cond({ 'earthsong', 'earthsong-mute' }),
+    priority = get_priority({ 'earthsong', 'earthsong-mute' }),
+    event = get_event({ 'earthsong', 'earthsong-mute' }),
+    init = function()
+      theming.apply_overrides('earthsong-mute', {
+        { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.2 } } },
+        { WhichKeyBorder = { link = 'FloatBorder' } },
+      }, true)
+    end,
+  },
   ------------------------------------------------------------------------------
   -- Monochrome
   {
