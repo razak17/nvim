@@ -79,9 +79,7 @@ return {
         },
         { DiffAdd = { bg = { from = 'DiffAdd', alter = -0.65 } } },
         {
-          GitSignsAdd = {
-            fg = { from = 'DiffAdd', attr = 'bg', alter = 1.1 },
-          },
+          GitSignsAdd = { fg = { from = 'DiffAdd', attr = 'bg', alter = 1.1 } },
         },
         { WinSeparator = { fg = { from = 'LineNr', alter = -0.6 } } },
       }, true)
@@ -147,18 +145,39 @@ return {
     cond = get_cond({ 'catppuccin' }),
     priority = get_priority({ 'catppuccin' }),
     event = get_event({ 'catppuccin' }),
+    init = function()
+      theming.apply_overrides('catppuccin', {
+        { WinSeparator = { fg = { from = 'WinSeparator', alter = 2.2 } } },
+      }, true)
+    end,
   },
   {
     'biisal/blackhole',
     cond = get_cond({ 'blackhole' }),
     priority = get_priority({ 'blackhole' }),
     event = get_event({ 'blackhole' }),
+    init = function()
+      theming.apply_overrides('blackhole', {
+        { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
+      }, true)
+    end,
   },
   {
     'bettervim/yugen.nvim',
     cond = get_cond({ 'yugen' }),
     priority = get_priority({ 'yugen' }),
     event = get_event({ 'yugen' }),
+    init = function()
+      theming.apply_overrides('yugen', {
+        {
+          WinSeparator = {
+            bg = 'NONE',
+            fg = { from = 'WinSeparator', alter = -0.1 },
+          },
+        },
+        { WhichKeyBorder = { link = 'FloatBorder' } },
+      }, true)
+    end,
   },
   {
     'bluz71/vim-moonfly-colors',
@@ -166,18 +185,43 @@ return {
     cond = get_cond({ 'moonfly' }),
     priority = get_priority({ 'moonfly' }),
     event = get_event({ 'moonfly' }),
+    init = function()
+      theming.apply_overrides('moonfly', {
+        {
+          WinSeparator = {
+            bg = 'NONE',
+            fg = { from = 'WinSeparator', alter = -0.1 },
+          },
+        },
+      }, true)
+    end,
   },
   {
     'cooperuser/glowbeam.nvim',
     cond = get_cond({ 'glowbeam' }),
     priority = get_priority({ 'glowbeam' }),
     event = get_event({ 'glowbeam' }),
+    init = function()
+      theming.apply_overrides('glowbeam', {
+        { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.7 } } },
+      }, true)
+    end,
   },
   {
     'danilo-augusto/vim-afterglow',
     cond = get_cond({ 'afterglow' }),
     priority = get_priority({ 'afterglow' }),
     event = get_event({ 'afterglow' }),
+    init = function()
+      theming.apply_overrides('afterglow', {
+        {
+          WinSeparator = {
+            bg = 'NONE',
+            fg = { from = 'WinSeparator', alter = -0.7 },
+          },
+        },
+      }, true)
+    end,
   },
   ------------------------------------------------------------------------------
   -- Warm
@@ -193,9 +237,7 @@ return {
         { Visual = { bg = { from = 'CursorLine', alter = 0.1 } } },
         { DiffAdd = { bg = { from = 'DiffAdd', alter = -0.15 } } },
         {
-          GitSignsAdd = {
-            fg = { from = 'DiffAdd', attr = 'bg', alter = 1.1 },
-          },
+          GitSignsAdd = { fg = { from = 'DiffAdd', attr = 'bg', alter = 1.1 } },
         },
         { WinSeparator = { fg = { from = 'Comment' } } },
       }, true)
@@ -383,12 +425,6 @@ return {
     end,
   },
   {
-    'stevedylandev/darkmatter-nvim',
-    cond = get_cond({ 'darkmatter' }),
-    priority = get_priority({ 'darkmatter' }),
-    event = get_event({ 'darkmatter' }),
-  },
-  {
     'https://git.sr.ht/~p00f/alabaster.nvim',
     cond = get_cond({ 'alabaster' }),
     priority = get_priority({ 'alabaster' }),
@@ -398,27 +434,6 @@ return {
         { WinSeparator = { fg = { from = 'NonText', alter = -0.4 } } },
       }, true)
     end,
-  },
-  {
-    'cdmill/neomodern.nvim',
-    -- enabled = false,
-    cond = get_cond({ 'neomodern' }),
-    priority = get_priority({ 'neomodern' }),
-    event = get_event({ 'neomodern' }),
-    opts = {
-      theme = 'iceclimber', -- 'iceclimber' | 'gyokuro' | 'hojicha' | 'roseprime'
-      variant = 'dark', -- 'light' | 'dark', or set via vim.o.background
-    },
-    config = function(_, opts)
-      require('neomodern').setup(opts)
-      if colorscheme == 'neomodern' then require('neomodern').load() end
-    end,
-  },
-  {
-    'ficcdaf/ashen.nvim',
-    cond = get_cond({ 'ashen' }),
-    priority = get_priority({ 'ashen' }),
-    event = get_event({ 'ashen' }),
   },
   {
     'wnkz/monoglow.nvim',
@@ -437,19 +452,6 @@ return {
         },
       }, true)
     end,
-  },
-  {
-    'aktersnurra/no-clown-fiesta.nvim',
-    cond = get_cond({ 'no-clown-fiesta' }),
-    priority = get_priority({ 'no-clown-fiesta' }),
-    event = get_event({ 'no-clown-fiesta' }),
-    opts = {},
-  },
-  {
-    'kvrohit/rasmus.nvim',
-    cond = get_cond({ 'rasmus' }),
-    priority = get_priority({ 'rasmus' }),
-    event = get_event({ 'rasmus' }),
   },
   {
     'mitch1000/backpack.nvim',
@@ -479,6 +481,46 @@ return {
         { NeogitDiffDelete = { link = 'DiffDelete' } },
       }, true)
     end,
+  },
+  {
+    'stevedylandev/darkmatter-nvim',
+    cond = get_cond({ 'darkmatter' }),
+    priority = get_priority({ 'darkmatter' }),
+    event = get_event({ 'darkmatter' }),
+  },
+  {
+    'cdmill/neomodern.nvim',
+    -- enabled = false,
+    cond = get_cond({ 'neomodern' }),
+    priority = get_priority({ 'neomodern' }),
+    event = get_event({ 'neomodern' }),
+    opts = {
+      theme = 'iceclimber', -- 'iceclimber' | 'gyokuro' | 'hojicha' | 'roseprime'
+      variant = 'dark', -- 'light' | 'dark', or set via vim.o.background
+    },
+    config = function(_, opts)
+      require('neomodern').setup(opts)
+      if colorscheme == 'neomodern' then require('neomodern').load() end
+    end,
+  },
+  {
+    'ficcdaf/ashen.nvim',
+    cond = get_cond({ 'ashen' }),
+    priority = get_priority({ 'ashen' }),
+    event = get_event({ 'ashen' }),
+  },
+  {
+    'aktersnurra/no-clown-fiesta.nvim',
+    cond = get_cond({ 'no-clown-fiesta' }),
+    priority = get_priority({ 'no-clown-fiesta' }),
+    event = get_event({ 'no-clown-fiesta' }),
+    opts = {},
+  },
+  {
+    'kvrohit/rasmus.nvim',
+    cond = get_cond({ 'rasmus' }),
+    priority = get_priority({ 'rasmus' }),
+    event = get_event({ 'rasmus' }),
   },
   {
     'samharju/serene.nvim',

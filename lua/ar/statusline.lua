@@ -521,9 +521,9 @@ function M.format_servers(servers)
   if #servers > 2 then
     return fmt('%s +%d %s', servers[1], #servers - 1, separator)
   end
-  local names = table.concat(servers, fmt('%s ', separator))
+  local names = table.concat(servers, fmt(' %s ', separator))
   -- return table.concat(servers, ', ') .. ' ' .. separator
-  return names .. separator
+  return names  .. ' '.. separator
 end
 
 -- Get linters (from null-ls)

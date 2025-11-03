@@ -39,7 +39,7 @@ local force_inactive_filetypes = {
   '^undotree$',
 }
 
-local function setup_colors()
+local function setup_colors(colorscheme)
   local hl = ar.highlight
   local P = {
     bg_dark = hl.get('StatusLine', 'bg'),
@@ -53,7 +53,7 @@ local function setup_colors()
     forest_green = hl.get('DiffAdd', 'fg'),
     lightgreen = hl.get('DiagnosticVirtualTextHint', 'bg'),
   }
-  if vim.g.colors_name == 'default' then
+  if colorscheme == 'default' then
     return vim.tbl_deep_extend('force', P, {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.3),
       fg = hl.get('Normal', 'fg'),
@@ -66,7 +66,7 @@ local function setup_colors()
       lightgreen = hl.get('DiagnosticVirtualTextHint', 'fg'),
     })
   end
-  if vim.g.colors_name == 'peachpuff' then
+  if colorscheme == 'peachpuff' then
     return vim.tbl_deep_extend('force', P, {
       bg_dark = hl.get('CursorLine', 'bg'),
       fg = hl.get('Comment', 'fg'),
@@ -81,52 +81,64 @@ local function setup_colors()
       orange = hl.get('Constant', 'fg'),
     })
   end
-  if vim.g.colors_name == 'retrobox' then
+  if colorscheme == 'retrobox' then
     return vim.tbl_deep_extend('force', P, {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.2),
       blue = hl.get('DiagnosticInfo', 'fg'),
       dark_orange = hl.get('WarningMsg', 'fg'),
     })
   end
-  if vim.g.colors_name == 'habamax' then
+  if colorscheme == 'habamax' then
     return vim.tbl_deep_extend('force', P, {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.2),
       blue = hl.get('DiagnosticInfo', 'fg'),
       dark_orange = hl.get('WarningMsg', 'fg'),
     })
   end
-  if vim.g.colors_name == 'slate' then
+  if colorscheme == 'slate' then
     return vim.tbl_deep_extend('force', P, {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.1),
       blue = hl.get('DiagnosticInfo', 'fg'),
       dark_orange = hl.get('WarningMsg', 'fg'),
     })
   end
-  if vim.g.colors_name == 'vim' then
+  if colorscheme == 'vim' then
     return vim.tbl_deep_extend('force', P, {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.55),
     })
   end
-  if vim.g.colors_name == 'wildcharm' then
+  if colorscheme == 'wildcharm' then
     return vim.tbl_deep_extend('force', P, {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.6),
       blue = hl.get('DiagnosticInfo', 'fg'),
       dark_orange = hl.get('WarningMsg', 'fg'),
     })
   end
-  if vim.g.colors_name == 'zenbones' then
+  if colorscheme == 'zenbones' then
     return vim.tbl_deep_extend('force', P, {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.1),
       blue = hl.get('DiagnosticInfo', 'fg'),
       dark_orange = hl.get('WarningMsg', 'fg'),
     })
   end
-  if vim.g.colors_name == 'poimandres' then
+  if colorscheme == 'poimandres' then
     return vim.tbl_deep_extend('force', P, {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.25),
     })
   end
-  if vim.g.colors_name == 'gruvbox' then
+  if colorscheme == 'glowbeam' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.25),
+    })
+  end
+  if colorscheme == 'afterglow' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.25),
+      blue = hl.get('DiagnosticInfo', 'fg'),
+      dark_orange = hl.get('WarningMsg', 'fg'),
+    })
+  end
+  if colorscheme == 'gruvbox' then
     return vim.tbl_deep_extend('force', P, {
       bg_dark = hl.tint(hl.get('Normal', 'bg'), 0.25),
       blue = hl.tint(hl.get('Changed', 'fg'), -0.1),
@@ -135,7 +147,7 @@ local function setup_colors()
       lightgreen = hl.tint(hl.get('DiagnosticVirtualTextHint', 'fg'), -0.2),
     })
   end
-  if vim.g.colors_name == 'zenburn' then
+  if colorscheme == 'zenburn' then
     return vim.tbl_deep_extend('force', P, {
       bg_dark = hl.tint(hl.get('Normal', 'bg'), 0.25),
       blue = hl.tint(hl.get('Changed', 'fg'), -0.1),
@@ -145,7 +157,7 @@ local function setup_colors()
       lightgreen = hl.tint(hl.get('DiagnosticVirtualTextHint', 'fg'), -0.2),
     })
   end
-  if vim.g.colors_name == 'onedark' then P = require('onedark.palette') end
+  if colorscheme == 'onedark' then P = require('onedark.palette') end
   return P
 end
 
@@ -157,10 +169,10 @@ return {
     init = function()
       ar.augroup('Heirline', {
         event = 'ColorScheme',
-        command = function()
+        command = function(arg)
           if not ar.has('heirline.nvim') then return end
           local utils = require('heirline.utils')
-          utils.on_colorscheme(setup_colors)
+          utils.on_colorscheme(setup_colors(arg.match))
         end,
       })
     end,
