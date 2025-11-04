@@ -212,7 +212,7 @@ return {
           end,
         },
         biome = {
-          condition = function() return is_biome end,
+          condition = function() return not is_biome end,
           require_cwd = true,
         },
         -- https://github.com/mistweaverco/kulala-fmt
