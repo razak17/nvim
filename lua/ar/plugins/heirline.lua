@@ -155,6 +155,11 @@ local function setup_colors(colorscheme)
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.15),
     })
   end
+  if colorscheme == 'sunbather' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
+    })
+  end
   if colorscheme == 'no-clown-fiesta' then
     return vim.tbl_deep_extend('force', P, {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.2),

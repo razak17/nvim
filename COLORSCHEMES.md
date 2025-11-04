@@ -142,6 +142,7 @@
 - serenity
 - shadow
 - slate
+- sunbather
 - terafox
 - thorn
 - tokyobones

@@ -223,6 +223,23 @@ return {
       }, true)
     end,
   },
+  {
+    'nikolvs/vim-sunbather',
+    cond = get_cond({ 'sunbather' }),
+    priority = get_priority({ 'sunbather' }),
+    event = get_event({ 'sunbather' }),
+    init = function()
+      theming.apply_overrides('sunbather', {
+        { Visual = { bg = { from = 'Visual', alter = -0.7 }, fg = 'NONE' } },
+        {
+          WinSeparator = {
+            bg = 'NONE',
+            fg = { from = 'WinSeparator', alter = -0.7 },
+          },
+        },
+      }, true)
+    end,
+  },
   ------------------------------------------------------------------------------
   -- Warm
   {
