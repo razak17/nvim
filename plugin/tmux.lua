@@ -55,7 +55,7 @@ ar.augroup('TmuxUtils', {
   event = { 'VimLeave', 'VimLeavePre', 'FocusLost' },
   command = function() set_statusline(true) end,
 }, {
-  event = { 'ColorScheme', 'FocusGained' },
+  event = { 'ColorScheme', 'FocusGained', 'BufWinEnter' },
   command = function()
     -- NOTE: there is a race condition here as the colors
     -- for kitty to re-use need to be set AFTER the rest of the colorscheme
