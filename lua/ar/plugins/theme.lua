@@ -500,20 +500,15 @@ return {
     cond = get_cond({ 'darkmatter' }),
     priority = get_priority({ 'darkmatter' }),
     event = get_event({ 'darkmatter' }),
-  },
-  {
-    'cdmill/neomodern.nvim',
-    -- enabled = false,
-    cond = get_cond({ 'neomodern' }),
-    priority = get_priority({ 'neomodern' }),
-    event = get_event({ 'neomodern' }),
-    opts = {
-      theme = 'iceclimber', -- 'iceclimber' | 'gyokuro' | 'hojicha' | 'roseprime'
-      variant = 'dark', -- 'light' | 'dark', or set via vim.o.background
-    },
-    config = function(_, opts)
-      require('neomodern').setup(opts)
-      if colorscheme == 'neomodern' then require('neomodern').load() end
+    init = function()
+      theming.apply_overrides('darkmatter', {
+        { LineNr = { fg = { from = 'LineNr', alter = -0.25 } } },
+        { Comment = { fg = { from = 'Comment', alter = 0.45 } } },
+        { NonText = { link = 'Comment' } },
+        { Dim = { link = 'Comment' } },
+        { CursorLineNr = { link = 'TSString' } },
+        { WinSeparator = { fg = { from = 'Dim', alter = -0.35 } } },
+      }, true)
     end,
   },
   {
@@ -521,6 +516,16 @@ return {
     cond = get_cond({ 'ashen' }),
     priority = get_priority({ 'ashen' }),
     event = get_event({ 'ashen' }),
+    init = function()
+      theming.apply_overrides('ashen', {
+        {
+          WinSeparator = {
+            bg = 'NONE',
+            fg = { from = 'WinSeparator', alter = -0.05 },
+          },
+        },
+      }, true)
+    end,
   },
   {
     'aktersnurra/no-clown-fiesta.nvim',
@@ -528,18 +533,33 @@ return {
     priority = get_priority({ 'no-clown-fiesta' }),
     event = get_event({ 'no-clown-fiesta' }),
     opts = {},
+    init = function()
+      theming.apply_overrides('no-clown-fiesta', {
+        { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.45 } } },
+      }, true)
+    end,
   },
   {
     'kvrohit/rasmus.nvim',
     cond = get_cond({ 'rasmus' }),
     priority = get_priority({ 'rasmus' }),
     event = get_event({ 'rasmus' }),
+    init = function()
+      theming.apply_overrides('rasmus', {
+        { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.65 } } },
+      }, true)
+    end,
   },
   {
     'samharju/serene.nvim',
     cond = get_cond({ 'serene' }),
     priority = get_priority({ 'serene' }),
     event = get_event({ 'serene' }),
+    init = function()
+      theming.apply_overrides('serene', {
+        { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.35 } } },
+      }, true)
+    end,
   },
   {
     'Wansmer/serenity.nvim',
@@ -547,18 +567,31 @@ return {
     priority = get_priority({ 'serenity' }),
     event = get_event({ 'serenity' }),
     opts = {},
+    init = function() theming.apply_overrides('serenity', {}, true) end,
   },
   {
     'dotsilas/darcubox-nvim',
     cond = get_cond({ 'darcubox' }),
     priority = get_priority({ 'darcubox' }),
     event = get_event({ 'darcubox' }),
+    init = function()
+      theming.apply_overrides('darcubox', {
+        { WinSeparator = { fg = { from = 'LineNr', alter = -0.25 } } },
+      }, true)
+    end,
   },
   {
     'masar3141/mono-jade',
     cond = get_cond({ 'mono-jade' }),
     priority = get_priority({ 'mono-jade' }),
     event = get_event({ 'mono-jade' }),
+    init = function()
+      theming.apply_overrides('mono-jade', {
+        { CursorLine = { bg = { from = 'CursorLine', alter = -0.45 } } },
+        { Visual = { bg = { from = 'Visual', alter = -0.25 } } },
+        { WinSeparator = { fg = { from = 'LineNr', alter = -0.35 } } },
+      }, true)
+    end,
   },
   {
     'ferdinandrau/lavish.nvim',
@@ -566,6 +599,19 @@ return {
     priority = get_priority({ 'lavish' }),
     event = get_event({ 'lavish' }),
     -- config = function() require('lavish').apply() end,
+    init = function()
+      theming.apply_overrides('lavish', {
+        { CursorLine = { bg = { from = 'CursorLine', alter = 0.15 } } },
+        {
+          Visual = {
+            bg = { from = 'Visual', alter = -0.25 },
+            fg = 'NONE',
+          },
+        },
+        { NonText = { fg = { from = 'NonText', alter = 1.4 } } },
+        { WinSeparator = { fg = { from = 'LineNr', alter = -0.2 } } },
+      }, true)
+    end,
   },
   {
     'comfysage/evergarden',
@@ -577,12 +623,34 @@ return {
       variant = 'medium', -- 'hard'|'medium'|'soft'
       overrides = {},
     },
+    init = function()
+      theming.apply_overrides('evergarden', {
+        { WinSeparator = { fg = { from = 'LineNr', alter = -0.1 } } },
+      }, true)
+    end,
   },
   {
     'Yazeed1s/oh-lucy.nvim',
     cond = get_cond({ 'oh-lucy', 'oh-lucy-evening' }),
     priority = get_priority({ 'oh-lucy', 'oh-lucy-evening' }),
     event = get_event({ 'oh-lucy', 'oh-lucy-evening' }),
+    init = function()
+      theming.apply_overrides('oh-lucy', {
+        { WinSeparator = { fg = { from = 'LineNr', alter = -0.25 } } },
+      }, true)
+    end,
+  },
+  {
+    'cdmill/neomodern.nvim',
+    cond = get_cond({ 'iceclimber', 'gyokuro', 'hojicha', 'roseprime' }),
+    priority = get_priority({ 'iceclimber', 'gyokuro', 'hojicha', 'roseprime' }),
+    event = get_event({ 'iceclimber', 'gyokuro', 'hojicha', 'roseprime' }),
+    opts = { theme = 'iceclimber', variant = 'dark' },
+    init = function()
+      theming.apply_overrides('iceclimber', {
+        { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.25 } } },
+      }, true)
+    end,
   },
   ------------------------------------------------------------------------------
   -- Mild

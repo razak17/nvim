@@ -138,6 +138,68 @@ local function setup_colors(colorscheme)
       dark_orange = hl.get('WarningMsg', 'fg'),
     })
   end
+  if colorscheme == 'darkmatter' then
+    return vim.tbl_deep_extend('force', P, {
+      comment = hl.tint(hl.get('LineNr', 'fg'), -0.15),
+    })
+  end
+  if colorscheme == 'iceclimber' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.25),
+      blue = hl.get('DiagnosticInfo', 'fg'),
+      dark_orange = hl.get('WarningMsg', 'fg'),
+    })
+  end
+  if colorscheme == 'ashen' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.15),
+    })
+  end
+  if colorscheme == 'no-clown-fiesta' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.2),
+      blue = hl.get('DiagnosticInfo', 'fg'),
+      dark_orange = hl.get('WarningMsg', 'fg'),
+    })
+  end
+  if colorscheme == 'rasmus' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
+      comment = hl.tint(hl.get('Comment', 'fg'), 0.15),
+    })
+  end
+  if colorscheme == 'serenity' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
+    })
+  end
+  if colorscheme == 'darcubox' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.15),
+    })
+  end
+  if colorscheme == 'mono-jade' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.25),
+    })
+  end
+  if colorscheme == 'lavish' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.25),
+    })
+  end
+  if colorscheme == 'evergarden' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
+      dark_orange = hl.get('WarningMsg', 'fg'),
+    })
+  end
+  if colorscheme == 'oh-lucy' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
+      dark_orange = hl.get('WarningMsg', 'fg'),
+    })
+  end
   if colorscheme == 'gruvbox' then
     return vim.tbl_deep_extend('force', P, {
       bg_dark = hl.tint(hl.get('Normal', 'bg'), 0.25),
