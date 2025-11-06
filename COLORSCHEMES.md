@@ -40,6 +40,9 @@
 - evergarden-spring
 - evergarden-summer
 - evergarden-winter
+- ferriouscolor
+- ferriouscolor-dark
+- ferriouscolor-light
 - flexoki
 - flexoki-dawn
 - flexoki-moon

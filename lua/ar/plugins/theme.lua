@@ -273,6 +273,23 @@ return {
       theming.apply_overrides('wildberries', overrides)
     end,
   },
+  {
+    'ferrissushi/ferriouscolor.nvim',
+    cond = get_cond({ 'ferriouscolor' }),
+    priority = get_priority({ 'ferriouscolor' }),
+    event = get_event({ 'ferriouscolor' }),
+    init = function()
+      theming.apply_overrides('ferriouscolor', {
+        { Visual = { bg = { from = 'Visual', alter = -0.4 } } },
+        {
+          WinSeparator = {
+            bg = 'NONE',
+            fg = { from = 'WinSeparator', alter = -0.05 },
+          },
+        },
+      }, true)
+    end,
+  },
   ------------------------------------------------------------------------------
   -- Warm
   {
