@@ -160,6 +160,14 @@ local function setup_colors(colorscheme)
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
     })
   end
+  if colorscheme == 'wildberries' then
+    return vim.tbl_deep_extend('force', P, {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
+      blue = hl.get('DiagnosticInfo', 'fg'),
+      dark_orange = hl.get('WarningMsg', 'fg'),
+      comment = hl.tint(hl.get('LineNr', 'fg'), -0.15),
+    })
+  end
   if colorscheme == 'no-clown-fiesta' then
     return vim.tbl_deep_extend('force', P, {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.2),

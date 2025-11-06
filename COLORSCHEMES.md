@@ -155,6 +155,7 @@
 - vague
 - vim
 - vimbones
+- wildberries
 - wildcharm
 - WinterIsComing-dark-blue-color-no-italics-theme
 - WinterIsComing-dark-blue-color-theme

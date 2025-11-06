@@ -219,6 +219,7 @@ return {
   generate_completion_overrides = generate_completion_overrides,
   generate_lsp_overrides = generate_lsp_overrides,
   generate_picker_overrides = generate_picker_overrides,
+  generate_plugin_overrides = generate_plugin_overrides,
   generate_overrides = generate_overrides,
   apply_overrides = apply_overrides,
 }

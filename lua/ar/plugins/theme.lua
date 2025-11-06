@@ -240,6 +240,39 @@ return {
       }, true)
     end,
   },
+  {
+    'ianklapouch/wildberries.nvim',
+    cond = get_cond({ 'wildberries' }),
+    priority = get_priority({ 'wildberries' }),
+    event = get_event({ 'wildberries' }),
+    init = function()
+      local overrides = {
+        { NonText = { fg = { from = 'NonText', alter = 0.4 } } },
+        { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
+        { StatusLine = { bg = 'NONE', reverse = false } },
+        { Winbar = { link = 'Variable' } },
+        { WinbarNC = { link = 'NonText' } },
+        { MsgSeparator = { link = 'WinSeparator' } },
+        { VertSplit = { link = 'WinSeparator' } },
+        { IndentBlanklineChar = { link = 'VertSplit' } },
+        { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+      }
+      ar.list_insert(
+        overrides,
+        theming.generate_popup_overrides(),
+        theming.generate_completion_overrides(),
+        theming.generate_lsp_overrides(),
+        theming.generate_picker_overrides(),
+        theming.generate_plugin_overrides(),
+        {
+          { SnacksPickerInput = { link = 'PickerPrompt' } },
+          { SnacksPickerInputBorder = { link = 'PickerPromptBorder' } },
+          { SnacksPickerInputTitle = { link = 'PickerTitle' } },
+        }
+      )
+      theming.apply_overrides('wildberries', overrides)
+    end,
+  },
   ------------------------------------------------------------------------------
   -- Warm
   {
