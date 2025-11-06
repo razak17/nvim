@@ -93,6 +93,8 @@
 - lavish
 - lavish-dark
 - lavish-light
+- lemons
+- lightingale
 - lunar
 - makurai_autumn
 - makurai_dark

@@ -290,6 +290,18 @@ return {
       }, true)
     end,
   },
+  {
+    'Kaikacy/Lemons.nvim',
+    version = '*',
+    cond = get_cond({ 'lemons' }),
+    priority = get_priority({ 'lemons' }),
+    event = get_event({ 'lemons' }),
+    init = function()
+      theming.apply_overrides('lemons', {
+        { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.15 } } },
+      }, true)
+    end,
+  },
   ------------------------------------------------------------------------------
   -- Warm
   {
