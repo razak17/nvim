@@ -456,7 +456,7 @@ local config = {
   picker = {
     enable = true,
     files = 'snacks',
-    variant = 'telescope',
+    variant = 'snacks',
     win = { show_preview = false, show_border = true, fullscreen = true },
   },
   plugin = {
@@ -519,7 +519,6 @@ local config = {
       'git-conflict.nvim',
       'hlchunk.nvim',
       'inlayhint-filler.nvim',
-      'lazydev.nvim',
       'neoconf.nvim',
       'nvim-ufo',
       'pair-lens.nvim',

@@ -754,10 +754,7 @@ return {
     'isakbm/gitgraph.nvim',
     cond = function() return git_cond('gitgraph.nvim') end,
     opts = {
-      symbols = {
-        merge_commit = 'M',
-        commit = '*',
-      },
+      symbols = { merge_commit = 'M', commit = '*' },
       format = {
         timestamp = '%H:%M:%S %d-%m-%Y',
         fields = { 'hash', 'timestamp', 'author', 'branch_name', 'tag' },
