@@ -41,6 +41,9 @@ return {
     local utils = require('heirline.utils')
     local file_block = stl.file_block
 
+    ------------------------------------------------------------------------------
+    -- Components {{{1
+    ------------------------------------------------------------------------------
     local mode_colors = stl.mode_colors
 
     local empty_component = { provider = '' }
@@ -58,6 +61,117 @@ return {
       {
         provider = function() return stl.block() end,
         hl = function(self) return { fg = self.mode_color } end,
+      },
+    }
+
+    local git_branch = {
+      init = update_events({ 'BufEnter', 'BufWritePost', 'FocusGained' }),
+      provider = function()
+        return ' ' .. codicons.git.branch .. ' ' .. stl.pretty_branch()
+      end,
+      on_click = {
+        callback = function()
+          vim.defer_fn(function() stl.list_branches() end, 100)
+        end,
+        name = 'git_change_branch',
+      },
+      hl = { fg = 'yellowgreen' },
+    }
+
+    local git_status = {
+      -- condition = conditions.is_git_repo,
+      condition = function() return not stl.is_dots_repo end,
+      init = function(self)
+        self.status_dict = vim.b.gitsigns_status_dict
+        self.git_status = stl.git_status
+        self.ahead_hehind = stl.remote_counter()
+      end,
+      update = {
+        'User',
+        pattern = { 'GitStatusChanged' },
+        callback = vim.schedule_wrap(function() vim.cmd('redrawstatus') end),
+      },
+      {
+        condition = function(self) return not ar.falsy(self.ahead_hehind) end,
+        {
+          condition = function(self) return self.ahead_hehind.error end,
+          provider = function(self) return ' ' .. self.ahead_hehind.error end,
+          hl = { fg = 'comment', bold = true },
+        },
+        {
+          condition = function(self)
+            return not self.ahead_hehind.error
+              and self.ahead_hehind.ahead ~= nil
+              and self.ahead_hehind.behind ~= nil
+          end,
+          {
+            provider = function(self)
+              return ' ' .. self.ahead_hehind.behind .. icons.misc.arrow_down
+            end,
+            hl = function(self)
+              return {
+                fg = self.ahead_hehind.behind == 0 and 'fg' or 'pale_red',
+              }
+            end,
+          },
+          {
+            provider = function(self)
+              return ' ' .. self.ahead_hehind.ahead .. icons.misc.arrow_up
+            end,
+            hl = function(self)
+              return {
+                fg = self.ahead_hehind.ahead == 0 and 'fg' or 'yellowgreen',
+              }
+            end,
+          },
+        },
+      },
+      {
+        condition = function(self) return self.git_status ~= nil and false end,
+        {
+          condition = function(self) return self.git_status.status == 'pending' end,
+          provider = ' ' .. codicons.git.pending,
+          hl = { fg = 'comment', bold = true },
+        },
+        {
+          condition = function(self)
+            return self.git_status.status ~= 'pending'
+              and self.git_status.status ~= 'error'
+              and self.git_status.status ~= nil
+          end,
+          {
+            provider = function(self)
+              return ' ' .. self.git_status.behind .. icons.misc.arrow_down
+            end,
+            hl = function(self)
+              return {
+                fg = self.git_status.behind == 0 and 'fg' or 'pale_red',
+              }
+            end,
+            on_click = {
+              callback = function(self)
+                if self.git_status.behind > 0 then stl.git_pull() end
+              end,
+              name = 'git_pull',
+            },
+          },
+          {
+            provider = function(self)
+              return ' ' .. self.git_status.ahead .. icons.misc.arrow_up
+            end,
+            hl = function(self)
+              return {
+                fg = self.git_status.ahead == 0 and 'fg' or 'yellowgreen',
+              }
+            end,
+            on_click = {
+              callback = function(self)
+                if self.git_status.ahead > 0 then stl.git_push() end
+              end,
+              name = 'git_push',
+            },
+          },
+        },
       },
     }
 
@@ -80,6 +194,9 @@ return {
       hl = function(self) return { fg = self.mode_color } end,
     }
 
+    ------------------------------------------------------------------------------
+    -- Statuslines {{{2
+    ------------------------------------------------------------------------------
     local gp_statusline = {
       condition = function()
         if
@@ -294,6 +411,22 @@ return {
       align,
     }
 
+    local gitgraph_statusline = {
+      condition = function() return vim.bo.ft == 'gitgraph' end,
+      vim_mode,
+      { flexible = 3, git_branch },
+      { flexible = 3, git_status },
+      {
+        flexible = 2,
+        { provider = function() return ' ' .. string.lower(vim.bo.ft) end },
+      },
+      align,
+      -- Ruler
+      { flexible = 1, location },
+      -- Scroll Bar
+      { flexible = 1, scrollbar },
+    }
+
     local minimal_statusline = {
       condition = function(self)
         return conditions.buffer_matches({ filetype = self.filetypes })
@@ -302,7 +435,7 @@ return {
       { provider = ' ' },
       {
         condition = function() return vim.bo.filetype ~= 'help' end,
-        provider = function() return string.lower(vim.bo.filetype) end,
+        provider = function() return string.lower(vim.bo.ft) end,
         hl = { fg = 'fg' },
       },
       align,
@@ -323,23 +456,7 @@ return {
       -- Mode
       vim_mode,
       -- Git Branch
-      {
-        flexible = 4,
-        {
-          init = update_events({ 'BufEnter', 'BufWritePost', 'FocusGained' }),
-          provider = function()
-            return ' ' .. codicons.git.branch .. ' ' .. stl.pretty_branch()
-          end,
-          on_click = {
-            callback = function()
-              vim.defer_fn(function() stl.list_branches() end, 100)
-            end,
-            name = 'git_change_branch',
-          },
-          hl = { fg = 'yellowgreen' },
-        },
-        empty_component,
-      },
+      { flexible = 4, git_branch, empty_component },
       {
         flexible = 3,
         {
@@ -361,112 +478,7 @@ return {
         empty_component,
       },
       -- Git
-      {
-        flexible = 3,
-        {
-          -- condition = conditions.is_git_repo,
-          condition = function() return not stl.is_dots_repo end,
-          init = function(self)
-            self.status_dict = vim.b.gitsigns_status_dict
-            self.git_status = stl.git_status
-            self.ahead_hehind = stl.remote_counter()
-          end,
-          update = {
-            'User',
-            pattern = { 'GitStatusChanged' },
-            callback = vim.schedule_wrap(
-              function() vim.cmd('redrawstatus') end
-            ),
-          },
-          {
-            condition = function(self) return not ar.falsy(self.ahead_hehind) end,
-            {
-              condition = function(self) return self.ahead_hehind.error end,
-              provider = function(self) return ' ' .. self.ahead_hehind.error end,
-              hl = { fg = 'comment', bold = true },
-            },
-            {
-              condition = function(self)
-                return not self.ahead_hehind.error
-                  and self.ahead_hehind.ahead ~= nil
-                  and self.ahead_hehind.behind ~= nil
-              end,
-              {
-                provider = function(self)
-                  return ' '
-                    .. self.ahead_hehind.behind
-                    .. icons.misc.arrow_down
-                end,
-                hl = function(self)
-                  return {
-                    fg = self.ahead_hehind.behind == 0 and 'fg' or 'pale_red',
-                  }
-                end,
-              },
-              {
-                provider = function(self)
-                  return ' ' .. self.ahead_hehind.ahead .. icons.misc.arrow_up
-                end,
-                hl = function(self)
-                  return {
-                    fg = self.ahead_hehind.ahead == 0 and 'fg' or 'yellowgreen',
-                  }
-                end,
-              },
-            },
-          },
-          {
-            condition = function(self) return self.git_status ~= nil and false end,
-            {
-              condition = function(self)
-                return self.git_status.status == 'pending'
-              end,
-              provider = ' ' .. codicons.git.pending,
-              hl = { fg = 'comment', bold = true },
-            },
-            {
-              condition = function(self)
-                return self.git_status.status ~= 'pending'
-                  and self.git_status.status ~= 'error'
-                  and self.git_status.status ~= nil
-              end,
-              {
-                provider = function(self)
-                  return ' ' .. self.git_status.behind .. icons.misc.arrow_down
-                end,
-                hl = function(self)
-                  return {
-                    fg = self.git_status.behind == 0 and 'fg' or 'pale_red',
-                  }
-                end,
-                on_click = {
-                  callback = function(self)
-                    if self.git_status.behind > 0 then stl.git_pull() end
-                  end,
-                  name = 'git_pull',
-                },
-              },
-              {
-                provider = function(self)
-                  return ' ' .. self.git_status.ahead .. icons.misc.arrow_up
-                end,
-                hl = function(self)
-                  return {
-                    fg = self.git_status.ahead == 0 and 'fg' or 'yellowgreen',
-                  }
-                end,
-                on_click = {
-                  callback = function(self)
-                    if self.git_status.ahead > 0 then stl.git_push() end
-                  end,
-                  name = 'git_push',
-                },
-              },
-            },
-          },
-        },
-        empty_component,
-      },
+      { flexible = 3, git_status, empty_component },
       -- Filename
       utils.insert(
         { flexible = 4 },
@@ -1223,6 +1235,7 @@ return {
         lazy_statusline,
         terminal_statusline,
         scheme_switcher_statusline,
+        gitgraph_statusline,
         minimal_statusline,
         inactive_statusline,
         statusline,

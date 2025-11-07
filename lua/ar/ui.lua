@@ -337,6 +337,7 @@ local filetypes = ar.p_table({
   ['fugitive'] = presets.statusline_only:with({ cursorline = true }),
   ['fyler'] = presets.tool_panel,
   ['fzf'] = presets.tool_panel,
+  ['gitgraph'] = presets.statusline_only,
   ['gitcommit'] = commit_buffer,
   ['grug-far'] = presets.tool_panel,
   ['harpoon'] = presets.tool_panel,
