@@ -31,11 +31,6 @@ return {
     },
   },
   {
-    'yyk/find-git-root.nvim',
-    cond = function() return git_cond('find-git-root.nvim') end,
-    cmd = { 'CdGitRoot' },
-  },
-  {
     'kilavila/nvim-gitignore',
     cond = function() return ar.get_plugin_cond('nvim-gitignore', not minimal) end,
     cmd = { 'Gitignore', 'Licenses' },
