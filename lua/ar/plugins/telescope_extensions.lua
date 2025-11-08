@@ -27,7 +27,6 @@ return {
         },
         specs = {
           'nvim-telescope/telescope.nvim',
-          optional = true,
           opts = function(_, opts)
             local datapath = vim.fn.stdpath('data')
             vim.g.telescope_add_extension({ 'frecency' }, opts, {
