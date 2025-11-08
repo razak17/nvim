@@ -15,9 +15,6 @@ if vim.loader then vim.loader.enable() end
 g.os = vim.uv.os_uname().sysname
 g.dotfiles = env.DOTFILES or fn.expand('~/.dots')
 g.projects_dir = env.DEV_HOME or fn.expand('~/personal/workspace/coding')
-if fn.has('nvim-0.12') == 1 then
-  require('vim._extui').enable({ enable = true, msg = { target = 'msg' } })
-end
 --------------------------------------------------------------------------------
 -- Load Modules
 --------------------------------------------------------------------------------

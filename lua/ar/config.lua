@@ -496,6 +496,7 @@ local config = {
       autocommands = { enable = true },
       colors = { enable = true },
       env = { enable = true },
+      experimental = { enable = true },
       filetypes = { enable = true },
       mappings = { enable = true },
       numbers = { enable = true },
