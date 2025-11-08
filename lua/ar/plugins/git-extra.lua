@@ -1,9 +1,10 @@
 local minimal = ar.plugins.minimal
+local git_cond = require('ar.utils.git').git_cond
 
 return {
   {
     'FabijanZulj/blame.nvim',
-    cond = function() return vim.g.git_cond('blame.nvim') end,
+    cond = function() return git_cond('blame.nvim') end,
     cmd = { 'BlameToggle' },
     init = function()
       ar.add_to_select_menu('git', { ['Toggle Blame'] = 'BlameToggle' })
@@ -12,7 +13,7 @@ return {
   },
   {
     'niuiic/git-log.nvim',
-    cond = function() return vim.g.git_cond('git-log.nvim') end,
+    cond = function() return git_cond('git-log.nvim') end,
     -- stylua: ignore
     keys = {
       { mode = { 'n', 'x' }, '<leader>gL', "<Cmd>lua require'git-log'.check_log()<CR>", desc = 'git-log: show line/selection log' },
@@ -21,7 +22,7 @@ return {
   },
   {
     'rbong/vim-flog',
-    cond = function() return vim.g.git_cond('vim-flog') end,
+    cond = function() return git_cond('vim-flog') end,
     init = function()
       ar.add_to_select_menu('git', { ['View Branch Graph'] = 'Flog' })
     end,
@@ -30,7 +31,7 @@ return {
   },
   {
     'SuperBo/fugit2.nvim',
-    cond = function() return vim.g.git_cond('fugit2.nvim') end,
+    cond = function() return git_cond('fugit2.nvim') end,
     cmd = { 'Fugit2', 'Fugit2Blame', 'Fugit2Diff', 'Fugit2Graph' },
     opts = { width = 100 },
   },
@@ -47,13 +48,13 @@ return {
   },
   {
     'yutkat/git-rebase-auto-diff.nvim',
-    cond = function() return vim.g.git_cond('git-rebase-auto-diff.nvim') end,
+    cond = function() return git_cond('git-rebase-auto-diff.nvim') end,
     ft = { 'gitrebase' },
     opts = {},
   },
   {
     'ldelossa/gh.nvim',
-    cond = function() return vim.g.git_cond('gh.nvim') end,
+    cond = function() return git_cond('gh.nvim') end,
     -- stylua: ignore
     cmd = {
       'GHCloseCommit', 'GHExpandCommit', 'GHOpenToCommit', 'GHPopOutCommit',
@@ -74,7 +75,7 @@ return {
   {
     'aaronhallaert/advanced-git-search.nvim',
     cond = function()
-      return vim.g.git_cond('advanced-git-search.nvim')
+      return git_cond('advanced-git-search.nvim')
         and (not ar.plugin_disabled('telescope.nvim') and not minimal)
     end,
     cmd = { 'AdvancedGitSearch' },
@@ -87,7 +88,7 @@ return {
   },
   {
     '2kabhishek/co-author.nvim',
-    cond = function() return vim.g.git_cond('co-author.nvim') end,
+    cond = function() return git_cond('co-author.nvim') end,
     cmd = 'CoAuthor',
     init = function()
       ar.add_to_select_menu('git', { ['List Authors'] = 'CoAuthor' })
@@ -95,7 +96,7 @@ return {
   },
   {
     'isakbm/gitgraph.nvim',
-    cond = function() return vim.g.git_cond('gitgraph.nvim') end,
+    cond = function() return git_cond('gitgraph.nvim') end,
     opts = {
       symbols = { merge_commit = 'M', commit = '*' },
       format = {

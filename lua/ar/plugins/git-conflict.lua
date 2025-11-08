@@ -1,8 +1,10 @@
+local git_cond = require('ar.utils.git').git_cond
+
 return {
   -- FIX: Causes performance issues in large folds (~1000+ lines)
   {
     'TungstnBallon/conflict.nvim',
-    cond = function() return vim.g.git_cond('conflict.nvim') end,
+    cond = function() return git_cond('conflict.nvim') end,
     event = { 'BufReadPre', 'BufNewFile' },
     -- stylua: ignore
     keys = {
@@ -13,7 +15,7 @@ return {
   },
   {
     'akinsho/git-conflict.nvim',
-    cond = vim.g.git_cond('git-conflict.nvim'),
+    cond = git_cond('git-conflict.nvim'),
     event = 'BufReadPre',
     opts = {
       disable_diagnostics = true,

@@ -5,18 +5,13 @@ local icons = ar.ui.icons
 local border = ar.ui.current.border
 local left_block = icons.separators.left_block
 
-local is_git = ar.is_git_repo() or ar.is_git_env()
 local statuscolumn_enabled = ar_config.ui.statuscolumn.enable
-
-vim.g.git_cond = function(plugin)
-  local condition = ar.git.enable and is_git
-  return ar.get_plugin_cond(plugin, condition)
-end
+local git_cond = require('ar.utils.git').git_cond
 
 return {
   {
     'NeogitOrg/neogit',
-    cond = function() return vim.g.git_cond('neogit') end,
+    cond = function() return git_cond('neogit') end,
     cmd = 'Neogit',
     -- stylua: ignore
     keys = {
@@ -126,7 +121,7 @@ return {
   },
   {
     'chrisgrieser/nvim-tinygit',
-    cond = function() return vim.g.git_cond('nvim-tinygit') end,
+    cond = function() return git_cond('nvim-tinygit') end,
     -- stylua: ignore
     keys = {
       { '<leader><leader>ga', '<Cmd>lua require("tinygit").amendOnlyMsg()<CR>', desc = 'tinygit: amend commit' },
@@ -148,7 +143,7 @@ return {
   },
   {
     'sindrets/diffview.nvim',
-    cond = function() return vim.g.git_cond('diffview.nvim') end,
+    cond = function() return git_cond('diffview.nvim') end,
     cmd = {
       'DiffviewOpen',
       'DiffviewFileHistory',
@@ -385,7 +380,7 @@ return {
   },
   {
     'lewis6991/gitsigns.nvim',
-    cond = function() return vim.g.git_cond('gitsigns.nvim') end,
+    cond = function() return git_cond('gitsigns.nvim') end,
     event = { 'BufRead', 'BufNewFile' },
     init = function()
       ar.add_to_select_menu('git', {
@@ -457,7 +452,7 @@ return {
   },
   {
     'razak17/agitator.nvim',
-    cond = function() return vim.g.git_cond('agitator.nvim') end,
+    cond = function() return git_cond('agitator.nvim') end,
     init = function()
       local function time_machine()
         require('agitator').git_time_machine({ use_current_win = true })

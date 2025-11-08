@@ -1,4 +1,5 @@
 local api, fs = vim.api, vim.fs
+local is_git = ar.is_git_repo() or ar.is_git_env()
 
 local M = {}
 
@@ -36,6 +37,12 @@ function M.get_root(path)
   end
 
   return vim.env.GIT_WORK_TREE
+end
+
+---@param plugin string plugin name
+function M.git_cond(plugin)
+  local condition = ar.git.enable and is_git
+  return ar.get_plugin_cond(plugin, condition)
 end
 
 return M

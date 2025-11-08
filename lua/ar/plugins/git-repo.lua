@@ -1,9 +1,10 @@
 local minimal = ar.plugins.minimal
+local git_cond = require('ar.utils.git').git_cond
 
 return {
   {
     'almo7aya/openingh.nvim',
-    cond = function() return vim.g.git_cond('openingh.nvim') end,
+    cond = function() return git_cond('openingh.nvim') end,
     cmd = { 'OpenInGHFile', 'OpenInGHRepo', 'OpenInGHFileLines' },
     init = function()
       ar.add_to_select_menu('git', {
@@ -107,7 +108,7 @@ return {
   },
   {
     'linrongbin16/gitlinker.nvim',
-    cond = function() return vim.g.git_cond('gitlinker.nvim') end,
+    cond = function() return git_cond('gitlinker.nvim') end,
     cmd = { 'GitLink' },
     -- stylua: ignore
     keys = {
