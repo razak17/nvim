@@ -2,177 +2,307 @@ local highlight = ar.highlight
 local minimal = ar.plugins.minimal
 local ts_enabled = ar.treesitter.enable
 local ts_extra_enabled = ar.ts_extra_enabled
+local ts = require('ar.utils.treesitter')
+
+-- https://github.com/rachartier/dotfiles/blob/main/.config/nvim/lua/plugins/utils/treesitter.lua?plain=1#L1
+-- https://github.com/chrisgrieser/.config/blob/15cc1b7ad2cfc187c3bc984144136648083e85ca/nvim/lua/plugin-specs/appearance/treesitter.lua?plain=1#L1
+-- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/treesitter.lua?plain=1#L1
+
+-- stylua: ignore
+local ensure_installed = {
+  programming_langs = {
+    'c', 'cpp', 'bash', 'javascript', 'lua', 'python', 'ruby', 'rust', 'svelte',
+    'swift', 'typescript', 'vim',
+  },
+  data_formats = { 'json', 'json5', 'jsonc', 'toml', 'xml', 'yaml' },
+  content = { 'css', 'html', 'markdown', 'markdown_inline' },
+  special_filetypes = {
+    'diff', 'dockerfile', 'editorconfig', 'git_config', 'git_rebase', 'gitcommit',
+    'gitattributes', 'gitignore', 'just', 'make', 'query', -- treesitter query files
+    'requirements',
+  },
+  embedded_langs = {
+    'comment', 'graphql', 'jsdoc', 'luadoc', 'luap', -- lua patterns
+    'regex', 'rst', -- python reST
+    'vimdoc',
+  },
+}
 
 return {
   {
-    'nvim-treesitter/nvim-treesitter',
-    cond = ts_enabled,
-    event = 'BufReadPost',
-    branch = 'master',
-    build = ':TSUpdate',
-    lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
-    init = function(plugin)
-      -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
-      -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
-      -- no longer trigger the **nvim-treesitter** module to be loaded in time.
-      -- Luckily, the only things that those plugins need are the custom queries, which we make available
-      -- during startup.
-      require('lazy.core.loader').add_to_rtp(plugin)
-      require('nvim-treesitter.query_predicates')
-    end,
-    opts = {
-      auto_install = true,
-      highlight = {
-        enable = true,
-        disable = function(_, buf)
-          if not ts_extra_enabled and vim.bo.ft ~= 'lua' then return true end
-          local max_filesize = 100 * 1024 -- 100 KB
-          local ok, stats =
-            pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
-          if ok and stats and stats.size > max_filesize then return true end
-        end,
-        additional_vim_regex_highlighting = { 'org', 'sql' },
+    {
+      'nvim-treesitter/nvim-treesitter',
+      cond = ts_enabled,
+      branch = 'main',
+      lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
+      event = { 'VeryLazy' },
+      cmd = { 'TSUpdate', 'TSInstall', 'TSLog', 'TSUninstall' },
+      build = function()
+        local TS = require('nvim-treesitter')
+        if not TS.get_installed then
+          vim.notify(
+            'Please restart Neovim and run `:TSUpdate` to use the `nvim-treesitter` **main** branch.',
+            vim.log.levels.ERROR
+          )
+          return
+        end
+        -- make sure we're using the latest treesitter util
+        package.loaded['nvim-treesitter'] = nil
+        ts.ensure_treesitter_cli(
+          function() TS.update(nil, { summary = true }) end
+        )
+      end,
+      enabled = true,
+      ---@alias ar.TSFeat { enable?: boolean, disable?: string[] }
+      ---@class ar.TSConfig: TSConfig
+      opts = {
+        indent = {
+          enable = true,
+          disable = { 'bash', 'zsh', 'markdown', 'javascript' },
+        },
+        highlight = { enable = true },
+        folds = { enable = true },
+        ensure_installed = ensure_installed,
+        install_dir = vim.fn.stdpath('data') .. '/treesitter',
       },
-      ignore_install = { 'tmux' }, -- BUG: tmux parser is broken. @see: https://github.com/Freed-Wu/tree-sitter-tmux/issues/26
+      config = function(_, opts)
+        local TS = require('nvim-treesitter')
+        TS.setup(opts)
+
+        vim.treesitter.language.register('bash', 'zsh')
+
+        -- initialize the installed langs
+        ts.get_installed(true)
+
+        local to_install =
+          vim.iter(vim.tbl_values(opts.ensure_installed)):flatten():totable()
+
+        -- flatten ensure_installed
+        local install = vim.tbl_filter(
+          function(lang) return not ts.have(lang) end,
+          to_install
+        )
+
+        -- install missing parsers
+        if #install > 0 then
+          ts.ensure_treesitter_cli(function()
+            TS.install(install, { summary = true }):await(function()
+              ts.get_installed(true) -- refresh the installed langs
+            end)
+          end)
+        end
+
+        ---@param feat string
+        ---@param query string
+        ---@param ft string
+        local function enabled(feat, query, ft)
+          local lang = vim.treesitter.language.get_lang(ft)
+          local f = opts[feat] or {} ---@type ar.TSFeat
+          return f.enable ~= false
+            and not vim.tbl_contains(f.disable or {}, lang)
+            and ts.have(ft, query)
+        end
+
+        -- start treesitter
+        ---@param ft string
+        local function start(ft, bufnr)
+          if not ts.have(ft) then return end
+
+          -- highlighting
+          if enabled('highlight', 'highlights', ft) then
+            pcall(vim.treesitter.start, bufnr)
+          end
+
+          -- indents
+          if enabled('indent', 'indents', ft) then
+            ar.set_default(
+              'indentexpr',
+              "v:lua.require'ar.utils.treesitter'.indentexpr()"
+            )
+          end
+
+          -- folds
+          if enabled('folds', 'folds', ft) then
+            if ar.set_default('foldmethod', 'expr') then
+              ar.set_default(
+                'foldexpr',
+                "v:lua.require'ar.utils.treesitter'.foldexpr()"
+              )
+            end
+          end
+        end
+
+        ar.augroup('ar_treesitter', {
+          event = 'FileType',
+          command = function(ev)
+            local parser_name = vim.treesitter.language.get_lang(ev.match)
+            if not parser_name then return end
+
+            -- auto install
+            if not ts.have(ev.match) then
+              ts.ensure_treesitter_cli(function()
+                TS.install({ parser_name }, { summary = true }):await(function()
+                  ts.get_installed(true) -- refresh the installed langs
+                  start(ev.match, ev.buf)
+                end)
+              end)
+              return
+            end
+
+            start(ev.match, ev.buf)
+          end,
+        })
+      end,
+    },
+    {
+      'hrsh7th/nvim-cmp',
+      optional = true,
+      opts = function(_, opts)
+        vim.g.cmp_add_source(opts, {
+          menu = { treesitter = '[TS]' },
+        })
+      end,
+    },
+  },
+  {
+    'MeanderingProgrammer/treesitter-modules.nvim',
+    cond = function()
+      local condition = not minimal and ts_enabled
+      return ar.get_plugin_cond('treesitter-modules.nvim', condition)
+    end,
+    event = { 'BufRead' },
+    opts = {
       incremental_selection = {
-        enable = false,
-        disable = { 'help' },
+        enable = true,
         keymaps = {
-          init_selection = '<CR>', -- maps in normal mode to init the node/scope selection
-          node_incremental = '<CR>', -- increment to the upper named parent
-          node_decremental = '<C-CR>', -- decrement to the previous node
+          init_selection = '<A-o>',
+          node_incremental = '<A-o>',
+          scope_incremental = '<A-O>',
+          node_decremental = '<A-i>',
         },
       },
-      textobjects = {
+    },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  },
+  {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    cond = not minimal and ts_enabled,
+    branch = 'main',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    event = { 'BufRead' },
+    keys = {
+      {
+        'a=',
+        mode = { 'x', 'o' },
+        function()
+          require('nvim-treesitter-textobjects.select').select_textobject(
+            '@assignment.outer',
+            'textobjects'
+          )
+        end,
+        desc = 'Select inner part of an assignment',
+      },
+      {
+        'i=',
+        mode = { 'x', 'o' },
+        function()
+          require('nvim-treesitter-textobjects.select').select_textobject(
+            '@assignment.inner',
+            'textobjects'
+          )
+        end,
+        desc = 'Select inner part of an assignment',
+      },
+      {
+        'L=',
+        mode = { 'x', 'o' },
+        function()
+          require('nvim-treesitter-textobjects.select').select_textobject(
+            '@assignment.lhs',
+            'textobjects'
+          )
+        end,
+        desc = 'Select left hand side of an assignment',
+      },
+      {
+        'R=',
+        mode = { 'x', 'o' },
+        function()
+          require('nvim-treesitter-textobjects.select').select_textobject(
+            '@assignment.rhs',
+            'textobjects'
+          )
+        end,
+        desc = 'Select right hand side of an assignment',
+      },
+      {
+        'a:',
+        mode = { 'x', 'o' },
+        function()
+          require('nvim-treesitter-textobjects.select').select_textobject(
+            '@property.outer',
+            'textobjects'
+          )
+        end,
+        desc = 'Select outer part of an object property',
+      },
+      {
+        'i:',
+        mode = { 'x', 'o' },
+        function()
+          require('nvim-treesitter-textobjects.select').select_textobject(
+            '@property.inner',
+            'textobjects'
+          )
+        end,
+        desc = 'Select inner part of an object property',
+      },
+      {
+        'L:',
+        mode = { 'x', 'o' },
+        function()
+          require('nvim-treesitter-textobjects.select').select_textobject(
+            '@property.lhs',
+            'textobjects'
+          )
+        end,
+        desc = 'Select left part of an object property',
+      },
+      {
+        'R:',
+        mode = { 'x', 'o' },
+        function()
+          require('nvim-treesitter-textobjects.select').select_textobject(
+            '@property.rhs',
+            'textobjects'
+          )
+        end,
+        desc = 'Select right part of an object property',
+      },
+    },
+    config = function()
+      require('nvim-treesitter-textobjects').setup({
         select = {
           enable = not minimal,
           lookahead = true,
-          include_surrounding_whitespace = true,
-          -- stylua: ignore
-          keymaps = {
-            -- You can use the capture groups defined in textobjects.scm
-            ["a="] = { query = "@assignment.outer", desc = "Select outer part of an assignment" },
-            ["i="] = { query = "@assignment.inner", desc = "Select inner part of an assignment" },
-            ["L="] = { query = "@assignment.lhs", desc = "Select left hand side of an assignment" },
-            ["R="] = { query = "@assignment.rhs", desc = "Select right hand side of an assignment" },
-
-            -- works for javascript/typescript files (custom capture I created in after/queries/ecma/textobjects.scm)
-            ["a:"] = { query = "@property.outer", desc = "Select outer part of an object property" },
-            ["i:"] = { query = "@property.inner", desc = "Select inner part of an object property" },
-            ["L:"] = { query = "@property.lhs", desc = "Select left part of an object property" },
-            ["R:"] = { query = "@property.rhs", desc = "Select right part of an object property" },
-
-            -- NOTE: mini.ai does same things
-            -- ["aa"] = { query = "@parameter.outer", desc = "Select outer part of a parameter/argument" },
-            -- ["ia"] = { query = "@parameter.inner", desc = "Select inner part of a parameter/argument" },
-
-            -- ["ao"] = { query = "@conditional.outer", desc = "Select outer part of a conditional" },
-            -- ["io"] = { query = "@conditional.inner", desc = "Select inner part of a conditional" },
-
-            -- ["al"] = { query = "@loop.outer", desc = "Select outer part of a loop" },
-            -- ["il"] = { query = "@loop.inner", desc = "Select inner part of a loop" },
-
-            -- ["au"] = { query = "@call.outer", desc = "Select outer part of a function call" },
-            -- ["iu"] = { query = "@call.inner", desc = "Select inner part of a function call" },
-
-            -- ["af"] = { query = "@function.outer", desc = "Select outer part of a method/function definition" },
-            -- ["if"] = { query = "@function.inner", desc = "Select inner part of a method/function definition" },
-
-            -- ["ac"] = { query = "@class.outer", desc = "Select outer part of a class" },
-            -- ["ic"] = { query = "@class.inner", desc = "Select inner part of a class" },
+          selection_modes = {
+            ['@parameter.outer'] = 'v', -- charwise
+            ['@function.outer'] = 'V', -- linewise
+            ['@class.outer'] = '<c-v>', -- blockwise
           },
+          include_surrounding_whitespace = true,
         },
         -- stylua: ignore
         move = {
           enable = true,
+          set_jumps = true, -- whether to set jumps in the jumplist
           goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer", ["]a"] = "@parameter.inner" },
           goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]A"] = "@parameter.inner" },
           goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer", ["[a"] = "@parameter.inner" },
           goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer", ["[A"] = "@parameter.inner" },
         },
-      },
-      indent = { enable = false },
-      matchup = {
-        enable = true,
-        enable_quotes = true,
-        disable_virtual_text = true,
-        disable = { 'c', 'python' },
-      },
-      tree_setter = { enable = true },
-      query_linter = {
-        enable = true,
-        use_virtual_text = false,
-        lint_events = { 'BufWrite', 'CursorHold' },
-      },
-      playground = { persist_queries = true },
-      -- stylua: ignore
-      ensure_installed = {
-        'c', 'vim', 'vimdoc', 'query', 'lua', 'luadoc', 'luap', 'diff', 'regex',
-        'gitcommit', 'git_config', 'git_rebase', 'markdown', 'markdown_inline',
-      },
-    },
-    config = function(_, opts)
-      local parser_config =
-        require('nvim-treesitter.parsers').get_parser_configs()
-
-      ---@diagnostic disable-next-line: inject-field
-      parser_config.blade = {
-        install_info = {
-          url = 'https://github.com/EmranMR/tree-sitter-blade',
-          files = { 'src/parser.c' },
-          branch = 'main',
-        },
-        filetype = 'blade',
-      }
-
-      -- if no compiler or git available, disable installation
-      if
-        vim.fn.executable('git') == 0
-        or not vim.tbl_contains(
-          require('nvim-treesitter.install').compilers,
-          function(c) return c ~= vim.NIL and vim.fn.executable(c) == 1 end,
-          { predicate = true }
-        )
-      then
-        opts.auto_install = false
-        opts.ensure_installed = nil
-      end
-
-      require('nvim-treesitter.configs').setup(opts)
-      ar.add_to_select_menu('command_palette', {
-        ['Toggle TS Highlight'] = function() vim.cmd.TSBufToggle('highlight') end,
-        ['Enable TS Highlight'] = 'edit | TSBufEnable highlight',
       })
     end,
-    dependencies = {
-      {
-        'nvim-treesitter/nvim-treesitter-textobjects',
-        cond = not minimal and ts_enabled,
-        config = function()
-          -- ref: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/treesitter.lua?plain=1#L108
-          -- When in diff mode, we want to use the default
-          -- vim text objects c & C instead of the treesitter ones.
-          local move = require('nvim-treesitter.textobjects.move') ---@type table<string,fun(...)>
-          local configs = require('nvim-treesitter.configs')
-          for name, fn in pairs(move) do
-            if name:find('goto') == 1 then
-              move[name] = function(q, ...)
-                if vim.wo.diff then
-                  local config = configs.get_module('textobjects.move')[name] ---@type table<string,string>
-                  for key, query in pairs(config or {}) do
-                    if q == query and key:find('[%]%[][cC]') then
-                      vim.cmd('normal! ' .. key)
-                      return
-                    end
-                  end
-                end
-                return fn(q, ...)
-              end
-            end
-          end
-        end,
-      },
-    },
   },
   {
     'windwp/nvim-ts-autotag',
@@ -186,11 +316,6 @@ return {
       'svelte',
     },
     opts = {},
-  },
-  {
-    'nvim-treesitter/playground',
-    cond = not minimal and ts_extra_enabled,
-    cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
   },
   {
     'andymass/vim-matchup',

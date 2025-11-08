@@ -531,7 +531,7 @@ local config = {
       'vim-matchup',
     },
     modules = {
-      disabled = { 'treesitter', 'incline' },
+      disabled = { 'incline' },
       override = {},
     },
     overrides = {},

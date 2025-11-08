@@ -38,6 +38,8 @@
 - games
 - ghost
 - git
+- git-conflict
+- git-extra
 - git-repo
 - gitpad
 - gp
@@ -123,7 +125,6 @@
 - translate
 - transparent
 - treesitter
-- treesitter-main
 - typescript
 - typr
 - ui

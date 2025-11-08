@@ -892,6 +892,8 @@
                   "games",
                   "ghost",
                   "git",
+                  "git-conflict",
+                  "git-extra",
                   "git-repo",
                   "gitpad",
                   "gp",
@@ -977,7 +979,6 @@
                   "translate",
                   "transparent",
                   "treesitter",
-                  "treesitter-main",
                   "typescript",
                   "typr",
                   "ui",
@@ -1034,6 +1035,8 @@
                   "games",
                   "ghost",
                   "git",
+                  "git-conflict",
+                  "git-extra",
                   "git-repo",
                   "gitpad",
                   "gp",
@@ -1119,7 +1122,6 @@
                   "translate",
                   "transparent",
                   "treesitter",
-                  "treesitter-main",
                   "typescript",
                   "typr",
                   "ui",
@@ -1250,4 +1252,3 @@
   "title": "ArConfig",
   "type": "object"
 }
-
