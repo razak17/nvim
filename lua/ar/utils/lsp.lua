@@ -19,13 +19,13 @@ function M.soft_stop(client_or_id, opts)
   opts.on_close = opts.on_close or function() end
 
   if opts.retry <= 0 then
-    client.stop(true)
+    client:stop(true)
     opts.on_close(client)
     return
   end
-  client.stop()
+  client:stop()
   ---@diagnostic disable-next-line: invisible
-  if client.is_stopped() then
+  if client:is_stopped() then
     opts.on_close(client)
     return
   end
