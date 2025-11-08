@@ -48,12 +48,10 @@ end
 function M.ensure_treesitter_cli(cb)
   if vim.fn.executable('tree-sitter') == 1 then return cb() end
 
-  return vim.notify({
-    '**treesitter-nvim** `main` requires the `tree-sitter` CLI executable to be installed.',
-    'Please install it manually from https://github.com/tree-sitter/tree-sitter/tree/master/crates/cli or',
-    'use your system package manager.',
-    'Run `:checkhealth nvim-treesitter` for more information.',
-  }, vim.log.levels.ERROR)
+  return vim.notify(
+    '`tree-sitter` CLI executable not found. Run `:checkhealth nvim-treesitter` for more information.',
+    vim.log.levels.ERROR
+  )
 end
 
 return M
