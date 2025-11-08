@@ -9,7 +9,7 @@ local minimal = ar.plugins.minimal
 local is_git = ar.is_git_repo() or ar.is_git_env()
 local statuscolumn_enabled = ar_config.ui.statuscolumn.enable
 
-local git_cond = function(plugin)
+vim.g.git_cond = function(plugin)
   local condition = ar.git.enable and is_git
   return ar.get_plugin_cond(plugin, condition)
 end
@@ -18,16 +18,13 @@ return {
   -- FIX: Causes performance issues in large folds (~1000+ lines)
   {
     'TungstnBallon/conflict.nvim',
-    cond = function() return git_cond('conflict.nvim') end,
+    cond = function() return vim.g.git_cond('conflict.nvim') end,
     event = { 'BufReadPre', 'BufNewFile' },
+    -- stylua: ignore
     keys = {
       { '<leader>g?n', '<Plug>ConflictJumpToNext', desc = 'next conflict' },
       { '<leader>g?p', '<Plug>ConflictJumpToPrevious', desc = 'prev conflict' },
-      {
-        '<leader>g??',
-        '<Plug>ConflictResolveAroundCursor',
-        desc = 'resolve conflict',
-      },
+      { '<leader>g??', '<Plug>ConflictResolveAroundCursor', desc = 'resolve conflict' },
     },
   },
   {
@@ -43,13 +40,13 @@ return {
   },
   {
     'yutkat/git-rebase-auto-diff.nvim',
-    cond = function() return git_cond('git-rebase-auto-diff.nvim') end,
+    cond = function() return vim.g.git_cond('git-rebase-auto-diff.nvim') end,
     ft = { 'gitrebase' },
     opts = {},
   },
   {
     'NeogitOrg/neogit',
-    cond = function() return git_cond('neogit') end,
+    cond = function() return vim.g.git_cond('neogit') end,
     cmd = 'Neogit',
     -- stylua: ignore
     keys = {
@@ -159,7 +156,7 @@ return {
   },
   {
     'chrisgrieser/nvim-tinygit',
-    cond = function() return git_cond('nvim-tinygit') end,
+    cond = function() return vim.g.git_cond('nvim-tinygit') end,
     -- stylua: ignore
     keys = {
       { '<leader><leader>ga', '<Cmd>lua require("tinygit").amendOnlyMsg()<CR>', desc = 'tinygit: amend commit' },
@@ -181,7 +178,7 @@ return {
   },
   {
     'sindrets/diffview.nvim',
-    cond = function() return git_cond('diffview.nvim') end,
+    cond = function() return vim.g.git_cond('diffview.nvim') end,
     cmd = {
       'DiffviewOpen',
       'DiffviewFileHistory',
@@ -418,7 +415,7 @@ return {
   },
   {
     'lewis6991/gitsigns.nvim',
-    cond = function() return git_cond('gitsigns.nvim') end,
+    cond = function() return vim.g.git_cond('gitsigns.nvim') end,
     event = { 'BufRead', 'BufNewFile' },
     init = function()
       ar.add_to_select_menu('git', {
@@ -489,175 +486,8 @@ return {
     },
   },
   {
-    'almo7aya/openingh.nvim',
-    cond = function() return git_cond('openingh.nvim') end,
-    cmd = { 'OpenInGHFile', 'OpenInGHRepo', 'OpenInGHFileLines' },
-    init = function()
-      ar.add_to_select_menu('git', {
-        ['Open File In GitHub'] = 'OpenInGHFile',
-        ['Open Line In GitHub'] = 'OpenInGHFileLines',
-        ['Open Repo In GitHub'] = 'OpenInGHRepo',
-      })
-    end,
-    keys = {
-      {
-        '<leader>gof',
-        function()
-          vim.cmd('OpenInGHFile')
-          vim.notify('opening file in github', 'info', { title = 'openingh' })
-        end,
-        desc = 'openingh: open file',
-      },
-      {
-        '<leader>gor',
-        function()
-          vim.cmd('OpenInGHRepo')
-          vim.notify('opening repo in github', 'info', { title = 'openingh' })
-        end,
-        desc = 'openingh: open repo',
-      },
-      {
-        '<leader>gol',
-        function()
-          vim.cmd('OpenInGHFileLines')
-          vim.notify(
-            'opening file line in github',
-            'info',
-            { title = 'openingh' }
-          )
-        end,
-        desc = 'openingh: open to line',
-        mode = { 'n', 'x' },
-      },
-    },
-  },
-  {
-    'https://git.sr.ht/~tomleb/repo-url.nvim',
-    cond = function() return ar.get_plugin_cond('repo-url.nvim', not minimal) end,
-    -- stylua: ignore
-    keys= {
-      {  mode = { 'n', 'v' }, '<localleader>gyb', ':lua require("repo-url").copy_blob_url()<CR>', desc= 'copy blob URL' },
-      {  mode = { 'n', 'v' }, '<localleader>gob', ':lua require("repo-url").open_blob_url()<CR>', desc= 'open blob URL' },
-      {  mode = { 'n', 'v' }, '<leader>gyu', ':lua require("repo-url").copy_blame_url()<CR>', desc= 'copy blame URL' },
-      {  mode = { 'n', 'v' }, '<localleader>gou', ':lua require("repo-url").open_blame_url()<CR>', desc= 'open blame URL' },
-      {  mode= { 'n', 'v' }, '<localleader>gyh', ':lua require("repo-url").copy_history_url()<CR>', desc= 'copy history URL' },
-      {  mode= { 'n', 'v' }, '<localleader>goh', ':lua require("repo-url").open_history_url()<CR>', desc= 'open history URL' },
-      {  mode= { 'n', 'v' }, '<localleader>gyr', ':lua require("repo-url").copy_raw_url()<CR>', desc= 'copy raw URL' },
-      {  mode= { 'n', 'v' }, '<localleader>gor', ':lua require("repo-url").open_raw_url()<CR>', desc= 'open raw URL' },
-    },
-    opts = {},
-    config = function(_, opts)
-      require('repo-url').setup(opts)
-
-      local ru = require('repo-url')
-
-      -- For Go's go.mod file, generate permalinks to the dependency under the
-      -- cursor and copy to the clipboard or open in the default browser.
-      ar.augroup('repo-url', {
-        event = { 'FileType' },
-        pattern = 'gomod',
-        command = function(args)
-          map(
-            'n',
-            '<localleader>gyg',
-            function() ru.copy_gomod_tree_url() end,
-            { desc = 'copy gomod URL', buffer = args.buf }
-          )
-          map(
-            'n',
-            '<localleader>gog',
-            function() ru.open_gomod_tree_url() end,
-            { desc = 'open gomod URL', buffer = args.buf }
-          )
-        end,
-      }, {
-        -- For Go's go.sum file, generate permalinks to the dependency under the
-        -- cursor and copy to the clipboard or open in the default browser.
-        event = { 'FileType' },
-        pattern = 'gosum',
-        command = function(args)
-          map(
-            'n',
-            '<localleader>gyg',
-            function() ru.copy_gosum_tree_url() end,
-            { desc = 'copy gosum URL', buffer = args.buf }
-          )
-          map(
-            'n',
-            '<localleader>gog',
-            function() ru.open_gosum_tree_url() end,
-            { desc = 'open gosum URL', buffer = args.buf }
-          )
-        end,
-      })
-    end,
-  },
-  {
-    'linrongbin16/gitlinker.nvim',
-    cond = function() return git_cond('gitlinker.nvim') end,
-    cmd = { 'GitLink' },
-    opts = {
-
-      router = {
-        default_branch = {
-          ['^github%.com'] = 'https://github.com/'
-            .. '{_A.USER}/'
-            .. '{_A.REPO}/blob/'
-            .. '{_A.DEFAULT_BRANCH}/' -- always 'master'/'main' branch
-            .. '{_A.FILE}?plain=1' -- '?plain=1'
-            .. '#L{_A.LSTART}'
-            .. "{(_A.LEND > _A.LSTART and ('-L' .. _A.LEND) or '')}",
-        },
-        current_branch = {
-          ['^github%.com'] = 'https://github.com/'
-            .. '{_A.USER}/'
-            .. '{_A.REPO}/blob/'
-            .. '{_A.CURRENT_BRANCH}/' -- always current branch
-            .. '{_A.FILE}?plain=1' -- '?plain=1'
-            .. '#L{_A.LSTART}'
-            .. "{(_A.LEND > _A.LSTART and ('-L' .. _A.LEND) or '')}",
-        },
-        blame_default_branch = {
-          ['^github%.com'] = 'https://github.com/'
-            .. '{_A.USER}/'
-            .. '{_A.REPO}/blame/'
-            .. '{_A.DEFAULT_BRANCH}/'
-            .. '{_A.FILE}?plain=1' -- '?plain=1'
-            .. '#L{_A.LSTART}'
-            .. "{(_A.LEND > _A.LSTART and ('-L' .. _A.LEND) or '')}",
-        },
-      },
-    },
-    keys = {
-      {
-        '<leader>gom',
-        '<cmd>GitLink default_branch<cr>',
-        desc = 'gitlinker: copy line URL (main branch)',
-        mode = { 'n', 'v' },
-      },
-      {
-        '<leader>gob',
-        '<cmd>GitLink current_branch<cr>',
-        desc = 'gitlinker: copy line URL (current branch)',
-        mode = { 'n', 'v' },
-      },
-      {
-        '<leader>goc',
-        '<cmd>GitLink<cr>',
-        desc = 'gitlinker: copy line URL (commit)',
-        mode = { 'n', 'v' },
-      },
-      {
-        '<leader>gbm',
-        '<cmd>GitLink! blame_default_branch<cr>',
-        desc = 'gitlinker: github blame (main branch)',
-        mode = { 'v', 'n' },
-      },
-    },
-  },
-  {
     'razak17/agitator.nvim',
-    cond = function() return git_cond('agitator.nvim') end,
+    cond = function() return vim.g.git_cond('agitator.nvim') end,
     init = function()
       local function time_machine()
         require('agitator').git_time_machine({ use_current_win = true })
@@ -687,7 +517,7 @@ return {
   },
   {
     'FabijanZulj/blame.nvim',
-    cond = function() return git_cond('blame.nvim') end,
+    cond = function() return vim.g.git_cond('blame.nvim') end,
     cmd = { 'BlameToggle' },
     init = function()
       ar.add_to_select_menu('git', { ['Toggle Blame'] = 'BlameToggle' })
@@ -696,7 +526,7 @@ return {
   },
   {
     'aaronhallaert/advanced-git-search.nvim',
-    cond = function() return git_cond('advanced-git-search.nvim') end,
+    cond = function() return vim.g.git_cond('advanced-git-search.nvim') end,
     cmd = { 'AdvancedGitSearch' },
     init = function()
       ar.add_to_select_menu('git', { ['Git Search'] = 'AdvancedGitSearch' })
@@ -707,7 +537,7 @@ return {
   },
   {
     '2kabhishek/co-author.nvim',
-    cond = function() return git_cond('co-author.nvim') end,
+    cond = function() return vim.g.git_cond('co-author.nvim') end,
     cmd = 'CoAuthor',
     init = function()
       ar.add_to_select_menu('git', { ['List Authors'] = 'CoAuthor' })
@@ -715,7 +545,7 @@ return {
   },
   {
     'niuiic/git-log.nvim',
-    cond = function() return git_cond('git-log.nvim') end,
+    cond = function() return vim.g.git_cond('git-log.nvim') end,
     -- stylua: ignore
     keys = {
       { '<leader>gL', "<Cmd>lua require'git-log'.check_log()<CR>", mode = { 'n', 'x' }, desc = 'git-log: show line/selection log', },
@@ -724,7 +554,7 @@ return {
   },
   {
     'rbong/vim-flog',
-    cond = function() return git_cond('vim-flog') end,
+    cond = function() return vim.g.git_cond('vim-flog') end,
     init = function()
       ar.add_to_select_menu('git', { ['View Branch Graph'] = 'Flog' })
     end,
@@ -732,7 +562,7 @@ return {
   },
   {
     'ldelossa/gh.nvim',
-    cond = function() return git_cond('gh.nvim') end,
+    cond = function() return vim.g.git_cond('gh.nvim') end,
     -- stylua: ignore
     cmd = {
       'GHCloseCommit', 'GHExpandCommit', 'GHOpenToCommit', 'GHPopOutCommit',
@@ -752,7 +582,7 @@ return {
   },
   {
     'isakbm/gitgraph.nvim',
-    cond = function() return git_cond('gitgraph.nvim') end,
+    cond = function() return vim.g.git_cond('gitgraph.nvim') end,
     opts = {
       symbols = { merge_commit = 'M', commit = '*' },
       format = {
@@ -773,7 +603,7 @@ return {
   },
   {
     'akinsho/git-conflict.nvim',
-    cond = git_cond('git-conflict.nvim'),
+    cond = vim.g.git_cond('git-conflict.nvim'),
     event = 'BufReadPre',
     opts = {
       disable_diagnostics = true,
@@ -806,7 +636,7 @@ return {
   },
   {
     'SuperBo/fugit2.nvim',
-    cond = function() return git_cond('fugit2.nvim') end,
+    cond = function() return vim.g.git_cond('fugit2.nvim') end,
     cmd = { 'Fugit2', 'Fugit2Blame', 'Fugit2Diff', 'Fugit2Graph' },
     opts = { width = 100 },
   },

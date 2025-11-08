@@ -38,6 +38,7 @@
 - games
 - ghost
 - git
+- git-repo
 - gitpad
 - gp
 - grapple

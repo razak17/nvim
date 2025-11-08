@@ -892,6 +892,7 @@
                   "games",
                   "ghost",
                   "git",
+                  "git-repo",
                   "gitpad",
                   "gp",
                   "grapple",
@@ -1033,6 +1034,7 @@
                   "games",
                   "ghost",
                   "git",
+                  "git-repo",
                   "gitpad",
                   "gp",
                   "grapple",
@@ -1248,3 +1250,4 @@
   "title": "ArConfig",
   "type": "object"
 }
+
