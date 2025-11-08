@@ -44,21 +44,10 @@ function M.colorscheme_menu()
   local original_scheme = M.get_current_colorscheme()
   local buf = api.nvim_create_buf(false, true)
 
-  local win_w, win_h = vim.o.columns, vim.o.lines
-
-  -- compute width based on longest scheme name and cap it
-  local max_name = 0
-  for _, s in ipairs(schemes) do
-    if #s > max_name then max_name = #s end
-  end
-
-  local min_w = 30
-  local pane_w =
-    math.min(math.max(max_name + 6, min_w), math.floor(win_w * 0.6))
-  local pane_h = math.min(#schemes + 6, math.max(10, win_h - 20))
-
-  local row = math.floor((win_h - pane_h) / 2)
-  local col = math.floor((win_w - pane_w) / 2)
+  local width = math.ceil(vim.o.columns * 0.4)
+  local height = math.ceil(vim.o.lines * 0.7)
+  local col = math.ceil((vim.o.columns - width) / 2)
+  local row = math.ceil((vim.o.lines - height) / 2)
 
   local metalines = {
     'Available colorschemes: ' .. tostring(#schemes),
@@ -77,8 +66,8 @@ function M.colorscheme_menu()
     relative = 'editor',
     row = row,
     col = col,
-    width = pane_w,
-    height = math.min(pane_h, win_h - 2),
+    width = width,
+    height = height,
     border = 'single',
   })
 
