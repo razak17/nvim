@@ -2,7 +2,6 @@ local fn = vim.fn
 local cwd = fn.getcwd()
 local fmt = string.format
 local border = ar.ui.current.border
-local minimal = ar.plugins.minimal
 local lsp_override = ar_config.lsp.override
 local ar_lsp = ar_config.lsp.lang
 
@@ -66,7 +65,6 @@ return {
   {
     {
       'mason-org/mason.nvim',
-      cond = function() return not minimal or ar.lsp.enable end,
       lazy = false,
       keys = { { '<leader>lm', '<cmd>Mason<CR>', desc = 'mason info' } },
       build = ':MasonUpdate',
