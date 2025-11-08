@@ -67,7 +67,7 @@ return {
     {
       'mason-org/mason.nvim',
       cond = function() return not minimal or ar.lsp.enable end,
-      event = { 'VeryLazy' },
+      lazy = false,
       keys = { { '<leader>lm', '<cmd>Mason<CR>', desc = 'mason info' } },
       build = ':MasonUpdate',
       init = function()
