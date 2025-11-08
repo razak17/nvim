@@ -1,6 +1,9 @@
 ---@diagnostic disable: redundant-parameter
 
 local codicons = ar.ui.codicons
+local minimal = ar.plugins.minimal
+
+local function get_cond(plugin) return ar.get_plugin_cond(plugin, not minimal) end
 
 return {
   {
@@ -9,11 +12,10 @@ return {
     dependencies = {
       {
         'hrsh7th/cmp-path',
-        cond = function() return ar.get_plugin_cond('cmp-path') end,
+        cond = get_cond('cmp-path'),
         specs = {
           {
             'hrsh7th/nvim-cmp',
-            optional = true,
             opts = function(_, opts)
               vim.g.cmp_add_source(opts, {
                 source = {
@@ -30,10 +32,10 @@ return {
       },
       {
         'https://codeberg.org/FelipeLema/cmp-async-path',
+        cond = get_cond('cmp-async-path'),
         specs = {
           {
             'hrsh7th/nvim-cmp',
-            optional = true,
             opts = function(_, opts)
               vim.g.cmp_add_source(opts, {
                 source = {
@@ -50,10 +52,10 @@ return {
       },
       {
         'lukas-reineke/cmp-rg',
+        cond = get_cond('cmp-rg'),
         specs = {
           {
             'hrsh7th/nvim-cmp',
-            optional = true,
             opts = function(_, opts)
               vim.g.cmp_add_source(opts, {
                 source = {
@@ -71,10 +73,10 @@ return {
       },
       {
         'hrsh7th/cmp-buffer',
+        cond = get_cond('cmp-buffer'),
         specs = {
           {
             'hrsh7th/nvim-cmp',
-            optional = true,
             opts = function(_, opts)
               vim.g.cmp_add_source(opts, {
                 source = {
@@ -94,10 +96,10 @@ return {
       },
       {
         'amarakon/nvim-cmp-buffer-lines',
+        cond = get_cond('nvim-cmp-buffer-lines'),
         specs = {
           {
             'hrsh7th/nvim-cmp',
-            optional = true,
             opts = function(_, opts)
               vim.g.cmp_add_source(opts, {
                 source = {
@@ -114,10 +116,10 @@ return {
       },
       {
         'dmitmel/cmp-cmdline-history',
+        cond = get_cond('cmp-cmdline-history'),
         specs = {
           {
             'hrsh7th/nvim-cmp',
-            optional = true,
             opts = function(_, opts)
               vim.g.cmp_add_source(opts, {
                 menu = { cmdline_history = '[CHIST]' },
@@ -132,11 +134,11 @@ return {
       },
       {
         'hrsh7th/cmp-cmdline',
+        cond = get_cond('cmp-cmdline'),
         config = function() vim.o.wildmode = '' end,
         specs = {
           {
             'hrsh7th/nvim-cmp',
-            optional = true,
             opts = function(_, opts)
               vim.g.cmp_add_source(opts, {
                 menu = { cmdline = '[CMD]' },
@@ -185,10 +187,10 @@ return {
       {
         'f3fora/cmp-spell',
         ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' },
+        cond = get_cond('cmp-spell'),
         specs = {
           {
             'hrsh7th/nvim-cmp',
-            optional = true,
             opts = function(_, opts)
               vim.g.cmp_add_source(opts, {
                 source = {
@@ -204,10 +206,10 @@ return {
       },
       {
         'andersevenrud/cmp-tmux',
+        cond = get_cond('cmp-tmux'),
         specs = {
           {
             'hrsh7th/nvim-cmp',
-            optional = true,
             opts = function(_, opts)
               vim.g.cmp_add_source(opts, {
                 source = {
@@ -246,11 +248,10 @@ return {
       },
       {
         'SergioRibera/cmp-dotenv',
-        cond = function() return ar.get_plugin_cond('cmp-dotenv') end,
+        cond = get_cond('cmp-dotenv'),
         specs = {
           {
             'hrsh7th/nvim-cmp',
-            optional = true,
             opts = function(_, opts)
               vim.g.cmp_add_source(opts, {
                 source = {
@@ -267,10 +268,10 @@ return {
       {
         'Gelio/cmp-natdat',
         opts = {},
+        cond = get_cond('cmp-natdat'),
         specs = {
           {
             'hrsh7th/nvim-cmp',
-            optional = true,
             opts = function(_, opts)
               vim.g.cmp_add_source(opts, {
                 source = {
@@ -293,10 +294,10 @@ return {
       },
       {
         'hrsh7th/cmp-emoji',
+        cond = get_cond('cmp-emoji'),
         specs = {
           {
             'hrsh7th/nvim-cmp',
-            optional = true,
             opts = function(_, opts)
               vim.g.cmp_add_source(opts, {
                 source = {
@@ -319,10 +320,10 @@ return {
       },
       {
         'fazibear/cmp-nerdfonts',
+        cond = get_cond('cmp-nerdfonts'),
         specs = {
           {
             'hrsh7th/nvim-cmp',
-            optional = true,
             opts = function(_, opts)
               vim.g.cmp_add_source(opts, {
                 source = {
@@ -345,7 +346,7 @@ return {
       {
         'uga-rosa/cmp-dictionary',
         cond = function()
-          local condition = ar.plugins.overrides.dict.enable
+          local condition = ar.plugins.overrides.dict.enable and not minimal
           return ar.get_plugin_cond('cmp-dictionary', condition)
         end,
         config = function()
@@ -356,7 +357,6 @@ return {
         specs = {
           {
             'hrsh7th/nvim-cmp',
-            optional = true,
             opts = function(_, opts)
               vim.g.cmp_add_source(opts, { menu = { dictionary = '[DICT]' } })
             end,
