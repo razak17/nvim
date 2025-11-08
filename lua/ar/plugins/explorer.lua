@@ -4,6 +4,7 @@ local highlight, lsp_hls = ar.highlight, ar.ui.lsp.highlights
 local api, fn = vim.api, vim.fn
 local utils = require('ar.utils.fs')
 local ar_icons = ar_config.icons.variant
+local variant = ar_config.explorer.variant
 
 ---@param from string
 ---@param to string
@@ -22,8 +23,7 @@ return {
   {
     'A7Lavinraj/fyler.nvim',
     cond = function()
-      local condition = ar_config.explorer.variant == 'fyler'
-      return ar.get_plugin_cond('fyler.nvim', condition)
+      return ar.get_plugin_cond('fyler.nvim', variant == 'fyler')
     end,
     branch = 'stable',
     cmd = { 'Fyler' },
@@ -73,7 +73,7 @@ return {
   {
     'nvim-neo-tree/neo-tree.nvim',
     cond = function()
-      return ar.get_plugin_cond('neo-tree.nvim', ar_config.explorer.variant == 'neo-tree')
+      return ar.get_plugin_cond('neo-tree.nvim', variant == 'neo-tree')
     end,
     branch = 'v3.x',
     cmd = { 'Neotree' },
@@ -382,10 +382,7 @@ return {
   {
     'nvim-mini/mini.files',
     cond = function()
-      return ar.get_plugin_cond(
-        'mini.files',
-        ar_config.explorer.variant == 'mini.files'
-      )
+      return ar.get_plugin_cond('mini.files', variant == 'mini.files')
     end,
     keys = {
       {
@@ -471,10 +468,7 @@ return {
   },
   {
     'stevearc/oil.nvim',
-    cond = function()
-      local condition = ar_config.explorer.variant == 'oil'
-      return ar.get_plugin_cond('oil.nvim', condition)
-    end,
+    cond = function() return ar.get_plugin_cond('oil.nvim', variant == 'oil') end,
     keys = {
       {
         '<C-n>',

@@ -523,7 +523,7 @@ function M.format_servers(servers)
   end
   local names = table.concat(servers, fmt(' %s ', separator))
   -- return table.concat(servers, ', ') .. ' ' .. separator
-  return names  .. ' '.. separator
+  return names .. ' ' .. separator
 end
 
 -- Get linters (from null-ls)

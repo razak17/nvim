@@ -90,7 +90,7 @@ return {
   },
   {
     'sudo-tee/opencode.nvim',
-    cond = function() return  get_cond('opencode.nvim', 'frontend') end,
+    cond = function() return get_cond('opencode.nvim', 'frontend') end,
     name = 'opencode-frontend.nvim',
     event = 'VeryLazy',
     init = function()
