@@ -36,6 +36,13 @@ return {
     opts = { width = 100 },
   },
   {
+    'Mauritz8/gitstatus.nvim',
+    cmd = { 'Gitstatus' },
+    keys = {
+      { '<localleader>gg', vim.cmd.Gitstatus, desc = 'open commit buffer' },
+    },
+  },
+  {
     'kilavila/nvim-gitignore',
     cond = function() return ar.get_plugin_cond('nvim-gitignore', not minimal) end,
     cmd = { 'Gitignore', 'Licenses' },
