@@ -780,7 +780,7 @@
           "type": "boolean"
         },
         "files": {
-          "enum": ["smart-open", "snacks", "telescope", "fzf-lua", "mini.pick"],
+          "enum": ["smart-open", "snacks", "telescope", "fzf-lua", "mini.pick", "fff"],
           "type": "string"
         },
         "variant": {

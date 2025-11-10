@@ -444,6 +444,28 @@ return {
     },
   },
   {
+    'razak17/todo-comments.nvim',
+    optional = true,
+    opts = function()
+      if ar_config.picker.variant == 'fzf-lua' then
+        local todos = require('todo-comments.fzf').todo
+        local function todos_fixes()
+          todos({ keywords = { 'TODO', 'FIX', 'FIXME' } })
+        end
+        local function config_todos()
+          todos({
+            keywords = { 'TODO', 'FIX', 'FIXME' },
+            cwd = fn.stdpath('config'),
+          })
+        end
+
+        map('n', '<leader>ft', todos, { desc = 'todos' })
+        map('n', '<leader>fF', todos_fixes, { desc = 'todo/fixme' })
+        map('n', '<leader>fC', config_todos, { desc = 'config todo/fixme' })
+      end
+    end,
+  },
+  {
     'piersolenski/import.nvim',
     cond = not minimal,
     keys = { { '<leader>fi', '<Cmd>Import<CR>', desc = 'import' } },
@@ -451,44 +473,37 @@ return {
     opts = {
       picker = ar_config.picker.variant ~= 'mini.pick'
           and ar_config.picker.variant
-        or 'snacks', -- | "fzf-lua" | "telescope" | "snacks",
+        or 'snacks',
     },
   },
   {
     'dmtrKovalenko/fff.nvim',
-    -- cond = false,
     build = 'cargo build --release',
-    opts = {},
-    keys = {
-      {
-        'f/', -- try it if you didn't it is a banger keybinding for a picker
-        function()
-          require('fff').find_files() -- or find_in_git_root() if you only want git files
-        end,
-        desc = 'Open file picker',
+    cmd = { 'FFFFind' },
+    keys = function()
+      local function fff_find() require('fff').find_files() end
+      local keys = {
+        { 'f/', fff_find, desc = 'Open file picker' },
+      }
+      if ar_config.picker.files == 'fff' then
+        table.insert(keys, { '<C-p>', fff_find, desc = 'fff: find files' })
+      end
+      return keys
+    end,
+    opts = {
+      prompt = '🦆 ',
+      hl = { normal = 'NormalFloat' },
+      layout = {
+        height = ar_config.picker.win.fullscreen and 1.0 or 0.9,
+        width = ar_config.picker.win.fullscreen and 1.0 or 0.9,
+        prompt_position = 'top',
+        preview_position = 'right', -- or 'left', 'right', 'top', 'bottom'
+        preview_size = 0.5,
       },
-    },
-    {
-      'razak17/todo-comments.nvim',
-      optional = true,
-      opts = function()
-        if ar_config.picker.variant == 'fzf-lua' then
-          local todos = require('todo-comments.fzf').todo
-          local function todos_fixes()
-            todos({ keywords = { 'TODO', 'FIX', 'FIXME' } })
-          end
-          local function config_todos()
-            todos({
-              keywords = { 'TODO', 'FIX', 'FIXME' },
-              cwd = fn.stdpath('config'),
-            })
-          end
-
-          map('n', '<leader>ft', todos, { desc = 'todos' })
-          map('n', '<leader>fF', todos_fixes, { desc = 'todo/fixme' })
-          map('n', '<leader>fC', config_todos, { desc = 'config todo/fixme' })
-        end
-      end,
+      preview = {
+        enabled = ar_config.picker.win.show_preview,
+        line_numbers = true,
+      },
     },
   },
 }
