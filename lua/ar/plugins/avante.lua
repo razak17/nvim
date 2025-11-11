@@ -173,6 +173,9 @@ return {
     dependencies = {
       {
         'Kaiser-Yang/blink-cmp-avante',
+        cond = function()
+          return ar.get_plugin_cond('avante.nvim', ar.ai.enable)
+        end,
         specs = {
           'saghen/blink.cmp',
           opts = {
