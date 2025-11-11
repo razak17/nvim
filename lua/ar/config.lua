@@ -486,6 +486,7 @@ local config = {
       smart_spelling = { enable = true },
       smart_splits = { enable = true },
       smart_tilde = { enable = true },
+      spell_all_good = { enable = true },
       sticky_note = { enable = false },
       sticky_yank = { enable = true },
       surf_plugins = { enable = true },

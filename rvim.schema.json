@@ -986,6 +986,13 @@
               },
               "type": "object"
             },
+            "spell_all_good": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": { "type": "boolean" }
+              },
+              "type": "object"
+            },
             "sticky_note": {
               "additionalProperties": false,
               "properties": {
