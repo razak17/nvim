@@ -7,7 +7,14 @@ return {
         ar_config.ui.transparent.enable
       )
     end,
+    init = function()
+      ar.add_to_select_menu(
+        'toggle',
+        { ['Toggle Transparency'] = 'TransparentToggle' }
+      )
+    end,
     event = 'VimEnter',
+    cmd = { 'TransparentToggle', 'TransparentEnable', 'TransparentDisable' },
     opts = {
       extra_groups = {
         'PopupNormal',
