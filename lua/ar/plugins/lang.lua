@@ -404,13 +404,10 @@ return {
   ------------------------------------------------------------------------------
   {
     'psliwka/vim-dirtytalk',
-    cond = function()
-      local condition = not minimal and niceties
-      return ar.get_plugin_cond('vim-dirtytalk', condition)
-    end,
-    lazy = false,
+    cond = function() return ar.get_plugin_cond('vim-dirtytalk', not minimal) end,
+    event = { 'BufRead' },
     build = ':DirtytalkUpdate',
-    init = function() vim.opt.spelllang:append('programming') end,
+    init = function() vim.opt.spelllang:prepend('programming') end,
   },
   ---}}}
 }
