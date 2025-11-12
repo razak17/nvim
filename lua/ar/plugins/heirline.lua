@@ -44,8 +44,8 @@ local function setup_colors(colorscheme)
   local P = {
     bg_dark = hl.get('StatusLine', 'bg'),
     fg = hl.get('Normal', 'fg'),
-    blue = hl.get('DiagnosticInfo', 'bg'),
-    dark_orange = hl.get('DiagnosticWarn', 'bg'),
+    blue = hl.get('Directory', 'fg'),
+    dark_orange = hl.get('WarningMsg', 'fg'),
     error_red = hl.get('NvimInternalError', 'bg'),
     pale_red = ar.highlight.get('Error', 'fg'),
     pale_blue = hl.get('DiagnosticInfo', 'bg'),
@@ -53,24 +53,21 @@ local function setup_colors(colorscheme)
     forest_green = hl.get('DiffAdd', 'fg'),
     lightgreen = hl.get('DiagnosticVirtualTextHint', 'bg'),
   }
-  if colorscheme == 'default' then
-    return vim.tbl_deep_extend('force', P, {
+  local overrides = {
+    default = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.3),
       fg = hl.get('Normal', 'fg'),
-      blue = hl.get('DiagnosticInfo', 'fg'),
-      dark_orange = hl.get('DiagnosticWarn', 'fg'),
-      error_red = hl.get('ExtraWhitespace', 'fg'),
       pale_red = hl.get('DiagnosticError', 'fg'),
       pale_blue = hl.get('DiagnosticInfo', 'fg'),
       forest_green = hl.get('DiffAdd', 'bg'),
       lightgreen = hl.get('DiagnosticVirtualTextHint', 'fg'),
-    })
-  end
-  if colorscheme == 'peachpuff' then
-    return vim.tbl_deep_extend('force', P, {
+    },
+    habamax = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.2),
+    },
+    peachpuff = {
       bg_dark = hl.get('CursorLine', 'bg'),
       fg = hl.get('Comment', 'fg'),
-      blue = hl.tint(hl.get('Visual', 'bg'), -0.4),
       yellowgreen = hl.get('String', 'fg'),
       dark_orange = hl.tint(hl.get('WarningMsg', 'fg'), -0.2),
       error_red = hl.tint(hl.get('Error', 'fg'), -0.4),
@@ -79,165 +76,100 @@ local function setup_colors(colorscheme)
       forest_green = hl.tint(hl.get('DiffAdd', 'bg'), -0.3),
       lightgreen = hl.tint(hl.get('DiagnosticVirtualTextHint', 'fg'), -0.2),
       orange = hl.get('Constant', 'fg'),
-    })
-  end
-  if colorscheme == 'retrobox' then
-    return vim.tbl_deep_extend('force', P, {
+    },
+    retrobox = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.2),
-      blue = hl.get('DiagnosticInfo', 'fg'),
-      dark_orange = hl.get('WarningMsg', 'fg'),
-    })
-  end
-  if colorscheme == 'habamax' then
-    return vim.tbl_deep_extend('force', P, {
-      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.2),
-      blue = hl.get('DiagnosticInfo', 'fg'),
-      dark_orange = hl.get('WarningMsg', 'fg'),
-    })
-  end
-  if colorscheme == 'slate' then
-    return vim.tbl_deep_extend('force', P, {
+      blue = hl.tint(hl.get('Changed', 'fg'), 0.2),
+    },
+    slate = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.1),
-      blue = hl.get('DiagnosticInfo', 'fg'),
-      dark_orange = hl.get('WarningMsg', 'fg'),
-    })
-  end
-  if colorscheme == 'vim' then
-    return vim.tbl_deep_extend('force', P, {
+      blue = hl.get('DiffChange', 'bg'),
+    },
+    vim = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.55),
-    })
-  end
-  if colorscheme == 'wildcharm' then
-    return vim.tbl_deep_extend('force', P, {
+    },
+    wildcharm = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.6),
-      blue = hl.get('DiagnosticInfo', 'fg'),
-      dark_orange = hl.get('WarningMsg', 'fg'),
-    })
-  end
-  if colorscheme == 'zenbones' then
-    return vim.tbl_deep_extend('force', P, {
-      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.1),
-      blue = hl.get('DiagnosticInfo', 'fg'),
-      dark_orange = hl.get('WarningMsg', 'fg'),
-    })
-  end
-  if colorscheme == 'poimandres' then
-    return vim.tbl_deep_extend('force', P, {
+    },
+    afterglow = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.25),
-    })
-  end
-  if colorscheme == 'glowbeam' then
-    return vim.tbl_deep_extend('force', P, {
-      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.25),
-    })
-  end
-  if colorscheme == 'afterglow' then
-    return vim.tbl_deep_extend('force', P, {
-      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.25),
-      blue = hl.get('DiagnosticInfo', 'fg'),
-      dark_orange = hl.get('WarningMsg', 'fg'),
-    })
-  end
-  if colorscheme == 'darkmatter' then
-    return vim.tbl_deep_extend('force', P, {
-      comment = hl.tint(hl.get('LineNr', 'fg'), -0.15),
-    })
-  end
-  if colorscheme == 'iceclimber' then
-    return vim.tbl_deep_extend('force', P, {
-      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.25),
-      blue = hl.get('DiagnosticInfo', 'fg'),
-      dark_orange = hl.get('WarningMsg', 'fg'),
-    })
-  end
-  if colorscheme == 'ashen' then
-    return vim.tbl_deep_extend('force', P, {
+    },
+    ashen = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.15),
-    })
-  end
-  if colorscheme == 'sunbather' then
-    return vim.tbl_deep_extend('force', P, {
-      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
-    })
-  end
-  if colorscheme == 'ferriouscolor' then
-    return vim.tbl_deep_extend('force', P, {
-      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
-      blue = hl.get('DiagnosticInfo', 'fg'),
-      dark_orange = hl.get('WarningMsg', 'fg'),
-    })
-  end
-  if colorscheme == 'wildberries' then
-    return vim.tbl_deep_extend('force', P, {
-      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
-      blue = hl.get('DiagnosticInfo', 'fg'),
-      dark_orange = hl.get('WarningMsg', 'fg'),
-      comment = hl.tint(hl.get('LineNr', 'fg'), -0.15),
-    })
-  end
-  if colorscheme == 'no-clown-fiesta' then
-    return vim.tbl_deep_extend('force', P, {
-      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.2),
-      blue = hl.get('DiagnosticInfo', 'fg'),
-      dark_orange = hl.get('WarningMsg', 'fg'),
-    })
-  end
-  if colorscheme == 'rasmus' then
-    return vim.tbl_deep_extend('force', P, {
-      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
-      comment = hl.tint(hl.get('Comment', 'fg'), 0.15),
-    })
-  end
-  if colorscheme == 'serenity' then
-    return vim.tbl_deep_extend('force', P, {
-      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
-    })
-  end
-  if colorscheme == 'darcubox' then
-    return vim.tbl_deep_extend('force', P, {
+    },
+    darcubox = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.15),
-    })
-  end
-  if colorscheme == 'mono-jade' then
-    return vim.tbl_deep_extend('force', P, {
+      dark_orange = hl.get('Label', 'fg'),
+    },
+    darkmatter = {
+      dark_orange = hl.get('Label', 'fg'),
+      error_red = hl.get('TSType', 'fg'),
+      comment = hl.tint(hl.get('LineNr', 'fg'), -0.15),
+    },
+    evergarden = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.05),
+    },
+    ferriouscolor = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
+      blue = hl.get('Changed', 'fg'),
+    },
+    glowbeam = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.25),
-    })
-  end
-  if colorscheme == 'lavish' then
-    return vim.tbl_deep_extend('force', P, {
-      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.25),
-    })
-  end
-  if colorscheme == 'evergarden' then
-    return vim.tbl_deep_extend('force', P, {
-      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
-      dark_orange = hl.get('WarningMsg', 'fg'),
-    })
-  end
-  if colorscheme == 'oh-lucy' then
-    return vim.tbl_deep_extend('force', P, {
-      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
-      dark_orange = hl.get('WarningMsg', 'fg'),
-    })
-  end
-  if colorscheme == 'gruvbox' then
-    return vim.tbl_deep_extend('force', P, {
+    },
+    gruvbox = {
       bg_dark = hl.tint(hl.get('Normal', 'bg'), 0.25),
-      blue = hl.tint(hl.get('Changed', 'fg'), -0.1),
-      dark_orange = hl.tint(hl.get('WarningMsg', 'fg'), -0.2),
+      blue = hl.get('Changed', 'fg'),
       forest_green = hl.tint(hl.get('DiffAdd', 'bg'), -0.3),
       lightgreen = hl.tint(hl.get('DiagnosticVirtualTextHint', 'fg'), -0.2),
-    })
-  end
-  if colorscheme == 'zenburn' then
-    return vim.tbl_deep_extend('force', P, {
+    },
+    iceclimber = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.25),
+    },
+    lavish = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.25),
+    },
+    ['mono-jade'] = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.25),
+    },
+    ['no-clown-fiesta'] = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.2),
+    },
+    ['oh-lucy'] = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
+    },
+    poimandres = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.25),
+    },
+    rasmus = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
+      comment = hl.tint(hl.get('Comment', 'fg'), 0.15),
+    },
+    serenity = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
+      blue = hl.get('Define', 'fg'),
+    },
+    sunbather = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
+    },
+    wildberries = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
+      blue = hl.get('DiagnosticInfo', 'fg'),
+      comment = hl.tint(hl.get('LineNr', 'fg'), -0.15),
+    },
+    zenbones = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.1),
+      blue = hl.get('DiagnosticInfo', 'fg'),
+    },
+    zenburn = {
       bg_dark = hl.tint(hl.get('Normal', 'bg'), 0.25),
-      blue = hl.tint(hl.get('Changed', 'fg'), -0.1),
-      dark_orange = hl.tint(hl.get('WarningMsg', 'fg'), -0.3),
+      dark_orange = hl.get('Function', 'fg'),
       pale_blue = hl.tint(hl.get('DiagnosticInfo', 'fg'), -0.2),
       forest_green = hl.tint(hl.get('DiffAdd', 'bg'), -0.3),
       lightgreen = hl.tint(hl.get('DiagnosticVirtualTextHint', 'fg'), -0.2),
-    })
+    },
+  }
+  if overrides[colorscheme] then
+    return vim.tbl_deep_extend('force', P, overrides[colorscheme])
   end
   if colorscheme == 'onedark' then P = require('onedark.palette') end
   return P
