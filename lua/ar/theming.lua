@@ -178,12 +178,13 @@ end
 ---@param override? table
 ---@return table
 local function generate_overrides(override)
-  local overrides = {}
-  if not ar.falsy(override) then ar.list_insert(overrides, override) end
-  ar.list_insert(overrides, {
+  local overrides = {
     { StatusLine = { bg = 'NONE', reverse = false } },
     { Winbar = { link = 'Variable' } },
     { WinbarNC = { link = 'NonText' } },
+  }
+  if not ar.falsy(override) then ar.list_insert(overrides, override) end
+  ar.list_insert(overrides, {
     { MsgSeparator = { link = 'WinSeparator' } },
     { VertSplit = { link = 'WinSeparator' } },
     { IndentBlanklineChar = { link = 'VertSplit' } },
