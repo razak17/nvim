@@ -12,7 +12,7 @@ settings({
     opt = {
       list = false,
       spell = true,
-      spelllang = { 'en_gb', 'programming' },
+      spelllang = { 'en', 'programming' },
     },
     function()
       -- @see: https://github.com/linkarzu/dotfiles-latest/blob/main/neovim/neobean/lua/config/keymaps.lua?plain=1#L141
@@ -71,7 +71,7 @@ settings({
     opt = {
       list = false,
       spell = true,
-      spelllang = { 'en_gb', 'programming' },
+      spelllang = { 'en', 'programming' },
     },
     function() vim.bo.commentstring = '; %s' end,
   },
@@ -119,7 +119,7 @@ settings({
     opt = {
       list = false,
       spell = true,
-      spelllang = { 'en_gb', 'programming' },
+      spelllang = { 'en', 'programming' },
     },
     plugins = {
       cmp = function(cmp)

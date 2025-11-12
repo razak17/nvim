@@ -143,12 +143,6 @@ local function colorscheme_overrides()
   local overrides = {
     -- builtin colorschemes
     ['default'] = theming.generate_overrides({
-      {
-        StatusLine = {
-          bg = { from = 'StatusLine', alter = -0.85 },
-          fg = { from = 'Normal' },
-        },
-      },
       { CurSearch = { link = 'WildMenu' } },
       { Folded = { bg = { from = 'CursorLine', alter = -0.2 } } },
       { Comment = { fg = { from = 'Comment', alter = -0.2 } } },
@@ -213,7 +207,6 @@ local function colorscheme_overrides()
       { Folded = { bg = { from = 'CursorLine', alter = -0.1 } } },
       { CursorLine = { link = 'CursorLine' } },
       { NonText = { fg = { from = 'NonText', alter = 0.4 } } },
-      { StatusLine = { bg = 'NONE', reverse = false } },
       { Visual = { bg = { from = 'CursorLine', alter = 0.2 }, fg = 'NONE' } },
       { WinSeparator = { fg = { from = 'VertSplit' }, bg = 'NONE' } },
     }),
