@@ -175,6 +175,38 @@ return {
       },
     }
 
+    local codecompanion_status = {
+      static = { processing = false },
+      update = {
+        'User',
+        pattern = 'CodeCompanionRequest*',
+        callback = function(self, args)
+          if args.match == 'CodeCompanionRequestStarted' then
+            self.processing = true
+          elseif args.match == 'CodeCompanionRequestFinished' then
+            self.processing = false
+          end
+          vim.cmd('redrawstatus')
+        end,
+      },
+      {
+        provider = ' ' .. codicons.misc.robot_alt,
+        hl = function(self)
+          if self.processing then return { fg = 'yellow', bold = true } end
+          return { fg = 'comment', bold = true }
+        end,
+      },
+      { provider = ' ' .. separator, hl = { bold = true } },
+    }
+
+    local words = {
+      { provider = ' ' .. separator, hl = { fg = 'comment', bold = true } },
+      {
+        provider = function() return ' ' .. stl.word_count() end,
+        hl = { fg = 'comment', italic = true },
+      },
+    }
+
     local location =
       { provider = function() return stl.location() .. stl.progress() end }
 
@@ -227,7 +259,7 @@ return {
       {
         flexible = 3,
         {
-          { provider = separator, hl = { fg = 'comment', bold = true } },
+          { provider = ' ' .. separator, hl = { fg = 'comment', bold = true } },
           {
             init = function(self)
               self.agent = require('gp').get_chat_agent().name
@@ -240,21 +272,29 @@ return {
         },
         empty_component,
       },
-      {
-        flexible = 2,
-        {
-          { provider = separator, hl = { fg = 'comment', bold = true } },
-          {
-            provider = function() return ' ' .. stl.word_count() end,
-            hl = { fg = 'comment', italic = true },
-          },
-        },
-        empty_component,
-      },
+      { flexible = 2, words, empty_component },
       align,
-      -- Ruler
       { flexible = 1, location, empty_component },
-      -- Scroll Bar
+      { flexible = 1, scrollbar, empty_component },
+    }
+
+    local codecompanion_statusline = {
+      condition = function()
+        if not ar.ai.enable or not ar.has('codecompanion.nvim') then
+          return false
+        end
+        return vim.bo.ft == 'codecompanion'
+      end,
+      vim_mode,
+      {
+        provider = ' ' .. 'Codecompanion',
+        bold = true,
+        hl = { fg = 'pale_blue' },
+      },
+      { flexible = 2, words, empty_component },
+      align,
+      { flexible = 2, codecompanion_status, empty_component },
+      { flexible = 1, location, empty_component },
       { flexible = 1, scrollbar, empty_component },
     }
 
@@ -285,10 +325,7 @@ return {
 
     local explorer_statusline = {
       condition = function()
-        local filetypes = {
-          '^neo--tree$',
-          'snacks_picker_list',
-        }
+        local filetypes = { '^neo--tree$', 'snacks_picker_list' }
         return conditions.buffer_matches({ filetype = filetypes })
       end,
       vim_mode,
@@ -457,6 +494,7 @@ return {
       vim_mode,
       -- Git Branch
       { flexible = 4, git_branch, empty_component },
+      -- nvim-tinygit
       {
         flexible = 3,
         {
@@ -974,29 +1012,7 @@ return {
       {
         flexible = 2,
         condition = function() return ar.ai.enable end,
-        {
-          static = { processing = false },
-          update = {
-            'User',
-            pattern = 'CodeCompanionRequest*',
-            callback = function(self, args)
-              if args.match == 'CodeCompanionRequestStarted' then
-                self.processing = true
-              elseif args.match == 'CodeCompanionRequestFinished' then
-                self.processing = false
-              end
-              vim.cmd('redrawstatus')
-            end,
-          },
-          {
-            provider = ' ' .. codicons.misc.robot_alt,
-            hl = function(self)
-              if self.processing then return { fg = 'yellow', bold = true } end
-              return { fg = 'comment', bold = true }
-            end,
-          },
-          { provider = ' ' .. separator, hl = { bold = true } },
-        },
+        codecompanion_status,
         empty_component,
       },
       -- VectorCode
@@ -1228,6 +1244,7 @@ return {
         hl = { bg = 'bg_dark', fg = 'fg' },
         fallthrough = false,
         gp_statusline,
+        codecompanion_statusline,
         mason_statusline,
         explorer_statusline,
         help_statusline,
