@@ -847,19 +847,35 @@ return {
       cond = get_cond({ 'rose-pine' }),
       priority = get_priority({ 'rose-pine' }),
       event = get_event({ 'rose-pine' }),
+      init = function()
+        theming.apply_overrides('rose-pine', {
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.45 } } },
+        }, true)
+      end,
     },
     {
       'oxfist/night-owl.nvim',
       priority = get_priority({ 'night-owl' }),
       event = get_event({ 'night-owl' }),
       cond = get_cond({ 'night-owl' }),
-      -- opts = { underline = false },
+      init = function()
+        theming.apply_overrides('night-owl', {
+          { CursorLine = { bg = { from = 'CursorLine', alter = 0.95 } } },
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = 0.45 } } },
+        }, true)
+      end,
     },
     {
       'projekt0n/github-nvim-theme',
       cond = get_cond({ 'github_dark' }),
       priority = get_priority({ 'github_dark' }),
       event = get_event({ 'github_dark' }),
+      init = function()
+        theming.apply_overrides('github_dark', {
+          { CursorLine = { bg = { from = 'CursorLine', alter = -0.2 } } },
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = 1.75 } } },
+        }, true)
+      end,
     },
     {
       'NTBBloodbath/doom-one.nvim',
@@ -870,6 +886,12 @@ return {
         vim.g.doom_one_pumblend_enable = true
         vim.g.doom_one_pumblend_transparency = 3
       end,
+      init = function()
+        theming.apply_overrides('doom-one', {
+          { CursorLine = { bg = { from = 'CursorLine', alter = 0.05 } } },
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.65 } } },
+        }, true)
+      end,
     },
     {
       'neanias/everforest-nvim',
@@ -878,24 +900,55 @@ return {
       event = get_event({ 'everforest' }),
       opts = {},
       config = function(_, opts) require('everforest').setup(opts) end,
+      init = function()
+        theming.apply_overrides('everforest', {
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.2 } } },
+        }, true)
+      end,
     },
     {
       'aliqyan-21/darkvoid.nvim',
       cond = get_cond({ 'darkvoid' }),
       priority = get_priority({ 'darkvoid' }),
       event = get_event({ 'darkvoid' }),
+      init = function()
+        theming.apply_overrides('darkvoid', {
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.65 } } },
+        }, true)
+      end,
     },
     {
       'rjshkhr/shadow.nvim',
       cond = get_cond({ 'shadow' }),
       priority = get_priority({ 'shadow' }),
       event = get_event({ 'shadow' }),
+      init = function()
+        theming.apply_overrides('shadow', {
+          { Folded = { bg = { from = 'Folded', alter = 2.65 } } },
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = 0.45 } } },
+        }, true)
+      end,
     },
     {
       'RostislavArts/naysayer.nvim',
-      cond = get_cond({ 'naysayer', 'naysayer.nvim' }),
+      cond = get_cond({ 'naysayer' }),
       priority = get_priority({ 'naysayer' }),
       event = get_event({ 'naysayer' }),
+      init = function()
+        theming.apply_overrides('naysayer', {
+          { Folded = { bg = { from = 'CursorLine', alter = 0.15 } } },
+          {
+            Visual = { fg = 'NONE', bg = { from = 'CursorLine', alter = 0.45 } },
+          },
+          { MatchParen = { link = 'Visual' } },
+          {
+            WinSeparator = {
+              bg = 'NONE',
+              fg = { from = 'WinSeparator', alter = -0.65 },
+            },
+          },
+        }, true)
+      end,
     },
   },
   ------------------------------------------------------------------------------

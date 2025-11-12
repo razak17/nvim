@@ -106,6 +106,16 @@ local function setup_colors(colorscheme)
       error_red = hl.get('TSType', 'fg'),
       comment = hl.tint(hl.get('LineNr', 'fg'), -0.15),
     },
+    darkvoid = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.15),
+    },
+    ['doom-one'] = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.05),
+    },
+    everforest = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.05),
+      blue = hl.get('DiagnosticInfo', 'fg'),
+    },
     evergarden = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.05),
     },
@@ -115,6 +125,9 @@ local function setup_colors(colorscheme)
     },
     glowbeam = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.25),
+    },
+    ['github_dark'] = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.2),
     },
     gruvbox = {
       bg_dark = hl.tint(hl.get('Normal', 'bg'), 0.25),
@@ -131,6 +144,12 @@ local function setup_colors(colorscheme)
     ['mono-jade'] = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.25),
     },
+    naysayer = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
+    },
+    ['night-owl'] = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.05),
+    },
     ['no-clown-fiesta'] = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.2),
     },
@@ -144,9 +163,16 @@ local function setup_colors(colorscheme)
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
       comment = hl.tint(hl.get('Comment', 'fg'), 0.15),
     },
+    ['rose-pine'] = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.05),
+    },
     serenity = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
       blue = hl.get('Define', 'fg'),
+    },
+    shadow = {
+      bg_dark = hl.tint(hl.get('NormalFloat', 'bg'), 0.25),
+      comment = hl.tint(hl.get('Comment', 'fg'), 0.45),
     },
     sunbather = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
