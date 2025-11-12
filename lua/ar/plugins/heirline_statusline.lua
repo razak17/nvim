@@ -538,7 +538,6 @@ return {
             end,
             name = 'git diff',
           },
-          hl = { fg = 'dark_orange' },
         },
         empty_component,
       },

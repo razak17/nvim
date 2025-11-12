@@ -250,6 +250,7 @@ return {
       event = get_event({ 'wildberries' }),
       init = function()
         local overrides = {
+          { LineNr = { fg = { from = 'LineNr', alter = -0.35 } } },
           { NonText = { fg = { from = 'NonText', alter = 0.4 } } },
           { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
           { StatusLine = { bg = 'NONE', reverse = false } },
@@ -259,6 +260,16 @@ return {
           { VertSplit = { link = 'WinSeparator' } },
           { IndentBlanklineChar = { link = 'VertSplit' } },
           { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+          {
+            GitSignsAdd = {
+              fg = { from = 'DiffAdd', attr = 'bg', alter = 0.4 },
+            },
+          },
+          {
+            GitSignsChange = {
+              fg = { from = 'DiagnosticInfo', attr = 'fg', alter = 0.2 },
+            },
+          },
         }
         ar.list_insert(
           overrides,
