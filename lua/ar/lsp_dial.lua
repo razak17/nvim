@@ -83,16 +83,16 @@ config.augends:register_group({
   },
 })
 
-vim.keymap.set(
+map(
   'n',
-  '<A-a>',
+  '<M-n>',
   require('dial.map').inc_normal('enum'),
   { noremap = true, desc = 'dial: next enum' }
 )
 
-vim.keymap.set(
+map(
   'n',
-  '<A-x>',
+  '<M-p>',
   require('dial.map').dec_normal('enum'),
   { noremap = true, desc = 'dial: prev enum' }
 )

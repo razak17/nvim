@@ -197,5 +197,5 @@ local function generate_message()
 end
 
 require('ar.utils.fs').on_event('FileType', function()
-  vim.keymap.set({ 'n', 'i' }, '<M-a>', function() generate_message() end)
+  map('i', '<M-a>', function() generate_message() end)
 end, { target = 'gitcommit' })
