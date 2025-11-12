@@ -155,6 +155,37 @@ local function colorscheme_overrides()
       { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.3 } } },
       { Dim = { link = 'NonText' } },
       { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.2 } } },
+      {
+        GitSignsAdd = { fg = { from = 'DiffAdd', attr = 'bg', alter = 1.4 } },
+      },
+      {
+        DiagnosticUnderlineError = {
+          cterm = { undercurl = true },
+          sp = { from = 'DiagnosticError', attr = 'fg' },
+          undercurl = true,
+        },
+      },
+      {
+        DiagnosticUnderlineWarn = {
+          cterm = { undercurl = true },
+          sp = { from = 'DiagnosticWarn', attr = 'fg' },
+          undercurl = true,
+        },
+      },
+      {
+        DiagnosticUnderlineInfo = {
+          cterm = { undercurl = true },
+          sp = { from = 'DiagnosticInfo', attr = 'fg' },
+          undercurl = true,
+        },
+      },
+      {
+        DiagnosticUnderlineHint = {
+          cterm = { undercurl = true },
+          sp = { from = 'DiagnosticHint', attr = 'fg' },
+          undercurl = true,
+        },
+      },
     }),
     ['habamax'] = theming.generate_overrides({
       {
