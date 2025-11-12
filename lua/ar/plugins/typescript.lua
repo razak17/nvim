@@ -54,7 +54,9 @@ return {
   },
   {
     'marilari88/twoslash-queries.nvim',
-    cond = enabled,
+    cond = function()
+      return ar.get_plugin_cond('twoslash-queries.nvim', enabled)
+    end,
     -- stylua: ignore
     keys = {
       { '<localleader>lI', '<Cmd>TwoslashQueriesInspect<CR>', desc = 'twoslash-queries: inspect', },
@@ -63,7 +65,9 @@ return {
   },
   {
     'razak17/better-ts-errors.nvim',
-    cond = enabled,
+    cond = function()
+      return ar.get_plugin_cond('better-ts-errors.nvim', enabled)
+    end,
     ft = filetypes,
     keys = {
       {
@@ -84,7 +88,7 @@ return {
   },
   {
     'dmmulroy/tsc.nvim',
-    cond = enabled,
+    cond = function() return ar.get_plugin_cond('tsc.nvim', enabled) end,
     cmd = 'TSC',
     ft = filetypes,
     opts = {
@@ -126,6 +130,7 @@ return {
   },
   {
     'Sebastian-Nielsen/better-type-hover',
+    cond = function() return ar.get_plugin_cond('better-type-hover', enabled) end,
     ft = { 'typescript', 'typescriptreact' },
     config = function()
       require('better-type-hover').setup({ openTypeDocKeymap = 'dK' })
