@@ -856,12 +856,6 @@ return {
       -- opts = { underline = false },
     },
     {
-      'atmosuwiryo/vim-winteriscoming',
-      cond = get_cond({ 'WinterIsComing-dark-color-theme' }),
-      priority = get_priority({ 'WinterIsComing-dark-color-theme' }),
-      event = get_event({ 'WinterIsComing-dark-color-theme' }),
-    },
-    {
       'projekt0n/github-nvim-theme',
       cond = get_cond({ 'github_dark' }),
       priority = get_priority({ 'github_dark' }),
