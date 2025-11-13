@@ -150,8 +150,12 @@ local function colorscheme_overrides()
       { Dim = { link = 'NonText' } },
       { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.2 } } },
       {
-        GitSignsAdd = { fg = { from = 'DiffAdd', attr = 'bg', alter = 1.4 } },
+        StatusLine = {
+          bg = { from = 'Folded', alter = -0.2 },
+          fg = { from = 'Normal' },
+        },
       },
+      { GitSignsAdd = { fg = { from = 'DiffAdd', attr = 'bg', alter = 1.4 } } },
       {
         DiagnosticUnderlineError = {
           cterm = { undercurl = true },
