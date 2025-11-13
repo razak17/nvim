@@ -316,11 +316,7 @@ end
 
 StatusLine = {}
 
-StatusLine.inactive = function()
-  return table.concat({
-    formatted_filetype('StatusLineMode'),
-  })
-end
+StatusLine.inactive = function() return table.concat({ '%#Normal#%' }) end
 
 local readeable_filetypes = {
   ['qf'] = true,
