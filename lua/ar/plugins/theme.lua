@@ -593,6 +593,11 @@ return {
           {
             WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.7 } },
           },
+          {
+            GitSignsAdd = {
+              fg = { from = 'DiffAdd', attr = 'bg', alter = 0.2 },
+            },
+          },
           { NeogitDiffAdd = { link = 'DiffAdd' } },
           { NeogitDiffDelete = { link = 'DiffDelete' } },
         }, true)
