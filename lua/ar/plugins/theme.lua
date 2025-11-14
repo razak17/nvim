@@ -316,6 +316,48 @@ return {
         }, true)
       end,
     },
+    {
+      'wtfox/jellybeans.nvim',
+      cond = get_cond({ 'jellybeans' }),
+      priority = get_priority({ 'jellybeans' }),
+      event = get_event({ 'jellybeans' }),
+      init = function()
+        theming.apply_overrides('jellybeans', {
+          { WinSeparator = { fg = { from = 'LineNr', alter = -0.35 } } },
+        }, true)
+      end,
+    },
+    {
+      'Skardyy/makurai-nvim',
+      cond = get_cond({ 'makurai_dark' }),
+      priority = get_priority({ 'makurai_dark' }),
+      event = get_event({ 'makurai_dark' }),
+      init = function()
+        theming.apply_overrides('makurai_dark', {
+          { CursorLine = { bg = { from = 'CursorLine', alter = 0.25 } } },
+          { Folded = { bg = { from = 'CursorLine', alter = 0.25 } } },
+          { WinSeparator = { fg = { from = 'LineNr', alter = -0.05 } } },
+        }, true)
+      end,
+    },
+    {
+      'scottmckendry/cyberdream.nvim',
+      cond = get_cond({ 'cyberdream' }),
+      priority = get_priority({ 'cyberdream' }),
+      event = get_event({ 'cyberdream' }),
+      init = function()
+        theming.apply_overrides('cyberdream', {
+          { CursorLine = { bg = { from = 'CursorLine', alter = -0.25 } } },
+          {
+            WinSeparator = {
+              bg = 'NONE',
+              fg = { from = 'WinSeparator', alter = -0.15 },
+            },
+          },
+        }, true)
+      end,
+      opts = {},
+    },
   },
   ------------------------------------------------------------------------------
   -- Warm
@@ -964,6 +1006,12 @@ return {
       cond = get_cond({ 'eldritch' }),
       priority = get_priority({ 'eldritch' }),
       event = get_event({ 'eldritch' }),
+      init = function()
+        theming.apply_overrides('eldritch', {
+          { Visual = { bg = { from = 'Visual', alter = -0.45 } } },
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.55 } } },
+        }, true)
+      end,
       opts = {},
     },
     {
@@ -971,6 +1019,12 @@ return {
       cond = function() return colorscheme == 'ronny' end,
       priority = get_priority({ 'ronny' }),
       event = get_event({ 'ronny' }),
+      init = function()
+        theming.apply_overrides('ronny', {
+          { MatchParen = { link = 'Visual' } },
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.25 } } },
+        }, true)
+      end,
       opts = {},
     },
     {
@@ -978,19 +1032,54 @@ return {
       cond = get_cond({ 'horizon' }),
       priority = get_priority({ 'horizon' }),
       event = get_event({ 'horizon' }),
-    },
-    {
-      'scottmckendry/cyberdream.nvim',
-      cond = get_cond({ 'cyberdream' }),
-      priority = get_priority({ 'cyberdream' }),
-      event = get_event({ 'cyberdream' }),
-      opts = {},
+      init = function()
+        theming.apply_overrides('horizon', {
+          { MatchParen = { link = 'Visual' } },
+          {
+            WinSeparator = {
+              bg = 'NONE',
+              fg = { from = 'WinSeparator', alter = -0.55 },
+            },
+          },
+        }, true)
+      end,
     },
     {
       'folke/tokyonight.nvim',
       cond = get_cond({ 'tokyonight' }),
       priority = get_priority({ 'tokyonight' }),
       event = get_event({ 'tokyonight' }),
+      init = function()
+        local overrides = {
+          { NonText = { link = 'Comment' } },
+          { StatusLine = { bg = 'NONE', reverse = false } },
+          { Winbar = { link = 'Variable' } },
+          { WinbarNC = { link = 'NonText' } },
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = 1.25 } } },
+          { MsgSeparator = { link = 'WinSeparator' } },
+          { VertSplit = { link = 'WinSeparator' } },
+          { Visual = { bg = { from = 'Visual', alter = 0.25 } } },
+          { IndentBlanklineChar = { link = 'VertSplit' } },
+          { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+        }
+        ar.list_insert(
+          overrides,
+          theming.generate_popup_overrides(),
+          theming.generate_completion_overrides(),
+          theming.generate_lsp_overrides(),
+          theming.generate_picker_overrides(),
+          theming.generate_plugin_overrides(),
+          {
+            { SnacksPicker = { link = 'PickerPrompt' } },
+            { SnacksPickerBorder = { link = 'PickerPromptBorder' } },
+            { SnacksPickerInput = { link = 'PickerPrompt' } },
+            { SnacksPickerBoxBorder = { link = 'PickerPromptBorder' } },
+            { SnacksPickerInputBorder = { link = 'PickerPromptBorder' } },
+            { SnacksPickerInputTitle = { link = 'PickerTitle' } },
+          }
+        )
+        theming.apply_overrides('tokyonight', overrides)
+      end,
       opts = {},
     },
     {
@@ -998,30 +1087,33 @@ return {
       cond = get_cond({ 'nightfox' }),
       priority = get_priority({ 'nightfox' }),
       event = get_event({ 'nightfox' }),
+      init = function()
+        theming.apply_overrides('nightfox', {
+          { WinSeparator = { fg = { from = 'LineNr', alter = -0.45 } } },
+        }, true)
+      end,
     },
     {
       'rebelot/kanagawa.nvim',
       cond = get_cond({ 'kanagawa' }),
       priority = get_priority({ 'kanagawa' }),
       event = get_event({ 'kanagawa' }),
-    },
-    {
-      'wtfox/jellybeans.nvim',
-      cond = get_cond({ 'jellybeans' }),
-      priority = get_priority({ 'jellybeans' }),
-      event = get_event({ 'jellybeans' }),
-    },
-    {
-      'Skardyy/makurai-nvim',
-      cond = get_cond({ 'makurai' }),
-      priority = get_priority({ 'makurai' }),
-      event = get_event({ 'makurai' }),
+      init = function()
+        theming.apply_overrides('kanagawa', {
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = 1.45 } } },
+        }, true)
+      end,
     },
     {
       'ribru17/bamboo.nvim',
       cond = get_cond({ 'bamboo' }),
       priority = get_priority({ 'bamboo' }),
       event = get_event({ 'bamboo' }),
+      init = function()
+        theming.apply_overrides('bamboo', {
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.05 } } },
+        }, true)
+      end,
     },
   },
   -- }}}

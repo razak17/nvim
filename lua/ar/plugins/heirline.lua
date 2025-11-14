@@ -97,6 +97,12 @@ local function setup_colors(colorscheme)
     ashen = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.15),
     },
+    bamboo = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.05),
+    },
+    cyberdream = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.3),
+    },
     darcubox = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.15),
       dark_orange = hl.get('Label', 'fg'),
@@ -111,6 +117,9 @@ local function setup_colors(colorscheme)
     },
     ['doom-one'] = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.05),
+    },
+    eldritch = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.05),
     },
     everforest = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.05),
@@ -135,8 +144,18 @@ local function setup_colors(colorscheme)
       forest_green = hl.tint(hl.get('DiffAdd', 'bg'), -0.3),
       lightgreen = hl.tint(hl.get('DiagnosticVirtualTextHint', 'fg'), -0.2),
     },
+    horizon = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.05),
+      blue = hl.get('Changed', 'fg'),
+    },
     iceclimber = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.25),
+    },
+    jellybeans = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.15),
+    },
+    kanagawa = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.15),
     },
     lavish = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.25),
@@ -144,8 +163,14 @@ local function setup_colors(colorscheme)
     ['mono-jade'] = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.25),
     },
+    makurai_dark = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
+    },
     naysayer = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
+    },
+    nightfox = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.15),
     },
     ['night-owl'] = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.05),
@@ -163,6 +188,10 @@ local function setup_colors(colorscheme)
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
       comment = hl.tint(hl.get('Comment', 'fg'), 0.15),
     },
+    ronny = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.25),
+      blue = hl.get('Changed', 'fg'),
+    },
     ['rose-pine'] = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.05),
     },
@@ -176,6 +205,9 @@ local function setup_colors(colorscheme)
     },
     sunbather = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
+    },
+    tokyonight = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.1),
     },
     wildberries = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), 0.15),
