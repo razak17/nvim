@@ -192,6 +192,12 @@ local function colorscheme_overrides()
           reverse = false,
         },
       },
+      {
+        StatusLine = {
+          bg = { from = 'Folded', alter = -0.2 },
+          fg = { from = 'Normal' },
+        },
+      },
       { Dim = { link = 'NonText' } },
       { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.2 } } },
     }),
@@ -232,7 +238,7 @@ local function colorscheme_overrides()
       { Visual = { fg = { from = 'CursorLine', alter = 0.1 } } },
       { Search = { bg = { from = 'Search', alter = -0.2 } } },
       { IncSearch = { link = 'Search' } },
-      { WinSeparator = { fg = { from = 'NonText', alter = -0.2 } } },
+      { WinSeparator = { bg = 'NONE', fg = { from = 'NonText', alter = -0.2 } } },
     }),
     ['wildcharm'] = theming.generate_overrides({
       { StatusLine = { reverse = false } },

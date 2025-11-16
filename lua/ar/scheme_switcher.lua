@@ -11,7 +11,7 @@ local M = {}
 function M.get_current_colorscheme()
   local file = io.open(set_colorscheme_file_path, 'r')
   if not file or not ar.plugins.enable or ar.plugins.minimal then
-    return 'default'
+    return 'habamax'
   end
   if ar_config.colorscheme.name ~= '' then return ar_config.colorscheme.name end
   if file then
