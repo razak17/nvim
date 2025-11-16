@@ -4,44 +4,6 @@ local minimal = ar.plugins.minimal
 local is_biome = ar_config.lsp.lang.web.biome
   or vim.tbl_contains(ar_config.lsp.override, 'biome')
 
-local function get_lsp_servers()
-  local servers = require('ar.servers').list
-  return vim.iter(servers):fold({}, function(acc, key)
-    local mason_map = require('mason-lspconfig.mappings').get_mason_map()
-    local pkg_name = mason_map.lspconfig_to_package[key]
-    table.insert(acc, pkg_name)
-    return acc
-  end)
-end
-
-local function get_linters()
-  local linters = {}
-  local lint_ok, lint = pcall(require, 'lint')
-  if lint_ok then
-    vim
-      .iter(pairs(lint.linters_by_ft))
-      :map(function(_, l)
-        if type(l) == 'table' and not ar.falsy(l) then
-          if vim.tbl_contains(l, 'golangcilint') then
-            table.insert(linters, 'golangci-lint')
-            local others = vim.tbl_filter(
-              function(v) return v ~= 'golangcilint' end,
-              l
-            )
-            if #others > 0 then
-              table.insert(linters, table.concat(others, ','))
-            end
-          else
-            table.insert(linters, table.concat(l, ','))
-          end
-        end
-        if type(l) == 'string' and l ~= '' then table.insert(linters, l) end
-      end)
-      :totable()
-  end
-  return linters
-end
-
 ---@alias ConformCtx {buf: number, filename: string, dirname: string}
 
 local prettier_ft = ar.lsp.prettier.supported
@@ -143,36 +105,11 @@ return {
     dependencies = { 'gbprod/none-ls-shellcheck.nvim' },
   },
   {
-    'WhoIsSethDaniel/mason-tool-installer.nvim',
-    cond = not minimal and ar.lsp.enable,
-    cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
-    opts = function(_, opts)
-      local packages = get_lsp_servers()
-      if not ar_config.lsp.null_ls.enable then
-        local linters = get_linters()
-        vim.list_extend(packages, linters)
-        local conform_ok, conform = pcall(require, 'conform')
-        if conform_ok then
-          local formatters = vim
-            .iter(pairs(conform.list_all_formatters()))
-            :map(function(_, f) return f.command end)
-            :filter(
-              function(f) return f ~= '' and f ~= nil and f ~= 'injected' end
-            )
-            :totable()
-          vim.list_extend(packages, formatters)
-        end
-      end
-      opts.run_on_start = false
-      opts.ensure_installed = opts.ensure_installed or {}
-      table.insert(opts.ensure_installed, packages)
-      return opts
-    end,
-    config = function(_, opts) require('mason-tool-installer').setup(opts) end,
-  },
-  {
     'stevearc/conform.nvim',
-    cond = not minimal and not ar_config.lsp.null_ls.enable,
+    cond = function()
+      local condition = not ar_config.lsp.null_ls.enable
+      return ar.get_plugin_cond('conform.nvim', condition)
+    end,
     event = { 'BufReadPre', 'BufNewFile' },
     cmd = 'ConformInfo',
     keys = {
@@ -283,7 +220,12 @@ return {
   },
   {
     'mfussenegger/nvim-lint',
-    cond = not minimal and ar.lsp.enable and not ar_config.lsp.null_ls.enable,
+    cond = function()
+      local condition = not minimal
+        and ar.lsp.enable
+        and not ar_config.lsp.null_ls.enable
+      return ar.get_plugin_cond('nvim-lint', condition)
+    end,
     -- stylua: ignore
     ft = {
       'javascript', 'javascript.jsx', 'javascriptreact', 'lua', 'python', 'rst',

@@ -4,6 +4,8 @@ local fmt = string.format
 local border = ar.ui.current.border
 local lsp_override = ar_config.lsp.override
 local ar_lsp = ar_config.lsp.lang
+local minimal = ar.plugins.minimal
+local enabled = not minimal and ar.lsp.enable
 
 local server_langs = {
   ts_ls = 'typescript',
@@ -63,44 +65,6 @@ end
 
 return {
   {
-    {
-      'mason-org/mason.nvim',
-      lazy = false,
-      keys = { { '<leader>lm', '<cmd>Mason<CR>', desc = 'mason info' } },
-      build = ':MasonUpdate',
-      init = function()
-        ar.add_to_select_menu('command_palette', {
-          ['Update All Mason Packages'] = 'MasonUpdateAll',
-        })
-      end,
-      -- stylua: ignore
-      cmd = {
-        'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll',
-        'MasonLog', 'MasonUpdate'
-      },
-      opts = {
-        ui = {
-          border = border,
-          height = 0.8,
-          icons = {
-            package_pending = ' ',
-            package_installed = '󰄳 ',
-            package_uninstalled = ' 󰚌',
-          },
-        },
-        registries = {
-          'lua:mason-registry.index',
-          'github:mason-org/mason-registry',
-          'github:nvim-java/mason-registry',
-        },
-        providers = { 'mason.providers.registry-api', 'mason.providers.client' },
-      },
-    },
-    {
-      'Zeioth/mason-extra-cmds',
-      cmd = 'MasonUpdateAll', -- this cmd is provided by mason-extra-cmds
-      opts = {},
-    },
     {
       'williamboman/mason-lspconfig.nvim',
       cond = ar.lsp.enable,
@@ -162,7 +126,7 @@ return {
   {
     'smjonas/inc-rename.nvim',
     cmd = { 'IncRename' },
-    cond = ar.lsp.enable,
+    cond = function() return ar.get_plugin_cond('inc-rename.nvim', enabled) end,
     opts = { hl_group = 'Visual', preview_empty_name = true },
     keys = function()
       local mappings = {}
@@ -183,7 +147,7 @@ return {
   {
     'antosha417/nvim-lsp-file-operations',
     cond = function()
-      return ar.get_plugin_cond('nvim-lsp-file-operations', ar.lsp.enable)
+      return ar.get_plugin_cond('nvim-lsp-file-operations', enabled)
     end,
     event = 'LspAttach',
     opts = {},
