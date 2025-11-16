@@ -47,7 +47,7 @@ local function init_or_reset(client)
 end
 
 -- Get the row position of the current floating window. If it is the first one, it is placed just
--- right above the statuslien; if not, it is placed on top of others.
+-- right above the statusline; if not, it is placed on top of others.
 local function get_win_row(pos) return o.lines - o.cmdheight - pos * 3 end
 
 -- Update the window config
