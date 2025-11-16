@@ -405,8 +405,7 @@ local function setup_mappings(client, bufnr)
       lsp.inline_completion.get,
       desc = 'current inline completion',
       capability = M.textDocument_inlineCompletion,
-      disabled = not ar.ai.enable
-        or ar_config.ai.completion.variant ~= 'builtin',
+      disabled = ar_config.ai.completion.variant ~= 'builtin',
     },
     {
       'i',
@@ -414,16 +413,14 @@ local function setup_mappings(client, bufnr)
       function() lsp.inline_completion.select({ count = 1 }) end,
       desc = 'previous copilot suggestion',
       capability = M.textDocument_inlineCompletion,
-      disabled = not ar.ai.enable
-        or ar_config.ai.completion.variant ~= 'builtin',
+      disabled = ar_config.ai.completion.variant ~= 'builtin',
     },
     {
       'i',
       '<M-[>',
       function() lsp.inline_completion.select({ count = -1 }) end,
       desc = 'next Copilot suggestion',
-      disabled = not ar.ai.enable
-        or ar_config.ai.completion.variant ~= 'builtin',
+      disabled = ar_config.ai.completion.variant ~= 'builtin',
     },
     {
       'n',
