@@ -2,7 +2,6 @@ if
   not ar
   or ar.none
   or not ar.plugins.enable
-  or ar.plugins.minimal
   or not ar_config.ui.statuscolumn.enable
   or ar_config.ui.statuscolumn.variant ~= 'local'
 then
