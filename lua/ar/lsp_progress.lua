@@ -48,7 +48,7 @@ end
 
 -- Get the row position of the current floating window. If it is the first one, it is placed just
 -- right above the statusline; if not, it is placed on top of others.
-local function get_win_row(pos) return o.lines - o.cmdheight - pos * 3 end
+local function get_win_row(pos) return o.lines - o.cmdheight + 1 - pos * 3 end
 
 -- Update the window config
 local function win_update_config(client)
@@ -107,17 +107,17 @@ local function show_message(client)
   then
     local success = guard(
       function()
-      winid = api.nvim_open_win(client.bufnr, false, {
-        relative = 'editor',
-        width = #client.message,
-        height = 1,
-        row = get_win_row(client.pos),
-        col = o.columns - #client.message,
-        focusable = false,
-        style = 'minimal',
-        noautocmd = true,
+        winid = api.nvim_open_win(client.bufnr, false, {
+          relative = 'editor',
+          width = #client.message,
+          height = 1,
+          row = get_win_row(client.pos),
+          col = o.columns - #client.message,
+          focusable = false,
+          style = 'minimal',
+          noautocmd = true,
           border = 'none',
-      })
+        })
       end
     )
     if not success then return end
@@ -126,8 +126,8 @@ local function show_message(client)
   else
     win_update_config(client)
   end
+  vim.wo[winid].winhighlight = 'Normal:NormalFloat,FloatBorder:FloatBorder'
   -- Write the message into the buffer
-  vim.wo[winid].winhl = 'Normal:Normal'
   guard(
     function()
       api.nvim_buf_set_lines(client.bufnr, 0, 1, false, { client.message })
