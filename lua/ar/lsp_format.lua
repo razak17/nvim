@@ -19,37 +19,26 @@ local format_exclusions = {
   },
 }
 
+---@param client vim.lsp.Client
 local function formatting_filter(client)
   local exceptions = (format_exclusions.servers)[vim.bo.filetype]
   if not exceptions then return true end
   return not vim.tbl_contains(exceptions, client.name)
 end
 
--- https://github.com/chrisgrieser/.config/blob/main/nvim/after/ftplugin/typescript.lua?plain=1#L13
-local function biome_format()
-  local bufnr = api.nvim_get_current_buf()
-  local client = lsp.get_clients({ bufnr = bufnr, name = 'biome' })[1]
-
-  -- format client filter, to only format items for one single client, so a format operation for biome doesn't drag tsserver in.
-  local client_filter = function(formatter) return formatter.name == client.name end
-
-  -- Step 1: Apply fixAll synchronously
+-- https://github.com/biomejs/biome/discussions/7931
+---@param client vim.lsp.Client
+---@param bufnr number
+local function biome_format(client, bufnr)
   local win = api.nvim_get_current_win()
   local params = lsp.util.make_range_params(win, client.offset_encoding)
-  params.context = {
-    only = { 'source.fixAll.biome' },
-    diagnostics = {},
-  }
+  ---@diagnostic disable-next-line: inject-field
+  params.context = { only = { 'source.fixAll.biome' }, diagnostics = {} }
 
-  local fixall_results = lsp.buf_request_sync(
-    bufnr,
-    'textDocument/codeAction',
-    params,
-    1000 -- 1 second timeout
-  )
+  local fixall_results =
+    lsp.buf_request_sync(bufnr, 'textDocument/codeAction', params, 1000)
 
   if fixall_results then
-    -- Don't need client id, since only biome is running this action
     for _, result in pairs(fixall_results) do
       if result.result then
         for _, action in ipairs(result.result) do
@@ -63,34 +52,21 @@ local function biome_format()
     end
   end
 
-  -- Step 2: Wait a tiny bit for edits to settle
   vim.cmd('redraw')
 
-  -- Step 3: Format synchronously
   lsp.buf.format({
+    bufnr = bufnr,
     async = false,
-    filter = client_filter,
+    filter = function(formatter) return formatter.name == client.name end,
     timeout_ms = 3000,
   })
-
-  -- local actions = { 'source.fixAll.biome' }
-  -- for i = 1, #actions do
-  --   vim.defer_fn(function()
-  --     lsp.buf.code_action({
-  --       ---@diagnostic disable-next-line: missing-fields, assign-type-mismatch
-  --       context = { only = { actions[i] } },
-  --       apply = true,
-  --     })
-  --   end, i * 60)
-  -- end
-  -- vim.defer_fn(lsp.buf.format, (#actions + 2) * 60)
 end
 
----@param opts {bufnr: integer, async: boolean, filter: fun(lsp.Client): boolean}
-local function conform_format(opts)
+---@param bufnr number
+local function conform_format(bufnr)
   local client_names = vim.tbl_map(
     function(client) return client.name end,
-    lsp.get_clients({ bufnr = opts.bufnr })
+    lsp.get_clients({ bufnr = bufnr })
   )
   local lsp_fallback
   local lsp_fallback_inclusions = { 'eslint' }
@@ -101,27 +77,28 @@ local function conform_format(opts)
     end
   end
   require('conform').format({
-    bufnr = opts.bufnr,
+    bufnr = bufnr,
     async = true,
-    timeout_ms = 500,
     lsp_fallback = lsp_fallback or true,
+    timeout_ms = 500,
   })
 end
 
----@param opts {bufnr: integer, async: boolean, filter: fun(lsp.Client): boolean}
-local function format(opts)
-  opts = opts or {}
-  if is_biome then
-    biome_format()
+local function format()
+  local bufnr = api.nvim_get_current_buf()
+  local client = lsp.get_clients({ bufnr = bufnr })[1]
+
+  if is_biome and client.name == 'biome' then
+    biome_format(client, bufnr)
     return
   end
   if conform then
-    conform_format(opts)
+    conform_format(bufnr)
     return
   end
   lsp.buf.format({
-    bufnr = opts.bufnr,
-    async = opts.async,
+    bufnr = bufnr,
+    async = false,
     filter = formatting_filter,
   })
 end
