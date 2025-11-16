@@ -9,6 +9,30 @@ if not ar or ar.none or not enabled then return end
 local statusline_augroup =
   vim.api.nvim_create_augroup('native_statusline', { clear = true })
 
+ar.highlight.all({
+  { StatusLineBar = { fg = { from = 'Directory' }, bold = true } },
+  { StatusLineMode = { fg = { from = 'Debug' } } },
+  { StatusLineMedium = { fg = { from = 'Normal' } } },
+  { StatusLineLspActive = { fg = { from = 'Directory' }, bold = true } },
+  { StatusLineLspError = { fg = { from = 'ErrorMsg' } } },
+  { StatusLineLspWarn = { fg = { from = 'WarnMsg' } } },
+  { StatusLineLspHint = { fg = { from = 'DiagnosicHint' } } },
+  { StatusLineLspInfo = { fg = { from = 'DiagnosicInfo' } } },
+  { StatusLineLspMessages = { fg = { from = 'Comment' } } },
+  { StatusLineGitBranchIcon = { fg = { from = 'DiagnosticSignHint' } } },
+  {
+    StatusLineGitDiffAdded = {
+      fg = { from = 'DiffAdd', attr = 'bg', alter = 2.2 },
+    },
+  },
+  {
+    StatusLineGitDiffChanged = {
+      fg = { from = 'DiffChange', attr = 'bg', alter = 2.2 },
+    },
+  },
+  { StatusLineGitDiffRemoved = { fg = { from = 'DiffDelete', attr = 'bg' } } },
+})
+
 -- LSP clients attached to buffer
 local function lsp_clients()
   local current_buf = vim.api.nvim_get_current_buf()
