@@ -2,6 +2,8 @@ local enabled = ar.plugins.minimal
 
 if not ar or ar.none or not enabled then return end
 
+local stl = require('ar.statusline')
+
 --------------------------------------------------------------------------------
 -- Statusline with no plugin
 -- @see: https://github.com/shivambegin/Neovim/blob/main/lua/config/statusline.lua
@@ -44,7 +46,7 @@ local function lsp_clients()
   for _, client in pairs(clients) do
     table.insert(c, client.name)
   end
-  return ' 󰌘 ' .. table.concat(c, '|') .. ' '
+  return ' 󰌘 ' .. table.concat(c, '|')
 end
 --- @return string
 local function filename()
@@ -165,7 +167,7 @@ end
 local function diagnostics_hint()
   local count = get_lsp_diagnostics_count(vim.diagnostic.severity.HINT)
   if count > 0 then
-    return string.format('%%#StatusLineLspHint#  %s%%*', count)
+    return string.format('%%#StatusLineLspHint# 󰌵 %s%%*', count)
   end
 
   return ''
@@ -250,7 +252,7 @@ end
 local function git_diff_added()
   local added = get_git_diff('added')
   if added > 0 then
-    return string.format('%%#StatusLineGitDiffAdded#  %s%%*', added)
+    return string.format('%%#StatusLineGitDiffAdded#  %s%%*', added)
   end
 
   return ''
@@ -260,7 +262,7 @@ end
 local function git_diff_changed()
   local changed = get_git_diff('changed')
   if changed > 0 then
-    return string.format('%%#StatusLineGitDiffChanged#  %s%%*', changed)
+    return string.format('%%#StatusLineGitDiffChanged#  %s%%*', changed)
   end
 
   return ''
@@ -270,7 +272,7 @@ end
 local function git_diff_removed()
   local removed = get_git_diff('removed')
   if removed > 0 then
-    return string.format('%%#StatusLineGitDiffRemoved#  %s%%*', removed)
+    return string.format('%%#StatusLineGitDiffRemoved#  %s%%*', removed)
   end
 
   return ''
@@ -282,8 +284,7 @@ local function git_branch_icon() return '%#StatusLineGitBranchIcon#%*' end
 --- @return string
 local function git_branch()
   local branch = vim.b.gitsigns_head
-
-  if branch == '' or branch == nil then return '' end
+  if branch == '' or branch == nil then return stl.pretty_branch() end
 
   return string.format('%%#StatusLineMedium#%s%%*', branch)
 end
@@ -300,32 +301,22 @@ local function full_git()
   end
 
   local added = git_diff_added()
-  if added ~= '' then full = full .. added .. space end
+  if added ~= '' then full = full .. added end
 
   local changed = git_diff_changed()
-  if changed ~= '' then full = full .. changed .. space end
+  if changed ~= '' then full = full .. changed end
 
   local removed = git_diff_removed()
-  if removed ~= '' then full = full .. removed .. space end
+  if removed ~= '' then full = full .. removed end
 
   return full
 end
 
 --- @return string
-local function file_percentage()
-  local current_line = vim.api.nvim_win_get_cursor(0)[1]
-  local lines = vim.api.nvim_buf_line_count(0)
+local function location()
+  local loc = stl.location()
 
-  return string.format(
-    '%%#StatusLineMedium#  %d%%%% %%*',
-    math.ceil(current_line / lines * 100)
-  )
-end
-
---- @return string
-local function total_lines()
-  local lines = vim.fn.line('$')
-  return string.format('%%#StatusLineMedium#of %s %%*', lines)
+  return string.format('%%#StatusLineMedium#%s%% %%*', loc)
 end
 
 --- @param hlgroup string
@@ -355,8 +346,7 @@ StatusLine.active = function()
       mode(),
       '%=',
       '%=',
-      file_percentage(),
-      total_lines(),
+      location(),
     })
   end
 
@@ -365,16 +355,9 @@ StatusLine.active = function()
       formatted_filetype('StatusLineMode'),
       '%=',
       '%=',
-      file_percentage(),
-      total_lines(),
+      location(),
     })
   end
-
-  vim.api.nvim_set_hl(
-    0,
-    'StatusLineBar',
-    { fg = '#61afef', bg = 'NONE', bold = true }
-  )
 
   local statusline = {
     '%#StatusLineBar#▊%*',
@@ -392,9 +375,8 @@ StatusLine.active = function()
     lsp_active(),
     python_env(),
     filetype(),
-    file_percentage(),
-    total_lines(),
     lsp_clients(),
+    location(),
     '%#StatusLineBar#▊%*',
   }
 
