@@ -1,4 +1,5 @@
 local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
+local enabled = not minimal and ar.lsp.enable
 local virtual_lines_variant = ar_config.lsp.virtual_lines.variant
 
 return {
@@ -6,7 +7,7 @@ return {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
     -- 'ErichDonGubler/lsp_lines.nvim',
     cond = function()
-      local condition = ar.lsp.enable and virtual_lines_variant == 'lsp_lines'
+      local condition = enabled and virtual_lines_variant == 'lsp_lines'
       return ar.get_plugin_cond('lsp_lines.nvim', condition)
     end,
     event = 'LspAttach',
@@ -16,7 +17,7 @@ return {
     'rachartier/tiny-inline-diagnostic.nvim',
     cond = function()
       local condition = not ar_config.lsp.virtual_text.enable
-        and ar.lsp.enable
+        and enabled
         and virtual_lines_variant == 'tiny-inline'
       return ar.get_plugin_cond('tiny-inline-diagnostic.nvim', condition)
     end,
@@ -36,7 +37,7 @@ return {
   {
     desc = 'LSP diagnostics in virtual text at the top right of your screen',
     'dgagn/diagflow.nvim',
-    cond = ar.lsp.enable and not minimal and niceties,
+    cond = enabled and niceties,
     event = 'LspAttach',
     opts = {
       format = function(diagnostic)
@@ -79,7 +80,7 @@ return {
     -- 'artemave/workspace-diagnostics.nvim',
     'razak17/workspace-diagnostics.nvim',
     cond = function()
-      return ar.get_plugin_cond('workspace-diagnostics.nvim', ar.lsp.enable)
+      return ar.get_plugin_cond('workspace-diagnostics.nvim', enabled)
     end,
     opts = {},
   },

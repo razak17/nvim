@@ -1,7 +1,10 @@
+local minimal = ar.plugins.minimal
+local enabled = not minimal and ar.lsp.enable
+
 return {
   {
     'kosayoda/nvim-lightbulb',
-    cond = ar.lsp.enable,
+    cond = function() return ar.get_plugin_cond('nvim-lightbulb', enabled) end,
     event = 'LspAttach',
     opts = {
       autocmd = { enabled = true },
@@ -13,7 +16,7 @@ return {
     desc = 'A Neovim plugin that provides a simple way to run and visualize code actions with Telescope.',
     'rachartier/tiny-code-action.nvim',
     cond = function()
-      local condition = ar.lsp.enable
+      local condition = enabled
         and ar_config.lsp.code_actions.variant == 'tiny-code-action'
 
       return ar.get_plugin_cond('tiny-code-action.nvim', condition)
@@ -61,7 +64,7 @@ return {
   {
     desc = 'Fully customizable previewer for LSP code actions.',
     'aznhe21/actions-preview.nvim',
-    cond = ar.lsp.enable,
+    cond = enabled,
     -- stylua: ignore
     keys = { { '<leader>lap', function() require('actions-preview').code_actions() end, desc = 'code action preview' }, },
     opts = {
@@ -71,9 +74,7 @@ return {
   },
   {
     'yarospace/dev-tools.nvim',
-    cond = function()
-      return ar.get_plugin_cond('dev-tools.nvim', ar.lsp.enable)
-    end,
+    cond = function() return ar.get_plugin_cond('dev-tools.nvim', enabled) end,
     event = 'LspAttach',
     dependencies = {
       'nvim-treesitter/nvim-treesitter', -- code manipulation in buffer, required

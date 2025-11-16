@@ -1,4 +1,5 @@
-local enabled = ar.lsp.enable
+local minimal = ar.plugins.minimal
+local enabled = not minimal and ar.lsp.enable
 
 -- stylua: ignore
 local filetypes = {
