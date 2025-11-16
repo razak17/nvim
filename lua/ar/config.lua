@@ -521,6 +521,7 @@ local config = {
       'git-conflict.nvim',
       'hlchunk.nvim',
       'inlayhint-filler.nvim',
+      'lsplinks.nvim',
       'neoconf.nvim',
       'nvim-ufo',
       'pair-lens.nvim',
