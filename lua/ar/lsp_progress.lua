@@ -105,7 +105,8 @@ local function show_message(client)
     or not api.nvim_win_is_valid(winid)
     or api.nvim_win_get_tabpage(winid) ~= api.nvim_get_current_tabpage() -- Switch to another tab
   then
-    local success = guard(function()
+    local success = guard(
+      function()
       winid = api.nvim_open_win(client.bufnr, false, {
         relative = 'editor',
         width = #client.message,
@@ -115,9 +116,10 @@ local function show_message(client)
         focusable = false,
         style = 'minimal',
         noautocmd = true,
-        -- border = border,
+          border = 'none',
       })
-    end)
+      end
+    )
     if not success then return end
     client.winid = winid
     M.total_wins = M.total_wins + 1
