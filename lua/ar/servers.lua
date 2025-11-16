@@ -68,6 +68,7 @@ local servers = {
   clangd = { cmd = get_clangd_cmd() },
   cmake = {},
   cssls = {},
+  css_variables = {},
   denols = {},
   dockerls = {},
   -- golangci_lint_ls = {},

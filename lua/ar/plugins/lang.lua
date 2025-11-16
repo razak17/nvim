@@ -1,6 +1,7 @@
 local ui, highlight = ar.ui, ar.highlight
 local border = ui.current.border
 local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
+local enabled = not minimal and ar.lsp.enable
 
 return {
   ------------------------------------------------------------------------------
@@ -238,9 +239,7 @@ return {
   --------------------------------------------------------------------------------
   {
     'linux-cultist/venv-selector.nvim',
-    cond = function()
-      return ar.get_plugin_cond('venv-selector.nvim', ar.lsp.enable)
-    end,
+    cond = function() return ar.get_plugin_cond('venv-selector.nvim', enabled) end,
     branch = 'regexp', -- This is the regexp branch, use this for the new version
     init = function()
       ar.add_to_select_menu('command_palette', {
@@ -255,7 +254,7 @@ return {
   },
   {
     'alexpasmantier/pymple.nvim',
-    cond = function() return ar.get_plugin_cond('pymple.nvim', ar.lsp.enable) end,
+    cond = function() return ar.get_plugin_cond('pymple.nvim', enabled) end,
     build = ':PympleBuild',
     ft = { 'python' },
     opts = {
