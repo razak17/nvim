@@ -1,9 +1,11 @@
 local minimal = ar.plugins.minimal
+local coding = ar.plugins.coding
+local enabled = minimal and coding
 
 return {
   {
     'nvim-mini/mini.pairs',
-    cond = function() return ar.get_plugin_cond('mini.pairs', minimal) end,
+    cond = function() return ar.get_plugin_cond('mini.pairs', enabled) end,
     event = 'VeryLazy',
     init = function()
       local function toggle_minipairs()
