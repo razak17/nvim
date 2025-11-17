@@ -51,8 +51,9 @@ local function generate_completion_overrides()
       },
     },
     { PmenuMatch = { fg = { from = 'Normal' }, bold = true } },
-    { PmenuExtra = { fg = { from = 'NonText' } } },
+    { PmenuExtra = { bg = 'NONE', fg = { from = 'NonText' } } },
     { PmenuSel = { bg = { from = 'Visual' }, fg = 'NONE', reverse = false } },
+    { PmenuExtraSel = { link = 'PmenuSel' } },
     {
       PmenuKindSel = {
         bg = { from = 'PmenuSel' },
