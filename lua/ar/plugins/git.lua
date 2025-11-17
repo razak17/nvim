@@ -45,6 +45,16 @@ return {
     config = function(_, opts)
       ar.highlight.plugin('neogit', {
         theme = {
+          ['habamax'] = {
+            {
+              NeogitDiffAdd = {
+                bg = { from = 'DiffAdd', attr = 'fg', alter = -0.65 },
+                fg = { from = 'Normal' },
+                reverse = false,
+              },
+            },
+            { NeogitDiffAddHighlight = { fg = { from = 'Normal' } } },
+          },
           ['retrobox'] = {
             {
               NeogitDiffAdd = {
@@ -449,6 +459,29 @@ return {
         map('n', '[h', jump({ forward = false }), { desc = 'previous hunk' })
       end,
     },
+    config = function(_, opts)
+      require('gitsigns').setup(opts)
+
+      ar.highlight.plugin('gitsigns', {
+        theme = {
+          ['default'] = {
+            {
+              GitSignsAdd = {
+                fg = { from = 'DiffAdd', attr = 'bg', alter = 1.4 },
+              },
+            },
+          },
+          ['habamax'] = {
+            {
+              GitSignsChange = {
+                fg = { from = 'DiffChange', attr = 'fg', alter = -0.1 },
+                reverse = false,
+              },
+            },
+          },
+        },
+      })
+    end,
   },
   {
     'razak17/agitator.nvim',

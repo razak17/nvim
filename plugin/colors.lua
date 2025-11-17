@@ -150,65 +150,24 @@ local function colorscheme_overrides()
       { Dim = { link = 'NonText' } },
       { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.2 } } },
       {
-        StatusLine = {
-          bg = { from = 'Folded', alter = -0.2 },
-          fg = { from = 'Normal' },
-        },
-      },
-      { GitSignsAdd = { fg = { from = 'DiffAdd', attr = 'bg', alter = 1.4 } } },
-      {
-        DiagnosticUnderlineError = {
-          cterm = { undercurl = true },
-          sp = { from = 'DiagnosticError', attr = 'fg' },
-          undercurl = true,
-        },
-      },
-      {
-        DiagnosticUnderlineWarn = {
-          cterm = { undercurl = true },
-          sp = { from = 'DiagnosticWarn', attr = 'fg' },
-          undercurl = true,
-        },
-      },
-      {
-        DiagnosticUnderlineInfo = {
-          cterm = { undercurl = true },
-          sp = { from = 'DiagnosticInfo', attr = 'fg' },
-          undercurl = true,
-        },
-      },
-      {
-        DiagnosticUnderlineHint = {
-          cterm = { undercurl = true },
-          sp = { from = 'DiagnosticHint', attr = 'fg' },
-          undercurl = true,
+        SpellBad = {
+          sp = { from = 'DiffAdd', attr = 'fg', alter = -0.35 },
+          reverse = false,
         },
       },
     }),
     ['habamax'] = theming.generate_overrides({
+      { Visual = { bg = { from = 'Visual', alter = 0.5 }, reverse = false } },
+      { Dim = { link = 'NonText' } },
+      { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.2 } } },
       {
-        Visual = {
-          bg = { from = 'Visual', alter = 0.5 },
+        SpellBad = {
+          sp = { from = 'DiffAdd', attr = 'fg', alter = -0.1 },
           reverse = false,
         },
       },
-      {
-        StatusLine = {
-          bg = { from = 'Folded', alter = -0.2 },
-          fg = { from = 'Normal' },
-        },
-      },
-      { Dim = { link = 'NonText' } },
-      { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.2 } } },
     }),
     ['peachpuff'] = theming.generate_overrides({
-      {
-        DiagnosticVirtualTextInfo = {
-          bg = { from = 'FloatTitle' },
-          fg = { from = 'Directory' },
-          italic = true,
-        },
-      },
       { Dim = { link = 'LineNr' } },
       { WinSeparator = { fg = { from = 'Dim', alter = 0.5 }, bg = 'NONE' } },
     }),
@@ -238,7 +197,9 @@ local function colorscheme_overrides()
       { Visual = { fg = { from = 'CursorLine', alter = 0.1 } } },
       { Search = { bg = { from = 'Search', alter = -0.2 } } },
       { IncSearch = { link = 'Search' } },
-      { WinSeparator = { bg = 'NONE', fg = { from = 'NonText', alter = -0.2 } } },
+      {
+        WinSeparator = { bg = 'NONE', fg = { from = 'NonText', alter = -0.2 } },
+      },
     }),
     ['wildcharm'] = theming.generate_overrides({
       { StatusLine = { reverse = false } },
@@ -247,7 +208,45 @@ local function colorscheme_overrides()
     }),
   }
   local hls = overrides[vim.g.colors_name]
-  if hls then highlight.all(hls) end
+  if hls then
+    ar.list_insert(hls, {
+      {
+        StatusLine = {
+          bg = { from = 'CursorLine', alter = -0.3 },
+          fg = { from = 'Normal' },
+        },
+      },
+      {
+        DiagnosticUnderlineError = {
+          cterm = { undercurl = true },
+          sp = { from = 'DiagnosticError', attr = 'fg' },
+          undercurl = true,
+        },
+      },
+      {
+        DiagnosticUnderlineWarn = {
+          cterm = { undercurl = true },
+          sp = { from = 'DiagnosticWarn', attr = 'fg' },
+          undercurl = true,
+        },
+      },
+      {
+        DiagnosticUnderlineInfo = {
+          cterm = { undercurl = true },
+          sp = { from = 'DiagnosticInfo', attr = 'fg' },
+          undercurl = true,
+        },
+      },
+      {
+        DiagnosticUnderlineHint = {
+          cterm = { undercurl = true },
+          sp = { from = 'DiagnosticHint', attr = 'fg' },
+          undercurl = true,
+        },
+      },
+    })
+    highlight.all(hls)
+  end
 end
 
 local function user_highlights()
