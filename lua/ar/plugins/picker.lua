@@ -425,22 +425,33 @@ return {
     end,
   },
   {
-    'elanmed/fzf-lua-frecency.nvim',
-    specs = {
-      'ibhagwan/fzf-lua',
-      optional = true,
-      keys = function(_, keys)
-        local mappings = keys or {}
+    'ibhagwan/fzf-lua',
+    optional = true,
+    dependencies = {
+      {
+        'elanmed/fzf-lua-frecency.nvim',
+        specs = {
+          {
+            'ibhagwan/fzf-lua',
+            optional = true,
+            keys = function(_, keys)
+              local mappings = keys or {}
 
-        if ar_config.picker.files == 'fzf-lua' then
-          local function frecency()
-            require('fzf-lua-frecency').frecency({ cwd_only = true })
-          end
+              if ar_config.picker.files == 'fzf-lua' then
+                local function frecency()
+                  require('fzf-lua-frecency').frecency({ cwd_only = true })
+                end
 
-          table.insert(mappings, { '<C-p>', frecency, desc = 'find files' })
-        end
-        return mappings
-      end,
+                table.insert(
+                  mappings,
+                  { '<C-p>', frecency, desc = 'find files' }
+                )
+              end
+              return mappings
+            end,
+          },
+        },
+      },
     },
   },
   {
