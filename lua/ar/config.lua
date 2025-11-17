@@ -172,6 +172,7 @@ local env = vim.env
 
 ---@class ArPlugins
 ---@field enable boolean
+---@field coding boolean
 ---@field disabled table
 ---@field minimal boolean
 ---@field modules table
@@ -258,6 +259,7 @@ local namespace = {
   ---@type ArPlugins
   plugins = {
     enable = env.RVIM_PLUGINS_ENABLED == '1',
+    coding = env.RVIM_PLUGINS_CODING == '1',
     minimal = env.RVIM_PLUGINS_MINIMAL == '1',
     niceties = env.RVIM_NICETIES_ENABLED == '1',
     overrides = {
@@ -530,6 +532,7 @@ local config = {
       'sidekick.nvim',
       'telescope-smart-history.nvim',
       'ts-comments.nvim',
+      'ultimate-autopair.nvim',
       'vim-footprints',
       'vim-matchup',
     },

@@ -1,6 +1,6 @@
 local api, fn, uv = vim.api, vim.fn, vim.uv
 local border = ar.ui.current.border
-local minimal = ar.plugins.minimal
+local coding = ar.plugins.coding
 local is_biome = ar_config.lsp.lang.web.biome
   or vim.tbl_contains(ar_config.lsp.override, 'biome')
 
@@ -39,7 +39,7 @@ return {
   {
     'nvimtools/none-ls.nvim',
     cond = function()
-      local condition = not minimal and ar_config.lsp.null_ls.enable
+      local condition = coding and ar_config.lsp.null_ls.enable
       return ar.get_plugin_cond('none-ls.nvim', condition)
     end,
     event = { 'VeryLazy' },
@@ -107,7 +107,7 @@ return {
   {
     'stevearc/conform.nvim',
     cond = function()
-      local condition = not ar_config.lsp.null_ls.enable
+      local condition = coding and not ar_config.lsp.null_ls.enable
       return ar.get_plugin_cond('conform.nvim', condition)
     end,
     event = { 'BufReadPre', 'BufNewFile' },
@@ -221,7 +221,7 @@ return {
   {
     'mfussenegger/nvim-lint',
     cond = function()
-      local condition = not minimal
+      local condition = coding
         and ar.lsp.enable
         and not ar_config.lsp.null_ls.enable
       return ar.get_plugin_cond('nvim-lint', condition)

@@ -1,5 +1,5 @@
 local fn = vim.fn
-local minimal = ar.plugins.minimal
+local coding = ar.plugins.coding
 
 local function expand_or_jump()
   local ls = require('luasnip')
@@ -40,13 +40,13 @@ local function get_snippets_list()
     :totable()
 end
 
-local function get_cond() return ar.get_plugin_cond('LuaSnip', not minimal) end
+local function get_cond() return ar.get_plugin_cond('LuaSnip', coding) end
 
 return {
   {
     'rafamadriz/friendly-snippets',
     cond = function()
-      local cond = not minimal
+      local cond = coding
         and ar_config.completion.snippets.variant == 'friendly-snippets'
       return ar.get_plugin_cond('friendly-snippets', cond)
     end,
@@ -138,7 +138,7 @@ return {
       'saghen/blink.cmp',
       optional = true,
       opts = function(_, opts)
-        if minimal then return opts end
+        if ar.plugins.minimal then return opts end
         opts = opts or {}
         opts.snippets = vim.tbl_deep_extend('force', opts.snippets or {}, {
           preset = 'luasnip',
