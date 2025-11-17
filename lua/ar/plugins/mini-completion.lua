@@ -1,10 +1,12 @@
 local minimal = ar.plugins.minimal
+local coding = ar.plugins.coding
+local enabled = minimal and coding
 
 return {
   {
     'nvim-mini/mini.completion',
     cond = function()
-      local condition = minimal
+      local condition = enabled
         or ar_config.completion.variant == 'mini.completion'
       return ar.get_plugin_cond('mini.completion', condition)
     end,

@@ -1,4 +1,5 @@
 local minimal = ar.plugins.minimal
+local coding = ar.plugins.coding
 
 return {
   {
@@ -35,7 +36,10 @@ return {
   },
   {
     'nvim-mini/mini.comment',
-    cond = function() return ar.get_plugin_cond('mini.comment') end,
+    cond = function()
+      local condition = minimal and coding
+      return ar.get_plugin_cond('mini.comment', condition)
+    end,
     event = 'VeryLazy',
     opts = {
       options = {

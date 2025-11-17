@@ -1,11 +1,13 @@
 local minimal = ar.plugins.minimal
+local coding = ar.plugins.coding
+local enabled = not minimal and coding
 
 return {
   -- BUG: Disable until this issue is fixed: https://github.com/folke/ts-comments.nvim/issues/72
   {
     'folke/ts-comments.nvim',
     cond = function()
-      return ar.get_plugin_cond('ts-comments.nvim', not minimal)
+      return ar.get_plugin_cond('ts-comments.nvim', enabled)
     end,
     event = 'VeryLazy',
     opts = {
@@ -24,7 +26,7 @@ return {
   },
   {
     's1n7ax/nvim-comment-frame',
-    cond = not minimal,
+    cond = enabled,
     keys = {
       {
         '<localleader>cf',
