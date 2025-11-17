@@ -7,6 +7,7 @@
 - clangd
 - cmake
 - copilot
+- css_variables
 - cssls
 - denols
 - docker_compose_language_service

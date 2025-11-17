@@ -66,6 +66,7 @@
 - lsp_symbols
 - markdown
 - marks
+- mason
 - mcphub
 - mini
 - mini-ai

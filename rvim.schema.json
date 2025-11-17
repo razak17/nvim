@@ -460,6 +460,7 @@
                   "clangd",
                   "cmake",
                   "copilot",
+                  "css_variables",
                   "cssls",
                   "denols",
                   "docker_compose_language_service",
@@ -644,6 +645,7 @@
               "clangd",
               "cmake",
               "copilot",
+              "css_variables",
               "cssls",
               "denols",
               "docker_compose_language_service",
@@ -780,7 +782,14 @@
           "type": "boolean"
         },
         "files": {
-          "enum": ["smart-open", "snacks", "telescope", "fzf-lua", "mini.pick", "fff"],
+          "enum": [
+            "smart-open",
+            "snacks",
+            "telescope",
+            "fzf-lua",
+            "mini.pick",
+            "fff"
+          ],
           "type": "string"
         },
         "variant": {
@@ -1205,6 +1214,7 @@
                   "lsp_symbols",
                   "markdown",
                   "marks",
+                  "mason",
                   "mcphub",
                   "mini",
                   "mini-ai",
@@ -1348,6 +1358,7 @@
                   "lsp_symbols",
                   "markdown",
                   "marks",
+                  "mason",
                   "mcphub",
                   "mini",
                   "mini-ai",
