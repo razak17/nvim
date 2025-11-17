@@ -138,7 +138,7 @@ return {
       'saghen/blink.cmp',
       optional = true,
       opts = function(_, opts)
-        if ar.plugins.minimal then return opts end
+        if not coding then return opts end
         opts = opts or {}
         opts.snippets = vim.tbl_deep_extend('force', opts.snippets or {}, {
           preset = 'luasnip',
