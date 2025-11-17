@@ -98,7 +98,7 @@ local function generate_picker_overrides()
     {
       PickerToggle = {
         bg = { from = 'FloatTitle' },
-        fg = { from = 'DiagnosticVirtualTextInfo' },
+        fg = { from = 'Directory' },
         italic = true,
       },
     },
