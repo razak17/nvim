@@ -6,6 +6,10 @@ local utils = require('ar.utils.fs')
 local ar_icons = ar_config.icons.variant
 local variant = ar_config.explorer.variant
 
+local function plugin_cond(plugin, v)
+  return ar.get_plugin_cond(plugin, variant == v)
+end
+
 ---@param from string
 ---@param to string
 local function on_rename(from, to)
@@ -22,9 +26,7 @@ end
 return {
   {
     'A7Lavinraj/fyler.nvim',
-    cond = function()
-      return ar.get_plugin_cond('fyler.nvim', variant == 'fyler')
-    end,
+    cond = function() return plugin_cond('fyler.nvim', 'fyler') end,
     branch = 'stable',
     cmd = { 'Fyler' },
     keys = {
@@ -72,9 +74,7 @@ return {
   },
   {
     'nvim-neo-tree/neo-tree.nvim',
-    cond = function()
-      return ar.get_plugin_cond('neo-tree.nvim', variant == 'neo-tree')
-    end,
+    cond = function() return plugin_cond('neo-tree.nvim', 'neo-tree') end,
     branch = 'v3.x',
     cmd = { 'Neotree' },
     keys = {
@@ -381,9 +381,7 @@ return {
   },
   {
     'nvim-mini/mini.files',
-    cond = function()
-      return ar.get_plugin_cond('mini.files', variant == 'mini.files')
-    end,
+    cond = function() return plugin_cond('mini.files', 'mini.files') end,
     keys = {
       {
         '<leader>ee',
@@ -468,7 +466,7 @@ return {
   },
   {
     'stevearc/oil.nvim',
-    cond = function() return ar.get_plugin_cond('oil.nvim', variant == 'oil') end,
+    cond = function() return plugin_cond('oil.nvim', 'oil') end,
     keys = {
       {
         '<C-n>',
