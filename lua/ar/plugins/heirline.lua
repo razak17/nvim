@@ -276,7 +276,7 @@ return {
 
       if
         ar_config.ui.statuscolumn.enable
-        and ar_config.ui.statuscolumn.variant == 'plugin'
+        and ar_config.ui.statuscolumn.variant == 'heirline'
       then
         opts.statuscolumn =
           vim.tbl_deep_extend('force', opts.statuscolumn or {}, {

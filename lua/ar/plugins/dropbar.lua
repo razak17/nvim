@@ -11,7 +11,7 @@ return {
     cond = function()
       local condition = not ar.plugins.minimal
         and ar_config.ui.winbar.enable
-        and ar_config.ui.winbar.variant == 'plugin'
+        and ar_config.ui.winbar.variant == 'dropbar'
       return ar.get_plugin_cond('dropbar.nvim', condition)
     end,
     keys = {

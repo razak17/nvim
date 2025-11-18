@@ -48,8 +48,8 @@ local env = vim.env
 ---@alias ArWhichSession 'persisted' | 'persistence'
 ---@alias ArWhichFilesPicker 'smart-open' | 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick' | 'fff'
 ---@alias ArWhichShelter 'cloak' | 'ecolog'
----@alias ArWhichStatuscolumn 'local' | 'plugin'
----@alias ArWhichWinbar 'local' | 'plugin'
+---@alias ArWhichStatuscolumn 'local' | 'heirline'
+---@alias ArWhichWinbar 'local' | 'dropbar'
 
 ---@alias ArCond {enable: boolean,}
 ---@alias ArPythonLang { basedpyright: boolean, ruff: boolean, ty: boolean, jedi_language_server: boolean, pyrefly: boolean, }
@@ -557,7 +557,7 @@ local config = {
     ---@type ArStatuscolumn
     statuscolumn = { enable = true, variant = 'local' },
     ---@type ArWinbar
-    winbar = { enable = true, variant = 'plugin' },
+    winbar = { enable = true, variant = 'dropbar' },
     transparent = { enable = true },
   },
 }
