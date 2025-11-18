@@ -141,8 +141,8 @@ local function generate_picker_overrides()
     { SnacksPicker = { link = 'PickerNormal' } },
     { SnacksPickerTitle = { link = 'PickerTitle' } },
     { SnacksPickerBorder = { link = 'PickerBorder' } },
-    -- { SnacksPickerInput = { link = 'PickerPrompt' } },
-    -- { SnacksPickerInputBorder = { link = 'PickerPromptBorder' } },
+    { SnacksPickerInput = { link = 'PickerNormal' } },
+    { SnacksPickerInputBorder = { link = 'PickerBorder' } },
     { SnacksPickerPreview = { link = 'PickerPreview' } },
     { SnacksPickerPreviewBorder = { link = 'PickerPreviewBorder' } },
     { FzfLuaTitleFlags = { link = 'PickerToggle' } },
@@ -179,13 +179,11 @@ end
 ---@param override? table
 ---@return table
 local function generate_overrides(override)
-  local overrides = {
-    { StatusLine = { bg = 'NONE', reverse = false } },
-    { Winbar = { link = 'Variable' } },
-    { WinbarNC = { link = 'NonText' } },
-  }
+  local overrides = {}
   if not ar.falsy(override) then ar.list_insert(overrides, override) end
   ar.list_insert(overrides, {
+    { Winbar = { link = 'Variable' } },
+    { WinbarNC = { link = 'NonText' } },
     { MsgSeparator = { link = 'WinSeparator' } },
     { VertSplit = { link = 'WinSeparator' } },
     { IndentBlanklineChar = { link = 'VertSplit' } },

@@ -6,7 +6,7 @@ local highlight = ar.highlight
 local transparent = ar_config.ui.transparent.enable
 
 local function general_overrides()
-  highlight.all({
+  return {
     { CursorLineNr = { bg = 'NONE' } },
     { mkdLineBreak = { clear = true } },
     { LineNr = { bg = 'NONE' } },
@@ -26,6 +26,9 @@ local function general_overrides()
     { GitSignsCurrentLineBlame = { link = 'Comment' } },
     { StatusColSep = { link = 'Dim' } },
     { StatusColFold = { link = 'Comment' } },
+    { DevIconDefault = { link = 'Comment' } },
+    { NotifyBackground = { link = 'NormalFloat' } },
+    { StatusLine = { bg = 'NONE', reverse = false } },
     ----------------------------------------------------------------------------
     --  Semantic tokens
     ----------------------------------------------------------------------------
@@ -73,15 +76,39 @@ local function general_overrides()
         fg = { from = '@character' },
       },
     },
-    { ['@illuminate'] = { link = 'LspReferenceText' } },
-    { DevIconDefault = { link = 'Comment' } },
-    { NotifyBackground = { link = 'NormalFloat' } },
-    { statusLine = { bg = 'NONE' } },
-  })
+    {
+      DiagnosticUnderlineError = {
+        cterm = { undercurl = true },
+        sp = { from = 'DiagnosticError', attr = 'fg' },
+        undercurl = true,
+      },
+    },
+    {
+      DiagnosticUnderlineWarn = {
+        cterm = { undercurl = true },
+        sp = { from = 'DiagnosticWarn', attr = 'fg' },
+        undercurl = true,
+      },
+    },
+    {
+      DiagnosticUnderlineInfo = {
+        cterm = { undercurl = true },
+        sp = { from = 'DiagnosticInfo', attr = 'fg' },
+        undercurl = true,
+      },
+    },
+    {
+      DiagnosticUnderlineHint = {
+        cterm = { undercurl = true },
+        sp = { from = 'DiagnosticHint', attr = 'fg' },
+        undercurl = true,
+      },
+    },
+  }
 end
 
 local function set_sidebar_highlight()
-  highlight.all({
+  return {
     {
       PanelDarkBackground = {
         bg = transparent and 'NONE' or { from = 'Normal', alter = -0.53 },
@@ -114,7 +141,7 @@ local function set_sidebar_highlight()
     },
     { PanelStNC = { link = 'PanelWinSeparator' } },
     { PanelSt = { bg = { from = 'Visual', alter = -0.1 } } },
-  })
+  }
 end
 
 local sidebar_fts = {
@@ -124,6 +151,7 @@ local sidebar_fts = {
   'neo-tree',
   'qf',
   'neotest-summary',
+  'minifiles',
 }
 
 local function on_sidebar_enter()
@@ -138,11 +166,12 @@ local function on_sidebar_enter()
   })
 end
 
-local function colorscheme_overrides()
+local function colorscheme_overrides(colorscheme)
   local theming = require('ar.theming')
   local overrides = {
     -- builtin colorschemes
     ['default'] = theming.generate_overrides({
+      { NormalFloat = { link = 'Normal' } },
       { CurSearch = { link = 'WildMenu' } },
       { Folded = { bg = { from = 'CursorLine', alter = -0.2 } } },
       { Comment = { fg = { from = 'Comment', alter = -0.2 } } },
@@ -157,6 +186,7 @@ local function colorscheme_overrides()
       },
     }),
     ['habamax'] = theming.generate_overrides({
+      { NormalFloat = { bg = { from = 'Normal', alter = -0.5 } } },
       {
         Visual = {
           bg = { from = 'Visual', alter = 0.5 },
@@ -178,6 +208,7 @@ local function colorscheme_overrides()
       { WinSeparator = { fg = { from = 'Dim', alter = 0.5 }, bg = 'NONE' } },
     }),
     ['retrobox'] = theming.generate_overrides({
+      { NormalFloat = { link = 'Normal' } },
       { ColorColumn = { bg = { from = 'CursorLine', alter = 0.1 } } },
       { Folded = { bg = { from = 'CursorLine', alter = -0.1 } } },
       { CursorLine = { link = 'CursorLine' } },
@@ -186,17 +217,19 @@ local function colorscheme_overrides()
       { WinSeparator = { fg = { from = 'VertSplit' }, bg = 'NONE' } },
     }),
     ['slate'] = theming.generate_overrides({
+      { NormalFloat = { link = 'Normal' } },
       { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
       { Dim = { link = 'Comment' } },
+      { Visual = { bg = { from = 'Visual', alter = -0.4 }, fg = 'NONE' } },
       { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.3 } } },
     }),
     ['vim'] = theming.generate_overrides({
       { Normal = { bg = '#24283b' } },
+      { NormalFloat = { link = 'Normal' } },
       { Comment = { fg = { from = 'Comment', alter = -0.3 } } },
       { Title = { fg = { from = 'Title', alter = 0.4 } } },
       { LineNr = { fg = { from = 'Comment' } } },
       { NonText = { fg = { from = 'Comment' } } },
-      { StatusLine = { reverse = false } },
       { CursorLine = { bg = { from = 'CursorLine', alter = -0.5 } } },
       { Conceal = { bg = { from = 'CursorLine' } } },
       { Folded = { bg = { from = 'CursorLine', alter = 0.15 } } },
@@ -208,62 +241,20 @@ local function colorscheme_overrides()
       },
     }),
     ['wildcharm'] = theming.generate_overrides({
-      { StatusLine = { reverse = false } },
+      { NormalFloat = { link = 'Normal' } },
       { Visual = { link = 'CursorLine' } },
       { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.45 } } },
     }),
   }
-  local hls = overrides[vim.g.colors_name]
-  if hls then
-    ar.list_insert(hls, {
-      {
-        StatusLine = {
-          bg = { from = 'CursorLine', alter = -0.3 },
-          fg = { from = 'Normal' },
-        },
-      },
-      {
-        DiagnosticUnderlineError = {
-          cterm = { undercurl = true },
-          sp = { from = 'DiagnosticError', attr = 'fg' },
-          undercurl = true,
-        },
-      },
-      {
-        DiagnosticUnderlineWarn = {
-          cterm = { undercurl = true },
-          sp = { from = 'DiagnosticWarn', attr = 'fg' },
-          undercurl = true,
-        },
-      },
-      {
-        DiagnosticUnderlineInfo = {
-          cterm = { undercurl = true },
-          sp = { from = 'DiagnosticInfo', attr = 'fg' },
-          undercurl = true,
-        },
-      },
-      {
-        DiagnosticUnderlineHint = {
-          cterm = { undercurl = true },
-          sp = { from = 'DiagnosticHint', attr = 'fg' },
-          undercurl = true,
-        },
-      },
-    })
-    highlight.all(hls)
-  end
-end
-
-local function user_highlights()
-  general_overrides()
-  colorscheme_overrides()
-  if not transparent then set_sidebar_highlight() end
+  local hls = general_overrides()
+  if overrides[colorscheme] then ar.list_insert(hls, overrides[colorscheme]) end
+  if not transparent then ar.list_insert(hls, set_sidebar_highlight()) end
+  highlight.all(hls)
 end
 
 ar.augroup('UserHighlights', {
   event = { 'ColorScheme' },
-  command = function() user_highlights() end,
+  command = function(arg) colorscheme_overrides(arg.match) end,
 }, {
   event = { 'FileType' },
   pattern = sidebar_fts,

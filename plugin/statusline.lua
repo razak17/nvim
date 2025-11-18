@@ -12,6 +12,12 @@ local statusline_augroup =
   vim.api.nvim_create_augroup('native_statusline', { clear = true })
 
 ar.highlight.all({
+  {
+    StatusLine = {
+      bg = { from = 'CursorLine', alter = -0.3 },
+      fg = { from = 'Normal' },
+    },
+  },
   { StatusLineBar = { fg = { from = 'Directory' }, bold = true } },
   { StatusLineMode = { fg = { from = 'Debug' } } },
   { StatusLineMedium = { fg = { from = 'Normal' } } },
