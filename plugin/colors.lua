@@ -157,7 +157,13 @@ local function colorscheme_overrides()
       },
     }),
     ['habamax'] = theming.generate_overrides({
-      { Visual = { bg = { from = 'Visual', alter = 0.5 }, reverse = false } },
+      {
+        Visual = {
+          bg = { from = 'Visual', alter = 0.5 },
+          fg = 'NONE',
+          reverse = false,
+        },
+      },
       { Dim = { link = 'NonText' } },
       { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.2 } } },
       {
