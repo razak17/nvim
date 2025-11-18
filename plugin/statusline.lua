@@ -1,6 +1,11 @@
-local enabled = ar.plugins.minimal
-
-if not ar or ar.none or not enabled then return end
+if
+  not ar
+  or ar.none
+  or not ar_config.ui.statusline.enable
+  or (ar_config.ui.statusline.variant ~= 'local' and not ar.plugins.minimal)
+then
+  return
+end
 
 local stl = require('ar.statusline')
 

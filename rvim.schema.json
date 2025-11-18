@@ -1513,7 +1513,20 @@
               "type": "boolean"
             },
             "variant": {
-              "enum": ["local", "plugin"],
+              "enum": ["local", "heirline"],
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "statusline": {
+          "additionalProperties": false,
+          "properties": {
+            "enable": {
+              "type": "boolean"
+            },
+            "variant": {
+              "enum": ["local", "heirline"],
               "type": "string"
             }
           },
@@ -1535,7 +1548,7 @@
               "type": "boolean"
             },
             "variant": {
-              "enum": ["local", "plugin"],
+              "enum": ["local", "dropbar"],
               "type": "string"
             }
           },

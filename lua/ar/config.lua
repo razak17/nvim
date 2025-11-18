@@ -49,6 +49,7 @@ local env = vim.env
 ---@alias ArWhichFilesPicker 'smart-open' | 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick' | 'fff'
 ---@alias ArWhichShelter 'cloak' | 'ecolog'
 ---@alias ArWhichStatuscolumn 'local' | 'heirline'
+---@alias ArWhichStatusline 'local' | 'heirline'
 ---@alias ArWhichWinbar 'local' | 'dropbar'
 
 ---@alias ArCond {enable: boolean,}
@@ -119,6 +120,10 @@ local env = vim.env
 ---@class ArStatuscolumn
 ---@field enable boolean
 ---@field variant ArWhichStatuscolumn
+
+---@class ArStatusline
+---@field enable boolean
+---@field variant ArWhichStatusline
 
 ---@class ArWinbar
 ---@field enable boolean
@@ -556,6 +561,8 @@ local config = {
     indentline = { enable = true, variant = 'snacks' },
     ---@type ArStatuscolumn
     statuscolumn = { enable = true, variant = 'local' },
+    ---@type ArStatusline
+    statusline = { enable = true, variant = 'heirline' },
     ---@type ArWinbar
     winbar = { enable = true, variant = 'dropbar' },
     transparent = { enable = true },
