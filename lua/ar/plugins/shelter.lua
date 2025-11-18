@@ -24,12 +24,28 @@ return {
   },
   {
     'laytan/cloak.nvim',
-    cond = function() return get_cond('cloak.nvim', 'cloak') end,
-    event = 'VeryLazy',
+    cond = function()
+      if minimal then return true end
+      return get_cond('cloak.nvim', 'cloak')
+    end,
+    lazy = false,
     init = function()
       ar.add_to_select_menu('toggle', { ['Toggle Cloak'] = 'CloakToggle' })
     end,
-    opts = {},
+    opts = {
+      patterns = {
+        {
+          file_pattern = {
+            '.env*',
+            '*.env.*',
+            'config.*',
+            '*.secret.*',
+            'secrets',
+          },
+          cloak_pattern = '=.+',
+        },
+      },
+    },
   },
   {
     {
