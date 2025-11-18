@@ -56,7 +56,7 @@ local function setup_colors(colorscheme)
   local overrides = {
     default = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.3),
-      fg = hl.get('Normal', 'fg'),
+      fg = hl.tint(hl.get('Comment', 'fg'), 0.55),
       pale_red = hl.get('DiagnosticError', 'fg'),
       pale_blue = hl.get('DiagnosticInfo', 'fg'),
       forest_green = hl.get('DiffAdd', 'bg'),
@@ -64,6 +64,7 @@ local function setup_colors(colorscheme)
     },
     habamax = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.2),
+      fg = hl.tint(hl.get('Comment', 'fg'), 0.55),
     },
     peachpuff = {
       bg_dark = hl.get('CursorLine', 'bg'),
@@ -83,6 +84,7 @@ local function setup_colors(colorscheme)
     },
     slate = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.1),
+      fg = hl.tint(hl.get('Comment', 'fg'), 0.8),
       blue = hl.get('DiffChange', 'bg'),
     },
     vim = {
