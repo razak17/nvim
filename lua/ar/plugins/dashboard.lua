@@ -219,15 +219,7 @@ return {
         event = { 'User' },
         pattern = { 'AlphaReady' },
         command = function(args)
-          -- opt.foldenable = false
-          vim.opt.colorcolumn = ''
-          vim.o.laststatus = 0
-          map('n', 'q', '<Cmd>q<CR>', { buffer = args.buf, nowait = true })
-
-          vim.api.nvim_create_autocmd('BufUnload', {
-            buffer = args.buf,
-            callback = function() vim.o.laststatus = 3 end,
-          })
+          require('ar.statusline').intro_statusline(args.buf)
         end,
       })
 

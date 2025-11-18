@@ -1,7 +1,6 @@
 -- https://github.com/amanbabuhemant/nvim/blob/733feb90c75364708367c4e088c7e8d23c3d7ef7/lua/scheme-switcher.lua#L1--[[ color scheme switcher ]]
 
 --[[ color scheme switcher ]]
---
 
 local api, fn = vim.api, vim.fn
 local set_colorscheme_file_path = vim.fn.stdpath('data') .. '/.set_colorscheme'

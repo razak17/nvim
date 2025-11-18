@@ -405,17 +405,10 @@ vim.api.nvim_create_autocmd(
         fname = vim.fn.bufname(args.buf),
         setting = 'statusline',
       })
+      if vim.bo.ft == '' then stl.intro_statusline(args.buf) end
       if not decs or ar.falsy(decs) then return end
       if decs.ft == false or decs.fname == false then
-        -- vim.opt.foldenable = false
-        vim.opt.colorcolumn = ''
-        vim.o.laststatus = 0
-        map('n', 'q', '<Cmd>q<CR>', { buffer = args.buf, nowait = true })
-
-        vim.api.nvim_create_autocmd('BufUnload', {
-          buffer = args.buf,
-          callback = function() vim.o.laststatus = 3 end,
-        })
+        stl.intro_statusline(args.buf)
       end
     end,
   }

@@ -715,4 +715,17 @@ function M.gp_extract_topic_from_buffer(bufnr)
   local topic = first_line:match('^#%s*topic:%s*(.+)$')
   return topic
 end
+
+function M.intro_statusline(bufnr)
+  -- opt.foldenable = false
+  vim.opt.colorcolumn = ''
+  vim.o.laststatus = 0
+  map('n', 'q', '<Cmd>q<CR>', { buffer = bufnr, nowait = true })
+
+  vim.api.nvim_create_autocmd('BufUnload', {
+    buffer = bufnr,
+    callback = function() vim.o.laststatus = 3 end,
+  })
+end
+
 return M
