@@ -3,22 +3,6 @@
 local api, o = vim.api, vim.o
 -- local border = ar.ui.current.border
 
---- @class LspProgressParams
---- @field kind string?
---- @field title string?
---- @field percentage integer?
---- @field message string?
-
---- @class LspProgressClient
---- @field name string?
---- @field is_done boolean?
---- @field spinner_idx integer?
---- @field winid integer?
---- @field bufnr integer?
---- @field message string?
---- @field pos integer?
---- @field timer (uv.uv_timer_t)?
-
 local M = {
   -- Maintain the total number of current windows
   total_wins = 0,
@@ -88,45 +72,6 @@ local function close_window(winid, bufnr)
   end
 end
 
--- Assemble the output progress message and set the flag to mark if it's completed.
--- * Circle Spinner:  󰪟 30% [client.name] title: message
--- * Regular Spinner: ⣾ [client.name] title: message ( 5%)
--- * Done:             [client.name] title: DONE!
---- @param client LspProgressClient
---- @param params LspProgressParams
-local function process_progress_msg(client, params)
-  local kind, msg, title = params.kind, params.message, params.title
-  local message = client.name and '[' .. client.name .. ']' or ''
-  if title then message = message .. ' ' .. title .. ':' end
-  if kind == 'end' then
-    client.is_done = true
-    message = ar.ui.codicons.misc.checkmark .. '  ' .. message .. ' DONE!'
-  else
-    client.is_done = false
-    local loaded_count = msg and string.match(msg, '^(%d+/%d+)') or ''
-    message = message .. ' ' .. (loaded_count or '')
-    local pct = params.percentage
-    if ar_config.lsp.progress.spinner == 'circle' then
-      local progress = ''
-      if params.percentage then
-        local spinners = ar.ui.spinners.circle_quarters
-        local idx = math.max(1, math.floor(pct / 10))
-        progress = spinners[idx] .. ' ' .. pct .. '% '
-      end
-      message = progress .. message
-    end
-    if ar_config.lsp.progress.spinner == 'dots' then
-      local spinners = ar.ui.spinners.dots_alt
-      if pct then message = string.format('%s (%3d%%)', message, pct) end
-      local idx = client.spinner_idx
-      idx = idx == #spinners * 4 and 1 or idx + 1
-      message = spinners[math.ceil(idx / 4)] .. ' ' .. message
-      client.spinner_idx = idx
-    end
-  end
-  return message
-end
-
 -- Show the progress message in floating window
 local function show_message(client)
   local winid = client.winid
@@ -189,7 +134,8 @@ local function handler(args)
   if cur_client.timer == nil then cur_client.timer = vim.uv.new_timer() end
 
   -- Get the formatted progress message
-  cur_client.message = process_progress_msg(cur_client, {
+  local utils = require('ar.utils.lsp')
+  cur_client.message = utils.process_progress_msg(cur_client, {
     kind = args.data.params.value.kind,
     title = args.data.params.value.title,
     percentage = args.data.params.value.percentage,
@@ -242,11 +188,10 @@ end
 
 ar.augroup('lsp_progress', {
   event = { 'LspProgress' },
-  pattern = { '*' },
+  pattern = { 'begin', 'report', 'end' },
   command = function(args) handler(args) end,
 }, {
   event = { 'VimResized', 'TermLeave' },
-  pattern = { '*' },
   command = function()
     for _, c in ipairs(M.clients) do
       if c.is_done then win_update_config(c) end
