@@ -1,19 +1,23 @@
 local minimal = ar.plugins.minimal
-local ar_icons = ar_config.icons.variant
+local variant = ar_config.icons.variant
+
+local function plugin_cond(plugin, v)
+  if ar_config.explorer.variant == 'fyler' then
+    return ar.get_plugin_cond(plugin)
+  end
+  return ar.get_plugin_cond(plugin, variant == v)
+end
 
 return {
   {
     'nvim-tree/nvim-web-devicons',
     cond = function()
-      return ar.get_plugin_cond('nvim-web-devicons')
-        and ar_icons == 'nvim-web-devicons'
+      return plugin_cond('nvim-web-devicons', 'nvim-web-devicons')
     end,
   },
   {
     'nvim-mini/mini.icons',
-    cond = function()
-      return ar.get_plugin_cond('mini.icons') and ar_icons == 'mini.icons'
-    end,
+    cond = function() return plugin_cond('mini.icons', 'mini.icons') end,
     init = function()
       package.preload['nvim-web-devicons'] = function()
         require('mini.icons').mock_nvim_web_devicons()
