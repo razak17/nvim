@@ -212,20 +212,23 @@ ar.augroup('NativeStatuslineLspProgress', {
   command = function(args)
     if not (args.data and args.data.client_id) then return end
 
-    lsp_progress = {
-      client = vim.lsp.get_client_by_id(args.data.client_id),
-      kind = args.data.params.value.kind,
-      message = args.data.params.value.message,
-      percentage = args.data.params.value.percentage,
-      title = args.data.params.value.title,
-    }
+    local data = args.data
+    local client = { name = vim.lsp.get_client_by_id(data.client_id).name }
+    local message = require('ar.utils.lsp').process_progress_msg(client, {
+      kind = data.params.value.kind,
+      title = data.params.value.title,
+      percentage = data.params.value.percentage,
+      message = data.params.value.message,
+    })
 
-    if lsp_progress.kind == 'end' then
-      lsp_progress.title = nil
-      vim.defer_fn(function() vim.cmd.redrawstatus() end, 500)
+    if data.params.value.kind == 'end' then
+      lsp_progress.message = nil
     else
-      vim.cmd.redrawstatus()
+      -- replace % with %% to avoid statusline issues
+      lsp_progress.message = message:gsub('%%', '%%%%')
     end
+
+    vim.defer_fn(function() vim.cmd.redrawstatus() end, 500)
   end,
 })
 
@@ -235,25 +238,9 @@ local function lsp_status()
 
   if vim.o.columns < 120 then return '' end
 
-  if not lsp_progress.client or not lsp_progress.title then return '' end
+  if not lsp_progress.message then return '' end
 
-  local title = lsp_progress.title or ''
-  local percentage = (
-    lsp_progress.percentage and (lsp_progress.percentage .. '%%')
-  ) or ''
-  local message = lsp_progress.message or ''
-
-  local lsp_message = string.format('%s', title)
-
-  if message ~= '' then
-    lsp_message = string.format('%s %s', lsp_message, message)
-  end
-
-  if percentage ~= '' then
-    lsp_message = string.format('%s %s', lsp_message, percentage)
-  end
-
-  return string.format('%%#StatusLineLspMessages#%s%%* ', lsp_message)
+  return string.format('%%#StatusLineLspMessages#%s%%* ', lsp_progress.message)
 end
 
 --- @return string
