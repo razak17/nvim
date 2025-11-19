@@ -46,7 +46,7 @@ return {
     keys = function()
       local mappings = {
         {
-          '<leader>ln',
+          '<localleader>lN',
           function()
             require('null-ls.info').show_window({
               height = 0.7,
