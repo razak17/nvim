@@ -202,6 +202,14 @@ local function colorscheme_overrides(colorscheme)
           reverse = false,
         },
       },
+      {
+        IncSearch = {
+          inherit = 'IncSearch',
+          bg = { from = 'IncSearch', attr = 'fg' },
+          fg = { from = 'IncSearch', attr = 'bg' },
+          reverse = false,
+        },
+      },
     }),
     ['peachpuff'] = theming.generate_overrides({
       { Dim = { link = 'LineNr' } },
