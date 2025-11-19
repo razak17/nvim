@@ -694,6 +694,10 @@
             "variant": {
               "enum": ["builtin", "noice", "snacks"],
               "type": "string"
+            },
+            "spinner": {
+              "enum": ["circle", "dots"],
+              "type": "string"
             }
           },
           "type": "object"
