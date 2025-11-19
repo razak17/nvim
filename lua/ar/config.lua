@@ -39,6 +39,7 @@ local env = vim.env
 ---@alias ArWhichIndentline 'mini.indentscope' | 'ibl' | 'snacks' | 'indentmini'
 ---@alias ArWhichLspCodeAction 'builtin' | 'tiny-code-action'
 ---@alias ArWhichLspProgress 'builtin' | 'noice' | 'snacks'
+---@alias ArWhichLspProgressSpinner 'dots' | 'circle'
 ---@alias ArWhichLspRename 'builtin' | 'inc-rename'
 ---@alias ArWhichLspSymbols 'builtin' | 'picker' | 'namu'
 ---@alias ArWhichLspVirtualLines 'builtin' | 'lsp_lines' | 'tiny-inline'
@@ -112,6 +113,7 @@ local env = vim.env
 ---@class ArLspProgress
 ---@field enable boolean
 ---@field variant ArWhichLspProgress
+---@field spinner ArWhichLspProgressSpinner
 
 ---@class ArIndentline
 ---@field enable boolean
@@ -449,7 +451,7 @@ local config = {
     null_ls = { enable = false },
     omnifunc = { enable = true },
     override = {},
-    progress = { enable = true, variant = 'builtin' },
+    progress = { enable = true, variant = 'builtin', spinner = 'circle' },
     rename = { enable = true, variant = 'inc-rename' },
     signs = { enable = false },
     symbols = { enable = true, variant = 'namu' },

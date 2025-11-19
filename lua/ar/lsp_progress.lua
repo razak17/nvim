@@ -10,6 +10,7 @@ local api, o = vim.api, vim.o
 --- @field message string?
 
 --- @class LspProgressClient
+--- @field name string?
 --- @field is_done boolean?
 --- @field spinner_idx integer?
 --- @field winid integer?
@@ -19,10 +20,6 @@ local api, o = vim.api, vim.o
 --- @field timer (uv.uv_timer_t)?
 
 local M = {
-  icons = {
-    spinner = { '⣾', '⣽', '⣻', '⢿', '⡿', '⣟', '⣯', '⣷' },
-    done = ' ',
-  },
   -- Maintain the total number of current windows
   total_wins = 0,
   ---@type table<LspProgressClient>
@@ -54,6 +51,7 @@ end
 -- Initialize or reset the properties of the given client
 --- @param client LspProgressClient
 local function init_or_reset(client)
+  client.name = nil
   client.is_done = false
   client.spinner_idx = 0
   client.winid = nil
@@ -91,31 +89,40 @@ local function close_window(winid, bufnr)
 end
 
 -- Assemble the output progress message and set the flag to mark if it's completed.
--- * General: ⣾ [client_name] title: message ( 5%)
--- * Done:     [client_name] title: DONE!
+-- * Circle Spinner:  󰪟 30% [client.name] title: message
+-- * Regular Spinner: ⣾ [client.name] title: message ( 5%)
+-- * Done:             [client.name] title: DONE!
 --- @param client LspProgressClient
---- @param name string
 --- @param params LspProgressParams
-local function process_message(client, name, params)
-  local message = ''
-  message = '[' .. name .. ']'
-  local kind = params.kind
-  local title = params.title
+local function process_progress_msg(client, params)
+  local kind, msg, title = params.kind, params.message, params.title
+  local message = client.name and '[' .. client.name .. ']' or ''
   if title then message = message .. ' ' .. title .. ':' end
   if kind == 'end' then
     client.is_done = true
-    message = M.icons.done .. ' ' .. message .. ' DONE!'
+    message = ar.ui.codicons.misc.checkmark .. '  ' .. message .. ' DONE!'
   else
     client.is_done = false
-    local raw_msg = params.message
+    local loaded_count = msg and string.match(msg, '^(%d+/%d+)') or ''
+    message = message .. ' ' .. (loaded_count or '')
     local pct = params.percentage
-    if raw_msg then message = message .. ' ' .. raw_msg end
-    if pct then message = string.format('%s (%3d%%)', message, pct) end
-    -- Spinner
-    local idx = client.spinner_idx
-    idx = idx == #M.icons.spinner * 4 and 1 or idx + 1
-    message = M.icons.spinner[math.ceil(idx / 4)] .. ' ' .. message
-    client.spinner_idx = idx
+    if ar_config.lsp.progress.spinner == 'circle' then
+      local progress = ''
+      if params.percentage then
+        local spinners = ar.ui.spinners.circle_quarters
+        local idx = math.max(1, math.floor(pct / 10))
+        progress = spinners[idx] .. ' ' .. pct .. '% '
+      end
+      message = progress .. message
+    end
+    if ar_config.lsp.progress.spinner == 'dots' then
+      local spinners = ar.ui.spinners.dots_alt
+      if pct then message = string.format('%s (%3d%%)', message, pct) end
+      local idx = client.spinner_idx
+      idx = idx == #spinners * 4 and 1 or idx + 1
+      message = spinners[math.ceil(idx / 4)] .. ' ' .. message
+      client.spinner_idx = idx
+    end
   end
   return message
 end
@@ -172,6 +179,7 @@ local function handler(args)
 
   ---@type LspProgressClient
   local cur_client = M.clients[client_id]
+  cur_client.name = vim.lsp.get_client_by_id(client_id).name
 
   -- Create buffer for the floating window showing the progress message and the timer used to close
   -- the window when progress report is done.
@@ -181,13 +189,12 @@ local function handler(args)
   if cur_client.timer == nil then cur_client.timer = vim.uv.new_timer() end
 
   -- Get the formatted progress message
-  cur_client.message =
-    process_message(cur_client, vim.lsp.get_client_by_id(client_id).name, {
-      kind = args.data.params.value.kind,
-      title = args.data.params.value.title,
-      percentage = args.data.params.value.percentage,
-      message = args.data.params.value.message,
-    })
+  cur_client.message = process_progress_msg(cur_client, {
+    kind = args.data.params.value.kind,
+    title = args.data.params.value.title,
+    percentage = args.data.params.value.percentage,
+    message = args.data.params.value.message,
+  })
   -- Show progress message in floating window
   show_message(cur_client)
 
