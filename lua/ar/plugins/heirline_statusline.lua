@@ -294,7 +294,7 @@ return {
       {
         provider = ' ' .. 'Codecompanion',
         bold = true,
-        hl = { fg = 'pale_blue' },
+        hl = { fg = 'fg' },
       },
       { flexible = 2, words, empty_component },
       align,
