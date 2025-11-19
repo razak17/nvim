@@ -31,17 +31,24 @@ local smart_close_buftypes = ar.p_table({
   ['nofile'] = true,
 })
 
+local smart_close_exclusions = ar.p_table({
+  ['fyler'] = true,
+})
+
 function ar.smart_close()
   if fn.winnr('$') ~= 1 then api.nvim_win_close(0, true) end
 end
 
 ar.augroup('SmartClose', {
-  -- Close certain filetypes by pressing q.
   event = { 'FileType' },
+  desc = 'Close certain filetypes by pressing q.',
   command = function(args)
     local is_unmapped = fn.hasmapto('q', 'n') == 0
 
     local buf = vim.bo[args.buf]
+
+    if smart_close_exclusions[buf.ft] then return end
+
     local is_eligible = is_unmapped
       or vim.wo.previewwindow
       or smart_close_filetypes[buf.ft]
