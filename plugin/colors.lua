@@ -152,6 +152,7 @@ local sidebar_fts = {
   'qf',
   'neotest-summary',
   'minifiles',
+  'fyler',
 }
 
 local function on_sidebar_enter()

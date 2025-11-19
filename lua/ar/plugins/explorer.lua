@@ -27,50 +27,82 @@ return {
   {
     'A7Lavinraj/fyler.nvim',
     cond = function() return plugin_cond('fyler.nvim', 'fyler') end,
-    branch = 'stable',
     cmd = { 'Fyler' },
+    -- stylua: ignore
     keys = {
-      { '<c-n>', '<cmd>Fyler kind=split:rightmost<CR>', desc = 'toggle tree' },
+      { '-', '<Cmd>Fyler kind=replace<CR>', desc = 'fyler float' },
+      { '<C-n>', '<Cmd>Fyler kind=float<CR>', desc = 'fyler float' },
+      { '<leader>ee', '<Cmd>Fyler kind=split_right_most<CR>', desc = 'toggle tree' },
     },
     opts = {
-      icon_provider = ar_icons == 'mini.icons' and 'mini-icons'
-        or 'nvim-web-devicons',
-      hooks = {
-        on_rename = function(src_path, dst_path) on_rename(src_path, dst_path) end,
+      integrations = {
+        icon = ar_icons == 'mini.icons' and 'mini_icons' or 'nvim-web-devicons',
       },
+      hooks = { on_rename = function(src, dst) on_rename(src, dst) end },
       views = {
-        explorer = {
+        finder = {
           confirm_simple = true,
           default_explorer = true,
-          git_status = false,
+          delete_to_trash = true,
+          git_status = {
+            enabled = true,
+            symbols = {
+              Untracked = icons.git.untracked,
+              Added = codicons.git.added,
+              Modified = codicons.git.mod,
+              Deleted = codicons.git.removed,
+              Renamed = codicons.git.renamed,
+              Copied = codicons.git.copied,
+              Conflict = icons.git.branch,
+              Ignored = codicons.git.ignored,
+            },
+          },
+          indentscope = { group = 'FylerIndentMarker' },
           win = {
+            border = vim.o.winborder == '' and 'single' or vim.o.winborder,
+            kind = 'float',
             win_opts = {
               number = false,
               relativenumber = false,
               cursorline = true,
+              winhighlight = 'NormalFloat:NormalFloat,NormalNC:NormalFloat',
+            },
+            kinds = {
+              float = {
+                height = '70%',
+                width = '40%',
+                top = '10%',
+                left = '30%',
+              },
+              split_left = { width = '40' },
+              split_left_most = {
+                width = '40',
+                win_opts = { winfixwidth = true },
+              },
+              split_right = { width = '40' },
+              split_right_most = {
+                width = '40',
+                win_opts = { winfixwidth = true },
+              },
             },
           },
-          width = 0.2,
-          height = 0.8,
-          kind = 'float',
-          border = 'single',
         },
       },
     },
     config = function(_, opts)
-      require('fyler').setup(opts)
-
-      ar.augroup('FylerEnter', {
-        event = { 'BufEnter', 'FocusGained' },
-        pattern = '*',
-        command = function(args)
-          if vim.bo[args.buf].ft == 'fyler' then
-            vim.cmd('wincmd L | vertical resize 40')
-          end
-        end,
+      ar.highlight.plugin('Fyler', {
+        { FylerRed = { link = 'Error' } },
+        { FylerGreen = { link = 'DiagnosticHint' } },
+        { FylerYellow = { link = 'DiagnosticWarn' } },
+        { FylerNormal = { link = 'NormalFloat' } },
+        { FylerNormalNC = { link = 'NormalFloat' } },
+        { FylerBorder = { link = 'Error' } },
+        { FylerFsFile = { link = 'NormalFloat' } },
+        { FylerGitDeleted = { link = 'DiffDelete' } },
+        { FylerIndentMarker = { link = 'NonText' } },
       })
+      require('fyler').setup(opts)
     end,
-    dependencies = { 'nvim-mini/mini.icons' },
   },
   {
     'nvim-neo-tree/neo-tree.nvim',
