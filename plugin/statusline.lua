@@ -342,15 +342,13 @@ end
 
 StatusLine = {}
 
-StatusLine.inactive = function() return table.concat({ '%#Normal#%' }) end
-
 local readeable_filetypes = {
   ['qf'] = true,
   ['help'] = true,
   ['tsplayground'] = true,
 }
 
-StatusLine.active = function()
+StatusLine.render = function()
   local mode_str = vim.api.nvim_get_mode().mode
   if mode_str == 't' or mode_str == 'nt' then
     return table.concat({
@@ -362,6 +360,8 @@ StatusLine.active = function()
       '%#StatusLineBar#▊%*',
     })
   end
+
+  if vim.bo.ft == '' then return table.concat({ '%#Normal#%' }) end
 
   if readeable_filetypes[vim.bo.filetype] or vim.o.modifiable == false then
     return table.concat({
@@ -398,36 +398,24 @@ StatusLine.active = function()
   return table.concat(statusline)
 end
 
-StatusLine.render = function()
-  if vim.bo.ft == '' then
-    return StatusLine.inactive()
-  else
-    return StatusLine.active()
-  end
-end
-
 vim.opt.statusline = '%!v:lua.StatusLine.render()'
 
-vim.api.nvim_create_autocmd(
-  { 'WinEnter', 'BufEnter', 'FileType', 'VimEnter' },
-  {
-    group = statusline_augroup,
-    pattern = { '*' },
-    callback = function(args)
-      -- vim.opt_local.statusline = '%!v:lua.StatusLine.inactive()'
-      local decs = ar.ui.decorations.get({
-        ft = vim.bo[args.buf].ft,
-        fname = vim.fn.bufname(args.buf),
-        setting = 'statusline',
-      })
-      if vim.bo.ft == '' then
-        stl.intro_statusline(args.buf)
-        return
-      end
-      if not decs or ar.falsy(decs) then return end
-      if decs.ft == false or decs.fname == false then
-        stl.intro_statusline(args.buf)
-      end
-    end,
-  }
-)
+vim.api.nvim_create_autocmd({ 'VimEnter' }, {
+  group = statusline_augroup,
+  pattern = { '*' },
+  callback = function(args)
+    local decs = ar.ui.decorations.get({
+      ft = vim.bo[args.buf].ft,
+      fname = vim.fn.bufname(args.buf),
+      setting = 'statusline',
+    })
+    if vim.bo.ft == '' and args.match == '' then
+      stl.intro_statusline(args.buf)
+      return
+    end
+    if not decs or ar.falsy(decs) then return end
+    if decs.ft == false or decs.fname == false then
+      stl.intro_statusline(args.buf)
+    end
+  end,
+})
