@@ -3,6 +3,21 @@
 local api, o = vim.api, vim.o
 -- local border = ar.ui.current.border
 
+--- @class LspProgressParams
+--- @field kind string?
+--- @field title string?
+--- @field percentage integer?
+--- @field message string?
+
+--- @class LspProgressClient
+--- @field is_done boolean?
+--- @field spinner_idx integer?
+--- @field winid integer?
+--- @field bufnr integer?
+--- @field message string?
+--- @field pos integer?
+--- @field timer (uv.uv_timer_t)?
+
 local M = {
   icons = {
     spinner = { '⣾', '⣽', '⣻', '⢿', '⡿', '⣟', '⣯', '⣷' },
@@ -10,6 +25,7 @@ local M = {
   },
   -- Maintain the total number of current windows
   total_wins = 0,
+  ---@type table<LspProgressClient>
   clients = {},
 }
 
@@ -36,6 +52,7 @@ local function guard(callable)
 end
 
 -- Initialize or reset the properties of the given client
+--- @param client LspProgressClient
 local function init_or_reset(client)
   client.is_done = false
   client.spinner_idx = 0
@@ -48,9 +65,11 @@ end
 
 -- Get the row position of the current floating window. If it is the first one, it is placed just
 -- right above the statusline; if not, it is placed on top of others.
+--- @param pos integer
 local function get_win_row(pos) return o.lines - o.cmdheight + 1 - pos * 3 end
 
 -- Update the window config
+--- @param client LspProgressClient
 local function win_update_config(client)
   api.nvim_win_set_config(client.winid, {
     relative = 'editor',
@@ -62,6 +81,8 @@ local function win_update_config(client)
 end
 
 -- Close the window and delete the associated buffer
+--- @param winid integer
+--- @param bufnr integer
 local function close_window(winid, bufnr)
   if api.nvim_win_is_valid(winid) then api.nvim_win_close(winid, true) end
   if api.nvim_buf_is_valid(bufnr) then
@@ -72,19 +93,22 @@ end
 -- Assemble the output progress message and set the flag to mark if it's completed.
 -- * General: ⣾ [client_name] title: message ( 5%)
 -- * Done:     [client_name] title: DONE!
+--- @param client LspProgressClient
+--- @param name string
+--- @param params LspProgressParams
 local function process_message(client, name, params)
   local message = ''
   message = '[' .. name .. ']'
-  local kind = params.value.kind
-  local title = params.value.title
+  local kind = params.kind
+  local title = params.title
   if title then message = message .. ' ' .. title .. ':' end
   if kind == 'end' then
     client.is_done = true
     message = M.icons.done .. ' ' .. message .. ' DONE!'
   else
     client.is_done = false
-    local raw_msg = params.value.message
-    local pct = params.value.percentage
+    local raw_msg = params.message
+    local pct = params.percentage
     if raw_msg then message = message .. ' ' .. raw_msg end
     if pct then message = string.format('%s (%3d%%)', message, pct) end
     -- Spinner
@@ -136,6 +160,7 @@ local function show_message(client)
 end
 
 -- Display the progress message
+---@param args AutocmdArgs
 local function handler(args)
   local client_id = args.data.client_id
 
@@ -144,6 +169,8 @@ local function handler(args)
     M.clients[client_id] = {}
     init_or_reset(M.clients[client_id])
   end
+
+  ---@type LspProgressClient
   local cur_client = M.clients[client_id]
 
   -- Create buffer for the floating window showing the progress message and the timer used to close
@@ -154,12 +181,13 @@ local function handler(args)
   if cur_client.timer == nil then cur_client.timer = vim.uv.new_timer() end
 
   -- Get the formatted progress message
-  cur_client.message = process_message(
-    cur_client,
-    vim.lsp.get_client_by_id(client_id).name,
-    args.data.params
-  )
-
+  cur_client.message =
+    process_message(cur_client, vim.lsp.get_client_by_id(client_id).name, {
+      kind = args.data.params.value.kind,
+      title = args.data.params.value.title,
+      percentage = args.data.params.value.percentage,
+      message = args.data.params.value.message,
+    })
   -- Show progress message in floating window
   show_message(cur_client)
 
