@@ -60,7 +60,7 @@ end
 local function filename()
   local fname = vim.fn.expand('%:t')
   if fname == '' then return '' end
-  return ' ' .. fname
+  return ' ' .. fname .. ' '
 end
 
 --- @param severity integer
@@ -279,21 +279,15 @@ local function git_branch_icon() return '%#StatusLineGitBranchIcon#%*' end
 --- @return string
 local function git_branch()
   local branch = vim.b.gitsigns_head
-  if branch == '' or branch == nil then return stl.pretty_branch() end
+  if branch == '' or branch == nil then branch = stl.pretty_branch() end
 
+  branch = ' ' .. git_branch_icon() .. ' ' .. branch
   return string.format('%%#StatusLineMedium#%s%%*', branch)
 end
 
 --- @return string
-local function full_git()
+local function git_diff()
   local full = ''
-  local space = '%#StatusLineMedium# %*'
-
-  local branch = git_branch()
-  if branch ~= '' then
-    local icon = git_branch_icon()
-    full = full .. space .. icon .. space .. branch .. ' '
-  end
 
   local added = git_diff_added()
   if added ~= '' then full = full .. added end
@@ -361,8 +355,9 @@ StatusLine.render = function()
   local statusline = {
     '%#StatusLineBar#▊%*',
     mode(),
+    git_branch(),
     filename(),
-    full_git(),
+    git_diff(),
     diagnostics_error(),
     diagnostics_warns(),
     diagnostics_info(),
