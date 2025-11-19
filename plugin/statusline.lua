@@ -13,10 +13,7 @@ local stl = require('ar.statusline')
 -- Statusline with no plugin
 -- @see: https://github.com/shivambegin/Neovim/blob/main/lua/config/statusline.lua
 --------------------------------------------------------------------------------
-local statusline_augroup =
-  vim.api.nvim_create_augroup('native_statusline', { clear = true })
-
-ar.highlight.plugin('NativeStatusline', {
+ar.highlight.plugin('NativeStatuslineHl', {
   {
     StatusLine = {
       bg = { from = 'CursorLine', alter = -0.3 },
@@ -208,11 +205,11 @@ local lsp_progress = {
   message = nil,
 }
 
-vim.api.nvim_create_autocmd('LspProgress', {
-  group = statusline_augroup,
+ar.augroup('NativeStatuslineLspProgress', {
+  event = 'LspProgress',
   desc = 'Update LSP progress in statusline',
   pattern = { 'begin', 'report', 'end' },
-  callback = function(args)
+  command = function(args)
     if not (args.data and args.data.client_id) then return end
 
     lsp_progress = {
@@ -400,10 +397,9 @@ end
 
 vim.opt.statusline = '%!v:lua.StatusLine.render()'
 
-vim.api.nvim_create_autocmd({ 'VimEnter' }, {
-  group = statusline_augroup,
-  pattern = { '*' },
-  callback = function(args)
+ar.augroup('NativeStatusline', {
+  event = { 'VimEnter' },
+  command = function(args)
     local decs = ar.ui.decorations.get({
       ft = vim.bo[args.buf].ft,
       fname = vim.fn.bufname(args.buf),
