@@ -305,7 +305,7 @@ local function full_git()
   local branch = git_branch()
   if branch ~= '' then
     local icon = git_branch_icon()
-    full = full .. space .. icon .. space .. branch
+    full = full .. space .. icon .. space .. branch .. ' '
   end
 
   local added = git_diff_added()
@@ -317,7 +317,7 @@ local function full_git()
   local removed = git_diff_removed()
   if removed ~= '' then full = full .. removed end
 
-  return full
+  return full .. ' '
 end
 
 --- @return string
@@ -374,16 +374,16 @@ StatusLine.render = function()
   local statusline = {
     '%#StatusLineBar#▊%*',
     mode(),
-    full_git(),
     filename(),
-    '%=',
-    '%=',
-    '%S ',
-    lsp_status(),
+    full_git(),
     diagnostics_error(),
     diagnostics_warns(),
     diagnostics_info(),
     diagnostics_hint(),
+    '%=',
+    '%=',
+    '%S ',
+    lsp_status(),
     lsp_active(),
     python_env(),
     filetype(),
