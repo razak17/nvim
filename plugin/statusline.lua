@@ -16,7 +16,7 @@ local stl = require('ar.statusline')
 local statusline_augroup =
   vim.api.nvim_create_augroup('native_statusline', { clear = true })
 
-ar.highlight.all({
+ar.highlight.plugin('NativeStatusline', {
   {
     StatusLine = {
       bg = { from = 'CursorLine', alter = -0.3 },
@@ -24,7 +24,7 @@ ar.highlight.all({
     },
   },
   { StatusLineBar = { fg = { from = 'Directory' }, bold = true } },
-  { StatusLineMode = { fg = { from = 'Debug' } } },
+  { StatusLineMode = { fg = { from = 'Special' } } },
   { StatusLineMedium = { fg = { from = 'Normal' } } },
   { StatusLineLspActive = { fg = { from = 'Directory' }, bold = true } },
   { StatusLineLspError = { fg = { from = 'ErrorMsg' } } },
@@ -354,19 +354,23 @@ StatusLine.active = function()
   local mode_str = vim.api.nvim_get_mode().mode
   if mode_str == 't' or mode_str == 'nt' then
     return table.concat({
+      '%#StatusLineBar#▊%*',
       mode(),
       '%=',
       '%=',
       location(),
+      '%#StatusLineBar#▊%*',
     })
   end
 
   if readeable_filetypes[vim.bo.filetype] or vim.o.modifiable == false then
     return table.concat({
+      '%#StatusLineBar#▊%*',
       formatted_filetype('StatusLineMode'),
       '%=',
       '%=',
       location(),
+      '%#StatusLineBar#▊%*',
     })
   end
 
@@ -416,7 +420,10 @@ vim.api.nvim_create_autocmd(
         fname = vim.fn.bufname(args.buf),
         setting = 'statusline',
       })
-      if vim.bo.ft == '' then stl.intro_statusline(args.buf) end
+      if vim.bo.ft == '' then
+        stl.intro_statusline(args.buf)
+        return
+      end
       if not decs or ar.falsy(decs) then return end
       if decs.ft == false or decs.fname == false then
         stl.intro_statusline(args.buf)

@@ -56,6 +56,9 @@ function M.colorscheme_menu()
     '',
   }
 
+  vim.bo[buf].filetype = 'scheme_switcher'
+  vim.bo[buf].bufhidden = 'wipe'
+
   api.nvim_buf_set_lines(buf, 0, -1, false, metalines)
   for i, s in ipairs(schemes) do
     api.nvim_buf_set_lines(buf, #metalines + i, -1, false, { s })
@@ -70,10 +73,7 @@ function M.colorscheme_menu()
     border = 'single',
   })
 
-  -- buffer/window appearance
   vim.bo[buf].modifiable = false
-  vim.bo[buf].bufhidden = 'wipe'
-  vim.bo[buf].filetype = 'scheme_switcher'
   vim.wo[win].number = false
   vim.wo[win].relativenumber = false
   vim.wo[win].cursorline = true
