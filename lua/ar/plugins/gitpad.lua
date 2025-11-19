@@ -14,13 +14,9 @@ return {
     },
     config = function(_, opts)
       ar.highlight.plugin('neogit', {
-        theme = {
-          ['onedark'] = {
-            { GitpadFloat = { inherit = 'NormalFloat' } },
-            { GitpadFloatBorder = { inherit = 'FloatBorder' } },
-            { GitpadFloatTitle = { inherit = 'FloatTitle' } },
-          },
-        },
+        { GitpadFloat = { inherit = 'NormalFloat' } },
+        { GitpadFloatBorder = { inherit = 'FloatBorder' } },
+        { GitpadFloatTitle = { inherit = 'FloatTitle' } },
       })
       require('gitpad').setup(opts)
     end,
