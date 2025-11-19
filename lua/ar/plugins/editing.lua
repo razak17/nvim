@@ -1,3 +1,4 @@
+local coding = ar.plugins.coding
 local minimal = ar.plugins.minimal
 local get_cond = ar.get_plugin_cond
 
@@ -149,7 +150,7 @@ return {
   },
   {
     'Wansmer/treesj',
-    cond = function() return get_cond('treesj', not minimal) end,
+    cond = function() return get_cond('treesj', coding) end,
     -- stylua: ignore
     keys = {
       { '<leader>oK', function() require('treesj').toggle() end, desc = 'split-join lines' },
