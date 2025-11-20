@@ -15,12 +15,12 @@ return {
   {
     'icholy/lsplinks.nvim',
     event = 'LspAttach',
-    cond = ar.lsp.enable,
+    cond = function() return ar.get_plugin_cond('lsplinks.nvim', ar.lsp.enable) end,
     opts = {},
   },
   {
     'chrisgrieser/nvim-rulebook',
-    cond = ar.lsp.enable,
+    cond = function() return ar.get_plugin_cond('nvim-rulebook', ar.lsp.enable) end,
     init = function()
       vim.g.whichkey_add_spec({ '<leader>l?', group = 'Rulebook' })
     end,
@@ -52,8 +52,7 @@ return {
   {
     'zeioth/garbage-day.nvim',
     cond = function()
-      local condition = ar.lsp.enable
-      return ar.get_plugin_cond('garbage-day.nvim', condition)
+      return ar.get_plugin_cond('garbage-day.nvim', ar.lsp.enable)
     end,
     event = 'LspAttach',
     opts = {
@@ -64,7 +63,9 @@ return {
   },
   {
     'stevanmilic/nvim-lspimport',
-    cond = ar.lsp.enable,
+    cond = function()
+      return ar.get_plugin_cond('nvim-lspimport', ar.lsp.enable)
+    end,
     ft = { 'python' },
     -- stylua: ignore
     keys = {
