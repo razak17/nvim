@@ -525,7 +525,6 @@ local config = {
       'conflict.nvim',
       'dev-tools.nvim',
       'flatten.nvim',
-      'fold_line.nvim',
       'garbage-day.nvim',
       'git-conflict.nvim',
       'hlchunk.nvim',

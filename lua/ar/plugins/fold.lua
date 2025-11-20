@@ -28,9 +28,6 @@ return {
       },
     },
   },
-  ------------------------------------------------------------------------------
-  -- Disabled {{{1
-  ------------------------------------------------------------------------------
   {
     'kevinhwang91/nvim-ufo',
     cond = function()
@@ -147,22 +144,5 @@ return {
       require('ufo').setup(opts)
     end,
     dependencies = 'kevinhwang91/promise-async',
-  },
-  {
-    'gh-liu/fold_line.nvim',
-    cond = function() return ar.get_plugin_cond('fold_line.nvim', not minimal) end,
-    event = 'VeryLazy',
-    config = function()
-      ar.highlight.plugin('fold_line', {
-        theme = {
-          ['onedark'] = { { FoldLine = { link = 'IndentBlanklineChar' } } },
-        },
-      })
-    end,
-    init = function()
-      -- change the char of the line, see the `Appearance` section
-      vim.g.fold_line_char_open_start = '╭'
-      vim.g.fold_line_char_open_end = '╰'
-    end,
   },
 }
