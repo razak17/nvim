@@ -59,6 +59,18 @@ return {
                 bg = { from = 'IncSearch', attr = 'bg', alter = -0.35 },
               },
             },
+            { NeogitChangeAdded = { fg = { from = 'DiffAdd' } } },
+            { NeogitChangeModified = { fg = { from = 'DiffChange' } } },
+            { NeogitChangeDeleted = { fg = { from = 'DiffDelete' } } },
+            { NeogitChangeCopied = { fg = { from = 'Change' } } },
+            {
+              NeogitChangeRenamed = {
+                fg = { from = 'DiffChange', alter = 0.35 },
+              },
+            },
+            {
+              NeogitChangeNewFile = { fg = { from = 'DiffAdd', alter = 0.35 } },
+            },
           },
           ['retrobox'] = {
             {
