@@ -1,5 +1,5 @@
 local highlight = ar.highlight
-local minimal = ar.plugins.minimal
+local coding = ar.plugins.coding
 local ts_enabled = ar.treesitter.enable
 local ts_extra_enabled = ar.ts_extra_enabled
 local ts = require('ar.utils.treesitter')
@@ -167,7 +167,7 @@ return {
   {
     'MeanderingProgrammer/treesitter-modules.nvim',
     cond = function()
-      local condition = not minimal and ts_enabled
+      local condition = coding and ts_enabled
       return ar.get_plugin_cond('treesitter-modules.nvim', condition)
     end,
     event = { 'BufRead' },
@@ -186,7 +186,10 @@ return {
   },
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
-    cond = not minimal and ts_enabled,
+    cond = function()
+      local condition = coding and ts_enabled
+      return ar.get_plugin_cond('nvim-treesitter-textobjects', condition)
+    end,
     branch = 'main',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     event = { 'BufRead' },
@@ -283,7 +286,7 @@ return {
     config = function()
       require('nvim-treesitter-textobjects').setup({
         select = {
-          enable = not minimal,
+          enable = not coding,
           lookahead = true,
           selection_modes = {
             ['@parameter.outer'] = 'v', -- charwise
@@ -306,7 +309,7 @@ return {
   },
   {
     'windwp/nvim-ts-autotag',
-    cond = not minimal and ts_extra_enabled,
+    cond = coding and ts_extra_enabled,
     ft = {
       'typescriptreact',
       'javascript',
@@ -321,7 +324,7 @@ return {
     'andymass/vim-matchup',
     event = { 'BufReadPre', 'BufNewFile' },
     cond = function()
-      local condition = not minimal and ts_extra_enabled
+      local condition = coding and ts_extra_enabled
       return ar.get_plugin_cond('vim-matchup', condition)
     end,
     keys = {

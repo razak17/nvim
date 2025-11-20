@@ -1,12 +1,11 @@
-local minimal = ar.plugins.minimal
+local coding = ar.plugins.coding
 
 return {
   { 'ragnarok22/whereami.nvim', cmd = 'Whereami' },
   {
     'nvim-treesitter/nvim-treesitter-context',
     cond = function()
-      local condition = not minimal and ar.ts_extra_enabled
-      return ar.get_plugin_cond('nvim-treesitter-context', condition)
+      return ar.get_plugin_cond('nvim-treesitter-context', coding)
     end,
     keys = {
       {
@@ -43,7 +42,7 @@ return {
   {
     'andersevenrud/nvim_context_vt',
     cond = function()
-      local condition = not minimal and ar.ts_extra_enabled
+      local condition = coding and ar.ts_extra_enabled
       return ar.get_plugin_cond('nvim_context_vt', condition)
     end,
     cmd = 'NvimContextVtToggle',
@@ -62,7 +61,7 @@ return {
   {
     'nabekou29/pair-lens.nvim',
     cond = function()
-      local condition = not minimal and ar.ts_extra_enabled
+      local condition = coding and ar.ts_extra_enabled
       return ar.get_plugin_cond('pair-lens.nvim', condition)
     end,
     event = { 'BufReadPre', 'BufNewFile' },
