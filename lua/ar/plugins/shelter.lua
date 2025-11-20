@@ -38,7 +38,6 @@ return {
           file_pattern = {
             '.env*',
             '*.env.*',
-            'config.*',
             '*.secret.*',
             'secrets',
           },
