@@ -22,9 +22,134 @@ return {
     local spacer = { provider = space(), hl = 'HeirlineStatusColumn' }
     local shade = sep.light_shade_block
 
+    local inactive_statuscolumn = {
+      hl = { bg = 'NONE', fg = 'fg' },
+      condition = function(self)
+        return conditions.buffer_matches({
+          filetype = self.force_inactive_filetypes,
+        }) or vim.bo.ft == ''
+      end,
+      { provider = '' },
+      align,
+    }
+
+    local statuscolumn = {
+      init = function(self)
+        local lnum, relnum, virtnum = v.lnum, v.relnum, v.virtnum
+        local win = api.nvim_get_current_win()
+        local buf = api.nvim_win_get_buf(win)
+        local line_count = api.nvim_buf_line_count(buf)
+
+        self.ln = statuscol.nr(win, lnum, relnum, virtnum, line_count)
+        self.left, self.g_sns = statuscol.get_left(buf, lnum)
+        self.no = vim.wo[win].signcolumn == 'no'
+      end,
+      -- Signs
+      {
+        provider = function(self) return self.no and '' or self.left end,
+        on_click = {
+          name = 'sign_click',
+          callback = function(self, ...)
+            if self.handlers.signs then
+              self.handlers.signs(self.click_args(self, ...))
+            end
+          end,
+        },
+      },
+      align,
+      spacer,
+      -- Line numbers
+      {
+        provider = function(self) return self.ln end,
+        on_click = {
+          name = 'line_number_click',
+          callback = function(self, ...)
+            if self.handlers.line_number then
+              self.handlers.line_number(self.click_args(self, ...))
+            end
+          end,
+        },
+      },
+      spacer,
+      -- Git signs
+      {
+        {
+          condition = function() return not is_git_repo() or v.virtnum ~= 0 end,
+          provider = space(),
+          hl = 'HeirlineStatusColumn',
+        },
+        {
+          condition = function() return is_git_repo() and v.virtnum == 0 end,
+          init = function(self)
+            if #self.g_sns == 0 then
+              self.gitsign = nil
+            else
+              self.gitsign = unpack(self.g_sns)
+            end
+            self.has_gitsign = self.gitsign ~= nil
+          end,
+          provider = function(self)
+            if self.has_gitsign then return self.gitsign.text end
+            return space()
+          end,
+          hl = function(self)
+            if self.has_gitsign then return self.gitsign.texthl end
+            return 'HeirlineStatusColumn'
+          end,
+          on_click = {
+            name = 'gitsigns_click',
+            callback = function(self, ...)
+              if self.handlers.git_signs then
+                self.handlers.git_signs(self.click_args(self, ...))
+              end
+            end,
+          },
+        },
+      },
+      -- Virtual lines
+      {
+        init = function(self)
+          self.is_wrap = self.ln:gsub('^%s*(.-)%s*$', '%1') == ''
+          self.is_shade = self.ln:gsub('^%s*(.-)%s*$', '%1') == shade
+        end,
+        provider = function(self)
+          if self.is_shade then return '' end
+          if not self.is_wrap then return sep.left_thin_block end
+          return ''
+        end,
+        hl = 'IndentBlanklineChar',
+      },
+      -- Folds
+      {
+        condition = function() return v.virtnum == 0 end,
+        init = function(self) self.fold = statuscol.get_fold(v.lnum) end,
+        {
+          provider = function(self) return self.fold.text end,
+          hl = function(self) return self.fold.texthl end,
+        },
+        on_click = {
+          name = 'fold_click',
+          callback = function(self, ...)
+            if self.handlers.fold then
+              self.handlers.fold(self.click_args(self, ...))
+            end
+          end,
+        },
+        spacer,
+      },
+    }
+
     return vim.tbl_deep_extend('force', opts or {}, {
       statuscolumn = vim.tbl_deep_extend('force', opts.statuscolumn or {}, {
+        fallthrough = false,
         static = {
+          force_inactive_filetypes = {
+            '^aerial$',
+            '^alpha$',
+            '^netrw$',
+            '^oil$',
+            '^undotree$',
+          },
           click_args = function(self, minwid, clicks, button, mods)
             local args = {
               minwid = minwid,
@@ -78,111 +203,8 @@ return {
             )
           end
         end,
-        {
-          init = function(self)
-            local lnum, relnum, virtnum = v.lnum, v.relnum, v.virtnum
-            local win = api.nvim_get_current_win()
-            local buf = api.nvim_win_get_buf(win)
-            local line_count = api.nvim_buf_line_count(buf)
-
-            self.ln = statuscol.nr(win, lnum, relnum, virtnum, line_count)
-            self.left, self.g_sns = statuscol.get_left(buf, lnum)
-            self.no = vim.wo[win].signcolumn == 'no'
-          end,
-          -- Signs
-          {
-            provider = function(self) return self.no and '' or self.left end,
-            on_click = {
-              name = 'sign_click',
-              callback = function(self, ...)
-                if self.handlers.signs then
-                  self.handlers.signs(self.click_args(self, ...))
-                end
-              end,
-            },
-          },
-          align,
-          spacer,
-          -- Line numbers
-          {
-            provider = function(self) return self.ln end,
-            on_click = {
-              name = 'line_number_click',
-              callback = function(self, ...)
-                if self.handlers.line_number then
-                  self.handlers.line_number(self.click_args(self, ...))
-                end
-              end,
-            },
-          },
-          spacer,
-          -- Git signs
-          {
-            {
-              condition = function() return not is_git_repo() or v.virtnum ~= 0 end,
-              provider = space(),
-              hl = 'HeirlineStatusColumn',
-            },
-            {
-              condition = function() return is_git_repo() and v.virtnum == 0 end,
-              init = function(self)
-                if #self.g_sns == 0 then
-                  self.gitsign = nil
-                else
-                  self.gitsign = unpack(self.g_sns)
-                end
-                self.has_gitsign = self.gitsign ~= nil
-              end,
-              provider = function(self)
-                if self.has_gitsign then return self.gitsign.text end
-                return space()
-              end,
-              hl = function(self)
-                if self.has_gitsign then return self.gitsign.texthl end
-                return 'HeirlineStatusColumn'
-              end,
-              on_click = {
-                name = 'gitsigns_click',
-                callback = function(self, ...)
-                  if self.handlers.git_signs then
-                    self.handlers.git_signs(self.click_args(self, ...))
-                  end
-                end,
-              },
-            },
-          },
-          -- Virtual lines
-          {
-            init = function(self)
-              self.is_wrap = self.ln:gsub('^%s*(.-)%s*$', '%1') == ''
-              self.is_shade = self.ln:gsub('^%s*(.-)%s*$', '%1') == shade
-            end,
-            provider = function(self)
-              if self.is_shade then return '' end
-              if not self.is_wrap then return sep.left_thin_block end
-              return ''
-            end,
-            hl = 'IndentBlanklineChar',
-          },
-          -- Folds
-          {
-            condition = function() return v.virtnum == 0 end,
-            init = function(self) self.fold = statuscol.get_fold(v.lnum) end,
-            {
-              provider = function(self) return self.fold.text end,
-              hl = function(self) return self.fold.texthl end,
-            },
-            on_click = {
-              name = 'fold_click',
-              callback = function(self, ...)
-                if self.handlers.fold then
-                  self.handlers.fold(self.click_args(self, ...))
-                end
-              end,
-            },
-            spacer,
-          },
-        },
+        inactive_statuscolumn,
+        statuscolumn,
       }),
     })
   end,
