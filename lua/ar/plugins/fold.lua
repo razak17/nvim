@@ -1,4 +1,5 @@
 local minimal = ar.plugins.minimal
+local coding = ar.plugins.coding
 
 return {
   {
@@ -144,5 +145,11 @@ return {
       require('ufo').setup(opts)
     end,
     dependencies = 'kevinhwang91/promise-async',
+  },
+  {
+    'dmtrKovalenko/fold-imports.nvim',
+    cond = function() return ar.get_plugin_cond('fold-imports.nvim', coding) end,
+    event = 'BufRead',
+    opts = {},
   },
 }
