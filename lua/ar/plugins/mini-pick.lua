@@ -192,6 +192,7 @@ return {
         if ar_config.lsp.symbols.enable and ar_config.lsp.symbols.variant == 'picker' then
           ar.list_insert(picker_mappings {
             { '<leader>lsd', lsp('document_symbol'), desc = 'mini.pick: document symbols' },
+            { '<leader>lsl', lsp('workspace_symbol_live'), desc = 'mini.pick: live workspace symbols' },
             { '<leader>lsw', lsp('workspace_symbol'), desc = 'mini.pick: workspace symbols' },
           })
         end
