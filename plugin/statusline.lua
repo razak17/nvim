@@ -192,18 +192,8 @@ local function diagnostics_info()
 end
 
 --- @class LspProgress
---- @field client vim.lsp.Client?
---- @field kind string?
---- @field title string?
---- @field percentage integer?
 --- @field message string?
-local lsp_progress = {
-  client = nil,
-  kind = nil,
-  title = nil,
-  percentage = nil,
-  message = nil,
-}
+local lsp_progress = { message = nil }
 
 ar.augroup('NativeStatuslineLspProgress', {
   event = 'LspProgress',
@@ -212,21 +202,16 @@ ar.augroup('NativeStatuslineLspProgress', {
   command = function(args)
     if not (args.data and args.data.client_id) then return end
 
-    local data = args.data
-    local client = { name = vim.lsp.get_client_by_id(data.client_id).name }
-    local message = require('ar.utils.lsp').process_progress_msg(client, {
-      kind = data.params.value.kind,
-      title = data.params.value.title,
-      percentage = data.params.value.percentage,
-      message = data.params.value.message,
-    })
+    local data, params = args.data, args.data.params.value
 
-    if data.params.value.kind == 'end' then
-      lsp_progress.message = nil
-    else
-      -- replace % with %% to avoid statusline issues
-      lsp_progress.message = message:gsub('%%', '%%%%')
-    end
+    ---@type LspProgressClient
+    local client = { name = vim.lsp.get_client_by_id(data.client_id).name }
+    local message = require('ar.utils.lsp').process_progress_msg(client, params)
+
+    -- replace % with %% to avoid statusline issues
+    lsp_progress.message = message:gsub('%%', '%%%%')
+
+    if client.is_done then lsp_progress.message = nil end
 
     vim.defer_fn(function() vim.cmd.redrawstatus() end, 500)
   end,
