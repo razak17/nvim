@@ -105,13 +105,14 @@ end
 function M.process_progress_msg(client, params)
   local kind, msg, title = params.kind, params.message, params.title
   local message = client.name and '[' .. client.name .. ']' or ''
-  if title then message = message .. ' ' .. title .. ':' end
+  if title then message = message .. ' ' .. title end
   if kind == 'end' then
     client.is_done = true
-    message = ar.ui.codicons.misc.checkmark .. '  ' .. message .. ' DONE!'
+    message = ar.ui.codicons.misc.checkmark .. '  ' .. message .. ': DONE!'
   else
     client.is_done = false
     local loaded_count = msg and string.match(msg, '^(%d+/%d+)') or ''
+    if loaded_count ~= '' then message = message .. ' :' .. loaded_count end
     message = message .. ' ' .. (loaded_count or '')
     local pct = params.percentage
     if ar_config.lsp.progress.spinner == 'circle' then
