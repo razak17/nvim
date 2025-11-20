@@ -53,7 +53,12 @@ return {
                 reverse = false,
               },
             },
-            { NeogitDiffAddHighlight = { fg = { from = 'Normal' } } },
+            {
+              NeogitHunkHeader = {
+                inherit = 'IncSearch',
+                bg = { from = 'IncSearch', attr = 'bg', alter = -0.35 },
+              },
+            },
           },
           ['retrobox'] = {
             {
