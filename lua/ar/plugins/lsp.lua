@@ -53,6 +53,7 @@ local function get_servers()
     :map(function(name)
       local config = ar_servers.get(name)
       if not config then return nil end -- skip if config missing
+      if name == 'copilot' and not ar.ai.enable then return nil end
       vim.lsp.config(name, config)
       return name
     end)
