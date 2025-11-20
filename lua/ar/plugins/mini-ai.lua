@@ -1,51 +1,8 @@
-local api, fn = vim.api, vim.fn
-local minimal = ar.plugins.minimal
-
--- https://www.lazyvim.org/plugins/coding#miniai
--- Mini.ai indent text object
--- For "a", it will include the non-whitespace line surrounding the indent block.
--- "a" is line-wise, "i" is character-wise.
-local function ai_indent(ai_type)
-  local spaces = (' '):rep(vim.o.tabstop)
-  local lines = api.nvim_buf_get_lines(0, 0, -1, false)
-  local indents = {} ---@type {line: number, indent: number, text: string}[]
-
-  for l, line in ipairs(lines) do
-    if not line:find('^%s*$') then
-      indents[#indents + 1] = {
-        line = l,
-        indent = #line:gsub('\t', spaces):match('^%s*'),
-        text = line,
-      }
-    end
-  end
-
-  local ret = {}
-
-  for i = 1, #indents do
-    if i == 1 or indents[i - 1].indent < indents[i].indent then
-      local from, to = i, i
-      for j = i + 1, #indents do
-        if indents[j].indent < indents[i].indent then break end
-        to = j
-      end
-      from = ai_type == 'a' and from > 1 and from - 1 or from
-      to = ai_type == 'a' and to < #indents and to + 1 or to
-      ret[#ret + 1] = {
-        indent = indents[i].indent,
-        from = {
-          line = indents[from].line,
-          col = ai_type == 'a' and 1 or indents[from].indent + 1,
-        },
-        to = { line = indents[to].line, col = #indents[to].text },
-      }
-    end
-  end
-
-  return ret
-end
+local fn = vim.fn
+local coding = ar.plugins.coding
 
 -- taken from MiniExtra.gen_ai_spec.buffer
+-- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util/mini.lua?plain=1#L5
 local function ai_buffer(ai_type)
   local start_line, end_line = 1, fn.line('$')
   if ai_type == 'i' then
@@ -66,68 +23,72 @@ local function ai_buffer(ai_type)
   }
 end
 
+-- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util/mini.lua?plain=1#L23
+local function ai_whichkey()
+  local objects = {
+    { ' ', desc = 'whitespace' },
+    { '"', desc = '" string' },
+    { "'", desc = "' string" },
+    { '(', desc = '() block' },
+    { ')', desc = '() block with ws' },
+    { '<', desc = '<> block' },
+    { '>', desc = '<> block with ws' },
+    { '?', desc = 'user prompt' },
+    { 'U', desc = 'use/call without dot' },
+    { '[', desc = '[] block' },
+    { ']', desc = '[] block with ws' },
+    { '_', desc = 'underscore' },
+    { '`', desc = '` string' },
+    { 'a', desc = 'argument' },
+    { 'b', desc = ')]} block' },
+    { 'c', desc = 'class' },
+    { 'd', desc = 'digit(s)' },
+    { 'e', desc = 'CamelCase / snake_case' },
+    { 'f', desc = 'function' },
+    { 'g', desc = 'entire file' },
+    { 'i', desc = 'indent' },
+    { 'o', desc = 'block, conditional, loop' },
+    { 'q', desc = 'quote `"\'' },
+    { 't', desc = 'tag' },
+    { 'u', desc = 'use/call' },
+    { '{', desc = '{} block' },
+    { '}', desc = '{} with ws' },
+  }
+
+  local ret = { mode = { 'o', 'x' } }
+  local mappings = vim.tbl_extend('force', {}, {
+    around = 'a',
+    inside = 'i',
+    around_next = 'an',
+    inside_next = 'in',
+    around_last = 'al',
+    inside_last = 'il',
+  })
+  mappings.goto_left = nil
+  mappings.goto_right = nil
+
+  for name, prefix in pairs(mappings) do
+    name = name:gsub('^around_', ''):gsub('^inside_', '')
+    ret[#ret + 1] = { prefix, group = name }
+    for _, obj in ipairs(objects) do
+      local desc = obj.desc
+      if prefix:sub(1, 1) == 'i' then desc = desc:gsub(' with ws', '') end
+      ret[#ret + 1] = { prefix .. obj[1], desc = obj.desc }
+    end
+  end
+
+  require('which-key').add(ret, { notify = false })
+end
+
 return {
   {
     'nvim-mini/mini.ai',
-    cond = function() return ar.get_plugin_cond('mini.ai', not minimal) end,
+    cond = function() return ar.get_plugin_cond('mini.ai', coding) end,
     event = { 'VeryLazy' },
-    config = function()
-      -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util/mini.lua?plain=1#L64
-      local objects = {
-        { ' ', desc = 'whitespace' },
-        { '"', desc = '" string' },
-        { "'", desc = "' string" },
-        { '(', desc = '() block' },
-        { ')', desc = '() block with ws' },
-        { '<', desc = '<> block' },
-        { '>', desc = '<> block with ws' },
-        { '?', desc = 'user prompt' },
-        { 'U', desc = 'use/call without dot' },
-        { '[', desc = '[] block' },
-        { ']', desc = '[] block with ws' },
-        { '_', desc = 'underscore' },
-        { '`', desc = '` string' },
-        { 'a', desc = 'argument' },
-        { 'b', desc = ')]} block' },
-        { 'c', desc = 'class' },
-        { 'd', desc = 'digit(s)' },
-        { 'e', desc = 'CamelCase / snake_case' },
-        { 'f', desc = 'function' },
-        { 'g', desc = 'entire file' },
-        { 'i', desc = 'indent' },
-        { 'o', desc = 'block, conditional, loop' },
-        { 'q', desc = 'quote `"\'' },
-        { 't', desc = 'tag' },
-        { 'u', desc = 'use/call' },
-        { '{', desc = '{} block' },
-        { '}', desc = '{} with ws' },
-      }
-
-      local ret = { mode = { 'o', 'x' } }
-      for prefix, name in pairs({
-        i = 'inside',
-        a = 'around',
-        il = 'last',
-        ['in'] = 'next',
-        al = 'last',
-        an = 'next',
-      }) do
-        ret[#ret + 1] = { prefix, group = name }
-        for _, obj in ipairs(objects) do
-          local desc = obj.desc
-          if prefix:sub(1, 1) == 'i' then desc = desc:gsub(' with ws', '') end
-          ret[#ret + 1] = { prefix .. obj[1], desc = obj.desc }
-        end
-      end
-
-      if ar.has('which-key.nvim') then
-        require('which-key').add(ret, { notify = false })
-      end
-
+    opts = function()
       local ai = require('mini.ai')
       local gen_ai_spec = require('mini.extra').gen_ai_spec
-
-      require('mini.ai').setup({
+      return {
         n_lines = 500,
         custom_textobjects = {
           B = gen_ai_spec.buffer(),
@@ -155,13 +116,15 @@ return {
             },
             '^().*()$',
           },
-          i = ai_indent, -- indent
           g = ai_buffer, -- buffer
           u = ai.gen_spec.function_call(), -- u for "Usage"
           U = ai.gen_spec.function_call({ name_pattern = '[%w_]' }), -- without dot in function name
         },
-        mappings = { around_last = '', inside_last = '' },
-      })
+      }
+    end,
+    config = function(_, opts)
+      require('mini.ai').setup(opts)
+      if ar.has('which-key.nvim') then ai_whichkey() end
     end,
     dependencies = { 'nvim-mini/mini.extra' },
   },
