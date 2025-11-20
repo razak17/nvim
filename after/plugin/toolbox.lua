@@ -145,7 +145,7 @@ local function show_toolbox()
       end
       last_idx = item.idx
     end,
-    layout = { preview = false, preset = 'select' },
+    layout = { preset = 'select' },
     confirm = function(picker, item)
       picker:close()
       items[item.idx].execute()
