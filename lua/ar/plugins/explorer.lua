@@ -23,6 +23,57 @@ local function on_rename(from, to)
   end
 end
 
+---Show image in float window using snacks.nvim
+---@param path string Path to image
+---@param win_opts? table Options for float window
+local function snacks_show_image(path, win_opts)
+  local ok, _ = pcall(require, 'snacks.image')
+  if not ok then
+    vim.notify('snacks.nvim is required')
+    return
+  end
+
+  local current_buf = api.nvim_get_current_buf()
+  win_opts = vim.tbl_deep_extend('keep', win_opts or {}, {
+    width = 60,
+    height = 17,
+  })
+
+  Snacks.image.doc.at_cursor(function(src)
+    src = path
+    local config = {
+      border = 'single',
+      backdrop = false,
+      relative = 'editor',
+      row = 1,
+      float = true,
+      show = false,
+      enter = false,
+      focusable = false,
+    }
+    local win = Snacks.win(config)
+    win:show()
+    local opts = Snacks.config.merge({}, Snacks.image.config.doc, {
+      on_update_pre = function()
+        win.opts.width = win_opts.width
+        win.opts.height = win_opts.height
+        win:show()
+      end,
+      inline = false,
+    })
+    local hover = {
+      win = win,
+      buf = current_buf,
+      img = Snacks.image.placement.new(win.buf, src, opts),
+    }
+
+    vim.on_key(function()
+      hover.win:close()
+      hover.img:close()
+    end, 0)
+  end)
+end
+
 return {
   {
     'A7Lavinraj/fyler.nvim',
@@ -143,7 +194,7 @@ return {
         local width = state.window.width + 1
         local node = state.tree:get_node()
         if not ar.has('image.nvim') then
-          ar.snacks_show_image(node:get_id())
+          snacks_show_image(node:get_id())
           return
         end
         ar.show_image(node:get_id(), { col = width })
