@@ -2,6 +2,12 @@ local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
   {
+    'stevearc/quicker.nvim',
+    cond = function() return ar.get_plugin_cond('quicker.nvim', not minimal) end,
+    ft = 'qf',
+    opts = { borders = { vert = ' ' } },
+  },
+  {
     'yorickpeterse/nvim-pqf',
     cond = function() return ar.get_plugin_cond('nvim-pqf', not minimal) end,
     event = 'BufRead',
