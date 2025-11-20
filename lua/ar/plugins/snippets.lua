@@ -4,7 +4,7 @@ local coding = ar.plugins.coding
 local function expand_or_jump()
   local ls = require('luasnip')
   if ls.expand_or_locally_jumpable() then
-    vim.schedule(function() ls.expand_or_jump(1) end)
+    vim.schedule(function() ls.expand_or_jump() end)
     return true
   else
     vim.api.nvim_feedkeys(
@@ -112,7 +112,7 @@ return {
         require('luasnip.loaders.from_lua').lazy_load()
 
         local paths = {
-          join_paths(fn.stdpath('config'), 'snippets', 'textmate'),
+          join_paths(fn.stdpath('config'), 'snippets'),
         }
 
         if ar_config.completion.snippets.variant == 'friendly-snippets' then
