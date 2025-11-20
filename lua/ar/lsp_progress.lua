@@ -81,21 +81,19 @@ local function show_message(client)
     or not api.nvim_win_is_valid(winid)
     or api.nvim_win_get_tabpage(winid) ~= api.nvim_get_current_tabpage() -- Switch to another tab
   then
-    local success = guard(
-      function()
-        winid = api.nvim_open_win(client.bufnr, false, {
-          relative = 'editor',
-          width = #client.message,
-          height = 1,
-          row = get_win_row(client.pos),
-          col = o.columns - #client.message,
-          focusable = false,
-          style = 'minimal',
-          noautocmd = true,
-          border = 'none',
-        })
-      end
-    )
+    local success = guard(function()
+      winid = api.nvim_open_win(client.bufnr, false, {
+        relative = 'editor',
+        width = #client.message,
+        height = 1,
+        row = get_win_row(client.pos),
+        col = o.columns - #client.message,
+        focusable = false,
+        style = 'minimal',
+        noautocmd = true,
+        border = 'none',
+      })
+    end)
     if not success then return end
     client.winid = winid
     M.total_wins = M.total_wins + 1
@@ -114,7 +112,7 @@ end
 -- Display the progress message
 ---@param args AutocmdArgs
 local function handler(args)
-  local client_id = args.data.client_id
+  local client_id, params = args.data.client_id, args.data.params.value
 
   -- Initialize the properties
   if M.clients[client_id] == nil then
@@ -125,22 +123,15 @@ local function handler(args)
   ---@type LspProgressClient
   local cur_client = M.clients[client_id]
   cur_client.name = vim.lsp.get_client_by_id(client_id).name
-
   -- Create buffer for the floating window showing the progress message and the timer used to close
   -- the window when progress report is done.
-  if cur_client.bufnr == nil then
-    cur_client.bufnr = api.nvim_create_buf(false, true)
-  end
-  if cur_client.timer == nil then cur_client.timer = vim.uv.new_timer() end
+  cur_client.bufnr = cur_client.bufnr or api.nvim_create_buf(false, true)
+  cur_client.timer = cur_client.timer or vim.uv.new_timer()
 
   -- Get the formatted progress message
   local utils = require('ar.utils.lsp')
-  cur_client.message = utils.process_progress_msg(cur_client, {
-    kind = args.data.params.value.kind,
-    title = args.data.params.value.title,
-    percentage = args.data.params.value.percentage,
-    message = args.data.params.value.message,
-  })
+  cur_client.message = utils.process_progress_msg(cur_client, params)
+
   -- Show progress message in floating window
   show_message(cur_client)
 

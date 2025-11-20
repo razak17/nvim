@@ -112,12 +112,11 @@ function M.process_progress_msg(client, params)
   else
     client.is_done = false
     local loaded_count = msg and string.match(msg, '^(%d+/%d+)') or ''
-    if loaded_count ~= '' then message = message .. ' :' .. loaded_count end
-    message = message .. ' ' .. (loaded_count or '')
+    if loaded_count ~= '' then message = message .. ': ' .. loaded_count end
     local pct = params.percentage
     if ar_config.lsp.progress.spinner == 'circle' then
       local progress = ''
-      if params.percentage then
+      if pct then
         local spinners = ar.ui.spinners.circle_quarters
         local idx = math.max(1, math.floor(pct / 10))
         progress = spinners[idx] .. ' ' .. pct .. '% '
@@ -125,11 +124,13 @@ function M.process_progress_msg(client, params)
       message = progress .. message
     elseif ar_config.lsp.progress.spinner == 'dots' then
       local spinners = ar.ui.spinners.dots_alt
-      if pct then message = string.format('%s (%3d%%)', message, pct) end
-      local idx = client.spinner_idx or 0
-      idx = idx == #spinners * 4 and 1 or idx + 1
-      message = spinners[math.ceil(idx / 4)] .. ' ' .. message
-      client.spinner_idx = idx
+      if pct then
+        message = string.format('%s (%3d%%)', message, pct)
+        local idx = client.spinner_idx or 0
+        idx = idx == #spinners * 4 and 1 or idx + 1
+        message = spinners[math.ceil(idx / 4)] .. ' ' .. message
+        client.spinner_idx = idx
+      end
     end
   end
   return message
