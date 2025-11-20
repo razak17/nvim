@@ -2,6 +2,8 @@ local enabled = false
 
 if not ar or ar.none or not enabled then return end
 
+-- Ref: https://github.com/mslalith/dotfiles/blob/9279acb63f63a0a8b011c949b7c9c6c5bdc55dc3/roles/neovim/files/lua/ms/snacks/toolbox/init.lua
+
 ---@class toolbox.Command
 ---@field name string
 ---@field execute fun()
