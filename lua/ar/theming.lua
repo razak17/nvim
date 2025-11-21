@@ -133,6 +133,7 @@ local function generate_picker_overrides()
   end
 
   ar.list_insert(overrides, {
+    { SnacksPickerPrompt = { bg = 'NONE' } },
     { SnacksTitle = { link = 'PickerTitle' } },
     { SnacksInputNormal = { link = 'PickerPrompt' } },
     { SnacksInputTitle = { link = 'PickerTitle' } },

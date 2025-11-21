@@ -376,6 +376,20 @@ return {
         }, true)
       end,
     },
+    {
+      'adibhanna/yukinord.nvim',
+      cond = get_cond({ 'yukinord' }),
+      priority = get_priority({ 'yukinord' }),
+      event = get_event({ 'yukinord' }),
+      init = function()
+        theming.apply_overrides('yukinord', {
+          { DiagnosticVirtualTextInfo = { bg = 'NONE' } },
+          { DiagnosticVirtualTextHint = { bg = 'NONE' } },
+          { DiagnosticVirtualTextWarn = { bg = 'NONE' } },
+          { DiagnosticVirtualTextError = { bg = 'NONE' } },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Warm

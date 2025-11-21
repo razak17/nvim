@@ -184,6 +184,7 @@
 - wildcharm
 - yoda
 - yugen
+- yukinord
 - zenbones
 - zenburn
 - zenburned
