@@ -134,18 +134,14 @@ function ar.demicolon_jump(callback, opts)
   return function() require('demicolon.jump').repeatably_do(callback, opts) end
 end
 
-function ar.remove_duplicates(table)
-  local seen = {}
-  return vim
-    .iter(table)
-    :filter(function(s)
-      if not seen[s] then
-        seen[s] = true
-        return true
-      end
-      return false
-    end)
-    :totable()
+--- Remove duplicates from a table
+---@param t table
+---@return table
+function ar.unique(t)
+  return vim.iter(t):fold({}, function(acc, v)
+    if not vim.tbl_contains(acc, v) then table.insert(acc, v) end
+    return acc
+  end)
 end
 
 function ar.mergeTables(destination, source)
