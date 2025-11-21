@@ -2,6 +2,21 @@ local minimal = ar.plugins.minimal
 
 return {
   {
+    -- 'mawkler/demicolon.nvim',
+    'razak17/demicolon.nvim',
+    cond = ar.treesitter.enable,
+    -- stylua: ignore
+    init = function()
+      map({ 'n', 'x', 'o' }, ';n', function () require('demicolon.repeat_jump').forward() end, { desc = 'demicolon: forward' })
+      map({ 'n', 'x', 'o' }, ';p', function () require('demicolon.repeat_jump').backward() end, { desc = 'demicolon: backward' })
+    end,
+    keys = { ';', ']', '[' },
+    dependencies = 'nvim-treesitter/nvim-treesitter-textobjects',
+    opts = {
+      keymaps = { horizontal_motions = false, repeat_motions = false },
+    },
+  },
+  {
     'aaronik/treewalker.nvim',
     event = 'VeryLazy',
     cmd = { 'Treewalker' },
@@ -17,21 +32,6 @@ return {
       { mode = { 'n', 'v' }, '<A-S-l>', '<Cmd>Treewalker SwapRight<cr>' },
     },
     opts = {},
-  },
-  {
-    -- 'mawkler/demicolon.nvim',
-    'razak17/demicolon.nvim',
-    cond = not minimal and ar.treesitter.enable,
-    -- stylua: ignore
-    init = function()
-      map({ 'n', 'x', 'o' }, ';n', function () require('demicolon.repeat_jump').forward() end, { desc = 'demicolon: forward' })
-      map({ 'n', 'x', 'o' }, ';p', function () require('demicolon.repeat_jump').backward() end, { desc = 'demicolon: backward' })
-    end,
-    keys = { ';', ']', '[' },
-    dependencies = 'nvim-treesitter/nvim-treesitter-textobjects',
-    opts = {
-      keymaps = { horizontal_motions = false, repeat_motions = false },
-    },
   },
   {
     'chrisgrieser/nvim-spider',
