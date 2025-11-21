@@ -1,4 +1,4 @@
-local minimal = ar.plugins.minimal
+local coding = ar.plugins.coding
 local get_cond = ar.get_plugin_cond
 
 return {
@@ -7,7 +7,7 @@ return {
   ------------------------------------------------------------------------------
   {
     'nguyenvukhang/nvim-toggler',
-    cond = function() return get_cond('nvim-toggler', not minimal) end,
+    cond = function() return get_cond('nvim-toggler', coding) end,
     -- stylua: ignore
     keys = {
       { '<leader>ii', function() require("nvim-toggler").toggle() end, desc = 'nvim-toggler: toggle', },
