@@ -80,7 +80,6 @@ return {
   },
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
-    cond = not minimal and ar.lsp.enable,
     cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
     opts = function(_, opts)
       local packages = get_lsp_servers()
