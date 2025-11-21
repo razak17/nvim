@@ -17,6 +17,7 @@ local diagnostic = vim.diagnostic
 local format = require('ar.lsp_format')
 local utils = require('ar.utils.lsp')
 local lsp_diag = require('ar.lsp_diagnostics')
+local minimal = ar.plugins.minimal
 local augroup, diag_icons, border =
   ar.augroup, ar.ui.codicons.lsp, ar.ui.current.border
 
@@ -435,7 +436,8 @@ local function setup_mappings(client, bufnr)
       lsp.buf.rename,
       desc = 'rename',
       capability = M.textDocument_rename,
-      disabled = ar_config.lsp.rename.variant ~= 'builtin',
+      disabled = not ar.plugins.minimal
+        or (not minimal and (ar_config.lsp.rename.variant ~= 'builtin')),
     },
     {
       'n',
