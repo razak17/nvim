@@ -145,6 +145,7 @@
             "bamboo-light",
             "bamboo-multiplex",
             "bamboo-vulgaris",
+            "batman",
             "blackhole",
             "carbonfox",
             "catppuccin",
@@ -259,6 +260,25 @@
             "no-clown-fiesta-light",
             "nordbones",
             "nordfox",
+            "oasis",
+            "oasis-abyss",
+            "oasis-cactus",
+            "oasis-canyon",
+            "oasis-dawn",
+            "oasis-dawnlight",
+            "oasis-day",
+            "oasis-desert",
+            "oasis-dune",
+            "oasis-dusk",
+            "oasis-dust",
+            "oasis-lagoon",
+            "oasis-midnight",
+            "oasis-mirage",
+            "oasis-night",
+            "oasis-rose",
+            "oasis-sol",
+            "oasis-starlight",
+            "oasis-twilight",
             "oh-lucy",
             "oh-lucy-evening",
             "oldworld",
@@ -299,12 +319,6 @@
             "vimbones",
             "wildberries",
             "wildcharm",
-            "WinterIsComing-dark-blue-color-no-italics-theme",
-            "WinterIsComing-dark-blue-color-theme",
-            "WinterIsComing-dark-color-no-italics-theme",
-            "WinterIsComing-dark-color-theme",
-            "WinterIsComing-light-color-no-italics-theme",
-            "WinterIsComing-light-color-theme",
             "yoda",
             "yugen",
             "zenbones",
@@ -483,8 +497,8 @@
                   "pyrefly",
                   "pyright",
                   "ruff",
-                  "rustaceanvim",
                   "rust_analyzer",
+                  "rustaceanvim",
                   "sqls",
                   "svelte",
                   "tailwindcss",
@@ -572,13 +586,13 @@
             "rust": {
               "additionalProperties": false,
               "properties": {
-                "rustaceanvim": {
+                "bacon_ls": {
                   "type": "boolean"
                 },
                 "rust_analyzer": {
                   "type": "boolean"
                 },
-                "bacon_ls": {
+                "rustaceanvim": {
                   "type": "boolean"
                 }
               },
@@ -686,8 +700,8 @@
               "pyrefly",
               "pyright",
               "ruff",
-              "rustaceanvim",
               "rust_analyzer",
+              "rustaceanvim",
               "sqls",
               "svelte",
               "tailwindcss",
@@ -712,12 +726,12 @@
             "enable": {
               "type": "boolean"
             },
-            "variant": {
-              "enum": ["builtin", "noice", "snacks"],
-              "type": "string"
-            },
             "spinner": {
               "enum": ["circle", "dots"],
+              "type": "string"
+            },
+            "variant": {
+              "enum": ["builtin", "noice", "snacks"],
               "type": "string"
             }
           },
@@ -848,217 +862,279 @@
             "accelerated_jk": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "auto_cursorline": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "baredot": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "big_file": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "cheatsheet": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "colorify": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "comment": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "copilot_commit_message": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "custom_fold": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "git_conflict": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "interceptor": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "large_file": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "last_place": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "notepad": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "orphans": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "recording_studio": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "reload_plugin": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "remote_sync": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "remove_comments": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "search_return": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "smart_close": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "smart_hl_search": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "smart_spelling": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "smart_splits": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "smart_tilde": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "spell_all_good": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "sticky_note": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "sticky_yank": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "surf_plugins": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "wb_current_line": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "yank_ring": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             }
@@ -1071,84 +1147,108 @@
             "autocommands": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "colors": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "env": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "experimental": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "filetypes": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "mappings": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "numbers": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "pack": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "rooter": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "select_menu": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "tmux": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             },
             "whitespace": {
               "additionalProperties": false,
               "properties": {
-                "enable": { "type": "boolean" }
+                "enable": {
+                  "type": "boolean"
+                }
               },
               "type": "object"
             }

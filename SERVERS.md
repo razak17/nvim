@@ -1,6 +1,7 @@
 ## 🚀 LSP Servers
 
 - astro
+- bacon_ls
 - basedpyright
 - bashls
 - biome
@@ -29,6 +30,8 @@
 - pyrefly
 - pyright
 - ruff
+- rust_analyzer
+- rustaceanvim
 - sqls
 - svelte
 - tailwindcss

@@ -145,7 +145,7 @@ function M.update()
 
   local ok, err = pcall(function()
     local lsp_servers = require('ar.servers').names('all')
-    vim.list_extend(lsp_servers, { 'typescript-tools' })
+    vim.list_extend(lsp_servers, { 'typescript-tools', 'rustaceanvim' })
     table.sort(lsp_servers, function(a, b) return a:lower() < b:lower() end)
     local plugin_modules = generate_plugin_modules()
     local colorschemes = fn.getcompletion('', 'color')
