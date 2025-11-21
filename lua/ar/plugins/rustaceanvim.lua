@@ -4,7 +4,13 @@ return {
   {
     'mrcjkb/rustaceanvim',
     ft = { 'rust' },
-    cond = function() return ar.get_plugin_cond('rustaceanvim', ar.lsp.enable) end,
+    cond = function()
+      local name = 'rustaceanvim'
+      local override = ar_config.lsp.override
+      if not ar.lsp.enable then return false end
+      if not ar.falsy(override) then return vim.tbl_contains(override, name) end
+      return ar.get_plugin_cond('rustaceanvim', ar_config.lsp.lang.rust[name])
+    end,
     init = function()
       vim.g.whichkey_add_spec({ '<leader><leader>r', group = 'Rustaceanvim' })
     end,
@@ -66,13 +72,10 @@ return {
             ['rust-analyzer'] = {
               assist = {
                 importEnforceGranularity = true,
-                importPrefix = 'create',
+                importPrefix = 'crate',
               },
               cargo = { allFeatures = true },
-              checkOnSave = {
-                command = 'clippy',
-                allFeatures = true,
-              },
+              checkOnSave = true,
               lens = { enable = true },
               procMacro = { enable = true },
               files = {

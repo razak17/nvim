@@ -257,6 +257,7 @@ local servers = {
       },
     },
   },
+  rust_analyzer = {},
   sqls = {},
   tailwindcss = {},
   tinymist = {

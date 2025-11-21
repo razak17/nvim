@@ -55,6 +55,7 @@ local env = vim.env
 
 ---@alias ArCond {enable: boolean,}
 ---@alias ArPythonLang { basedpyright: boolean, ruff: boolean, ty: boolean, jedi_language_server: boolean, pyrefly: boolean, }
+---@alias ArRustLang { rustaceanvim: boolean, rust_analyzer: boolean, }
 ---@alias ArTailwindLang { tailwindcss: boolean, tailwind-tools: boolean, }
 ---@alias ArTypescriptLang { ts_ls: boolean, typescript-tools: boolean, vtsls: boolean, tsgo: boolean, }
 ---@alias ArWebLang { biome: boolean,  eslint: boolean, emmet_language_server: boolean, }
@@ -106,6 +107,7 @@ local env = vim.env
 
 ---@class ArLspLang
 ---@field python ArPythonLang
+---@field rust ArRustLang
 ---@field typescript ArTypescriptLang
 ---@field tailwind ArTailwindLang
 ---@field web ArWebLang
@@ -429,6 +431,10 @@ local config = {
         ty = false,
         jedi_language_server = false,
         pyrefly = false,
+      },
+      rust = {
+        rustaceanvim = true,
+        rust_analyzer = false,
       },
       tailwind = {
         tailwindcss = false,

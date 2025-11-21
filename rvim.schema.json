@@ -482,6 +482,8 @@
                   "pyrefly",
                   "pyright",
                   "ruff",
+                  "rustaceanvim",
+                  "rust_analyzer",
                   "sqls",
                   "svelte",
                   "tailwindcss",
@@ -561,6 +563,18 @@
                   "type": "boolean"
                 },
                 "ty": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "rust": {
+              "additionalProperties": false,
+              "properties": {
+                "rustaceanvim": {
+                  "type": "boolean"
+                },
+                "rust_analyzer": {
                   "type": "boolean"
                 }
               },
@@ -667,6 +681,8 @@
               "pyrefly",
               "pyright",
               "ruff",
+              "rustaceanvim",
+              "rust_analyzer",
               "sqls",
               "svelte",
               "tailwindcss",
