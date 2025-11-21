@@ -2,8 +2,10 @@
 --------------------------------------------------------------------------------
 -- Language servers
 --------------------------------------------------------------------------------
+local fn = vim.fn
+
 local function get_clangd_cmd()
-  local cmd = ar.has('mason.nvim') and vim.fn.expand('$MASON') .. '/bin/clangd'
+  local cmd = ar.has('mason.nvim') and fn.expand('$MASON') .. '/bin/clangd'
     or 'clangd'
   -- stylua: ignore
   return {
@@ -210,27 +212,43 @@ local servers = {
     settings = {
       Lua = {
         codeLens = { enable = true },
-        hint = {
-          enable = true,
-          arrayIndex = 'Disable',
-          setType = false,
-          paramName = 'Disable',
-          paramType = true,
+        completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
+        diagnostics = {
+          disable = {
+            'cast-local-type',
+            'incomplete-signature-doc',
+            'lowercase-global',
+            'missing-fields',
+            'missing-parameter',
+            'param-type-mismatch',
+            'return-type-mismatch',
+          },
+          unusedLocalExclude = { '_*' },
+          workspacedelay = -1,
         },
         format = { enable = false },
-        diagnostics = {
-          globals = {
-            'vim',
-            'describe',
-            'it',
-            'before_each',
-            'after_each',
-            'ar',
-            'join_paths',
+        hint = {
+          enable = true,
+          setType = false,
+          paramType = true,
+          paramName = 'Disable',
+          semicolon = 'Disable',
+          arrayIndex = 'Disable',
+        },
+        runtime = { version = 'LuaJIT', path = vim.split(package.path, ';') },
+        type = { castNumberToInteger = true, inferParamType = true },
+        -- don't make workspace diagnostic, as it consumes too much cpu and ram
+        workspace = {
+          maxPreload = 100000,
+          preloadFileSize = 10000,
+          checkThirdParty = false,
+          library = {
+            fn.expand('$VIMRUNTIME/lua'),
+            fn.expand('$VIMRUNTIME/lua/vim/lsp'),
+            unpack(vim.api.nvim_list_runtime_paths()),
+            -- unpack(vim.api.nvim_get_runtime_file('', true)),
           },
         },
-        completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
-        workspace = { checkThirdParty = false },
       },
     },
   },
