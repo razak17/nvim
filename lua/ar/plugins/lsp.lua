@@ -31,6 +31,7 @@ local server_langs = {
 }
 
 local function is_enabled(name)
+  if name == 'copilot' and not ar.ai.enable then return false end
   local disabled = ar.lsp_disabled(name)
   local override = ar_config.lsp.override
   if vim.tbl_contains(lsp_override, name) and not disabled then return true end
@@ -57,7 +58,6 @@ local function get_servers()
     :map(function(name)
       local config = ar_servers.get(name)
       if not config then return nil end -- skip if config missing
-      if name == 'copilot' and not ar.ai.enable then return nil end
       vim.lsp.config(name, config)
       return name
     end)
