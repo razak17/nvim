@@ -358,6 +358,24 @@ return {
       end,
       opts = {},
     },
+    {
+      'uhs-robert/oasis.nvim',
+      cond = get_cond({ 'oasis' }),
+      priority = get_priority({ 'oasis' }),
+      event = get_event({ 'oasis' }),
+      opts = {},
+      init = function()
+        theming.apply_overrides('oasis', {
+          -- { Folded = { bg = { from = 'Folded', alter = -0.1 } } },
+          {
+            WinSeparator = {
+              bg = 'NONE',
+              fg = { from = 'WinSeparator', alter = -0.45 },
+            },
+          },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Warm
