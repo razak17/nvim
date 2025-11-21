@@ -841,9 +841,6 @@
             "fullscreen": {
               "type": "boolean"
             },
-            "show_border": {
-              "type": "boolean"
-            },
             "show_preview": {
               "type": "boolean"
             }
@@ -1605,6 +1602,10 @@
     "ui": {
       "additionalProperties": false,
       "properties": {
+        "border": {
+          "enum": ["single", "rounded", "none"],
+          "type": "string"
+        },
         "cmdline": {
           "additionalProperties": false,
           "properties": {

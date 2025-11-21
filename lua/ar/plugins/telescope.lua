@@ -70,13 +70,15 @@ end
 
 local api, env, fn = vim.api, vim.env, vim.fn
 local fmt, ui = string.format, ar.ui
-local border = ui.border
-local datapath = vim.fn.stdpath('data')
+local ar_border = ar.ui.border
+local datapath = fn.stdpath('data')
 local minimal = ar.plugins.minimal
 local enabled = not ar.plugin_disabled('telescope.nvim')
 local min_enabled = enabled and not minimal
 local is_telescope = ar_config.picker.variant == 'telescope'
 local picker_enabled = min_enabled and is_telescope
+local border_style = ar_config.ui.border
+local border = ui.border.telescope[border_style]
 
 -- A helper function to limit the size of a telescope window to fit the maximum available
 -- space on the screen. This is useful for dropdowns e.g. the cursor or dropdown theme
@@ -386,7 +388,7 @@ ar.telescope = vim.tbl_extend('force', ar.telescope, {
 return {
   {
     'nvim-telescope/telescope.nvim',
-    cond = min_enabled,
+    -- cond = min_enabled,
     -- NOTE: usind cmd causes issues with dressing and frecency
     cmd = { 'Telescope' },
     event = 'VeryLazy',
@@ -507,8 +509,8 @@ return {
           sorting_strategy = 'ascending',
           layout_strategy = 'flex',
           set_env = { ['TERM'] = env.TERM },
-          borderchars = ar_config.picker.win.show_border and border.common
-            or border.empty,
+          -- border = border_enabled,
+          borderchars = border.borderchars,
           file_browser = { hidden = true },
           color_devicons = true,
           dynamic_preview_title = true,
@@ -630,7 +632,7 @@ return {
           }),
           diagnostics = themes.get_ivy({
             wrap_results = true,
-            borderchars = { preview = border.ivy },
+            borderchars = { preview = ar_border.ivy },
           }),
           builtin = { previewer = show_preview, include_extensions = true },
           buffers = dropdown({
@@ -749,7 +751,7 @@ return {
       if ar_config.picker.variant == 'telescope' then
         local ivy = require('telescope.themes').get_ivy({
           wrap_results = true,
-          borderchars = { preview = border.ivy },
+          borderchars = { preview = ar_border.ivy },
         })
         local todos = function()
           extension('todo-comments', 'todo')({

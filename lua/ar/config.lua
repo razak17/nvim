@@ -27,6 +27,7 @@ local env = vim.env
 ---@alias ArAISuggestions 'ghost-text' | 'completion'
 ---@alias ArAIWhichOpencode 'tui' | 'frontend'
 ---@alias ArExplorerRename 'local' | 'snacks'
+---@alias ArWhichBorder 'single' | 'rounded' | 'none'
 ---@alias ArWhichBuffers 'snacks'
 ---@alias ArWhichCmdline 'builtin' | 'noice' | 'telescope-cmdline'
 ---@alias ArCompletion 'cmp' | 'blink' | 'mini.completion' | 'omnifunc'
@@ -59,7 +60,7 @@ local env = vim.env
 ---@alias ArTailwindLang { tailwindcss: boolean, tailwind-tools: boolean, }
 ---@alias ArTypescriptLang { ts_ls: boolean, typescript-tools: boolean, vtsls: boolean, tsgo: boolean, }
 ---@alias ArWebLang { biome: boolean,  eslint: boolean, emmet_language_server: boolean, }
----@alias ArPickerWin { show_preview: boolean,  show_border: boolean, fullscreen: boolean, }
+---@alias ArPickerWin { show_preview: boolean, fullscreen: boolean, }
 
 ---@class ArAIModels
 ---@field claude boolean
@@ -473,7 +474,7 @@ local config = {
     enable = true,
     files = 'snacks',
     variant = 'snacks',
-    win = { show_preview = false, show_border = true, fullscreen = true },
+    win = { show_preview = false, fullscreen = true },
   },
   plugin = {
     custom = {
@@ -564,6 +565,8 @@ local config = {
     variant = 'ecolog',
   },
   ui = {
+    ---@type ArWhichBorder
+    border = 'single',
     ---@type ArCmdline
     cmdline = { enable = true, variant = 'builtin' },
     ---@type ArIndentline

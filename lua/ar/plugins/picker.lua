@@ -31,6 +31,7 @@ local fmt = string.format
 local icons, codicons, lsp_hls = ui.icons, ui.codicons, ui.lsp.highlights
 local prompt = fmt('%s ', icons.misc.chevron_right)
 local minimal = ar.plugins.minimal
+local border_style = ar_config.ui.border
 
 local fzf_lua = reqcall('fzf-lua') ---@module 'fzf-lua'
 --------------------------------------------------------------------------------
@@ -242,6 +243,7 @@ return {
 
       fzf.setup({
         prompt = prompt,
+        fzf_colors = true,
         fzf_opts = {
           ['--info'] = 'default', -- hidden OR inline:⏐
           ['--reverse'] = false,
@@ -249,34 +251,13 @@ return {
           ['--no-scrollbar'] = true,
           ['--ellipsis'] = ui.icons.misc.ellipsis,
         },
-        fzf_colors = {
-          ['fg'] = { 'fg', 'FzfLuaCursorLine' },
-          ['bg'] = { 'bg', 'FzfLuaNormal' },
-          ['hl'] = { 'fg', 'CursorLineNr' },
-          ['fg+'] = { 'fg', 'FzfLuaNormal' },
-          ['bg+'] = { 'bg', 'FzfLuaCursorLine' },
-          ['hl+'] = { 'fg', 'FzfLuaCursorLineNr', 'italic' },
-          ['info'] = { 'fg', 'CursorLineNr', 'italic' },
-          ['prompt'] = { 'fg', 'Underlined' },
-          ['pointer'] = { 'fg', 'Exception' },
-          ['marker'] = { 'fg', '@character' },
-          ['spinner'] = { 'fg', 'DiagnosticOk' },
-          ['header'] = { 'fg', 'Comment' },
-          ['gutter'] = { 'bg', 'FzfLuaNormal' },
-          ['separator'] = { 'fg', 'Comment' },
-        },
         previewers = { builtin = { toggle_behavior = 'extend' } },
-        hls = {
-          title = 'FloatTitle',
-          border = 'FloatBorder',
-          preview_border = 'FzfLuaPreviewBorder',
-        },
         winopts = {
-          border = ar_config.picker.win.show_border and ui.current.border
-            or ui.border.empty,
+          border = border_style,
           height = ar_config.picker.win.fullscreen and 100 or 0.9,
           width = ar_config.picker.win.fullscreen and 400 or 0.9,
           preview = {
+            border = border_style,
             wrap = 'nowrap',
             hidden = show_preview and 'nohidden' or 'hidden',
             vertical = 'up:50%',

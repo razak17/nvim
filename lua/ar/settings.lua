@@ -165,7 +165,7 @@ o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→', '↴'
 if not ar_config.plugin.custom.auto_cursorline.enable then
   o.cursorline = true
 end
-o.winborder = 'single' -- Single border for windows
+o.winborder = ar_config.ui.border -- Single border for windows
 --------------------------------------------------------------------------------
 -- List chars {{{1
 --------------------------------------------------------------------------------

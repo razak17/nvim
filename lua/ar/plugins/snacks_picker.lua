@@ -17,7 +17,7 @@ if ar_config.picker.variant == 'snacks' then ar.pick.register(picker_config) end
 
 local fn = vim.fn
 local fmt = string.format
-local border = ar_config.picker.win.show_border and 'single' or 'none'
+local border_style = ar_config.ui.border
 local diag_icons = ar.ui.codicons.lsp
 local show_preview = ar_config.picker.win.show_preview
 
@@ -36,12 +36,12 @@ local picker_layouts = {
           win = 'list',
           title = ' Results ',
           title_pos = 'center',
-          border = border,
+          border = border_style,
         },
         {
           win = 'input',
           height = 1,
-          border = border,
+          border = border_style,
           title = '{title} {live} {flags}',
           title_pos = 'center',
         },
@@ -50,7 +50,7 @@ local picker_layouts = {
         win = 'preview',
         title = '{preview:Preview}',
         width = 0.6,
-        border = border,
+        border = border_style,
         title_pos = 'center',
       },
     },
@@ -63,7 +63,7 @@ local picker_layouts = {
       height = 0.8,
       {
         box = 'vertical',
-        border = border,
+        border = border_style,
         title = '{title} {live} {flags}',
         { win = 'input', height = 1, border = 'bottom' },
         { win = 'list', border = 'none' },
@@ -71,7 +71,7 @@ local picker_layouts = {
       {
         win = 'preview',
         title = '{preview}',
-        border = border,
+        border = border_style,
         width = 0.6,
       },
     },
@@ -84,7 +84,7 @@ local picker_layouts = {
       height = 0.4,
       min_height = 3,
       box = 'vertical',
-      border = border,
+      border = border_style,
       title = '{title}',
       title_pos = 'center',
       { win = 'input', height = 1, border = 'bottom' },
