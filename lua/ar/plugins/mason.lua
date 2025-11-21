@@ -1,5 +1,4 @@
 local border = ar.ui.current.border
-local minimal = ar.plugins.minimal
 
 local function get_lsp_servers()
   local servers = require('ar.servers').list
@@ -36,7 +35,30 @@ local function get_linters()
       end)
       :totable()
   end
+  linters = ar.unique(linters)
   return linters
+end
+
+local function get_all_packages()
+  local packages = ar.lsp.enable and get_lsp_servers() or {}
+  if not ar_config.lsp.null_ls.enable then
+    local linters = get_linters()
+    vim.list_extend(packages, linters)
+    local conform_ok, conform = pcall(require, 'conform')
+    if conform_ok then
+      local formatters = vim
+        .iter(pairs(conform.list_all_formatters()))
+        :map(function(_, f)
+          if f.name == 'prettier' then return f.name end
+          return f.command
+        end)
+        :filter(function(f) return f ~= '' and f ~= nil and f ~= 'injected' end)
+        :totable()
+      formatters = ar.unique(formatters)
+      vim.list_extend(packages, formatters)
+    end
+  end
+  return packages
 end
 
 return {
@@ -50,11 +72,11 @@ return {
         ['Update All Mason Packages'] = 'MasonUpdateAll',
       })
     end,
-      -- stylua: ignore
-      cmd = {
-        'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll',
-        'MasonLog', 'MasonUpdate'
-      },
+    -- stylua: ignore
+    cmd = {
+      'Mason', 'MasonInstall', 'MasonUninstall', 'MasonUninstallAll',
+      'MasonLog', 'MasonUpdate'
+    },
     opts = {
       ui = {
         border = border,
@@ -82,25 +104,8 @@ return {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
     opts = function(_, opts)
-      local packages = get_lsp_servers()
-      if not ar_config.lsp.null_ls.enable then
-        local linters = get_linters()
-        vim.list_extend(packages, linters)
-        local conform_ok, conform = pcall(require, 'conform')
-        if conform_ok then
-          local formatters = vim
-            .iter(pairs(conform.list_all_formatters()))
-            :map(function(_, f) return f.command end)
-            :filter(
-              function(f) return f ~= '' and f ~= nil and f ~= 'injected' end
-            )
-            :totable()
-          vim.list_extend(packages, formatters)
-        end
-      end
       opts.run_on_start = false
-      opts.ensure_installed = opts.ensure_installed or {}
-      table.insert(opts.ensure_installed, packages)
+      opts.ensure_installed = get_all_packages()
       return opts
     end,
     config = function(_, opts) require('mason-tool-installer').setup(opts) end,
