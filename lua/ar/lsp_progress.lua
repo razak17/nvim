@@ -1,7 +1,9 @@
 -- ref: https://github.com/rockyzhang24/dotfiles/blob/master/.config/nvim/lua/rockyz/lsp/progress.lua
 
 local api, o = vim.api, vim.o
--- local border = ar.ui.current.border
+local border_enabled = ar_config.ui.border ~= 'none'
+local border_style = ar_config.ui.border
+local border = ar.ui.current.border
 
 local M = {
   -- Maintain the total number of current windows
@@ -48,7 +50,9 @@ end
 -- Get the row position of the current floating window. If it is the first one, it is placed just
 -- right above the statusline; if not, it is placed on top of others.
 --- @param pos integer
-local function get_win_row(pos) return o.lines - o.cmdheight + 1 - pos * 3 end
+local function get_win_row(pos)
+  return vim.o.lines - vim.o.cmdheight - 1 - pos * (border_enabled and 3 or 1)
+end
 
 -- Update the window config
 --- @param client LspProgressClient
@@ -58,6 +62,7 @@ local function win_update_config(client)
     width = #client.message,
     height = 1,
     row = get_win_row(client.pos),
+    -- row = vim.o.lines - 3,
     col = o.columns - #client.message,
   })
 end
@@ -87,11 +92,12 @@ local function show_message(client)
         width = #client.message,
         height = 1,
         row = get_win_row(client.pos),
+        -- row = vim.o.lines - 3,
         col = o.columns - #client.message,
         focusable = false,
         style = 'minimal',
         noautocmd = true,
-        border = 'none',
+        border = border_style == 'single' and border or border_style,
       })
     end)
     if not success then return end
