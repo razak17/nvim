@@ -64,6 +64,7 @@ local pyright_analysis = {
 ---@type table<string, vim.lsp.Config|{mason?:boolean, enabled?:boolean}|boolean>
 local servers = {
   astro = {},
+  bacon_ls = {},
   biome = {},
   clangd = { cmd = get_clangd_cmd() },
   cmake = {},
@@ -257,7 +258,15 @@ local servers = {
       },
     },
   },
-  rust_analyzer = {},
+  rust_analyzer = {
+    settings = {
+      ['rust-analyzer'] = {
+        diagnostics = {
+          enable = not ar_config.lsp.lang.rust.bacon_ls,
+        },
+      },
+    },
+  },
   sqls = {},
   tailwindcss = {},
   tinymist = {

@@ -1,4 +1,5 @@
 local border = ar.ui.current.border
+local bacon_ls = ar_config.lsp.lang.rust.bacon_ls
 
 return {
   {
@@ -67,15 +68,20 @@ return {
             map('n', '<leader><leader>ra', function() rlsp('codeAction') end, { desc = 'code action', buffer = bufnr })
             map('n', '<leader><leader>rx', function() rlsp('explainError') end, { desc = 'explain error', buffer = bufnr })
           end,
-          standalone = false,
-          settings = {
+          -- standalone = false,
+          default_settings = {
             ['rust-analyzer'] = {
               assist = {
                 importEnforceGranularity = true,
                 importPrefix = 'crate',
               },
-              cargo = { allFeatures = true },
-              checkOnSave = true,
+              cargo = {
+                allFeatures = true,
+                loadOutDirsFromCheck = true,
+                buildScripts = { enable = true },
+              },
+              checkOnSave = not bacon_ls,
+              diagnostics = { enable = not bacon_ls },
               lens = { enable = true },
               procMacro = { enable = true },
               files = {

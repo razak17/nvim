@@ -10,6 +10,7 @@ local enabled = not minimal and ar.lsp.enable
 local server_langs = {
   rustaceanvim = 'rust',
   rust_analyzer = 'rust',
+  bacon_ls = 'rust',
   ts_ls = 'typescript',
   ['typescript-tools'] = 'typescript',
   tsgo = 'typescript',

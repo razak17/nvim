@@ -454,6 +454,7 @@
               "items": {
                 "enum": [
                   "astro",
+                  "bacon_ls",
                   "basedpyright",
                   "bashls",
                   "biome",
@@ -576,6 +577,9 @@
                 },
                 "rust_analyzer": {
                   "type": "boolean"
+                },
+                "bacon_ls": {
+                  "type": "boolean"
                 }
               },
               "type": "object"
@@ -653,6 +657,7 @@
           "items": {
             "enum": [
               "astro",
+              "bacon_ls",
               "basedpyright",
               "bashls",
               "biome",
