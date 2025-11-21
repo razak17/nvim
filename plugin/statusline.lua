@@ -157,7 +157,6 @@ local function diagnostics_error()
   if count > 0 then
     return string.format('%%#StatusLineLspError#  %s%%*', count)
   end
-
   return ''
 end
 
@@ -167,7 +166,6 @@ local function diagnostics_warns()
   if count > 0 then
     return string.format('%%#StatusLineLspWarn#  %s%%*', count)
   end
-
   return ''
 end
 
@@ -177,7 +175,6 @@ local function diagnostics_hint()
   if count > 0 then
     return string.format('%%#StatusLineLspHint# 󰌵 %s%%*', count)
   end
-
   return ''
 end
 
@@ -187,7 +184,6 @@ local function diagnostics_info()
   if count > 0 then
     return string.format('%%#StatusLineLspInfo#  %s%%*', count)
   end
-
   return ''
 end
 
@@ -200,19 +196,9 @@ ar.augroup('NativeStatuslineLspProgress', {
   desc = 'Update LSP progress in statusline',
   pattern = { 'begin', 'report', 'end' },
   command = function(args)
-    if not (args.data and args.data.client_id) then return end
-
-    local data, params = args.data, args.data.params.value
-
-    ---@type LspProgressClient
-    local client = { name = vim.lsp.get_client_by_id(data.client_id).name }
-    local message = require('ar.utils.lsp').process_progress_msg(client, params)
-
-    -- replace % with %% to avoid statusline issues
-    lsp_progress.message = message:gsub('%%', '%%%%')
-
-    if client.is_done then lsp_progress.message = nil end
-
+    local progress = stl.lsp_progress.handle(args)
+    lsp_progress.message = progress.message
+    if progress.is_done then lsp_progress.message = nil end
     vim.defer_fn(function() vim.cmd.redrawstatus() end, 500)
   end,
 })
@@ -220,11 +206,7 @@ ar.augroup('NativeStatuslineLspProgress', {
 --- @return string
 local function lsp_status()
   if not rawget(vim, 'lsp') then return '' end
-
-  if vim.o.columns < 120 then return '' end
-
-  if not lsp_progress.message then return '' end
-
+  if not lsp_progress.message or vim.o.columns < 120 then return '' end
   return string.format('%%#StatusLineLspMessages#%s%%* ', lsp_progress.message)
 end
 
@@ -234,7 +216,6 @@ local function git_diff_added()
   if added > 0 then
     return string.format('%%#StatusLineGitDiffAdded#  %s%%*', added)
   end
-
   return ''
 end
 
@@ -244,7 +225,6 @@ local function git_diff_changed()
   if changed > 0 then
     return string.format('%%#StatusLineGitDiffChanged#  %s%%*', changed)
   end
-
   return ''
 end
 
@@ -254,7 +234,6 @@ local function git_diff_removed()
   if removed > 0 then
     return string.format('%%#StatusLineGitDiffRemoved#  %s%%*', removed)
   end
-
   return ''
 end
 

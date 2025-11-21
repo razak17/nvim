@@ -652,35 +652,36 @@ function M.copilot_status()
   end
 end
 
-M.lsp_progress = ''
-M.lsp_pending = ''
+M.lsp_progress = { message = '' }
+M.lsp_pending = { message = '' }
+
+---@param args AutocmdArgs
+function M.lsp_progress.handle(args)
+  local data, params = args.data, args.data.params.value
+
+  ---@type LspProgressClient
+  local client = { name = vim.lsp.get_client_by_id(data.client_id).name }
+  local message = require('ar.utils.lsp').process_progress_msg(client, params)
+
+  -- replace % with %% to avoid statusline issues
+  return { message = message:gsub('%%', '%%%%'), is_done = client.is_done }
+end
+
 function M.autocmds()
   -- Ref: https://github.com/NvChad/ui/blob/v3.0/lua/nvchad/stl/utils.lua?plain=1#L161
   ar.augroup('stl_lsp_autocmds', {
     event = { 'LspProgress' },
-    once = true,
     desc = 'LSP Progress',
     pattern = { 'begin', 'report', 'end' },
     command = function(args)
-      local data = args.data.params.value
-      local progress = ''
-
-      if data.percentage then
-        local spinners = ar.ui.spinners.circle_quarters
-        local idx = math.max(1, math.floor(data.percentage / 10))
-        progress = spinners[idx] .. ' ' .. data.percentage .. '%% '
-      end
-
-      local kind, msg, title = data.kind, data.message, data.title
-      local loaded_count = msg and string.match(msg, '^(%d+/%d+)') or ''
-      local str = progress .. (title or '') .. ' ' .. (loaded_count or '')
-      M.lsp_progress = kind == 'end' and '' or str
-      vim.cmd.redrawstatus()
+      local progress = M.lsp_progress.handle(args)
+      M.lsp_progress.message = progress.message
+      if progress.is_done then M.lsp_progress.message = '' end
+      vim.defer_fn(function() vim.cmd.redrawstatus() end, 500)
     end,
   }, {
     -- Ref: https://github.com/emmanueltouzery/nvim_config/blame/5c3d184b2ab62aa0cd3e8861ecc23c5f51931d33/lua/plugins/lualine.lua#L240
     event = { 'LspRequest' },
-    once = true,
     desc = 'LSP Pendingg Request',
     command = function(args)
       local active_lsp_requests = {}
@@ -697,9 +698,10 @@ function M.autocmds()
       end
       local active_requests_count = vim.tbl_count(active_lsp_requests)
       if active_requests_count > 0 then
-        M.lsp_pending = '󰘦 Pending LSP requests: ' .. active_requests_count
+        M.lsp_pending.message = '󰘦 Pending LSP requests: '
+          .. active_requests_count
       else
-        M.lsp_pending = ''
+        M.lsp_pending.message = ''
       end
       vim.cmd.redrawstatus()
     end,

@@ -665,13 +665,13 @@ return {
           condition = function() return ar.lsp.enable end,
           -- LSP Progress
           {
-            provider = function() return stl.lsp_progress end,
+            provider = function() return stl.lsp_progress.message end,
             hl = { fg = 'comment' },
           },
           -- LSP Pending Requests
           {
-            condition = function() return stl.lsp_progress == '' end,
-            provider = function() return stl.lsp_pending end,
+            condition = function() return stl.lsp_progress.message == '' end,
+            provider = function() return stl.lsp_pending.message end,
             hl = { fg = 'comment' },
           },
         },
