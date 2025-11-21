@@ -3,6 +3,7 @@
 -- Language servers
 --------------------------------------------------------------------------------
 local fn = vim.fn
+local bacon_ls = ar_config.lsp.lang.rust.bacon_ls
 
 local function get_clangd_cmd()
   local cmd = ar.has('mason.nvim') and fn.expand('$MASON') .. '/bin/clangd'
@@ -277,10 +278,32 @@ local servers = {
     },
   },
   rust_analyzer = {
+    capabilities = {
+      experimental = { serverStatusNotification = true },
+    },
     settings = {
       ['rust-analyzer'] = {
-        diagnostics = {
-          enable = not ar_config.lsp.lang.rust.bacon_ls,
+        diagnostics = { enable = not bacon_ls },
+        assist = {
+          importEnforceGranularity = true,
+          importPrefix = 'crate',
+        },
+        cargo = {
+          allFeatures = true,
+          loadOutDirsFromCheck = true,
+          runBuildScripts = true,
+        },
+        checkOnSave = not bacon_ls,
+        inlay_hints = {
+          auto = false,
+        },
+        procMacro = {
+          enable = true,
+          ignored = {
+            ['async-trait'] = { 'async_trait' },
+            ['napi-derive'] = { 'napi' },
+            ['async-recursion'] = { 'async_recursion' },
+          },
         },
       },
     },
