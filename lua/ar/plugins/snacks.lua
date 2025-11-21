@@ -64,7 +64,10 @@ return {
       words = { enabled = ar.lsp.enable },
       zen = {},
     },
-    init = function()
+    config = function(_, opts)
+      local notify = vim.notify
+      require('snacks').setup(opts)
+
       ar.add_to_select_menu('command_palette', {
         ['Neovim News'] = function()
           Snacks.win({
@@ -81,6 +84,7 @@ return {
           })
         end,
       })
+
       ar.add_to_select_menu('toggle', {
         ['Toggle Light/Dark Background'] = function()
           Snacks.toggle.option(
@@ -104,6 +108,7 @@ return {
         ['Toggle Scratch'] = function() Snacks.scratch() end,
         ['Toggle Scratch Buffer'] = function() Snacks.scratch.select() end,
       })
+
       api.nvim_create_autocmd('User', {
         pattern = 'VeryLazy',
         callback = function()
@@ -113,10 +118,6 @@ return {
           vim.print = _G.dd -- Override print to use snacks for `:=` command
         end,
       })
-    end,
-    config = function(_, opts)
-      local notify = vim.notify
-      require('snacks').setup(opts)
 
       local function jump(options)
         return ar.demicolon_jump(function(opt)
