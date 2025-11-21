@@ -3,7 +3,7 @@ local git_cond = require('ar.utils.git').git_cond
 
 return {
   {
-    'almo7aya/openingh.nvim',
+    'razak17/openingh.nvim',
     cond = function() return git_cond('openingh.nvim') end,
     cmd = { 'OpenInGHFile', 'OpenInGHRepo', 'OpenInGHFileLines' },
     init = function()
