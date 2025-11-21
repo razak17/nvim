@@ -410,13 +410,6 @@ function ar.dir_lsp_disabled(dir)
   return ar.dirs_match(ar_config.lsp.disabled.directories, fmt('%s', dir))
 end
 
----@param lsp string The lsp to search for.
----@return boolean disabled # Whether the lsp is disabled.
-function ar.lsp_override(lsp)
-  return not ar.falsy(ar_config.lsp.override)
-    and not vim.tbl_contains(ar_config.lsp.override, lsp)
-end
-
 ---Get whether using nightly version of neovim
 local LATEST_NIGHTLY_MINOR = 10
 function ar.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end

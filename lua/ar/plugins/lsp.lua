@@ -29,8 +29,9 @@ local server_langs = {
 
 local function is_enabled(name)
   local disabled = ar.lsp_disabled(name)
+  local override = ar_config.lsp.override
   if vim.tbl_contains(lsp_override, name) and not disabled then return true end
-  if ar.lsp_override(name) then return false end
+  if not ar.falsy(override) then return vim.tbl_contains(override, name) end
   if ar.lsp_disabled(name) then return false end
   if ar.dir_lsp_disabled(cwd) then return false end
   local lang = server_langs[name]
