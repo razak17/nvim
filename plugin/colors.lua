@@ -216,6 +216,7 @@ local function colorscheme_overrides(colorscheme)
     ['peachpuff'] = theming.generate_overrides({
       { NormalFloat = { link = 'Normal' } },
       { Dim = { link = 'LineNr' } },
+      { Visual = { fg = 'NONE' } },
       { WinSeparator = { fg = { from = 'Dim', alter = 0.5 }, bg = 'NONE' } },
     }),
     ['retrobox'] = theming.generate_overrides({
