@@ -77,7 +77,7 @@ return {
   {
     'WilliamHsieh/overlook.nvim',
     cond = function() ar.get_plugin_cond('overlook.nvim', ar.lsp.enable) end,
-    opts = { ui = { border = 'single' } },
+    opts = { ui = { border = vim.o.winborder } },
     -- stylua: ignore
     keys = {
       { '<C-w>pd', function() require('overlook.api').peek_definition() end, desc = 'overlook: peek definition' },

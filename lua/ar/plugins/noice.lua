@@ -58,7 +58,7 @@ return {
       documentation = {
         enabled = is_cmp,
         opts = {
-          border = { style = 'single' },
+          border = { style = vim.o.winborder },
           position = { row = 2 },
         },
       },
@@ -98,7 +98,7 @@ return {
       },
       popup = {
         border = {
-          style = 'single',
+          style = vim.o.winborder,
           padding = {
             top = 0,
             bottom = 0,
@@ -112,7 +112,7 @@ return {
         position = { row = 5, col = '50%' },
         size = { width = 'auto', height = 'auto' },
         border = {
-          style = 'single',
+          style = vim.o.winborder,
           padding = {
             top = 0,
             bottom = 0,
@@ -125,7 +125,7 @@ return {
       confirm = {
         position = { row = 20 },
         border = {
-          style = 'single',
+          style = vim.o.winborder,
           padding = {
             top = 0,
             bottom = 0,
@@ -141,7 +141,7 @@ return {
         position = { row = 9, col = '50%' },
         size = { width = 60, height = 10 },
         border = {
-          style = 'single',
+          style = vim.o.winborder,
           padding = {
             top = 0,
             bottom = 0,

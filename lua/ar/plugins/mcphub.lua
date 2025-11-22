@@ -12,7 +12,7 @@ return {
       extensions = {
         avante = { make_slash_commands = true },
       },
-      ui = { window = { border = 'single' } },
+      ui = { window = { border = ar.ui.current.border.default } },
       log = {
         level = vim.log.levels.INFO,
         to_file = true,

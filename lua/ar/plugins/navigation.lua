@@ -40,7 +40,7 @@ return {
       jump = { autojump = true, nohlsearch = true },
       highlight = { backdrop = false },
       labels = 'asdfqwerzxcv', -- Limit labels to left side of the keyboard
-      prompt = { win_config = { border = 'none' } },
+      prompt = { win_config = { border = vim.o.winborder } },
       search = { wrap = true },
     },
     init = function()

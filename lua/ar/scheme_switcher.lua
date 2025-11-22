@@ -70,7 +70,7 @@ function M.colorscheme_menu()
     col = col,
     width = width,
     height = height,
-    border = 'single',
+    style = 'minimal',
   })
 
   vim.bo[buf].modifiable = false

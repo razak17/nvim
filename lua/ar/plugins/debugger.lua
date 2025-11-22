@@ -95,7 +95,7 @@ return {
         '<localleader>ds',
         function()
           local widgets = require('dap.ui.widgets')
-          widgets.centered_float(widgets.scopes, { border = 'rounded' })
+          widgets.centered_float(widgets.scopes, { border = vim.o.winborder })
         end,
         desc = 'dap-ui: scopes',
       },

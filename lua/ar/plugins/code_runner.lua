@@ -127,7 +127,7 @@ return {
     opts = {
       input = {
         border = {
-          style = 'single',
+          style = vim.o.winborder,
           padding = {
             top = 0,
             bottom = 0,

@@ -157,7 +157,6 @@ local function action(key, direction, symbol, amount, desc, resize)
     local config = api.nvim_win_get_config(0)
     local win = api.nvim_get_current_win()
     if config.relative == '' then
-      local feedkey = '<C-w>' .. symbol
       api.nvim_feedkeys(
         api.nvim_replace_termcodes('<C-w>' .. symbol, true, false, true),
         't',
@@ -181,7 +180,7 @@ map('n', '<leader><leader>no', function()
     width = 20,
     height = 10,
     style = 'minimal',
-    border = 'single',
+    border = vim.o.winborder,
     highlight = {
       Normal = 'NormalFloat',
       FloatTitle = 'FloatTitle',

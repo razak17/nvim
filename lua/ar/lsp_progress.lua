@@ -1,8 +1,8 @@
 -- ref: https://github.com/rockyzhang24/dotfiles/blob/master/.config/nvim/lua/rockyz/lsp/progress.lua
 
 local api, o = vim.api, vim.o
-local border_enabled = ar_config.ui.border ~= 'none'
-local border_style = ar_config.ui.border
+local border_style = vim.o.winborder
+local border_enabled = border_style ~= 'none'
 local border = ar.ui.current.border.default
 
 local M = {

@@ -42,7 +42,7 @@ local function snacks_show_image(path, win_opts)
   Snacks.image.doc.at_cursor(function(src)
     src = path
     local config = {
-      border = 'single',
+      border = vim.o.winborder,
       backdrop = false,
       relative = 'editor',
       row = 1,
@@ -110,7 +110,7 @@ return {
           },
           indentscope = { group = 'FylerIndentMarker' },
           win = {
-            border = vim.o.winborder == '' and 'single' or vim.o.winborder,
+            border = vim.o.winborder,
             kind = 'float',
             win_opts = {
               number = false,

@@ -152,7 +152,6 @@ local function generate_message()
           row = row,
           col = col,
           style = 'minimal',
-          border = 'rounded',
           noautocmd = true,
         })
 

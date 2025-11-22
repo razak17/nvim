@@ -30,7 +30,7 @@ return {
       styles = {
         blame_line = { border = border },
         git = { border = border },
-        input = { border = 'single' },
+        input = { border = vim.o.winborder },
         lazygit = { border = border },
         snacks_image = { relative = 'editor', col = -1 },
       },

@@ -17,7 +17,7 @@ if ar_config.picker.variant == 'snacks' then ar.pick.register(picker_config) end
 
 local fn = vim.fn
 local fmt = string.format
-local border_style = ar_config.ui.border
+local border_style = vim.o.winborder
 local diag_icons = ar.ui.codicons.lsp
 local show_preview = ar_config.picker.win.show_preview
 

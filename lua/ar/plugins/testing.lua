@@ -95,7 +95,7 @@ return {
         discovery = { enabled = true },
         diagnostic = { enabled = true },
         icons = { running = ar.ui.codicons.misc.clock },
-        floating = { border = 'single' },
+        floating = { border = vim.o.winborder },
         quickfix = { enabled = false, open = true },
         adapters = {
           require('neotest-plenary'),

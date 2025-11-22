@@ -26,8 +26,8 @@ return {
         load_on_start = true, -- load saved session on first entry
         preserve_context = true, -- preserve context between executions
       },
-      windo = {
-        border = 'double', -- single|double|rounded
+      window = {
+        border = vim.o.winborder, -- single|double|rounded
         height = 0.6, -- percentage of main window
       },
       mappings = {

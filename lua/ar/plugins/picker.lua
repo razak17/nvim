@@ -31,7 +31,7 @@ local fmt = string.format
 local icons, codicons, lsp_hls = ui.icons, ui.codicons, ui.lsp.highlights
 local prompt = fmt('%s ', icons.misc.chevron_right)
 local minimal = ar.plugins.minimal
-local border_style = ar_config.ui.border
+local border_style = vim.o.winborder
 
 local fzf_lua = reqcall('fzf-lua') ---@module 'fzf-lua'
 --------------------------------------------------------------------------------

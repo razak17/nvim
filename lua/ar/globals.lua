@@ -817,7 +817,7 @@ function ar.open_buf_centered_popup(bufnr, readonly)
     height = height,
     col = col,
     row = row,
-    border = 'single',
+    border = vim.o.winborder,
     style = 'minimal',
   }
   api.nvim_open_win(bufnr, true, opts)
