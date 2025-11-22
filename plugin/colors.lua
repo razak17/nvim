@@ -2,6 +2,7 @@ local enabled = ar_config.plugin.main.colors.enable
 
 if not ar or ar.none or not enabled then return end
 
+local fmt = string.format
 local highlight = ar.highlight
 local transparent = ar_config.ui.transparent.enable
 
@@ -273,4 +274,16 @@ ar.augroup('UserHighlights', {
 })
 
 local scheme_switcher = require('ar.scheme_switcher')
-ar.load_colorscheme(scheme_switcher.get_current_colorscheme())
+local colorscheme = scheme_switcher.get_current_colorscheme()
+local is_colorschme = ar.load_colorscheme(colorscheme)
+if not is_colorschme then
+  ar.load_colorscheme('default')
+  vim.schedule(
+    function()
+      vim.notify(
+        fmt('Colorscheme %s not found. Reverting to default.', colorscheme),
+        vim.log.levels.WARN
+      )
+    end
+  )
+end

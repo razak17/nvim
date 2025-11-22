@@ -514,7 +514,7 @@ function ar.copy_to_clipboard(to_copy, msg)
 end
 
 function ar.load_colorscheme(name)
-  ar.pcall('theme failed to load because', cmd.colorscheme, name)
+  return ar.pcall('theme failed to load because', cmd.colorscheme, name)
 end
 
 -- Check if root directory is a git repo
