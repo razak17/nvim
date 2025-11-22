@@ -123,15 +123,17 @@ settings({
     },
     plugins = {
       cmp = function(cmp)
-        cmp.setup.filetype('NeogitCommitMessage', {
-          sources = {
-            { name = 'git', group_index = 1 },
-            { name = 'luasnip', group_index = 1 },
-            { name = 'dictionary', max_item_count = 10, group_index = 1 },
-            { name = 'buffer', group_index = 1 },
-            { name = 'spell', group_index = 1 },
-          },
-        })
+        if ar_config.completion.variant == 'cmp' then
+          cmp.setup.filetype('NeogitCommitMessage', {
+            sources = {
+              { name = 'git', group_index = 1 },
+              { name = 'luasnip', group_index = 1 },
+              { name = 'dictionary', max_item_count = 10, group_index = 1 },
+              { name = 'buffer', group_index = 1 },
+              { name = 'spell', group_index = 1 },
+            },
+          })
+        end
       end,
     },
     function()
@@ -206,18 +208,20 @@ settings({
     opt = { spell = true },
     plugins = {
       cmp = function(cmp)
-        cmp.setup.filetype('norg', {
-          sorting = {
-            -- deprioritize `.box`, `.mut`, etc.
-            require('cmp-rust').deprioritize_postfix,
-            -- deprioritize `Borrow::borrow` and `BorrowMut::borrow_mut`
-            require('cmp-rust').deprioritize_borrow,
-            -- deprioritize `Deref::deref` and `DerefMut::deref_mut`
-            require('cmp-rust').deprioritize_deref,
-            -- deprioritize `Into::into`, `Clone::clone`, etc.
-            require('cmp-rust').deprioritize_common_traits,
-          },
-        })
+        if ar_config.completion.variant == 'cmp' then
+          cmp.setup.filetype('norg', {
+            sorting = {
+              -- deprioritize `.box`, `.mut`, etc.
+              require('cmp-rust').deprioritize_postfix,
+              -- deprioritize `Borrow::borrow` and `BorrowMut::borrow_mut`
+              require('cmp-rust').deprioritize_borrow,
+              -- deprioritize `Deref::deref` and `DerefMut::deref_mut`
+              require('cmp-rust').deprioritize_deref,
+              -- deprioritize `Into::into`, `Clone::clone`, etc.
+              require('cmp-rust').deprioritize_common_traits,
+            },
+          })
+        end
       end,
     },
   },
