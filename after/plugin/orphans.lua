@@ -210,7 +210,7 @@ local function show_plugins(plugins)
 end
 
 function M.show_orphans(opts)
-  opts = opts or {}
+  opts = ar.falsy(opts) and { loaded = true } or opts
 
   local plugin_dirs = {}
 

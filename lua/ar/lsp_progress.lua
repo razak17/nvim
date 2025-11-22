@@ -3,7 +3,6 @@
 local api, o = vim.api, vim.o
 local border_style = vim.o.winborder
 local border_enabled = border_style ~= 'none'
-local border = ar.ui.current.border.default
 
 local M = {
   -- Maintain the total number of current windows
@@ -97,7 +96,7 @@ local function show_message(client)
         focusable = false,
         style = 'minimal',
         noautocmd = true,
-        border = border_style == 'single' and border or border_style,
+        border = border_style,
       })
     end)
     if not success then return end
