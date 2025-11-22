@@ -214,6 +214,7 @@ local function colorscheme_overrides(colorscheme)
       },
     }),
     ['peachpuff'] = theming.generate_overrides({
+      { NormalFloat = { link = 'Normal' } },
       { Dim = { link = 'LineNr' } },
       { WinSeparator = { fg = { from = 'Dim', alter = 0.5 }, bg = 'NONE' } },
     }),

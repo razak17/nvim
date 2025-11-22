@@ -12,6 +12,18 @@ return {
         'toggle',
         { ['Toggle Transparency'] = 'TransparentToggle' }
       )
+      ar.augroup('TransparentLightMode', {
+        event = { 'ColorScheme' },
+        command = function(arg)
+          local bg =
+            vim.api.nvim_get_option_value('background', { scope = 'global' })
+          if bg == 'light' then
+            vim.schedule(function() vim.cmd('TransparentDisable') end)
+          else
+            vim.schedule(function() vim.cmd('TransparentEnable') end)
+          end
+        end,
+      })
     end,
     event = 'VimEnter',
     cmd = { 'TransparentToggle', 'TransparentEnable', 'TransparentDisable' },

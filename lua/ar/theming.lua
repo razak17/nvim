@@ -10,7 +10,7 @@ local function generate_popup_overrides()
     ar.list_insert(overrides, {
       {
         NormalFloat = {
-          bg = { from = 'Normal', alter = 0.25 },
+          bg = { from = 'Normal', alter = 0.1 },
           fg = { from = 'Normal', alter = -0.15 },
         },
       },
