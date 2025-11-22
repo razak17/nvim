@@ -129,8 +129,7 @@ return {
         end
       end,
       opts = function(_, opts)
-        return (not minimal and ar.ts_extra_enabled and ar.has('aerial.nvim'))
-            and vim.g.telescope_add_extension({ 'aerial' }, opts)
+        return get_cond() and vim.g.telescope_add_extension({ 'aerial' }, opts)
           or opts
       end,
     },
