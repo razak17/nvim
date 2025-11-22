@@ -24,13 +24,9 @@ return {
     end,
     config = function()
       ar.highlight.plugin('treesitter-context', {
-        theme = {
-          ['onedark'] = {
-            { TreesitterContextSeparator = { link = 'VertSplit' } },
-            { TreesitterContext = { inherit = 'Normal' } },
-            { TreesitterContextLineNumber = { inherit = 'LineNr' } },
-          },
-        },
+        { TreesitterContextSeparator = { link = 'VertSplit' } },
+        { TreesitterContext = { inherit = 'NormalFloat' } },
+        { TreesitterContextLineNumber = { inherit = 'LineNr' } },
       })
       require('treesitter-context').setup({
         multiline_threshold = 4,
