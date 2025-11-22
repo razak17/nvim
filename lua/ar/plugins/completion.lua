@@ -19,7 +19,7 @@ local fmt = string.format
 local cmp_utils = require('ar.utils.cmp')
 local ui, highlight = ar.ui, ar.highlight
 local border, lsp_hls, ellipsis =
-  ui.current.border, ui.lsp.highlights, ui.icons.misc.ellipsis
+  ui.current.border.default, ui.lsp.highlights, ui.icons.misc.ellipsis
 local minimal = ar.plugins.minimal
 local is_cmp = ar_config.completion.variant == 'cmp'
 

@@ -19,7 +19,7 @@ return {
     ft = 'qf',
     opts = {
       preview = {
-        border = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
+        border = ar.ui.current.border.default,
         winblend = ar_config.ui.transparent.enable and 12 or 0,
       },
     },

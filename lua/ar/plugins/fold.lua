@@ -67,7 +67,7 @@ return {
         open_fold_hl_timeout = 0,
         preview = {
           win_config = {
-            border = ar.ui.current.border,
+            border = ar.ui.current.border.default,
             winhighlight = 'NormalFloat:FloatBorder,FloatBorder:FloatBorder',
             winblend = ar_config.ui.transparent.enable and 0 or 12,
           },

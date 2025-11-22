@@ -1,5 +1,5 @@
 local minimal = ar.plugins.minimal
-local border = ar.ui.current.border
+local border = ar.ui.current.border.default
 
 local buffer_hint = [[
 _a_: close all         _d_: delete buffer                _l_: last buffer

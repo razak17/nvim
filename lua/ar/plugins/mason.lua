@@ -1,4 +1,4 @@
-local border = ar.ui.current.border
+local border = ar.ui.current.border.default
 
 local function get_lsp_servers()
   local servers = require('ar.servers').list

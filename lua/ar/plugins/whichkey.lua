@@ -103,7 +103,7 @@ return {
       opts.win = {
         col = 0.5,
         height = { min = 10, max = 25 },
-        border = ar.ui.current.border,
+        border = ar.ui.current.border.default,
         wo = {
           winblend = ar_config.ui.transparent.enable and 0 or 12, -- value between 0-100 0 for fully opaque and 100 for fully transparent
         },

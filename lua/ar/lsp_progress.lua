@@ -3,7 +3,7 @@
 local api, o = vim.api, vim.o
 local border_enabled = ar_config.ui.border ~= 'none'
 local border_style = ar_config.ui.border
-local border = ar.ui.current.border
+local border = ar.ui.current.border.default
 
 local M = {
   -- Maintain the total number of current windows

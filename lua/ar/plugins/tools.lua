@@ -1,5 +1,5 @@
 local api, fn, uv = vim.api, vim.fn, vim.uv
-local border = ar.ui.current.border
+local border = ar.ui.current.border.default
 local coding = ar.plugins.coding
 local is_biome = ar_config.lsp.lang.web.biome
   or vim.tbl_contains(ar_config.lsp.override, 'biome')

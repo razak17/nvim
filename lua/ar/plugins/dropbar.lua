@@ -1,7 +1,7 @@
 local api = vim.api
 local fmt = string.format
 local ui, highlight = ar.ui, ar.highlight
-local border = ui.current.border
+local border = ui.current.border.default
 local decor = ui.decorations
 
 return {

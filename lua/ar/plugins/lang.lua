@@ -1,5 +1,5 @@
 local ui, highlight = ar.ui, ar.highlight
-local border = ui.current.border
+local border = ui.current.border.default
 local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 local enabled = not minimal and ar.lsp.enable
 

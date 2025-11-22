@@ -1,4 +1,3 @@
-local border = ar.ui.current.border
 local bacon_ls = ar_config.lsp.lang.rust.bacon_ls
 
 return {
@@ -22,7 +21,7 @@ return {
           reload_workspace_from_cargo_toml = true,
           runnables = { use_telescope = false },
           hover_actions = {
-            border = ar.ui.border.rectangle,
+            border = ar.ui.current.border.rectangle,
             auto_focus = true,
             max_width = math.min(math.floor(vim.o.columns * 0.7), 100),
             max_height = math.min(math.floor(vim.o.lines * 0.3), 30),
@@ -116,7 +115,10 @@ return {
     end,
     event = 'BufRead Cargo.toml',
     opts = {
-      popup = { autofocus = true, border = border },
+      popup = {
+        autofocus = true,
+        border = ar.ui.current.border.default,
+      },
       -- TODO: lsp integration seems to have issues
       lsp = {
         enabled = ar.lsp.enable,

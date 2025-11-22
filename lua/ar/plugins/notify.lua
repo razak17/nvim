@@ -28,7 +28,7 @@ return {
         stages = 'fade_in_slide_out',
         on_open = function(win)
           if api.nvim_win_is_valid(win) then
-            api.nvim_win_set_config(win, { border = ui.current.border })
+            api.nvim_win_set_config(win, { border = ui.current.border.default })
           end
         end,
         icons = {

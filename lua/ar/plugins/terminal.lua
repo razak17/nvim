@@ -1,5 +1,5 @@
 local fn, ui = vim.fn, ar.ui
-local border = ui.current.border
+local border = ui.current.border.default
 
 return {
   {

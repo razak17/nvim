@@ -2,7 +2,7 @@ local api = vim.api
 local fmt = string.format
 local cwd = fmt('%s', vim.fn.getcwd())
 local icons = ar.ui.icons
-local border = ar.ui.current.border
+local border = ar.ui.current.border.default
 local left_block = icons.separators.left_block
 
 local statuscolumn_enabled = ar_config.ui.statuscolumn.enable

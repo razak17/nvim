@@ -19,7 +19,7 @@ local utils = require('ar.utils.lsp')
 local lsp_diag = require('ar.lsp_diagnostics')
 local minimal = ar.plugins.minimal
 local augroup, diag_icons, border =
-  ar.augroup, ar.ui.codicons.lsp, ar.ui.current.border
+  ar.augroup, ar.ui.codicons.lsp, ar.ui.current.border.default
 
 if vim.env.DEVELOPING then lsp.log.set_level(L.DEBUG) end
 

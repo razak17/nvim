@@ -70,15 +70,13 @@ end
 
 local api, env, fn = vim.api, vim.env, vim.fn
 local fmt, ui = string.format, ar.ui
-local ar_border = ar.ui.border
 local datapath = fn.stdpath('data')
 local minimal = ar.plugins.minimal
 local enabled = not ar.plugin_disabled('telescope.nvim')
 local min_enabled = enabled and not minimal
 local is_telescope = ar_config.picker.variant == 'telescope'
 local picker_enabled = min_enabled and is_telescope
-local border_style = ar_config.ui.border
-local border = ui.border.telescope[border_style]
+local border = ui.current.border.telescope
 
 -- A helper function to limit the size of a telescope window to fit the maximum available
 -- space on the screen. This is useful for dropdowns e.g. the cursor or dropdown theme
@@ -632,7 +630,7 @@ return {
           }),
           diagnostics = themes.get_ivy({
             wrap_results = true,
-            borderchars = { preview = ar_border.ivy },
+            borderchars = { preview = ui.current.border.ivy },
           }),
           builtin = { previewer = show_preview, include_extensions = true },
           buffers = dropdown({
@@ -751,7 +749,7 @@ return {
       if ar_config.picker.variant == 'telescope' then
         local ivy = require('telescope.themes').get_ivy({
           wrap_results = true,
-          borderchars = { preview = ar_border.ivy },
+          borderchars = { preview = ui.current.border.ivy },
         })
         local todos = function()
           extension('todo-comments', 'todo')({

@@ -1,4 +1,4 @@
-local border = ar.ui.current.border
+local border = ar.ui.current.border.default
 
 return {
   {

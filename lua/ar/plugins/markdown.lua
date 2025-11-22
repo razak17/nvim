@@ -146,7 +146,7 @@ return {
       { '<localleader>mh', '<cmd>MarkdownHeaders<CR>', desc = 'md-header: headers', },
       { '<localleader>mn', '<cmd>MarkdownHeadersClosest<CR>', desc = 'md-header: closest', },
     },
-    opts = { borderchars = ui.border.common },
+    opts = { borderchars = ui.current.border.rectangle },
     config = function(_, opts)
       highlight.plugin('md-headers', {
         theme = {
@@ -195,7 +195,7 @@ return {
           row = 0,
           col = 0,
           style = 'minimal',
-          border = ui.current.border,
+          border = ui.current.border.default,
           zindex = 1,
         }
       end,

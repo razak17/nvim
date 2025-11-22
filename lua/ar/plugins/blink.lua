@@ -14,7 +14,7 @@ local api = vim.api
 local fmt = string.format
 local cmp_utils = require('ar.utils.cmp')
 local ui = ar.ui
-local border, lsp_hls = ui.current.border, ui.lsp.highlights
+local border, lsp_hls = ui.current.border.default, ui.lsp.highlights
 local minimal = ar.plugins.minimal
 local is_blink = ar_config.completion.variant == 'blink'
 

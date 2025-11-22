@@ -1,5 +1,5 @@
 local ui, highlight = ar.ui, ar.highlight
-local border = ui.current.border
+local border = ui.current.border.default
 local preview_cmd = '/usr/bin/zathura'
 local minimal = ar.plugins.minimal
 

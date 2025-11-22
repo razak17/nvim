@@ -32,7 +32,7 @@ require('lazy').setup({
     fallback = true,
   },
   install = { colorscheme = { colorscheme, 'habamax' } },
-  -- ui = { border = ar.ui.current.border },
+  -- ui = { border = ar.ui.current.border.default },
   checker = {
     enabled = true,
     concurrency = 30,

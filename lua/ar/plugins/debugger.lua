@@ -446,7 +446,7 @@ return {
               position = 'bottom',
             },
           },
-          floating = { border = ar.ui.current.border },
+          floating = { border = ar.ui.current.border.default },
         },
         config = function(_, opts)
           local dap = require('dap')

@@ -1,9 +1,17 @@
 ar.ui.border = {
-  common = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
   none = { '', '', '', '', '', '', '', '' },
   line = { '🭽', '▔', '🭾', '▕', '🭿', '▁', '🭼', '▏' },
-  rectangle = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
   ivy = { '▔', '▕', '▁', '▏', '🭽', '🭾', '🭿', '🭼' },
+  common = {
+    none = { '', '', '', '', '', '', '', '' },
+    single = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
+    rounded = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
+  },
+  rectangle = {
+    none = { '', '', '', '', '', '', '', '' },
+    single = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+    rounded = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+  },
   telescope = {
     none = {
       borderchars = {
@@ -467,4 +475,14 @@ end
 
 --------------------------------------------------------------------------------
 -- The current styles for various UI elements
-ar.ui.current = { border = ar.ui.border.line }
+local border_style = ar_config.ui.border
+local border = ar.ui.border
+ar.ui.current = {
+  -- stylua: ignore
+  border = {
+    default = border_style == 'single' and border.line or border.common[border_style] or border.common.single,
+    ivy = border_style == 'single' and border.ivy or border.rectangle[border_style] or border.rectangle.single,
+    rectangle = border.rectangle[border_style] or border.rectangle.single,
+    telescope = border.telescope[border_style] or border.telescope.single,
+  },
+}
