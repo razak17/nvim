@@ -410,7 +410,12 @@ M.file_icon = {
     callback = function() ar.change_filetype() end,
     name = 'change_ft',
   },
-  hl = function(self) return { fg = ar.highlight.get(self.icon_hl, 'fg') } end,
+  hl = function(self)
+    local bg = vim.api.nvim_get_option_value('background', { scope = 'global' })
+    return {
+      fg = bg == 'dark' and ar.highlight.get(self.icon_hl, 'fg') or 'fg',
+    }
+  end,
 }
 
 M.file_type = {
