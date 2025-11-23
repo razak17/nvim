@@ -2,6 +2,8 @@ local fn, api, env, fmt = vim.fn, vim.api, vim.env, string.format
 local falsy, icons, codicons = ar.falsy, ar.ui.icons, ar.ui.codicons
 local separator = icons.separators.dotted_thin_block
 local root_util = require('ar.utils.root')
+local theming = require('ar.theming')
+local P = theming.get_statusline_palette(ar_config.colorscheme.name)
 
 local M = {}
 
@@ -235,26 +237,26 @@ function M.pretty_branch()
 end
 
 M.mode_colors = {
-  n = 'blue',
-  i = 'yellowgreen',
-  v = 'magenta',
-  [''] = 'pale_blue',
-  V = 'pink',
-  c = 'yellow',
-  no = 'pale_red',
-  s = 'orange',
-  S = 'orange',
-  [''] = 'orange',
-  ic = 'yellowgreen',
-  R = 'violet',
-  Rv = 'violet',
-  cv = 'pale_red',
-  ce = 'pale_red',
-  r = 'cyan',
-  rm = 'cyan',
-  ['r?'] = 'cyan',
-  ['!'] = 'pale_red',
-  t = 'red',
+  n = P.blue,
+  i = P.forest_green,
+  v = P.pale_red,
+  ['\22'] = P.pale_red,
+  V = P.pale_red,
+  c = P.pale_blue,
+  no = P.pale_red,
+  s = P.dark_orange,
+  S = P.dark_orange,
+  ['\19'] = P.lightgreen,
+  ic = P.lightgreen,
+  R = P.error_red,
+  Rv = P.error_red,
+  cv = P.pale_red,
+  ce = P.pale_red,
+  r = P.pale_blue,
+  rm = P.pale_blue,
+  ['r?'] = P.pale_blue,
+  ['!'] = P.pale_red,
+  t = P.pale_red,
 }
 -- https://github.com/LazyVim/LazyVim/blob/3f034d0a7f58031123300309f2efd3bb0356ee21/lua/lazyvim/util/lualine.lua?plain=1#L141
 ---@param opts? {cwd:false, subdirectory: true, parent: true, other: true, icon?:string}

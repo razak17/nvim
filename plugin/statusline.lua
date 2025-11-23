@@ -56,6 +56,7 @@ local function lsp_clients()
   end
   return ' 󰌘 ' .. table.concat(c, '|')
 end
+
 --- @return string
 local function filename()
   local fname = vim.fn.expand('%:t')
@@ -83,32 +84,12 @@ local function get_git_diff(type)
   return 0
 end
 
-local modes = {
-  ['n'] = 'NORMAL',
-  ['no'] = 'NORMAL',
-  ['v'] = 'VISUAL',
-  ['V'] = 'VISUAL LINE',
-  [''] = 'VISUAL BLOCK',
-  ['s'] = 'SELECT',
-  ['S'] = 'SELECT LINE',
-  [''] = 'SELECT BLOCK',
-  ['i'] = 'INSERT',
-  ['ic'] = 'INSERT',
-  ['R'] = 'REPLACE',
-  ['Rv'] = 'VISUAL REPLACE',
-  ['c'] = 'COMMAND',
-  ['cv'] = 'VIM EX',
-  ['ce'] = 'EX',
-  ['r'] = 'PROMPT',
-  ['rm'] = 'MOAR',
-  ['r?'] = 'CONFIRM',
-  ['!'] = 'SHELL',
-  ['t'] = 'TERMINAL',
-}
 --- @return string
-local function mode()
-  local current_mode = vim.api.nvim_get_mode().mode
-  return string.format(' %s', modes[current_mode]):upper()
+local function bar()
+  local mode = vim.fn.mode()
+  local hl_name = 'StatusBorderActive' .. mode
+  vim.api.nvim_set_hl(0, hl_name, { fg = stl.mode_colors[mode] })
+  return string.format('%%#%s# ▊%%*', hl_name)
 end
 
 --- @return string
@@ -294,12 +275,11 @@ StatusLine.render = function()
   local mode_str = vim.api.nvim_get_mode().mode
   if mode_str == 't' or mode_str == 'nt' then
     return table.concat({
-      '%#StatusLineBar#▊%*',
-      mode(),
+      bar(),
       '%=',
       '%=',
       location(),
-      '%#StatusLineBar#▊%*',
+      bar(),
     })
   end
 
@@ -307,18 +287,17 @@ StatusLine.render = function()
 
   if readeable_filetypes[vim.bo.filetype] or vim.o.modifiable == false then
     return table.concat({
-      '%#StatusLineBar#▊%*',
+      bar(),
       formatted_filetype('StatusLineMode'),
       '%=',
       '%=',
       location(),
-      '%#StatusLineBar#▊%*',
+      bar(),
     })
   end
 
   local statusline = {
-    '%#StatusLineBar#▊%*',
-    mode(),
+    bar(),
     git_branch(),
     filename(),
     git_diff(),
@@ -335,7 +314,7 @@ StatusLine.render = function()
     filetype(),
     lsp_clients(),
     location(),
-    '%#StatusLineBar#▊%*',
+    bar(),
   }
 
   return table.concat(statusline)
