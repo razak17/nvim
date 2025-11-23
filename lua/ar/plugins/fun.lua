@@ -3,7 +3,7 @@ local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 return {
   {
     'koron/nyancat-vim',
-    cond = function() ar.get_plugin_cond('nyancat-vim') end,
+    cond = function() return ar.get_plugin_cond('nyancat-vim') end,
     cmd = { 'Nyancat', 'Nyancat2' },
   },
   {
@@ -17,7 +17,7 @@ return {
   },
   {
     'tjdevries/sPoNGe-BoB.NvIm',
-    cond = function() ar.get_plugin_cond('sPoNGe-BoB.NvIm') end,
+    cond = function() return ar.get_plugin_cond('sPoNGe-BoB.NvIm') end,
     cmd = { 'SpOnGeBoBiFy' },
     init = function()
       ar.add_to_select_menu('toggle', { ['Toggle SpOnGeBoB'] = 'SpOnGeBoBiFy' })
