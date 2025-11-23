@@ -165,7 +165,35 @@ o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→', '↴'
 if not ar_config.plugin.custom.auto_cursorline.enable then
   o.cursorline = true
 end
-o.winborder = ar_config.ui.border -- Single border for windows
+local function safe_winborder()
+  local winborder_opts = {
+    'bold',
+    'single',
+    'double',
+    'rounded',
+    'solid',
+    'shadow',
+    'none'
+  }
+  if not vim.tbl_contains(winborder_opts, ar_config.ui.border) then
+    vim.schedule(
+      function()
+        vim.notify(
+          string.format(
+            "ar_config.ui.border value '%s' is invalid. Falling back to 'single'. Valid options are: %s",
+            ar_config.ui.border,
+            table.concat(winborder_opts, ', ')
+          ),
+          vim.log.levels.WARN,
+          { title = 'ar.nvim' }
+        )
+      end
+    )
+    return 'single'
+  end
+  return ar_config.ui.border
+end
+o.winborder = safe_winborder()
 --------------------------------------------------------------------------------
 -- List chars {{{1
 --------------------------------------------------------------------------------
@@ -194,7 +222,7 @@ o.cindent = true -- Increase indent on line after opening brace
 o.smartindent = true
 --------------------------------------------------------------------------------
 -- LSP autocompletion
-o.pumborder = ar_config.ui.border
+o.pumborder = safe_winborder()
 o.pumheight = 15
 o.confirm = true -- make vim prompt me to save before doing destructive things
 if ar_config.completion.variant == 'omnifunc' then o.complete = 'o' end
