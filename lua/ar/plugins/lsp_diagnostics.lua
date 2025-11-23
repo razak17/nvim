@@ -59,7 +59,7 @@ return {
         ['Trouble Diagnostics'] = 'TroubleToggle',
       })
     end,
-    cond = ar.lsp.enable,
+    cond = function() return ar.get_plugin_cond('trouble.nvim', ar.lsp.enable) end,
     cmd = { 'Trouble' },
     -- stylua: ignore
     keys = {

@@ -1,10 +1,13 @@
-local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
+local niceties = ar.plugins.niceties
 
 return {
   {
     desc = 'Display references, definitions and implementations of document symbols',
     'Wansmer/symbol-usage.nvim',
-    cond = ar.lsp.enable and niceties,
+    cond = function()
+      local condition = ar.lsp.enable and niceties
+      return ar.get_plugin_cond('symbol-usage.nvim', condition)
+    end,
     event = 'LspAttach',
     config = function()
       ar.highlight.plugin('symbol-usage', {
@@ -73,7 +76,10 @@ return {
     desc = 'A lightweight nvim plugin that displays fully customizeable contextual information about functions',
     'oribarilan/lensline.nvim',
     tag = '1.0.0',
-    cond = ar.lsp.enable and niceties,
+    cond = function()
+      local condition = ar.lsp.enable and niceties
+      return ar.get_plugin_cond('lensline.nvim', condition)
+    end,
     event = 'LspAttach',
     config = function() require('lensline').setup() end,
   },

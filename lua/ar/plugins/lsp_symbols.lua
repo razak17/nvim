@@ -22,13 +22,15 @@ return {
         ['Function References'] = 'FuncReferences',
       })
     end,
-    cond = ar.lsp.enable,
+    cond = function()
+      return ar.get_plugin_cond('hierarchy.nvim', ar.lsp.enable)
+    end,
     opts = {},
   },
   {
     desc = 'Flexible and sleek fuzzy picker, LSP symbol navigator, and more. inspired by Zed.',
     'bassamsdata/namu.nvim',
-    cond = ar.lsp.enable,
+    cond = function() return ar.get_plugin_cond('namu.nvim', ar.lsp.enable) end,
     cmd = { 'Namu' },
     -- stylua: ignore
     keys = function()

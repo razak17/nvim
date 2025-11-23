@@ -72,7 +72,9 @@ return {
   {
     {
       'williamboman/mason-lspconfig.nvim',
-      cond = ar.lsp.enable,
+      cond = function()
+        return ar.get_plugin_cond('mason-lspconfig.nvim', ar.lsp.enable)
+      end,
       event = { 'BufReadPre' },
       config = function()
         require('mason-lspconfig').setup({ automatic_enable = get_servers() })
@@ -80,7 +82,9 @@ return {
       dependencies = {
         {
           'neovim/nvim-lspconfig',
-          cond = ar.lsp.enable,
+          cond = function()
+            return ar.get_plugin_cond('nvim-lspconfig.nvim', ar.lsp.enable)
+          end,
           config = function()
             require('lspconfig.ui.windows').default_options.border = border
           end,
@@ -106,7 +110,9 @@ return {
       dependencies = { -- this will only be evaluated if nvim-cmp is enabled
         {
           'hrsh7th/cmp-nvim-lsp',
-          cond = ar.lsp.enable,
+          cond = function()
+            return ar.get_plugin_cond('cmp-nvim-lsp.nvim', ar.lsp.enable)
+          end,
           specs = {
             {
               'hrsh7th/nvim-cmp',
@@ -127,7 +133,11 @@ return {
       },
     },
   },
-  { 'mfussenegger/nvim-jdtls', ft = 'java', cond = ar.lsp.enable },
+  {
+    'mfussenegger/nvim-jdtls',
+    ft = 'java',
+    cond = function() return ar.get_plugin_cond('nvim-jdtls', ar.lsp.enable) end,
+  },
   {
     'smjonas/inc-rename.nvim',
     cmd = { 'IncRename' },

@@ -7,7 +7,10 @@ return {
       ar.add_to_select_menu('lsp', { ['Output Panel'] = 'OutputPanel' })
     end,
     event = 'LspAttach',
-    cond = not minimal and ar.lsp.enable,
+    cond = function()
+      local condition = not minimal and ar.lsp.enable
+      return ar.get_plugin_cond('output-panel.nvim', condition)
+    end,
     cmd = { 'OutputPanel' },
     opts = {},
     config = function(_, opts) require('output_panel').setup(opts) end,
