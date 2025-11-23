@@ -14,7 +14,7 @@ return {
       )
       ar.augroup('TransparentLightMode', {
         event = { 'ColorScheme' },
-        command = function(arg)
+        command = function()
           local bg =
             vim.api.nvim_get_option_value('background', { scope = 'global' })
           if bg == 'light' then
