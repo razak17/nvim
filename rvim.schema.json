@@ -1604,7 +1604,7 @@
       "additionalProperties": false,
       "properties": {
         "border": {
-          "enum": ["single", "rounded", "none"],
+          "enum": ["single", "rounded", "none", "double", "solid", "shadow"],
           "type": "string"
         },
         "cmdline": {

@@ -27,7 +27,7 @@ local env = vim.env
 ---@alias ArAISuggestions 'ghost-text' | 'completion'
 ---@alias ArAIWhichOpencode 'tui' | 'frontend'
 ---@alias ArExplorerRename 'local' | 'snacks'
----@alias ArWhichBorder 'single' | 'rounded' | 'none'
+---@alias ArWhichBorder 'single' | 'rounded' | 'none' | 'double' | 'solid' | 'shadow'
 ---@alias ArWhichBuffers 'snacks'
 ---@alias ArWhichCmdline 'builtin' | 'noice' | 'telescope-cmdline'
 ---@alias ArCompletion 'cmp' | 'blink' | 'mini.completion' | 'omnifunc'
