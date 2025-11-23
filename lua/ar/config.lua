@@ -540,6 +540,7 @@ local config = {
       'inlayhint-filler.nvim',
       'lsplinks.nvim',
       'neoconf.nvim',
+      'nvim-toggler',
       'nvim-ufo',
       'pair-lens.nvim',
       'persistent-breakpoints.nvim',

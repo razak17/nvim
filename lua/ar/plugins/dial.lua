@@ -1,18 +1,24 @@
 local get_cond = ar.get_plugin_cond
-local minimal = ar.plugins.minimal
+local coding = ar.plugins.coding
 
-local function inc(mode)
-  return function() require('dial.map').manipulate('increment', mode) end
+local function inc(mode, group_name)
+  group_name = group_name or 'default'
+  return function()
+    require('dial.map').manipulate('increment', mode, group_name)
+  end
 end
 
-local function dec(mode)
-  return function() require('dial.map').manipulate('decrement', mode) end
+local function dec(mode, group_name)
+  group_name = group_name or 'default'
+  return function()
+    require('dial.map').manipulate('decrement', mode, group_name)
+  end
 end
 
 return {
   {
     'monaqa/dial.nvim',
-    cond = function() return get_cond('dial.nvim', not minimal) end,
+    cond = function() return get_cond('dial.nvim', coding) end,
     keys = {
       { '<C-a>', inc('normal'), desc = 'dial: increment' },
       { '<C-x>', dec('normal'), desc = 'dial: decrement' },
@@ -22,6 +28,7 @@ return {
       { mode = { 'x' }, '<C-x>', dec('visual'), desc = 'dial: vdecrement' },
       { mode = { 'x' }, 'g<C-a>', inc('gvisual'), desc = 'dial: gvincrement' },
       { mode = { 'x' }, 'g<C-x>', dec('gvisual'), desc = 'dial: gvdecrement' },
+      { '<leader>ii', inc('normal', 'toggler'), desc = 'dial: toggles' },
     },
     config = function()
       local augend = require('dial.augend')
@@ -51,7 +58,43 @@ return {
         }),
       }
 
-      config.augends:register_group({ default = default })
+      local const = augend.constant.new
+      local toggler = {
+        const({ elements = { '==', '~=' }, cyclic = true }),
+        const({ elements = { '===', '!==' }, cyclic = true }),
+        const({ elements = { '!=', '==' }, cyclic = true }),
+        const({ elements = { 'true', 'false' }, cyclic = true }),
+        const({ elements = { 'True', 'False' }, cyclic = true }),
+        const({ elements = { 'yes', 'no' }, cyclic = true }),
+        const({ elements = { 'on', 'off' }, cyclic = true }),
+        const({ elements = { 'left', 'right' }, cyclic = true }),
+        const({ elements = { 'up', 'down' }, cyclic = true }),
+        const({ elements = { 'enable', 'disable' }, cyclic = true }),
+        const({ elements = { 'vim', 'emacs' }, cyclic = true }),
+        const({ elements = { 'let', 'const' }, cyclic = true }),
+        const({ elements = { 'margin', 'padding' }, cyclic = true }),
+        const({ elements = { '-', '+' }, cyclic = true }),
+        const({ elements = { 'onClick', 'onSubmit' }, cyclic = true }),
+        const({ elements = { 'public', 'private' }, cyclic = true }),
+        const({ elements = { 'string', 'int' }, cyclic = true }),
+        const({ elements = { 'leader', 'localleader' }, cyclic = true }),
+        const({ elements = { 'chore', 'feat' }, cyclic = true }),
+        const({ elements = { 'double', 'single' }, cyclic = true }),
+        const({ elements = { 'config', 'opts' }, cyclic = true }),
+        const({ elements = { 'pre', 'post' }, cyclic = true }),
+        const({ elements = { 'column', 'row' }, cyclic = true }),
+        const({ elements = { 'before', 'after' }, cyclic = true }),
+        const({ elements = { 'end', 'start' }, cyclic = true }),
+        const({ elements = { 'high', 'low' }, cyclic = true }),
+        const({ elements = { 'open', 'close' }, cyclic = true }),
+        const({ elements = { 'and', 'or' }, cyclic = true }),
+        const({ elements = { 'GET', 'POST' }, cyclic = true }),
+      }
+
+      config.augends:register_group({
+        default = default,
+        toggler = toggler,
+      })
 
       local operators = augend.constant.new({
         elements = { '&&', '||' },
@@ -105,6 +148,39 @@ return {
           'astro',
         })
         :each(function(ft) config.augends:on_filetype({ [ft] = ts }) end)
+
+      local const = augend.constant.new
+      local toggler = {
+        const({ elements = { '==', '~=' }, cyclic = true }),
+        const({ elements = { '===', '!==' }, cyclic = true }),
+        const({ elements = { '!=', '==' }, cyclic = true }),
+        const({ elements = { 'true', 'false' }, cyclic = true }),
+        const({ elements = { 'True', 'False' }, cyclic = true }),
+        const({ elements = { 'yes', 'no' }, cyclic = true }),
+        const({ elements = { 'on', 'off' }, cyclic = true }),
+        const({ elements = { 'left', 'right' }, cyclic = true }),
+        const({ elements = { 'up', 'down' }, cyclic = true }),
+        const({ elements = { 'enable', 'disable' }, cyclic = true }),
+        const({ elements = { 'vim', 'emacs' }, cyclic = true }),
+        const({ elements = { 'let', 'const' }, cyclic = true }),
+        const({ elements = { 'margin', 'padding' }, cyclic = true }),
+        const({ elements = { '-', '+' }, cyclic = true }),
+        const({ elements = { 'onClick', 'onSubmit' }, cyclic = true }),
+        const({ elements = { 'public', 'private' }, cyclic = true }),
+        const({ elements = { 'string', 'int' }, cyclic = true }),
+        const({ elements = { 'leader', 'localleader' }, cyclic = true }),
+        const({ elements = { 'chore', 'feat' }, cyclic = true }),
+        const({ elements = { 'double', 'single' }, cyclic = true }),
+        const({ elements = { 'config', 'opts' }, cyclic = true }),
+        const({ elements = { 'pre', 'post' }, cyclic = true }),
+        const({ elements = { 'column', 'row' }, cyclic = true }),
+        const({ elements = { 'before', 'after' }, cyclic = true }),
+        const({ elements = { 'end', 'start' }, cyclic = true }),
+        const({ elements = { 'high', 'low' }, cyclic = true }),
+        const({ elements = { 'open', 'close' }, cyclic = true }),
+        const({ elements = { 'and', 'or' }, cyclic = true }),
+        const({ elements = { 'GET', 'POST' }, cyclic = true }),
+      }
     end,
   },
 }
