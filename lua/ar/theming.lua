@@ -6,11 +6,13 @@ local function generate_popup_overrides()
     { FloatTitle = { bg = { from = 'Visual' }, fg = { from = 'Type' } } },
   }
 
+  local bg = vim.api.nvim_get_option_value('background', { scope = 'global' })
+
   if variant == 'fill' then
     ar.list_insert(overrides, {
       {
         NormalFloat = {
-          bg = { from = 'Normal', alter = 0.1 },
+          bg = { from = 'Normal', alter = bg == 'dark' and 0.25 or -0.1 },
           fg = { from = 'Normal', alter = -0.15 },
         },
       },

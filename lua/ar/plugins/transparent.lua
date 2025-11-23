@@ -33,6 +33,7 @@ return {
         'PopupBorder',
         'NormalFloat',
         'FloatBorder',
+        'FloatShadow',
         'NeoTreeTabInactive',
         'NoiceMini',
         'NoicePopupBaseGroup',
