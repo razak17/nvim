@@ -37,7 +37,10 @@ return {
   },
   {
     'chrisgrieser/nvim-spider',
-    cond = not ar.plugins.minimal and ar.plugins.niceties,
+    cond = function()
+      local condition = not minimal and ar.plugins.niceties
+      return ar.get_plugin_cond('nvim-spider', condition)
+    end,
     -- stylua: ignore
     keys = {
       { 'w', "<cmd>lua require('spider').motion('w')<CR>", mode = { 'x', 'n', 'o' }, },

@@ -37,7 +37,10 @@ return {
   },
   {
     'rubiin/highlighturl.nvim',
-    cond = not minimal and niceties,
+    cond = function()
+      local condition = not minimal and niceties
+      return ar.get_plugin_cond('highlighturl.nvim', condition)
+    end,
     event = 'ColorScheme',
     config = function()
       vim.g.highlighturl = true

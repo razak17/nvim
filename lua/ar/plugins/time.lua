@@ -5,7 +5,10 @@ return {
   -- Config Time
   {
     'sammce/fleeting.nvim',
-    cond = not minimal and niceties,
+    cond = function()
+      local condition = not minimal and niceties
+      return ar.get_plugin_cond('fleeting.nvim', condition)
+    end,
     lazy = false,
     init = function()
       ar.add_to_select_menu(
@@ -16,7 +19,10 @@ return {
   },
   {
     'mrquantumcodes/configpulse',
-    cond = not minimal and niceties,
+    cond = function()
+      local condition = not minimal and niceties
+      return ar.get_plugin_cond('configpulse', condition)
+    end,
     lazy = false,
     init = function()
       ar.add_to_select_menu('command_palette', {
@@ -26,7 +32,10 @@ return {
   },
   {
     'blumaa/ohne-accidents',
-    cond = not minimal and niceties,
+    cond = function()
+      local condition = not minimal and niceties
+      return ar.get_plugin_cond('ohne-accidents', condition)
+    end,
     cmd = { 'OhneAccidents' },
     opts = { welcomeOnStartup = false },
     init = function()

@@ -37,7 +37,10 @@ return {
   {
     desc = 'LSP diagnostics in virtual text at the top right of your screen',
     'dgagn/diagflow.nvim',
-    cond = enabled and niceties,
+    cond = function()
+      local condition = enabled and niceties
+      return ar.get_plugin_cond('diagflow.nvim', condition)
+    end,
     event = 'LspAttach',
     opts = {
       format = function(diagnostic)
