@@ -1,7 +1,11 @@
 local minimal = ar.plugins.minimal
 
 return {
-  { 'tyru/capture.vim', cmd = { 'Capture' } },
+  {
+    'tyru/capture.vim',
+    cmd = { 'Capture' },
+    cond = function() return ar.get_plugin_cond('capture.vim') end,
+  },
   {
     'ariel-frischer/bmessages.nvim',
     cond = function() return ar.get_plugin_cond('bmessages.nvim', not minimal) end,

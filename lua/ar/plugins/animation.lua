@@ -81,19 +81,28 @@ end
 return {
   {
     'anuvyklack/animation.nvim',
-    cond = not minimal and niceties,
+    cond = function()
+      local condition = not minimal and niceties
+      return ar.get_plugin_cond('animation.nvim', condition)
+    end,
     keys = { { '<leader>Aa', redraw_buffer, desc = 'animation: start' } },
     dependencies = { 'anuvyklack/middleclass' },
   },
   {
     'letieu/hacker.nvim',
-    cond = not minimal and niceties,
+    cond = function()
+      local condition = not minimal and niceties
+      return ar.get_plugin_cond('hacker.nvim', condition)
+    end,
     event = 'VeryLazy',
     cmd = { 'Hack', 'HackAuto', 'HackFollow' },
   },
   {
     'eandrju/cellular-automaton.nvim',
-    cond = not minimal,
+    cond = function()
+      local condition = not minimal
+      return ar.get_plugin_cond('cellular-automaton.nvim', condition)
+    end,
     cmd = 'CellularAutomaton',
     -- stylua: ignore
     keys = {

@@ -7,7 +7,7 @@ end
 return {
   {
     'folke/flash.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('flash.nvim', not minimal) end,
     keys = {
       { mode = { 'n', 'x' }, 's', f('jump') },
       { 'S', f('treesitter') },
@@ -56,7 +56,7 @@ return {
   },
   {
     'ysmb-wtsg/in-and-out.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('in-and-out.nvim', not minimal) end,
     -- stylua: ignore
     keys = {
       { mode = 'i', '<C-\\>', function() require('in-and-out').in_and_out() end },

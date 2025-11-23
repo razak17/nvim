@@ -2,6 +2,11 @@ local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
   {
+    'Rasukarusan/nvim-block-paste',
+    cond = function() return ar.get_plugin_cond('nvim-block-paste') end,
+    cmd = { 'Block' },
+  },
+  {
     'koron/nyancat-vim',
     cond = function() return ar.get_plugin_cond('nyancat-vim') end,
     cmd = { 'Nyancat', 'Nyancat2' },

@@ -5,7 +5,7 @@ return {
   -- Find And Replace
   {
     'MagicDuck/grug-far.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('grug-far.nvim', not minimal) end,
     cmd = { 'GrugFar', 'GrugFarWithin' },
     opts = {
       startInInsertMode = false,
@@ -26,13 +26,13 @@ return {
   },
   {
     'AckslD/muren.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('muren.nvim', not minimal) end,
     cmd = { 'MurenToggle', 'MurenUnique', 'MurenFresh' },
     opts = {},
   },
   {
     'gbprod/substitute.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('substitute.nvim', not minimal) end,
     keys = {
       { 'cx', "<cmd>lua require('substitute').operator()<cr>", mode = 'n' },
       { 'cx', "<cmd>lua require('substitute').visual()<cr>", mode = 'x' },

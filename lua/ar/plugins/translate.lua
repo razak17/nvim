@@ -5,7 +5,7 @@ return {
   --------------------------------------------------------------------------------
   {
     'potamides/pantran.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('pantran.nvim', not minimal) end,
     init = function()
       vim.g.whichkey_add_spec({ '<leader><leader>T', group = 'Translate' })
     end,
@@ -58,7 +58,9 @@ return {
   },
   {
     'coffebar/crowtranslate.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('crowtranslate.nvim', not minimal)
+    end,
     cmd = { 'CrowTranslate' },
     opts = {
       language = 'es',

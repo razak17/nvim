@@ -4,7 +4,9 @@ return {
   {
     -- 'mawkler/demicolon.nvim',
     'razak17/demicolon.nvim',
-    cond = ar.treesitter.enable,
+    cond = function()
+      return ar.get_plugin_cond('demicolon.nvim', ar.treesitter.enable)
+    end,
     -- stylua: ignore
     init = function()
       map({ 'n', 'x', 'o' }, ';n', function () require('demicolon.repeat_jump').forward() end, { desc = 'demicolon: forward' })

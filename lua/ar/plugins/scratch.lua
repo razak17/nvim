@@ -7,6 +7,7 @@ return {
   ------------------------------------------------------------------------------
   {
     'LintaoAmons/scratch.nvim',
+    cond = function() return ar.get_plugin_cond('scratch.nvim') end,
     cmd = { 'Scratch', 'ScratchPad', 'ScratchOpen' },
     keys = { { '<c-w>O', ':Scratch<cr>', desc = 'scratch: new' } },
   },
@@ -18,6 +19,7 @@ return {
   },
   {
     'yarospace/lua-console.nvim',
+    cond = function() return ar.get_plugin_cond('lua-console.nvim') end,
     keys = { { '<leader>ok', desc = 'lua-console: toggle' } },
     opts = {
       buffer = {

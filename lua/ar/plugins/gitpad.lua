@@ -1,6 +1,7 @@
 return {
   {
     'yujinyuz/gitpad.nvim',
+    cond = function() return ar.get_plugin_cond('gitpad.nvim') end,
     init = function()
       vim.g.whichkey_add_spec({ '<localleader>p', group = 'Pad' })
     end,

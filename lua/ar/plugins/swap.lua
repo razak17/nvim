@@ -15,6 +15,7 @@ return {
   },
   {
     'Wansmer/sibling-swap.nvim',
+    cond = function() return ar.get_plugin_cond('sibling-swap.nvim') end,
     -- stylua: ignore
     keys = {
       { '<leader>ih', function() require('sibling-swap').swap_with_left() end, desc = 'sibling-swap: swap left', },

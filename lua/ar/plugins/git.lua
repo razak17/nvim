@@ -56,7 +56,7 @@ return {
             {
               NeogitHunkHeader = {
                 inherit = 'IncSearch',
-                bg = { from = 'IncSearch', attr = 'bg', alter = -0.35 },
+                bg = { from = 'IncSearch', attr = 'bg', alter = -0.25 },
               },
             },
             { NeogitChangeAdded = { fg = { from = 'DiffAdd' } } },

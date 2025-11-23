@@ -173,7 +173,7 @@ local function safe_winborder()
     'rounded',
     'solid',
     'shadow',
-    'none'
+    'none',
   }
   if not vim.tbl_contains(winborder_opts, ar_config.ui.border) then
     vim.schedule(

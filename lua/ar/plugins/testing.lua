@@ -37,7 +37,7 @@ map(
 return {
   {
     'nvim-neotest/neotest',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('neotest', not minimal) end,
     init = function()
       vim.g.whichkey_add_spec({
         { '<leader>t', group = 'Testing' },
@@ -132,7 +132,7 @@ return {
   },
   {
     'vim-test/vim-test',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('vim-test', not minimal) end,
     init = function()
       vim.g.whichkey_add_spec({
         { '<leader>tv', group = 'Vim-test' },
@@ -168,7 +168,7 @@ return {
   },
   {
     'stevearc/overseer.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('overseer.nvim', not minimal) end,
     init = function()
       vim.g.whichkey_add_spec({
         { '<leader>to', group = 'Overseer' },
@@ -237,7 +237,7 @@ return {
   },
   {
     'andythigpen/nvim-coverage',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('nvim-coverage', not minimal) end,
     init = function()
       vim.g.whichkey_add_spec({
         { '<leader>tc', group = 'Coverage' },
@@ -309,7 +309,7 @@ return {
   },
   {
     'quolpr/quicktest.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('quicktest.nvim', not minimal) end,
     init = function()
       vim.g.whichkey_add_spec({
         { '<leader>tq', group = 'Quicktest' },

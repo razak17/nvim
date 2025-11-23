@@ -3,12 +3,13 @@ local minimal = ar.plugins.minimal
 return {
   {
     'emmanueltouzery/apidocs.nvim',
+    cond = function() return ar.get_plugin_cond('apidocs.nvim') end,
     cmd = { 'ApidocsInstall', 'ApidocsOpen' },
     opts = {},
   },
   {
     'maskudo/devdocs.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('devdocs.nvim', not minimal) end,
     -- lazy = false,
     cmd = { 'DevDocs' },
     init = function()

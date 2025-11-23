@@ -3,6 +3,7 @@ local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 return {
   {
     'tpope/vim-eunuch',
+    cond = function() return ar.get_plugin_cond('vim-eunuch') end,
     cmd = {
       'Cfind',
       'Chmod',

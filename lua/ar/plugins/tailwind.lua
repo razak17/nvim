@@ -97,6 +97,7 @@ return {
   },
   {
     'atiladefreitas/tinyunit',
+    cond = function() return ar.get_plugin_cond('tinyunit') end,
     keys = {
       { '<leader>tu', desc = 'tinyunit: open', mode = { 'n', 'x' } },
     },

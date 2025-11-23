@@ -25,7 +25,7 @@ return {
   {
     'laytan/cloak.nvim',
     cond = function()
-      if minimal then return true end
+      if minimal then return ar.get_plugin_cond('cloak.nvim') end
       return get_cond('cloak.nvim', 'cloak')
     end,
     lazy = false,

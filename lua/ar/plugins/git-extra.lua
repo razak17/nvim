@@ -27,7 +27,7 @@ return {
       ar.add_to_select_menu('git', { ['View Branch Graph'] = 'Flog' })
     end,
     cmd = { 'Flog', 'Flogsplit', 'Floggit' },
-    dependencies = { 'tpope/vim-fugitive' },
+    dependencies = { 'tpope/vim-fugitive', 'tpope/vim-rhubarb' },
   },
   {
     'SuperBo/fugit2.nvim',
@@ -37,6 +37,7 @@ return {
   },
   {
     'Mauritz8/gitstatus.nvim',
+    cond = function() return git_cond('gitstatus.nvim') end,
     cmd = { 'Gitstatus' },
     keys = {
       { '<localleader>gg', vim.cmd.Gitstatus, desc = 'open commit buffer' },

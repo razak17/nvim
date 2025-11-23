@@ -1265,6 +1265,12 @@
           },
           "type": "array"
         },
+        "override": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "modules": {
           "additionalProperties": false,
           "properties": {

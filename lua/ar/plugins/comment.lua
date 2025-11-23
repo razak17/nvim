@@ -16,6 +16,9 @@ return {
   },
   {
     'JoosepAlviste/nvim-ts-context-commentstring',
+    cond = function()
+      return ar.get_plugin_cond('nvim-ts-context-commentstring')
+    end,
     opts = { enable_autocmd = false },
     config = function(_, opts)
       vim.g.skip_ts_context_commentstring_module = true
@@ -24,7 +27,7 @@ return {
   },
   {
     's1n7ax/nvim-comment-frame',
-    cond = enabled,
+    cond = function() return ar.get_plugin_cond('nvim-comment-frame', enabled) end,
     keys = {
       {
         '<localleader>cf',

@@ -2,7 +2,6 @@ local fn = vim.fn
 local cwd = fn.getcwd()
 local fmt = string.format
 local border = ar.ui.current.border.default
-local lsp_override = ar_config.lsp.override
 local ar_lsp = ar_config.lsp.lang
 local minimal = ar.plugins.minimal
 local enabled = not minimal and ar.lsp.enable
@@ -34,7 +33,7 @@ local function is_enabled(name)
   if name == 'copilot' and not ar.ai.enable then return false end
   local disabled = ar.lsp_disabled(name)
   local override = ar_config.lsp.override
-  if vim.tbl_contains(lsp_override, name) and not disabled then return true end
+  if vim.tbl_contains(override, name) and not disabled then return true end
   if not ar.falsy(override) then return vim.tbl_contains(override, name) end
   if ar.lsp_disabled(name) then return false end
   if ar.dir_lsp_disabled(cwd) then return false end

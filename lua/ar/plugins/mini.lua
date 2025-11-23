@@ -31,6 +31,7 @@ return {
   },
   {
     'nvim-mini/mini.splitjoin',
+    cond = function() return ar.get_plugin_cond('mini.splitjoin') end,
     keys = { { '<leader>J', desc = 'splitjoin: toggle' } },
     opts = { mappings = { toggle = '<leader>J' } },
   },

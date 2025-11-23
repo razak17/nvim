@@ -265,6 +265,9 @@ end
 ---@return boolean disabled # Whether the plugin is disabled.
 function ar.get_plugin_cond(plugin, cond)
   local disabled = ar.plugin_disabled(plugin)
+  local override = ar_config.plugins.override
+  if vim.tbl_contains(override, plugin) and not disabled then return true end
+  if not ar.falsy(override) then return vim.tbl_contains(override, plugin) end
   if disabled then return false end
   if cond == nil then cond = true end
   return cond

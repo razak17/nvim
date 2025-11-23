@@ -8,7 +8,7 @@ return {
   --------------------------------------------------------------------------------
   {
     'razak17/jaq-nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('jaq-nvim', not minimal) end,
     cmd = 'Jaq',
     keys = {
       { '<leader>rb', ':silent only | Jaq<CR>', desc = 'jaq: run' },
@@ -37,6 +37,9 @@ return {
   },
   {
     'jellydn/quick-code-runner.nvim',
+    cond = function()
+      return ar.get_plugin_cond('quick-code-runner.nvim', not minimal)
+    end,
     opts = { debug = true },
     init = function()
       ar.add_to_select_menu(
@@ -45,7 +48,6 @@ return {
       )
     end,
     cmd = { 'QuickCodeRunner', 'QuickCodePad' },
-    cond = not minimal,
     keys = {
       {
         mode = 'v',
@@ -112,7 +114,7 @@ return {
   {
     -- 'google/executor.nvim',
     'razak17/executor.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('executor.nvim', not minimal) end,
     init = function()
       vim.g.whichkey_add_spec({ '<leader><leader>x', group = 'Executor' })
     end,
@@ -149,7 +151,7 @@ return {
     'michaelb/sniprun',
     build = 'sh install.sh',
     cmd = { 'SnipRun', 'SnipInfo' },
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('sniprun', not minimal) end,
     init = function()
       vim.g.whichkey_add_spec({ '<leader>rs', group = 'SnipRun' })
     end,
@@ -177,7 +179,9 @@ return {
   },
   {
     'ej-shafran/compile-mode.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('compile-mode.nvim', not minimal)
+    end,
     cmd = { 'Compile', 'Recompile' },
     opts = { default_command = '' },
     dependencies = {
@@ -187,7 +191,9 @@ return {
   -- https://github.com/CRAG666/dotfiles/blob/main/config/nvim/lua/plugins/dev/code_runner.lua
   {
     'CRAG666/code_runner.nvim',
-    cond = not minimal,
+    cond = function()
+      return ar.get_plugin_cond('code_runner.nvim', not minimal)
+    end,
     -- stylua: ignore
     keys = {
       { '<leader>rc', function() require('code_runner').run_code() end, desc = 'code runner: run code' },

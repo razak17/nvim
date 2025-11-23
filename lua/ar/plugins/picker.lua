@@ -123,7 +123,7 @@ return {
     cond = function()
       if ar_config.picker.variant == 'fzf-lua' then return true end
       if ar_config.picker.files == 'fzf-lua' then return true end
-      return not minimal
+      return ar.get_plugin_cond('fzf-lua', not minimal)
     end,
     init = function()
       vim.g.whichkey_add_spec({
@@ -459,7 +459,7 @@ return {
   },
   {
     'piersolenski/import.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('import.nvim', not minimal) end,
     keys = { { '<leader>fi', '<Cmd>Import<CR>', desc = 'import' } },
     cmd = { 'Import' },
     opts = {
@@ -470,6 +470,7 @@ return {
   },
   {
     'dmtrKovalenko/fff.nvim',
+    cond = function() return ar.get_plugin_cond('fff.nvim') end,
     build = 'cargo build --release',
     cmd = { 'FFFFind' },
     keys = function()

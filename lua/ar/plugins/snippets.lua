@@ -53,6 +53,7 @@ return {
   },
   {
     's1n7ax/nvim-snips',
+    cond = function() return ar.get_plugin_cond('nvim-snips') end,
     name = 'snips',
     dependencies = { 'razak17/nvim-ts-utils' },
   },

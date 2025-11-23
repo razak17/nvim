@@ -64,6 +64,7 @@ end
 return {
   {
     'mason-org/mason.nvim',
+    cond = function() return ar.get_plugin_cond('mason.nvim') end,
     lazy = false,
     keys = { { '<leader>lm', '<cmd>Mason<CR>', desc = 'mason info' } },
     build = ':MasonUpdate',
@@ -97,11 +98,13 @@ return {
   },
   {
     'Zeioth/mason-extra-cmds',
+    cond = function() return ar.get_plugin_cond('mason-extra-cmds') end,
     cmd = 'MasonUpdateAll', -- this cmd is provided by mason-extra-cmds
     opts = {},
   },
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
+    cond = function() return ar.get_plugin_cond('mason-tool-installer.nvim') end,
     cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
     opts = function(_, opts)
       opts.run_on_start = false

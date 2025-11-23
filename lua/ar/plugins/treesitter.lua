@@ -32,7 +32,9 @@ return {
   {
     {
       'nvim-treesitter/nvim-treesitter',
-      cond = ts_enabled,
+      cond = function()
+        return ar.get_plugin_cond('nvim-treesitter', ts_enabled)
+      end,
       branch = 'main',
       lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
       event = { 'VeryLazy' },
@@ -309,7 +311,10 @@ return {
   },
   {
     'windwp/nvim-ts-autotag',
-    cond = coding and ts_extra_enabled,
+    cond = function()
+      local condition = coding and ts_extra_enabled
+      return ar.get_plugin_cond('nvim-ts-autotag', condition)
+    end,
     ft = {
       'typescriptreact',
       'javascript',

@@ -3,12 +3,13 @@ local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 return {
   {
     'mrjones2014/smart-splits.nvim',
+    cond = function() return ar.get_plugin_cond('smart-splits.nvim') end,
     opts = {},
     build = './kitty/install-kittens.bash',
   },
   {
     'anuvyklack/windows.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('windows.nvim', not minimal) end,
     init = function()
       vim.g.whichkey_add_spec({ '<leader>wm', group = 'Maximizer' })
       ar.add_to_select_menu('command_palette', {
@@ -33,6 +34,7 @@ return {
   },
   {
     'sindrets/winshift.nvim',
+    cond = function() return ar.get_plugin_cond('winshift.nvim') end,
     cmd = { 'WinShift' },
     -- stylua: ignore
     keys = {
@@ -47,7 +49,10 @@ return {
   },
   {
     'nvim-zh/colorful-winsep.nvim',
-    cond = not minimal and niceties,
+    cond = function()
+      local condtion = not minimal and niceties
+      return ar.get_plugin_cond('winshift.nvim', condtion)
+    end,
     event = { 'WinNew' },
     opts = function()
       return {

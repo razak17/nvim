@@ -1,6 +1,7 @@
 return {
   {
     'nvim-mini/mini.surround',
+    cond = function() return ar.get_plugin_cond('mini.surround') end,
     keys = function(_, keys)
       -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/extras/coding/mini-surround.lua#L9
       local opts = ar.opts('mini.surround')

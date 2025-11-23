@@ -63,6 +63,7 @@ return {
   },
   {
     'mikesmithgh/kitty-scrollback.nvim',
+    cond = function() return ar.get_plugin_cond('kitty-scrollback.nvim') end,
     cmd = { 'KittyScrollbackGenerateKittens', 'KittyScrollbackCheckHealth' },
     event = { 'User KittyScrollbackLaunch' },
     config = function()

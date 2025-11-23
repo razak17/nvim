@@ -3,6 +3,7 @@ local api = vim.api
 return {
   {
     's1n7ax/nvim-window-picker',
+    cond = function() return ar.get_plugin_cond('nvim-window-picker') end,
     version = '2.*',
     keys = {
       {

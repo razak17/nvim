@@ -4,6 +4,7 @@ local border = ar.ui.current.border.default
 return {
   {
     'folke/snacks.nvim',
+    cond = function() return ar.get_plugin_cond('snacks.nvim') end,
     priority = 1000,
     lazy = false,
     keys = {

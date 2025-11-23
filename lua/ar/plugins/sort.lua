@@ -4,6 +4,7 @@ return {
   ------------------------------------------------------------------------------
   {
     'sQVe/sort.nvim',
+    cond = function() return ar.get_plugin_cond('sort.nvim') end,
     cmd = { 'Sort' },
     -- stylua: ignore
     init = function()
@@ -19,6 +20,7 @@ return {
   },
   {
     'mtrajano/tssorter.nvim',
+    cond = function() return ar.get_plugin_cond('tssorter.nvim') end,
     -- stylua: ignore
     keys = {
       { '<leader>is', function() require('tssorter').sort() end, desc = 'tssorter: sort' },

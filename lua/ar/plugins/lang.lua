@@ -7,8 +7,16 @@ return {
   ------------------------------------------------------------------------------
   -- Filetype Plugins {{{1
   ------------------------------------------------------------------------------
-  { 'razak17/slides.nvim', ft = 'slide' },
-  { 'fladson/vim-kitty', ft = 'kitty' },
+  {
+    'razak17/slides.nvim',
+    ft = 'slide',
+    cond = function() return ar.get_plugin_cond('slides.nvim') end,
+  },
+  {
+    'fladson/vim-kitty',
+    ft = 'kitty',
+    cond = function() return ar.get_plugin_cond('vim-kitty') end,
+  },
   {
     'raimon49/requirements.txt.vim',
     cond = function()
@@ -24,7 +32,11 @@ return {
   },
   -- Web Dev (Typescript)
   --------------------------------------------------------------------------------
-  { 'brianhuster/live-preview.nvim', cmd = { 'LivePreview' } },
+  {
+    'brianhuster/live-preview.nvim',
+    cmd = { 'LivePreview' },
+    cond = function() return ar.get_plugin_cond('live-preview') end,
+  },
   {
     'Redoxahmii/json-to-types.nvim',
     cond = function()
@@ -214,6 +226,7 @@ return {
   },
   {
     '2nthony/sortjson.nvim',
+    cond = function() return ar.get_plugin_cond('sortjson.nvim') end,
     cmd = {
       'SortJSONByAlphaNum',
       'SortJSONByAlphaNumReverse',
@@ -224,6 +237,7 @@ return {
   },
   {
     'razak17/stringbreaker.nvim',
+    cond = function() return ar.get_plugin_cond('stringbreaker.nvim') end,
     cmd = { 'BreakString', 'SaveString' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function() require('string-breaker').setup() end,
@@ -286,12 +300,14 @@ return {
   },
   {
     'jack-rabe/impl.nvim',
+    cond = function() return ar.get_plugin_cond('impl.nvim') end,
     ft = 'go',
     cmd = { 'ImplGenerate', 'ImplSearch' },
     opts = {},
   },
   {
     'fredrikaverpil/godoc.nvim',
+    cond = function() return ar.get_plugin_cond('godoc.nvim') end,
     cmd = { 'GoDoc' }, -- optional
     version = '*',
     build = 'go install github.com/lotusirous/gostdsym/stdsym@latest', -- optional
@@ -350,6 +366,7 @@ return {
   },
   {
     'hat0uma/csvview.nvim',
+    cond = function() return ar.get_plugin_cond('csvview.nvim') end,
     cmd = { 'CsvViewToggle', 'CsvViewEnable', 'CsvViewDisable' },
     config = function() require('csvview').setup() end,
   },

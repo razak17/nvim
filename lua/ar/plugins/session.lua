@@ -63,7 +63,7 @@ return {
       'nvim-telescope/telescope.nvim',
       optional = true,
       opts = function(_, opts)
-        return get_cond('persisted')
+        return get_cond('persisted.nvim', 'persisted')()
             and vim.g.telescope_add_extension({ 'persisted' }, opts, {
               persisted = ar.telescope.dropdown(),
             })

@@ -21,6 +21,7 @@ return {
   },
   {
     'hamidi-dev/org-list.nvim',
+    cond = function() return ar.get_plugin_cond('org-list.nvim') end,
     keys = { { '<leader>oh', desc = 'org-list: toggle checkbox' } },
     opts = { checkbox_toggle = { key = '<leader>oh' } },
     dependencies = { 'tpope/vim-repeat' },

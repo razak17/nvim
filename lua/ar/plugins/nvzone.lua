@@ -1,20 +1,20 @@
 local minimal = ar.plugins.minimal
 
 return {
-  'nvzone/volt',
   {
     'nvzone/timerly',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('timerly', not minimal) end,
     cmd = 'TimerlyToggle',
     init = function()
       ar.add_to_select_menu('command_palette', {
         ['Toggle Timer'] = 'TimerlyToggle',
       })
     end,
+    dependencies = { 'nvzone/volt' },
   },
   {
     'nvzone/showkeys',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('showkeys', not minimal) end,
     init = function()
       ar.add_to_select_menu(
         'command_palette',
@@ -27,10 +27,11 @@ return {
       timeout = 1,
       maxkeys = 17,
     },
+    dependencies = { 'nvzone/volt' },
   },
   {
     'nvzone/minty',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('minty', not minimal) end,
     cmd = { 'Shades', 'Huefy' },
     init = function()
       ar.add_to_select_menu('toggle', {
@@ -48,5 +49,6 @@ return {
       require('minty.huefy').open()
       require('minty.shades').open()
     end,
+    dependencies = { 'nvzone/volt' },
   },
 }

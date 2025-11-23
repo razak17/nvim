@@ -4,7 +4,7 @@ return {
   {
     'mistweaverco/kulala.nvim',
     branch = 'develop',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('kulala.nvim', not minimal) end,
     ft = { 'http' },
     init = function()
       vim.g.whichkey_add_spec({ '<leader>rk', group = 'Kulala' })
@@ -29,7 +29,7 @@ return {
   },
   {
     'zerochae/endpoint.nvim',
-    cond = not minimal,
+    cond = function() return ar.get_plugin_cond('endpoint.nvim', not minimal) end,
     cmd = { 'Endpoint', 'EndpointRefresh' },
     opts = {},
   },

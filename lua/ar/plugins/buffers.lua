@@ -13,6 +13,7 @@ end
 return {
   {
     'jackMort/tide.nvim',
+    cond = function() return ar.get_plugin_cond('tide.nvim') end,
     -- event = 'VeryLazy',
     init = function()
       vim.g.whichkey_add_spec({

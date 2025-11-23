@@ -15,7 +15,10 @@ local function cond(server, plugin)
 end
 
 return {
-  'dmmulroy/ts-error-translator.nvim',
+  {
+    'dmmulroy/ts-error-translator.nvim',
+    cond = function() return ar.get_plugin_cond('ts-error-translator.nvim') end,
+  },
   {
     'yioneko/nvim-vtsls',
     cond = function() return cond('vtsls', 'nvim-vtsls') end,

@@ -8,6 +8,7 @@ return {
   },
   {
     'neuromaancer/readup.nvim',
+    cond = function() return ar.get_plugin_cond('readup.nvim') end,
     cmd = { 'Readup', 'ReadupBrowser' },
     opts = { float = true },
   },

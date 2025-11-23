@@ -1,7 +1,11 @@
 local coding = ar.plugins.coding
 
 return {
-  { 'ragnarok22/whereami.nvim', cmd = 'Whereami' },
+  {
+    'ragnarok22/whereami.nvim',
+    cmd = 'Whereami',
+    cond = function() return ar.get_plugin_cond('whereami.nvim') end,
+  },
   {
     'nvim-treesitter/nvim-treesitter-context',
     cond = function()

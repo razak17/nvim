@@ -72,6 +72,7 @@ return {
   },
   {
     'carldaws/surface.nvim',
+    cond = function() return ar.get_plugin_cond('surface.nvim') end,
     keys = {
       {
         '<localleader>o/',

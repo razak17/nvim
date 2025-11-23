@@ -64,7 +64,9 @@ return {
   {
     desc = 'Fully customizable previewer for LSP code actions.',
     'aznhe21/actions-preview.nvim',
-    cond = enabled,
+    cond = function()
+      return ar.get_plugin_cond('actions-preview.nvim', enabled)
+    end,
     -- stylua: ignore
     keys = { { '<leader>lap', function() require('actions-preview').code_actions() end, desc = 'code action preview' }, },
     opts = {

@@ -54,7 +54,10 @@ end
 return {
   {
     'saghen/blink.cmp',
-    cond = ar.completion.enable and not minimal and is_blink,
+    cond = function()
+      local condition = ar.completion.enable and not minimal and is_blink
+      return ar.get_plugin_cond('blink.cmp', condition)
+    end,
     event = { 'InsertEnter', 'CmdlineEnter' },
     version = '*', -- REQUIRED `version` needed to download pre-built binary
     opts_extend = {

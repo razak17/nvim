@@ -526,6 +526,7 @@ local config = {
     },
   },
   plugins = {
+    override = {},
     disabled = {
       'VectorCode',
       'btw.nvim',
