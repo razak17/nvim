@@ -44,7 +44,7 @@ return {
         mode = { 'n', 'x' },
       })
     end,
-    cond = function() return get_cond('yanky.nvim', not minimal) end,
+    cond = function() return get_cond('yanky.nvim') end,
     -- stylua: ignore
     keys = {
       { mode = { 'n', 'x' }, 'p', '<Plug>(YankyPutAfter)', desc = 'yanky: put after', },
