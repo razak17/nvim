@@ -86,6 +86,10 @@ return {
         end,
       })
 
+      ar.add_to_select_menu('command_palette', {
+        ['Close Other Buffers'] = function() Snacks.bufdelete.other() end,
+      })
+
       ar.add_to_select_menu('toggle', {
         ['Toggle Light/Dark Background'] = function()
           Snacks.toggle.option(
