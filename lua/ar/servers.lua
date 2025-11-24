@@ -366,6 +366,7 @@ local servers = {
       },
       javascript = {
         updateImportsOnFileMove = { enabled = 'always' },
+        preferences = { useAliasesForRenames = false },
         suggest = { completeFunctionCalls = true },
         inlayHints = {
           parameterNames = {
