@@ -75,6 +75,7 @@ local servers = {
   css_variables = {},
   denols = {},
   dockerls = {},
+  expert = {},
   -- golangci_lint_ls = {},
   marksman = {},
   prismals = {},
