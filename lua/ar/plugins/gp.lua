@@ -232,7 +232,7 @@ return {
             model = model,
             temperature = config.temp or 1.1,
             top_p = config.top_p or 1,
-            max_tokens = config.max_tokens or 4096,
+            max_tokens = config.max_tokens or 128000,
           },
           chat = true,
           command = false,
