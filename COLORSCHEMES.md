@@ -16,6 +16,7 @@
 - catppuccin-latte
 - catppuccin-macchiato
 - catppuccin-mocha
+- christmas
 - conifer
 - conifer-lunar
 - conifer-solar

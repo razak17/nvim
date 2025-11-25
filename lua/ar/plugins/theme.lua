@@ -390,6 +390,17 @@ return {
         }, true)
       end,
     },
+    {
+      'chaserensberger/christmas.nvim',
+      cond = get_cond({ 'christmas' }),
+      priority = get_priority({ 'christmas' }),
+      event = get_event({ 'christmas' }),
+      init = function()
+        theming.apply_overrides('christmas', {
+          { WinSeparator = { fg = { from = 'LineNr', alter = -0.6 } } },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Warm
