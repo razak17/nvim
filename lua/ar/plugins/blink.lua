@@ -67,7 +67,6 @@ return {
       'cmdline.sources',
       'term.sources',
     },
-
     opts = function(_, opts)
       local sources = get_sources()
       opts = opts or {}
@@ -269,6 +268,8 @@ return {
           end
         )
         :totable()
+
+      ar.highlight.plugin('BlinkCmp', hl_defs)
 
       local symbols = require('lspkind').symbol_map
       local ai_icons = ar.ui.codicons.ai
