@@ -171,6 +171,10 @@
 - sunbather
 - terafox
 - thorn
+- thorn-dark-cold
+- thorn-dark-warm
+- thorn-light-cold
+- thorn-light-warm
 - tokyobones
 - tokyonight
 - tokyonight-day
