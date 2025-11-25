@@ -1,3 +1,4 @@
+local coding = ar.plugins.coding
 local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
@@ -35,7 +36,7 @@ return {
   },
   {
     'chrisgrieser/nvim-genghis',
-    cond = function() return ar.get_plugin_cond('nvim-genghis', not minimal) end,
+    cond = function() return ar.get_plugin_cond('nvim-genghis', coding) end,
     event = { 'BufReadPost', 'BufNewFile' },
     init = function()
       vim.g.whichkey_add_spec({ '<leader><localleader>f', group = 'Genghis' })
