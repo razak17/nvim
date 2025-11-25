@@ -396,6 +396,7 @@ local config = {
     },
   },
   colorscheme = {
+    use_in_minimal_mode = false,
     name = '',
     ---@type 'fill' | 'outline'
     variant = 'outline',

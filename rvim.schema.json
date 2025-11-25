@@ -135,6 +135,9 @@
     "colorscheme": {
       "additionalProperties": false,
       "properties": {
+        "use_in_minimal_mode": {
+          "type": "boolean"
+        },
         "name": {
           "enum": [
             "afterglow",
