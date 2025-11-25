@@ -516,9 +516,14 @@ return {
         require('agitator').search_git_branch()
       end
 
+      local function search_in_added()
+        require('agitator.search_in_added').search_in_added()
+      end
+
       ar.add_to_select_menu('git', {
         ['Time Machine'] = time_machine,
-        ['Search In Another Branch'] = search_in_another_branch,
+        ['Search Word In Another Branch'] = search_in_another_branch,
+        ['Search In Added Files'] = search_in_added,
         ['Open File From Branch'] = open_file_from_branch,
       })
     end,
