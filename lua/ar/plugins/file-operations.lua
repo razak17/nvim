@@ -24,7 +24,7 @@ return {
   },
   {
     'lambdalisue/suda.vim',
-    cond = function() return ar.get_plugin_cond('suda.vim', false) end,
+    cond = function() return ar.get_plugin_cond('suda.vim') end,
     lazy = false,
     init = function()
       ar.add_to_select_menu('command_palette', {
