@@ -89,7 +89,7 @@ local function bar()
   local mode = vim.fn.mode()
   local hl_name = 'StatusBorderActive' .. mode
   vim.api.nvim_set_hl(0, hl_name, { fg = stl.mode_colors[mode] })
-  return string.format('%%#%s# ▊%%*', hl_name)
+  return string.format('%%#%s#▊%%*', hl_name)
 end
 
 --- @return string
