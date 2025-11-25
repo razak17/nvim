@@ -17,6 +17,7 @@
 - emmet_language_server
 - emmet_ls
 - eslint
+- expert
 - gh_actions_ls
 - gopls
 - graphql

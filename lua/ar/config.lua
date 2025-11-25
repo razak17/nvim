@@ -561,7 +561,6 @@ local config = {
       disabled = { 'incline' },
       override = {},
     },
-    overrides = {},
   },
   ---@type ArSession
   session = { enable = true, variant = 'persisted' },

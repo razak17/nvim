@@ -135,9 +135,6 @@
     "colorscheme": {
       "additionalProperties": false,
       "properties": {
-        "use_in_minimal_mode": {
-          "type": "boolean"
-        },
         "name": {
           "enum": [
             "afterglow",
@@ -336,6 +333,9 @@
           ],
           "type": "string"
         },
+        "use_in_minimal_mode": {
+          "type": "boolean"
+        },
         "variant": {
           "enum": ["fill", "outline"],
           "type": "string"
@@ -492,6 +492,7 @@
                   "emmet_language_server",
                   "emmet_ls",
                   "eslint",
+                  "expert",
                   "gh_actions_ls",
                   "gopls",
                   "graphql",
@@ -695,6 +696,7 @@
               "emmet_language_server",
               "emmet_ls",
               "eslint",
+              "expert",
               "gh_actions_ls",
               "gopls",
               "graphql",
@@ -1272,12 +1274,6 @@
           },
           "type": "array"
         },
-        "override": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
         "modules": {
           "additionalProperties": false,
           "properties": {
@@ -1572,17 +1568,11 @@
           },
           "type": "object"
         },
-        "overrides": {
-          "additionalProperties": {
-            "additionalProperties": false,
-            "properties": {
-              "enable": {
-                "type": "boolean"
-              }
-            },
-            "type": "object"
+        "override": {
+          "items": {
+            "type": "string"
           },
-          "type": "object"
+          "type": "array"
         }
       },
       "type": "object"
