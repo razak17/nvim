@@ -50,6 +50,7 @@ end
 -- right above the statusline; if not, it is placed on top of others.
 --- @param pos integer
 local function get_win_row(pos)
+  -- return vim.o.lines - (border_enabled and 5 or 3)
   return vim.o.lines - vim.o.cmdheight - 1 - pos * (border_enabled and 3 or 1)
 end
 
@@ -187,10 +188,12 @@ ar.augroup('lsp_progress', {
   pattern = { 'begin', 'report', 'end' },
   command = function(args) handler(args) end,
 }, {
-  event = { 'VimResized', 'TermLeave' },
+  event = { 'VimResized', 'TermLeave', 'WinEnter' },
   command = function()
-    for _, c in ipairs(M.clients) do
-      if c.is_done then win_update_config(c) end
+    for _, c in pairs(M.clients) do
+      if c.winid ~= nil and vim.api.nvim_win_is_valid(c.winid) then
+        guard(function() win_update_config(c) end)
+      end
     end
   end,
 })
