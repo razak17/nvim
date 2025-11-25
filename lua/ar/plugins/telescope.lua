@@ -1,59 +1,59 @@
----@type ArPick
-local picker_config = {
-  name = 'telescope',
-  commands = {
-    files = 'find_files',
-    diagnostics_buffer = 'diagnostics',
-  },
-  -- this will return a function that calls telescope.
-  -- cwd will default to lazyvim.util.get_root
-  -- for `files`, git_files or find_files will be chosen depending on .git
-  ---@param command string
-  ---@param opts? ArPickOpts
-  open = function(command, opts)
-    opts = opts or {}
-    opts.follow = opts.follow ~= false
-    if opts.cwd and opts.cwd ~= vim.uv.cwd() then
-      local function open_cwd_dir()
-        local action_state = require('telescope.actions.state')
-        local line = action_state.get_current_line()
-        ar.pick.open(
-          command,
-          vim.tbl_deep_extend('force', {}, opts or {}, {
-            root = false,
-            default_text = line,
-          })
-        )
-      end
-      ---@diagnostic disable-next-line: inject-field
-      opts.attach_mappings = function(_, map)
-        -- opts.desc is overridden by telescope, until it's changed there is this fix
-        map('i', '<a-c>', open_cwd_dir, { desc = 'open cwd directory' })
-        return true
-      end
-    end
-
-    if command == 'diagnostics' then
-      opts = vim.tbl_deep_extend('force', {}, opts or {}, {
-        bufnr = 0,
-        ignore_filename = true,
-        layout_strategy = 'center',
-      })
-    end
-
-    if command == 'files' or command == 'live_grep' then
-      opts = vim.tbl_deep_extend('force', {}, opts or {}, { hidden = true })
-    end
-
-    if opts.extension then
-      local extension = opts.extension
-      require('telescope').extensions[extension][command](opts)
-    else
-      require('telescope.builtin')[command](opts)
-    end
-  end,
-}
 if ar_config.picker.variant == 'telescope' then
+  ---@type ArPick
+  local picker_config = {
+    name = 'telescope',
+    commands = {
+      files = 'find_files',
+      diagnostics_buffer = 'diagnostics',
+    },
+    -- this will return a function that calls telescope.
+    -- cwd will default to lazyvim.util.get_root
+    -- for `files`, git_files or find_files will be chosen depending on .git
+    ---@param command string
+    ---@param opts? ArPickOpts
+    open = function(command, opts)
+      opts = opts or {}
+      opts.follow = opts.follow ~= false
+      if opts.cwd and opts.cwd ~= vim.uv.cwd() then
+        local function open_cwd_dir()
+          local action_state = require('telescope.actions.state')
+          local line = action_state.get_current_line()
+          ar.pick.open(
+            command,
+            vim.tbl_deep_extend('force', {}, opts or {}, {
+              root = false,
+              default_text = line,
+            })
+          )
+        end
+        ---@diagnostic disable-next-line: inject-field
+        opts.attach_mappings = function(_, map)
+          -- opts.desc is overridden by telescope, until it's changed there is this fix
+          map('i', '<a-c>', open_cwd_dir, { desc = 'open cwd directory' })
+          return true
+        end
+      end
+
+      if command == 'diagnostics' then
+        opts = vim.tbl_deep_extend('force', {}, opts or {}, {
+          bufnr = 0,
+          ignore_filename = true,
+          layout_strategy = 'center',
+        })
+      end
+
+      if command == 'files' or command == 'live_grep' then
+        opts = vim.tbl_deep_extend('force', {}, opts or {}, { hidden = true })
+      end
+
+      if opts.extension then
+        local extension = opts.extension
+        require('telescope').extensions[extension][command](opts)
+      else
+        require('telescope.builtin')[command](opts)
+      end
+    end,
+  }
   ar.pick.register(picker_config)
 end
 
