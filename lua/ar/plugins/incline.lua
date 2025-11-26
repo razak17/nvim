@@ -35,7 +35,7 @@ end
 return {
   {
     'b0o/incline.nvim',
-    event = { 'UiEnter' },
+    event = 'VeryLazy',
     config = function()
       require('incline').setup(
         ---@module 'incline'
