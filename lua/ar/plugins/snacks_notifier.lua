@@ -49,6 +49,7 @@ return {
 
           return true
         end,
+        margin = { top = 0, right = 1, bottom = 1 },
         icons = {
           error = diag_icons.error,
           warn = diag_icons.warn,
