@@ -36,7 +36,6 @@ return {
   {
     'b0o/incline.nvim',
     event = { 'UiEnter' },
-    dependencies = 'nvim-mini/mini.icons',
     config = function()
       require('incline').setup(
         ---@module 'incline'
@@ -77,10 +76,15 @@ return {
                   .. '/'
                   .. vim.fn.fnamemodify(full_path, ':t')
               end
-              local ft_icon, ft_color =
-                require('nvim-web-devicons').get_icon_color(filename)
+              local ft_icon = ar.ui.codicons.documents.default_file
+              local ft_color = 'DevIconDefault'
               local modified = vim.bo[props.buf].modified and 'bold,italic'
                 or 'bold'
+
+              local ok, devicons = pcall(require, 'nvim-web-devicons')
+              if ok then
+                ft_icon, ft_color = devicons.get_icon_color(filename)
+              end
 
               local function get_git_signs()
                 local status_dict = vim.b.gitsigns_status_dict
