@@ -84,13 +84,29 @@ local function get_git_diff(type)
   return 0
 end
 
+local vim_mode = { mode = nil, hl = nil }
+
 --- @return string
 local function bar()
-  local mode = vim.fn.mode()
-  local hl_name = 'StatusBorderActive' .. mode
-  vim.api.nvim_set_hl(0, hl_name, { fg = stl.mode_colors[mode] })
-  return string.format('%%#%s#▊%%*', hl_name)
+  return string.format('%%#%s#▊%%*', vim_mode.hl or stl.mode_colors['n'])
 end
+
+ar.augroup('NativeStatuslineMode', {
+  event = 'ModeChanged',
+  pattern = '*:*',
+  command = function()
+    local mode = vim.fn.mode(1)
+    local mode_to_str = stl.mode_to_str[vim_mode.mode] or stl.mode_to_str['n']
+    local hl_name = 'StatusBorderActive' .. mode_to_str
+    vim.api.nvim_set_hl(0, hl_name, {
+      fg = stl.mode_colors[mode:sub(1, 1)],
+    })
+    vim_mode.mode = mode
+    vim_mode.hl = hl_name
+
+    vim.defer_fn(function() vim.cmd.redrawstatus() end, 500)
+  end,
+})
 
 --- @return string
 local function python_env()
