@@ -256,6 +256,11 @@ return {
           return function()
             local current_file = vim.api.nvim_buf_get_name(0)
             local current_dir = vim.fn.fnamemodify(current_file, ':h')
+            local args = {}
+            if recursive and source == 'files' then
+              args = recursive and { '--files', current_dir }
+                or { '--max-depth', '1', '--files', current_dir }
+            end
             p(source, {
               title = fmt(
                 '%s In Dir%s',
@@ -264,8 +269,7 @@ return {
               ),
               cwd = current_dir,
               cmd = source == 'files' and 'rg' or 'rg',
-              args = recursive and { '--files', current_dir }
-                or { '--max-depth', '1', '--files', current_dir },
+              args = args,
             })()
           end
         end
@@ -273,8 +277,8 @@ return {
         ar.add_to_select_menu('command_palette', {
           ['Find Files In Dir'] = fuzzy_in_cur_dir('files', false),
           ['Find Files In Dir & Children'] = fuzzy_in_cur_dir('files', true),
-          ['Live Grep In Dir'] = fuzzy_in_cur_dir('grep', true),
-          ['Find Word In Dir'] = fuzzy_in_cur_dir('word', true),
+          ['Live Grep In Dir'] = fuzzy_in_cur_dir('grep'),
+          ['Find Word In Dir'] = fuzzy_in_cur_dir('grep_word'),
         })
       end
     end,
