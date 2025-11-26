@@ -39,7 +39,7 @@ local env = vim.env
 ---@alias ArWhichImage 'image.nvim' | 'snacks'
 ---@alias ArWhichIndentline 'mini.indentscope' | 'ibl' | 'snacks' | 'indentmini'
 ---@alias ArWhichLspCodeAction 'builtin' | 'tiny-code-action'
----@alias ArWhichLspProgress 'builtin' | 'noice' | 'snacks'
+---@alias ArWhichLspProgress 'builtin' | 'noice'
 ---@alias ArWhichLspProgressSpinner 'dots' | 'circle'
 ---@alias ArWhichLspRename 'builtin' | 'inc-rename'
 ---@alias ArWhichLspSymbols 'builtin' | 'picker' | 'namu'

@@ -742,7 +742,7 @@
               "type": "string"
             },
             "variant": {
-              "enum": ["builtin", "noice", "snacks"],
+              "enum": ["builtin", "noice"],
               "type": "string"
             }
           },
