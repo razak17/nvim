@@ -5,24 +5,32 @@ local is_cmp = ar_config.completion.variant == 'cmp'
 return {
   'folke/noice.nvim',
   cond = function()
-    return ar.get_plugin_cond('noice.nvim', not ar.plugins.minimal)
+    local condition = not ar.plugins.minimal
       and ar_config.ui.cmdline.variant == 'noice'
+    return ar.get_plugin_cond('noice.nvim', condition)
   end,
   event = 'VeryLazy',
   lazy = false,
   init = function()
     vim.g.whichkey_add_spec({ '<leader><leader>n', group = 'Noice' })
   end,
-    -- stylua: ignore
-  keys = {
-    { '<S-Enter>', function() require('noice').redirect(vim.fn.getcmdline()) end, mode = 'c', desc = 'Redirect Cmdline' },
-    { '<leader><leader>nl', function() require('noice').cmd('last') end, desc = 'noice last message' },
-    { '<leader><leader>nh', function() require('noice').cmd('history') end, desc = 'noice history' },
-    { '<leader><leader>na', function() require('noice').cmd('all') end, desc = 'noice all' },
-    { '<leader><leader>nd', function() require('noice').cmd('dismiss') end, desc = 'dismiss all' },
-    { '<c-f>', function() if not require('noice.lsp').scroll(4) then return '<c-f>' end end, silent = true, expr = true, desc = 'scroll forward', mode = {'i', 'n', 's'} },
-    { '<c-b>', function() if not require('noice.lsp').scroll(-4) then return '<c-b>' end end, silent = true, expr = true, desc = 'scroll backward', mode = {'i', 'n', 's'}},
-  },
+  -- stylua: ignore
+  keys = function(_, keys)
+    keys = keys or {}
+    ar.list_insert(keys, {
+      { mode = 'c', '<S-Enter>', function() require('noice').redirect(fn.getcmdline()) end, desc = 'Redirect Cmdline' },
+      { '<leader><leader>nl', function() require('noice').cmd('last') end, desc = 'noice last message' },
+      { '<leader><leader>na', function() require('noice').cmd('all') end, desc = 'noice all' },
+      { '<leader><leader>nd', function() require('noice').cmd('dismiss') end, desc = 'dismiss all' },
+      { mode = {'i', 'n', 's'}, '<c-f>', function() if not require('noice.lsp').scroll(4) then return '<c-f>' end end, silent = true, expr = true, desc = 'scroll forward' },
+      { mode = {'i', 'n', 's'}, '<c-b>', function() if not require('noice.lsp').scroll(-4) then return '<c-b>' end end, silent = true, expr = true, desc = 'scroll backward' },
+    })
+    if ar_config.notifier.variant == 'snacks' then
+      ar.list_insert(keys, {
+        { '<leader>nh', function() require('noice').cmd('history') end, desc = 'noice history' },
+      })
+    end
+  end,
   opts = {
     cmdline = {
       format = {
@@ -53,7 +61,10 @@ return {
       enabled = ar_config.completion.variant ~= 'mini.completion',
       backend = 'nui',
     },
-    notify = { enabled = true, view = 'notify' },
+    notify = {
+      enabled = ar_config.notifier.variant == 'noice',
+      view = 'notify',
+    },
     lsp = {
       documentation = {
         enabled = is_cmp,

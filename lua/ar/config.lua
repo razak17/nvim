@@ -45,7 +45,7 @@ local env = vim.env
 ---@alias ArWhichLspSymbols 'builtin' | 'picker' | 'namu'
 ---@alias ArWhichLspVirtualLines 'builtin' | 'lsp_lines' | 'tiny-inline'
 ---@alias ArWhichLspVirtualText 'builtin' | 'lsp_lines' | 'tiny-inline'
----@alias ArWhichNotifier 'native' | 'nvim-notify' | 'snacks'
+---@alias ArWhichNotifier 'native' | 'nvim-notify' | 'snacks' | 'noice'
 ---@alias ArWhichPicker 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick'
 ---@alias ArWhichSession 'persisted' | 'persistence'
 ---@alias ArWhichFilesPicker 'smart-open' | 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick' | 'fff'
@@ -471,7 +471,7 @@ local config = {
     virtual_lines = { enable = false, variant = 'tiny-inline' },
   },
   ---@type ArNotifier
-  notifier = { enable = true, variant = 'native' },
+  notifier = { enable = true, variant = 'snacks' },
   ---@type ArPicker
   picker = {
     enable = true,

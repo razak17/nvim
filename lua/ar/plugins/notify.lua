@@ -4,7 +4,6 @@ local codicons = ui.codicons
 
 local function get_cond(plugin)
   local condition = not ar.plugins.minimal
-    and ar_config.notifier.enable
     and ar_config.notifier.variant == 'nvim-notify'
   return ar.get_plugin_cond(plugin, condition)
 end
@@ -16,7 +15,7 @@ return {
     cond = function() return get_cond('nvim-notify') end,
     -- stylua: ignore
     keys = {
-      { '<leader>nn', '<cmd>Notifications<CR>', desc = 'notify: show' },
+      { '<leader>nh', '<cmd>Notifications<CR>', desc = 'notify: show' },
       { '<leader>nx', function() require('notify').dismiss({ silent = true, pending = true }) end, desc = 'notify: dismiss notifications', },
     },
     init = function()

@@ -7,10 +7,15 @@ return {
   recommended = true,
   'folke/snacks.nvim',
   -- stylua: ignore
-  keys = {
-    { '<leader>nx', function() Snacks.notifier.hide() end, desc = 'snacks: dismiss all notifications' },
-    { '<leader>nh', function() Snacks.notifier.show_history() end, desc = 'snacks: show notification history' },
-  },
+  keys = function(_, keys)
+    keys = keys or {}
+    if ar_config.notifier.variant == 'snacks' then
+      ar.list_insert(keys, {
+        { '<leader>nx', function() Snacks.notifier.hide() end, desc = 'snacks: dismiss all notifications' },
+        { '<leader>nh', function() Snacks.notifier.show_history() end, desc = 'snacks: show notification history' },
+      })
+    end
+  end,
   opts = function(_, opts)
     return vim.tbl_deep_extend('force', opts or {}, {
       styles = vim.tbl_deep_extend('force', opts.styles or {}, {
@@ -25,8 +30,7 @@ return {
       }),
       notifier = {
         border = border,
-        enabled = ar_config.notifier.enable
-          and ar_config.notifier.variant == 'snacks',
+        enabled = ar_config.notifier.variant == 'snacks',
         filter = function(n)
           local ignored_messages = {
             'Neo-tree',
