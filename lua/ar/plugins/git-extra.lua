@@ -34,6 +34,7 @@ return {
     cond = function() return git_cond('fugit2.nvim') end,
     cmd = { 'Fugit2', 'Fugit2Blame', 'Fugit2Diff', 'Fugit2Graph' },
     opts = { width = 100 },
+    dependencies = { 'nvim-lua/plenary.nvim' },
   },
   {
     'Mauritz8/gitstatus.nvim',
