@@ -2,7 +2,7 @@ return {
   {
     'folke/lazydev.nvim',
     cond = function() return ar.get_plugin_cond('lazydev.nvim', ar.lsp.enable) end,
-    ft = 'lua',
+    event = 'BufRead ' .. vim.fn.stdpath('config') .. '**/*.lua',
     cmd = 'LazyDev',
     opts = {
       library = {
