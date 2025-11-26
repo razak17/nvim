@@ -13,7 +13,7 @@ return {
   {
     'rcarriga/nvim-notify',
     event = 'BufRead',
-    cond = function() get_cond('nvim-notify') end,
+    cond = function() return get_cond('nvim-notify') end,
     -- stylua: ignore
     keys = {
       { '<leader>nn', '<cmd>Notifications<CR>', desc = 'notify: show' },
