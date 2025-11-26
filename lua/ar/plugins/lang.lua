@@ -300,7 +300,10 @@ return {
   },
   {
     'jack-rabe/impl.nvim',
-    cond = function() return ar.get_plugin_cond('impl.nvim') end,
+    cond = function()
+      local cond = not ar.plugin_disabled('telescope.nvim') and not minimal
+      return ar.get_plugin_cond('impl.nvim', cond)
+    end,
     ft = 'go',
     cmd = { 'ImplGenerate', 'ImplSearch' },
     opts = {},
