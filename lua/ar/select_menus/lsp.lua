@@ -113,16 +113,15 @@ local function nvim_lint_create_autocmds()
   local DEBOUNCE_MS = 500
   ar.augroup('Lint', {
     event = { 'BufEnter', 'BufWritePost', 'TextChanged', 'InsertLeave' },
-    command = function()
-      local bufnr = api.nvim_get_current_buf()
+    command = function(arg)
       timer:stop()
       timer:start(
         DEBOUNCE_MS,
         0,
         vim.schedule_wrap(function()
-          if api.nvim_buf_is_valid(bufnr) then
+          if api.nvim_buf_is_valid(arg.buf) then
             api.nvim_buf_call(
-              bufnr,
+              arg.buf,
               function() lint.try_lint(nil, { ignore_errors = true }) end
             )
           end
