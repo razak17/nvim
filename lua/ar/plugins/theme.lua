@@ -1234,5 +1234,21 @@ return {
       end,
     },
   },
+  {
+    'Mofiqul/dracula.nvim',
+    cond = get_cond({ 'dracula' }),
+    priority = get_priority({ 'dracula' }),
+    event = get_event({ 'dracula' }),
+    init = function()
+      theming.apply_overrides('dracula', {
+        {
+          WinSeparator = {
+            bg = 'NONE',
+            fg = { from = 'WinSeparator', alter = 2.4 },
+          },
+        },
+      }, true)
+    end,
+  },
   -- }}}
 }

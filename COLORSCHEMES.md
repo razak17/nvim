@@ -29,6 +29,8 @@
 - dayfox
 - default
 - doom-one
+- dracula
+- dracula-soft
 - duckbones
 - duskfox
 - earthsong
