@@ -541,6 +541,7 @@ local config = {
       'garbage-day.nvim',
       'git-conflict.nvim',
       'hlchunk.nvim',
+      'incline.nvim',
       'inlayhint-filler.nvim',
       'lsplinks.nvim',
       'neoconf.nvim',
@@ -559,7 +560,7 @@ local config = {
       'vim-matchup',
     },
     modules = {
-      disabled = { 'incline' },
+      disabled = {},
       override = {},
     },
   },

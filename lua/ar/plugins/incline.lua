@@ -35,6 +35,7 @@ end
 return {
   {
     'b0o/incline.nvim',
+    cond = function() return ar.get_plugin_cond('incline.nvim') end,
     event = 'VeryLazy',
     config = function()
       require('incline').setup(
