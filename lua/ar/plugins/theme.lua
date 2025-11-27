@@ -401,6 +401,22 @@ return {
         }, true)
       end,
     },
+    {
+      'nyoom-engineering/oxocarbon.nvim',
+      cond = get_cond({ 'oxocarbon' }),
+      priority = get_priority({ 'oxocarbon' }),
+      event = get_event({ 'oxocarbon' }),
+      init = function()
+        theming.apply_overrides('oxocarbon', {
+          {
+            WinSeparator = {
+              bg = 'NONE',
+              fg = { from = 'LineNr', alter = -0.2 },
+            },
+          },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Warm

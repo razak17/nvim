@@ -150,6 +150,7 @@
 - oh-lucy-evening
 - oldworld
 - onedark
+- oxocarbon
 - peachpuff
 - poimandres
 - rams
