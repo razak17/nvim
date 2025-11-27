@@ -30,6 +30,7 @@ ar.highlight.plugin('NativeStatuslineHl', {
   { StatusLineLspInfo = { fg = { from = 'DiagnosicInfo' } } },
   { StatusLineLspMessages = { fg = { from = 'Comment' } } },
   { StatusLineGitBranchIcon = { fg = { from = 'DiagnosticSignHint' } } },
+  { StatusLineVirtualEnv = { fg = { from = 'DiagnosticSignHint' } } },
   {
     StatusLineGitDiffAdded = {
       fg = { from = 'DiffAdd', attr = 'bg', alter = 2.2 },
@@ -110,23 +111,8 @@ ar.augroup('NativeStatuslineMode', {
 
 --- @return string
 local function python_env()
-  if not rawget(vim, 'lsp') then return '' end
-
-  local buf = vim.api.nvim_get_current_buf()
-  local buf_clients = vim.lsp.get_clients({ bufnr = buf })
-  if next(buf_clients) == nil then return '' end
-
-  for _, client in pairs(buf_clients) do
-    if client.name == 'pyright' or client.name == 'pylance' then
-      local virtual_env = vim.env.VIRTUAL_ENV_PROMPT
-      if virtual_env == nil then return '' end
-
-      virtual_env = virtual_env:gsub('%s+', '')
-      return string.format('%%#StatusLineMedium# %s%%*', virtual_env)
-    end
-  end
-
-  return ''
+  local virtual_env = stl.python_env()
+  return string.format('%%#StatusLineVirtualEnv# %s%%*', virtual_env)
 end
 
 --- @return string
