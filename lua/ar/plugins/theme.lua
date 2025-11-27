@@ -417,6 +417,22 @@ return {
         }, true)
       end,
     },
+    {
+      'Mofiqul/vscode.nvim',
+      cond = get_cond({ 'vscode' }),
+      priority = get_priority({ 'vscode' }),
+      event = get_event({ 'vscode' }),
+      init = function()
+        theming.apply_overrides('vscode', {
+          {
+            WinSeparator = {
+              bg = 'NONE',
+              fg = { from = 'WinSeparator', alter = -0.1 },
+            },
+          },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Warm
@@ -1214,6 +1230,22 @@ return {
       init = function()
         theming.apply_overrides('bamboo', {
           { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.05 } } },
+        }, true)
+      end,
+    },
+    {
+      'Mofiqul/vscode.nvim',
+      cond = get_cond({ 'vscode' }),
+      priority = get_priority({ 'vscode' }),
+      event = get_event({ 'vscode' }),
+      init = function()
+        theming.apply_overrides('vscode', {
+          {
+            WinSeparator = {
+              bg = 'NONE',
+              fg = { from = 'WinSeparator', alter = -0.1 },
+            },
+          },
         }, true)
       end,
     },

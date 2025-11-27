@@ -189,6 +189,7 @@
 - vague
 - vim
 - vimbones
+- vscode
 - wildberries
 - wildcharm
 - yoda
