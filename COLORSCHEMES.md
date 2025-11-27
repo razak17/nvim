@@ -123,6 +123,7 @@
 - no-clown-fiesta-dark
 - no-clown-fiesta-dim
 - no-clown-fiesta-light
+- nord
 - nordbones
 - nordfox
 - nordic

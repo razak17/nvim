@@ -1067,6 +1067,22 @@ return {
         }, true)
       end,
     },
+    {
+      'shaunsingh/nord.nvim',
+      cond = get_cond({ 'nord' }),
+      priority = get_priority({ 'nord' }),
+      event = get_event({ 'nord' }),
+      init = function()
+        theming.apply_overrides('nord', {
+          {
+            WinSeparator = {
+              bg = 'NONE',
+              fg = { from = 'LineNr', alter = -0.2 },
+            },
+          },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Clown show
