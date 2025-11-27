@@ -125,6 +125,7 @@
 - no-clown-fiesta-light
 - nordbones
 - nordfox
+- nordic
 - oasis
 - oasis-abyss
 - oasis-cactus

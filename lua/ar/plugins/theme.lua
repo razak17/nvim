@@ -1040,19 +1040,33 @@ return {
         }, true)
       end,
     },
-  },
-  {
-    'tommarien/github-plus.nvim',
-    cond = get_cond({ 'github_plus' }),
-    priority = get_priority({ 'github_plus' }),
-    event = get_event({ 'github_plus' }),
-    opts = {},
-    init = function()
-      theming.apply_overrides('github_plus', {
-        { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.2 } } },
-        { TreesitterContextBottom = { underline = false } },
-      }, true)
-    end,
+    {
+      'tommarien/github-plus.nvim',
+      cond = get_cond({ 'github_plus' }),
+      priority = get_priority({ 'github_plus' }),
+      event = get_event({ 'github_plus' }),
+      opts = {},
+      init = function()
+        theming.apply_overrides('github_plus', {
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.2 } } },
+          { TreesitterContextBottom = { underline = false } },
+        }, true)
+      end,
+    },
+    {
+      'AlexvZyl/nordic.nvim',
+      cond = get_cond({ 'nordic' }),
+      priority = get_priority({ 'nordic' }),
+      event = get_event({ 'nordic' }),
+      config = function()
+        if colorscheme == 'nordic' then require('nordic').load() end
+      end,
+      init = function()
+        theming.apply_overrides('nordic', {
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = 1.5 } } },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Clown show
