@@ -21,7 +21,7 @@ return {
       styles = vim.tbl_deep_extend('force', opts.styles or {}, {
         notification = { border = border },
         notification_history = {
-          border = border,
+          border = vim.o.winborder,
           wo = {
             winblend = ar_config.ui.transparent.enable and 0 or 5,
             wrap = true,
