@@ -171,8 +171,8 @@ local function diagnostics_info()
 end
 
 --- @class LspProgress
---- @field message string?
-local lsp_progress = { message = nil }
+--- @field msg string?
+local lsp_progress = { msg = nil }
 
 ar.augroup('NativeStatuslineLspProgress', {
   event = 'LspProgress',
@@ -180,8 +180,8 @@ ar.augroup('NativeStatuslineLspProgress', {
   pattern = { 'begin', 'report', 'end' },
   command = function(args)
     local progress = stl.lsp_progress.handle(args)
-    lsp_progress.message = progress.message
-    if progress.is_done then lsp_progress.message = nil end
+    lsp_progress.msg = progress.message
+    if progress.is_done then lsp_progress.msg = nil end
     vim.defer_fn(function() vim.cmd.redrawstatus() end, 500)
   end,
 })
@@ -189,8 +189,8 @@ ar.augroup('NativeStatuslineLspProgress', {
 --- @return string
 local function lsp_status()
   if not rawget(vim, 'lsp') then return '' end
-  if not lsp_progress.message or vim.o.columns < 120 then return '' end
-  return string.format('%%#StatusLineLspMessages#%s%%* ', lsp_progress.message)
+  if not lsp_progress.msg or vim.o.columns < 120 then return '' end
+  return string.format('%%#StatusLineLspMessages#%s%%* ', lsp_progress.msg)
 end
 
 --- @return string
