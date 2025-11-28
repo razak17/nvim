@@ -706,6 +706,9 @@ return {
           { Folded = { bg = { from = 'Folded', alter = 0.7 } } },
           { Visual = { bg = { from = 'Visual', alter = -0.25 }, fg = 'NONE' } },
           { Dim = { inherit = 'WinSeparator' } },
+          { DiffAdd = { bg = { from = 'DiffAdd', alter = -0.55 } } },
+          { DiffChange = { bg = { from = 'DiffChange', alter = -0.45 } } },
+          { DiffDelete = { bg = { from = 'DiffDelete', alter = -0.25 } } },
           {
             WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.7 } },
           },
