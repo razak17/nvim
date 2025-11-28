@@ -48,10 +48,9 @@ end
 
 -- Get the row position of the current floating window. If it is the first one, it is placed just
 -- right above the statusline; if not, it is placed on top of others.
---- @param pos integer
-local function get_win_row(pos)
-  -- return vim.o.lines - (border_enabled and 5 or 3)
-  return vim.o.lines - vim.o.cmdheight - 1 - pos * (border_enabled and 3 or 1)
+local function get_win_row()
+  return vim.o.lines - (border_enabled and 5 or 3)
+  -- return vim.o.lines - vim.o.cmdheight - 1 - pos * (border_enabled and 3 or 1)
 end
 
 -- Update the window config
