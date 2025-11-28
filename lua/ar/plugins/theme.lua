@@ -417,6 +417,21 @@ return {
         }, true)
       end,
     },
+    {
+      'the-coding-doggo/batman.nvim',
+      cond = function() return colorscheme == 'batman' end,
+      priority = get_priority({ 'batman' }),
+      event = get_event({ 'batman' }),
+      opts = { theme = 'catwoman', use_persistence = false },
+      init = function()
+        ar.add_to_select_menu('command_palette', {
+          ['Batman Colors'] = require('ar.batman_scheme_switcher').colorscheme_menu,
+        })
+        theming.apply_overrides('batman', {
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.45 } } },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Warm
