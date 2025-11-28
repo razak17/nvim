@@ -25,7 +25,7 @@ return {
       { mode = {'i', 'n', 's'}, '<c-f>', function() if not require('noice.lsp').scroll(4) then return '<c-f>' end end, silent = true, expr = true, desc = 'scroll forward' },
       { mode = {'i', 'n', 's'}, '<c-b>', function() if not require('noice.lsp').scroll(-4) then return '<c-b>' end end, silent = true, expr = true, desc = 'scroll backward' },
     })
-    if ar_config.notifier.variant == 'snacks' then
+    if ar_config.notifier.variant == 'noice' then
       ar.list_insert(keys, {
         { '<leader>nh', function() require('noice').cmd('history') end, desc = 'noice history' },
       })
