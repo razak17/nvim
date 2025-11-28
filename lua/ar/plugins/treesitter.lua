@@ -86,14 +86,47 @@ return {
           to_install
         )
 
-        -- install missing parsers
-        if #install > 0 then
+        local function install_parsers(parsers)
           ts.ensure_treesitter_cli(function()
-            TS.install(install, { summary = true }):await(function()
+            TS.install(parsers, { summary = true }):await(function()
               ts.get_installed(true) -- refresh the installed langs
             end)
           end)
         end
+
+        local function uninstall_parsers(parsers)
+          ts.ensure_treesitter_cli(function()
+            TS.uninstall(parsers, { summary = true }):await(function()
+              ts.get_installed(true) -- refresh the installed langs
+            end)
+          end)
+        end
+
+        ar.add_to_select_menu('command_palette', {
+          ['Install Treesitter Parser'] = function()
+            vim.ui.input({
+              prompt = 'Enter parser names to install (comma separated): ',
+            }, function(input)
+              if not input or input == '' then return end
+              local parsers = vim.split(input, ',', { trimempty = true })
+              install_parsers(parsers)
+            end)
+          end,
+          ['Uninstall Treesitter Parser'] = function()
+            local installed =
+              require('nvim-treesitter').get_installed('parsers')
+            table.sort(installed)
+            vim.ui.select(installed, {
+              prompt = 'Select parser to uninstall: ',
+            }, function(choice)
+              if not choice then return end
+              uninstall_parsers({ choice })
+            end)
+          end,
+        })
+
+        -- install missing parsers
+        if #install > 0 then install_parsers(install) end
 
         ---@param feat string
         ---@param query string
