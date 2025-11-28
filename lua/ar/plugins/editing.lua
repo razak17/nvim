@@ -111,7 +111,7 @@ return {
       },
       {
         'u',
-        ":lua require('tsht').nodes()<CR>",
+        function() require('tsht').nodes() end,
         desc = 'treehopper: toggle',
         mode = 'x',
         silent = true,
