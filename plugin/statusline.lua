@@ -87,27 +87,26 @@ end
 
 local vim_mode = { mode = nil, hl = nil }
 
---- @return string
-local function bar()
-  return string.format('%%#%s#▊%%*', vim_mode.hl or stl.mode_colors['n'])
+local function generate_mode_hl(mode)
+  local mode_to_str = mode and stl.mode_to_str[mode]
+  local hl_name = 'StatusBorderActive' .. mode_to_str
+  vim.api.nvim_set_hl(0, hl_name, { fg = stl.mode_colors[mode:sub(1, 1)] })
+  return hl_name
 end
 
 ar.augroup('NativeStatuslineMode', {
-  event = 'ModeChanged',
-  pattern = '*:*',
+  event = { 'ModeChanged', 'VimEnter' },
+  pattern = '*',
   command = function()
     local mode = vim.fn.mode(1)
-    local mode_to_str = stl.mode_to_str[vim_mode.mode] or stl.mode_to_str['n']
-    local hl_name = 'StatusBorderActive' .. mode_to_str
-    vim.api.nvim_set_hl(0, hl_name, {
-      fg = stl.mode_colors[mode:sub(1, 1)],
-    })
-    vim_mode.mode = mode
-    vim_mode.hl = hl_name
-
-    vim.defer_fn(function() vim.cmd.redrawstatus() end, 500)
+    vim_mode.mode = stl.mode_to_str[mode]
+    vim_mode.hl = generate_mode_hl(mode)
+    vim.cmd.redrawstatus()
   end,
 })
+
+--- @return string
+local function bar() return string.format('%%#%s#▊%%*', vim_mode.hl) end
 
 --- @return string
 local function python_env()
