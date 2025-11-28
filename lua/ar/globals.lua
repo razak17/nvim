@@ -166,7 +166,7 @@ function ar.mergeTables(destination, source)
 end
 
 --- check for project local config
-function ar.project_config(file)
+function ar.project_config(config, file)
   if not file then return end
   local json = file:read('*a')
   local status, table = pcall(fn.json_decode, json)
@@ -176,7 +176,7 @@ function ar.project_config(file)
     vim.notify('Invalid json found in .rvim.json', 'error')
     return
   end
-  ar.mergeTables(ar_config, table)
+  ar.mergeTables(config, table)
 end
 
 --- Autosize horizontal split to match its minimum content
