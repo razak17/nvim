@@ -16,6 +16,7 @@ end
 return {
   {
     'olimorris/codecompanion.nvim',
+    branch = 'v18',
     cond = get_cond,
     -- stylua: ignore
     keys = {
@@ -37,7 +38,6 @@ return {
             ['Fix'] = function() visual_cmd('CodeCompanion /fix') end,
             ['Lsp'] = function() visual_cmd('CodeCompanion /lsp') end,
             ['Tests'] = function() visual_cmd('CodeCompanion /tests') end,
-            ['Workspace'] = 'CodeCompanion /workspace',
             ['Code Workflow'] = 'CodeCompanion /cw',
             ['Edit<->Test workflow'] = 'CodeCompanion /et',
           })()
@@ -99,14 +99,14 @@ return {
           cmd = {},
           inline = {},
         },
-        memory = {
+        rules = {
           opts = {
             chat = {
               enabled = true,
             },
           },
           default = {
-            description = 'Common memory files',
+            description = 'Collection of common files for all projects',
             files = {},
           },
         },
