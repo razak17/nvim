@@ -3,6 +3,19 @@ local git_cond = require('ar.utils.git').git_cond
 
 return {
   {
+    'esmuellert/vscode-diff.nvim',
+    cond = function() return git_cond('vscode-diff.nvim') end,
+    cmd = { 'CodeDiff' },
+    opts = {
+      keymaps = {
+        view = {
+          toggle_explorer = '<leader>e',
+        },
+      },
+    },
+    dependencies = { 'MunifTanjim/nui.nvim' },
+  },
+  {
     'sindrets/diffview.nvim',
     cond = function() return git_cond('diffview.nvim') end,
     cmd = {

@@ -32,6 +32,7 @@ local config = {
       'TelescopePrompt',
       'noice',
       'snacks_dashboard',
+      'vscode-diff-explorer',
       'codecompanion',
       'kulala_ui',
     },
