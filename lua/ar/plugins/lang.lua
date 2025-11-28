@@ -243,6 +243,11 @@ return {
     config = function() require('string-breaker').setup() end,
   },
   {
+    'AndrewRadev/inline_edit.vim',
+    cond = function() return ar.get_plugin_cond('inline_edit.nvim') end,
+    cmd = { 'InlineEdit' },
+  },
+  {
     'Kenzo-Wada/boundary.nvim',
     cond = function() return ar.get_plugin_cond('boundary.nvim', not minimal) end,
     cmd = { 'BoundaryRefresh' },
