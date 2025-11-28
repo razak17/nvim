@@ -52,12 +52,7 @@ return {
                 reverse = false,
               },
             },
-            {
-              NeogitHunkHeader = {
-                inherit = 'IncSearch',
-                bg = { from = 'IncSearch', attr = 'bg', alter = -0.25 },
-              },
-            },
+            { NeogitHunkHeader = { inherit = 'FloatTitle' } },
             { NeogitChangeAdded = { fg = { from = 'DiffAdd' } } },
             { NeogitChangeModified = { fg = { from = 'DiffChange' } } },
             { NeogitChangeDeleted = { fg = { from = 'DiffDelete' } } },
@@ -70,6 +65,7 @@ return {
             {
               NeogitChangeNewFile = { fg = { from = 'DiffAdd', alter = 0.35 } },
             },
+            { NeogitDiffAddHighlight = { fg = { from = 'Normal' } } },
           },
           ['retrobox'] = {
             {
