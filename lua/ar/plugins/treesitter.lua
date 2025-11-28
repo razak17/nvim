@@ -23,7 +23,8 @@ local ensure_installed = {
   },
   embedded_langs = {
     'comment', 'graphql', 'jsdoc', 'luadoc', 'luap', -- lua patterns
-    'regex', 'rst', -- python reST
+    -- 'regex', -- causes cursor to shift to the left when grepping in snacks picker
+    'rst', -- python reST
     'vimdoc',
   },
 }
