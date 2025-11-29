@@ -1,23 +1,30 @@
 local niceties = ar.plugins.niceties
 
+local cond = ar.lsp.enable and niceties
+
+---@type 'symbol-usage' | 'lensline'
+local variant = 'symbol-usage'
+
+local function get_cond(plugin, which)
+  local condition = cond and variant == which
+  return ar.get_plugin_cond(plugin, condition)
+end
+
 return {
   {
     desc = 'Display references, definitions and implementations of document symbols',
     'Wansmer/symbol-usage.nvim',
-    cond = function()
-      local condition = ar.lsp.enable and niceties
-      return ar.get_plugin_cond('symbol-usage.nvim', condition)
-    end,
+    cond = get_cond('symbol-usage.nvim', 'symbol-usage'),
     event = 'LspAttach',
     config = function()
-          -- stylua: ignore
+      -- stylua: ignore
       ar.highlight.plugin('symbol-usage', {
-            { SymbolUsageRounding = { italic = true, fg = { from = 'CursorLine', attr = 'bg' }, }, },
-            { SymbolUsageContent = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Comment' }, }, },
-            { SymbolUsageRef = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Function' }, }, },
-            { SymbolUsageDef = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Type' }, }, },
-            { SymbolUsageImpl = { italic = true, bg = { from = 'CursorLine' }, fg = { from = '@keyword' }, }, },
-            { SymbolUsageContent = { bold = false, italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Comment' }, }, },
+        { SymbolUsageRounding = { italic = true, fg = { from = 'CursorLine', attr = 'bg' }, }, },
+        { SymbolUsageContent = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Comment' }, }, },
+        { SymbolUsageRef = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Function' }, }, },
+        { SymbolUsageDef = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Type' }, }, },
+        { SymbolUsageImpl = { italic = true, bg = { from = 'CursorLine' }, fg = { from = '@keyword' }, }, },
+        { SymbolUsageContent = { bold = false, italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Comment' }, }, },
       })
 
       local function text_format(symbol)
@@ -72,10 +79,7 @@ return {
     desc = 'A lightweight nvim plugin that displays fully customizeable contextual information about functions',
     'oribarilan/lensline.nvim',
     tag = '1.0.0',
-    cond = function()
-      local condition = ar.lsp.enable and niceties
-      return ar.get_plugin_cond('lensline.nvim', condition)
-    end,
+    cond = get_cond('lensline.nvim', 'lensline'),
     event = 'LspAttach',
     config = function() require('lensline').setup() end,
   },
