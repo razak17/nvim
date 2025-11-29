@@ -242,6 +242,15 @@ local function visual_grep_string()
   end
 end
 
+local function help_tags()
+  local prefill = nil
+  if vim.fn.mode():find('[Vv]') then
+    vim.cmd.normal({ '"zy"', bang = true })
+    prefill = vim.fn.getreg('z')
+  end
+  b('help_tags', { default_text = prefill })()
+end
+
 local function stopinsert(callback)
   return function(prompt_bufnr)
     vim.cmd.stopinsert()
@@ -423,7 +432,7 @@ return {
         -- stylua: ignore
         local telescope_mappings = {
           { '<M-space>', b('buffers'), desc = 'buffers' },
-          { '<leader>f?', b('help_tags'), desc = 'help tags' },
+          { mode = { 'n', 'x' }, '<leader>f?', help_tags, desc = 'help tags' },
           { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer', },
           { '<leader>fc', nvim_config, desc = 'nvim config' },
           { '<leader>ff', find_files, desc = 'find files' },
