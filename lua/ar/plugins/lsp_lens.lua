@@ -10,18 +10,14 @@ return {
     end,
     event = 'LspAttach',
     config = function()
-      ar.highlight.plugin('symbol-usage', {
-        theme = {
           -- stylua: ignore
-          ['onedark'] = {
+      ar.highlight.plugin('symbol-usage', {
             { SymbolUsageRounding = { italic = true, fg = { from = 'CursorLine', attr = 'bg' }, }, },
             { SymbolUsageContent = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Comment' }, }, },
             { SymbolUsageRef = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Function' }, }, },
             { SymbolUsageDef = { italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Type' }, }, },
             { SymbolUsageImpl = { italic = true, bg = { from = 'CursorLine' }, fg = { from = '@keyword' }, }, },
             { SymbolUsageContent = { bold = false, italic = true, bg = { from = 'CursorLine' }, fg = { from = 'Comment' }, }, },
-          },
-        },
       })
 
       local function text_format(symbol)
