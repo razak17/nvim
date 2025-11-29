@@ -121,6 +121,7 @@ ar.ui.icons = {
     active_ts = '',
     spell_check = '󰓆',
     triangle = '',
+    triangle_alt = '',
     triangle_long = '▶',
     triangle_long_down = '▼',
     triangle_short_right = '',
