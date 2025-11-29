@@ -335,4 +335,5 @@ return {
       { desc = 'redirect cmdline' }
     )
   end,
+  dependencies = { 'MunifTanjim/nui.nvim' },
 }

@@ -79,6 +79,7 @@ return {
         require('mason-lspconfig').setup({ automatic_enable = get_servers() })
       end,
       dependencies = {
+        'mason-org/mason.nvim',
         {
           'neovim/nvim-lspconfig',
           cond = function()
