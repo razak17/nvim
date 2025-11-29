@@ -17,7 +17,7 @@ return {
     'rachartier/tiny-code-action.nvim',
     cond = function()
       local condition = enabled
-        and ar_config.lsp.code_actions.variant == 'tiny-code-action'
+        and ar.config.lsp.code_actions.variant == 'tiny-code-action'
 
       return ar.get_plugin_cond('tiny-code-action.nvim', condition)
     end,

@@ -16,7 +16,7 @@ local cmp_utils = require('ar.utils.cmp')
 local ui = ar.ui
 local border, lsp_hls = ui.current.border.default, ui.lsp.highlights
 local minimal = ar.plugins.minimal
-local is_blink = ar_config.completion.variant == 'blink'
+local is_blink = ar.config.completion.variant == 'blink'
 
 local show_index = false
 _G.auto_show = true

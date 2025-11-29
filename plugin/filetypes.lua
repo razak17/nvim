@@ -1,4 +1,4 @@
-local enabled = ar_config.plugin.main.filetypes.enable
+local enabled = ar.config.plugin.main.filetypes.enable
 
 if not ar or ar.none or not enabled then return end
 
@@ -123,7 +123,7 @@ settings({
     },
     plugins = {
       cmp = function(cmp)
-        if ar_config.completion.variant == 'cmp' then
+        if ar.config.completion.variant == 'cmp' then
           cmp.setup.filetype('NeogitCommitMessage', {
             sources = {
               { name = 'git', group_index = 1 },
@@ -208,7 +208,7 @@ settings({
     opt = { spell = true },
     plugins = {
       cmp = function(cmp)
-        if ar_config.completion.variant == 'cmp' then
+        if ar.config.completion.variant == 'cmp' then
           cmp.setup.filetype('norg', {
             sorting = {
               -- deprioritize `.box`, `.mut`, etc.

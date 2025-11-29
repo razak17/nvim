@@ -65,7 +65,7 @@ return {
       cond = function()
         local condition = not minimal
           and ar.completion.enable
-          and ar_config.completion.variant == 'cmp'
+          and ar.config.completion.variant == 'cmp'
         return ar.get_plugin_cond('lab.nvim', condition)
       end,
       keys = {

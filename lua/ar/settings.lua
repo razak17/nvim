@@ -88,8 +88,8 @@ o.foldlevelstart = 99
 o.foldlevel = 99
 opt.foldmethod = 'expr'
 opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-if not ar_config.plugin.custom.custom_fold.enable then opt.foldtext = '' end
-opt.foldcolumn = ar_config.ui.statuscolumn.enable and '0' or '2'
+if not ar.config.plugin.custom.custom_fold.enable then opt.foldtext = '' end
+opt.foldcolumn = ar.config.ui.statuscolumn.enable and '0' or '2'
 opt.foldnestmax = 10
 --------------------------------------------------------------------------------
 -- Grepprg {{{1
@@ -162,7 +162,7 @@ o.signcolumn = 'yes:1'
 o.ruler = false
 -- o.cmdheight = 0
 o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→', '↴'
-if not ar_config.plugin.custom.auto_cursorline.enable then
+if not ar.config.plugin.custom.auto_cursorline.enable then
   o.cursorline = true
 end
 local function safe_winborder()
@@ -175,13 +175,13 @@ local function safe_winborder()
     'shadow',
     'none',
   }
-  if not vim.tbl_contains(winborder_opts, ar_config.ui.border) then
+  if not vim.tbl_contains(winborder_opts, ar.config.ui.border) then
     vim.schedule(
       function()
         vim.notify(
           string.format(
-            "ar_config.ui.border value '%s' is invalid. Falling back to 'single'. Valid options are: %s",
-            ar_config.ui.border,
+            "ar.config.ui.border value '%s' is invalid. Falling back to 'single'. Valid options are: %s",
+            ar.config.ui.border,
             table.concat(winborder_opts, ', ')
           ),
           vim.log.levels.WARN,
@@ -191,7 +191,7 @@ local function safe_winborder()
     )
     return 'single'
   end
-  return ar_config.ui.border
+  return ar.config.ui.border
 end
 o.winborder = safe_winborder()
 --------------------------------------------------------------------------------
@@ -225,7 +225,7 @@ o.smartindent = true
 o.pumborder = safe_winborder()
 o.pumheight = 15
 o.confirm = true -- make vim prompt me to save before doing destructive things
-if ar_config.completion.variant == 'omnifunc' then o.complete = 'o' end
+if ar.config.completion.variant == 'omnifunc' then o.complete = 'o' end
 opt.completeopt = { 'menuone', 'noselect', 'popup' }
 if fn.has('nvim-0.11') then
   opt.completeopt:append('fuzzy') -- Use fuzzy matching for built-in completion

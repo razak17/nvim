@@ -32,8 +32,8 @@ return {
   recommended = true,
   'rebelot/heirline.nvim',
   opts = function(_, opts)
-    local cond = ar_config.ui.statusline.enable
-      and ar_config.ui.statusline.variant == 'heirline'
+    local cond = ar.config.ui.statusline.enable
+      and ar.config.ui.statusline.variant == 'heirline'
 
     if not cond or minimal then return opts end
 
@@ -394,7 +394,7 @@ return {
         condition = function()
           return ar.has('sidekick.nvim')
             and ar.ai.enable
-            and ar_config.ai.models.copilot
+            and ar.config.ai.models.copilot
             and vim.bo.filetype == 'sidekick_terminal'
         end,
         {
@@ -842,7 +842,7 @@ return {
             self.curbuf = api.nvim_win_get_buf(self.curwin)
             local ignored = { 'copilot', 'dev-tools', 'null-ls' }
             self.client_names = stl.get_lsp_servers({ ignored = ignored })
-            local icon = ar_config.lsp.null_ls.enable and codicons.misc.connect
+            local icon = ar.config.lsp.null_ls.enable and codicons.misc.connect
               or codicons.misc.disconnect
             self.icon = ' ' .. icon
           end,
@@ -863,10 +863,10 @@ return {
           },
           -- Linters, Formatters (nvim-lint, conform)
           {
-            condition = function() return not ar_config.lsp.null_ls.enable end,
+            condition = function() return not ar.config.lsp.null_ls.enable end,
             update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
             init = function(self)
-              if not ar_config.lsp.null_ls.enable then
+              if not ar.config.lsp.null_ls.enable then
                 self.linters = stl.get_linters()
                 self.formatters = stl.get_formatters(self.curbuf)
               end
@@ -894,7 +894,7 @@ return {
           },
           -- Linters, Formatters (null-ls)
           {
-            condition = function() return ar_config.lsp.null_ls.enable end,
+            condition = function() return ar.config.lsp.null_ls.enable end,
             update = { 'LspAttach', 'LspDetach', 'WinEnter', 'BufEnter' },
             init = function(self)
               local ft = vim.bo[self.curbuf].ft
@@ -935,8 +935,8 @@ return {
         {
           condition = function()
             return ar.has('ecolog.nvim')
-              and ar_config.shelter.enable
-              and ar_config.shelter.variant == 'ecolog'
+              and ar.config.shelter.enable
+              and ar.config.shelter.variant == 'ecolog'
           end,
           init = function(self)
             local ecolog_utils = require('ecolog.utils')
@@ -968,7 +968,7 @@ return {
             condition = function()
               return ar.lsp.enable
                 and ar.ai.enable
-                and ar_config.ai.completion.variant == 'builtin'
+                and ar.config.ai.completion.variant == 'builtin'
             end,
             {
               condition = function(self)
@@ -992,7 +992,7 @@ return {
             condition = function()
               return ar.has('copilot.lua')
                 and ar.ai.enable
-                and ar_config.ai.models.copilot
+                and ar.config.ai.models.copilot
             end,
             {
               condition = function(self)

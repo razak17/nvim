@@ -1,6 +1,6 @@
 -- https://github.com/yutkat/wb-only-current-line.nvim
 
-local enabled = ar_config.plugin.custom.wb_current_line.enable
+local enabled = ar.config.plugin.custom.wb_current_line.enable
 
 if not ar or ar.none or not enabled then return end
 

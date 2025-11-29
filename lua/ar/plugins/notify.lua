@@ -4,7 +4,7 @@ local codicons = ui.codicons
 
 local function get_cond(plugin)
   local condition = not ar.plugins.minimal
-    and ar_config.notifier.variant == 'nvim-notify'
+    and ar.config.notifier.variant == 'nvim-notify'
   return ar.get_plugin_cond(plugin, condition)
 end
 

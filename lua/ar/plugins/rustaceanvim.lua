@@ -1,4 +1,4 @@
-local bacon_ls = ar_config.lsp.lang.rust.bacon_ls
+local bacon_ls = ar.config.lsp.lang.rust.bacon_ls
 
 return {
   {
@@ -6,10 +6,10 @@ return {
     ft = { 'rust' },
     cond = function()
       local name = 'rustaceanvim'
-      local override = ar_config.lsp.override
+      local override = ar.config.lsp.override
       if not ar.lsp.enable then return false end
       if not ar.falsy(override) then return vim.tbl_contains(override, name) end
-      return ar.get_plugin_cond('rustaceanvim', ar_config.lsp.lang.rust[name])
+      return ar.get_plugin_cond('rustaceanvim', ar.config.lsp.lang.rust[name])
     end,
     init = function()
       vim.g.whichkey_add_spec({ '<leader><leader>r', group = 'Rustaceanvim' })

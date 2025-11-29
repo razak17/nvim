@@ -20,7 +20,7 @@ return {
     opts = {
       preview = {
         border = ar.ui.current.border.default,
-        winblend = ar_config.ui.transparent.enable and 12 or 0,
+        winblend = ar.config.ui.transparent.enable and 12 or 0,
       },
     },
     config = function(_, opts)

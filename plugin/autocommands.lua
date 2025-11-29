@@ -1,4 +1,4 @@
-local enabled = ar_config.plugin.main.autocommands.enable
+local enabled = ar.config.plugin.main.autocommands.enable
 
 if not ar or ar.none or not enabled then return end
 
@@ -60,7 +60,7 @@ local function can_save()
     and vim.bo.modifiable
     and not vim.bo.readonly
     and not vim.tbl_contains(save_excluded, vim.bo.filetype)
-    and ar_config.autosave.enable
+    and ar.config.autosave.enable
   -- and ar.kitty_scrollback.enable
 end
 

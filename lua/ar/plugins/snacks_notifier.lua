@@ -9,7 +9,7 @@ return {
   -- stylua: ignore
   keys = function(_, keys)
     keys = keys or {}
-    if ar_config.notifier.variant == 'snacks' then
+    if ar.config.notifier.variant == 'snacks' then
       ar.list_insert(keys, {
         { '<leader>nx', function() Snacks.notifier.hide() end, desc = 'snacks: dismiss all notifications' },
         { '<leader>nh', function() Snacks.notifier.show_history() end, desc = 'snacks: show notification history' },
@@ -23,14 +23,14 @@ return {
         notification_history = {
           border = vim.o.winborder,
           wo = {
-            winblend = ar_config.ui.transparent.enable and 0 or 5,
+            winblend = ar.config.ui.transparent.enable and 0 or 5,
             wrap = true,
           },
         },
       }),
       notifier = {
         border = border,
-        enabled = ar_config.notifier.variant == 'snacks',
+        enabled = ar.config.notifier.variant == 'snacks',
         filter = function(n)
           local ignored_messages = {
             'Neo-tree',

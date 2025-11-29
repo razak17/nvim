@@ -1,4 +1,4 @@
-local enabled = ar_config.plugin.main.tmux.enable
+local enabled = ar.config.plugin.main.tmux.enable
 
 if not ar or ar.none or not enabled or vim.env.TMUX == nil then return end
 
@@ -22,7 +22,7 @@ local function set_statusline(reset)
   if vim.tbl_contains(ignored, vim.bo.ft) then return end
   local tmux_bg = '#20222f'
   local bg = tmux_bg
-  if ar_config.ui.transparent.enable then
+  if ar.config.ui.transparent.enable then
     bg = 'default'
   elseif not reset then
     bg = ar.highlight.get('Normal', 'bg')

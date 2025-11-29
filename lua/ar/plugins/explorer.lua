@@ -3,8 +3,8 @@ local copy = ar.copy_to_clipboard
 local highlight, lsp_hls = ar.highlight, ar.ui.lsp.highlights
 local api, fn = vim.api, vim.fn
 local utils = require('ar.utils.fs')
-local ar_icons = ar_config.icons.variant
-local variant = ar_config.explorer.variant
+local ar_icons = ar.config.icons.variant
+local variant = ar.config.explorer.variant
 
 local function plugin_cond(plugin, v)
   return ar.get_plugin_cond(plugin, variant == v)
@@ -13,10 +13,10 @@ end
 ---@param from string
 ---@param to string
 local function on_rename(from, to)
-  if ar_config.explorer.rename == 'local' then
+  if ar.config.explorer.rename == 'local' then
     utils.on_rename_file(from, to)
   end
-  if ar_config.explorer.rename == 'snacks' then
+  if ar.config.explorer.rename == 'snacks' then
     local snacks_ok, snacks = pcall(require, 'snacks')
     if not snacks_ok then return end
     snacks.rename.on_rename_file(from, to)
@@ -170,8 +170,8 @@ return {
       local function on_move(data) on_rename(data.source, data.destination) end
 
       local function disable_autosave()
-        ar_config.autosave.current = ar_config.autosave.enable
-        if ar_config.autosave.current then ar_config.autosave.enable = false end
+        ar.config.autosave.current = ar.config.autosave.enable
+        if ar.config.autosave.current then ar.config.autosave.enable = false end
       end
 
       local function custom_open_with_window_picker(state)
@@ -261,7 +261,7 @@ return {
           {
             event = events.FILE_RENAMED,
             handler = function()
-              ar_config.autosave.enable = ar_config.autosave.current
+              ar.config.autosave.enable = ar.config.autosave.current
             end,
           },
           {
@@ -426,7 +426,7 @@ return {
             { NeoTreeStatusLine = { link = 'PanelBackground' } },
             {
               NeoTreeTabActive = {
-                bg = ar_config.ui.transparent and 'NONE'
+                bg = ar.config.ui.transparent and 'NONE'
                   or { from = 'FloatTitle' },
               },
             },

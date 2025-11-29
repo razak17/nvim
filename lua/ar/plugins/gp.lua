@@ -1,7 +1,7 @@
 local api, fn = vim.api, vim.fn
 local fmt = string.format
 
-local models = ar_config.ai.models
+local models = ar.config.ai.models
 
 vim.env.GOOGLEAI_API_KEY = vim.env.GEMINI_API_KEY or ''
 

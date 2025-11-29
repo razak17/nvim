@@ -13,13 +13,13 @@ local picker_config = {
   ---@param opts? snacks.picker.Config
   open = function(source, opts) return Snacks.picker.pick(source, opts) end,
 }
-if ar_config.picker.variant == 'snacks' then ar.pick.register(picker_config) end
+if ar.config.picker.variant == 'snacks' then ar.pick.register(picker_config) end
 
 local fn = vim.fn
 local fmt = string.format
 local border_style = vim.o.winborder
 local diag_icons = ar.ui.codicons.lsp
-local show_preview = ar_config.picker.win.show_preview
+local show_preview = ar.config.picker.win.show_preview
 
 local picker_layouts = {
   telescope = {
@@ -27,8 +27,8 @@ local picker_layouts = {
     layout = {
       box = 'horizontal',
       backdrop = false,
-      height = ar_config.picker.win.fullscreen and 100 or 0.9,
-      width = ar_config.picker.win.fullscreen and 400 or 0.9,
+      height = ar.config.picker.win.fullscreen and 100 or 0.9,
+      width = ar.config.picker.win.fullscreen and 400 or 0.9,
       border = 'none',
       {
         box = 'vertical',
@@ -215,7 +215,7 @@ return {
     'razak17/todo-comments.nvim',
     optional = true,
     opts = function()
-      if ar_config.picker.variant == 'snacks' then
+      if ar.config.picker.variant == 'snacks' then
         local function todos()
           p('todo_comments', {
             layout = { preview = 'main', preset = 'ivy' },
@@ -251,7 +251,7 @@ return {
     recommended = true,
     'folke/snacks.nvim',
     init = function()
-      if ar_config.picker.variant == 'snacks' then
+      if ar.config.picker.variant == 'snacks' then
         local function fuzzy_in_cur_dir(source, recursive)
           return function()
             local current_file = vim.api.nvim_buf_get_name(0)
@@ -284,13 +284,13 @@ return {
     end,
     keys = function(_, keys)
       keys = keys or {}
-      if ar_config.picker.files == 'snacks' then
+      if ar.config.picker.files == 'snacks' then
         table.insert(keys, { '<C-p>', find_files, desc = 'snacks: find files' })
       end
-      if ar_config.buffers.variant == 'snacks' then
+      if ar.config.buffers.variant == 'snacks' then
         table.insert(keys, { '<M-space>', buffers, desc = 'snacks: buffers' })
       end
-      if ar_config.picker.variant == 'snacks' then
+      if ar.config.picker.variant == 'snacks' then
         -- stylua: ignore
         local picker_mappings = {
           { '<leader>fc', p('files', { cwd = fn.stdpath('config') }), desc = 'find config file' },
@@ -339,7 +339,7 @@ return {
           { "<leader>fe", function() Snacks.explorer() end, desc = "explorer" },
         }
         -- stylua: ignore
-        if ar_config.explorer.variant == 'snacks' then
+        if ar.config.explorer.variant == 'snacks' then
           table.insert(picker_mappings, { '<C-n>', function() Snacks.explorer() end, desc = 'explorer' })
         end
         -- stylua: ignore
@@ -354,7 +354,7 @@ return {
             { 'gao', p('lsp_outgoing_calls'), desc = 'c[a]lls outgoing' },
           })
           -- stylua: ignore
-          if ar_config.lsp.symbols.enable and ar_config.lsp.symbols.variant == 'picker' then
+          if ar.config.lsp.symbols.enable and ar.config.lsp.symbols.variant == 'picker' then
             ar.list_insert(picker_mappings, {
               { '<leader>lsd', p('lsp_symbols'), desc = 'snacks: lsp symbols' },
               { '<leader>lsw', p('lsp_workspace_symbols'), desc = 'snacks: lsp workspace symbols' },

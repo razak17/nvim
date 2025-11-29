@@ -1,6 +1,6 @@
 local api, fn = vim.api, vim.fn
 local diagnostic = vim.diagnostic
-local ts_lsp = ar_config.lsp.lang.typescript
+local ts_lsp = ar.config.lsp.lang.typescript
 
 local bool2str = ar.bool2str
 local icons = ar.ui.codicons
@@ -232,7 +232,7 @@ function M.toggle_signs()
   else
     config = vim.tbl_extend('force', config, { signs = false })
   end
-  ar_config.lsp.signs.enable = not ar_config.lsp.signs.enable
+  ar.config.lsp.signs.enable = not ar.config.lsp.signs.enable
   diagnostic.config(config)
   vim.cmd('edit | silent! wall') -- Redraw
   lsp_notify(
@@ -244,33 +244,33 @@ function M.toggle_signs()
 end
 
 function M.toggle_hover_diagnostics()
-  ar_config.lsp.hover_diagnostics.enable =
-    not ar_config.lsp.hover_diagnostics.enable
+  ar.config.lsp.hover_diagnostics.enable =
+    not ar.config.lsp.hover_diagnostics.enable
   lsp_notify(
     string.format(
       'hover diagnostics %s',
-      bool2str(ar_config.lsp.hover_diagnostics.enable)
+      bool2str(ar.config.lsp.hover_diagnostics.enable)
     )
   )
 end
 
 function M.toggle_hover_diagnostics_go_to()
-  ar_config.lsp.hover_diagnostics.go_to =
-    not ar_config.lsp.hover_diagnostics.go_to
+  ar.config.lsp.hover_diagnostics.go_to =
+    not ar.config.lsp.hover_diagnostics.go_to
   lsp_notify(
     string.format(
       'hover diagnostics (go_to) %s',
-      bool2str(ar_config.lsp.hover_diagnostics.go_to)
+      bool2str(ar.config.lsp.hover_diagnostics.go_to)
     )
   )
 end
 
 function M.toggle_format_on_save()
-  ar_config.lsp.format_on_save.enable = not ar_config.lsp.format_on_save.enable
+  ar.config.lsp.format_on_save.enable = not ar.config.lsp.format_on_save.enable
   lsp_notify(
     string.format(
       'format on save %s',
-      bool2str(ar_config.lsp.format_on_save.enable)
+      bool2str(ar.config.lsp.format_on_save.enable)
     )
   )
 end

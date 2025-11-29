@@ -8,10 +8,10 @@ local filetypes = {
 }
 
 local function cond(server, plugin)
-  local override = ar_config.lsp.override
+  local override = ar.config.lsp.override
   if not ar.lsp.enable then return false end
   if not ar.falsy(override) then return vim.tbl_contains(override, server) end
-  return ar.get_plugin_cond(plugin, ar_config.lsp.lang.typescript[server])
+  return ar.get_plugin_cond(plugin, ar.config.lsp.lang.typescript[server])
 end
 
 return {

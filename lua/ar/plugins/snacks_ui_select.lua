@@ -6,7 +6,7 @@ return {
     local snack_opts = vim.tbl_deep_extend('force', opts or {}, {
       picker = { ui_select = false },
     })
-    if ar_config.picker.variant == 'snacks' then
+    if ar.config.picker.variant == 'snacks' then
       ---@diagnostic disable-next-line: duplicate-set-field
       vim.ui.select = function(items, options, on_choice)
         ---@diagnostic disable-next-line: inject-field

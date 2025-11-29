@@ -1,10 +1,10 @@
-local enabled = ar_config.plugin.main.colors.enable
+local enabled = ar.config.plugin.main.colors.enable
 
 if not ar or ar.none or not enabled then return end
 
 local fmt = string.format
 local highlight = ar.highlight
-local transparent = ar_config.ui.transparent.enable
+local transparent = ar.config.ui.transparent.enable
 
 local function general_overrides()
   return {

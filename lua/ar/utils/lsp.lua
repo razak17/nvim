@@ -115,14 +115,14 @@ function M.process_progress_msg(client, params)
     if loaded_count ~= '' then message = message .. ': ' .. loaded_count end
     local pct = params.percentage
     local progress = ''
-    if ar_config.lsp.progress.spinner == 'circle' then
+    if ar.config.lsp.progress.spinner == 'circle' then
       if pct then
         local spinners = ar.ui.spinners.circle_quarters
         local idx = math.max(1, math.floor(pct / 10))
         progress = spinners[idx] .. ' ' .. pct .. '% '
       end
       message = progress .. message
-    elseif ar_config.lsp.progress.spinner == 'dots' then
+    elseif ar.config.lsp.progress.spinner == 'dots' then
       if pct then
         local spinners = ar.ui.spinners.dots_alt
         message = string.format('%s (%3d%%)', message, pct)

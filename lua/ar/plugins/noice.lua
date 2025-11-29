@@ -1,12 +1,12 @@
 local fn, L = vim.fn, vim.log.levels
 
-local is_cmp = ar_config.completion.variant == 'cmp'
+local is_cmp = ar.config.completion.variant == 'cmp'
 
 return {
   'folke/noice.nvim',
   cond = function()
     local condition = not ar.plugins.minimal
-      and ar_config.ui.cmdline.variant == 'noice'
+      and ar.config.ui.cmdline.variant == 'noice'
     return ar.get_plugin_cond('noice.nvim', condition)
   end,
   event = 'VeryLazy',
@@ -25,7 +25,7 @@ return {
       { mode = {'i', 'n', 's'}, '<c-f>', function() if not require('noice.lsp').scroll(4) then return '<c-f>' end end, silent = true, expr = true, desc = 'scroll forward' },
       { mode = {'i', 'n', 's'}, '<c-b>', function() if not require('noice.lsp').scroll(-4) then return '<c-b>' end end, silent = true, expr = true, desc = 'scroll backward' },
     })
-    if ar_config.notifier.variant == 'noice' then
+    if ar.config.notifier.variant == 'noice' then
       ar.list_insert(keys, {
         { '<leader>nh', function() require('noice').cmd('history') end, desc = 'noice history' },
       })
@@ -58,11 +58,11 @@ return {
       view = 'mini', -- minimise pattern not found messages
     },
     popupmenu = {
-      enabled = ar_config.completion.variant ~= 'mini.completion',
+      enabled = ar.config.completion.variant ~= 'mini.completion',
       backend = 'nui',
     },
     notify = {
-      enabled = ar_config.notifier.variant == 'noice',
+      enabled = ar.config.notifier.variant == 'noice',
       view = 'notify',
     },
     lsp = {
@@ -81,8 +81,8 @@ return {
       },
       hover = { enabled = true, silent = true },
       progress = {
-        enabled = ar_config.lsp.progress.enable
-          and ar_config.lsp.progress.variant == 'noice'
+        enabled = ar.config.lsp.progress.enable
+          and ar.config.lsp.progress.variant == 'noice'
           and false,
         throttle = 1000 / 1000,
       },

@@ -8,8 +8,8 @@ return {
   recommended = true,
   'rebelot/heirline.nvim',
   opts = function(_, opts)
-    local cond = ar_config.ui.statuscolumn.enable
-      and ar_config.ui.statuscolumn.variant == 'heirline'
+    local cond = ar.config.ui.statuscolumn.enable
+      and ar.config.ui.statuscolumn.variant == 'heirline'
 
     if not cond or minimal then return opts end
 

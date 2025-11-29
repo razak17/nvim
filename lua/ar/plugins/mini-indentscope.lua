@@ -5,8 +5,8 @@ return {
   {
     'nvim-mini/mini.indentscope',
     cond = function()
-      local indentline_enable = ar_config.ui.indentline.enable
-      local indentline_variant = ar_config.ui.indentline.variant
+      local indentline_enable = ar.config.ui.indentline.enable
+      local indentline_variant = ar.config.ui.indentline.variant
       local condition = not minimal
         and indentline_enable
         and indentline_variant == 'mini.indentscope'

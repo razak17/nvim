@@ -28,8 +28,8 @@ map(
 if not ar.lsp.enable then return end
 
 local falsy = ar.falsy
-local override = ar_config.lsp.override
-local ts_lang = ar_config.lsp.lang.typescript
+local override = ar.config.lsp.override
+local ts_lang = ar.config.lsp.lang.typescript
 
 if
   vim.tbl_contains(override, 'ts_ls') or (falsy(override) and ts_lang['ts_ls'])

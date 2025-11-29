@@ -1,4 +1,4 @@
-local enabled = ar_config.plugin.main.mappings.enable
+local enabled = ar.config.plugin.main.mappings.enable
 
 if not ar or ar.none or not enabled then return end
 
@@ -72,7 +72,7 @@ map({ 'n', 'x' }, '<leader>C', '"_C', { desc = 'cut' })
 -- Credit: JGunn Choi ?il | inner line
 ----------------------------------------------------------------------------
 -- Yank all
-if not ar_config.plugin.custom.sticky_yank.enable then
+if not ar.config.plugin.custom.sticky_yank.enable then
   nnoremap('<localleader>Y', ':%y+<CR>', { desc = 'yank all' })
 end
 -- Select all
@@ -351,11 +351,11 @@ nnoremap('<localleader>bo', function()
 end, { desc = 'close other buffers' })
 nnoremap('<leader>od', function()
   if fn.confirm('Move file to trash?', '&Yes\n&No') == 1 then
-    ar_config.autosave.enable = not ar_config.autosave.enable
+    ar.config.autosave.enable = not ar.config.autosave.enable
     local file = fn.expand('%:p')
     ar.trash_file(file, true)
     Snacks.bufdelete.delete()
-    ar_config.autosave.enable = not ar_config.autosave.enable
+    ar.config.autosave.enable = not ar.config.autosave.enable
   end
 end, { desc = 'trash file' })
 nnoremap('<leader>oD', function()
@@ -481,7 +481,7 @@ xnoremap(
 -- GX - replicate netrw functionality
 --------------------------------------------------------------------------------
 if
-  (ar_config.gx.enable and ar_config.gx.variant == 'local')
+  (ar.config.gx.enable and ar.config.gx.variant == 'local')
   or ar.plugins.minimal
 then
   map('n', 'gx', function()

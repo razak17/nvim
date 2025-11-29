@@ -311,7 +311,6 @@ local namespace = {
     },
   },
 }
-_G.ar = ar or namespace
 
 local config = {
   ai = {
@@ -587,7 +586,8 @@ local config = {
     transparent = { enable = true },
   },
 }
-_G.ar_config = config
 
-_G.map = vim.keymap.set
+_G.ar = ar or namespace
+_G.ar.config = config
 _G.ar.pick = require('ar.pick')
+_G.map = vim.keymap.set

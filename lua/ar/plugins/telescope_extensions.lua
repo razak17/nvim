@@ -1,6 +1,6 @@
 local function get_cond(plugin)
   return function()
-    local condition = ar_config.picker.variant == 'telescope'
+    local condition = ar.config.picker.variant == 'telescope'
     if not plugin then return condition end
     return ar.get_plugin_cond(plugin, condition)
   end
@@ -56,7 +56,7 @@ return {
       {
         'jonarrien/telescope-cmdline.nvim',
         cond = function()
-          local condition = ar_config.ui.cmdline.variant == 'telescope-cmdline'
+          local condition = ar.config.ui.cmdline.variant == 'telescope-cmdline'
           return ar.get_plugin_cond('telescope-cmdline.nvim', condition)
         end,
         keys = {
@@ -73,7 +73,7 @@ return {
       {
         'danielfalk/smart-open.nvim',
         cond = function()
-          local condition = ar_config.picker.files == 'smart-open'
+          local condition = ar.config.picker.files == 'smart-open'
           return ar.get_plugin_cond('smart-open.nvim', condition)
         end,
         keys = {

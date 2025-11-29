@@ -1,4 +1,4 @@
-local enabled = ar_config.plugin.main.whitespace.enable
+local enabled = ar.config.plugin.main.whitespace.enable
 
 if not ar or ar.none or not enabled then return end
 

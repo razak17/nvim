@@ -2,7 +2,7 @@ local fn, api = vim.fn, vim.api
 local bo = vim.bo
 local decor = ar.ui.decorations
 local minimal = ar.plugins.minimal
-local variant = ar_config.ui.statusline.variant
+local variant = ar.config.ui.statusline.variant
 
 local buftypes = { 'nofile', 'prompt', 'help', 'quickfix' }
 
@@ -59,7 +59,7 @@ return {
     config = function(_, opts)
       local conditions = require('heirline.conditions')
 
-      if ar_config.ui.statusline.enable and variant == 'heirline' then
+      if ar.config.ui.statusline.enable and variant == 'heirline' then
         opts.statusline = vim.tbl_deep_extend('force', opts.statusline or {}, {
           static = {
             filetypes = filetypes,
@@ -84,7 +84,7 @@ return {
         })
       end
 
-      if ar_config.ui.statuscolumn.enable and variant == 'heirline' then
+      if ar.config.ui.statuscolumn.enable and variant == 'heirline' then
         opts.statuscolumn =
           vim.tbl_deep_extend('force', opts.statuscolumn or {}, {
             condition = function()

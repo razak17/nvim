@@ -1,5 +1,5 @@
 local separators = ar.ui.icons.separators
-local ar_indent = ar_config.ui.indentline
+local ar_indent = ar.config.ui.indentline
 local indent_char = separators.left_thin_block
 
 return {

@@ -1,7 +1,7 @@
 local scheme_switcher = require('ar.scheme_switcher')
 local colorscheme = scheme_switcher.get_current_colorscheme()
 local theming = require('ar.theming')
-local variant = ar_config.colorscheme.variant
+local variant = ar.config.colorscheme.variant
 
 local function is_colorscheme(name) return name == colorscheme end
 
@@ -118,7 +118,7 @@ return {
       priority = get_priority({ 'vague' }),
       event = get_event({ 'vague' }),
       opts = {
-        transparent = ar_config.ui.transparent.enable,
+        transparent = ar.config.ui.transparent.enable,
         colors = { floatBorder = '#252530' },
       },
       init = function()
@@ -581,7 +581,7 @@ return {
       cond = get_cond({ 'conifer' }),
       priority = get_priority({ 'conifer' }),
       event = get_event({ 'conifer' }),
-      opts = { transparent = ar_config.ui.transparent.enable },
+      opts = { transparent = ar.config.ui.transparent.enable },
       init = function()
         theming.apply_overrides('conifer', {
           { DiffAdd = { bg = { from = 'DiffAdd', alter = 3.15 } } },
@@ -595,7 +595,7 @@ return {
       cond = function() return colorscheme == 'nanode' end,
       priority = get_priority({ 'nanode' }),
       event = get_event({ 'nanode' }),
-      opts = { transparent = ar_config.ui.transparent.enable },
+      opts = { transparent = ar.config.ui.transparent.enable },
       init = function()
         theming.apply_overrides('nanode', {
           { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.2 } } },

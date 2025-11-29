@@ -2,7 +2,7 @@ local fn = vim.fn
 local cwd = fn.getcwd()
 local fmt = string.format
 local border = ar.ui.current.border.default
-local ar_lsp = ar_config.lsp.lang
+local ar_lsp = ar.config.lsp.lang
 local minimal = ar.plugins.minimal
 local enabled = not minimal and ar.lsp.enable
 
@@ -32,7 +32,7 @@ local server_langs = {
 local function is_enabled(name)
   if name == 'copilot' and not ar.ai.enable then return false end
   local disabled = ar.lsp_disabled(name)
-  local override = ar_config.lsp.override
+  local override = ar.config.lsp.override
   if vim.tbl_contains(override, name) and not disabled then return true end
   if not ar.falsy(override) then return vim.tbl_contains(override, name) end
   if ar.lsp_disabled(name) then return false end
@@ -144,7 +144,7 @@ return {
     opts = { hl_group = 'Visual', preview_empty_name = true },
     keys = function()
       local mappings = {}
-      if ar_config.lsp.rename.variant == 'inc-rename' then
+      if ar.config.lsp.rename.variant == 'inc-rename' then
         ar.list_insert(mappings, {
           {
             '<leader>ln',

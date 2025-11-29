@@ -1,8 +1,8 @@
 if
   not ar
   or ar.none
-  or not ar_config.ui.statusline.enable
-  or (ar_config.ui.statusline.variant ~= 'local' and not ar.plugins.minimal)
+  or not ar.config.ui.statusline.enable
+  or (ar.config.ui.statusline.variant ~= 'local' and not ar.plugins.minimal)
 then
   return
 end

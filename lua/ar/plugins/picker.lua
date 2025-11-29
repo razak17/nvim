@@ -22,7 +22,7 @@ local picker_config = {
     return require('fzf-lua')[command](opts)
   end,
 }
-if ar_config.picker.variant == 'fzf-lua' then
+if ar.config.picker.variant == 'fzf-lua' then
   ar.pick.register(picker_config)
 end
 
@@ -121,8 +121,8 @@ return {
     'ibhagwan/fzf-lua',
     cmd = 'FzfLua',
     cond = function()
-      if ar_config.picker.variant == 'fzf-lua' then return true end
-      if ar_config.picker.files == 'fzf-lua' then return true end
+      if ar.config.picker.variant == 'fzf-lua' then return true end
+      if ar.config.picker.files == 'fzf-lua' then return true end
       return ar.get_plugin_cond('fzf-lua', not minimal)
     end,
     init = function()
@@ -132,7 +132,7 @@ return {
         { '<localleader>fv', group = 'Vim' },
       })
 
-      if ar_config.picker.variant == 'fzf-lua' then
+      if ar.config.picker.variant == 'fzf-lua' then
         local fzf = require('fzf-lua')
         fzf.register_ui_select(function(fzf_opts, items)
           fzf_opts.prompt = fzf_opts.prompt or 'Select one of'
@@ -181,7 +181,7 @@ return {
     end,
     keys = function()
       local mappings = {}
-      if ar_config.picker.variant == 'fzf-lua' then
+      if ar.config.picker.variant == 'fzf-lua' then
         -- stylua: ignore
         local fzf_mappings = {
           { '<M-space>', fzf_lua.buffers, desc = 'buffers' },
@@ -223,7 +223,7 @@ return {
             { '<leader>ly', fzf_lua.lsp_typedefs, desc = 'type definitions' },
           })
           -- stylua: ignore
-          if ar_config.lsp.symbols.enable and ar_config.lsp.symbols.variant == 'picker' then
+          if ar.config.lsp.symbols.enable and ar.config.lsp.symbols.variant == 'picker' then
             ar.list_insert(fzf_mappings, {
               { '<leader>lsd', fzf_lua.lsp_document_symbols, desc = 'document symbols' },
               { '<leader>lsl', fzf_lua.lsp_live_workspace_symbols, desc = 'live workspace symbols' },
@@ -239,7 +239,7 @@ return {
     config = function()
       local lsp_kind = require('lspkind')
       local fzf = require('fzf-lua')
-      local show_preview = ar_config.picker.win.show_preview
+      local show_preview = ar.config.picker.win.show_preview
 
       fzf.setup({
         prompt = prompt,
@@ -254,8 +254,8 @@ return {
         previewers = { builtin = { toggle_behavior = 'extend' } },
         winopts = {
           border = border_style,
-          height = ar_config.picker.win.fullscreen and 100 or 0.9,
-          width = ar_config.picker.win.fullscreen and 400 or 0.9,
+          height = ar.config.picker.win.fullscreen and 100 or 0.9,
+          width = ar.config.picker.win.fullscreen and 400 or 0.9,
           preview = {
             border = border_style,
             wrap = 'nowrap',
@@ -418,7 +418,7 @@ return {
             keys = function(_, keys)
               local mappings = keys or {}
 
-              if ar_config.picker.files == 'fzf-lua' then
+              if ar.config.picker.files == 'fzf-lua' then
                 local function frecency()
                   require('fzf-lua-frecency').frecency({ cwd_only = true })
                 end
@@ -439,7 +439,7 @@ return {
     'razak17/todo-comments.nvim',
     optional = true,
     opts = function()
-      if ar_config.picker.variant == 'fzf-lua' then
+      if ar.config.picker.variant == 'fzf-lua' then
         local todos = require('todo-comments.fzf').todo
         local function todos_fixes()
           todos({ keywords = { 'TODO', 'FIX', 'FIXME' } })
@@ -463,8 +463,8 @@ return {
     keys = { { '<leader>fi', '<Cmd>Import<CR>', desc = 'import' } },
     cmd = { 'Import' },
     opts = {
-      picker = ar_config.picker.variant ~= 'mini.pick'
-          and ar_config.picker.variant
+      picker = ar.config.picker.variant ~= 'mini.pick'
+          and ar.config.picker.variant
         or 'snacks',
     },
   },
@@ -478,7 +478,7 @@ return {
       local keys = {
         { 'f/', fff_find, desc = 'Open file picker' },
       }
-      if ar_config.picker.files == 'fff' then
+      if ar.config.picker.files == 'fff' then
         table.insert(keys, { '<C-p>', fff_find, desc = 'fff: find files' })
       end
       return keys
@@ -487,14 +487,14 @@ return {
       prompt = '🦆 ',
       hl = { normal = 'NormalFloat' },
       layout = {
-        height = ar_config.picker.win.fullscreen and 1.0 or 0.9,
-        width = ar_config.picker.win.fullscreen and 1.0 or 0.9,
+        height = ar.config.picker.win.fullscreen and 1.0 or 0.9,
+        width = ar.config.picker.win.fullscreen and 1.0 or 0.9,
         prompt_position = 'top',
         preview_position = 'right', -- or 'left', 'right', 'top', 'bottom'
         preview_size = 0.5,
       },
       preview = {
-        enabled = ar_config.picker.win.show_preview,
+        enabled = ar.config.picker.win.show_preview,
         line_numbers = true,
       },
     },

@@ -475,7 +475,7 @@ end
 
 --------------------------------------------------------------------------------
 -- The current styles for various UI elements
-local border_style = ar_config.ui.border
+local border_style = ar.config.ui.border
 local border = ar.ui.border
 ar.ui.current = {
   -- stylua: ignore

@@ -3,7 +3,7 @@ local falsy, icons, codicons = ar.falsy, ar.ui.icons, ar.ui.codicons
 local separator = icons.separators.dotted_thin_block
 local root_util = require('ar.utils.root')
 local theming = require('ar.theming')
-local P = theming.get_statusline_palette(ar_config.colorscheme.name)
+local P = theming.get_statusline_palette(ar.config.colorscheme.name)
 
 local M = {}
 
@@ -667,7 +667,7 @@ function M.copilot_native_status()
   local opts = copilot_opts
   local clients = vim.lsp.get_clients({ name = 'copilot', bufnr = 0 })
   if not (clients and #clients > 0) then return '' end
-  local status = ar_config.ai.completion.status
+  local status = ar.config.ai.completion.status
   if ar.falsy(status) then
     return { icon = opts.icons.sleep, hl = opts.hl.sleep }
   elseif status[1] == 'pending' then

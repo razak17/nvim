@@ -4,7 +4,7 @@ return {
     cond = function()
       return ar.get_plugin_cond(
         'transparent.nvim',
-        ar_config.ui.transparent.enable
+        ar.config.ui.transparent.enable
       )
     end,
     init = function()

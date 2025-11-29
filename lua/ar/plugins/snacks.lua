@@ -44,7 +44,7 @@ return {
       git = { enabled = true },
       gitbrowse = { enabled = true },
       image = {
-        enabled = ar_config.image.variant == 'snacks',
+        enabled = ar.config.image.variant == 'snacks',
         doc = {
           inline = false,
           float = true,
@@ -137,7 +137,7 @@ return {
       -- https://github.com/LazyVim/LazyVim/blob/66981fe5b2c220286a31292fce3cc82b0e17ae76/lua/lazyvim/plugins/init.lua?plain=1#L24
       -- HACK: restore vim.notify after snacks setup and let noice.nvim take over
       -- this is needed to have early notifications show up in noice history
-      if ar.has('noice.nvim') and ar_config.notifier.variant == 'noice' then
+      if ar.has('noice.nvim') and ar.config.notifier.variant == 'noice' then
         vim.notify = notify
       end
     end,

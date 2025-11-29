@@ -1,4 +1,4 @@
-if ar_config.picker.variant == 'telescope' then
+if ar.config.picker.variant == 'telescope' then
   ---@type ArPick
   local picker_config = {
     name = 'telescope',
@@ -74,7 +74,7 @@ local datapath = fn.stdpath('data')
 local minimal = ar.plugins.minimal
 local enabled = not ar.plugin_disabled('telescope.nvim')
 local min_enabled = enabled and not minimal
-local is_telescope = ar_config.picker.variant == 'telescope'
+local is_telescope = ar.config.picker.variant == 'telescope'
 local picker_enabled = min_enabled and is_telescope
 local border = ui.current.border.telescope
 
@@ -393,7 +393,7 @@ return {
     keys = function(_, keys)
       local mappings = keys or {}
 
-      if ar_config.picker.files == 'telescope' then
+      if ar.config.picker.files == 'telescope' then
         table.insert(mappings, { '<C-p>', find_files, desc = 'find files' })
       end
       if is_telescope then
@@ -452,7 +452,7 @@ return {
       local themes = require('telescope.themes')
       local config = require('telescope.config')
       local vimgrep_arguments = { unpack(config.values.vimgrep_arguments) }
-      local show_preview = ar_config.picker.win.show_preview
+      local show_preview = ar.config.picker.win.show_preview
 
       table.insert(vimgrep_arguments, '--hidden')
       table.insert(vimgrep_arguments, '--glob')
@@ -514,8 +514,8 @@ return {
           dynamic_preview_title = true,
           results_title = false,
           layout_config = {
-            height = ar_config.picker.win.fullscreen and 100 or 0.95,
-            width = ar_config.picker.win.fullscreen and 400 or 0.9,
+            height = ar.config.picker.win.fullscreen and 100 or 0.95,
+            width = ar.config.picker.win.fullscreen and 400 or 0.9,
             horizontal = { preview_width = 0.55 },
           },
           winblend = 0,
@@ -747,7 +747,7 @@ return {
     'razak17/todo-comments.nvim',
     optional = true,
     opts = function()
-      if ar_config.picker.variant == 'telescope' then
+      if ar.config.picker.variant == 'telescope' then
         local ivy = require('telescope.themes').get_ivy({
           wrap_results = true,
           borderchars = { preview = ui.current.border.ivy },

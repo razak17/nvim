@@ -1,4 +1,4 @@
-local enabled = ar_config.plugin.custom.large_file.enable
+local enabled = ar.config.plugin.custom.large_file.enable
 
 if not ar or ar.none or not enabled then return end
 

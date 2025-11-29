@@ -7,7 +7,7 @@ return {
     'nvim-mini/mini.completion',
     cond = function()
       local condition = enabled
-        or ar_config.completion.variant == 'mini.completion'
+        or ar.config.completion.variant == 'mini.completion'
       return ar.get_plugin_cond('mini.completion', condition)
     end,
     event = { 'InsertEnter', 'BufEnter' },

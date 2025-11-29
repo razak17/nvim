@@ -79,7 +79,7 @@ return {
       local condition = not minimal
         and not vim.g.neovide
         and not ar.kitty_scrollback.enable
-        and ar_config.image.variant == 'image.nvim'
+        and ar.config.image.variant == 'image.nvim'
       return ar.get_plugin_cond('image.nvim', condition)
     end,
     ft = { 'markdown' },
@@ -218,7 +218,7 @@ return {
       opts = {
         latex = { enabled = false },
         completions = {
-          blink = { enabled = ar_config.completion.variant == 'blink' },
+          blink = { enabled = ar.config.completion.variant == 'blink' },
           lsp = { enabled = ar.lsp.enable },
         },
         file_types = { 'markdown', 'Avante' },
@@ -248,7 +248,7 @@ return {
           enabled = true,
           sign = false,
           render_modes = false,
-          style = ar_config.ui.transparent.enable and 'language' or 'full', -- 'normal' | 'full' | 'language' | 'none'
+          style = ar.config.ui.transparent.enable and 'language' or 'full', -- 'normal' | 'full' | 'language' | 'none'
           highlight = 'CodeBlock',
           language_icon = true,
           language_name = true,

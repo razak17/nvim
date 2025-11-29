@@ -1,8 +1,8 @@
 local api, fn, uv = vim.api, vim.fn, vim.uv
 local border = ar.ui.current.border.default
 local coding = ar.plugins.coding
-local is_biome = ar_config.lsp.lang.web.biome
-  or vim.tbl_contains(ar_config.lsp.override, 'biome')
+local is_biome = ar.config.lsp.lang.web.biome
+  or vim.tbl_contains(ar.config.lsp.override, 'biome')
 
 ---@alias ConformCtx {buf: number, filename: string, dirname: string}
 
@@ -39,7 +39,7 @@ return {
   {
     'nvimtools/none-ls.nvim',
     cond = function()
-      local condition = coding and ar_config.lsp.null_ls.enable
+      local condition = coding and ar.config.lsp.null_ls.enable
       return ar.get_plugin_cond('none-ls.nvim', condition)
     end,
     event = { 'VeryLazy' },
@@ -107,7 +107,7 @@ return {
   {
     'stevearc/conform.nvim',
     cond = function()
-      local condition = coding and not ar_config.lsp.null_ls.enable
+      local condition = coding and not ar.config.lsp.null_ls.enable
       return ar.get_plugin_cond('conform.nvim', condition)
     end,
     event = { 'BufReadPre', 'BufNewFile' },
@@ -223,7 +223,7 @@ return {
     cond = function()
       local condition = coding
         and ar.lsp.enable
-        and not ar_config.lsp.null_ls.enable
+        and not ar.config.lsp.null_ls.enable
       return ar.get_plugin_cond('nvim-lint', condition)
     end,
     -- stylua: ignore

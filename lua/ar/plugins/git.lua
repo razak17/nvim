@@ -4,7 +4,7 @@ local icons = ar.ui.icons
 local border = ar.ui.current.border.default
 local left_block = icons.separators.left_block
 
-local statuscolumn_enabled = ar_config.ui.statuscolumn.enable
+local statuscolumn_enabled = ar.config.ui.statuscolumn.enable
 local git_cond = require('ar.utils.git').git_cond
 
 return {

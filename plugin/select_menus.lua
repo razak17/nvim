@@ -1,4 +1,4 @@
-local enabled = ar_config.plugin.main.select_menu.enable
+local enabled = ar.config.plugin.main.select_menu.enable
 
 if not ar or ar.none or not ar.plugins.enable or not enabled then return end
 
@@ -102,8 +102,8 @@ if ar.lsp.enable then
       ['Goto Workspace Symbol Under Cursor'] = "lua require'ar.select_menus.lsp'.ws_symbol_under_cursor()",
     })
   end
-  local is_biome = ar_config.lsp.lang.web.biome
-    or vim.tbl_contains(ar_config.lsp.override, 'biome')
+  local is_biome = ar.config.lsp.lang.web.biome
+    or vim.tbl_contains(ar.config.lsp.override, 'biome')
   if ar.lsp.enable and is_biome then
     ar.add_to_select_menu('lsp', {
       ['Apply Biome Fixes'] = "lua require'ar.select_menus.lsp'.apply_biome_fixes()",

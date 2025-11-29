@@ -35,7 +35,7 @@ return {
     -- stylua: ignore
     keys = function()
       local mappings = { { '<leader>ld', '<Cmd>Namu diagnostics<CR>', desc = 'namu: diagnostics' }, }
-      if ar_config.lsp.symbols.enable and ar_config.lsp.symbols.variant == 'namu' then
+      if ar.config.lsp.symbols.enable and ar.config.lsp.symbols.variant == 'namu' then
         ar.list_insert(mappings, {
           { '<leader>lsd', '<Cmd>Namu symbols<CR>', desc = 'namu: document symbols' },
           { '<leader>lsw', '<Cmd>Namu workspace<CR>', desc = 'namu: workspace symbols' },

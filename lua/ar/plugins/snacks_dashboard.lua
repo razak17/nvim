@@ -1,8 +1,8 @@
 local fn = vim.fn
 
 local dashboard = {
-  enabled = ar_config.dashboard.enable
-    and ar_config.dashboard.variant == 'snacks',
+  enabled = ar.config.dashboard.enable
+    and ar.config.dashboard.variant == 'snacks',
   width = 60,
   row = nil, -- dashboard position. nil for center
   col = nil, -- dashboard position. nil for center

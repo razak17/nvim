@@ -3,7 +3,7 @@ return {
     'nvim-telescope/telescope.nvim',
     optional = true,
     keys = function(_, keys)
-      if not ar.lsp.enable or ar_config.picker.variant ~= 'telescope' then
+      if not ar.lsp.enable or ar.config.picker.variant ~= 'telescope' then
         return keys
       end
 
@@ -28,7 +28,7 @@ return {
             { '<leader>ly', b('lsp_type_definitions'), desc = 'telescope: type definitions' },
           })
           -- stylua: ignore
-          if ar_config.lsp.symbols.enable and ar_config.lsp.symbols.variant == 'picker' then
+          if ar.config.lsp.symbols.enable and ar.config.lsp.symbols.variant == 'picker' then
             ar.list_insert(mappings, {
               { '<leader>lsd', b('lsp_document_symbols'), desc = 'telescope: document symbols', },
               { '<leader>lsl', b('lsp_dynamic_workspace_symbols'), desc = 'telescope: live workspace symbols' },

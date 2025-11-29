@@ -1,4 +1,4 @@
-local enabled = ar_config.plugin.custom.smart_hl_search.enable
+local enabled = ar.config.plugin.custom.smart_hl_search.enable
 
 if not ar or ar.none or not enabled then return end
 

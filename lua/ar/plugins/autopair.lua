@@ -10,7 +10,7 @@ return {
   {
     'windwp/nvim-autopairs',
     cond = function()
-      local condition = enabled and ar_config.completion.variant ~= 'omnifunc'
+      local condition = enabled and ar.config.completion.variant ~= 'omnifunc'
       return get_cond('nvim-autopairs', condition)
     end,
     event = 'InsertEnter',

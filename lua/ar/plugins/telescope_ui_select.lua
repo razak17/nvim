@@ -5,7 +5,7 @@ return {
     dependencies = {
       {
         'nvim-telescope/telescope-ui-select.nvim',
-        cond = function() return ar_config.picker.variant == 'telescope' end,
+        cond = function() return ar.config.picker.variant == 'telescope' end,
         specs = {
           'nvim-telescope/telescope.nvim',
           optional = true,

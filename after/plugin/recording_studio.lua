@@ -1,4 +1,4 @@
-local enabled = ar_config.plugin.custom.recording_studio.enable
+local enabled = ar.config.plugin.custom.recording_studio.enable
 
 if not ar or ar.none or not enabled then return end
 
@@ -60,7 +60,7 @@ local function run_command(job, cmd, filename)
   jobs[job] = fn.jobstart(cmd, {
     on_exit = function(_, exit_code, _)
       if exit_code ~= 0 then
-        if ar_config.debug.enable then
+        if ar.config.debug.enable then
           notify(job .. ' recording exited with error: ' .. exit_code, L.ERROR)
         end
       end
@@ -90,7 +90,7 @@ local function start_video(filename)
   vim.list_extend(record_cmd, get_video_input_args(filepath))
   vim.list_extend(record_cmd, { '-y', filepath }) -- -y to overwrite existing files
 
-  if ar_config.debug.enable then
+  if ar.config.debug.enable then
     print('Record command: ' .. vim.inspect(record_cmd))
   end
 
@@ -111,7 +111,7 @@ local function start_audio(filename)
   vim.list_extend(audio_cmd, get_audio_input_args())
   vim.list_extend(audio_cmd, { '-c:a', 'aac', '-b:a', '128k', filepath })
 
-  if ar_config.debug.enable then
+  if ar.config.debug.enable then
     print('Audio command: ' .. vim.inspect(audio_cmd))
   end
 

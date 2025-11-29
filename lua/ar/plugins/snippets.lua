@@ -47,7 +47,7 @@ return {
     'rafamadriz/friendly-snippets',
     cond = function()
       local cond = coding
-        and ar_config.completion.snippets.variant == 'friendly-snippets'
+        and ar.config.completion.snippets.variant == 'friendly-snippets'
       return ar.get_plugin_cond('friendly-snippets', cond)
     end,
   },
@@ -116,7 +116,7 @@ return {
           join_paths(fn.stdpath('config'), 'snippets'),
         }
 
-        if ar_config.completion.snippets.variant == 'friendly-snippets' then
+        if ar.config.completion.snippets.variant == 'friendly-snippets' then
           paths = vim.list_extend(paths, {
             join_paths(fn.stdpath('data'), 'lazy', 'friendly-snippets'),
           })
@@ -181,7 +181,7 @@ return {
       {
         'benfowler/telescope-luasnip.nvim',
         cond = function()
-          local picker = ar_config.picker.variant
+          local picker = ar.config.picker.variant
           local condition = picker == 'telescope' and get_cond()
           return ar.get_plugin_cond('telescope-luasnip.nvim', condition)
         end,

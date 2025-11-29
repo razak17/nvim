@@ -8,7 +8,7 @@ return {
     opts = {
       icons = { type = '󰜁 ', parameter = '󰏪 ' },
       label = { padding = 1, marginLeft = 0 },
-      autoEnableHints = ar_config.lsp.inlay_hint.enable,
+      autoEnableHints = ar.config.lsp.inlay_hint.enable,
     },
   },
   {

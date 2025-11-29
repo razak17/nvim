@@ -1,10 +1,10 @@
 local minimal = ar.plugins.minimal
-local variant = ar_config.shelter.variant
-local is_fzf = ar_config.picker.variant == 'fzf-lua'
-local is_snacks = ar_config.picker.variant == 'snacks'
-local is_blink = ar_config.completion.variant == 'blink'
+local variant = ar.config.shelter.variant
+local is_fzf = ar.config.picker.variant == 'fzf-lua'
+local is_snacks = ar.config.picker.variant == 'snacks'
+local is_blink = ar.config.completion.variant == 'blink'
 
-local cond = not minimal and ar_config.shelter.enable
+local cond = not minimal and ar.config.shelter.enable
 
 local function get_cond(plugin, which)
   local condition = cond and variant == which
@@ -72,7 +72,7 @@ return {
           ['Ecolog Goto'] = 'EcologGoto',
           ['Ecolog Goto Var'] = 'EcologGotoVar',
         })
-        if ar_config.completion.variant == 'omnifunc' then
+        if ar.config.completion.variant == 'omnifunc' then
           ar.augroup('EcologOmniFunc', {
             event = { 'FileType' },
             pattern = { 'javascript', 'typescript', 'python', 'lua' },

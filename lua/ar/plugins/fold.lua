@@ -32,7 +32,7 @@ return {
   {
     'kevinhwang91/nvim-ufo',
     cond = function()
-      local condition = not ar_config.plugin.custom.custom_fold.enable
+      local condition = not ar.config.plugin.custom.custom_fold.enable
         and not minimal
       return ar.get_plugin_cond('nvim-ufo', condition)
     end,
@@ -69,7 +69,7 @@ return {
           win_config = {
             border = ar.ui.current.border.default,
             winhighlight = 'NormalFloat:FloatBorder,FloatBorder:FloatBorder',
-            winblend = ar_config.ui.transparent.enable and 0 or 12,
+            winblend = ar.config.ui.transparent.enable and 0 or 12,
           },
           mappings = {
             scrollB = '',

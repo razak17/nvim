@@ -3,7 +3,7 @@
 -- Language servers
 --------------------------------------------------------------------------------
 local fn = vim.fn
-local bacon_ls = ar_config.lsp.lang.rust.bacon_ls
+local bacon_ls = ar.config.lsp.lang.rust.bacon_ls
 
 local function get_clangd_cmd()
   local cmd = ar.has('mason.nvim') and fn.expand('$MASON') .. '/bin/clangd'
@@ -102,12 +102,12 @@ local servers = {
   },
   copilot = {
     on_init = function()
-      ar_config.ai.completion.status = {} ---@type table<number, "ok" | "error" | "pending">
+      ar.config.ai.completion.status = {} ---@type table<number, "ok" | "error" | "pending">
     end,
     handlers = {
       didChangeStatus = function(err, res, ctx)
         if err then return end
-        ar_config.ai.completion.status[ctx.client_id] = res.kind ~= 'Normal'
+        ar.config.ai.completion.status[ctx.client_id] = res.kind ~= 'Normal'
             and 'error'
           or res.busy and 'pending'
           or 'ok'

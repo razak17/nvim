@@ -119,7 +119,7 @@ end
 
 function M.toggle_guides()
   local enabled = config.toggle_guides.enabled
-  ar_config.plugin.main.numbers.enable = not enabled
+  ar.config.plugin.main.numbers.enable = not enabled
   local wins = api.nvim_list_wins()
   for _, win in ipairs(wins) do
     vim.wo[win].number, vim.wo.relativenumber = not enabled, not enabled
