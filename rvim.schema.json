@@ -1624,7 +1624,7 @@
               "type": "boolean"
             },
             "variant": {
-              "enum": ["builtin", "noice", "telescope-cmdline"],
+              "enum": ["builtin", "extui", "noice", "telescope-cmdline"],
               "type": "string"
             }
           },

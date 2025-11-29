@@ -29,7 +29,7 @@ local env = vim.env
 ---@alias ArExplorerRename 'local' | 'snacks'
 ---@alias ArWhichBorder 'single' | 'rounded' | 'none' | 'double' | 'solid' | 'shadow'
 ---@alias ArWhichBuffers 'snacks'
----@alias ArWhichCmdline 'builtin' | 'noice' | 'telescope-cmdline'
+---@alias ArWhichCmdline 'builtin' | 'extui' | 'noice' | 'telescope-cmdline'
 ---@alias ArCompletion 'cmp' | 'blink' | 'mini.completion' | 'omnifunc'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
 ---@alias ArWhichDashboard 'builtin' | 'alpha' | 'snacks'
