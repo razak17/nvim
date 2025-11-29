@@ -3,6 +3,7 @@
 - aerial
 - ai
 - animation
+- annotation
 - api
 - autopair
 - avante
@@ -39,6 +40,7 @@
 - ghost
 - git
 - git-conflict
+- git-diff
 - git-extra
 - git-repo
 - gitpad

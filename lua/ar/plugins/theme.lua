@@ -432,6 +432,17 @@ return {
         }, true)
       end,
     },
+    {
+      'nendix/zen.nvim',
+      cond = get_cond({ 'zen' }),
+      priority = get_priority({ 'zen' }),
+      event = get_event({ 'zen' }),
+      init = function()
+        theming.apply_overrides('zen', {
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = 1.45 } } },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Warm

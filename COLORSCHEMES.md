@@ -197,6 +197,7 @@
 - yoda
 - yugen
 - yukinord
+- zen
 - zenbones
 - zenburn
 - zenburned
