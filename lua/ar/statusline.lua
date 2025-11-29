@@ -39,10 +39,9 @@ function M.list_branches()
 end
 
 -- function M.git_remote_sync()
---   local cmd = 'git'
---   local fetch_args = { 'fetch' }
---   local upstream_args =
---     { 'rev-list', '--left-right', '--count', 'HEAD...@{upstream}' }
+--   local fetch_cmd = {'git', 'fetch' }
+--   local upstream_cmd =
+--     { 'git', 'rev-list', '--left-right', '--count', 'HEAD...@{upstream}' }
 --
 --   if ar.falsy(fn.executable(cmd)) then
 --     vim.notify('Git is not installed or not in PATH', vim.log.levels.ERROR)
@@ -51,8 +50,7 @@ end
 --
 --   -- Fetch the remote repository
 --   ar.run_command(
---     cmd,
---     fetch_args,
+--     fetch_cmd,
 --     function() M.git_status.status = 'done' end,
 --     function() M.git_status.status = 'pending' end
 --   )
@@ -81,7 +79,7 @@ end
 --     M.git_status.status = 'pending'
 --     on_status_change()
 --   end
---   ar.run_command(cmd, upstream_args, on_exit, on_start)
+--   ar.run_command(upstream_cmd, on_exit, on_start)
 -- end
 -- ar.command('GitRemoteSync', M.git_remote_sync)
 
@@ -216,8 +214,7 @@ local function git_push_pull(action, _)
   }, function(choice)
     if choice == 'Yes' then
       ar.run_command(
-        'git',
-        { action, 'origin', branch },
+        { 'git', action, 'origin', branch },
         function() vim.cmd('GitRemoteSync') end
       )
     end
