@@ -718,6 +718,7 @@ end
 
 ---@param client vim.lsp.Client
 local function setup_lsp_foldexpr(client)
+  if not ar.config.lsp.foldexpr.enable then return end
   if client:supports_method(M.textDocument_foldingRange) then
     local win = api.nvim_get_current_win()
     vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
@@ -729,7 +730,7 @@ end
 
 ---@param client vim.lsp.Client
 ---@param bufnr number
-local function setup_completion(client, bufnr)
+local function setup_omnifunc_completion(client, bufnr)
   if client:supports_method(M.textDocument_completion) then
     lsp.completion.enable(true, client.id, bufnr, {
       autotrigger = true,
@@ -751,7 +752,18 @@ end
 
 ---@param client vim.lsp.Client
 ---@param bufnr number
+local function setup_completion(client, bufnr)
+  local variant = ar.config.completion.variant
+  if variant == 'omnifunc' then setup_omnifunc_completion(client, bufnr) end
+  if variant == 'mini.completion' and ar.has('mini.completion') then
+    vim.bo[bufnr].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
+  end
+end
+
+---@param client vim.lsp.Client
+---@param bufnr number
 local function setup_inline_completion(client, bufnr)
+  if ar.config.ai.completion.variant ~= 'builtin' then return end
   if client:supports_method(M.textDocument_inlineCompletion) then
     lsp.inline_completion.enable(true, { buffer = bufnr })
   end
@@ -775,21 +787,16 @@ end
 ---@param client vim.lsp.Client the lsp client
 ---@param bufnr number
 local function on_attach(client, bufnr)
-  local ar_lsp = ar.config.lsp
   setup_autocommands(client, bufnr)
   setup_mappings(client, bufnr)
   setup_lsp_stop_detached()
-  if ar_lsp.foldexpr.enable then setup_lsp_foldexpr(client) end
+  setup_lsp_foldexpr(client)
   setup_semantic_tokens(client, bufnr)
   setup_colors(client, bufnr)
   setup_lsp_plugins(client, bufnr)
   setup_type_formatting(client, bufnr)
-  if ar.config.ai.completion.variant == 'builtin' then
-    setup_inline_completion(client, bufnr)
-  end
-  if ar.config.completion.variant == 'omnifunc' then
-    setup_completion(client, bufnr)
-  end
+  setup_inline_completion(client, bufnr)
+  setup_completion(client, bufnr)
 end
 
 augroup('LspSetupAutoCommands', {
