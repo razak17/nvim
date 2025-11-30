@@ -15,13 +15,28 @@ local picker_config = {
 }
 if ar.config.picker.variant == 'snacks' then ar.pick.register(picker_config) end
 
-local fn = vim.fn
+local api, fn = vim.api, vim.fn
 local fmt = string.format
 local border_style = vim.o.winborder
 local diag_icons = ar.ui.codicons.lsp
 local show_preview = ar.config.picker.win.show_preview
 
 local picker_layouts = {
+  small_no_preview = {
+    layout = {
+      box = 'horizontal',
+      height = ar.config.picker.win.fullscreen and 100 or 0.6,
+      width = ar.config.picker.win.fullscreen and 400 or 0.65,
+      border = 'none',
+      {
+        box = 'vertical',
+        border = border_style,
+        title = '{title} {live} {flags}',
+        { win = 'input', height = 1, border = 'bottom' },
+        { win = 'list', border = 'none' },
+      },
+    },
+  },
   telescope = {
     reverse = false,
     layout = {
@@ -130,7 +145,7 @@ end
 local function visual_grep_string()
   -- Get visual selection
   vim.cmd('noau normal! "vy"')
-  local text = vim.fn.getreg('v')
+  local text = fn.getreg('v')
   p('grep', {
     layout = { preview = 'main', cycle = true, preset = 'ivy' },
     search = text,
@@ -166,6 +181,7 @@ end
 
 local function lazy()
   p('files', {
+    cmd = 'fd',
     matcher = { frecency = true },
     args = { '--exact-depth', '2', '--ignore-case', 'readme.md' },
     cwd = fn.stdpath('data') .. '/lazy',
@@ -191,7 +207,40 @@ local function notes()
   p('files', {
     matcher = { frecency = true },
     cwd = ar.sync_dir('obsidian'),
-    args = { '--glob', '*.md' },
+    args = { '--glob', '*.md', '--sortr=modified' },
+  })()
+end
+
+-- https://github.com/chrisgrieser/.config/blob/fa7a24dc15cc5061f2061a54c509076103e7c419/nvim/lua/plugin-specs/snacks-picker.lua?plain=1#L6
+-- lightweight version of `telescope-import.nvim`
+local function imports()
+  p('grep_word', {
+    title = 'Imports',
+    cmd = 'rg',
+    args = { '--only-matching' },
+    live = false,
+    regex = true,
+    search = [[local (\w+) ?= ?require\(["'](.*?)["']\)(\.[\w.]*)?]],
+    ft = 'lua',
+    layout = { preset = 'small_no_preview', layout = { width = 0.75 } },
+    transform = function(item, ctx) -- ensure items are unique
+      ctx.meta.done = ctx.meta.done or {}
+      local import = item.text:gsub('.-:', '') -- different occurrences of same import
+      if ctx.meta.done[import] then return false end
+      ctx.meta.done[import] = true
+    end,
+    format = function(item, _picker) -- only display the grepped line
+      local out = {}
+      local line = item.line:gsub('^local ', '')
+      Snacks.picker.highlight.format(item, line, out)
+      return out
+    end,
+    confirm = function(picker, item) -- insert the line below the current one
+      picker:close()
+      vim.cmd.normal({ 'o', bang = true })
+      api.nvim_set_current_line(item.line)
+      vim.cmd.normal({ '==l', bang = true })
+    end,
   })()
 end
 
@@ -212,41 +261,6 @@ end
 
 return {
   {
-    'razak17/todo-comments.nvim',
-    optional = true,
-    opts = function()
-      if ar.config.picker.variant == 'snacks' then
-        local function todos()
-          p('todo_comments', {
-            layout = { preview = 'main', preset = 'ivy' },
-            title = 'All Todos',
-          })()
-        end
-
-        local function todos_fixes()
-          p('todo_comments', {
-            keywords = { 'TODO', 'FIX', 'FIXME' },
-            layout = { preview = 'main', preset = 'ivy' },
-            title = 'TODO/FIXME Todos',
-          })()
-        end
-
-        local function config_todos()
-          p('todo_comments', {
-            keywords = { 'TODO', 'FIX', 'FIXME' },
-            layout = { preview = 'main', preset = 'ivy' },
-            cwd = fn.stdpath('config'),
-            title = 'Config Todos',
-          })()
-        end
-
-        map('n', '<leader>ft', todos, { desc = 'todo' })
-        map('n', '<leader>fF', todos_fixes, { desc = 'todo/fixme' })
-        map('n', '<leader>fC', config_todos, { desc = 'config todo/fixme' })
-      end
-    end,
-  },
-  {
     desc = 'snacks picker',
     recommended = true,
     'folke/snacks.nvim',
@@ -254,8 +268,8 @@ return {
       if ar.config.picker.variant == 'snacks' then
         local function fuzzy_in_cur_dir(source, recursive)
           return function()
-            local current_file = vim.api.nvim_buf_get_name(0)
-            local current_dir = vim.fn.fnamemodify(current_file, ':h')
+            local current_file = api.nvim_buf_get_name(0)
+            local current_dir = fn.fnamemodify(current_file, ':h')
             local args = {}
             if recursive and source == 'files' then
               args = recursive and { '--files', current_dir }
@@ -307,6 +321,7 @@ return {
           { '<leader>fgs', p('git_status'), desc = 'git status' },
           { '<leader>fgS', p('git_stash'), desc = 'git stash' },
           { '<leader>fh', p('help'), desc = 'help pages' },
+          { '<leader>fi', imports, desc = 'imports' },
           { '<leader>fI', p('pickers'), desc = 'availble pickers' },
           { '<leader>fk', p('keymaps'), desc = 'keymaps' },
           { '<leader>fK', p('colorschemes'), desc = 'colorschemes' },
@@ -369,6 +384,11 @@ return {
       return vim.tbl_deep_extend('force', opts or {}, {
         picker = {
           layouts = {
+            small_no_preview = picker_layouts.small_no_preview,
+            very_vertical = {
+              preset = 'small_no_preview',
+              layout = { height = 0.95, width = 0.45 },
+            },
             custom_default = picker_layouts.default,
             custom_telescope = picker_layouts.telescope,
             custom_select = picker_layouts.select,
@@ -381,80 +401,10 @@ return {
             buffers = {
               layout = { preview = 'main', preset = 'custom_select' },
             },
-            lsp_definitions = { layout = { preview = 'main', preset = 'ivy' } },
-            lsp_references = { layout = { preview = 'main', preset = 'ivy' } },
-            files = {
-              hidden = true,
-              ignored = true,
-              exclude = {
-                '.luarc.json',
-                'node_modules',
-                'env',
-                '__pycache__',
-                '.mypy_cache',
-                '.pytest_cache',
-                '.git',
-                'tags',
-                'dist',
-                '.DS_Store',
-                'build',
-                'tmp',
-                'out',
-                '.next',
-                'vim-sessions',
-                '.vercel',
-                '.netlify',
-                'lcov-report',
-                '__snapshots__',
-                'lazy-lock.json',
-                'package-lock.json',
-                'yarn.lock',
-                'yarn-error.log',
-                'pnpm-lock.yaml',
-                'bun.lock',
-                'lazyvim.json',
-                '.local',
-                'share',
-                '\\.venv',
-                '.coverage',
-                '.repro',
-                '.nx',
-                'package-lock.json',
-              },
-            },
-            grep = {
-              hidden = true,
-              ignored = true,
-              exclude = {
-                'tags',
-                'node_modules',
-                '.git',
-                'dist',
-                'build',
-                '.next',
-                'package-lock.json',
-                'yarn.lock',
-                'yarn-error.log',
-                'pnpm-lock.yaml',
-                'bun.lock',
-                '__snapshots__',
-                'lcov-report',
-                '.coverage',
-                '.nx',
-                '\\.venv',
-              },
-            },
-            registers = {
-              confirm = {
-                action = { 'yank', 'close' },
-                source = 'registers',
-                notify = false,
-              },
-            },
             explorer = {
               hidden = true,
               auto_close = false,
-              layout = { layout = { position = 'right' } },
+              layout = { preset = 'very_vertical' },
               actions = {
                 find_files_in_dir = function(_, item, _)
                   vim.defer_fn(
@@ -491,6 +441,160 @@ return {
                     ['<C-p>'] = 'find_files_in_dir',
                   },
                 },
+              },
+            },
+            files = {
+              cmd = 'rg',
+              args = {
+                '--files', -- turn `rg` into a file finder
+                '--sortr=modified', -- sort by recency, slight performance impact
+                '--no-config',
+              },
+              hidden = true,
+              ignored = true,
+              matcher = { frecency = true }, -- slight performance impact
+              exclude = {
+                '.luarc.json',
+                'node_modules',
+                'env',
+                '__pycache__',
+                '.mypy_cache',
+                '.pytest_cache',
+                '.git',
+                'tags',
+                'dist',
+                '.DS_Store',
+                'build',
+                'tmp',
+                'out',
+                '.next',
+                'vim-sessions',
+                '.vercel',
+                '.netlify',
+                'lcov-report',
+                '__snapshots__',
+                'lazy-lock.json',
+                'package-lock.json',
+                'yarn.lock',
+                'yarn-error.log',
+                'pnpm-lock.yaml',
+                'bun.lock',
+                'lazyvim.json',
+                '.local',
+                'share',
+                '\\.venv',
+                '.coverage',
+                '.repro',
+                '.nx',
+                'package-lock.json',
+              },
+              win = {
+                input = {
+                  keys = {
+                    ['<C-h>'] = { 'toggle_hidden_and_ignored', mode = 'i' }, -- consistent with `fzf`
+                    [':'] = { 'complete_and_add_colon', mode = 'i' },
+                  },
+                },
+              },
+              -- if binary, open in system application instead
+              confirm = function(picker, item, action)
+                local abs_path = Snacks.picker.util.path(item) or ''
+                local binary_ext = { 'pdf', 'png', 'webp', 'docx' }
+                local ext = abs_path:match('.+%.([^.]+)$') or ''
+                if vim.tbl_contains(binary_ext, ext) then
+                  vim.ui.open(abs_path)
+                  picker:close()
+                  return
+                end
+                Snacks.picker.actions.confirm(picker, item, action)
+              end,
+              actions = {
+                complete_and_add_colon = function(picker)
+                  -- snacks allows opening files with `file:lnum`, but it
+                  -- only matches if the filename is complete. With this
+                  -- action, we complete the filename if using the 1st colon
+                  -- in the query.
+                  local query = api.nvim_get_current_line()
+                  local file = picker:current().file
+                  if not file or query:find(':') then
+                    fn.feedkeys(':', 'n')
+                    return
+                  end
+                  api.nvim_set_current_line(file .. ':')
+                  vim.cmd.startinsert({ bang = true })
+                end,
+              },
+            },
+            grep = {
+              cmd = 'rg',
+              args = {
+                '--sortr=modified', -- sort by recency, slight performance impact
+              },
+              regex = false, -- use fixed strings by default
+              hidden = true,
+              ignored = true,
+              win = {
+                input = {
+                  keys = {
+                    ['<C-h>'] = { 'toggle_hidden_and_ignored', mode = 'i' }, -- consistent with `fzf`
+                    ['<C-r>'] = { 'toggle_regex', mode = 'i' },
+                  },
+                },
+              },
+              exclude = {
+                'tags',
+                'node_modules',
+                '.git',
+                'dist',
+                'build',
+                '.next',
+                'package-lock.json',
+                'yarn.lock',
+                'yarn-error.log',
+                'pnpm-lock.yaml',
+                'bun.lock',
+                '__snapshots__',
+                'lcov-report',
+                '.coverage',
+                '.nx',
+                '\\.venv',
+              },
+            },
+            help = {
+              confirm = function(picker)
+                picker:action('help')
+                vim.cmd.only() -- so help is full window
+              end,
+            },
+            highlights = {
+              confirm = function(picker, item)
+                fn.setreg('+', item.hl_group)
+                vim.notify(
+                  item.hl_group,
+                  nil,
+                  { title = 'Copied', icon = '󰅍' }
+                )
+                picker:close()
+              end,
+            },
+            keymaps = {
+              -- open keymap definition
+              confirm = function(picker, item)
+                if not item.file then return end
+                picker:close()
+                local lnum = item.pos[1]
+                vim.cmd(('edit +%d %s'):format(lnum, item.file))
+              end,
+              layout = 'toggled_preview',
+            },
+            lsp_definitions = { layout = { preview = 'main', preset = 'ivy' } },
+            lsp_references = { layout = { preview = 'main', preset = 'ivy' } },
+            registers = {
+              transform = function(item) return item.label:find('[1-9]') ~= nil end, -- only numbered
+              confirm = {
+                action = { 'yank', 'close' },
+                source = 'registers',
+                notify = false,
               },
             },
           },
@@ -537,6 +641,28 @@ return {
                 picker:find()
               end,
             },
+            toggle_hidden_and_ignored = function(picker)
+              picker.opts['hidden'] = not picker.opts.hidden
+              picker.opts['ignored'] = not picker.opts.ignored
+
+              if picker.opts.finder ~= 'explorer' then
+                -- remove `--ignore-file` extra arg
+                picker.opts['_originalArgs'] = picker.opts['_originalArgs']
+                  or picker.opts.args
+                local noIgnoreFileArgs = vim
+                  .iter(picker.opts.args)
+                  :filter(
+                    function(arg)
+                      return not vim.startswith(arg, '--ignore-file=')
+                    end
+                  )
+                  :totable()
+                picker.opts['args'] = picker.opts.hidden and noIgnoreFileArgs
+                  or picker.opts['_originalArgs']
+              end
+
+              picker:find()
+            end,
           },
           win = {
             input = {
@@ -556,6 +682,41 @@ return {
           },
         },
       })
+    end,
+  },
+  {
+    'razak17/todo-comments.nvim',
+    optional = true,
+    opts = function()
+      if ar.config.picker.variant == 'snacks' then
+        local function todos()
+          p('todo_comments', {
+            layout = { preview = 'main', preset = 'ivy' },
+            title = 'All Todos',
+          })()
+        end
+
+        local function todos_fixes()
+          p('todo_comments', {
+            keywords = { 'TODO', 'FIX', 'FIXME' },
+            layout = { preview = 'main', preset = 'ivy' },
+            title = 'TODO/FIXME Todos',
+          })()
+        end
+
+        local function config_todos()
+          p('todo_comments', {
+            keywords = { 'TODO', 'FIX', 'FIXME' },
+            layout = { preview = 'main', preset = 'ivy' },
+            cwd = fn.stdpath('config'),
+            title = 'Config Todos',
+          })()
+        end
+
+        map('n', '<leader>ft', todos, { desc = 'todo' })
+        map('n', '<leader>fF', todos_fixes, { desc = 'todo/fixme' })
+        map('n', '<leader>fC', config_todos, { desc = 'config todo/fixme' })
+      end
     end,
   },
 }
