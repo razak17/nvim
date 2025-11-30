@@ -403,7 +403,7 @@ return {
             },
             explorer = {
               hidden = true,
-              auto_close = false,
+              auto_close = true,
               layout = { preset = 'very_vertical' },
               actions = {
                 find_files_in_dir = function(_, item, _)
@@ -431,9 +431,15 @@ return {
               win = {
                 list = {
                   keys = {
-                    ['z'] = 'explorer_close_all',
+                    ['d'] = 'explorer_del',
+                    ['h'] = 'explorer_close', -- go up folder
+                    ['l'] = 'confirm', -- enter folder / open file
                     ['O'] = { { 'pick_win', 'jump' }, mode = { 'n', 'i' } },
                     ['w'] = 'window_picker',
+                    ['y'] = 'explorer_copy',
+                    ['z'] = 'explorer_close_all',
+                    ['-'] = 'focus_input', -- i.e. search
+                    ['.'] = 'toggle_hidden_and_ignored',
                     [']c'] = 'explorer_git_next',
                     ['[c'] = 'explorer_git_prev',
                     ['<C-b>'] = 'close',
