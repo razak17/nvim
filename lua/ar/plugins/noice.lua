@@ -5,12 +5,11 @@ local is_cmp = ar.config.completion.variant == 'cmp'
 return {
   'folke/noice.nvim',
   cond = function()
-    local condition = not ar.plugins.minimal
-      and ar.config.ui.cmdline.variant == 'noice'
+    local condition = ar.config.ui.cmdline.variant == 'noice'
     return ar.get_plugin_cond('noice.nvim', condition)
   end,
   event = 'VeryLazy',
-  lazy = false,
+  -- lazy = false,
   init = function()
     vim.g.whichkey_add_spec({ '<leader><leader>n', group = 'Noice' })
   end,
@@ -325,6 +324,60 @@ return {
     -- but this is not ideal when Lazy is installing plugins,
     -- so clear the messages in this case.
     if vim.o.filetype == 'lazy' then vim.cmd([[messages clear]]) end
+
+    local bg = vim.api.nvim_get_option_value('background', { scope = 'global' })
+    local variant = ar.config.colorscheme.variant
+
+    -- stylua: ignore
+    local overrides = {
+      { NoiceMini = { link = 'Type' } },
+      { NoicePopupBorder = { link = 'FloatTitle' } },
+      { NoiceCmdlinePopupTitleInput = { link = 'FloatTitle' } },
+      { NoiceCmdlinePopupTitleCmdline = { link = 'NoiceCmdlinePopupTitleInput' } },
+      { NoiceCmdlinePopupBorderCalculator = { link = 'NoiceCmdlinePopupTitleInput' } },
+      { NoiceCmdlinePopupTitleHelp = { link = 'NoiceCmdlinePopupTitleInput' } },
+      { NoiceCmdlinePopupTitleFilter = { link = 'NoiceCmdlinePopupTitleInput' } },
+      { NoiceCmdlinePopupTitleSearch = { link = 'NoiceCmdlinePopupTitleInput' } },
+      { NoiceCmdlinePopupTitleIncRename = { link = 'NoiceCmdlinePopupTitleInput' } },
+      { NoiceCmdlinePopupTitleSubstitute = { link = 'NoiceCmdlinePopupTitleInput' } },
+      { NoiceCmdlinePopupTitleCalculator = { link = 'NoiceCmdlinePopupTitleInput' } },
+    }
+
+    if variant == 'fill' then
+      ar.list_insert(overrides, {
+        {
+          NoicePopupBaseGroup = {
+            bg = { from = 'Normal', alter = bg == 'dark' and 0.45 or -0.1 },
+            fg = { from = 'Normal', attr = 'bg' },
+          },
+        },
+      })
+    end
+
+    if variant == 'outline' then
+      ar.list_insert(overrides, {
+        { NoicePopupBaseGroup = { link = 'FloatBorder' } },
+      })
+    end
+
+    -- stylua: ignore
+    ar.list_insert(overrides, {
+      { NoicePopupWarnBaseGroup = { link = 'NoicePopupBaseGroup' } },
+      { NoicePopupInfoBaseGroup = { link = 'NoicePopupBaseGroup' } },
+      { NoiceCmdlinePopup = { inherit = 'NoicePopupBaseGroup', fg = { from = 'Normal' } } },
+      { NoiceCmdlinePopupBorder = { link = 'NoicePopupBaseGroup' } },
+      { NoiceCmdlinePopupTitle = { link = 'FloatTitle' } },
+      { NoiceCmdlinePopupBorderCmdline = { link = 'NoicePopupBaseGroup' } },
+      { NoiceCmdlinePopupBorderSearch = { link = 'NoicePopupWarnBaseGroup' } },
+      { NoiceCmdlinePopupBorderFilter = { link = 'NoicePopupWarnBaseGroup' } },
+      { NoiceCmdlinePopupBorderHelp = { link = 'NoicePopupInfoBaseGroup' } },
+      { NoiceCmdlinePopupBorderSubstitute = { link = 'NoicePopupWarnBaseGroup' } },
+      { NoiceCmdlinePopupBorderIncRename = { link = 'NoicePopupWarnBaseGroup' } },
+      { NoiceCmdlinePopupBorderInput = { link = 'NoicePopupBaseGroup' } },
+      { NoiceCmdlinePopupBorderLua = { link = 'NoicePopupBaseGroup' } },
+    })
+
+    ar.highlight.plugin('noice', overrides)
 
     require('noice').setup(opts)
 
