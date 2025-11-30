@@ -247,7 +247,7 @@ local servers = {
           library = {
             fn.expand('$VIMRUNTIME/lua'),
             fn.expand('$VIMRUNTIME/lua/vim/lsp'),
-            unpack(vim.api.nvim_list_runtime_paths()),
+            -- unpack(vim.api.nvim_list_runtime_paths()),
             -- unpack(vim.api.nvim_get_runtime_file('', true)),
           },
         },
