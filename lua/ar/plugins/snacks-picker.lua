@@ -11,7 +11,13 @@ local picker_config = {
 
   ---@param source string
   ---@param opts? snacks.picker.Config
-  open = function(source, opts) return Snacks.picker.pick(source, opts) end,
+  open = function(source, opts)
+    opts = opts or {}
+    opts.layout = vim.tbl_extend('keep', opts.layout or {}, {
+      preview = ar.config.picker.win.show_preview,
+    })
+    return Snacks.picker.pick(source, opts)
+  end,
 }
 if ar.config.picker.variant == 'snacks' then ar.pick.register(picker_config) end
 
