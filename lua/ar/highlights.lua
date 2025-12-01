@@ -227,7 +227,8 @@ local function plugin(name, opts)
   augroup(fmt('%sHighlightOverrides', name:gsub('^%l', string.upper)), {
     event = { 'ColorScheme' },
     command = function()
-      vim.schedule(function() all(opts) end)
+      -- vim.schedule(function() all(opts) end)
+      all(opts)
     end,
   })
 end
