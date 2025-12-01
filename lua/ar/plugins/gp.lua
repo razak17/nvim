@@ -209,7 +209,7 @@ return {
       agents = {
         { name = 'CodeClaude-3-5-Haiku', disable = true },
       },
-      default_chat_agent = 'ChatCopilot-claude-haiku-4.5',
+      default_chat_agent = 'ChatCopilot-claude-opus-4.5',
     }
 
     local function setup_model(model)

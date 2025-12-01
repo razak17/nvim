@@ -132,7 +132,7 @@ return {
       if models.claude then
         set_provider('claude')
       elseif models.copilot then
-        set_provider('copilot', 'copilot-claude-haiku-4.5')
+        set_provider('copilot', 'copilot-claude-opus-4.5')
         opts.providers = get_copilot_providers()
       elseif models.openai then
         set_provider('openai')
