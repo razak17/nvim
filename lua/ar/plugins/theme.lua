@@ -443,6 +443,18 @@ return {
         }, true)
       end,
     },
+    {
+      'Pair-of-dice/Alienocean.nvim',
+      cond = get_cond({ 'Alienocean' }),
+      priority = get_priority({ 'Alienocean' }),
+      event = get_event({ 'Alienocean' }),
+      init = function()
+        theming.apply_overrides('Alienocean', {
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.7 } } },
+          { WhichKeyBorder = { link = 'FloatBorder' } },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Warm
