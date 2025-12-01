@@ -1,7 +1,7 @@
 local minimal = ar.plugins.minimal
 local coding = ar.plugins.coding
 local variant = ar.config.completion.variant
-local enabled = minimal and coding and variant == 'mini.completion'
+local enabled = (minimal and coding) or variant == 'mini.completion'
 
 return {
   {
