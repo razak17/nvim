@@ -39,6 +39,7 @@
 - eldritch
 - eldritch-dark
 - eldritch-minimal
+- evangelion
 - everforest
 - evergarden
 - evergarden-fall

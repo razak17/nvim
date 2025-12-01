@@ -1140,6 +1140,35 @@ return {
         }, true)
       end,
     },
+    {
+      'xero/evangelion.nvim',
+      cond = get_cond({ 'evangelion' }),
+      priority = get_priority({ 'evangelion' }),
+      event = get_event({ 'evangelion' }),
+      init = function()
+        theming.apply_overrides('evangelion', {
+          { Comment = { bg = 'NONE' } },
+          { SpellBad = { link = 'Comment' } },
+          { Directory = { bg = 'NONE' } },
+          { LineNr = { fg = { from = 'CursorLineNr', alter = -0.55 } } },
+          {
+            Folded = { bg = { from = 'CursorLine', alter = -0.1 }, fg = 'NONE' },
+          },
+          { Visual = { bg = { from = 'Visual', alter = -0.65 }, fg = 'NONE' } },
+          {
+            WinSeparator = {
+              bg = 'NONE',
+              fg = { from = 'WinSeparator', alter = -0.45 },
+            },
+          },
+          { GitSignsAdd = { bg = 'NONE' } },
+          { GitSignsChange = { bg = 'NONE' } },
+          { GitSignsDelete = { bg = 'NONE' } },
+          { WhichKeyBorder = { link = 'FloatBorder' } },
+          { WhichKeyFloat = { link = 'Normal' } },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Clown show
