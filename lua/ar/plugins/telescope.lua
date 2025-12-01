@@ -418,7 +418,7 @@ ar.telescope = vim.tbl_extend('force', ar.telescope, {
 return {
   {
     'nvim-telescope/telescope.nvim',
-    -- cond = function() return ar.get_plugin_cond('telescope.nvim', min_enabled) end,
+    cond = function() return ar.get_plugin_cond('telescope.nvim', min_enabled) end,
     -- NOTE: usind cmd causes issues with dressing and frecency
     cmd = { 'Telescope' },
     event = 'VeryLazy',
