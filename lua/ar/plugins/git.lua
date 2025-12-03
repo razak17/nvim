@@ -49,7 +49,12 @@ return {
               NeogitDiffAdd = {
                 bg = { from = 'DiffAdd', attr = 'fg', alter = -0.65 },
                 fg = { from = 'Normal' },
-                reverse = false,
+              },
+            },
+            {
+              NeogitDiffDelete = {
+                fg = { from = 'Normal' },
+                bg = { from = 'DiffDelete', attr = 'fg', alter = -0.7 },
               },
             },
             { NeogitHunkHeader = { inherit = 'FloatTitle' } },
