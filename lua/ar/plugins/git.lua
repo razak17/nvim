@@ -122,6 +122,36 @@ return {
               },
             },
           },
+          ['github_dark_dimmed'] = {
+            {
+              NeogitDiffAdd = {
+                fg = { from = 'Normal' },
+                bg = { from = 'NeogitDiffAdd', attr = 'fg', alter = -0.65 },
+              },
+            },
+            {
+              NeogitDiffDelete = {
+                fg = { from = 'Normal' },
+                bg = { from = 'DiffDelete', attr = 'fg', alter = -0.75 },
+              },
+            },
+            { NeogitHunkHeader = { inherit = 'FloatTitle' } },
+          },
+          ['github_dark_tritanopia'] = {
+            {
+              NeogitDiffAdd = {
+                fg = { from = 'Normal' },
+                bg = { from = 'NeogitDiffAdd', attr = 'fg', alter = -0.6 },
+              },
+            },
+            {
+              NeogitDiffDelete = {
+                fg = { from = 'Normal' },
+                bg = { from = 'DiffDelete', attr = 'fg', alter = -0.75 },
+              },
+            },
+            { NeogitHunkHeader = { inherit = 'FloatTitle' } },
+          },
         },
       })
 
