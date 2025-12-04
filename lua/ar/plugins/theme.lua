@@ -1014,13 +1014,23 @@ return {
     },
     {
       'projekt0n/github-nvim-theme',
-      cond = get_cond({ 'github_dark' }),
-      priority = get_priority({ 'github_dark' }),
-      event = get_event({ 'github_dark' }),
+      cond = get_cond({ 'github_dark_dimmed', 'github_dark_tritanopia' }),
+      priority = get_priority({
+        'github_dark_dimmed',
+        'github_dark_tritanopia',
+      }),
+      event = get_event({ 'github_dark_dimmed', 'github_dark_tritanopia' }),
       init = function()
-        theming.apply_overrides('github_dark', {
-          { CursorLine = { bg = { from = 'CursorLine', alter = -0.2 } } },
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = 1.75 } } },
+        theming.apply_overrides('github_dark_dimmed', {
+          { Folded = { bg = { from = 'Folded', alter = 0.1 } } },
+          { Type = { fg = { from = 'Type', alter = -0.25 } } },
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = 0.1 } } },
+        }, true)
+        theming.apply_overrides('github_dark_tritanopia', {
+          { CursorLine = { bg = { from = 'CursorLine', alter = -0.3 } } },
+          { Folded = { bg = { from = 'Folded', alter = 0.2 } } },
+          { Type = { fg = { from = 'Type', alter = -0.45 } } },
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = 0.3 } } },
         }, true)
       end,
     },
