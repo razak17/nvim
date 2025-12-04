@@ -259,6 +259,11 @@ return {
               },
             },
           },
+          ['kanagawa'] = {
+            { GitSignsAdd = { bg = 'NONE' } },
+            { GitSignsChange = { bg = 'NONE' } },
+            { GitSignsDelete = { bg = 'NONE' } },
+          },
         },
       })
     end,

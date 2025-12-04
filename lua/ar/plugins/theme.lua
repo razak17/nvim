@@ -586,15 +586,19 @@ return {
     },
     {
       'zenbones-theme/zenbones.nvim',
-      cond = get_cond({ 'zenbones' }),
-      priority = get_priority({ 'zenbones' }),
-      event = get_event({ 'zenbones' }),
+      cond = get_cond({ 'zenbones', 'kanagawabones' }),
+      priority = get_priority({ 'zenbones', 'kanagawabones' }),
+      event = get_event({ 'zenbones', 'kanagawabones' }),
       init = function()
         theming.apply_overrides('zenbones', {
           { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.2 } } },
           { CursorLine = { bg = { from = 'CursorLine', alter = 0.1 } } },
           { Folded = { bg = { from = 'Folded', alter = -0.2 } } },
           { WinSeparator = { fg = { from = 'VertSplit', alter = -0.35 } } },
+        }, true)
+        theming.apply_overrides('kanagawabones', {
+          { CursorLine = { bg = { from = 'CursorLine', alter = 0.2 } } },
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.15 } } },
         }, true)
       end,
       dependencies = 'rktjmp/lush.nvim',
