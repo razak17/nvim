@@ -323,6 +323,12 @@ local function get_statusline_palette(colorscheme)
     ['github_dark'] = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.2),
     },
+    ['github_dark_dimmed'] = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.2),
+    },
+    ['github_dark_tritanopia'] = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.55),
+    },
     gruvbox = {
       bg_dark = hl.tint(hl.get('Normal', 'bg'), 0.25),
       blue = hl.get('Changed', 'fg'),
