@@ -207,7 +207,7 @@ local function add_theme_overrides(theme)
   for _, hl in ipairs(list) do
     local n = next(hl)
     if not seen[n] then res[#res + 1] = hl end
-    seen[n] = true
+    if n then seen[n] = true end
   end
   return res
 end
