@@ -115,8 +115,9 @@ end
 --------------------------------------------------------------------------------
 -- Wild and file globbing stuff in command mode {{{1
 --------------------------------------------------------------------------------
-o.wildcharm = ('\t'):byte()
-o.wildmenu = false -- Turn (on/)off the native commandline completion menu
+local cmp = ar.config.completion.variant
+o.wildmenu = ar.plugins.minimal or (cmp ~= 'blink' and cmp ~= 'cmp')
+-- o.wildmenu =true
 o.wildmode = 'full' -- 'list:full' -- Shows a menu bar as opposed to an enormous list
 o.wildignorecase = true -- Ignore case when completing file names and directories
 opt.wildignore = {
