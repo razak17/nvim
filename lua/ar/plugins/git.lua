@@ -282,12 +282,8 @@ return {
             },
           },
           ['habamax'] = {
-            {
-              GitSignsChange = {
-                fg = { from = 'DiffChange', attr = 'fg', alter = -0.1 },
-                reverse = false,
-              },
-            },
+            { GitSignsAdd = { fg = { from = 'GitSignsAdd', alter = -0.35 } } },
+            { GitSignsChange = { fg = { from = 'DiffChange', alter = 0.2 } } },
           },
           ['kanagawa'] = {
             { GitSignsAdd = { bg = 'NONE' } },
