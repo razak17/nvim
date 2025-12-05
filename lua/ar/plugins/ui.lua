@@ -19,7 +19,13 @@ return {
     'nmac427/guess-indent.nvim',
     cond = function() return ui_cond('guess-indent.nvim') end,
     cmd = { 'GuessIndent' },
-    opts = {},
+    event = 'BufReadPre',
+    opts = {
+      auto_cmd = true,
+      override_editorconfig = false,
+      filetype_exclude = { 'netrw', 'lazy', 'mason' },
+      buftype_exclude = { 'help', 'terminal', 'nofile' },
+    },
   },
   {
     'karb94/neoscroll.nvim',
