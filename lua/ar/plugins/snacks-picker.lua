@@ -27,94 +27,6 @@ local border_style = vim.o.winborder
 local diag_icons = ar.ui.codicons.lsp
 local show_preview = ar.config.picker.win.show_preview
 
-local picker_layouts = {
-  small_no_preview = {
-    layout = {
-      box = 'horizontal',
-      height = ar.config.picker.win.fullscreen and 100 or 0.6,
-      width = ar.config.picker.win.fullscreen and 400 or 0.65,
-      border = 'none',
-      {
-        box = 'vertical',
-        border = border_style,
-        title = '{title} {live} {flags}',
-        { win = 'input', height = 1, border = 'bottom' },
-        { win = 'list', border = 'none' },
-      },
-    },
-  },
-  telescope = {
-    reverse = false,
-    layout = {
-      box = 'horizontal',
-      backdrop = false,
-      height = ar.config.picker.win.fullscreen and 50 or 0.9,
-      width = ar.config.picker.win.fullscreen and 400 or 0.9,
-      border = 'none',
-      {
-        box = 'vertical',
-        {
-          win = 'list',
-          title = ' Results ',
-          title_pos = 'center',
-          border = border_style,
-        },
-        {
-          win = 'input',
-          height = 1,
-          border = border_style,
-          title = '{title} {live} {flags}',
-          title_pos = 'center',
-        },
-      },
-      {
-        win = 'preview',
-        title = '{preview:Preview}',
-        width = 0.6,
-        border = border_style,
-        title_pos = 'center',
-      },
-    },
-  },
-  default = {
-    layout = {
-      box = 'horizontal',
-      width = 0.8,
-      min_width = 120,
-      height = 0.8,
-      {
-        box = 'vertical',
-        border = border_style,
-        title = '{title} {live} {flags}',
-        { win = 'input', height = 1, border = 'bottom' },
-        { win = 'list', border = 'none' },
-      },
-      {
-        win = 'preview',
-        title = '{preview}',
-        border = border_style,
-        width = 0.6,
-      },
-    },
-  },
-  select = {
-    layout = {
-      backdrop = false,
-      width = 0.5,
-      min_width = 80,
-      height = 0.4,
-      min_height = 3,
-      box = 'vertical',
-      border = border_style,
-      title = '{title}',
-      title_pos = 'center',
-      { win = 'input', height = 1, border = 'bottom' },
-      { win = 'list', border = 'none' },
-      { win = 'preview', title = '{preview}', height = 0.4, border = 'top' },
-    },
-  },
-}
-
 ---@param source string
 ---@param opts? snacks.picker.proc.Config
 ---@return function
@@ -138,7 +50,7 @@ local function find_files()
     format = 'file',
     show_empty = true,
     supports_live = true,
-    layout = { preview = 'main', cycle = true, preset = 'custom_select' },
+    layout = { preview = 'main', cycle = true, preset = 'my_select' },
   })()
 end
 
@@ -173,7 +85,7 @@ local function buffers()
     hidden = false,
     unloaded = true,
     sort_lastused = true,
-    layout = { preview = 'main', preset = 'custom_select' },
+    layout = { preview = 'main', preset = 'my_select' },
     win = {
       input = {
         keys = {
@@ -228,7 +140,7 @@ local function imports()
     regex = true,
     search = [[local (\w+) ?= ?require\(["'](.*?)["']\)(\.[\w.]*)?]],
     ft = 'lua',
-    layout = { preset = 'small_no_preview', layout = { width = 0.75 } },
+    layout = { preset = 'small_no_preview' },
     transform = function(item, ctx) -- ensure items are unique
       ctx.meta.done = ctx.meta.done or {}
       local import = item.text:gsub('.-:', '') -- different occurrences of same import
@@ -390,27 +302,100 @@ return {
       return vim.tbl_deep_extend('force', opts or {}, {
         picker = {
           layouts = {
-            small_no_preview = picker_layouts.small_no_preview,
+            small_no_preview = {
+              layout = {
+                box = 'horizontal',
+                height = ar.config.picker.win.fullscreen and 50 or 0.9,
+                width = ar.config.picker.win.fullscreen and 400 or 0.75,
+                border = 'none',
+                {
+                  box = 'vertical',
+                  border = border_style,
+                  title = '{title} {live} {flags}',
+                  { win = 'input', height = 1, border = 'bottom' },
+                  { win = 'list', border = 'none' },
+                },
+              },
+            },
             very_vertical = {
               preset = 'small_no_preview',
               layout = { height = 0.95, width = 0.45 },
             },
-            custom_default = picker_layouts.default,
-            custom_telescope = picker_layouts.telescope,
-            custom_select = picker_layouts.select,
-            sidebar = {
-              layout = { layout = { position = 'right' } },
+            wide_with_preview = {
+              preset = 'small_no_preview',
+              layout = {
+                -- width = 0.99,
+                height = ar.config.picker.win.fullscreen and 50 or 0.75,
+                width = ar.config.picker.win.fullscreen and 400 or 0.9,
+                [2] = { -- as second column
+                  win = 'preview',
+                  title = '{preview}',
+                  border = border_style,
+                  width = 0.5,
+                  wo = { number = false, statuscolumn = ' ', signcolumn = 'no' },
+                },
+              },
+            },
+            big_preview = {
+              preset = 'wide_with_preview',
+              layout = {
+                height = ar.config.picker.win.fullscreen and 50 or 0.85,
+                [2] = { width = 0.6 }, -- second win is the preview
+              },
+            },
+            toggled_preview = {
+              preset = 'big_preview',
+              preview = false,
+            },
+            my_telescope = {
+              reverse = false,
+              layout = {
+                box = 'horizontal',
+                backdrop = false,
+                height = ar.config.picker.win.fullscreen and 50 or 0.9,
+                width = ar.config.picker.win.fullscreen and 400 or 0.9,
+                border = 'none',
+                {
+                  box = 'vertical',
+                  {
+                    win = 'list',
+                    title = ' Results ',
+                    title_pos = 'center',
+                    border = border_style,
+                  },
+                  {
+                    win = 'input',
+                    height = 1,
+                    border = border_style,
+                    title = '{title} {live} {flags}',
+                    title_pos = 'center',
+                  },
+                },
+                {
+                  win = 'preview',
+                  title = '{preview:Preview}',
+                  width = 0.6,
+                  border = border_style,
+                  title_pos = 'center',
+                },
+              },
+            },
+            my_select = {
+              preset = 'select',
+              layout = { border = border_style },
+            },
+            right_sidebar = {
+              preset = 'sidebar',
+              layout = { position = 'right' },
             },
           },
           prompt = fmt('%s ', ar.ui.icons.misc.chevron_right),
           sources = {
-            buffers = {
-              layout = { preview = 'main', preset = 'custom_select' },
-            },
+            buffers = { layout = { preview = 'main', preset = 'my_select' } },
             explorer = {
               hidden = true,
               auto_close = true,
-              layout = { preset = 'very_vertical' },
+              layout = { preset = 'right_sidebar' }, -- right_sidebar
               actions = {
                 find_files_in_dir = function(_, item, _)
                   vim.defer_fn(
@@ -597,7 +582,7 @@ return {
                 local lnum = item.pos[1]
                 vim.cmd(('edit +%d %s'):format(lnum, item.file))
               end,
-              layout = 'toggled_preview',
+              layout = { preset = 'toggled_preview' },
             },
             lsp_definitions = { layout = { preview = 'main', preset = 'ivy' } },
             lsp_references = { layout = { preview = 'main', preset = 'ivy' } },
@@ -609,15 +594,13 @@ return {
                 notify = false,
               },
             },
+            select = { layout = { preset = 'my_select' } },
           },
           debug = { scores = false },
           formatters = {
             file = { filename_first = true, truncate = 80 },
           },
-          layout = {
-            cycle = true,
-            preset = 'custom_telescope',
-          },
+          layout = { cycle = true, preset = 'my_telescope' },
           matcher = { frecency = true },
           icons = {
             diagnostics = {
