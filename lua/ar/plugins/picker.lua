@@ -209,11 +209,12 @@ return {
           { '<leader>fO', notes, desc = 'notes' },
           { '<leader>fp', fzf_lua.global, desc = 'global' },
           { '<leader>fP', plugin_spec, desc = 'search for plugin spec' },
+          { '<leader>fql', fzf_lua.loclist, desc = 'location list' },
+          { '<leader>fqq', fzf_lua.quickfix, desc = 'quickfix list' },
           { '<leader>fr', fzf_lua.resume, desc = 'resume picker' },
           { '<leader>fs', fzf_lua.live_grep, desc = 'live grep' },
           { '<leader>fs', fzf_lua.grep_visual, desc = 'grep visual selection', mode = 'x' },
-          { '<leader>fql', fzf_lua.loclist, desc = 'location list' },
-          { '<leader>fqq', fzf_lua.quickfix, desc = 'quickfix list' },
+          { '<leader>fu', fzf_lua.undotree, desc = 'undo tree' },
           { '<leader>fva', fzf_lua.autocmds, desc = 'autocommands' },
           { '<leader>fvc', fzf_lua.commands, desc = 'commands' },
           { '<leader>fvC', fzf_lua.command_history, desc = 'command history' },
@@ -367,6 +368,7 @@ return {
             preview = { hidden = 'nohidden' },
           },
         },
+        undotree = { previewer = 'undotree_native', locate = true },
         changes = dropdown({
           prompt = '',
           winopts = {
