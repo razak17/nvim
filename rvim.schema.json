@@ -126,7 +126,7 @@
           "type": "boolean"
         },
         "variant": {
-          "enum": ["snacks"],
+          "enum": ["snacks", "fzf-lua"],
           "type": "string"
         }
       },

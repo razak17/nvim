@@ -179,11 +179,14 @@ return {
         end)
       end
     end,
-    keys = function()
+    keys = function(_, keys)
+      keys = keys or {}
+      if ar.config.buffers.variant == 'fzf-lua' then
+        table.insert(keys, { '<M-space>', fzf_lua.buffers, desc = 'buffers' })
+      end
       if ar.config.picker.variant == 'fzf-lua' then
         -- stylua: ignore
         local fzf_mappings = {
-          { '<M-space>', fzf_lua.buffers, desc = 'buffers' },
           { '<leader>fa', '<Cmd>FzfLua<CR>', desc = 'builtins' },
           { '<leader>fb', fzf_lua.grep_curbuf, desc = 'current buffer fuzzy find' },
           { '<leader>fc', function() find_files(fn.stdpath('config')) end, desc = 'nvim config' },
@@ -239,10 +242,10 @@ return {
             })
           end
         end
-        vim.iter(fzf_mappings):each(function(m) table.insert(mappings, m) end)
+        vim.iter(fzf_mappings):each(function(m) table.insert(keys, m) end)
       end
 
-      return mappings
+      return keys
     end,
     config = function()
       local lsp_kind = require('lspkind')
