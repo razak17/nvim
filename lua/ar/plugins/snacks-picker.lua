@@ -256,7 +256,7 @@ return {
           { '<leader>fs', visual_grep_string, desc = 'grep visual selection', mode = 'x' },
           { '<leader>fS', p('grep_buffers'), desc = 'grep open buffers' },
           { '<leader>fql', p('loclist'), desc = 'location list' },
-          { '<leader>fqq', p('qflist'), desc = 'quickfix List' },
+          { '<leader>fqq', p('qflist'), desc = 'quickfix list' },
           { '<leader>fu', p('undo'), desc = 'undo history' },
           { '<leader>fva', p('autocmds'), desc = 'autocmds' },
           { '<leader>fvc', p('commands'), desc = 'commands' },
@@ -395,7 +395,7 @@ return {
             explorer = {
               hidden = true,
               auto_close = true,
-              layout = { preset = 'right_sidebar' }, -- right_sidebar
+              layout = { preset = 'very_vertical' }, -- right_sidebar
               actions = {
                 find_files_in_dir = function(_, item, _)
                   vim.defer_fn(
