@@ -246,6 +246,7 @@ return {
           { '<leader>fk', p('keymaps'), desc = 'keymaps' },
           { '<leader>fK', p('colorschemes'), desc = 'colorschemes' },
           { '<leader>fla', lazy, desc = 'all plugins' },
+          { '<leader>flL', p('lsp_config'), desc = 'lsp servers' },
           { '<leader>fL', p('lines'), desc = 'buffer lines' },
           { '<leader>fm', p('man'), desc = 'man pages' },
           { '<leader>fn', p('notifications'), desc = 'notification history' },
@@ -673,6 +674,41 @@ return {
             },
             lsp_definitions = { layout = { preview = 'main', preset = 'ivy' } },
             lsp_references = { layout = { preview = 'main', preset = 'ivy' } },
+            lsp_config = {
+              layout = 'big_preview',
+              confirm = function(picker, item)
+                if not item.enabled then
+                  vim.notify('LSP server not enabled', vim.log.levels.WARN)
+                  return
+                end
+                picker:close()
+
+                vim.schedule(
+                  function() -- scheduling needed for treesitter folding
+                    local client = item.attached
+                        and vim.lsp.get_clients({ name = item.name })[1]
+                      or vim.lsp.config[item.name]
+                    local type = item.attached and 'running' or 'enabled'
+                    Snacks.win({
+                      title = (' 󱈄 %s (%s) '):format(item.name, type),
+                      text = vim.inspect(client),
+                      width = 0.9,
+                      height = 0.9,
+                      border = border_style,
+                      bo = { ft = 'lua' }, -- `.bo.ft` instead of `.ft` needed for treesitter folding
+                      wo = {
+                        statuscolumn = ' ', -- adds padding
+                        cursorline = true,
+                        winfixbuf = true,
+                        fillchars = 'fold: ,eob: ',
+                        foldmethod = 'expr',
+                        foldexpr = 'v:lua.vim.treesitter.foldexpr()',
+                      },
+                    })
+                  end
+                )
+              end,
+            },
             recent = {
               layout = { preset = 'small_no_preview' },
               filter = {
