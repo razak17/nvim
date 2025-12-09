@@ -32,10 +32,12 @@ local show_preview = ar.config.picker.win.show_preview
 ---@return function
 local function p(source, opts)
   opts = opts or {}
-  opts.layout = vim.tbl_extend('keep', opts.layout or {}, {
-    preview = show_preview,
-    cycle = true,
-  })
+  if source == 'files' then
+    opts.layout = vim.tbl_extend('keep', opts.layout or {}, {
+      preview = show_preview,
+      cycle = true,
+    })
+  end
   return function() Snacks.picker[source](opts) end
 end
 
@@ -305,8 +307,8 @@ return {
             small_no_preview = {
               layout = {
                 box = 'horizontal',
-                height = ar.config.picker.win.fullscreen and 50 or 0.9,
-                width = ar.config.picker.win.fullscreen and 400 or 0.75,
+                height = ar.config.picker.win.fullscreen and 50 or 0.65,
+                width = ar.config.picker.win.fullscreen and 400 or 0.6,
                 border = 'none',
                 {
                   box = 'vertical',
@@ -336,6 +338,14 @@ return {
                 },
               },
             },
+            large_with_preview = {
+              preset = 'wide_with_preview',
+              layout = {
+                height = ar.config.picker.win.fullscreen and 50 or 0.9,
+                width = ar.config.picker.win.fullscreen and 400 or 0.9,
+                [2] = { width = 0.6 }, -- second win is the preview
+              },
+            },
             big_preview = {
               preset = 'wide_with_preview',
               layout = {
@@ -358,17 +368,17 @@ return {
                 {
                   box = 'vertical',
                   {
-                    win = 'list',
-                    title = ' Results ',
-                    title_pos = 'center',
-                    border = border_style,
-                  },
-                  {
                     win = 'input',
                     height = 1,
                     border = border_style,
                     title = '{title} {live} {flags}',
                     title_pos = 'center',
+                  },
+                  {
+                    win = 'list',
+                    title = ' Results ',
+                    title_pos = 'center',
+                    border = border_style,
                   },
                 },
                 {
@@ -381,6 +391,7 @@ return {
               },
             },
             my_select = {
+              hidden = { 'preview' },
               layout = {
                 backdrop = false,
                 width = 0.5,
@@ -408,7 +419,8 @@ return {
           },
           prompt = fmt('%s ', ar.ui.icons.misc.chevron_right),
           sources = {
-            buffers = { layout = { preview = 'main', preset = 'my_select' } },
+            buffers = { layout = { preset = 'my_select' } },
+            colorschemes = { layout = { max_height = 8, preset = 'ivy' } },
             explorer = {
               hidden = true,
               auto_close = true,
@@ -539,6 +551,35 @@ return {
                 end,
               },
             },
+            gh_issue = { layout = 'big_preview' },
+            gh_pr = { layout = 'big_preview' },
+            git_branches = { all = true }, -- = include remotes
+            git_diff = {
+              layout = 'big_preview',
+              win = {
+                input = {
+                  keys = {
+                    ['<Tab>'] = { 'list_down_wrapping', mode = 'i' },
+                    ['<Space>'] = { 'git_stage', mode = 'i' },
+                    -- <CR> opens the file as usual
+                  },
+                },
+              },
+            },
+            git_log = { layout = 'toggled_preview' },
+            git_log_file = { layout = 'toggled_preview' },
+            git_status = {
+              layout = 'big_preview',
+              win = {
+                input = {
+                  keys = {
+                    ['<Tab>'] = { 'list_down_wrapping', mode = 'i' },
+                    ['<Space>'] = { 'git_stage', mode = 'i' },
+                    -- <CR> opens the file as usual
+                  },
+                },
+              },
+            },
             grep = {
               cmd = 'rg',
               args = {
@@ -591,6 +632,35 @@ return {
                 picker:close()
               end,
             },
+            icons = {
+              layout = {
+                preset = 'small_no_preview',
+                layout = { width = 0.7 },
+              },
+              matcher = { frecency = true }, -- slight performance impact
+              -- PENDING https://github.com/folke/snacks.nvim/pull/2520
+              confirm = function(picker, item, action)
+                picker:close()
+                if not item then return end
+                local value = item[action.field] or item.data or item.text
+                vim.api.nvim_paste(value, true, -1)
+                if picker.input.mode ~= 'i' then return end
+                vim.schedule(function()
+                  -- `nvim_paste` puts the cursor on the last character, so we need to
+                  -- emulate `a` to re-enter insert mode at the correct position. However,
+                  -- `:startinsert` does `i` and `:startinsert!` does `A`, so we need to
+                  -- check if the cursor is at the end of the line.
+                  local col = vim.fn.virtcol('.')
+                  local eol = vim.fn.virtcol('$') - 1
+                  if col == eol then
+                    vim.cmd.startinsert({ bang = true })
+                  else
+                    vim.cmd.normal({ 'l', bang = true })
+                    vim.cmd.startinsert()
+                  end
+                end)
+              end,
+            },
             keymaps = {
               -- open keymap definition
               confirm = function(picker, item)
@@ -599,10 +669,18 @@ return {
                 local lnum = item.pos[1]
                 vim.cmd(('edit +%d %s'):format(lnum, item.file))
               end,
-              layout = { preset = 'toggled_preview' },
+              layout = 'toggled_preview',
             },
             lsp_definitions = { layout = { preview = 'main', preset = 'ivy' } },
             lsp_references = { layout = { preview = 'main', preset = 'ivy' } },
+            recent = {
+              layout = { preset = 'small_no_preview' },
+              filter = {
+                filter = function(item)
+                  return vim.fs.basename(item.file) ~= 'COMMIT_EDITMSG'
+                end,
+              },
+            },
             registers = {
               transform = function(item) return item.label:find('[1-9]') ~= nil end, -- only numbered
               confirm = {
@@ -611,13 +689,15 @@ return {
                 notify = false,
               },
             },
-            select = { layout = { preset = 'my_select' } },
+            select = {
+              layout = { preview = false, preset = 'my_select' },
+            },
           },
           debug = { scores = false },
           formatters = {
             file = { filename_first = true, truncate = 80 },
           },
-          layout = { cycle = true, preset = 'my_telescope' },
+          layout = { cycle = true, preset = 'large_with_preview' },
           matcher = { frecency = true },
           icons = {
             diagnostics = {
