@@ -188,6 +188,7 @@ local env = vim.env
 ---@field modules table
 ---@field niceties boolean
 ---@field overrides ArPluginsOverride
+---@field profile boolean
 
 ---@class ArUIColorscheme
 ---@field disabled table
@@ -278,6 +279,7 @@ local namespace = {
     overrides = {
       dict = { enable = env.RVIM_DICT_ENABLED == '1' },
     },
+    profile = env.RVIM_PROFILE == '1',
   },
   completion = { enable = env.RVIM_COMPLETION_ENABLED == '1' },
   treesitter = {

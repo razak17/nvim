@@ -11,6 +11,7 @@ export RVIM_COMPLETION_ENABLED='1'
 export RVIM_PLUGINS_CODING='0'
 export RVIM_PLUGINS_MINIMAL='1'
 export RVIM_NONE='0'
+export RVIM_PROFILE='0'
 export RVIM_GHOST_ENABLED='0'
 export RVIM_DICT_ENABLED='0'
 
@@ -110,6 +111,10 @@ while [ "$#" -gt 0 ]; do
     export RVIM_PLUGINS_ENABLED='0'
     export RVIM_LSP_ENABLED='0'
     export RVIM_NONE='1'
+    shift
+    ;;
+  --profile | -prof)
+    export RVIM_PROFILE='1'
     shift
     ;;
   --ghost)

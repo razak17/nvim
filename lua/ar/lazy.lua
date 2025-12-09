@@ -20,6 +20,13 @@ end
 vim.opt.rtp:prepend(lazy_path)
 local scheme_switcher = require('ar.scheme_switcher')
 local colorscheme = scheme_switcher.get_current_colorscheme()
+if ar.plugins.profile then
+  local snacks = join_paths(data, 'lazy', 'snacks.nvim')
+  vim.opt.rtp:append(snacks)
+  require('snacks.profiler').startup({
+    startup = { event = 'VimEnter' }, -- stop profiler on this event. Defaults to `VimEnter`
+  })
+end
 require('lazy').setup({
   spec = require('ar.plugins'),
   defaults = { lazy = true },
