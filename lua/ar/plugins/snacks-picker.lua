@@ -733,6 +733,10 @@ return {
           formatters = {
             file = { filename_first = true, truncate = 80 },
           },
+          previewers = {
+            diff = { builtin = false }, -- use `delta` automatically
+            git = { builtin = false },
+          },
           layout = { cycle = true, preset = 'large_with_preview' },
           matcher = { frecency = true },
           icons = {
