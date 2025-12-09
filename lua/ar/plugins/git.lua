@@ -43,8 +43,8 @@ return {
     },
     config = function(_, opts)
       local base_hl = {
-        { NeogitDiffAdd = { bg = { from = 'DiffAdd', attr = 'fg' } } },
-        { NeogitDiffDelete = { bg = { from = 'DiffDelete', attr = 'fg' } } },
+        { NeogitDiffAdd = { bg = { from = 'DiffAdd' } } },
+        { NeogitDiffDelete = { bg = { from = 'DiffDelete' } } },
         { NeogitHunkHeader = { inherit = 'FloatTitle' } },
       }
       local github_dark_hl = {
@@ -197,12 +197,14 @@ return {
       require('gitsigns').setup(opts)
 
       local base_hl = {
-        { GitSignsAdd = { fg = { from = 'DiffAdd', alter = 1.25 } } },
+        {
+          GitSignsAdd = { fg = { from = 'DiffAdd', attr = 'bg', alter = 1.25 } },
+        },
         { GitSignsChange = { fg = { from = 'DiffChange', alter = 0.2 } } },
         {
           GitSignsDeleteVirtLn = {
-            bg = { from = 'DiffDelete', attr = 'fg' },
-            fg = { from = 'Normal' },
+            bg = { from = 'DiffDelete' },
+            fg = { from = 'DiffDelete' },
             reverse = false,
           },
         },

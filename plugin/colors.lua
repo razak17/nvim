@@ -186,11 +186,9 @@ local function colorscheme_overrides(colorscheme)
           reverse = false,
         },
       },
-      {
-        DiffAdd = { fg = { from = 'DiffAdd', attr = 'bg', alter = 0.05 } },
-      },
-      { DiffChange = { fg = '#72A2D2' } },
-      { DiffDelete = { fg = { from = 'DiffDelete', alter = -0.75 } } },
+      { DiffAdd = { bg = { from = 'DiffAdd', alter = 0.05 } } },
+      { DiffChange = { bg = 'NONE', fg = '#72A2D2' } },
+      { DiffDelete = { bg = { from = 'Error', alter = -0.15 } } },
     }),
     ['habamax'] = theming.generate_overrides({
       { NormalFloat = { bg = { from = 'Normal', alter = -0.5 } } },
@@ -217,8 +215,21 @@ local function colorscheme_overrides(colorscheme)
           reverse = false,
         },
       },
-      { DiffAdd = { fg = { from = 'DiffAdd', alter = -0.65 } } },
-      { DiffDelete = { fg = { from = 'DiffDelete', alter = -0.55 } } },
+      {
+        DiffAdd = {
+          bg = { from = 'Added', attr = 'fg', alter = -0.65 },
+          fg = { from = 'Added' },
+          reverse = false,
+        },
+      },
+      { DiffChange = { reverse = false } },
+      {
+        DiffDelete = {
+          bg = { from = 'Removed', attr = 'fg', alter = -0.55 },
+          fg = { from = 'Removed' },
+          reverse = false,
+        },
+      },
     }),
     ['peachpuff'] = theming.generate_overrides({
       { NormalFloat = { link = 'Normal' } },
@@ -234,9 +245,26 @@ local function colorscheme_overrides(colorscheme)
       { NonText = { fg = { from = 'NonText', alter = 0.4 } } },
       { Visual = { bg = { from = 'CursorLine', alter = 0.2 }, fg = 'NONE' } },
       { WinSeparator = { fg = { from = 'VertSplit' }, bg = 'NONE' } },
-      { DiffAdd = { fg = { from = 'Added', alter = -0.6 } } },
-      { DiffChange = { fg = { from = 'Changed', alter = 0.65 } } },
-      { DiffDelete = { fg = { from = 'Removed', alter = -0.65 } } },
+      {
+        DiffAdd = {
+          bg = { from = 'Added', attr = 'fg', alter = -0.6 },
+          fg = { from = 'Added' },
+          reverse = false,
+        },
+      },
+      {
+        DiffChange = {
+          fg = { from = 'Changed', attr = 'fg', alter = 0.65 },
+          reverse = false,
+        },
+      },
+      {
+        DiffDelete = {
+          bg = { from = 'Removed', attr = 'fg', alter = -0.65 },
+          fg = { from = 'Removed' },
+          reverse = false,
+        },
+      },
     }),
     ['slate'] = theming.generate_overrides({
       { NormalFloat = { link = 'Normal' } },
@@ -244,9 +272,19 @@ local function colorscheme_overrides(colorscheme)
       { Dim = { link = 'Comment' } },
       { Visual = { bg = { from = 'Visual', alter = -0.4 }, fg = 'NONE' } },
       { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.3 } } },
-      { DiffAdd = { fg = { from = 'Added', alter = -0.55 } } },
-      { DiffChange = { fg = '#72A2D2' } },
-      { DiffDelete = { fg = { from = 'Removed', alter = -0.6 } } },
+      {
+        DiffAdd = {
+          bg = { from = 'Added', attr = 'fg', alter = -0.55 },
+          fg = { from = 'Added' },
+        },
+      },
+      { DiffChange = { bg = 'NONE', fg = '#72A2D2' } },
+      {
+        DiffDelete = {
+          bg = { from = 'Removed', attr = 'fg', alter = -0.6 },
+          fg = { from = 'Removed' },
+        },
+      },
     }),
     ['vim'] = theming.generate_overrides({
       { Normal = { bg = '#24283b' } },
@@ -264,17 +302,39 @@ local function colorscheme_overrides(colorscheme)
       {
         WinSeparator = { bg = 'NONE', fg = { from = 'NonText', alter = -0.2 } },
       },
-      { DiffAdd = { fg = { from = 'Added', alter = -0.55 } } },
-      { DiffChange = { fg = { from = 'DiffChange', alter = 1.2 } } },
-      { DiffDelete = { fg = { from = 'Removed', alter = -0.6 } } },
+      {
+        DiffAdd = {
+          bg = { from = 'Added', attr = 'fg', alter = -0.55 },
+          fg = { from = 'Added' },
+        },
+      },
+      {
+        DiffChange = { bg = 'NONE', fg = { from = 'DiffChange', alter = 1.2 } },
+      },
+      {
+        DiffDelete = {
+          bg = { from = 'Removed', attr = 'fg', alter = -0.6 },
+          fg = { from = 'Removed' },
+        },
+      },
     }),
     ['wildcharm'] = theming.generate_overrides({
       { NormalFloat = { link = 'Normal' } },
       { Visual = { link = 'CursorLine' } },
       { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.45 } } },
-      { DiffAdd = { fg = { from = 'Added', alter = -0.65 } } },
-      { DiffChange = { fg = { from = 'Changed', alter = -0.2 } } },
-      { DiffDelete = { fg = { from = 'Removed', alter = -0.55 } } },
+      {
+        DiffAdd = {
+          bg = { from = 'Added', attr = 'fg', alter = -0.65 },
+          fg = { from = 'Added' },
+        },
+      },
+      { DiffChange = { bg = 'NONE', fg = { from = 'Changed', alter = -0.2 } } },
+      {
+        DiffDelete = {
+          bg = { from = 'Removed', attr = 'fg', alter = -0.55 },
+          fg = { from = 'Removed' },
+        },
+      },
     }),
   }
   local hls = general_overrides()
