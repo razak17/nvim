@@ -19,8 +19,6 @@ map('n', 'o', function()
   return 'o'
 end, { buffer = 0, expr = true })
 
-if not ar.plugins.enable or ar.plugins.minimal then return end
-
 if not ar.has('package-info.nvim') then return end
 
 if vim.fn.expand('%:t') == 'package.json' then
