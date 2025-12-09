@@ -1650,6 +1650,19 @@
           },
           "type": "object"
         },
+        "scroll": {
+          "additionalProperties": false,
+          "properties": {
+            "enable": {
+              "type": "boolean"
+            },
+            "variant": {
+              "enum": ["snacks", "neoscroll"],
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
         "statuscolumn": {
           "additionalProperties": false,
           "properties": {

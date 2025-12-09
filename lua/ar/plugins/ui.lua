@@ -29,7 +29,12 @@ return {
   },
   {
     'karb94/neoscroll.nvim',
-    cond = function() return ar.get_plugin_cond('neoscroll.nvim', not minimal) end,
+    cond = function()
+      local should_scroll = ar.config.ui.scroll.enable
+        and ar.config.ui.scroll.variant == 'neoscroll'
+      local condition = not minimal and should_scroll
+      return ar.get_plugin_cond('neoscroll.nvim', condition)
+    end,
     event = 'BufRead',
     opts = {
       mappings = { '<C-d>', '<C-u>', '<C-y>', 'zt', 'zz', 'zb' },

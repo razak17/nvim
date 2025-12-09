@@ -49,6 +49,7 @@ local env = vim.env
 ---@alias ArWhichPicker 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick'
 ---@alias ArWhichSession 'persisted' | 'persistence'
 ---@alias ArWhichFilesPicker 'smart-open' | 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick' | 'fff'
+---@alias ArWhichScroll 'snacks' | 'neoscroll'
 ---@alias ArWhichShelter 'cloak' | 'ecolog'
 ---@alias ArWhichStatuscolumn 'local' | 'heirline'
 ---@alias ArWhichStatusline 'local' | 'heirline'
@@ -121,6 +122,10 @@ local env = vim.env
 ---@class ArIndentline
 ---@field enable boolean
 ---@field variant ArWhichIndentline
+
+---@class ArScroll
+---@field enable boolean
+---@field variant ArWhichScroll
 
 ---@class ArStatuscolumn
 ---@field enable boolean
@@ -580,6 +585,8 @@ local config = {
     cmdline = { enable = true, variant = 'builtin' },
     ---@type ArIndentline
     indentline = { enable = true, variant = 'snacks' },
+    ---@type ArScroll
+    scroll = { enable = true, variant = 'snacks' },
     ---@type ArStatuscolumn
     statuscolumn = { enable = true, variant = 'local' },
     ---@type ArStatusline

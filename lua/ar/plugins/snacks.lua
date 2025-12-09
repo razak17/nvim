@@ -1,5 +1,7 @@
 local api = vim.api
 local border = ar.ui.current.border.default
+local should_scroll = ar.config.ui.scroll.enable
+  and ar.config.ui.scroll.variant == 'snacks'
 
 return {
   {
@@ -54,9 +56,10 @@ return {
       },
       input = {},
       profiler = {
-        pick = { picker = 'telescope' },
+        pick = { picker = 'snacks' },
       },
       quickfile = { enabled = true },
+      scroll = { enabled = should_scroll },
       statuscolumn = { enabled = false },
       terminal = {
         enabled = true,
