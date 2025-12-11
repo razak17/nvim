@@ -11,6 +11,7 @@ return {
   event = 'VeryLazy',
   -- lazy = false,
   init = function()
+    vim.o.wildmenu = false
     vim.g.whichkey_add_spec({ '<leader><leader>n', group = 'Noice' })
   end,
   -- stylua: ignore
