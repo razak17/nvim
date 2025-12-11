@@ -349,7 +349,11 @@ return {
         {
           NoicePopupBaseGroup = {
             bg = { from = 'Normal', alter = bg == 'dark' and 0.45 or -0.1 },
-            fg = { from = 'Normal', attr = 'bg' },
+            fg = {
+              from = 'Normal',
+              attr = 'bg',
+              alter = bg == 'dark' and 0.45 or -0.1,
+            },
           },
         },
       })
