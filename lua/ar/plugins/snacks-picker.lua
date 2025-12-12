@@ -392,7 +392,6 @@ return {
               },
             },
             my_select = {
-              hidden = { 'preview' },
               layout = {
                 backdrop = false,
                 width = 0.5,
