@@ -212,15 +212,14 @@ function M.toggle_diagnostics()
   if not vim.diagnostic.is_enabled() then
     enabled = vim.diagnostic.is_enabled()
   end
-  enabled = not enabled
 
   if enabled then
-    vim.diagnostic.enable(true)
-  else
     vim.diagnostic.enable(false)
+  else
+    vim.diagnostic.enable(true)
   end
 
-  lsp_notify(string.format('diagnostics %s', bool2str(enabled)))
+  lsp_notify(string.format('diagnostics %s', bool2str(not enabled)))
 end
 
 function M.toggle_signs()
