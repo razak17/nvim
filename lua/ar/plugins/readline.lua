@@ -9,7 +9,7 @@ return {
   },
   {
     'assistcontrol/readline.nvim',
-    cond = function() return ar.get_plugin_cond('readline.nvim', false) end,
+    cond = function() return ar.get_plugin_cond('readline.nvim', not minimal) end,
     event = { 'InsertEnter' },
     -- stylua: ignore
     keys = {

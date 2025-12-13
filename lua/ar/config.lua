@@ -556,6 +556,7 @@ local config = {
       'nvim-ufo',
       'pair-lens.nvim',
       'persistent-breakpoints.nvim',
+      'readline.nvim',
       'rest.nvim',
       'sidekick.nvim',
       'startup.nvim',
