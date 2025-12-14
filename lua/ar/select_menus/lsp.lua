@@ -222,6 +222,18 @@ function M.toggle_diagnostics()
   lsp_notify(string.format('diagnostics %s', bool2str(not enabled)))
 end
 
+function M.toggle_inline_completion()
+  local enabled = vim.lsp.inline_completion.is_enabled()
+
+  if enabled then
+    vim.lsp.inline_completion.enable(false)
+  else
+    vim.lsp.inline_completion.enable(true)
+  end
+
+  lsp_notify(string.format('inline completion %s', bool2str(not enabled)))
+end
+
 function M.toggle_signs()
   local config = diagnostic.config()
   if type(config and config.signs) == 'boolean' then
