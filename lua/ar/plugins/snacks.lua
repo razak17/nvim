@@ -117,6 +117,15 @@ return {
         ['Toggle Scratch Buffer'] = function() Snacks.scratch.select() end,
       })
 
+      if should_scroll then
+        ar.add_to_select_menu('toggle', {
+          ['Toggle Smooth Scrolling'] = function()
+            local state = Snacks.scroll.enabled and 'disable' or 'enable'
+            Snacks.scroll[state]()
+          end,
+        })
+      end
+
       api.nvim_create_autocmd('User', {
         pattern = 'VeryLazy',
         callback = function()
