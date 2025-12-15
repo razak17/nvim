@@ -1333,6 +1333,20 @@ return {
         }, true)
       end,
     },
+    {
+      'kylesnowschwartz/cobalt-neon.nvim',
+      cond = get_cond({ 'cobalt-neon' }),
+      priority = get_priority({ 'cobalt-neon' }),
+      event = get_event({ 'cobalt-neon' }),
+      opts = {},
+      init = function()
+        theming.apply_overrides('cobalt-neon', {
+          { GitSignsAdd = { fg = { from = 'GitSignsAdd', alter = -0.25 } } },
+          { GitSignsChange = { fg = { from = '@comment.note', attr = 'bg' } } },
+          { WinSeparator = { bg = 'NONE' } },
+        }, true)
+      end,
+    },
   },
   -- }}}
 }
