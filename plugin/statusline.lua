@@ -143,7 +143,7 @@ local function diagnostics_error()
 end
 
 --- @return string
-local function diagnostics_warns()
+local function diagnostics_warn()
   local count = get_lsp_diagnostics_count(vim.diagnostic.severity.WARN)
   if count > 0 then
     return string.format('%%#StatusLineLspWarn#  %s%%*', count)
@@ -303,7 +303,7 @@ StatusLine.render = function()
     filename(),
     git_diff(),
     diagnostics_error(),
-    diagnostics_warns(),
+    diagnostics_warn(),
     diagnostics_info(),
     diagnostics_hint(),
     '%=',
