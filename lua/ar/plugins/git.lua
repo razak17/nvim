@@ -43,6 +43,11 @@ return {
     },
     config = function(_, opts)
       local base_hl = {
+        { NeogitNormal = { link = 'Normal' } },
+        { NeogitNormalFloat = { link = 'NormalFloat' } },
+        { NeogitFloatBorder = { link = 'FloatBorder' } },
+        { NeogitWinSeparator = { link = 'WinSeparator' } },
+        { NeogitCursorLineNr = { link = 'CursorLineNr' } },
         { NeogitDiffAdd = { bg = { from = 'DiffAdd' } } },
         { NeogitDiffDelete = { bg = { from = 'DiffDelete' } } },
         { NeogitHunkHeader = { inherit = 'FloatTitle' } },
