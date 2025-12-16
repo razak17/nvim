@@ -1,4 +1,5 @@
 local variant = ar.config.colorscheme.variant
+local transparent = ar.config.ui.transparent.enable
 
 ---@return table
 local function generate_popup_overrides()
@@ -13,7 +14,7 @@ local function generate_popup_overrides()
 
   local bg = vim.api.nvim_get_option_value('background', { scope = 'global' })
 
-  if variant == 'fill' then
+  if variant == 'fill' and not transparent then
     ar.list_insert(overrides, {
       {
         NormalFloat = {
@@ -30,7 +31,7 @@ local function generate_popup_overrides()
     })
   end
 
-  if variant == 'outline' then
+  if variant == 'outline' or transparent then
     ar.list_insert(overrides, {
       {
         NormalFloat = {
