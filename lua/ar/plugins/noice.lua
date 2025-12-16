@@ -333,7 +333,7 @@ return {
     -- stylua: ignore
     local overrides = {
       { NoiceMini = { link = 'Type' } },
-      { NoicePopupBorder = { link = 'FloatTitle' } },
+      { NoicePopupBorder = { link = 'FloatBorder' } },
       { NoiceCmdlinePopupTitleInput = { link = 'FloatTitle' } },
       { NoiceCmdlinePopupTitleCmdline = { link = 'NoiceCmdlinePopupTitleInput' } },
       { NoiceCmdlinePopupBorderCalculator = { link = 'NoiceCmdlinePopupTitleInput' } },
@@ -343,6 +343,8 @@ return {
       { NoiceCmdlinePopupTitleIncRename = { link = 'NoiceCmdlinePopupTitleInput' } },
       { NoiceCmdlinePopupTitleSubstitute = { link = 'NoiceCmdlinePopupTitleInput' } },
       { NoiceCmdlinePopupTitleCalculator = { link = 'NoiceCmdlinePopupTitleInput' } },
+      { NoiceConfirm = { link = 'NormalFloat' } },
+      { NoiceConfirmBorder = { link = 'FloatBorder' } },
     }
 
     if variant == 'fill' and not transparent then
