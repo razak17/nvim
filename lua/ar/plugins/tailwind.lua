@@ -7,7 +7,7 @@ return {
       if not ar.lsp.enable then
         return ar.get_plugin_cond('tailwind-fold.nvim')
       end
-      local condition = not ar_config.lsp.lang.tailwind['tailwind-tools']
+      local condition = not ar.config.lsp.lang.tailwind['tailwind-tools']
       return ar.get_plugin_cond('tailwind-fold.nvim', condition)
     end,
     init = function()
@@ -43,7 +43,7 @@ return {
     'luckasRanarison/tailwind-tools.nvim',
     cond = function()
       local condition = ar.lsp.enable
-        and ar_config.lsp.lang.tailwind['tailwind-tools']
+        and ar.config.lsp.lang.tailwind['tailwind-tools']
       return ar.get_plugin_cond('tailwind-fold.nvim', condition)
     end,
     ft = {

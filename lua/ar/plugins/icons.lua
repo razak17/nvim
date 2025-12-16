@@ -1,8 +1,8 @@
 local minimal = ar.plugins.minimal
-local variant = ar_config.icons.variant
+local variant = ar.config.icons.variant
 
 local function plugin_cond(plugin, v)
-  if ar_config.explorer.variant == 'fyler' then
+  if ar.config.explorer.variant == 'fyler' then
     return ar.get_plugin_cond(plugin)
   end
   return ar.get_plugin_cond(plugin, variant == v)

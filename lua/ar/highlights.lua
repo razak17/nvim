@@ -129,12 +129,12 @@ local function get(group, attribute, fallback)
         pattern = 'LazyDone',
         once = true,
         callback = function()
-          if ar_config.debug.enable then err_warn(group, attribute) end
+          if ar.config.debug.enable then err_warn(group, attribute) end
         end,
       })
     else
       vim.schedule(function()
-        if ar_config.debug.enable then err_warn(group, attribute) end
+        if ar.config.debug.enable then err_warn(group, attribute) end
       end)
     end
     return 'NONE'
@@ -207,7 +207,7 @@ local function add_theme_overrides(theme)
   for _, hl in ipairs(list) do
     local n = next(hl)
     if not seen[n] then res[#res + 1] = hl end
-    seen[n] = true
+    if n then seen[n] = true end
   end
   return res
 end
@@ -227,7 +227,8 @@ local function plugin(name, opts)
   augroup(fmt('%sHighlightOverrides', name:gsub('^%l', string.upper)), {
     event = { 'ColorScheme' },
     command = function()
-      vim.schedule(function() all(opts) end)
+      -- vim.schedule(function() all(opts) end)
+      all(opts)
     end,
   })
 end

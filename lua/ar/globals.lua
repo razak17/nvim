@@ -206,7 +206,7 @@ function ar.pcall(msg, func, ...)
     args, func, msg = { arg, unpack(args) }, msg, nil
   end
   return xpcall(func, function(err)
-    if ar_config.debug.enable then
+    if ar.config.debug.enable then
       msg = debug.traceback(
         msg and fmt('%s:\n%s\n%s', msg, vim.inspect(args), err) or err
       )
@@ -256,7 +256,7 @@ end
 ---@param plugin string The plugin to search for.
 ---@return boolean disabled # Whether the plugin is disabled.
 function ar.plugin_disabled(plugin)
-  return vim.tbl_contains(ar_config.plugins.disabled, plugin)
+  return vim.tbl_contains(ar.config.plugins.disabled, plugin)
 end
 
 -- Get a plugin's enable condition
@@ -265,7 +265,7 @@ end
 ---@return boolean disabled # Whether the plugin is disabled.
 function ar.get_plugin_cond(plugin, cond)
   local disabled = ar.plugin_disabled(plugin)
-  local override = ar_config.plugins.override
+  local override = ar.config.plugins.override
   if vim.tbl_contains(override, plugin) and not disabled then return true end
   if not ar.falsy(override) then return vim.tbl_contains(override, plugin) end
   if disabled then return false end
@@ -340,7 +340,7 @@ function ar.set_default(option, value)
     local by_rtp = #scriptinfo == 1
       and vim.startswith(scriptinfo[1].name, vim.fn.expand('$VIMRUNTIME'))
     if not by_rtp then
-      if ar_config.debug.enable then
+      if ar.config.debug.enable then
         vim.notify(
           ('Not setting option `%s` to `%q` because it was changed by a plugin.'):format(
             option,
@@ -354,7 +354,7 @@ function ar.set_default(option, value)
     end
   end
 
-  if ar_config.debug.enable then
+  if ar.config.debug.enable then
     vim.notify({
       ('Setting option `%s` to `%q`'):format(option, value),
       ('Was: %q'):format(l),
@@ -403,14 +403,14 @@ end
 ---@param lsp string The lsp to search for.
 ---@return boolean disabled # Whether the lsp is disabled.
 function ar.lsp_disabled(lsp)
-  return vim.tbl_contains(ar_config.lsp.disabled.servers, lsp)
+  return vim.tbl_contains(ar.config.lsp.disabled.servers, lsp)
 end
 
 -- Check if a lsp is disabled in a directory
 ---@param dir string The directory to search for.
 ---@return boolean disabled # Whether the lsp is disabled.
 function ar.dir_lsp_disabled(dir)
-  return ar.dirs_match(ar_config.lsp.disabled.directories, fmt('%s', dir))
+  return ar.dirs_match(ar.config.lsp.disabled.directories, fmt('%s', dir))
 end
 
 ---Get whether using nightly version of neovim
@@ -438,42 +438,29 @@ function ar.set_timeout(timeout, interval, callback)
 end
 
 --- Run a command
----@param command string
----@param params table
+---@param command table
 ---@param exit_cb? function
 ---@param start_cb? function
-function ar.run_command(command, params, exit_cb, start_cb)
-  local Job = require('plenary.job')
-  local error_msg = nil
-  Job:new({
-    command = command,
-    args = params,
-    on_start = function()
-      if start_cb then start_cb() end
-    end,
-    on_stderr = function(_, data, _)
-      if error_msg == nil then error_msg = data end
-    end,
-    on_exit = function(job, code, _)
-      vim.schedule_wrap(function()
-        if code == 0 then
-          if ar_config.debug.enable then
-            vim.notify(command .. ' executed successfully', vim.log.levels.INFO)
-          end
-        else
-          local info = { command .. ' failed!' }
-          if error_msg ~= nil then
-            table.insert(info, error_msg)
-            print(error_msg)
-          end
-          if ar_config.debug.enable then
-            vim.notify(info, vim.log.levels.ERROR)
-          end
+function ar.run_command(command, exit_cb, start_cb)
+  if start_cb then start_cb() end
+  vim.system(
+    command,
+    { text = true, cwd = vim.fs.root(vim.fn.getcwd(), '.git') },
+    vim.schedule_wrap(function(res)
+      if res.code == 0 then
+        vim.notify(command[1] .. ' executed successfully', L.INFO)
+        if exit_cb then exit_cb() end
+      else
+        local info = { command .. ' failed!' }
+        if res.stderr ~= nil then
+          table.insert(info, res.stderr)
+          print(res.stderr)
         end
-        if exit_cb then exit_cb(job) end
-      end)()
-    end,
-  }):start()
+        vim.notify(info, L.ERROR)
+      end
+    end)
+  )
+  vim.notify(command[1] .. ' launched...', L.INFO)
 end
 
 --- vim.cmd in visual mode
@@ -567,7 +554,7 @@ function ar.create_select_menu(prompt, options_table)
     .iter(options_table)
     :map(function(i, _) return i end)
     :totable()
-  if ar_config.frecency.enable then
+  if ar.config.frecency.enable then
     frecency.initialize()
     table.sort(option_names, function(a, b)
       local a_score = frecency.calc_frecency(a)
@@ -585,7 +572,7 @@ function ar.create_select_menu(prompt, options_table)
     }, function(choice, item)
       local action = options_table[choice]
       if action ~= nil then
-        if ar_config.frecency.enable then
+        if ar.config.frecency.enable then
           frecency.update_item(option_names[item], { prompt = prompt })
         end
         if type(action) == 'string' then
@@ -723,7 +710,7 @@ function ar.open_in_file_manager(file_path)
     print('File path is empty!')
     return
   end
-  local exe = ar_config.apps.explorer
+  local exe = ar.config.apps.explorer
   if exe and fn.executable(exe) then
     vim.system({ exe, file_path }, { detach = true })
   end
@@ -734,7 +721,7 @@ end
 ---@param notify? boolean
 function ar.open_media(path, notify)
   local file_extension = path:match('^.+%.(.+)$')
-  local apps, media = ar_config.apps, ar.media
+  local apps, media = ar.config.apps, ar.media
   local is_audio = vim.list_contains(media.audio, file_extension)
   local is_video = vim.list_contains(media.video, file_extension)
   local is_doc = vim.list_contains(media.doc, file_extension)

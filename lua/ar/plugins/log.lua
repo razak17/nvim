@@ -90,6 +90,7 @@ return {
   {
     'andrewferrier/debugprint.nvim',
     cond = function() return ar.get_plugin_cond('debugprint.nvim') end,
+    cmd = { 'Debugprint' },
     -- stylua: ignore
     keys = {
       'g?a', 'g?A',
@@ -124,11 +125,6 @@ return {
           variable_below = 'g?v',
           variable_above = 'g?V',
         },
-      },
-      commands = {
-        toggle_comment_debug_prints = 'ToggleCommentDebugPrints',
-        delete_debug_prints = 'DeleteDebugPrints',
-        reset_debug_prints_counter = 'ResetDebugPrintsCounter',
       },
     },
   },

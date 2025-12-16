@@ -1,4 +1,4 @@
-if ar_config.picker.variant == 'telescope' then
+if ar.config.picker.variant == 'telescope' then
   ---@type ArPick
   local picker_config = {
     name = 'telescope',
@@ -74,9 +74,10 @@ local datapath = fn.stdpath('data')
 local minimal = ar.plugins.minimal
 local enabled = not ar.plugin_disabled('telescope.nvim')
 local min_enabled = enabled and not minimal
-local is_telescope = ar_config.picker.variant == 'telescope'
+local is_telescope = ar.config.picker.variant == 'telescope'
 local picker_enabled = min_enabled and is_telescope
 local border = ui.current.border.telescope
+local show_preview = ar.config.picker.win.show_preview
 
 -- A helper function to limit the size of a telescope window to fit the maximum available
 -- space on the screen. This is useful for dropdowns e.g. the cursor or dropdown theme
@@ -116,6 +117,28 @@ local function horizontal(opts)
     },
   })
   return opts
+end
+
+---@param opts? table
+---@return table
+local function ivy(opts)
+  opts = vim.tbl_extend('force', opts or {}, {
+    trim_text = true,
+    show_line = true,
+    previewer = show_preview,
+    borderchars = { preview = ui.current.border.ivy },
+    file_ignore_patterns = {
+      '%.venv',
+      '%.svg',
+      '%.lock',
+      '%-lock.yaml',
+      '%-lock.json',
+      '/node_modules/',
+      '^node_modules/',
+    },
+    max_results = 2000,
+  })
+  return require('telescope.themes').get_ivy(opts)
 end
 
 ---@param opts? table
@@ -217,6 +240,15 @@ local function visual_grep_string()
       prompt_title = 'Searh: ' .. string.sub(search, 0, 20),
     })
   end
+end
+
+local function help_tags()
+  local prefill = nil
+  if vim.fn.mode():find('[Vv]') then
+    vim.cmd.normal({ '"zy"', bang = true })
+    prefill = vim.fn.getreg('z')
+  end
+  b('help_tags', { default_text = prefill })()
 end
 
 local function stopinsert(callback)
@@ -393,14 +425,14 @@ return {
     keys = function(_, keys)
       local mappings = keys or {}
 
-      if ar_config.picker.files == 'telescope' then
+      if ar.config.picker.files == 'telescope' then
         table.insert(mappings, { '<C-p>', find_files, desc = 'find files' })
       end
       if is_telescope then
         -- stylua: ignore
         local telescope_mappings = {
           { '<M-space>', b('buffers'), desc = 'buffers' },
-          { '<leader>f?', b('help_tags'), desc = 'help tags' },
+          { mode = { 'n', 'x' }, '<leader>f?', help_tags, desc = 'help tags' },
           { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer', },
           { '<leader>fc', nvim_config, desc = 'nvim config' },
           { '<leader>ff', find_files, desc = 'find files' },
@@ -449,10 +481,8 @@ return {
       local sorters = require('telescope.sorters')
       local actions = require('telescope.actions')
       local layout_actions = require('telescope.actions.layout')
-      local themes = require('telescope.themes')
       local config = require('telescope.config')
       local vimgrep_arguments = { unpack(config.values.vimgrep_arguments) }
-      local show_preview = ar_config.picker.win.show_preview
 
       table.insert(vimgrep_arguments, '--hidden')
       table.insert(vimgrep_arguments, '--glob')
@@ -514,8 +544,8 @@ return {
           dynamic_preview_title = true,
           results_title = false,
           layout_config = {
-            height = ar_config.picker.win.fullscreen and 100 or 0.95,
-            width = ar_config.picker.win.fullscreen and 400 or 0.9,
+            height = ar.config.picker.win.fullscreen and 100 or 0.95,
+            width = ar.config.picker.win.fullscreen and 400 or 0.9,
             horizontal = { preview_width = 0.55 },
           },
           winblend = 0,
@@ -598,41 +628,6 @@ return {
           },
         },
         pickers = {
-          registers = cursor(),
-          reloader = dropdown(),
-          oldfiles = dropdown({ previewer = false }),
-          spell_suggest = dropdown({ previewer = false }),
-          find_files = {
-            previewer = show_preview,
-            -- https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#file-and-text-search-in-hidden-files-and-directories
-            find_command = {
-              'rg',
-              '--files',
-              '--hidden',
-              '--glob',
-              '!**/.git/*',
-            },
-            no_ignore = true,
-          },
-          colorscheme = { enable_preview = true },
-          keymaps = dropdown({ layout_config = { height = 18, width = 0.5 } }),
-          git_commits = {
-            previewer = show_preview,
-            layout_config = { horizontal = { preview_width = 0.55 } },
-          },
-          git_bcommits = {
-            previewer = show_preview,
-            layout_config = { horizontal = { preview_width = 0.55 } },
-          },
-          current_buffer_fuzzy_find = dropdown({
-            previewer = false,
-            shorten_path = false,
-          }),
-          diagnostics = themes.get_ivy({
-            wrap_results = true,
-            borderchars = { preview = ui.current.border.ivy },
-          }),
-          builtin = { previewer = show_preview, include_extensions = true },
           buffers = dropdown({
             initial_mode = 'normal',
             sort_mru = true,
@@ -647,30 +642,132 @@ return {
               },
             },
           }),
-          grep_string = {
+          builtin = { previewer = show_preview, include_extensions = true },
+          colorscheme = { enable_preview = true },
+          current_buffer_fuzzy_find = dropdown({
+            previewer = false,
+            shorten_path = false,
+          }),
+          diagnostics = ivy({ wrap_results = true }),
+          find_files = {
             previewer = show_preview,
-            file_ignore_patterns = {
-              '%.svg',
-              '%.lock',
-              '%-lock.yaml',
-              '%-lock.json',
-              '/node_modules/',
-              '^node_modules/',
+            -- https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#file-and-text-search-in-hidden-files-and-directories
+            find_command = {
+              'rg',
+              '--no-config',
+              '--follow',
+              '--files',
+              '--sortr=modified',
+              '--hidden',
+              '--glob',
+              '!**/.git/*',
             },
-            max_results = 2000,
+            follow = true,
+            no_ignore = true,
           },
-          live_grep = {
+          git_bcommits = {
             previewer = show_preview,
-            file_ignore_patterns = {
-              '%.svg',
-              '%.lock',
-              '%-lock.yaml',
-              '%-lock.json',
-              '/node_modules/',
-              '^node_modules/',
+            layout_config = { horizontal = { preview_width = 0.55 } },
+          },
+          git_commits = {
+            previewer = show_preview,
+            layout_config = { horizontal = { preview_width = 0.55 } },
+          },
+          git_status = {
+            show_untracked = true,
+            file_ignore_patterns = {}, -- do not ignore images etc here
+            mappings = {
+              i = {
+                ['<Tab>'] = 'move_selection_worse',
+                ['<S-Tab>'] = 'move_selection_better',
+                ['<Space>'] = 'git_staging_toggle',
+                ['<CR>'] = 'select_default', -- opens file
+              },
             },
-            max_results = 2000,
+            preview_title = 'Files not staged',
+            previewer = require('telescope.previewers').new_termopen_previewer({
+              get_command = function(_, status)
+                local width = api.nvim_win_get_width(status.preview_win)
+                local args = ('%s,%s,25'):format(width, math.floor(width / 2))
+                return { 'git', 'diff', '--color=always', '--stat=' .. args }
+              end,
+            }),
+          },
+          grep_string = ivy(),
+          help_tags = {
+            mappings = {
+              i = {
+                -- open help in full buffer
+                ['<CR>'] = function(prompt_bufnr)
+                  local entry =
+                    require('telescope.actions.state').get_selected_entry().value
+                  require('telescope.actions').close(prompt_bufnr)
+                  vim.cmd(('help %s | only'):format(entry))
+                end,
+              },
+            },
+          },
+          keymaps = dropdown({
+            modes = { 'n', 'i', 'c', 'x', 'o', 't' },
+            layout_config = { height = 18, width = 0.5 },
+          }),
+          live_grep = ivy({
             additional_args = { '--trim' },
+            disable_coordinates = true,
+          }),
+          lsp_definitions = ivy(),
+          lsp_document_symbols = ivy(),
+          lsp_dynamic_workspace_symbols = ivy({
+            fname_width = 0, -- can see name in preview title already
+            symbol_width = 30,
+          }),
+          lsp_references = ivy({
+            include_declaration = false,
+            include_current_line = true,
+          }),
+          lsp_type_definitions = ivy({ show_line = false }),
+          oldfiles = {
+            path_display = function(_, path)
+              local parent_of_roots = {
+                vim.g.localRepos,
+                vim.fs.normalize('~/Sync/Notes/obsidian'),
+                vim.fn.stdpath('data') .. '/lazy',
+                vim.env.SYNC_DIR .. '/Notes/obsidian',
+                vim.env.HOME,
+              }
+              vim
+                .iter(parent_of_roots)
+                :each(function(root) path = path:gsub(vim.pesc(root), '') end)
+
+              -- project = highest parent
+              local project = path:match('/(%.config/.-)/')
+                or path:match('/(.-)/')
+                or ''
+              local tail = vim.fs.basename(path)
+              local out = tail .. '  ' .. project
+
+              local highlights =
+                { { { #tail, #out }, 'TelescopeResultsComment' } }
+              return out, highlights
+            end,
+            file_ignore_patterns = {
+              'COMMIT_EDITMSG',
+              'nvim/runtime/doc/.*.txt', -- vim help docs
+              fn.stdpath('state') .. '/lazy/readme/doc', -- lazy.nvim-generated help
+            },
+            layout_config = { horizontal = { width = 0.6, height = 0.6 } },
+            previewer = false,
+          },
+          registers = cursor(),
+          reloader = dropdown(),
+          spell_suggest = dropdown({
+            theme = 'cursor',
+            previewer = false,
+          }),
+          treesitter = {
+            symbols = { 'function', 'method' },
+            show_line = false,
+            symbol_highlights = { ['function'] = 'Function', method = 'Method' }, -- FIX broken colors
           },
         },
       })
@@ -747,28 +844,27 @@ return {
     'razak17/todo-comments.nvim',
     optional = true,
     opts = function()
-      if ar_config.picker.variant == 'telescope' then
-        local ivy = require('telescope.themes').get_ivy({
+      if ar.config.picker.variant == 'telescope' then
+        local ivy_theme = ivy({
           wrap_results = true,
-          borderchars = { preview = ui.current.border.ivy },
         })
         local todos = function()
           extension('todo-comments', 'todo')({
             prompt_title = 'All Todos',
-          })(ivy)
+          })(ivy_theme)
         end
         local function todos_fixes()
           extension('todo-comments', 'todo')({
             keywords = 'TODO,FIX,FIXME',
             prompt_title = 'TODO/FIXME Todos',
-          })(ivy)
+          })(ivy_theme)
         end
         local function config_todos()
           extension('todo-comments', 'todo')({
             keywords = 'TODO,FIX,FIXME',
             cwd = vim.fn.stdpath('config'),
             prompt_title = 'Config Todos',
-          })(ivy)
+          })(ivy_theme)
         end
 
         map('n', '<leader>ft', todos, { desc = 'todos' })

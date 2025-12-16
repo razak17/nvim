@@ -1,9 +1,14 @@
-local variant = ar_config.colorscheme.variant
+local variant = ar.config.colorscheme.variant
 
 ---@return table
 local function generate_popup_overrides()
   local overrides = {
-    { FloatTitle = { bg = { from = 'Visual' }, fg = { from = 'Type' } } },
+    {
+      FloatTitle = {
+        bg = { from = 'Type', attr = 'fg', alter = -0.45 },
+        fg = { from = 'Normal' },
+      },
+    },
   }
 
   local bg = vim.api.nvim_get_option_value('background', { scope = 'global' })
@@ -317,6 +322,12 @@ local function get_statusline_palette(colorscheme)
     },
     ['github_dark'] = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.2),
+    },
+    ['github_dark_dimmed'] = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.2),
+    },
+    ['github_dark_tritanopia'] = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.55),
     },
     gruvbox = {
       bg_dark = hl.tint(hl.get('Normal', 'bg'), 0.25),

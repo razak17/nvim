@@ -28,8 +28,8 @@ local env = vim.env
 ---@alias ArAIWhichOpencode 'tui' | 'frontend'
 ---@alias ArExplorerRename 'local' | 'snacks'
 ---@alias ArWhichBorder 'single' | 'rounded' | 'none' | 'double' | 'solid' | 'shadow'
----@alias ArWhichBuffers 'snacks'
----@alias ArWhichCmdline 'builtin' | 'noice' | 'telescope-cmdline'
+---@alias ArWhichBuffers 'snacks' | 'fzf-lua'
+---@alias ArWhichCmdline 'builtin' | 'extui' | 'noice' | 'telescope-cmdline'
 ---@alias ArCompletion 'cmp' | 'blink' | 'mini.completion' | 'omnifunc'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
 ---@alias ArWhichDashboard 'builtin' | 'alpha' | 'snacks'
@@ -49,6 +49,7 @@ local env = vim.env
 ---@alias ArWhichPicker 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick'
 ---@alias ArWhichSession 'persisted' | 'persistence'
 ---@alias ArWhichFilesPicker 'smart-open' | 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick' | 'fff'
+---@alias ArWhichScroll 'snacks' | 'neoscroll'
 ---@alias ArWhichShelter 'cloak' | 'ecolog'
 ---@alias ArWhichStatuscolumn 'local' | 'heirline'
 ---@alias ArWhichStatusline 'local' | 'heirline'
@@ -122,6 +123,10 @@ local env = vim.env
 ---@field enable boolean
 ---@field variant ArWhichIndentline
 
+---@class ArScroll
+---@field enable boolean
+---@field variant ArWhichScroll
+
 ---@class ArStatuscolumn
 ---@field enable boolean
 ---@field variant ArWhichStatuscolumn
@@ -188,6 +193,7 @@ local env = vim.env
 ---@field modules table
 ---@field niceties boolean
 ---@field overrides ArPluginsOverride
+---@field profile boolean
 
 ---@class ArUIColorscheme
 ---@field disabled table
@@ -205,6 +211,7 @@ local namespace = {
       ['claude-sonnet-4'] = {},
       ['claude-sonnet-4.5'] = {},
       ['claude-haiku-4.5'] = {},
+      ['claude-opus-4.5'] = {},
       ['gemini-2.5-pro'] = {},
       ['gemini-3-pro-preview'] = {},
       ['grok-code-fast-1'] = {},
@@ -277,6 +284,7 @@ local namespace = {
     overrides = {
       dict = { enable = env.RVIM_DICT_ENABLED == '1' },
     },
+    profile = env.RVIM_PROFILE == '1',
   },
   completion = { enable = env.RVIM_COMPLETION_ENABLED == '1' },
   treesitter = {
@@ -311,7 +319,6 @@ local namespace = {
     },
   },
 }
-_G.ar = ar or namespace
 
 local config = {
   ai = {
@@ -549,6 +556,7 @@ local config = {
       'nvim-ufo',
       'pair-lens.nvim',
       'persistent-breakpoints.nvim',
+      'readline.nvim',
       'rest.nvim',
       'sidekick.nvim',
       'startup.nvim',
@@ -578,6 +586,8 @@ local config = {
     cmdline = { enable = true, variant = 'builtin' },
     ---@type ArIndentline
     indentline = { enable = true, variant = 'snacks' },
+    ---@type ArScroll
+    scroll = { enable = true, variant = 'snacks' },
     ---@type ArStatuscolumn
     statuscolumn = { enable = true, variant = 'local' },
     ---@type ArStatusline
@@ -587,7 +597,8 @@ local config = {
     transparent = { enable = true },
   },
 }
-_G.ar_config = config
 
-_G.map = vim.keymap.set
+_G.ar = ar or namespace
+_G.ar.config = config
 _G.ar.pick = require('ar.pick')
+_G.map = vim.keymap.set

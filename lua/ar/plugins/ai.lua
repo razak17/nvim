@@ -1,4 +1,4 @@
-local models = ar_config.ai.models
+local models = ar.config.ai.models
 
 return {
   {

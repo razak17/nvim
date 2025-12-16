@@ -5,7 +5,7 @@ if not ar.plugins.enable or ar.plugins.minimal then return end
 if vim.fn.expand('%:t') == 'Cargo.toml' and ar.has('crates.nvim') then
   local fmt = string.format
 
-  if ar_config.completion.variant == 'cmp' then
+  if ar.config.completion.variant == 'cmp' then
     require('cmp').setup.buffer({
       sources = { { name = 'crates', priority = 3, group_index = 1 } },
     })

@@ -1,7 +1,7 @@
 local scheme_switcher = require('ar.scheme_switcher')
 local colorscheme = scheme_switcher.get_current_colorscheme()
 local theming = require('ar.theming')
-local variant = ar_config.colorscheme.variant
+local variant = ar.config.colorscheme.variant
 
 local function is_colorscheme(name) return name == colorscheme end
 
@@ -118,7 +118,7 @@ return {
       priority = get_priority({ 'vague' }),
       event = get_event({ 'vague' }),
       opts = {
-        transparent = ar_config.ui.transparent.enable,
+        transparent = ar.config.ui.transparent.enable,
         colors = { floatBorder = '#252530' },
       },
       init = function()
@@ -432,6 +432,29 @@ return {
         }, true)
       end,
     },
+    {
+      'nendix/zen.nvim',
+      cond = get_cond({ 'zen' }),
+      priority = get_priority({ 'zen' }),
+      event = get_event({ 'zen' }),
+      init = function()
+        theming.apply_overrides('zen', {
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = 1.45 } } },
+        }, true)
+      end,
+    },
+    {
+      'Pair-of-dice/Alienocean.nvim',
+      cond = get_cond({ 'Alienocean' }),
+      priority = get_priority({ 'Alienocean' }),
+      event = get_event({ 'Alienocean' }),
+      init = function()
+        theming.apply_overrides('Alienocean', {
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.7 } } },
+          { WhichKeyBorder = { link = 'FloatBorder' } },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Warm
@@ -563,15 +586,19 @@ return {
     },
     {
       'zenbones-theme/zenbones.nvim',
-      cond = get_cond({ 'zenbones' }),
-      priority = get_priority({ 'zenbones' }),
-      event = get_event({ 'zenbones' }),
+      cond = get_cond({ 'zenbones', 'kanagawabones' }),
+      priority = get_priority({ 'zenbones', 'kanagawabones' }),
+      event = get_event({ 'zenbones', 'kanagawabones' }),
       init = function()
         theming.apply_overrides('zenbones', {
           { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.2 } } },
           { CursorLine = { bg = { from = 'CursorLine', alter = 0.1 } } },
           { Folded = { bg = { from = 'Folded', alter = -0.2 } } },
           { WinSeparator = { fg = { from = 'VertSplit', alter = -0.35 } } },
+        }, true)
+        theming.apply_overrides('kanagawabones', {
+          { CursorLine = { bg = { from = 'CursorLine', alter = 0.2 } } },
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.15 } } },
         }, true)
       end,
       dependencies = 'rktjmp/lush.nvim',
@@ -581,7 +608,7 @@ return {
       cond = get_cond({ 'conifer' }),
       priority = get_priority({ 'conifer' }),
       event = get_event({ 'conifer' }),
-      opts = { transparent = ar_config.ui.transparent.enable },
+      opts = { transparent = ar.config.ui.transparent.enable },
       init = function()
         theming.apply_overrides('conifer', {
           { DiffAdd = { bg = { from = 'DiffAdd', alter = 3.15 } } },
@@ -595,7 +622,7 @@ return {
       cond = function() return colorscheme == 'nanode' end,
       priority = get_priority({ 'nanode' }),
       event = get_event({ 'nanode' }),
-      opts = { transparent = ar_config.ui.transparent.enable },
+      opts = { transparent = ar.config.ui.transparent.enable },
       init = function()
         theming.apply_overrides('nanode', {
           { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.2 } } },
@@ -706,6 +733,9 @@ return {
           { Folded = { bg = { from = 'Folded', alter = 0.7 } } },
           { Visual = { bg = { from = 'Visual', alter = -0.25 }, fg = 'NONE' } },
           { Dim = { inherit = 'WinSeparator' } },
+          { DiffAdd = { bg = { from = 'DiffAdd', alter = -0.55 } } },
+          { DiffChange = { bg = { from = 'DiffChange', alter = -0.45 } } },
+          { DiffDelete = { bg = { from = 'DiffDelete', alter = -0.25 } } },
           {
             WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.7 } },
           },
@@ -988,13 +1018,23 @@ return {
     },
     {
       'projekt0n/github-nvim-theme',
-      cond = get_cond({ 'github_dark' }),
-      priority = get_priority({ 'github_dark' }),
-      event = get_event({ 'github_dark' }),
+      cond = get_cond({ 'github_dark_dimmed', 'github_dark_tritanopia' }),
+      priority = get_priority({
+        'github_dark_dimmed',
+        'github_dark_tritanopia',
+      }),
+      event = get_event({ 'github_dark_dimmed', 'github_dark_tritanopia' }),
       init = function()
-        theming.apply_overrides('github_dark', {
-          { CursorLine = { bg = { from = 'CursorLine', alter = -0.2 } } },
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = 1.75 } } },
+        theming.apply_overrides('github_dark_dimmed', {
+          { Folded = { bg = { from = 'Folded', alter = 0.1 } } },
+          { Type = { fg = { from = 'Type', alter = -0.25 } } },
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = 0.1 } } },
+        }, true)
+        theming.apply_overrides('github_dark_tritanopia', {
+          { CursorLine = { bg = { from = 'CursorLine', alter = -0.3 } } },
+          { Folded = { bg = { from = 'Folded', alter = 0.2 } } },
+          { Type = { fg = { from = 'Type', alter = -0.45 } } },
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = 0.3 } } },
         }, true)
       end,
     },
@@ -1111,6 +1151,35 @@ return {
               fg = { from = 'LineNr', alter = -0.2 },
             },
           },
+        }, true)
+      end,
+    },
+    {
+      'xero/evangelion.nvim',
+      cond = get_cond({ 'evangelion' }),
+      priority = get_priority({ 'evangelion' }),
+      event = get_event({ 'evangelion' }),
+      init = function()
+        theming.apply_overrides('evangelion', {
+          { Comment = { bg = 'NONE' } },
+          { SpellBad = { link = 'Comment' } },
+          { Directory = { bg = 'NONE' } },
+          { LineNr = { fg = { from = 'CursorLineNr', alter = -0.55 } } },
+          {
+            Folded = { bg = { from = 'CursorLine', alter = -0.1 }, fg = 'NONE' },
+          },
+          { Visual = { bg = { from = 'Visual', alter = -0.65 }, fg = 'NONE' } },
+          {
+            WinSeparator = {
+              bg = 'NONE',
+              fg = { from = 'WinSeparator', alter = -0.45 },
+            },
+          },
+          { GitSignsAdd = { bg = 'NONE' } },
+          { GitSignsChange = { bg = 'NONE' } },
+          { GitSignsDelete = { bg = 'NONE' } },
+          { WhichKeyBorder = { link = 'FloatBorder' } },
+          { WhichKeyFloat = { link = 'Normal' } },
         }, true)
       end,
     },
@@ -1248,22 +1317,36 @@ return {
         }, true)
       end,
     },
-  },
-  {
-    'Mofiqul/dracula.nvim',
-    cond = get_cond({ 'dracula' }),
-    priority = get_priority({ 'dracula' }),
-    event = get_event({ 'dracula' }),
-    init = function()
-      theming.apply_overrides('dracula', {
-        {
-          WinSeparator = {
-            bg = 'NONE',
-            fg = { from = 'WinSeparator', alter = 2.4 },
+    {
+      'Mofiqul/dracula.nvim',
+      cond = get_cond({ 'dracula' }),
+      priority = get_priority({ 'dracula' }),
+      event = get_event({ 'dracula' }),
+      init = function()
+        theming.apply_overrides('dracula', {
+          {
+            WinSeparator = {
+              bg = 'NONE',
+              fg = { from = 'WinSeparator', alter = 2.4 },
+            },
           },
-        },
-      }, true)
-    end,
+        }, true)
+      end,
+    },
+    {
+      'kylesnowschwartz/cobalt-neon.nvim',
+      cond = get_cond({ 'cobalt-neon' }),
+      priority = get_priority({ 'cobalt-neon' }),
+      event = get_event({ 'cobalt-neon' }),
+      opts = {},
+      init = function()
+        theming.apply_overrides('cobalt-neon', {
+          { GitSignsAdd = { fg = { from = 'GitSignsAdd', alter = -0.25 } } },
+          { GitSignsChange = { fg = { from = '@comment.note', attr = 'bg' } } },
+          { WinSeparator = { bg = 'NONE' } },
+        }, true)
+      end,
+    },
   },
   -- }}}
 }

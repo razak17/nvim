@@ -4,7 +4,7 @@ local cwd = vim.fn.getcwd()
 
 local disabled = not ar.lsp.enable
   or not ar.plugins.enable
-  or (cwd and ar.dirs_match(ar_config.lsp.disabled.directories, cwd))
+  or (cwd and ar.dirs_match(ar.config.lsp.disabled.directories, cwd))
 
 if disabled then return end
 
@@ -61,7 +61,7 @@ end
 -- from https://github.com/seblj/dotfiles/blob/014fd736413945c888d7258b298a37c93d5e97da/nvim/lua/config/lspconfig/handlers.lua
 
 -- jump to the first definition automatically if the multiple defs are on the same line
--- otherwise show a selector based on ar_config.picker or qf list
+-- otherwise show a selector based on ar.config.picker or qf list
 ---@param result table # A list of Location
 ---@param client vim.lsp.Client
 local function jump_to_first_definition(result, client)
@@ -234,8 +234,8 @@ local function setup_mappings(client, bufnr)
   local diagnostic_goto = function(next, severity)
     local go = diagnostic.jump
     severity = severity and vim.diagnostic.severity[severity] or nil
-    local float = ar_config.lsp.hover_diagnostics.go_to
-      and not ar_config.lsp.hover_diagnostics.enable
+    local float = ar.config.lsp.hover_diagnostics.go_to
+      and not ar.config.lsp.hover_diagnostics.enable
     return ar.demicolon_jump(function(opts)
       local count = opts.forward and 1 or -1
       count = count * vim.v.count1
@@ -335,7 +335,7 @@ local function setup_mappings(client, bufnr)
       end,
       desc = 'code action',
       capability = M.textDocument_codeAction,
-      disabled = ar_config.lsp.code_actions.variant ~= 'builtin',
+      disabled = ar.config.lsp.code_actions.variant ~= 'builtin',
     },
     {
       { 'n', 'x' },
@@ -406,7 +406,7 @@ local function setup_mappings(client, bufnr)
       lsp.inline_completion.get,
       desc = 'current inline completion',
       capability = M.textDocument_inlineCompletion,
-      disabled = ar_config.ai.completion.variant ~= 'builtin',
+      disabled = ar.config.ai.completion.variant ~= 'builtin',
     },
     {
       'i',
@@ -414,14 +414,14 @@ local function setup_mappings(client, bufnr)
       function() lsp.inline_completion.select({ count = 1 }) end,
       desc = 'previous copilot suggestion',
       capability = M.textDocument_inlineCompletion,
-      disabled = ar_config.ai.completion.variant ~= 'builtin',
+      disabled = ar.config.ai.completion.variant ~= 'builtin',
     },
     {
       'i',
       '<M-[>',
       function() lsp.inline_completion.select({ count = -1 }) end,
       desc = 'next Copilot suggestion',
-      disabled = ar_config.ai.completion.variant ~= 'builtin',
+      disabled = ar.config.ai.completion.variant ~= 'builtin',
     },
     {
       'n',
@@ -437,7 +437,7 @@ local function setup_mappings(client, bufnr)
       desc = 'rename',
       capability = M.textDocument_rename,
       disabled = not ar.plugins.minimal
-        or (not minimal and (ar_config.lsp.rename.variant ~= 'builtin')),
+        or (not minimal and (ar.config.lsp.rename.variant ~= 'builtin')),
     },
     {
       'n',
@@ -569,21 +569,21 @@ local function setup_autocommands(client, buf)
       buffer = buf,
       desc = 'LSP: Show diagnostics',
       command = function()
-        if not ar_config.lsp.hover_diagnostics.enable then return end
+        if not ar.config.lsp.hover_diagnostics.enable then return end
         if
           vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win)
         then
           return
         end
         vim.diagnostic.open_float({
-          scope = ar_config.lsp.hover_diagnostics.scope,
+          scope = ar.config.lsp.hover_diagnostics.scope,
         })
       end,
     })
   end
 
   if client:supports_method(M.textDocument_inlayHint, { bufnr = buf }) then
-    lsp.inlay_hint.enable(ar_config.lsp.inlay_hint.enable, { bufnr = buf })
+    lsp.inlay_hint.enable(ar.config.lsp.inlay_hint.enable, { bufnr = buf })
   end
 
   if client:supports_method(M.textDocument_formatting) then
@@ -595,7 +595,7 @@ local function setup_autocommands(client, buf)
         if
           not vim.g.formatting_disabled
           and not vim.b[buf].formatting_disabled
-          and ar_config.lsp.format_on_save.enable
+          and ar.config.lsp.format_on_save.enable
         then
           local clients = vim.tbl_filter(
             function(c) return c:supports_method(M.textDocument_formatting) end,
@@ -718,6 +718,7 @@ end
 
 ---@param client vim.lsp.Client
 local function setup_lsp_foldexpr(client)
+  if not ar.config.lsp.foldexpr.enable then return end
   if client:supports_method(M.textDocument_foldingRange) then
     local win = api.nvim_get_current_win()
     vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
@@ -729,7 +730,7 @@ end
 
 ---@param client vim.lsp.Client
 ---@param bufnr number
-local function setup_completion(client, bufnr)
+local function setup_omnifunc_completion(client, bufnr)
   if client:supports_method(M.textDocument_completion) then
     lsp.completion.enable(true, client.id, bufnr, {
       autotrigger = true,
@@ -751,7 +752,18 @@ end
 
 ---@param client vim.lsp.Client
 ---@param bufnr number
+local function setup_completion(client, bufnr)
+  local variant = ar.config.completion.variant
+  if variant == 'omnifunc' then setup_omnifunc_completion(client, bufnr) end
+  if variant == 'mini.completion' and ar.has('mini.completion') then
+    vim.bo[bufnr].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
+  end
+end
+
+---@param client vim.lsp.Client
+---@param bufnr number
 local function setup_inline_completion(client, bufnr)
+  if ar.config.ai.completion.variant ~= 'builtin' then return end
   if client:supports_method(M.textDocument_inlineCompletion) then
     lsp.inline_completion.enable(true, { buffer = bufnr })
   end
@@ -775,21 +787,16 @@ end
 ---@param client vim.lsp.Client the lsp client
 ---@param bufnr number
 local function on_attach(client, bufnr)
-  local ar_lsp = ar_config.lsp
   setup_autocommands(client, bufnr)
   setup_mappings(client, bufnr)
   setup_lsp_stop_detached()
-  if ar_lsp.foldexpr.enable then setup_lsp_foldexpr(client) end
+  setup_lsp_foldexpr(client)
   setup_semantic_tokens(client, bufnr)
   setup_colors(client, bufnr)
   setup_lsp_plugins(client, bufnr)
   setup_type_formatting(client, bufnr)
-  if ar_config.ai.completion.variant == 'builtin' then
-    setup_inline_completion(client, bufnr)
-  end
-  if ar_config.completion.variant == 'omnifunc' then
-    setup_completion(client, bufnr)
-  end
+  setup_inline_completion(client, bufnr)
+  setup_completion(client, bufnr)
 end
 
 augroup('LspSetupAutoCommands', {
@@ -817,7 +824,7 @@ augroup('LspSetupAutoCommands', {
   event = 'DiagnosticChanged',
   desc = 'Update the diagnostic locations',
   command = function(args)
-    if not ar_config.lsp.omnifunc.enable then
+    if not ar.config.lsp.omnifunc.enable then
       diagnostic.setloclist({ open = false })
     end
     if ar.falsy(args.data) or not args.data.diagnostics then return end
@@ -853,15 +860,15 @@ function ar.get_lsp_signs()
   }
 end
 
-local virtual_lines_variant = ar_config.lsp.virtual_lines.variant
+local virtual_lines_variant = ar.config.lsp.virtual_lines.variant
 
 diagnostic.config({
-  signs = ar_config.lsp.signs.enable and ar.get_lsp_signs() or false,
+  signs = ar.config.lsp.signs.enable and ar.get_lsp_signs() or false,
   underline = true,
   update_in_insert = false,
   severity_sort = true,
   virtual_lines = virtual_lines_variant == 'builtin',
-  virtual_text = ar_config.lsp.virtual_text.enable
+  virtual_text = ar.config.lsp.virtual_text.enable
       and {
         spacing = 1,
         -- BUG: when set to true, virtual text override does not work (severe diagnostics are not shown first)
@@ -926,7 +933,7 @@ diagnostic.handlers.virtual_text = {
 -- local hide_signs_handler = diagnostic.handlers.signs.hide
 -- diagnostic.handlers.signs = {
 --   show = function(ns, bufnr, diagnostics, opts)
---     if not ar_config.lsp.signs.enable then return end
+--     if not ar.config.lsp.signs.enable then return end
 --     local max_severity_per_line = vim
 --       .iter(diagnostics)
 --       :fold({}, function(diag_map, d)
@@ -974,7 +981,7 @@ end
 --------------------------------------------------------------------------------
 -- LSP Progress
 --------------------------------------------------------------------------------
-local lsp_progress = ar_config.lsp.progress
+local lsp_progress = ar.config.lsp.progress
 if lsp_progress.enable and lsp_progress.variant == 'builtin' then
   require('ar.lsp_progress')
 end

@@ -1,8 +1,8 @@
 if
   not ar
   or ar.none
-  or not ar_config.ui.statusline.enable
-  or (ar_config.ui.statusline.variant ~= 'local' and not ar.plugins.minimal)
+  or not ar.config.ui.statusline.enable
+  or (ar.config.ui.statusline.variant ~= 'local' and not ar.plugins.minimal)
 then
   return
 end
@@ -143,7 +143,7 @@ local function diagnostics_error()
 end
 
 --- @return string
-local function diagnostics_warns()
+local function diagnostics_warn()
   local count = get_lsp_diagnostics_count(vim.diagnostic.severity.WARN)
   if count > 0 then
     return string.format('%%#StatusLineLspWarn#  %s%%*', count)
@@ -303,7 +303,7 @@ StatusLine.render = function()
     filename(),
     git_diff(),
     diagnostics_error(),
-    diagnostics_warns(),
+    diagnostics_warn(),
     diagnostics_info(),
     diagnostics_hint(),
     '%=',

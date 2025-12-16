@@ -1,5 +1,7 @@
 local api = vim.api
 local border = ar.ui.current.border.default
+local should_scroll = ar.config.ui.scroll.enable
+  and ar.config.ui.scroll.variant == 'snacks'
 
 return {
   {
@@ -44,7 +46,7 @@ return {
       git = { enabled = true },
       gitbrowse = { enabled = true },
       image = {
-        enabled = ar_config.image.variant == 'snacks',
+        enabled = ar.config.image.variant == 'snacks',
         doc = {
           inline = false,
           float = true,
@@ -54,9 +56,10 @@ return {
       },
       input = {},
       profiler = {
-        pick = { picker = 'telescope' },
+        pick = { picker = 'snacks' },
       },
       quickfile = { enabled = true },
+      scroll = { enabled = should_scroll },
       statuscolumn = { enabled = false },
       terminal = {
         enabled = true,
@@ -114,6 +117,15 @@ return {
         ['Toggle Scratch Buffer'] = function() Snacks.scratch.select() end,
       })
 
+      if should_scroll then
+        ar.add_to_select_menu('toggle', {
+          ['Toggle Smooth Scrolling'] = function()
+            local state = Snacks.scroll.enabled and 'disable' or 'enable'
+            Snacks.scroll[state]()
+          end,
+        })
+      end
+
       api.nvim_create_autocmd('User', {
         pattern = 'VeryLazy',
         callback = function()
@@ -137,7 +149,7 @@ return {
       -- https://github.com/LazyVim/LazyVim/blob/66981fe5b2c220286a31292fce3cc82b0e17ae76/lua/lazyvim/plugins/init.lua?plain=1#L24
       -- HACK: restore vim.notify after snacks setup and let noice.nvim take over
       -- this is needed to have early notifications show up in noice history
-      if ar.has('noice.nvim') and ar_config.notifier.variant == 'noice' then
+      if ar.has('noice.nvim') and ar.config.notifier.variant == 'noice' then
         vim.notify = notify
       end
     end,

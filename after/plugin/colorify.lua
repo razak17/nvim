@@ -1,7 +1,7 @@
 -- All credits to the original code in nvchad/ui
 -- Ref; https://github.com/NvChad/ui/blob/ec5b1f8e591b2e8f1cd3653b41bb14d9cd43dfd1/lua/nvchad/colorify/init.lua?plain=1#L9
 
-local enabled = ar_config.plugin.custom.colorify.enable and not ar.lsp.enable
+local enabled = ar.config.plugin.custom.colorify.enable and not ar.lsp.enable
 
 if not ar or ar.none or not enabled then return end
 

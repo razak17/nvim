@@ -1,7 +1,7 @@
-local models = ar_config.ai.models
-local cmp = ar_config.completion.variant
-local ai_cmp = ar_config.ai.completion.variant
-local ai_suggestions = ar_config.ai.completion.suggestions
+local models = ar.config.ai.models
+local cmp = ar.config.completion.variant
+local ai_cmp = ar.config.ai.completion.variant
+local ai_suggestions = ar.config.ai.completion.suggestions
 
 local function get_cond()
   local is_minuet = models.gemini and ai_cmp == 'minuet'
@@ -84,7 +84,7 @@ return {
       },
       virtualtext = {
         auto_trigger_ft = ai_suggestions == 'ghost-text' and { '*' } or {},
-        auto_trigger_ignore_ft = ar_config.ai.ignored_filetypes,
+        auto_trigger_ignore_ft = ar.config.ai.ignored_filetypes,
         keymap = {
           accept = '<A-u>',
           accept_line = '<A-l>',
@@ -119,7 +119,7 @@ return {
           minuet = {
             enabled = function()
               return not vim.tbl_contains(
-                ar_config.ai.ignored_filetypes,
+                ar.config.ai.ignored_filetypes,
                 vim.bo.ft
               )
             end,

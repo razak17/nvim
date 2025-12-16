@@ -41,7 +41,7 @@ end
 
 local function get_all_packages()
   local packages = ar.lsp.enable and get_lsp_servers() or {}
-  if not ar_config.lsp.null_ls.enable then
+  if not ar.config.lsp.null_ls.enable then
     local linters = get_linters()
     vim.list_extend(packages, linters)
     local conform_ok, conform = pcall(require, 'conform')

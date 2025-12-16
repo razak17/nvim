@@ -19,11 +19,22 @@ return {
     'nmac427/guess-indent.nvim',
     cond = function() return ui_cond('guess-indent.nvim') end,
     cmd = { 'GuessIndent' },
-    opts = {},
+    event = 'BufReadPre',
+    opts = {
+      auto_cmd = true,
+      override_editorconfig = false,
+      filetype_exclude = { 'netrw', 'lazy', 'mason' },
+      buftype_exclude = { 'help', 'terminal', 'nofile' },
+    },
   },
   {
     'karb94/neoscroll.nvim',
-    cond = function() return ar.get_plugin_cond('neoscroll.nvim', not minimal) end,
+    cond = function()
+      local should_scroll = ar.config.ui.scroll.enable
+        and ar.config.ui.scroll.variant == 'neoscroll'
+      local condition = not minimal and should_scroll
+      return ar.get_plugin_cond('neoscroll.nvim', condition)
+    end,
     event = 'BufRead',
     opts = {
       mappings = { '<C-d>', '<C-u>', '<C-y>', 'zt', 'zz', 'zb' },

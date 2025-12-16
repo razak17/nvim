@@ -1,7 +1,7 @@
 local api, fn = vim.api, vim.fn
 local fmt = string.format
 
-local models = ar_config.ai.models
+local models = ar.config.ai.models
 
 vim.env.GOOGLEAI_API_KEY = vim.env.GEMINI_API_KEY or ''
 
@@ -209,7 +209,7 @@ return {
       agents = {
         { name = 'CodeClaude-3-5-Haiku', disable = true },
       },
-      default_chat_agent = 'ChatCopilot-claude-haiku-4.5',
+      default_chat_agent = 'ChatCopilot-claude-opus-4.5',
     }
 
     local function setup_model(model)

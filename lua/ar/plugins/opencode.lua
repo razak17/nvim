@@ -46,7 +46,7 @@ local function choose_mode()
   end)
 end
 
-local variant = ar_config.ai.opencode.variant
+local variant = ar.config.ai.opencode.variant
 
 local function get_cond(plugin, which)
   local condition = ar.ai.enable and variant == which

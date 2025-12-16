@@ -1,6 +1,6 @@
-local models = ar_config.ai.models
-local ai_cmp = ar_config.ai.completion.variant
-local ai_suggestions = ar_config.ai.completion.suggestions
+local models = ar.config.ai.models
+local ai_cmp = ar.config.ai.completion.variant
+local ai_suggestions = ar.config.ai.completion.suggestions
 
 local function get_cond(plugin)
   local is_copilot = models.copilot and ai_cmp == 'copilot'

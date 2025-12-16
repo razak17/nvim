@@ -4,7 +4,7 @@ local icons = ar.ui.icons
 local border = ar.ui.current.border.default
 local left_block = icons.separators.left_block
 
-local statuscolumn_enabled = ar_config.ui.statuscolumn.enable
+local statuscolumn_enabled = ar.config.ui.statuscolumn.enable
 local git_cond = require('ar.utils.git').git_cond
 
 return {
@@ -42,85 +42,40 @@ return {
       graph_style = 'kitty',
     },
     config = function(_, opts)
+      local base_hl = {
+        { NeogitDiffAdd = { bg = { from = 'DiffAdd' } } },
+        { NeogitDiffDelete = { bg = { from = 'DiffDelete' } } },
+        { NeogitHunkHeader = { inherit = 'FloatTitle' } },
+      }
+      local github_dark_hl = {
+        {
+          NeogitDiffAdd = {
+            bg = { from = 'NeogitDiffAdd', attr = 'fg', alter = -0.6 },
+          },
+        },
+        {
+          NeogitDiffDelete = {
+            bg = { from = 'DiffDelete', attr = 'fg', alter = -0.75 },
+          },
+        },
+        { NeogitHunkHeader = { inherit = 'FloatTitle' } },
+      }
+
       ar.highlight.plugin('neogit', {
         theme = {
-          ['habamax'] = {
-            {
-              NeogitDiffAdd = {
-                bg = { from = 'DiffAdd', attr = 'fg', alter = -0.65 },
-                fg = { from = 'Normal' },
-                reverse = false,
-              },
-            },
-            {
-              NeogitHunkHeader = {
-                inherit = 'IncSearch',
-                bg = { from = 'IncSearch', attr = 'bg', alter = -0.25 },
-              },
-            },
-            { NeogitChangeAdded = { fg = { from = 'DiffAdd' } } },
-            { NeogitChangeModified = { fg = { from = 'DiffChange' } } },
-            { NeogitChangeDeleted = { fg = { from = 'DiffDelete' } } },
-            { NeogitChangeCopied = { fg = { from = 'Change' } } },
-            {
-              NeogitChangeRenamed = {
-                fg = { from = 'DiffChange', alter = 0.35 },
-              },
-            },
-            {
-              NeogitChangeNewFile = { fg = { from = 'DiffAdd', alter = 0.35 } },
-            },
-          },
-          ['retrobox'] = {
-            {
-              NeogitDiffAdd = {
-                bg = { from = 'DiffChange', attr = 'fg', alter = -0.3 },
-                fg = { from = 'Normal' },
-                reverse = false,
-              },
-            },
-            { NeogitDiffAddHighlight = { fg = { from = 'Normal' } } },
-          },
-          ['slate'] = {
-            {
-              NeogitDiffAdd = {
-                bg = { from = 'DiffAdd', alter = -0.4 },
-                fg = { from = 'Normal' },
-              },
-            },
-            {
-              NeogitDiffDelete = {
-                bg = { from = 'DiffDelete', alter = -0.5 },
-                fg = { from = 'Normal' },
-              },
-            },
-            { NeogitDiffAddHighlight = { fg = { from = 'Normal' } } },
-          },
-          ['wildcharm'] = {
-            {
-              NeogitDiffAdd = {
-                bg = { from = 'DiffAdd', attr = 'bg' },
-              },
-            },
-            {
-              NeogitDiffDelete = {
-                bg = { from = 'Error', attr = 'fg', alter = -0.3 },
-              },
-            },
-            { NeogitDiffAddHighlight = { fg = { from = 'Normal' } } },
-          },
+          ['default'] = base_hl,
+          ['habamax'] = base_hl,
+          ['retrobox'] = base_hl,
+          ['slate'] = base_hl,
+          ['vim'] = base_hl,
+          ['wildcharm'] = base_hl,
           ['onedark'] = {
-            { NeogitHunkHeader = { inherit = 'Headline2', bold = true } },
-            { NeogitDiffHeader = { inherit = 'Headline2', bold = true } },
-            { NeogitWinSeparator = { link = 'WinSeparator' } },
-            { NeogitCommitViewHeader = { link = 'Normal' } },
-            {
-              NeogitCursorLine = {
-                bg = { from = 'CursorLine' },
-                fg = { from = 'Normal' },
-              },
-            },
+            { NeogitHunkHeader = { inherit = 'FloatTitle' } },
+            { NeogitDiffHeader = { inherit = 'FloatTitle' } },
+            { NeogitCommitViewHeader = { link = 'FloatTitle' } },
           },
+          ['github_dark_dimmed'] = github_dark_hl,
+          ['github_dark_tritanopia'] = github_dark_hl,
         },
       })
 
@@ -241,22 +196,47 @@ return {
     config = function(_, opts)
       require('gitsigns').setup(opts)
 
+      local base_hl = {
+        {
+          GitSignsAdd = { fg = { from = 'DiffAdd', attr = 'bg', alter = 1.25 } },
+        },
+        { GitSignsChange = { fg = { from = 'DiffChange', alter = 0.2 } } },
+        {
+          GitSignsDeleteVirtLn = {
+            bg = { from = 'DiffDelete' },
+            fg = { from = 'DiffDelete' },
+            reverse = false,
+          },
+        },
+      }
+
       ar.highlight.plugin('gitsigns', {
         theme = {
-          ['default'] = {
-            {
-              GitSignsAdd = {
-                fg = { from = 'DiffAdd', attr = 'bg', alter = 1.4 },
-              },
-            },
-          },
-          ['habamax'] = {
+          ['default'] = base_hl,
+          ['habamax'] = base_hl,
+          ['retrobox'] = base_hl,
+          ['slate'] = base_hl,
+          ['vim'] = base_hl,
+          ['wildcharm'] = base_hl,
+          ['kanagawa'] = {
+            { GitSignsAdd = { bg = 'NONE' } },
+            { GitSignsStagedAdd = { bg = 'NONE' } },
             {
               GitSignsChange = {
-                fg = { from = 'DiffChange', attr = 'fg', alter = -0.1 },
-                reverse = false,
+                bg = 'NONE',
+                fg = { from = 'Directory', alter = -0.2 },
               },
             },
+            { GitSignsStagedChange = { bg = 'NONE' } },
+            { GitSignsDelete = { bg = 'NONE' } },
+            { GitSignsStagedDelete = { bg = 'NONE' } },
+          },
+          ['github_dark_dimmed'] = {
+            { GitSignsChange = { fg = { from = 'Directory', alter = -0.2 } } },
+          },
+          ['github_dark_tritanopia'] = {
+            { GitSignsAdd = { fg = { from = 'DiffAdd', alter = -0.35 } } },
+            { GitSignsChange = { fg = { from = 'Directory', alter = -0.2 } } },
           },
         },
       })

@@ -121,6 +121,7 @@ ar.ui.icons = {
     active_ts = '',
     spell_check = '󰓆',
     triangle = '',
+    triangle_alt = '',
     triangle_long = '▶',
     triangle_long_down = '▼',
     triangle_short_right = '',
@@ -475,7 +476,7 @@ end
 
 --------------------------------------------------------------------------------
 -- The current styles for various UI elements
-local border_style = ar_config.ui.border
+local border_style = ar.config.ui.border
 local border = ar.ui.border
 ar.ui.current = {
   -- stylua: ignore

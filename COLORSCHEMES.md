@@ -2,6 +2,7 @@
 
 - afterglow
 - alabaster
+- Alienocean
 - ashen
 - backpack
 - bamboo
@@ -38,6 +39,7 @@
 - eldritch
 - eldritch-dark
 - eldritch-minimal
+- evangelion
 - everforest
 - evergarden
 - evergarden-fall
@@ -197,6 +199,7 @@
 - yoda
 - yugen
 - yukinord
+- zen
 - zenbones
 - zenburn
 - zenburned

@@ -4,8 +4,8 @@ return {
   {
     'chrishrb/gx.nvim',
     cond = function()
-      local condition = ar_config.gx.enable
-        and ar_config.gx.variant == 'plugin'
+      local condition = ar.config.gx.enable
+        and ar.config.gx.variant == 'plugin'
         and not minimal
       return ar.get_plugin_cond('gx.nvim', condition)
     end,

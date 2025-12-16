@@ -7,7 +7,7 @@ local data = vim.fn.stdpath('data')
 -- Project local config
 --------------------------------------------------------------------------------
 local local_config = io.open(vim.fn.expand('%:p:h') .. '/.rvim.json', 'r')
-if local_config then ar.project_config(ar_config, local_config) end
+if local_config then ar.project_config(ar.config, local_config) end
 --------------------------------------------------------------------------------
 -- Set leader keys
 --------------------------------------------------------------------------------

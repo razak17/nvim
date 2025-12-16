@@ -2,8 +2,8 @@ local minimal = ar.plugins.minimal
 local ui, highlight = ar.ui, ar.highlight
 local separators = ui.icons.separators
 local left_thin_block = ui.icons.separators.left_thin_block
-local indentline_enable = ar_config.ui.indentline.enable
-local indentline_variant = ar_config.ui.indentline.variant
+local indentline_enable = ar.config.ui.indentline.enable
+local indentline_variant = ar.config.ui.indentline.variant
 
 return {
   {

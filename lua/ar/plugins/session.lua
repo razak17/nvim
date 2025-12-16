@@ -1,7 +1,7 @@
 local function get_cond(plugin, variant)
   return function()
-    local condition = ar_config.session.enable
-      and ar_config.session.variant == variant
+    local condition = ar.config.session.enable
+      and ar.config.session.variant == variant
     return ar.get_plugin_cond(plugin, condition)
   end
 end

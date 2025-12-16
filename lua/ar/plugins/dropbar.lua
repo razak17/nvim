@@ -10,8 +10,8 @@ return {
     event = { 'BufRead', 'BufNewFile' },
     cond = function()
       local condition = not ar.plugins.minimal
-        and ar_config.ui.winbar.enable
-        and ar_config.ui.winbar.variant == 'dropbar'
+        and ar.config.ui.winbar.enable
+        and ar.config.ui.winbar.variant == 'dropbar'
       return ar.get_plugin_cond('dropbar.nvim', condition)
     end,
     keys = {

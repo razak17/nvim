@@ -1,15 +1,16 @@
+local coding = ar.plugins.coding
 local minimal = ar.plugins.minimal
 
 return {
   {
     desc = 'readline style keybindings in insert mode',
     'tpope/vim-rsi',
-    cond = function() return ar.get_plugin_cond('vim-rsi', not minimal) end,
+    cond = function() return ar.get_plugin_cond('vim-rsi', coding) end,
     event = { 'InsertEnter' },
   },
   {
     'assistcontrol/readline.nvim',
-    cond = function() return ar.get_plugin_cond('readline.nvim', false) end,
+    cond = function() return ar.get_plugin_cond('readline.nvim', not minimal) end,
     event = { 'InsertEnter' },
     -- stylua: ignore
     keys = {

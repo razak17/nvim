@@ -28,7 +28,7 @@ local session_commands = {
 
 ---@param command 'restore' | 'select'
 function ar.dashboard.session(command)
-  local variant = ar_config.session.variant
+  local variant = ar.config.session.variant
   local cmd = session_commands[variant] and session_commands[variant][command]
 
   if cmd then
@@ -47,8 +47,8 @@ return {
     'goolord/alpha-nvim',
     cond = function()
       local condition = not minimal
-        and ar_config.dashboard.enable
-        and ar_config.dashboard.variant == 'alpha'
+        and ar.config.dashboard.enable
+        and ar.config.dashboard.variant == 'alpha'
       return ar.get_plugin_cond('alpha-nvim', condition)
     end,
     event = 'VimEnter',

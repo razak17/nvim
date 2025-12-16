@@ -2,7 +2,7 @@
 
 local prompts = {
   COPILOT_BEAST_MODE = {
-    system_prompt = ar_config.ai.prompts.beast_mode,
+    system_prompt = ar.config.ai.prompts.beast_mode,
   },
   FixCode = {
     prompt = 'Please fix the following code to make it work as intended.',
@@ -57,7 +57,7 @@ return {
       local condition = not minimal
         and ar.ai.enable
         and ar.completion.enable
-        and ar_config.ai.models.copilot
+        and ar.config.ai.models.copilot
       return ar.get_plugin_cond('CopilotChat.nvim', condition)
     end,
     -- stylua: ignore
@@ -108,7 +108,7 @@ return {
     ---@type CopilotChat.config.shared
     opts = {
       auto_insert_mode = false,
-      model = 'claude-haiku-4.5',
+      model = 'claude-opus-4.5',
       agent = 'copilot',
       prompts = prompts,
       auto_follow_cursor = false,
@@ -156,7 +156,7 @@ return {
           end)
 
         opts.sticky = {
-          'Using the model $claude-haiku-4.5',
+          'Using the model $claude-opus-4.5',
           '#vectorcode', -- Automatically includes repository context in every conversation
         }
       end

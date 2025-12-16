@@ -37,7 +37,7 @@ return {
     'd00h/telescope-any',
     cond = function()
       local condition = not ar.plugins.minimal
-        and ar_config.picker.variant == 'telescope'
+        and ar.config.picker.variant == 'telescope'
       return ar.get_plugin_cond('telescope-any', condition)
     end,
     init = function()

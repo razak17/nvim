@@ -1,6 +1,6 @@
 local api, lsp = vim.api, vim.lsp
-local is_biome = ar_config.lsp.lang.web.biome
-  or vim.tbl_contains(ar_config.lsp.override, 'biome')
+local is_biome = ar.config.lsp.lang.web.biome
+  or vim.tbl_contains(ar.config.lsp.override, 'biome')
 local conform = ar.has('conform.nvim')
 
 local format_exclusions = {

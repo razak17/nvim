@@ -1,4 +1,4 @@
-local models = ar_config.ai.models
+local models = ar.config.ai.models
 
 local model_names = vim.tbl_keys(ar.ai.copilot_models)
 
@@ -103,7 +103,7 @@ return {
     opts = function()
       local opts = {
         mode = 'agentic',
-        system_prompt = function() return ar_config.ai.prompts.beast_mode end,
+        system_prompt = function() return ar.config.ai.prompts.beast_mode end,
         behaviour = { auto_set_keymaps = false },
         hints = { enabled = false },
         selector = {
@@ -132,7 +132,7 @@ return {
       if models.claude then
         set_provider('claude')
       elseif models.copilot then
-        set_provider('copilot', 'copilot-claude-haiku-4.5')
+        set_provider('copilot', 'copilot-claude-opus-4.5')
         opts.providers = get_copilot_providers()
       elseif models.openai then
         set_provider('openai')

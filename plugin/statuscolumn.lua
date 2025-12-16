@@ -1,8 +1,8 @@
 if
   not ar
   or ar.none
-  or not ar_config.ui.statuscolumn.enable
-  or (ar_config.ui.statuscolumn.variant ~= 'local' and not ar.plugins.minimal)
+  or not ar.config.ui.statuscolumn.enable
+  or (ar.config.ui.statuscolumn.variant ~= 'local' and not ar.plugins.minimal)
 then
   return
 end

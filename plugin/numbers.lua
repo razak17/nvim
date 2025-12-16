@@ -1,4 +1,4 @@
-local enabled = ar_config.plugin.main.numbers.enable
+local enabled = ar.config.plugin.main.numbers.enable
 
 if not ar or ar.none or not enabled then return end
 
@@ -39,7 +39,7 @@ local function is_blocked()
 end
 
 local function enable_relative_number()
-  local numbers_enabled = ar_config.plugin.main.numbers.enable
+  local numbers_enabled = ar.config.plugin.main.numbers.enable
   if not is_enabled or not numbers_enabled then return end
   if is_blocked() then
     vim.wo.number, vim.wo.relativenumber = false, false
@@ -51,7 +51,7 @@ local function enable_relative_number()
 end
 
 local function disable_relative_number()
-  local numbers_enabled = ar_config.plugin.main.numbers.enable
+  local numbers_enabled = ar.config.plugin.main.numbers.enable
   if is_ignored() or not numbers_enabled then return end
   vim.wo.number, vim.wo.relativenumber = not is_blocked(), false
 end

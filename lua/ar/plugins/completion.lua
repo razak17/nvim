@@ -21,7 +21,7 @@ local ui, highlight = ar.ui, ar.highlight
 local border, lsp_hls, ellipsis =
   ui.current.border.default, ui.lsp.highlights, ui.icons.misc.ellipsis
 local minimal = ar.plugins.minimal
-local is_cmp = ar_config.completion.variant == 'cmp'
+local is_cmp = ar.config.completion.variant == 'cmp'
 
 ar.completion.config = vim.tbl_extend('force', ar.completion.config or {}, {
   format = {
@@ -219,12 +219,12 @@ return {
               not ar.completion.config.format[entry.source.name]
               and item.kind ~= 'Color'
             then
-              if ar_config.completion.icons == 'mini.icons' then
+              if ar.config.completion.icons == 'mini.icons' then
                 local MiniIcons = require('mini.icons')
                 local icon, hl = MiniIcons.get('lsp', item.kind)
                 item.kind = icon
                 item.kind_hl_group = hl
-              elseif ar_config.completion.icons == 'lspkind' then
+              elseif ar.config.completion.icons == 'lspkind' then
                 item.kind = format_icon(symbols[item.kind])
               end
             end

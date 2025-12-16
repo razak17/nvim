@@ -6,8 +6,8 @@ vim.g.codecompanion_add_extension = function(extension, opts)
 end
 
 local fmt = string.format
-local models = ar_config.ai.models
-local cmp = ar_config.completion.variant
+local models = ar.config.ai.models
+local cmp = ar.config.completion.variant
 
 local function get_cond()
   return ar.get_plugin_cond('codecompanion.nvim', ar.ai.enable)
@@ -135,7 +135,7 @@ return {
         opts = {
           log_level = 'DEBUG', -- TRACE|DEBUG|ERROR|INFO
           language = 'English', -- The language used for LLM responses
-          system_prompt = function() return ar_config.ai.prompts.beast_mode end,
+          system_prompt = function() return ar.config.ai.prompts.beast_mode end,
         },
         extensions = {},
         adapters = {
@@ -272,7 +272,7 @@ return {
         set_adapter_and_strategy('anthropic')
       elseif models.copilot then
         -- https://docs.github.com/en/copilot/reference/ai-models/supported-models
-        set_adapter_and_strategy('copilot', 'claude-haiku-4.5')
+        set_adapter_and_strategy('copilot', 'claude-opus-4.5')
       elseif models.openai then
         -- https://platform.openai.com/docs/models
         set_adapter_and_strategy('openai', 'gpt-4.1')

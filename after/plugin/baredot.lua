@@ -1,4 +1,4 @@
-local enabled = ar_config.plugin.custom.baredot.enable
+local enabled = ar.config.plugin.custom.baredot.enable
 
 if not ar or ar.none or not enabled then return end
 

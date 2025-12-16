@@ -184,18 +184,6 @@ return {
     opts = { auto_set_keys = false, notify = false },
   },
   {
-    'hat0uma/prelive.nvim',
-    cond = function() return ar.get_plugin_cond('prelive.nvim', not minimal) end,
-    cmd = {
-      'PreLiveGo',
-      'PreLiveStatus',
-      'PreLiveClose',
-      'PreLiveCloseAll',
-      'PreLiveLog',
-    },
-    opts = {},
-  },
-  {
     -- 'fabridamicelli/cronex.nvim',
     'razak17/cronex.nvim',
     cond = function() return ar.get_plugin_cond('cronex.nvim', not minimal) end,
@@ -241,6 +229,11 @@ return {
     cmd = { 'BreakString', 'SaveString' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function() require('string-breaker').setup() end,
+  },
+  {
+    'AndrewRadev/inline_edit.vim',
+    cond = function() return ar.get_plugin_cond('inline_edit.nvim') end,
+    cmd = { 'InlineEdit' },
   },
   {
     'Kenzo-Wada/boundary.nvim',

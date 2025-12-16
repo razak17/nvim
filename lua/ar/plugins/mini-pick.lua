@@ -34,7 +34,7 @@ local picker_config = {
     return extra({ scope = scope }, {})
   end,
 }
-if ar_config.picker.variant == 'mini.pick' then
+if ar.config.picker.variant == 'mini.pick' then
   ar.pick.register(picker_config)
 end
 
@@ -138,16 +138,16 @@ end
 return {
   'nvim-mini/mini.pick',
   cond = function()
-    local condition = ar_config.picker.files == 'mini.pick'
-      or ar_config.picker.variant == 'mini.pick'
+    local condition = ar.config.picker.files == 'mini.pick'
+      or ar.config.picker.variant == 'mini.pick'
     return ar.get_plugin_cond('mini.pick', condition)
   end,
   keys = function()
     local mappings = {}
-    if ar_config.picker.files == 'mini.pick' then
+    if ar.config.picker.files == 'mini.pick' then
       table.insert(mappings, { '<C-p>', find_files, desc = 'open' })
     end
-    if ar_config.picker.variant == 'mini.pick' then
+    if ar.config.picker.variant == 'mini.pick' then
       -- stylua: ignore
       local picker_mappings = {
         { '<M-space>', b('buffers'), desc = 'buffers' },
@@ -189,7 +189,7 @@ return {
           { '<leader>ly', lsp('type_definition'), desc = 'mini.pick: type definitions' },
         })
         -- stylua: ignore
-        if ar_config.lsp.symbols.enable and ar_config.lsp.symbols.variant == 'picker' then
+        if ar.config.lsp.symbols.enable and ar.config.lsp.symbols.variant == 'picker' then
           ar.list_insert(picker_mappings {
             { '<leader>lsd', lsp('document_symbol'), desc = 'mini.pick: document symbols' },
             { '<leader>lsl', lsp('workspace_symbol_live'), desc = 'mini.pick: live workspace symbols' },
@@ -207,7 +207,7 @@ return {
   config = function(_, opts)
     local picker = require('mini.pick')
 
-    if ar_config.picker.variant == 'mini.pick' then
+    if ar.config.picker.variant == 'mini.pick' then
       vim.ui.select = picker.ui_select
     end
 

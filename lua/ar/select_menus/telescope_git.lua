@@ -10,7 +10,6 @@ local conf = require('telescope.config').values
 local actions = require('telescope.actions')
 local entry_display = require('telescope.pickers.entry_display')
 local strings = require('plenary.strings')
-local Job = require('plenary.job')
 local action_state = require('telescope.actions.state')
 
 local M = {}
@@ -433,6 +432,7 @@ local function telescope_branches_mappings(prompt_bufnr, map)
             .. string.gsub(branch, '^origin/', '')
             .. "'?"
         end
+        actions.close(prompt_bufnr)
         vim.ui.select({ 'Yes', 'No' }, {
           prompt = prompt,
         }, function(choice)
@@ -440,28 +440,24 @@ local function telescope_branches_mappings(prompt_bufnr, map)
           current_picker:delete_selection(function()
             -- remote branch
             if string.match(branch, '^origin/') then
-              Job
-                :new({
-                  command = 'git',
-                  args = {
-                    'push',
-                    'origin',
-                    '--delete',
-                    string.gsub(branch, '^origin/', ''),
-                  },
-                  on_exit = function(j, _) print(vim.inspect(j:result())) end,
-                })
-                :sync()
+              branch = string.gsub(branch, '^origin/', '')
+              vim
+                .system(
+                  { 'git', 'push', 'origin', '--delete', branch },
+                  {},
+                  vim.schedule_wrap(function(res)
+                    if res.code == 0 then print(vim.inspect(res.stdout)) end
+                  end)
+                )
+                :wait()
             else
-              -- local branch
-              Job:new({
-                command = 'git',
-                args = { 'branch', '-D', branch },
-                on_exit = function(j, _)
-                  -- prints the sha of the tip of the deleted branch, useful for a manual undo
-                  print(vim.inspect(j:result()))
-                end,
-              }):sync()
+              vim.system(
+                { 'git', 'branch', '-D', branch },
+                {},
+                vim.schedule_wrap(function(res)
+                  if res.code == 0 then print(vim.inspect(res.stdout)) end
+                end)
+              )
             end
           end)
         end)
@@ -785,13 +781,15 @@ local function telescope_stash_mappings(prompt_bufnr, map)
         local stash_key = action_state.get_selected_entry().value
         local current_picker = action_state.get_current_picker(prompt_bufnr)
         current_picker:delete_selection(function()
-          Job:new({
-            command = 'git',
-            args = { 'stash', 'drop', stash_key },
-            -- on_exit = function(j, return_val)
-            --   print(vim.inspect(j:result(), return_val))
-            -- end,
-          }):sync()
+          vim
+            .system(
+              { 'git', 'stash', 'drop', stash_key },
+              {},
+              vim.schedule_wrap(function(res)
+                if res.code == 0 then print(vim.inspect(res.stdout)) end
+              end)
+            )
+            :wait()
         end)
       end,
       desc = 'drop stash',

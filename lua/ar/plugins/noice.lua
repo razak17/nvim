@@ -1,17 +1,17 @@
 local fn, L = vim.fn, vim.log.levels
 
-local is_cmp = ar_config.completion.variant == 'cmp'
+local is_cmp = ar.config.completion.variant == 'cmp'
 
 return {
   'folke/noice.nvim',
   cond = function()
-    local condition = not ar.plugins.minimal
-      and ar_config.ui.cmdline.variant == 'noice'
+    local condition = ar.config.ui.cmdline.variant == 'noice'
     return ar.get_plugin_cond('noice.nvim', condition)
   end,
   event = 'VeryLazy',
-  lazy = false,
+  -- lazy = false,
   init = function()
+    vim.o.wildmenu = false
     vim.g.whichkey_add_spec({ '<leader><leader>n', group = 'Noice' })
   end,
   -- stylua: ignore
@@ -25,7 +25,7 @@ return {
       { mode = {'i', 'n', 's'}, '<c-f>', function() if not require('noice.lsp').scroll(4) then return '<c-f>' end end, silent = true, expr = true, desc = 'scroll forward' },
       { mode = {'i', 'n', 's'}, '<c-b>', function() if not require('noice.lsp').scroll(-4) then return '<c-b>' end end, silent = true, expr = true, desc = 'scroll backward' },
     })
-    if ar_config.notifier.variant == 'noice' then
+    if ar.config.notifier.variant == 'noice' then
       ar.list_insert(keys, {
         { '<leader>nh', function() require('noice').cmd('history') end, desc = 'noice history' },
       })
@@ -58,11 +58,11 @@ return {
       view = 'mini', -- minimise pattern not found messages
     },
     popupmenu = {
-      enabled = ar_config.completion.variant ~= 'mini.completion',
+      enabled = ar.config.completion.variant ~= 'mini.completion',
       backend = 'nui',
     },
     notify = {
-      enabled = ar_config.notifier.variant == 'noice',
+      enabled = ar.config.notifier.variant == 'noice',
       view = 'notify',
     },
     lsp = {
@@ -81,8 +81,8 @@ return {
       },
       hover = { enabled = true, silent = true },
       progress = {
-        enabled = ar_config.lsp.progress.enable
-          and ar_config.lsp.progress.variant == 'noice'
+        enabled = ar.config.lsp.progress.enable
+          and ar.config.lsp.progress.variant == 'noice'
           and false,
         throttle = 1000 / 1000,
       },
@@ -326,6 +326,64 @@ return {
     -- so clear the messages in this case.
     if vim.o.filetype == 'lazy' then vim.cmd([[messages clear]]) end
 
+    local bg = vim.api.nvim_get_option_value('background', { scope = 'global' })
+    local variant = ar.config.colorscheme.variant
+
+    -- stylua: ignore
+    local overrides = {
+      { NoiceMini = { link = 'Type' } },
+      { NoicePopupBorder = { link = 'FloatTitle' } },
+      { NoiceCmdlinePopupTitleInput = { link = 'FloatTitle' } },
+      { NoiceCmdlinePopupTitleCmdline = { link = 'NoiceCmdlinePopupTitleInput' } },
+      { NoiceCmdlinePopupBorderCalculator = { link = 'NoiceCmdlinePopupTitleInput' } },
+      { NoiceCmdlinePopupTitleHelp = { link = 'NoiceCmdlinePopupTitleInput' } },
+      { NoiceCmdlinePopupTitleFilter = { link = 'NoiceCmdlinePopupTitleInput' } },
+      { NoiceCmdlinePopupTitleSearch = { link = 'NoiceCmdlinePopupTitleInput' } },
+      { NoiceCmdlinePopupTitleIncRename = { link = 'NoiceCmdlinePopupTitleInput' } },
+      { NoiceCmdlinePopupTitleSubstitute = { link = 'NoiceCmdlinePopupTitleInput' } },
+      { NoiceCmdlinePopupTitleCalculator = { link = 'NoiceCmdlinePopupTitleInput' } },
+    }
+
+    if variant == 'fill' then
+      ar.list_insert(overrides, {
+        {
+          NoicePopupBaseGroup = {
+            bg = { from = 'Normal', alter = bg == 'dark' and 0.45 or -0.1 },
+            fg = {
+              from = 'Normal',
+              attr = 'bg',
+              alter = bg == 'dark' and 0.45 or -0.1,
+            },
+          },
+        },
+      })
+    end
+
+    if variant == 'outline' then
+      ar.list_insert(overrides, {
+        { NoicePopupBaseGroup = { link = 'FloatBorder' } },
+      })
+    end
+
+    -- stylua: ignore
+    ar.list_insert(overrides, {
+      { NoicePopupWarnBaseGroup = { link = 'NoicePopupBaseGroup' } },
+      { NoicePopupInfoBaseGroup = { link = 'NoicePopupBaseGroup' } },
+      { NoiceCmdlinePopup = { inherit = 'NoicePopupBaseGroup', fg = { from = 'Normal' } } },
+      { NoiceCmdlinePopupBorder = { link = 'NoicePopupBaseGroup' } },
+      { NoiceCmdlinePopupTitle = { link = 'FloatTitle' } },
+      { NoiceCmdlinePopupBorderCmdline = { link = 'NoicePopupBaseGroup' } },
+      { NoiceCmdlinePopupBorderSearch = { link = 'NoicePopupWarnBaseGroup' } },
+      { NoiceCmdlinePopupBorderFilter = { link = 'NoicePopupWarnBaseGroup' } },
+      { NoiceCmdlinePopupBorderHelp = { link = 'NoicePopupInfoBaseGroup' } },
+      { NoiceCmdlinePopupBorderSubstitute = { link = 'NoicePopupWarnBaseGroup' } },
+      { NoiceCmdlinePopupBorderIncRename = { link = 'NoicePopupWarnBaseGroup' } },
+      { NoiceCmdlinePopupBorderInput = { link = 'NoicePopupBaseGroup' } },
+      { NoiceCmdlinePopupBorderLua = { link = 'NoicePopupBaseGroup' } },
+    })
+
+    ar.highlight.plugin('noice', overrides)
+
     require('noice').setup(opts)
 
     map(
@@ -335,4 +393,5 @@ return {
       { desc = 'redirect cmdline' }
     )
   end,
+  dependencies = { 'MunifTanjim/nui.nvim' },
 }
