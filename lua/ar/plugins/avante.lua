@@ -141,11 +141,8 @@ return {
       end
 
       ar.highlight.plugin('neogit', {
-        theme = {
-          ['onedark'] = {
-            { AvanteInlineHint = { inherit = 'DiagnosticVirtualTextInfo' } },
-          },
-        },
+        { AvanteInlineHint = { inherit = 'DiagnosticVirtualTextInfo' } },
+        { AvanteSidebarWinSeparator = { link = 'FloatBorder' } },
       })
 
       return opts
