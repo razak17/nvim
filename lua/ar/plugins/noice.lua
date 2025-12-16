@@ -328,6 +328,7 @@ return {
 
     local bg = vim.api.nvim_get_option_value('background', { scope = 'global' })
     local variant = ar.config.colorscheme.variant
+    local transparent = ar.config.ui.transparent.enable
 
     -- stylua: ignore
     local overrides = {
@@ -344,7 +345,7 @@ return {
       { NoiceCmdlinePopupTitleCalculator = { link = 'NoiceCmdlinePopupTitleInput' } },
     }
 
-    if variant == 'fill' then
+    if variant == 'fill' and not transparent then
       ar.list_insert(overrides, {
         {
           NoicePopupBaseGroup = {
@@ -359,7 +360,7 @@ return {
       })
     end
 
-    if variant == 'outline' then
+    if variant == 'outline' or transparent then
       ar.list_insert(overrides, {
         { NoicePopupBaseGroup = { link = 'FloatBorder' } },
       })

@@ -49,7 +49,6 @@ return {
       local overrides = {
         { Strict = { link = 'DiffDeleteAlt' } },
         { Dim = { link = 'VertSplit' } },
-        { FloatTitle = { bg = { from = 'FloatTitle', alter = 0.1 } } },
         -- { ['@variable'] = { fg = { from = '@none' } } },
       }
       ar.list_insert(overrides, theming.generate_completion_overrides())
