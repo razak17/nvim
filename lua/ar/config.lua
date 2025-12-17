@@ -577,7 +577,7 @@ local config = {
   shelter = {
     enable = true,
     ---@type ArWhichShelter
-    variant = 'ecolog',
+    variant = 'cloak',
   },
   ui = {
     ---@type ArWhichBorder
