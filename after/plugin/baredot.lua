@@ -22,12 +22,14 @@ local function set_env(enable)
   end
 end
 
-if not ar.is_git_repo() then set_env(true) end
+local enable = not ar.is_git_repo() and not ar.is_git_worktree()
+
+if enable then set_env(true) end
 
 ar.augroup('BaredotLocal', {
   event = { 'DirChanged' },
   desc = 'Baredot: scan for .git',
   command = function()
-    if vim.v.event.scope == 'global' then set_env(not ar.is_git_repo()) end
+    if vim.v.event.scope == 'global' then set_env(enable) end
   end,
 })

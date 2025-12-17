@@ -515,6 +515,11 @@ function ar.is_git_repo()
     or not ar.falsy(vim.b.gitsigns_status_dict)
 end
 
+---@return boolean
+function ar.is_git_worktree()
+  return not ar.falsy(fn.filereadable(fmt('%s/.git', fn.expand('%:p:h'))))
+end
+
 -- Check if git environment variables are set
 ---@return boolean
 function ar.is_git_env() return vim.env.GIT_WORK_TREE and vim.env.GIT_DIR end
