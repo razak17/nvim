@@ -4,6 +4,27 @@ return {
   -- Translate
   --------------------------------------------------------------------------------
   {
+    'acidsugarx/babel.nvim',
+    version = '*',
+    cond = function() return ar.get_plugin_cond('babel.nvim', not minimal) end,
+    cmd = { 'Babel', 'BabelWord' },
+    opts = {
+      display = 'picker', -- "float" or "picker"
+      picker = 'snacks', -- "auto", "telescope", "fzf", "snacks", "mini"
+      target = 'de',
+      float = {
+        border = vim.o.winborder,
+        max_width = 80,
+        max_height = 240,
+      },
+      keymaps = { translate = '<leader>tr', translate_word = '<leader>tw' },
+    },
+    keys = {
+      { '<leader>tr', mode = 'x', desc = 'babel: translate selection' },
+      { '<leader>tw', desc = 'babel: translate word' },
+    },
+  },
+  {
     'potamides/pantran.nvim',
     cond = function() return ar.get_plugin_cond('pantran.nvim', not minimal) end,
     init = function()
