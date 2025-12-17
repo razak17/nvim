@@ -86,10 +86,9 @@ end
 
 local function format()
   local bufnr = api.nvim_get_current_buf()
-  local client = lsp.get_clients({ bufnr = bufnr })[1]
-
-  if is_biome and client.name == 'biome' then
-    biome_format(client, bufnr)
+  if is_biome then
+    local client = lsp.get_clients({ bufnr = bufnr, name = 'biome' })
+    if client then biome_format(client[1], bufnr) end
     return
   end
   if conform then
