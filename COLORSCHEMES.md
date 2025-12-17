@@ -18,6 +18,7 @@
 - catppuccin-macchiato
 - catppuccin-mocha
 - christmas
+- cobalt-neon
 - conifer
 - conifer-lunar
 - conifer-solar

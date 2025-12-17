@@ -57,6 +57,7 @@
 - lang
 - lazydev
 - leetcode
+- live-preview
 - log
 - lsp
 - lsp-code-actions
