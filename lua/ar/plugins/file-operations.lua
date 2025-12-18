@@ -1,4 +1,3 @@
-local coding = ar.plugins.coding
 local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
@@ -33,32 +32,6 @@ return {
         ['Write File With Sudo Permissions'] = 'SudaWrite',
       })
     end,
-  },
-  {
-    'chrisgrieser/nvim-genghis',
-    cond = function() return ar.get_plugin_cond('nvim-genghis', coding) end,
-    event = { 'BufReadPost', 'BufNewFile' },
-    init = function()
-      vim.g.whichkey_add_spec({ '<leader><localleader>f', group = 'Genghis' })
-    end,
-    -- stylua: ignore
-    keys = {
-      { '<leader><localleader>fp', '<cmd>lua require("genghis").copyFilepath()<CR>', desc = 'genghis: yank filepath' },
-      { '<leader><localleader>ff', '<cmd>lua require("genghis").copyFilename()<CR>', desc = 'genghis: yank filename' },
-      { '<leader><localleader>fr', '<cmd>lua require("genghis").renameFile()<CR>', desc = 'genghis: rename file' },
-      { '<leader><localleader>fm', '<cmd>lua require("genghis").moveAndRenameFile()<CR>', desc = 'genghis: move and rename' },
-      { '<leader><localleader>fn', '<cmd>lua require("genghis").createNewFile()<CR>', desc = 'genghis: create new file' },
-      { '<leader><localleader>fD', '<cmd>lua require("genghis").duplicateFile()<CR>', desc = 'genghis: duplicate current file' },
-      {
-        '<leader><localleader>fd',
-        function ()
-          if vim.fn.confirm('Delete file?', '&Yes\n&No') == 1 then
-            require('genghis').trashFile()
-          end
-        end,
-        desc = 'genghis: move to trash',
-      },
-    },
   },
   {
     'bgaillard/readonly.nvim',

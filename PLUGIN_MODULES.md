@@ -34,6 +34,7 @@
 - experiments
 - explorer
 - file-operations
+- file-path
 - fold
 - fun
 - games
