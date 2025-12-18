@@ -341,16 +341,34 @@ function M.display_call_hierarchy()
   })
 
   local make_display = function(entry)
+    local p = entry.path:match('[^/]+/[^/]+$')
     return displayer({
       { entry.name, 'TelescopeResultsIdentifier' },
-      { entry.path:match('[^/]+/[^/]+$'), 'Special' },
+      {
+        string.format('%s:%d', p, entry.lnum),
+        function()
+          return {
+            { { 0, #p }, 'Special' },
+            { { #p, #p + 1 + #tostring(entry.lnum) }, 'Comment' },
+          }
+        end,
+      },
     })
   end
 
   local make_display_nested = function(entry)
+    local p = entry.path:match('[^/]+/[^/]+$')
     return displayer({
       { entry.name, 'TelescopeResultsFunction' },
-      { entry.path:match('[^/]+/[^/]+$'), 'Special' },
+      {
+        string.format('%s:%d', p, entry.lnum),
+        function()
+          return {
+            { { 0, #p }, 'Special' },
+            { { #p, #p + 1 + #tostring(entry.lnum) }, 'Comment' },
+          }
+        end,
+      },
     })
   end
 
