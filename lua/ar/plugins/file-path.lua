@@ -2,11 +2,21 @@ local coding = ar.plugins.coding
 
 return {
   {
+    'ywpkwon/yank-path.nvim',
+    cond = function() return ar.get_plugin_cond('yank-path.nvim') end,
+    cmd = { 'YankPath' },
+    opts = { default_mapping = false },
+    -- stylua: ignore
+    keys = {
+      { '<leader><localleader>fo', '<Cmd>YankPath<CR>', desc = 'yank-path: file path' },
+    },
+  },
+  {
     'chrisgrieser/nvim-genghis',
     cond = function() return ar.get_plugin_cond('nvim-genghis', coding) end,
     event = { 'BufReadPost', 'BufNewFile' },
     init = function()
-      vim.g.whichkey_add_spec({ '<leader><localleader>f', group = 'Genghis' })
+      vim.g.whichkey_add_spec({ '<leader><localleader>f', group = 'Path' })
     end,
     -- stylua: ignore
     keys = {

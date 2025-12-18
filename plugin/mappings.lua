@@ -568,7 +568,7 @@ nnoremap(
 )
 --------------------------------------------------------------------------------
 -- Open in finder
-nnoremap('<leader><localleader>fo', function()
+nnoremap('<leader><localleader>fe', function()
   local file_path = vim.fn.expand('%:p')
   ar.open_in_file_manager(file_path)
 end, { desc = 'open in file manager' })
