@@ -38,6 +38,7 @@ return {
             'TelescopePrompt',
             'minifiles',
             'snacks_picker_input',
+            'fff_input',
           }
           if vim.tbl_contains(ignored_filetypes, vim.bo.filetype) then
             vim.b.minicompletion_disable = true
