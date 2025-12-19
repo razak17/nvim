@@ -646,7 +646,6 @@ end
 -- Ref: https://github.com/CRAG666/dotfiles/blob/main/config/nvim/lua/config/lsp/init.lua
 local lsp_autostop_pending
 ---Automatically stop LSP servers that no longer attach to any buffers
----
 ---  Once `BufDelete` is triggered, wait for 60s before checking and
 ---  stopping servers, in this way the callback will be invoked once
 ---  every 60 seconds at most and can stop multiple clients at once
@@ -928,23 +927,23 @@ diagnostic.handlers.virtual_text = {
   hide = hide_handler,
 }
 
--- local show_signs_handler = diagnostic.handlers.signs.show
--- assert(show_signs_handler)
--- local hide_signs_handler = diagnostic.handlers.signs.hide
--- diagnostic.handlers.signs = {
---   show = function(ns, bufnr, diagnostics, opts)
---     if not ar.config.lsp.signs.enable then return end
---     local max_severity_per_line = vim
---       .iter(diagnostics)
---       :fold({}, function(diag_map, d)
---         local m = diag_map[d.lnum]
---         if not m or d.severity < m.severity then diag_map[d.lnum] = d end
---         return diag_map
---       end)
---     return show_signs_handler(ns, bufnr, vim.tbl_values(max_severity_per_line), opts)
---   end,
---   hide = hide_signs_handler,
--- }
+local show_signs_handler = diagnostic.handlers.signs.show
+assert(show_signs_handler)
+local hide_signs_handler = diagnostic.handlers.signs.hide
+diagnostic.handlers.signs = {
+  show = function(ns, bufnr, diagnostics, opts)
+    if not ar.config.lsp.signs.enable then return end
+    local max_severity_per_line = vim
+      .iter(diagnostics)
+      :fold({}, function(diag_map, d)
+        local m = diag_map[d.lnum]
+        if not m or d.severity < m.severity then diag_map[d.lnum] = d end
+        return diag_map
+      end)
+    return show_signs_handler(ns, bufnr, vim.tbl_values(max_severity_per_line), opts)
+  end,
+  hide = hide_signs_handler,
+}
 
 if not ar.has('noice.nvim') then
   local hover = lsp.buf.hover
