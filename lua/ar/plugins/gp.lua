@@ -208,6 +208,9 @@ return {
       },
       agents = {
         { name = 'CodeClaude-3-5-Haiku', disable = true },
+        { name = 'ChatGPT4o', disable = true },
+        { name = 'ChatGPT4o-mini', disable = true },
+        { name = 'ChatGPT-o3-mini', disable = true },
       },
       default_chat_agent = 'ChatCopilot-claude-opus-4.5',
     }
@@ -240,13 +243,22 @@ return {
       end
     end
     if models.gemini then
-      setup_model({
-        provider = 'googleai',
-        name = 'ChatGemini',
-        model = { model = 'gemini-2.0-flash-001', temperature = 1.1, top_p = 1 },
-        chat = true,
-        command = false,
-      })
+      local gemini_models = {
+        ['gemini-2.0-flash-001'] = {},
+      }
+      for model, config in pairs(gemini_models) do
+        setup_model({
+          provider = 'googleai',
+          name = fmt('ChatGemini-%s', model),
+          model = {
+            model = model,
+            temperature = config.temp or 1.1,
+            top_p = config.top_p or 1,
+          },
+          chat = true,
+          command = false,
+        })
+      end
     end
     if models.claude then
       setup_model({
@@ -262,13 +274,19 @@ return {
       })
     end
     if models.openai then
-      setup_model({
-        provider = 'openai',
-        name = 'ChatGPT4o',
-        model = { model = 'gpt-4o', temperature = 1.1, top_p = 1 },
-        chat = true,
-        command = false,
-      })
+      for model, config in pairs(ar.ai.openai_models) do
+        setup_model({
+          provider = 'openai',
+          name = fmt('ChatGPT-%s', model),
+          model = {
+            model = model,
+            temperature = config.temp or 1.1,
+            top_p = config.top_p or 1,
+          },
+          chat = true,
+          command = false,
+        })
+      end
     end
 
     return opts

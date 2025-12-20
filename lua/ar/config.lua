@@ -224,6 +224,19 @@ local namespace = {
       ['gpt-4o-mini'] = { max_tokens = 12288 },
       ['oswe-vscode-prime'] = {},
     },
+    openai_models = {
+      ['gpt-5.2'] = {},
+      ['gpt-5.1'] = {},
+      ['gpt-5'] = {},
+      ['gpt-5-mini'] = {},
+      ['gpt-5-nano'] = { temp = 1 },
+      ['gpt-4o'] = {},
+      ['gpt-4o-mini'] = {},
+      ['o4-mini'] = {},
+      ['o3-mini'] = {},
+      ['gpt-4'] = {},
+      ['gpt-4.1'] = {},
+    },
   },
   ---@type ArMedia
   media = {
