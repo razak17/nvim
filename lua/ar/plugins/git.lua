@@ -51,6 +51,12 @@ return {
         { NeogitDiffAdd = { bg = { from = 'DiffAdd' } } },
         { NeogitDiffDelete = { bg = { from = 'DiffDelete' } } },
         { NeogitHunkHeader = { inherit = 'FloatTitle' } },
+        { NeogitChangeAdded = { fg = { from = 'DiffAdd' } } },
+        { NeogitChangeModified = { fg = { from = 'DiffChange' } } },
+        { NeogitChangeDeleted = { fg = { from = 'DiffDelete' } } },
+        { NeogitChangeRenamed = { fg = { from = 'Change' } } },
+        { NeogitChangeNewFile = { fg = { from = 'DiffAdd' } } },
+        { NeogitDiffAddHighlight = { fg = { from = 'Normal' } } },
       }
       local github_dark_hl = {
         {
