@@ -1,10 +1,16 @@
+local minimal = ar.plugins.minimal
 local fmt = string.format
+
+local function get_cond(plugin)
+  local cond = not minimal and ar.lsp.enable
+  return function() return ar.get_plugin_cond(plugin, cond) end
+end
 
 return {
   {
     -- 'razak17/glance.nvim',
     'dnlhc/glance.nvim',
-    cond = function() return ar.get_plugin_cond('glance.nvim', ar.lsp.enable) end,
+    cond = get_cond('glance.nvim'),
     cmd = { 'Glance' },
     -- stylua: ignore
     -- keys = {
@@ -31,7 +37,7 @@ return {
   },
   {
     'rmagatti/goto-preview',
-    cond = function() return ar.get_plugin_cond('goto-preview', ar.lsp.enable) end,
+    cond = get_cond('goto-preview'),
     -- stylua: ignore
     keys = {
       { 'gpd', '<Cmd>lua require("goto-preview").goto_preview_definition()<CR>', desc = 'goto preview: definition' },
@@ -48,7 +54,7 @@ return {
   },
   {
     'pechorin/any-jump.vim',
-    cond = function() return ar.get_plugin_cond('any-jump.vim', ar.lsp.enable) end,
+    cond = get_cond('any-jump.vim'),
     cmd = { 'AnyJump', 'AnyJumpArg', 'AnyJumpBack', 'AnyJumpLastResults' },
     init = function()
       vim.g.any_jump_disable_default_keybindings = 1
@@ -76,7 +82,7 @@ return {
   },
   {
     'WilliamHsieh/overlook.nvim',
-    cond = function() return ar.get_plugin_cond('overlook.nvim', ar.lsp.enable) end,
+    cond = get_cond('overlook.nvim'),
     opts = { ui = { border = vim.o.winborder } },
     -- stylua: ignore
     keys = {
