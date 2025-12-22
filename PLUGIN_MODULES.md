@@ -36,6 +36,7 @@
 - file-operations
 - file-path
 - fold
+- ft
 - fun
 - games
 - ghost
