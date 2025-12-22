@@ -36,7 +36,7 @@ return {
       { '<leader>ntp', open_pdf, desc = 'open neovim tips pdf' },
     },
     opts = {
-      user_file = fn.stdpath('config') .. '/neovim_tips/user_tips.md',
+      user_file = fn.stdpath('config') .. '/tips/user_tips.md',
       user_tip_prefix = '[User] ',
       -- 0 = off, 1 = once per day, 2 = every startup
       daily_tip = 2,
