@@ -208,29 +208,14 @@ function M.toggle_virtual_lines()
 end
 
 function M.toggle_diagnostics()
-  local enabled = true
-  if not vim.diagnostic.is_enabled() then
-    enabled = vim.diagnostic.is_enabled()
-  end
-
-  if enabled then
-    vim.diagnostic.enable(false)
-  else
-    vim.diagnostic.enable(true)
-  end
-
+  local enabled = vim.diagnostic.is_enabled()
+  vim.diagnostic.enable(not enabled)
   lsp_notify(string.format('diagnostics %s', bool2str(not enabled)))
 end
 
 function M.toggle_inline_completion()
   local enabled = vim.lsp.inline_completion.is_enabled()
-
-  if enabled then
-    vim.lsp.inline_completion.enable(false)
-  else
-    vim.lsp.inline_completion.enable(true)
-  end
-
+  vim.lsp.inline_completion.enable(not enabled)
   lsp_notify(string.format('inline completion %s', bool2str(not enabled)))
 end
 
