@@ -32,9 +32,9 @@ function M.format_buf()
     'vue',
   }
 
-  local biome_exists = fn.executable('prettier')
-  local prettier_exists = fn.executable('biome')
-  local sql_formatter_exists = fn.executable('biome')
+  local biome_exists = fn.executable('biome')
+  local prettier_exists = fn.executable('prettier')
+  local sql_formatter_exists = fn.executable('prettier')
 
   if ft == 'sql' and ar.falsy(sql_formatter_exists) then
     vim.notify('sql_formatter_exists executable was not found!')
