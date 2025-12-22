@@ -31,17 +31,9 @@ ar.highlight.plugin('NativeStatuslineHl', {
   { StatusLineLspMessages = { fg = { from = 'Comment' } } },
   { StatusLineGitBranchIcon = { fg = { from = 'DiagnosticSignHint' } } },
   { StatusLineVirtualEnv = { fg = { from = 'DiagnosticSignHint' } } },
-  {
-    StatusLineGitDiffAdded = {
-      fg = { from = 'DiffAdd', attr = 'bg', alter = 2.2 },
-    },
-  },
-  {
-    StatusLineGitDiffChanged = {
-      fg = { from = 'DiffChange', attr = 'bg', alter = 2.2 },
-    },
-  },
-  { StatusLineGitDiffRemoved = { fg = { from = 'DiffDelete', attr = 'bg' } } },
+  { StatusLineGitDiffAdded = { fg = { from = 'Added' } } },
+  { StatusLineGitDiffChanged = { fg = { from = 'Changed' } } },
+  { StatusLineGitDiffRemoved = { fg = { from = 'Error' } } },
 })
 
 -- LSP clients attached to buffer
@@ -111,6 +103,7 @@ local function bar() return string.format('%%#%s#▊%%*', vim_mode.hl) end
 --- @return string
 local function python_env()
   local virtual_env = stl.python_env()
+  if virtual_env == '' then return '' end
   return string.format('%%#StatusLineVirtualEnv# %s%%*', virtual_env)
 end
 
