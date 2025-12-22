@@ -257,6 +257,11 @@ local function filetype()
   return string.format(' {ft:%s}', vim.bo.filetype):lower()
 end
 
+local function search_matches()
+  if vim.v.hlsearch == 0 then return '' end
+  return stl.search_matches()
+end
+
 StatusLine = {}
 
 local readeable_filetypes = {
@@ -303,6 +308,7 @@ StatusLine.render = function()
     '%=',
     '%S ',
     lsp_status(),
+    search_matches(),
     lsp_active(),
     python_env(),
     filetype(),

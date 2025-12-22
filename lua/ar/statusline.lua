@@ -751,6 +751,16 @@ function M.autocmds()
   })
 end
 
+function M.search_matches()
+  local ok, search = pcall(fn.searchcount)
+  if ok and search.total then search = search end
+  return string.format(
+    ' %d/%d',
+    search.current,
+    math.min(search.total, search.maxcount)
+  )
+end
+
 function M.word_count() return '' .. tostring(fn.wordcount().words) .. ' words' end
 
 function M.gp_extract_topic_from_buffer(bufnr)

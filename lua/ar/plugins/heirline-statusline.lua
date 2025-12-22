@@ -701,18 +701,7 @@ return {
         flexible = 4,
         {
           condition = function() return v.hlsearch ~= 0 end,
-          init = function(self)
-            local ok, search = pcall(fn.searchcount)
-            if ok and search.total then self.search = search end
-          end,
-          provider = function(self)
-            local search = self.search
-            return string.format(
-              ' %d/%d',
-              search.current,
-              math.min(search.total, search.maxcount)
-            )
-          end,
+          provider = function() return stl.search_matches() end,
         },
         empty_component,
       },
