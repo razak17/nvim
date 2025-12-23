@@ -754,6 +754,7 @@ end
 function M.search_matches()
   local ok, search = pcall(fn.searchcount)
   if ok and search.total then search = search end
+  if search.current == 0 or search.total == 0 then return '' end
   return string.format(
     ' %d/%d',
     search.current,
