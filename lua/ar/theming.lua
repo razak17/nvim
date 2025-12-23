@@ -7,7 +7,7 @@ local function generate_popup_overrides()
     {
       FloatTitle = {
         bg = { from = 'Type', attr = 'fg', alter = -0.45 },
-        fg = { from = 'Normal' },
+        fg = { from = 'CursorLineNr' },
       },
     },
   }
