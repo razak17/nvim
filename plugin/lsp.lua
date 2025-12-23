@@ -476,7 +476,6 @@ local function setup_mappings(client, bufnr)
     { '<leader>l', group = 'LSP', mode = { 'n', 'x' } },
     { '<localleader>l', group = 'LSP', mode = { 'n', 'x' } },
     { '<leader>la', group = 'Code Actions', mode = { 'n', 'x' } },
-    { '<leader>lw', group = 'Workspace', mode = { 'n', 'x' } },
   })
 
   vim.iter(mappings):each(function(m)
