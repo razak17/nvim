@@ -1,6 +1,38 @@
 local models = ar.config.ai.models
 
+local function a(action)
+  return function() require('agentic')[action]() end
+end
+
 return {
+  {
+    'carlos-algms/agentic.nvim',
+    event = 'VeryLazy',
+    cond = function() return ar.get_plugin_cond('agentic.nvim', ar.ai.enable) end,
+    init = function()
+      vim.g.whichkey_add_spec({
+        '<leader>aa',
+        group = 'Agentic',
+        mode = { 'n', 'x' },
+      })
+    end,
+    -- stylua: ignore
+    keys = {
+      { mode = { 'n', 'x', 'i' }, '<leader>aao', a('toggle'), desc = 'agentic: toggle' },
+      { mode = { 'n', 'x' }, '<leader>aac', a('add_selection_or_file_to_context'), desc = 'agentic: add file or selection to context' },
+      { mode = { 'n', 'x' }, '<leader>aaf', a('add_file'), desc = 'agentic: add file to context' },
+      { mode = { 'n', 'x' }, '<leader>aas', a('add_selection'), desc = 'agentic: add selection to context' },
+      { mode = { 'n', 'x', 'i' }, '<leader>aan', a('new_session'), desc = 'agentic: new session' },
+    },
+    opts = { provider = 'opencode-acp' },
+    config = function(_, opts)
+      require('agentic').setup(opts)
+      ar.highlight.plugin(
+        'agentic.nvim',
+        { { AgenticTitle = { link = 'FloatTitle' } } }
+      )
+    end,
+  },
   {
     'kylesnowschwartz/prompt-tower.nvim',
     cond = function()
