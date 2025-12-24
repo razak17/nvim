@@ -68,6 +68,7 @@
 - github_plus
 - glowbeam
 - gruvbox
+- gruvbox-minimal
 - gruvdark
 - gruvdark-light
 - gyokuro

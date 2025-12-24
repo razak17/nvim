@@ -535,6 +535,23 @@ return {
       end,
     },
     {
+      'dybdeskarphet/gruvbox-minimal.nvim',
+      cond = get_cond({ 'gruvbox-minimal' }),
+      priority = get_priority({ 'gruvbox-minimal' }),
+      event = get_event({ 'gruvbox-minimal' }),
+      init = function()
+        theming.apply_overrides('gruvbox-minimal', {
+          { Visual = { bg = { from = 'Visual', alter = -0.3 } } },
+          {
+            WinSeparator = {
+              bg = 'NONE',
+              fg = { from = 'WinSeparator', alter = -0.7 },
+            },
+          },
+        }, true)
+      end,
+    },
+    {
       'jnurmine/Zenburn',
       cond = get_cond({ 'zenburn' }),
       priority = get_priority({ 'zenburn' }),
