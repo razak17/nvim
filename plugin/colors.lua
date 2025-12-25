@@ -191,6 +191,7 @@ local function colorscheme_overrides(colorscheme)
       { DiffDelete = { bg = { from = 'Error', alter = -0.15 } } },
     }),
     ['habamax'] = theming.generate_overrides({
+      { Normal = { bg = { from = 'Normal', alter = -0.3 } } },
       { NormalFloat = { bg = { from = 'Normal', alter = -0.5 } } },
       {
         Visual = {
