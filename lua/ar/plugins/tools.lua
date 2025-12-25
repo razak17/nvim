@@ -149,7 +149,7 @@ return {
           end,
         },
         biome = {
-          condition = function() return not is_biome end,
+          condition = function() return not is_biome or not ar.lsp.enable end,
           require_cwd = true,
         },
         -- https://github.com/mistweaverco/kulala-fmt
