@@ -3,7 +3,7 @@ local api = vim.api
 local M = {}
 
 -- https://github.com/chrisgrieser/.config/blob/main/nvim/after/ftplugin/typescript.lua?plain=1#L36
-function M.add()
+function M.add_async()
   api.nvim_feedkeys('t', 'n', true) -- pass through the trigger char
   local col = api.nvim_win_get_cursor(0)[2]
   local text_before_cursor = api.nvim_get_current_line():sub(col - 3, col)

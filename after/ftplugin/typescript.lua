@@ -15,7 +15,7 @@ ar.add_to_select_menu('command_palette', {
   ['Interface to Type'] = interface_to_type,
 })
 
-map('i', 't', require('ar.ts_async_func').add, { buffer = true })
+map('i', 't', require('ar.ts_async_func').add_async, { buffer = true })
 
 -- tool for exploratory type programming. Extract a type T that can be explored with the LSP hover, K
 map(
