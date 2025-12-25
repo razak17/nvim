@@ -5,6 +5,7 @@ local function a(action)
 end
 
 return {
+  -- FIX: Causes performance issues in insert mode
   {
     'carlos-algms/agentic.nvim',
     event = 'VeryLazy',

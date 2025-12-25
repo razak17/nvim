@@ -554,6 +554,7 @@ local config = {
     override = {},
     disabled = {
       'VectorCode',
+      'agentic.nvim',
       'btw.nvim',
       'cmp-path',
       'conflict.nvim',
