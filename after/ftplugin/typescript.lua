@@ -1,21 +1,24 @@
 vim.bo.textwidth = 100
 vim.opt.spell = true
 
-local interface_to_type = require('ar.ts_interface_to_type').interface_to_type
+ar.add_to_select_menu('command_palette', {
+  ['Interface to Type'] = function()
+    require('ar.ts_interface_to_type').interface_to_type()
+  end,
+})
+
 map(
   'n',
   '<leader><leader>ti',
-  interface_to_type,
+  function() require('ar.ts_interface_to_type').interface_to_type() end,
   { buffer = true, desc = 'interface to type' }
 )
 
-ar.command('InterfaceToType', interface_to_type)
-
 ar.add_to_select_menu('command_palette', {
-  ['Interface to Type'] = interface_to_type,
+  ['Extract Type For K Exploration'] = function()
+    require('ar.ts_extract_type').extract_type()
+  end,
 })
-
-map('i', 't', require('ar.ts_async_func').add_async, { buffer = true })
 
 -- tool for exploratory type programming. Extract a type T that can be explored with the LSP hover, K
 map(
@@ -23,6 +26,19 @@ map(
   '<localleader>lt',
   function() require('ar.ts_extract_type').extract_type() end,
   { buffer = true, desc = 'extract type for K exploration' }
+)
+
+ar.add_to_select_menu('command_palette', {
+  ['Convert Arrow Function'] = function()
+    require('ar.ts_convert_arrow_func').arrow_to_function()
+  end,
+})
+
+map(
+  'i',
+  't',
+  function() require('ar.ts_async_func').add_async() end,
+  { buffer = true, desc = 'add async to function' }
 )
 
 if not ar.lsp.enable then return end
