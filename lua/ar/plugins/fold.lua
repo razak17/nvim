@@ -15,7 +15,7 @@ return {
     end,
     event = 'UIEnter', -- needed for folds to load in time and comments being closed
     opts = {
-      useLspFoldsWithTreesitterFallback = false, -- required for `autoFold`
+      useLspFoldsWithTreesitterFallback = { enabled = false }, -- required for `autoFold`
       foldtext = {
         enabled = true,
         padding = 2,
