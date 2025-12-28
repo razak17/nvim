@@ -84,20 +84,26 @@ local function conform_format(bufnr)
   })
 end
 
-local function format()
-  local bufnr = api.nvim_get_current_buf()
+---@param opts {bufnr: integer, async: boolean, filter: fun(vim.lsp.Client): boolean}
+local function format(opts)
+  opts = opts
+    or {
+      async = opts.async or false,
+      bufnr = opts.bufnr or api.nvim_get_current_buf(),
+    }
+
   if is_biome then
-    local client = lsp.get_clients({ bufnr = bufnr, name = 'biome' })
-    if client and client[1] then biome_format(client[1], bufnr) end
+    local client = lsp.get_clients({ bufnr = opts.bufnr, name = 'biome' })
+    if client and client[1] then biome_format(client[1], opts.bufnr) end
     return
   end
   if conform then
-    conform_format(bufnr)
+    conform_format(opts.bufnr)
     return
   end
   lsp.buf.format({
-    bufnr = bufnr,
-    async = false,
+    bufnr = opts.bufnr,
+    async = opts.async,
     filter = formatting_filter,
   })
 end
