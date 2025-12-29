@@ -52,7 +52,7 @@ local function find_files()
     format = 'file',
     show_empty = true,
     supports_live = true,
-    layout = { preview = 'main', cycle = true, preset = 'my_select' },
+    layout = { preview = 'main', cycle = true, preset = 'centered_no_preview' },
   })()
 end
 
@@ -87,7 +87,7 @@ local function buffers()
     hidden = false,
     unloaded = true,
     sort_lastused = true,
-    layout = { preview = 'main', preset = 'my_select' },
+    layout = { preview = 'main', preset = 'centered_no_preview' },
     win = {
       input = {
         keys = {
@@ -358,7 +358,7 @@ return {
               preset = 'big_preview',
               preview = false,
             },
-            my_select = {
+            centered_no_preview = {
               layout = {
                 backdrop = false,
                 width = 0.5,
@@ -371,12 +371,6 @@ return {
                 title_pos = 'center',
                 { win = 'input', height = 1, border = 'bottom' },
                 { win = 'list', border = 'none' },
-                {
-                  win = 'preview',
-                  title = '{preview}',
-                  height = 0.4,
-                  border = 'top',
-                },
               },
             },
             right_sidebar = {
@@ -386,7 +380,7 @@ return {
           },
           prompt = fmt('%s ', ar.ui.icons.misc.chevron_right),
           sources = {
-            buffers = { layout = { preset = 'my_select' } },
+            buffers = { layout = { preset = 'centered_no_preview' } },
             colorschemes = { layout = { max_height = 8, preset = 'ivy' } },
             explorer = {
               hidden = true,
@@ -717,7 +711,7 @@ return {
               },
             },
             select = {
-              layout = { preview = false, preset = 'my_select' },
+              layout = { preview = false, preset = 'centered_no_preview' },
             },
           },
           debug = { scores = false },
