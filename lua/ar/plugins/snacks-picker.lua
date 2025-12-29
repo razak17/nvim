@@ -358,39 +358,6 @@ return {
               preset = 'big_preview',
               preview = false,
             },
-            my_telescope = {
-              reverse = false,
-              layout = {
-                box = 'horizontal',
-                backdrop = false,
-                height = ar.config.picker.win.fullscreen and 50 or 0.9,
-                width = ar.config.picker.win.fullscreen and 400 or 0.9,
-                border = 'none',
-                {
-                  box = 'vertical',
-                  {
-                    win = 'input',
-                    height = 1,
-                    border = border_style,
-                    title = '{title} {live} {flags}',
-                    title_pos = 'center',
-                  },
-                  {
-                    win = 'list',
-                    title = ' Results ',
-                    title_pos = 'center',
-                    border = border_style,
-                  },
-                },
-                {
-                  win = 'preview',
-                  title = '{preview:Preview}',
-                  width = 0.6,
-                  border = border_style,
-                  title_pos = 'center',
-                },
-              },
-            },
             my_select = {
               layout = {
                 backdrop = false,
