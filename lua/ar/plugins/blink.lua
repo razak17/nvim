@@ -227,6 +227,7 @@ return {
             enabled = ar.lsp.enable,
             name = '[LSP]',
             score_offset = 35,
+            async = true, -- critical
           },
           path = {
             name = '[PATH]',
