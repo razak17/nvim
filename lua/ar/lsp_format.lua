@@ -88,8 +88,8 @@ end
 local function format(opts)
   opts = opts
     or {
-      async = opts.async or false,
-      bufnr = opts.bufnr or api.nvim_get_current_buf(),
+      async = opts and opts.async or false,
+      bufnr = opts and opts.bufnr or api.nvim_get_current_buf(),
     }
 
   if is_biome then
