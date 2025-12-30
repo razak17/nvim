@@ -4,190 +4,192 @@ RV_CONFIG_DIR="${RV_CONFIG_DIR:-"$XDG_CONFIG_HOME/rvim"}"
 RV_DATA_DIR="${RV_DATA_DIR:-"$XDG_DATA_HOME/rvim"}"
 
 asktoinstallgit() {
-	echo "git not found, please install git" && exit
+  echo "git not found, please install git" && exit
 }
 
 asktoinstallgo() {
-	echo "Please install go before continuing with install" && exit
+  echo "Please install go before continuing with install" && exit
 }
 
 asktoinstallnode() {
-	echo "Please install node before continuing with install" && exit
+  echo "Please install node before continuing with install" && exit
 }
 
 asktoinstallpip() {
-	echo "Please install pip3 before continuing with install" && exit
+  echo "Please install pip3 before continuing with install" && exit
 }
 
 moveoldrvim() {
-	echo "rvim not installed"
-	echo "Please remove '$RV_CONFIG_DIR' path before installing" && exit
+  echo "rvim not installed"
+  echo "Please remove '$RV_CONFIG_DIR' path before installing" && exit
 }
 
 createDirs() {
-	mkdir -p "$HOME/.dots"
-	mkdir -p "$HOME/.cache/rvim"
-	mkdir -p "$HOME/.cache/rvim/undodir"
-	mkdir -p "$HOME/.local/share/rvim"
-	mkdir -p "$HOME/.local/share/rvim/site"
-	mkdir -p "$HOME/.local/share/rvim/site/spell"
-	mkdir -p "$HOME/.local/share/rvim/site/prompts"
+  mkdir -p "$HOME/.dots"
+  mkdir -p "$HOME/.cache/rvim"
+  mkdir -p "$HOME/.cache/rvim/undodir"
+  mkdir -p "$HOME/.local/share/rvim"
+  mkdir -p "$HOME/.local/share/rvim/site"
+  mkdir -p "$HOME/.local/share/rvim/site/spell"
+  mkdir -p "$HOME/.local/share/rvim/site/prompts"
 }
 
 setup_venv() {
-	if [ ! -d "$RV_DATA_DIR/venv" ]; then
-		python -m venv "$RV_DATA_DIR/venv"
-	fi
+  if [ ! -d "$RV_DATA_DIR/venv" ]; then
+    python -m venv "$RV_DATA_DIR/venv"
+  fi
 }
 
 python_packages() {
-	"$RV_DATA_DIR/venv/bin/python3" -m pip install -U setuptools neovim-remote python-dotenv requests pynvim==0.5.0 prompt-toolkit
+  "$RV_DATA_DIR/venv/bin/python3" -m pip install -U setuptools neovim-remote python-dotenv requests pynvim==0.5.0 prompt-toolkit
 }
 
 npm_deps() {
-	pkg_manager="$1"
-	if [ "$pkg_manager" = "npm" ]; then
-		npm install -g tree-sitter-cli neovim five-server
-	fi
-	if [ "$pkg_manager" = "pnpm" ]; then
-		pnpm install -g tree-sitter-cli neovim five-server
-	fi
-	if [ "$pkg_manager" = "yarn" ]; then
-		yarn global add tree-sitter-cli neovim five-server
-	fi
+  pkg_manager="$1"
+  if [ "$pkg_manager" = "npm" ]; then
+    npm install -g tree-sitter-cli neovim five-server
+  fi
+  if [ "$pkg_manager" = "pnpm" ]; then
+    pnpm install -g tree-sitter-cli neovim five-server
+  fi
+  if [ "$pkg_manager" = "yarn" ]; then
+    yarn global add tree-sitter-cli neovim five-server
+  fi
 }
 
 archExtra() {
-	sudo pacman -S ripgrep xsel fd lazygit unzip curl sqlite3 btop glow curl ueberzugpp freeze
+  sudo pacman -S ripgrep xsel fd lazygit unzip curl sqlite3 btop glow curl ueberzugpp freeze
 }
 
 rocks() {
-	luarocks --local --lua-version=5.1 install magick
+  luarocks --local --lua-version=5.1 install magick
 }
 
 get_prompts() {
-	mkdir -p "$HOME/.local/share/rvim/site/prompts"
-	curl -o "$RV_DATA_DIR/site/prompts/prompts.csv" https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv
+  mkdir -p "$HOME/.local/share/rvim/site/prompts"
+  curl -o "$RV_DATA_DIR/site/prompts/prompts.csv" https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv
 }
 
 importRvim() {
-	echo "Cloning rVim configuration"
-	git clone "https://github.com/razak17/nvim" "$RV_CONFIG_DIR"
+  echo "Cloning rVim configuration"
+  git clone "https://github.com/razak17/nvim" "$RV_CONFIG_DIR"
 }
 
 validate_node_installation() {
-	pkg_manager="$1"
+  pkg_manager="$1"
 
-	if [ "$pkg_manager" = "npm" ]; then
-		manager_home="$(npm config get prefix 2>/dev/null)"
-	fi
-	if [ "$pkg_manager" = "pnpm" ]; then
-		manager_home="$(pnpm config get prefix 2>/dev/null)"
-	fi
-	if [ "$pkg_manager" = "yarn" ]; then
-		manager_home="$(yarn global bin 2>/dev/null)"
-	fi
+  if [ "$pkg_manager" = "npm" ]; then
+    manager_home="$(npm config get prefix 2>/dev/null)"
+  fi
+  if [ "$pkg_manager" = "pnpm" ]; then
+    manager_home="$(pnpm config get prefix 2>/dev/null)"
+  fi
+  if [ "$pkg_manager" = "yarn" ]; then
+    manager_home="$(yarn global bin 2>/dev/null)"
+  fi
 
-	if [ ! -d "$manager_home" ] || [ ! -w "$manager_home" ]; then
-		echo "[$pkg_manager] not found."
-		return 1
-	fi
+  if [ ! -d "$manager_home" ] || [ ! -w "$manager_home" ]; then
+    echo "[$pkg_manager] not found."
+    return 1
+  fi
 
-	return 0
+  return 0
 }
 
 install_nodejs_deps() {
-	printf "Which package manager would you like to use (pnpm, yarn, npm)? "
-	 pkg_managers=("pnpm" "yarn" "npm")
+  printf "Which package manager would you like to use (pnpm, yarn, npm)? "
+  pkg_managers=("pnpm" "yarn" "npm")
 
-	read -r answer
-	 for pkg_manager in "${pkg_managers[@]}"; do
-	   if [ "$answer" = "$pkg_manager" ]; then
-	     if validate_node_installation "$pkg_manager"; then
-	       echo "Proceed to Install"
-	       npm_deps "$pkg_manager"
-	       return
-	     fi
-	     return
-	   fi
-	 done
-	echo "Unknown package manager"
+  read -r answer
+  for pkg_manager in "${pkg_managers[@]}"; do
+    if [ "$answer" = "$pkg_manager" ]; then
+      if validate_node_installation "$pkg_manager"; then
+        echo "Proceed to Install"
+        npm_deps "$pkg_manager"
+        return
+      fi
+      return
+    fi
+  done
+  echo "Unknown package manager"
 }
 
 generate_dict() {
-	dicwords="$RV_DATA_DIR/site/spell/en.dict"
-	if [ ! -x "$(command -v aspell)" ]; then
-		echo "aspell not found, please install aspell and aspell-en" && exit
-	fi
-	if [ -e "$dicwords" ]; then
-		echo "en.dict already exists, skipping..." && exit
-	fi
-	echo 'Generating en.dict...'
-	aspell -d en dump master | aspell -l en expand >"$dicwords"
-	echo "done."
+  dicwords="$RV_DATA_DIR/site/spell/en.dict"
+  if [ ! -x "$(command -v aspell)" ]; then
+    echo "aspell not found, please install aspell and aspell-en" && exit
+  fi
+  if [ -e "$dicwords" ]; then
+    echo "en.dict already exists, skipping..." && exit
+  fi
+  echo 'Generating en.dict...'
+  aspell -d en dump master | aspell -l en expand >"$dicwords"
+  echo "done."
 }
 
 install_deps() {
-	printf "Would you like to install node packages now (y/n)? "
-	read -r answer
-	[ "$answer" != "${answer#[Yy]}" ] && install_nodejs_deps
+  printf "Would you like to install node packages now (y/n)? "
+  read -r answer
+  [ "$answer" != "${answer#[Yy]}" ] && install_nodejs_deps
 
-	printf "Would you like to install extra arch packages now (y/n)? "
-	read -r answer
-	[ "$answer" != "${answer#[Yy]}" ] && archExtra
+  printf "Would you like to install extra arch packages now (y/n)? "
+  read -r answer
+  [ "$answer" != "${answer#[Yy]}" ] && archExtra
 
-	printf "Would you like to install luarocks packages now (y/n)? "
-	read -r answer
-	[ "$answer" != "${answer#[Yy]}" ] && rocks
+  printf "Would you like to install luarocks packages now (y/n)? "
+  read -r answer
+  [ "$answer" != "${answer#[Yy]}" ] && rocks
 
-	printf "Would you like to initialize python now (y/n)? "
-	read -r answer
-	[ "$answer" != "${answer#[Yy]}" ] && pythonPackages
+  printf "Would you like to initialize python now (y/n)? "
+  read -r answer
+  [ "$answer" != "${answer#[Yy]}" ] && pythonPackages
 
-	printf "Would you like to download chat gpt prompts now (y/n)? "
-	read -r answer
-	[ "$answer" != "${answer#[Yy]}" ] && get_prompts
+  printf "Would you like to download chat gpt prompts now (y/n)? "
+  read -r answer
+  [ "$answer" != "${answer#[Yy]}" ] && get_prompts
 }
 
 clone_config() {
-	(command -v git >/dev/null && echo "git installed, moving on...") || asktoinstallgit
+  (command -v git >/dev/null && echo "git installed, moving on...") || asktoinstallgit
 
-	(command -v go >/dev/null && echo "go installed, moving on...") || asktoinstallgo
+  (command -v go >/dev/null && echo "go installed, moving on...") || asktoinstallgo
 
-	(command -v pip >/dev/null && echo "pip installed, moving on...") || asktoinstallpip
+  (command -v pip >/dev/null && echo "pip installed, moving on...") || asktoinstallpip
 
-	# check existing config
-	[ -d "$RV_CONFIG_DIR" ] && moveoldrvim
+  # check existing config
+  [ -d "$RV_CONFIG_DIR" ] && moveoldrvim
 
-	echo "Creating default directories"
-	createDirs
+  echo "Creating default directories"
+  createDirs
 
-	echo "Installing rvim"
-	importRvim
+  echo "Installing rvim"
+  importRvim
 
-	echo "Creating virtualenv"
-	setup_venv
+  echo "Creating virtualenv"
+  setup_venv
 
-	sudo cp --force "$RV_CONFIG_DIR/bin/rvim" "$HOME/.local/bin"
+  [ -e "$HOME/.local/bin/rvim" ] && sudo rm "$HOME/.local/bin/rvim"
+
+  ln -s "$RV_CONFIG_DIR/bin/rvim" "$HOME/.local/bin/rvim"
 }
 
 while [ "$#" -gt 0 ]; do
-	curr=$1
-	shift
+  curr=$1
+  shift
 
-	case "$curr" in
-	-venv) setup_venv ;;
-	-py) python_packages ;;
-	-npm) install_nodejs_deps ;;
-	-deps) install_deps ;;
-	-dict) generate_dict ;;
-	-rocks) rocks ;;
-	-prompts) get_prompts ;;
-	*--all*)
-		clone_config
-		install_deps
-		generate_dict
-		;;
-	*) echo "Unavailable command... $curr" ;;
-	esac
+  case "$curr" in
+  -venv) setup_venv ;;
+  -py) python_packages ;;
+  -npm) install_nodejs_deps ;;
+  -deps) install_deps ;;
+  -dict) generate_dict ;;
+  -rocks) rocks ;;
+  -prompts) get_prompts ;;
+  *--all*)
+    clone_config
+    install_deps
+    generate_dict
+    ;;
+  *) echo "Unavailable command... $curr" ;;
+  esac
 done
