@@ -51,7 +51,7 @@ local function find_files()
     format = 'file',
     show_empty = true,
     supports_live = true,
-    layout = { preview = 'main', preset = 'centered_no_preview' },
+    layout = { preview = 'main', preset = 'centered_with_main_preview' },
   })()
 end
 
@@ -86,7 +86,7 @@ local function buffers()
     hidden = false,
     unloaded = true,
     sort_lastused = true,
-    layout = { preview = 'main', preset = 'centered_no_preview' },
+    layout = { preview = 'main', preset = 'centered_with_main_preview' },
     win = {
       input = {
         keys = {
@@ -357,7 +357,7 @@ return {
               preset = 'big_preview',
               preview = false,
             },
-            centered_no_preview = {
+            centered_with_main_preview = {
               preview = 'main',
               layout = {
                 backdrop = false,
@@ -386,7 +386,7 @@ return {
           },
           prompt = fmt('%s ', ar.ui.icons.misc.chevron_right),
           sources = {
-            buffers = { layout = { preset = 'centered_no_preview' } },
+            buffers = { layout = { preset = 'centered_with_main_preview' } },
             colorschemes = { layout = { max_height = 8, preset = 'ivy' } },
             explorer = {
               hidden = true,
@@ -717,7 +717,10 @@ return {
               },
             },
             select = {
-              layout = { preview = false, preset = 'centered_no_preview' },
+              layout = {
+                preview = false,
+                preset = 'centered_with_main_preview',
+              },
             },
           },
           debug = { scores = false },
