@@ -35,7 +35,6 @@ local function p(source, opts)
   if source == 'files' then
     opts.layout = vim.tbl_extend('keep', opts.layout or {}, {
       preview = show_preview,
-      cycle = true,
     })
   end
   return function() Snacks.picker[source](opts) end
@@ -52,13 +51,13 @@ local function find_files()
     format = 'file',
     show_empty = true,
     supports_live = true,
-    layout = { preview = 'main', cycle = true, preset = 'centered_no_preview' },
+    layout = { preview = 'main', preset = 'centered_no_preview' },
   })()
 end
 
 local function grep_string()
   p('grep', {
-    layout = { preview = 'main', cycle = true, preset = 'ivy' },
+    layout = { preview = 'main', preset = 'ivy' },
   })()
 end
 
@@ -67,14 +66,14 @@ local function visual_grep_string()
   vim.cmd('noau normal! "vy"')
   local text = fn.getreg('v')
   p('grep', {
-    layout = { preview = 'main', cycle = true, preset = 'ivy' },
+    layout = { preview = 'main', preset = 'ivy' },
     search = text,
   })()
 end
 
 local function grep_word()
   p('grep_word', {
-    layout = { preview = 'main', cycle = true, preset = 'ivy' },
+    layout = { preview = 'main', preset = 'ivy' },
   })()
 end
 
@@ -359,6 +358,7 @@ return {
               preview = false,
             },
             centered_no_preview = {
+              preview = 'main',
               layout = {
                 backdrop = false,
                 width = 0.5,
@@ -371,6 +371,12 @@ return {
                 title_pos = 'center',
                 { win = 'input', height = 1, border = 'bottom' },
                 { win = 'list', border = 'none' },
+                {
+                  win = 'preview',
+                  title = '{preview}',
+                  height = 0.4,
+                  border = 'top',
+                },
               },
             },
             right_sidebar = {
