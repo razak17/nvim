@@ -357,6 +357,31 @@ return {
               preset = 'big_preview',
               preview = false,
             },
+            dropdown_with_preview = {
+              layout = {
+                backdrop = false,
+                row = 1,
+                width = ar.config.picker.win.fullscreen and 0.99 or 0.4,
+                min_width = 80,
+                height = ar.config.picker.win.fullscreen and 0.99 or 0.8,
+                border = 'none',
+                box = 'vertical',
+                {
+                  win = 'preview',
+                  title = '{preview}',
+                  height = 0.55,
+                  border = true,
+                },
+                {
+                  box = 'vertical',
+                  border = true,
+                  title = '{title} {live} {flags}',
+                  title_pos = 'center',
+                  { win = 'input', height = 1, border = 'bottom' },
+                  { win = 'list', border = 'none' },
+                },
+              },
+            },
             centered_with_main_preview = {
               preview = 'main',
               layout = {
