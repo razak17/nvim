@@ -251,5 +251,18 @@ return {
         file_history_panel = { q = '<Cmd>DiffviewClose<CR>' },
       },
     },
+    config = function(_, opts)
+      ar.highlight.plugin('diffview', {
+        {
+          DiffviewDiffText = {
+            bg = { from = 'DiffDelete' },
+            fg = { from = 'DiffDelete' },
+            reverse = false,
+          },
+        },
+      })
+
+      require('diffview').setup(opts)
+    end,
   },
 }
