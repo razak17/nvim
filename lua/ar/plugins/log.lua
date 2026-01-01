@@ -89,6 +89,7 @@ return {
   },
   {
     'andrewferrier/debugprint.nvim',
+    event = 'VeryLazy',
     cond = function() return ar.get_plugin_cond('debugprint.nvim') end,
     cmd = { 'Debugprint' },
     -- stylua: ignore
@@ -102,6 +103,7 @@ return {
       'g?x',
     },
     opts = {
+      highlight_lines = true, -- Only works when plugin is not lazy-loaded
       keymaps = {
         normal = {
           plain_below = 'g?p',
