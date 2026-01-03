@@ -41,6 +41,7 @@ return {
             'Config Change Detected',
             'Executing query',
             'Done after',
+            'Failed to watch'
           }
 
           for _, banned in ipairs(ignored_messages) do
