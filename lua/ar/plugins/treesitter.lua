@@ -171,11 +171,12 @@ return {
         ar.augroup('ar_treesitter', {
           event = 'FileType',
           command = function(ev)
+            local P = require('nvim-treesitter.parsers')
             local parser_name = vim.treesitter.language.get_lang(ev.match)
             if not parser_name then return end
 
             -- auto install
-            if not ts.have(ev.match) then
+            if P[ev.match] ~= nil and not ts.have(ev.match) then
               ts.ensure_treesitter_cli(function()
                 TS.install({ parser_name }, { summary = true }):await(function()
                   ts.get_installed(true) -- refresh the installed langs
