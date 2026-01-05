@@ -57,9 +57,7 @@ local function paste_image_from_clipboard()
   if pasted_image then
     cmd('update')
     print('Image pasted and file saved')
-    if ar.has('image.nvim') then
-      cmd([[lua require("image").clear()]])
-    end
+    if ar.has('image.nvim') then cmd([[lua require("image").clear()]]) end
   else
     print('No image pasted. File not updated.')
   end

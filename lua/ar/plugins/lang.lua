@@ -62,9 +62,7 @@ return {
   },
   {
     'razak17/package-info.nvim',
-    cond = function()
-      return ar.get_plugin_cond('package-info.nvim')
-    end,
+    cond = function() return ar.get_plugin_cond('package-info.nvim') end,
     cmd = {
       'PackageInfoChangeVersion',
       'PackageInfoDelete',

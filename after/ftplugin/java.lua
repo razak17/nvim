@@ -1,8 +1,4 @@
-if
-  not ar.plugins.enable
-  or ar.plugins.minimal
-  or not ar.has('nvim-jdtls')
-then
+if not ar.plugins.enable or ar.plugins.minimal or not ar.has('nvim-jdtls') then
   return
 end
 

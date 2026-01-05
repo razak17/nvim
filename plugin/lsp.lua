@@ -939,7 +939,12 @@ diagnostic.handlers.signs = {
         if not m or d.severity < m.severity then diag_map[d.lnum] = d end
         return diag_map
       end)
-    return show_signs_handler(ns, bufnr, vim.tbl_values(max_severity_per_line), opts)
+    return show_signs_handler(
+      ns,
+      bufnr,
+      vim.tbl_values(max_severity_per_line),
+      opts
+    )
   end,
   hide = hide_signs_handler,
 }

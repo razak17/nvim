@@ -9,7 +9,7 @@ local fn = vim.fn
 local ignored_filetypes = {
   'NeogitCommitMessage',
   'gitcommit',
-  'qf'
+  'qf',
 }
 
 local function motion(key, back_key)
