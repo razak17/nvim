@@ -194,21 +194,6 @@ return {
           command = [[setlocal omnifunc=vim_dadbod_completion#omni]],
         }, {
           event = { 'FileType' },
-          pattern = { 'sql', 'mysql', 'plsql' },
-          command = function()
-            vim.schedule(
-              function()
-                require('cmp').setup.buffer({
-                  sources = {
-                    { name = 'vim-dadbod-completion' },
-                    { name = 'buffer' },
-                  },
-                })
-              end
-            )
-          end,
-        }, {
-          event = { 'FileType' },
           pattern = { 'dbout' },
           command = function() vim.api.nvim_win_set_height(0, 40) end,
         })
@@ -233,6 +218,22 @@ return {
     opts = function(_, opts)
       vim.g.cmp_add_source(opts, {
         menu = { ['vim-dadbod-completion'] = '[DB]' },
+      })
+      ar.augroup('dad-bod-cmp', {
+        event = { 'FileType' },
+        pattern = { 'sql', 'mysql', 'plsql' },
+        command = function()
+          vim.schedule(
+            function()
+              require('cmp').setup.buffer({
+                sources = {
+                  { name = 'vim-dadbod-completion' },
+                  { name = 'buffer' },
+                },
+              })
+            end
+          )
+        end,
       })
     end,
   },
