@@ -481,35 +481,4 @@ return {
         or 'snacks',
     },
   },
-  {
-    'dmtrKovalenko/fff.nvim',
-    cond = function() return ar.get_plugin_cond('fff.nvim') end,
-    build = 'cargo build --release',
-    cmd = { 'FFFFind' },
-    keys = function()
-      local function fff_find() require('fff').find_files() end
-      local keys = {
-        { 'f/', fff_find, desc = 'Open file picker' },
-      }
-      if ar.config.picker.files == 'fff' then
-        table.insert(keys, { '<C-p>', fff_find, desc = 'fff: find files' })
-      end
-      return keys
-    end,
-    opts = {
-      prompt = '🦆 ',
-      hl = { normal = 'NormalFloat' },
-      layout = {
-        height = ar.config.picker.win.fullscreen and 1.0 or 0.9,
-        width = ar.config.picker.win.fullscreen and 1.0 or 0.9,
-        prompt_position = 'top',
-        preview_position = 'right', -- or 'left', 'right', 'top', 'bottom'
-        preview_size = 0.5,
-      },
-      preview = {
-        enabled = ar.config.picker.win.show_preview,
-        line_numbers = true,
-      },
-    },
-  },
 }
