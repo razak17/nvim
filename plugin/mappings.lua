@@ -126,40 +126,6 @@ nnoremap(
   { desc = 'search word in workspace' }
 )
 xnoremap('/', '<esc>/\\%V', { desc = 'search inside selection' }) -- `:h /\%V`
---------------------------------------------------------------------------------
--- Delimiters
---------------------------------------------------------------------------------
--- TLDR: Conditionally modify character at end of line (add, remove or modify)
----@param character string
----@return function
-local function modify_line_end_delimiter(character)
-  local delimiters = { ',', ';' }
-  return function()
-    if not vim.bo.modifiable then return end
-    local line = api.nvim_get_current_line()
-    local last_char = line:sub(-1)
-    if last_char == character then
-      api.nvim_set_current_line(line:sub(1, #line - 1))
-      return
-    end
-    if vim.tbl_contains(delimiters, last_char) then
-      api.nvim_set_current_line(line:sub(1, #line - 1) .. character)
-      return
-    end
-    api.nvim_set_current_line(line .. character)
-  end
-end
-
-nnoremap(
-  '<localleader>,',
-  modify_line_end_delimiter(','),
-  { desc = 'append comma' }
-)
-nnoremap(
-  '<localleader>;',
-  modify_line_end_delimiter(';'),
-  { desc = 'append semi colon' }
-)
 -- @see: https://castel.dev/post/lecture-notes-1/#correcting-spelling-mistakes-on-the-fly
 inoremap(
   '<C-s>',
@@ -203,39 +169,6 @@ nnoremap('<C-l>', '<C-w>l')
 -----------------------------------------------------------------------------//
 -- Quick find/replace
 -----------------------------------------------------------------------------//
-local function replace_word(transform_fn, prompt_suffix, edit)
-  return function()
-    local value = fn.expand('<cword>')
-    local default_value = transform_fn(value)
-    vim.ui.input({
-      prompt = 'Replace word with ' .. prompt_suffix,
-      default = edit and default_value or '',
-    }, function(new_value)
-      if not new_value then return end
-      vim.cmd('%s/' .. value .. '/' .. transform_fn(new_value) .. '/gI')
-    end)
-  end
-end
-nnoremap(
-  '<leader>[[',
-  replace_word(function(x) return x end, ''),
-  { desc = 'replace word in file' }
-)
-nnoremap(
-  '<leader>[e',
-  replace_word(function(x) return x end, '', true),
-  { desc = 'edit word in file' }
-)
-nnoremap(
-  '<leader>[u',
-  replace_word(fn.toupper, 'UPPERCASE'),
-  { desc = 'replace word in file with UPPERCASE' }
-)
-nnoremap(
-  '<leader>[l',
-  replace_word(fn.tolower, 'lowercase'),
-  { desc = 'replace word in file with lowercase' }
-)
 vnoremap('<leader>[[', [["zy:%s/<C-r><C-o>"/]], { desc = 'replace all' })
 --------------------------------------------------------------------------------
 -- Visual shifting (does not exit Visual mode)
@@ -248,22 +181,6 @@ nnoremap(
   [[:e <C-R>=expand("%:p:h") . "/" <CR>]],
   { desc = 'open file' }
 )
--- create a new file in the same directory
-local function new_file_in_current_dir()
-  vim.ui.input({
-    prompt = 'New file name: ',
-    default = '',
-    completion = 'file',
-  }, function(file)
-    if not file or file == '' then return end
-    vim.defer_fn(function()
-      ar.open_with_window_picker(
-        function() vim.cmd('e ' .. fn.expand('%:p:h') .. '/' .. file) end
-      )
-    end, 100)
-  end)
-end
-nnoremap('<leader>nf', new_file_in_current_dir, { desc = 'create new file' })
 --------------------------------------------------------------------------------
 -- Make the file you run the command on, executable, so you don't have to go out to the command line
 -- https://github.com/linkarzu/dotfiles-latest/blob/66c7304d34c713e8c7d6066d924ac2c3a9c0c9e8/neovim/neobean/lua/config/keymaps.lua?plain=1#L131
@@ -305,20 +222,6 @@ cnoremap('<M-f>', function()
 end, { expr = true })
 cnoremap('<C-b>', '<Left>')
 cnoremap('<C-d>', '<Del>')
-
--- smooth searching, allow tabbing between search results similar to using <c-g>
--- or <c-t> the main difference being tab is easier to hit and remapping those keys
--- to these would swallow up a tab mapping
--- UPDATE: Pick a key you don’t type normally (commonly Ctrl-Z) as wildcharm.
--- Return that key from your expr mapping when cmdtype is ':'.
-vim.opt.wildcharm = 26 -- Ctrl-Z
-local function search(direction_key, default)
-  local c_type = fn.getcmdtype()
-  return (c_type == '/' or c_type == '?') and fmt('<CR>%s<C-r>/', direction_key)
-    or default
-end
-cnoremap('<Tab>', function() return search('/', '<C-z>') end, { expr = true })
-cnoremap('<S-Tab>', function() return search('?', '<C-z>') end, { expr = true })
 -- insert path of current file into a command
 cnoremap(';p', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 cnoremap(';;', "<C-r>=fnameescape(expand('%:h'))<cr>/")
@@ -445,38 +348,6 @@ nmap(
 -- Escape
 nnoremap('<C-c>', '<Esc>')
 --------------------------------------------------------------------------------
--- Web Search
---------------------------------------------------------------------------------
-function ar.mappings.ddg(path)
-  ar.web_search(path, 'https://html.duckduckgo.com/html?q=')
-end
-function ar.mappings.gh(path)
-  ar.web_search(path, 'https://github.com/search?q=')
-end
-
--- Search DuckDuckGo
-nnoremap(
-  '<localleader>?',
-  [[:lua ar.mappings.ddg(vim.fn.expand("<cword>"))<CR>]],
-  { desc = 'search word' }
-)
-xnoremap(
-  '<localleader>?',
-  [["gy:lua ar.mappings.ddg(vim.api.nvim_eval("@g"))<CR>gv]],
-  { desc = 'search word' }
-)
--- Search Github
-nnoremap(
-  '<localleader>!',
-  [[:lua ar.mappings.gh(vim.fn.expand("<cword>"))<CR>]],
-  { desc = 'gh search word' }
-)
-xnoremap(
-  '<localleader>!',
-  [["gy:lua ar.mappings.gh(vim.api.nvim_eval("@g"))<CR>gv]],
-  { desc = 'gh search word' }
-)
---------------------------------------------------------------------------------
 -- GX - replicate netrw functionality
 --------------------------------------------------------------------------------
 if
@@ -592,27 +463,6 @@ ar.add_to_select_menu('command_palette', {
   end,
 })
 --------------------------------------------------------------------------------
--- Dump messages in buffer
--- https://www.reddit.com/r/neovim/comments/1dyngff/a_lua_script_to_dump_messages_to_a_buffer_for/
-local function dump()
-  local tmpname = fn.tempname()
-  vim.g._messages = ''
-  vim.schedule(function()
-    vim.cmd('redir => g:_messages')
-    vim.cmd('silent! messages')
-    vim.cmd('redir END')
-    local file = io.open(tmpname, 'w')
-    if file then
-      file:write(vim.trim(vim.g._messages))
-      file:close()
-    end
-    vim.cmd('vsp ' .. tmpname)
-    vim.cmd('wincmd l')
-    vim.g._messages = nil
-  end)
-end
-nnoremap('<localleader>mm', dump, { desc = 'dump messages' })
---------------------------------------------------------------------------------
 -- Run code
 nnoremap(
   '<leader>rn',
@@ -680,36 +530,6 @@ ar.command(
   [['<,'>s/\d\+\(\(\.\|)\.\|\]\.\)\s\)\@=/\=line('.')-line("'<")+1/]],
   { range = true }
 )
---------------------------------------------------------------------------------
--- Share Code
----> Share the file or a range of lines over https://0x0.st .
-function ar.null_pointer()
-  local from = api.nvim_buf_get_mark(0, '<')[1]
-  local to = api.nvim_buf_get_mark(0, '>')[1]
-  local file = fn.tempname()
-  vim.cmd(
-    ':silent! ' .. (from == to and '' or from .. ',' .. to) .. 'w ' .. file
-  )
-
-  fn.jobstart({ 'curl', '-sF', 'file=@' .. file .. '', 'https://0x0.st' }, {
-    stdout_buffered = true,
-    on_stdout = function(_, data)
-      ar.copy_to_clipboard(data[1])
-      vim.notify('Copied ' .. data[1] .. ' to clipboard!')
-    end,
-    on_stderr = function(_, data)
-      if data then print(table.concat(data)) end
-    end,
-  })
-end
-nnoremap('<leader>up', ar.null_pointer, { desc = 'share code url' })
-xnoremap(
-  '<localleader>pp',
-  ':lua ar.null_pointer()<CR>gv<Esc>',
-  { desc = 'share code url' }
-)
-command('NullPointer', ar.null_pointer)
-ar.add_to_select_menu('command_palette', { ['Share Code URL'] = 'NullPointer' })
 --------------------------------------------------------------------------------
 -- Abbreviations
 --------------------------------------------------------------------------------

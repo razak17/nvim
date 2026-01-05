@@ -887,6 +887,15 @@
               },
               "type": "object"
             },
+            "advanced_new_file": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
             "auto_cursorline": {
               "additionalProperties": false,
               "properties": {
@@ -959,6 +968,15 @@
               },
               "type": "object"
             },
+            "dump_messages": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
             "git_conflict": {
               "additionalProperties": false,
               "properties": {
@@ -995,7 +1013,25 @@
               },
               "type": "object"
             },
+            "modify_line_end_delimiter": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
             "notepad": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "null_pointer": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1041,6 +1077,15 @@
               "type": "object"
             },
             "remove_comments": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "replace_word": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1139,7 +1184,34 @@
               },
               "type": "object"
             },
+            "tab_search": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "toolbox": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
             "wb_current_line": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "word_web_search": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
