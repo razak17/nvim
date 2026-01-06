@@ -3,6 +3,7 @@
 - afterglow
 - alabaster
 - Alienocean
+- anticuus
 - ashen
 - backpack
 - bamboo

@@ -60,6 +60,24 @@ return {
   -- Dark
   {
     {
+      'https://codeberg.org/juanmilkah/anticuus.nvim',
+      cond = get_cond({ 'anticuus' }),
+      priority = get_priority({ 'anticuus' }),
+      event = get_event({ 'anticuus' }),
+      init = function()
+        theming.apply_overrides('anticuus', {
+          { Added = { fg = { from = 'Added', alter = -0.45 } } },
+          { Changed = { fg = { from = 'Changed', alter = -0.15 } } },
+          {
+            WinSeparator = {
+              bg = 'NONE',
+              fg = { from = 'WinSeparator', alter = -0.7 },
+            },
+          },
+        }, true)
+      end,
+    },
+    {
       'stefanvanburen/rams.vim',
       cond = get_cond({ 'rams' }),
       priority = get_priority({ 'rams' }),
