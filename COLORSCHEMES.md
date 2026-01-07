@@ -30,6 +30,7 @@
 - darkvoid
 - dawnfox
 - dayfox
+- deepwater
 - default
 - doom-one
 - dracula

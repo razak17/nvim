@@ -496,6 +496,22 @@ return {
   -- Warm
   {
     {
+      'dgrco/deepwater.nvim',
+      cond = get_cond({ 'deepwater' }),
+      priority = get_priority({ 'deepwater' }),
+      event = get_event({ 'deepwater' }),
+      init = function()
+        theming.apply_overrides('deepwater', {
+          {
+            WinSeparator = {
+              bg = 'NONE',
+              fg = { from = 'WinSeparator', alter = -0.7 },
+            },
+          },
+        }, true)
+      end,
+    },
+    {
       'alexkotusenko/nightgem.nvim',
       cond = get_cond({ 'nightgem' }),
       priority = get_priority({ 'nightgem' }),
