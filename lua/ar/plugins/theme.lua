@@ -60,6 +60,25 @@ return {
   -- Dark
   {
     {
+      'Perljak/terracotta.nvim',
+      cond = get_cond({ 'terracotta' }),
+      priority = get_priority({ 'terracotta' }),
+      event = get_event({ 'terracotta' }),
+      opts = {
+        transparent = ar.config.ui.transparent.enable,
+      },
+      init = function()
+        theming.apply_overrides('terracotta', {
+          {
+            WinSeparator = {
+              bg = 'NONE',
+              fg = { from = 'WinSeparator', alter = -0.1 },
+            },
+          },
+        }, true)
+      end,
+    },
+    {
       'https://codeberg.org/juanmilkah/anticuus.nvim',
       cond = get_cond({ 'anticuus' }),
       priority = get_priority({ 'anticuus' }),

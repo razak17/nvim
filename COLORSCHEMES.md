@@ -181,6 +181,7 @@
 - slate
 - sunbather
 - terafox
+- terracotta
 - thorn
 - thorn-dark-cold
 - thorn-dark-warm
