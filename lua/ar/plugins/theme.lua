@@ -1219,6 +1219,29 @@ return {
     },
   },
   ------------------------------------------------------------------------------
+  -- Blueish
+  {
+    {
+      'gnfisher/tomorrow-night-blue.nvim',
+      cond = get_cond({ 'tomorrow-night-blue' }),
+      priority = get_priority({ 'tomorrow-night-blue' }),
+      event = get_event({ 'tomorrow-night-blue' }),
+      opts = {
+        transparent = ar.config.ui.transparent.enable,
+      },
+      init = function()
+        theming.apply_overrides('tomorrow-night-blue', {
+          {
+            WinSeparator = {
+              bg = 'NONE',
+              fg = { from = 'WinSeparator', alter = -0.3 },
+            },
+          },
+        }, true)
+      end,
+    },
+  },
+  ------------------------------------------------------------------------------
   -- Clown show
   {
     {

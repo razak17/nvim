@@ -192,6 +192,7 @@
 - tokyonight-moon
 - tokyonight-night
 - tokyonight-storm
+- tomorrow-night-blue
 - two-firewatch
 - vague
 - vim
