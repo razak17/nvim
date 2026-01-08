@@ -51,13 +51,14 @@ end
 function M.on_publish_diagnostics(err, result, ctx, cb)
   for idx, entry in ipairs(result.diagnostics) do
     if ar.has('ts-error-translator.nvim') then
-      local translate = require('ts-error-translator').translate
-      if translate then
-        local translated = translate({
-          code = entry.code,
-          message = entry.message,
-        })
-        entry.message = translated.message
+      local message_with_code = (
+        entry.code and ('TS' .. tostring(entry.code) .. ': ' .. entry.message)
+        or entry.message
+      )
+      local translator = require('ts-error-translator')
+      local translated = translator.parse_errors(message_with_code)
+      if translated and translated[1].improvedError then
+        entry.message = translated[1].improvedError.body
       end
     end
     if vim.tbl_contains(ar.lsp.disabled_codes.ts, entry.code) then
