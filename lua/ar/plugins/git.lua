@@ -288,4 +288,16 @@ return {
       },
     },
   },
+  {
+    'Salanoid/gitlogdiff.nvim',
+    main = 'gitlogdiff',
+    cond = function() return git_cond('gitlogdiff.nvim') end,
+    cmd = 'GitLogDiff',
+    -- stylua: ignore
+    keys = {
+      { '<localleader>gL', '<Cmd>GitLogDiff<CR>', desc = 'gitlogdiff: log diff' },
+    },
+    opts = { max_count = 10 },
+    dependencies = { 'sindrets/diffview.nvim', 'folke/snacks.nvim' },
+  },
 }
