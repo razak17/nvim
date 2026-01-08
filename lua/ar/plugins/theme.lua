@@ -60,6 +60,17 @@ return {
   -- Dark
   {
     {
+      'oskarnurm/koda.nvim',
+      cond = get_cond({ 'koda' }),
+      priority = get_priority({ 'koda' }),
+      event = get_event({ 'koda' }),
+      init = function()
+        theming.apply_overrides('koda', {
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.75 } } },
+        }, true)
+      end,
+    },
+    {
       'Perljak/terracotta.nvim',
       cond = get_cond({ 'terracotta' }),
       priority = get_priority({ 'terracotta' }),

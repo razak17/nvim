@@ -96,6 +96,7 @@
 - kanso-mist
 - kanso-pearl
 - kanso-zen
+- koda
 - lackluster
 - lackluster-dark
 - lackluster-hack
