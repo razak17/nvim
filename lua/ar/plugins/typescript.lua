@@ -18,6 +18,7 @@ return {
   {
     'dmmulroy/ts-error-translator.nvim',
     cond = function() return ar.get_plugin_cond('ts-error-translator.nvim') end,
+    opts = { auto_attach = false },
   },
   {
     'yioneko/nvim-vtsls',
