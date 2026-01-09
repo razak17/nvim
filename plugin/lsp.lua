@@ -46,14 +46,11 @@ local function show_related_locations(diag)
 end
 
 local publish_handler = lsp.handlers[M.textDocument_publishDiagnostics]
-lsp.handlers[M.textDocument_publishDiagnostics] = function(err, result, ctx)
+-- stylua: ignore
+lsp.handlers[M.textDocument_publishDiagnostics] = function(err, result, ctx, config)
   result.diagnostics = vim.tbl_map(show_related_locations, result.diagnostics)
-  local client = lsp.get_client_by_id(ctx.client_id)
-  local ts_servers = { 'tsgo', 'ts_ls', 'vtsls', 'svelte' }
-  if client and (vim.tbl_contains(ts_servers, client.name)) then
-    lsp_diag.on_publish_diagnostics(err, result, ctx)
-  end
-  publish_handler(err, result, ctx)
+  lsp_diag.on_publish_diagnostics(result, ctx)
+  publish_handler(err, result, ctx, config)
 end
 --------------------------------------------------------------------------------
 --  Smart Definitions

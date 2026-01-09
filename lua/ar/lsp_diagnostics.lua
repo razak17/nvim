@@ -9,7 +9,6 @@ local M = {}
 --- vim.diagnostic.get to return diagnostics at cursor directly and even with
 --- LSP Diagnostic structure. If it gets merged, simplify this funciton (the
 --- code for filter and build can be removed).
----
 ---@return table # A table of LSP Diagnostic
 function M.get_diagnostic_at_cursor()
   local cur_bufnr = api.nvim_get_current_buf()
@@ -45,27 +44,32 @@ function M.get_diagnostic_at_cursor()
   return lsp_diagnostics
 end
 
----@param err lsp.ResponseError
+local function translate_ts_error(message, code)
+  if not ar.has('ts-error-translator.nvim') then return message end
+  local message_with_code = (
+    code and ('TS' .. tostring(code) .. ': ' .. message) or message
+  )
+  local translator = require('ts-error-translator')
+  local translated = translator.parse_errors(message_with_code)
+  if translated and translated[1].improvedError then
+    return translated[1].improvedError.body
+  end
+  return message
+end
+
 ---@param result { diagnostics: table }
 ---@param ctx lsp.HandlerContext
-function M.on_publish_diagnostics(err, result, ctx, cb)
+function M.on_publish_diagnostics(result, ctx)
+  local client = vim.lsp.get_client_by_id(ctx.client_id)
+  local ts_servers = { 'tsgo', 'ts_ls', 'vtsls', 'svelte' }
   for idx, entry in ipairs(result.diagnostics) do
-    if ar.has('ts-error-translator.nvim') then
-      local message_with_code = (
-        entry.code and ('TS' .. tostring(entry.code) .. ': ' .. entry.message)
-        or entry.message
-      )
-      local translator = require('ts-error-translator')
-      local translated = translator.parse_errors(message_with_code)
-      if translated and translated[1].improvedError then
-        entry.message = translated[1].improvedError.body
-      end
+    if client and (vim.tbl_contains(ts_servers, client.name)) then
+      entry.message = translate_ts_error(entry.message, entry.code)
     end
     if vim.tbl_contains(ar.lsp.disabled_codes.ts, entry.code) then
       table.remove(result.diagnostics, idx)
     end
   end
-  if cb then cb(err, result, ctx) end
 end
 
 return M
