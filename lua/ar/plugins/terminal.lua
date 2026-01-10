@@ -65,7 +65,7 @@ return {
         on_open = float_handler,
       })
 
-      map('n', '<leader>lg', function() lazygit:toggle() end, {
+      map('n', '<leader>gg', function() lazygit:toggle() end, {
         desc = 'toggle lazygit',
       })
     end,
