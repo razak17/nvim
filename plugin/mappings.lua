@@ -372,8 +372,8 @@ then
   end, { desc = 'open link' })
 end
 --------------------------------------------------------------------------------
-nnoremap('<leader>lq', ar.list.qf.toggle, { desc = 'toggle quickfix list' })
-nnoremap('<leader>lL', ar.list.loc.toggle, { desc = 'toggle location list' })
+nnoremap('<leader>Lq', ar.list.qf.toggle, { desc = 'toggle quickfix list' })
+nnoremap('<leader>Ll', ar.list.loc.toggle, { desc = 'toggle location list' })
 nnoremap('<leader>j', '<Cmd>cnext<CR>', { desc = 'qflist next' })
 nnoremap('<leader>k', '<Cmd>cprev<CR>', { desc = 'qflist previous' })
 nnoremap('<localleader>j', '<Cmd>lnext<CR>', { desc = 'loclist next' })

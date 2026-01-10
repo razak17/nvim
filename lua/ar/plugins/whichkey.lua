@@ -46,6 +46,7 @@ return {
           { '<leader>gy', group = 'Yank' },
           { '<leader>h', group = 'Gitsigns' },
           { '<leader>i', group = 'Toggler/Swap' },
+          { '<leader>L', group = 'List' },
           { '<leader>ls', group = 'Symbols' },
           { '<leader>m', group = 'Marks' },
           { '<leader>n', group = 'Notify' },

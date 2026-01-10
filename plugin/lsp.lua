@@ -6,6 +6,13 @@ local disabled = not ar.lsp.enable
   or not ar.plugins.enable
   or (cwd and ar.dirs_match(ar.config.lsp.disabled.directories, cwd))
 
+if ar.has('mason.nvim') or ar.has('conform.nvim') then
+  vim.g.whichkey_add_spec({
+    { '<leader>l', group = 'LSP', mode = { 'n', 'x' } },
+    { '<localleader>l', group = 'LSP', mode = { 'n', 'x' } },
+  })
+end
+
 if disabled then return end
 
 local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
@@ -470,8 +477,6 @@ local function setup_mappings(client, bufnr)
   }
 
   vim.g.whichkey_add_spec({
-    { '<leader>l', group = 'LSP', mode = { 'n', 'x' } },
-    { '<localleader>l', group = 'LSP', mode = { 'n', 'x' } },
     { '<leader>la', group = 'Code Actions', mode = { 'n', 'x' } },
   })
 
