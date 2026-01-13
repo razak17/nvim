@@ -600,7 +600,7 @@ local config = {
   shelter = {
     enable = true,
     ---@type ArWhichShelter
-    variant = 'cloak',
+    variant = 'shelter',
   },
   ui = {
     ---@type ArWhichBorder

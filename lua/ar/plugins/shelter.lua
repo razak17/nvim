@@ -24,10 +24,7 @@ return {
   },
   {
     'laytan/cloak.nvim',
-    cond = function()
-      if minimal then return ar.get_plugin_cond('cloak.nvim') end
-      return get_cond('cloak.nvim', 'cloak')
-    end,
+    cond = function() return get_cond('cloak.nvim', 'cloak') end,
     lazy = false,
     init = function()
       ar.add_to_select_menu('toggle', { ['Toggle Cloak'] = 'CloakToggle' })
@@ -48,7 +45,10 @@ return {
   },
   {
     'ph1losof/shelter.nvim',
-    cond = function() return get_cond('shelter.nvim', 'shelter') end,
+    cond = function()
+      if minimal then return ar.get_plugin_cond('shelter.nvim') end
+      return get_cond('shelter.nvim', 'shelter')
+    end,
     build = ':ShelterBuild',
     lazy = false,
     opts = {
