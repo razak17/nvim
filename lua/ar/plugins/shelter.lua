@@ -48,7 +48,7 @@ return {
   },
   {
     {
-      'philosofonusus/ecolog.nvim',
+      'ph1losof/ecolog.nvim',
       cond = function() return get_cond('ecolog.nvim', 'ecolog') end,
       -- stylua: ignore
       keys = function()
