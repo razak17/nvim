@@ -50,7 +50,7 @@ local env = vim.env
 ---@alias ArWhichSession 'persisted' | 'persistence'
 ---@alias ArWhichFilesPicker 'smart-open' | 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick' | 'fff'
 ---@alias ArWhichScroll 'snacks' | 'neoscroll'
----@alias ArWhichShelter 'cloak' | 'ecolog'
+---@alias ArWhichShelter 'cloak' | 'ecolog' | 'shelter'
 ---@alias ArWhichStatuscolumn 'local' | 'heirline'
 ---@alias ArWhichStatusline 'local' | 'heirline'
 ---@alias ArWhichWinbar 'local' | 'dropbar'

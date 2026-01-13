@@ -47,6 +47,28 @@ return {
     },
   },
   {
+    'ph1losof/shelter.nvim',
+    cond = function() return get_cond('shelter.nvim', 'shelter') end,
+    build = ':ShelterBuild',
+    lazy = false,
+    opts = {
+      default_mode = 'full', -- 'partial' | 'full' | 'none'
+      env_filetypes = { 'dotenv', 'sh', 'conf', 'config' },
+      highlight_group = 'Comment',
+      mask_char = '*',
+      skip_comments = false,
+      modules = {
+        files = {
+          shelter_on_leave = true,
+          disable_cmp = function() return ar.has('blink.cmp') end,
+        },
+        fzf_previewer = function() ar.has('fzf-lua') end,
+        snacks_previewer = function() ar.has('snacks.nvim') end,
+        telescope_previewer = function() ar.has('telescope.nvim') end,
+      },
+    },
+  },
+  {
     {
       'ph1losof/ecolog.nvim',
       cond = function() return get_cond('ecolog.nvim', 'ecolog') end,
