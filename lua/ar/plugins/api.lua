@@ -1,10 +1,11 @@
+local coding = ar.plugins.coding
 local minimal = ar.plugins.minimal
 
 return {
   {
     'mistweaverco/kulala.nvim',
     branch = 'develop',
-    cond = function() return ar.get_plugin_cond('kulala.nvim', not minimal) end,
+    cond = function() return ar.get_plugin_cond('kulala.nvim', coding) end,
     ft = { 'http' },
     init = function()
       vim.g.whichkey_add_spec({ '<leader>rk', group = 'Kulala' })
