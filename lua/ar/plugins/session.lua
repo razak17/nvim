@@ -43,10 +43,10 @@ return {
       end,
       -- stylua: ignore
       keys = {
-        { '<leader>ql', ':SessionLoad<CR>', desc = 'restore session', silent = true },
-        { '<leader>qL', ':SessionLoadLast<CR>', desc = 'restore last session', silent = true },
-        { '<leader>qo', ':SessionSelect<CR>', desc = 'list session', silent = true },
-        { '<leader>qd', ':SessionStop<CR>', desc = "don't save current session", silent = true },
+        { '<leader>ql', '<Cmd>Persisted load<CR>', desc = 'restore session', silent = true },
+        { '<leader>qL', '<Cmd>Persisted load_last<CR>', desc = 'restore last session', silent = true },
+        { '<leader>qo', '<Cmd>Persisted select<CR>', desc = 'list session', silent = true },
+        { '<leader>qd', '<Cmd>Persisted stop<CR>', desc = "don't save current session", silent = true },
       },
       opts = {
         follow_cwd = true, -- Change the session file to match any change in the cwd?
