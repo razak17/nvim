@@ -104,6 +104,7 @@
 - sidekick
 - snacks
 - snacks-dashboard
+- snacks-git
 - snacks-indent
 - snacks-notifier
 - snacks-picker
