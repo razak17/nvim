@@ -68,6 +68,7 @@ return {
           { '<localleader>m', group = 'Markdown' },
           { '<localleader>n', group = 'Neogen/Notifications' },
           { '<localleader>o', group = 'Open' },
+          { '<localleader>r', group = 'Run' },
           { '<leader><leader>', group = 'Advanced' },
           { '<leader><leader>f', group = 'File' },
           { '<leader><leader>g', group = 'Git' },

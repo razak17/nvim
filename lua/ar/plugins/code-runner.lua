@@ -278,4 +278,35 @@ return {
       -- project_path = vim.fn.expand('~/.config/nvim/project_manager.json'),
     },
   },
+  {
+    'valonmulolli/zignite.nvim',
+    build = 'cd zig && zig build',
+    -- stylua: ignore
+    keys = {
+      { '<localleader>rr', ':RunFile<CR>', desc = 'zignite: run file' },
+      { '<localleader>rb', ':RunBuildSelect<CR>', desc = 'zignite: select build command' },
+      { '<localleader>rq', ':RunClose<CR>', desc = 'zignite: close runner' },
+      { '<localleader>rp', ':RunProject<CR>', desc = 'zignite: run project' },
+    },
+    opts = {
+      float = {
+        border = 'single',
+        border_hl = 'FloatBorder', -- Highlight group for the border
+        border_hl_success = 'FloatBorder', -- Border color on success (exit 0)
+        border_hl_error = 'FloatBorder', -- Border color on error (exit != 0)
+      },
+      keymaps = {
+        { 'n', '<localleader>rr', ':RunFile<CR>', { desc = 'Run file' } },
+        {
+          'n',
+          '<localleader>rb',
+          ':RunBuildSelect<CR>',
+          { desc = 'Select build command' },
+        },
+        { 'n', '<localleader>rq', ':RunClose<CR>', { desc = 'Close runner' } },
+        { 'n', '<localleader>rp', ':RunProject<CR>', { desc = 'Run project' } },
+      },
+    },
+    config = function(_, opts) require('zignite.config').setup(opts) end,
+  },
 }
