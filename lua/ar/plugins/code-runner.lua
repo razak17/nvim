@@ -1,14 +1,14 @@
 local ui, highlight = ar.ui, ar.highlight
 local border = ui.current.border.default
 local preview_cmd = '/usr/bin/zathura'
-local minimal = ar.plugins.minimal
+local coding = ar.plugins.coding
 
 return {
   -- Code Runner
   --------------------------------------------------------------------------------
   {
     'razak17/jaq-nvim',
-    cond = function() return ar.get_plugin_cond('jaq-nvim', not minimal) end,
+    cond = function() return ar.get_plugin_cond('jaq-nvim', coding) end,
     cmd = 'Jaq',
     keys = {
       { '<leader>rb', ':silent only | Jaq<CR>', desc = 'jaq: run' },
@@ -38,7 +38,7 @@ return {
   {
     'jellydn/quick-code-runner.nvim',
     cond = function()
-      return ar.get_plugin_cond('quick-code-runner.nvim', not minimal)
+      return ar.get_plugin_cond('quick-code-runner.nvim', coding)
     end,
     opts = { debug = true },
     init = function()
@@ -63,7 +63,7 @@ return {
       'razak17/lab.nvim',
       event = { 'InsertEnter' },
       cond = function()
-        local condition = not minimal
+        local condition = coding
           and ar.completion.enable
           and ar.config.completion.variant == 'cmp'
         return ar.get_plugin_cond('lab.nvim', condition)
@@ -114,7 +114,7 @@ return {
   {
     -- 'google/executor.nvim',
     'razak17/executor.nvim',
-    cond = function() return ar.get_plugin_cond('executor.nvim', not minimal) end,
+    cond = function() return ar.get_plugin_cond('executor.nvim', coding) end,
     init = function()
       vim.g.whichkey_add_spec({ '<leader><leader>x', group = 'Executor' })
     end,
@@ -151,7 +151,7 @@ return {
     'michaelb/sniprun',
     build = 'sh install.sh',
     cmd = { 'SnipRun', 'SnipInfo' },
-    cond = function() return ar.get_plugin_cond('sniprun', not minimal) end,
+    cond = function() return ar.get_plugin_cond('sniprun', coding) end,
     init = function()
       vim.g.whichkey_add_spec({ '<leader>rs', group = 'SnipRun' })
     end,
@@ -179,9 +179,7 @@ return {
   },
   {
     'ej-shafran/compile-mode.nvim',
-    cond = function()
-      return ar.get_plugin_cond('compile-mode.nvim', not minimal)
-    end,
+    cond = function() return ar.get_plugin_cond('compile-mode.nvim', coding) end,
     cmd = { 'Compile', 'Recompile' },
     opts = { default_command = '' },
     dependencies = {
@@ -191,9 +189,7 @@ return {
   -- https://github.com/CRAG666/dotfiles/blob/main/config/nvim/lua/plugins/dev/code_runner.lua
   {
     'CRAG666/code_runner.nvim',
-    cond = function()
-      return ar.get_plugin_cond('code_runner.nvim', not minimal)
-    end,
+    cond = function() return ar.get_plugin_cond('code_runner.nvim', coding) end,
     -- stylua: ignore
     keys = {
       { '<leader>rc', function() require('code_runner').run_code() end, desc = 'code runner: run code' },
