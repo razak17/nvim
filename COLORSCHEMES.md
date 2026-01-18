@@ -75,6 +75,8 @@
 - gruvdark-light
 - gyokuro
 - habamax
+- heap
+- heap-dark
 - hojicha
 - horizon
 - iceclimber

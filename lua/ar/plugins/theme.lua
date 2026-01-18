@@ -108,6 +108,29 @@ return {
       end,
     },
     {
+      'valonmulolli/heap.nvim',
+      cond = function()
+        return vim.tbl_contains({ 'heap', 'heap-dark' }, colorscheme)
+      end,
+      priority = get_priority({ 'heap', 'heap-dark' }),
+      event = get_event({ 'heap', 'heap-dark' }),
+      opts = {
+        variant = 'dark', -- "default" or "dark"
+        transparent = false,
+      },
+      init = function()
+        theming.apply_overrides('heap-dark', {
+          { GitSignsChange = { fg = { from = 'Changed', alter = -0.25 } } },
+          {
+            WinSeparator = {
+              bg = 'NONE',
+              fg = { from = 'WinSeparator', alter = 4.5 },
+            },
+          },
+        }, true)
+      end,
+    },
+    {
       'stefanvanburen/rams.vim',
       cond = get_cond({ 'rams' }),
       priority = get_priority({ 'rams' }),
