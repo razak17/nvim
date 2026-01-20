@@ -23,7 +23,7 @@ ar.add_to_select_menu('command_palette', {
 -- tool for exploratory type programming. Extract a type T that can be explored with the LSP hover, K
 map(
   'n',
-  '<localleader>lt',
+  '<localleader>lK',
   function() require('ar.ts_extract_type').extract_type() end,
   { buffer = true, desc = 'extract type for K exploration' }
 )
