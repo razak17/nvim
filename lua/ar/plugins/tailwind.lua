@@ -89,6 +89,7 @@ return {
     cond = function()
       return ar.get_plugin_cond('tw-values.nvim', ar.lsp.enable)
     end,
+    cmd = { 'TWValues' },
     -- stylua: ignore
     keys = {
       { '<localleader>lt', '<Cmd>TWValues<cr>', desc = 'tw-values: show values', },
