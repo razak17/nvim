@@ -51,7 +51,7 @@ local function translate_ts_error(message, code)
   )
   local translator = require('ts-error-translator')
   local translated = translator.parse_errors(message_with_code)
-  if translated and translated[1].improvedError then
+  if translated and translated[1] and translated[1].improvedError then
     return translated[1].improvedError.body
   end
   return message
