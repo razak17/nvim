@@ -20,7 +20,6 @@ local cmp_utils = require('ar.utils.cmp')
 local ui, highlight = ar.ui, ar.highlight
 local border, lsp_hls, ellipsis =
   ui.current.border.default, ui.lsp.highlights, ui.icons.misc.ellipsis
-local minimal = ar.plugins.minimal
 local is_cmp = ar.config.completion.variant == 'cmp'
 
 ar.completion.config = vim.tbl_extend('force', ar.completion.config or {}, {
@@ -36,7 +35,7 @@ return {
   {
     'hrsh7th/nvim-cmp',
     cond = function()
-      local condition = ar.completion.enable and not minimal and is_cmp
+      local condition = ar.completion.enable and is_cmp
       return ar.get_plugin_cond('nvim-cmp', condition)
     end,
     event = { 'InsertEnter', 'CmdlineEnter' },

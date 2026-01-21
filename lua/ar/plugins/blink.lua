@@ -15,7 +15,6 @@ local fmt = string.format
 local cmp_utils = require('ar.utils.cmp')
 local ui = ar.ui
 local border, lsp_hls = ui.current.border.default, ui.lsp.highlights
-local minimal = ar.plugins.minimal
 local is_blink = ar.config.completion.variant == 'blink'
 
 local show_index = false
@@ -55,7 +54,7 @@ return {
   {
     'saghen/blink.cmp',
     cond = function()
-      local condition = ar.completion.enable and not minimal and is_blink
+      local condition = ar.completion.enable and is_blink
       return ar.get_plugin_cond('blink.cmp', condition)
     end,
     event = { 'InsertEnter', 'CmdlineEnter' },
