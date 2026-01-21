@@ -97,6 +97,28 @@ return {
           },
         },
       },
+      {
+        'daliusd/blink-cmp-fuzzy-path',
+        cond = get_cond('blink-cmp-fuzzy-path'),
+        specs = {
+          'saghen/blink.cmp',
+          opts = {
+            sources = {
+              default = { 'fuzzy-path' },
+              providers = {
+                ['fuzzy-path'] = {
+                  module = 'blink-cmp-fuzzy-path',
+                  name = '[FUZZY]',
+                  score_offset = 0,
+                  opts = {
+                    filetypes = { 'markdown', 'json' }, -- optional
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     },
   },
 }
