@@ -164,4 +164,14 @@ return {
       },
     },
   },
+  {
+    'zbirenbaum/copilot.lua',
+    optional = true,
+    dependencies = { -- this will only be evaluated if nvim-cmp is enabled
+      {
+        'samiulsami/copilot-eldritch.nvim',
+        opts = {},
+      },
+    },
+  },
 }
