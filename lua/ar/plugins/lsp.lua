@@ -30,7 +30,8 @@ local server_langs = {
 }
 
 local function is_enabled(name)
-  if name == 'copilot' and not ar.ai.enable then return false end
+  local ai_cmp = ar.config.ai.completion.variant
+  if name == 'copilot' and (not ar.ai.enable or ai_cmp ~= 'builtin') then return false end
   local disabled = ar.lsp_disabled(name)
   local override = ar.config.lsp.override
   if vim.tbl_contains(override, name) and not disabled then return true end
