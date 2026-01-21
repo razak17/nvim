@@ -410,7 +410,7 @@ local config = {
     ---@type ArCompletionIcons
     icons = 'lspkind',
     ---@type ArCompletion
-    variant = 'blink',
+    variant = 'mini.completion',
     snippets = {
       enable = true,
       ---@type 'minimal' | 'friendly-snippets'
