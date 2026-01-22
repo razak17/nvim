@@ -60,7 +60,7 @@ end
 -- vim.opt.winbar = [[%!v:lua.ar.ui.winbar.render()]]
 
 ar.augroup('Winbar', {
-  event = { 'BufEnter', 'WinEnter', 'FileType' },
+  event = { 'BufEnter', 'FileType' },
   command = function(args)
     local ft = bo[args.buf].ft
     if not ft or ft == '' then return end
