@@ -220,7 +220,7 @@ return {
       if ar.config.picker.files == 'snacks' then
         table.insert(keys, { '<C-p>', find_files, desc = 'snacks: find files' })
       end
-      if ar.config.buffers.variant == 'snacks' then
+      if ar.plugins.minimal or ar.config.buffers.variant == 'snacks' then
         table.insert(keys, { '<M-space>', buffers, desc = 'snacks: buffers' })
       end
       if ar.config.picker.variant == 'snacks' then
