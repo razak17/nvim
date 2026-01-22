@@ -97,7 +97,8 @@ return {
     opts = { border = border, show_unknown_classes = true },
   },
   {
-    'atiladefreitas/tinyunit',
+    -- 'atiladefreitas/tinyunit',
+    'razak17/tinyunit',
     cond = function() return ar.get_plugin_cond('tinyunit') end,
     keys = {
       { mode = { 'n', 'x' }, '<leader>tu', desc = 'tinyunit: open' },
