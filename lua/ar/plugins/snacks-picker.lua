@@ -881,7 +881,11 @@ return {
             }
           end
         end,
-        opts = {},
+        opts = {
+          picker_opts = {
+            layout = { preset = 'centered_with_main_preview' },
+          },
+        },
       },
     },
   },
