@@ -428,6 +428,7 @@ local filetypes = ar.p_table({
   ['toggleterm'] = presets.statusline_only:with({ winbar = 'ignore' }),
   ['telescopeprompt'] = presets.statusline_only,
   ['TelescopePrompt'] = presets.statusline_only,
+  ['tinyunit'] = presets.tool_panel,
   ['Trouble'] = presets.tool_panel,
   ['tsplayground'] = presets.tool_panel,
   ['undotree'] = presets.tool_panel,
