@@ -100,36 +100,37 @@ return {
       vim.g.whichkey_add_spec({
         { '<leader>ah', group = 'Opencode', mode = { 'n', 'x' } },
         { '<leader>ahd', group = 'Diff', mode = { 'n', 'x' } },
-        { '<leader>ahp', group = 'Permission', mode = { 'n', 'x' } },
+        { '<leader>ahP', group = 'Permission', mode = { 'n', 'x' } },
         { '<leader>ahr', group = 'Revert/Restore', mode = { 'n', 'x' } },
+        { '<leader>ahs', group = 'Session', mode = { 'n', 'x' } },
       })
     end,
     -- stylua: ignore
     keys = {
       { '<leader>aho', ocf('toggle'), desc = 'opencode: toggle' },
       { '<leader>ah:', ocf('initialize'), desc = 'opencode: initialize' },
-      { '<leader>ahi', ocf('open_input'), desc = 'opencode: open input' },
-      { '<leader>ahI', ocf('open_input_new_session'), desc = 'opencode: open input (new)' },
-      { '<leader>ahO', ocf('open_output'), desc = 'opencode: open output' },
-      { '<leader>ahn', ':Opencode session new ', desc = 'opencode: new named session' },
       { '<leader>ahh', ocf('toggle_focus'), desc = 'opencode: toggle focus' },
-      { '<leader>ahq', ocf('close'), desc = 'opencode: close' },
-      { '<leader>ahx', ocf('cancel'), desc = 'opencode: cancel' },
-      { '<leader>ahp', ocf('select_session'), desc = 'opencode: select session' },
-      { '<leader>ahS', ocf('select_child_session'), desc = 'opencode: select child session' },
-      { '<leader>ahc', ocf('configure_provider'), desc = 'opencode: configure provider' },
+      { '<leader>ahH', ocf('swap_position'), desc = 'opencode: swap position' },
+      { '<leader>ahn', ocf('open_input'), desc = 'opencode: open input' },
+      { '<leader>ahN', ocf('open_input_new_session'), desc = 'opencode: open input (new)' },
       { '<leader>ahm', choose_mode, desc = 'opencode: choose mode' },
       { '<leader>ahM', ocf('mcp'), desc = 'opencode: available mcp servers' },
-      { '<leader>ahs', ocf('share'), desc = 'opencode: share' },
-      { '<leader>ahu', ocf('unshare'), desc = 'opencode: unshare' },
-      { '<leader>ahk', ocf('compact_session'), desc = 'opencode: compact session' },
-      { '<leader>ahU', ocf('undo'), desc = 'opencode: undo' },
+      { '<leader>ahO', ocf('open_output'), desc = 'opencode: open output' },
+      { '<leader>ahp', ocf('configure_provider'), desc = 'opencode: configure provider' },
+      { '<leader>ahq', ocf('close'), desc = 'opencode: close' },
       { '<leader>ahR', ocf('redo'), desc = 'opencode: redo' },
-      { '<leader>ahH', ocf('swap_position'), desc = 'opencode: swap position' },
+      { '<leader>ahsc', ocf('select_child_session'), desc = 'opencode: select child session' },
+      { '<leader>ahsp', ocf('select_session'), desc = 'opencode: select session' },
+      { '<leader>ahsk', ocf('compact_session'), desc = 'opencode: compact session' },
+      { '<leader>ahsn', ':Opencode session new ', desc = 'opencode: new named session' },
+      { '<leader>ahS', ocf('share'), desc = 'opencode: share' },
+      { '<leader>ahu', ocf('unshare'), desc = 'opencode: unshare' },
+      { '<leader>ahU', ocf('undo'), desc = 'opencode: undo' },
+      { '<leader>ahx', ocf('cancel'), desc = 'opencode: cancel' },
       --  Permission
-      { '<leader>ahpa', ocf('permission_accept'), desc = 'opencode: accept permission' },
-      { '<leader>ahpA', ocf('permission_accept_all'), desc = 'opencode: accept all permissions' },
-      { '<leader>ahpx', ocf('permission_deny'), desc = 'opencode: deny permission' },
+      { '<leader>ahPa', ocf('permission_accept'), desc = 'opencode: accept permission' },
+      { '<leader>ahPA', ocf('permission_accept_all'), desc = 'opencode: accept all permissions' },
+      { '<leader>ahPx', ocf('permission_deny'), desc = 'opencode: deny permission' },
       --  Diff
       { '<leader>ahdo', ocf('diff_open'), desc = 'opencode: open diff' },
       { '<leader>ahdn', ocf('diff_next'), desc = 'opencode: next diff' },
@@ -153,6 +154,7 @@ return {
       default_global_keymaps = false, -- If false, disables all default global keymaps
       default_mode = 'build', -- 'build' or 'plan' or any custom configured. @see [OpenCode Agents](https://opencode.ai/docs/modes/)
       keymap_prefix = '', -- Default keymap prefix for global keymaps change to your preferred prefix and it will be applied to all keymaps starting with <leader>o
+      quick_chat = { default_model = 'openai/gpt-5.2-codex' },
       ui = {
         input = {
           text = { wrap = true },
