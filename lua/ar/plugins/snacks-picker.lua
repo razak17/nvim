@@ -866,4 +866,23 @@ return {
       end
     end,
   },
+  {
+    'folke/snacks.nvim',
+    optional = true,
+    dependencies = { -- this will only be evaluated if snacks is enabled
+      {
+        desc = 'a progressive search plugin built on top of snacks.nvim ',
+        '2kabhishek/seeker.nvim',
+        cmd = { 'Seeker' },
+        keys = function()
+          if ar.config.picker.files == 'seeker' then
+            return {
+              { '<C-p>', '<Cmd>Seeker files<CR>', desc = 'seeker: files' },
+            }
+          end
+        end,
+        opts = {},
+      },
+    },
+  },
 }

@@ -46,7 +46,7 @@ local env = vim.env
 ---@alias ArWhichLspVirtualLines 'builtin' | 'lsp_lines' | 'tiny-inline'
 ---@alias ArWhichLspVirtualText 'builtin' | 'lsp_lines' | 'tiny-inline'
 ---@alias ArWhichNotifier 'native' | 'nvim-notify' | 'snacks' | 'noice'
----@alias ArWhichPicker 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick'
+---@alias ArWhichPicker 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick' | 'seeker'
 ---@alias ArWhichSession 'persisted' | 'persistence'
 ---@alias ArWhichFilesPicker 'smart-open' | 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick' | 'fff'
 ---@alias ArWhichScroll 'snacks' | 'neoscroll'

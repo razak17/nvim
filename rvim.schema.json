@@ -851,7 +851,7 @@
             "telescope",
             "fzf-lua",
             "mini.pick",
-            "fff"
+            "seeker"
           ],
           "type": "string"
         },
