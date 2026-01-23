@@ -581,7 +581,6 @@ local config = {
       'persistent-breakpoints.nvim',
       'readline.nvim',
       'rest.nvim',
-      'sidekick.nvim',
       'startup.nvim',
       'suda.vim',
       'telescope-smart-history.nvim',
