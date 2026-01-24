@@ -4,6 +4,7 @@
 - alabaster
 - Alienocean
 - anticuus
+- arctic
 - ashen
 - backpack
 - bamboo

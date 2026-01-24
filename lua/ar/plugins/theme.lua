@@ -1444,6 +1444,23 @@ return {
       end,
     },
     {
+      'rockyzhang24/arctic.nvim',
+      cond = get_cond({ 'arctic' }),
+      priority = get_priority({ 'arctic' }),
+      event = get_event({ 'arctic' }),
+      init = function()
+        theming.apply_overrides('arctic', {
+          {
+            WinSeparator = {
+              bg = 'NONE',
+              fg = { from = 'WinSeparator', alter = -0.1 },
+            },
+          },
+        }, true)
+      end,
+      dependencies = { 'rktjmp/lush.nvim' },
+    },
+    {
       'Mofiqul/dracula.nvim',
       cond = get_cond({ 'dracula' }),
       priority = get_priority({ 'dracula' }),
