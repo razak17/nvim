@@ -1678,6 +1678,19 @@
       },
       "type": "object"
     },
+    "repeatable": {
+      "additionalProperties": false,
+      "properties": {
+        "enable": {
+          "type": "boolean"
+        },
+        "variant": {
+          "enum": ["demicolon", "repeatable-move"],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "session": {
       "additionalProperties": false,
       "properties": {

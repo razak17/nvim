@@ -1,9 +1,16 @@
+local function get_cond(plugin, variant)
+  return function()
+    local condition = ar.treesitter.enable
+      and ar.config.repeatable.enable
+      and ar.config.repeatable.variant == variant
+    return ar.get_plugin_cond(plugin, condition)
+  end
+end
+
 return {
   {
     'mawkler/demicolon.nvim',
-    cond = function()
-      return ar.get_plugin_cond('demicolon.nvim', ar.treesitter.enable)
-    end,
+    cond = get_cond('demicolon.nvim', 'demicolon'),
     -- stylua: ignore
     init = function()
       map({ 'n', 'x', 'o' }, ';n', function() require('demicolon.repeat_jump').forward() end, { desc = 'demicolon: forward' })
@@ -17,9 +24,7 @@ return {
   },
   {
     'kiyoon/repeatable-move.nvim',
-    cond = function()
-      return ar.get_plugin_cond('repeatable-move.nvim', ar.treesitter.enable)
-    end,
+    cond = get_cond('repeatable-move.nvim', 'repeatable-move'),
     -- stylua: ignore
     init = function()
       local ok, ts_repeat_move = pcall(require, 'nvim-treesitter-textobjects.repeatable_move')

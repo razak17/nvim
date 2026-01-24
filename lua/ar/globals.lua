@@ -134,6 +134,31 @@ function ar.demicolon_jump(callback, opts)
   return function() require('demicolon.jump').repeatably_do(callback, opts) end
 end
 
+---@param callback function
+---@param opts { forward: boolean }
+---@return function
+function ar.repeatable_jump(callback, opts)
+  if not ar.has('repeatable-move.nvim') then
+    return function() return callback(opts) end
+  end
+  local repeat_move = require('repeatable_move').make_repeatable_move_pair
+  local function next() callback({ forward = true }) end
+  local function prev() callback({ forward = false }) end
+  local next_repeat, prev_repeat = repeat_move(next, prev)
+  return opts.forward and next_repeat or prev_repeat
+end
+
+---@param callback function
+---@param opts { next: boolean }
+---@return function
+function ar.jump(callback, opts)
+  if ar.has('demicolon.nvim') then return ar.demicolon_jump(callback, opts) end
+  if ar.has('repeatable-move.nvim') then
+    return ar.repeatable_jump(callback, opts)
+  end
+  return function() return callback(opts) end
+end
+
 --- Remove duplicates from a table
 ---@param t table
 ---@return table

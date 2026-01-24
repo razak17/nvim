@@ -47,6 +47,7 @@ local env = vim.env
 ---@alias ArWhichLspVirtualText 'builtin' | 'lsp_lines' | 'tiny-inline'
 ---@alias ArWhichNotifier 'native' | 'nvim-notify' | 'snacks' | 'noice'
 ---@alias ArWhichPicker 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick' | 'seeker'
+---@alias ArWhichRepeatable 'demicolon' | 'repeatable-move'
 ---@alias ArWhichSession 'persisted' | 'persistence'
 ---@alias ArWhichFilesPicker 'smart-open' | 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick' | 'fff'
 ---@alias ArWhichScroll 'snacks' | 'neoscroll'
@@ -102,6 +103,10 @@ local env = vim.env
 ---@field files ArWhichFilesPicker
 ---@field variant ArWhichPicker
 ---@field win ArPickerWin
+
+---@class ArRepeatable
+---@field enable boolean
+---@field variant ArWhichRepeatable
 
 ---@class ArSession
 ---@field enable boolean
@@ -594,6 +599,8 @@ local config = {
       override = {},
     },
   },
+  ---@type ArRepeatable
+  repeatable = { enable = true, variant = 'repeatable-move' },
   ---@type ArSession
   session = { enable = true, variant = 'persisted' },
   shelter = {

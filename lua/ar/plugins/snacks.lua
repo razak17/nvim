@@ -122,7 +122,7 @@ return {
       })
 
       local function jump(options)
-        return ar.demicolon_jump(function(opt)
+        return ar.jump(function(opt)
           local count = opt.forward and 1 or -1
           Snacks.words.jump(count, true)
         end, options)

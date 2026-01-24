@@ -194,7 +194,7 @@ return {
         bmap({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select hunk' })
 
         local function jump(options)
-          return ar.demicolon_jump(function(opts)
+          return ar.jump(function(opts)
             local direction = opts.forward and 'next' or 'prev'
             gs.nav_hunk(direction)
           end, options)
