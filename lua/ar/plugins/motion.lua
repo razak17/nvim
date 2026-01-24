@@ -2,8 +2,7 @@ local minimal = ar.plugins.minimal
 
 return {
   {
-    -- 'mawkler/demicolon.nvim',
-    'razak17/demicolon.nvim',
+    'mawkler/demicolon.nvim',
     cond = function()
       return ar.get_plugin_cond('demicolon.nvim', ar.treesitter.enable)
     end,
