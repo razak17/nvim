@@ -40,14 +40,14 @@ return {
         desc = 'sidekick: toggle cli',
       },
       {
-        '<leader>ass',
+        '<leader>asw',
         function() require('sidekick.cli').select() end,
         -- Or to select only installed tools:
         -- require("sidekick.cli").select({ filter = { installed = true } })
         desc = 'sidekick: select cli',
       },
       {
-        '<leader>ast',
+        '<leader>ass',
         function() require('sidekick.cli').send({ msg = '{this}' }) end,
         mode = { 'x', 'n' },
         desc = 'sidekick: send this',
@@ -65,7 +65,7 @@ return {
         desc = 'sidekick: select prompt',
       },
       {
-        '<leader>af',
+        '<leader>asf',
         function() require('sidekick.cli').send({ msg = '{file}' }) end,
         desc = 'sidekick: send file',
       },
