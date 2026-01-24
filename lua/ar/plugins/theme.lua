@@ -1428,6 +1428,40 @@ return {
       end,
     },
     {
+      'Mofiqul/dracula.nvim',
+      cond = get_cond({ 'dracula' }),
+      priority = get_priority({ 'dracula' }),
+      event = get_event({ 'dracula' }),
+      init = function()
+        theming.apply_overrides('dracula', {
+          {
+            WinSeparator = {
+              bg = 'NONE',
+              fg = { from = 'WinSeparator', alter = 2.4 },
+            },
+          },
+        }, true)
+      end,
+    },
+    {
+      'kylesnowschwartz/cobalt-neon.nvim',
+      cond = get_cond({ 'cobalt-neon' }),
+      priority = get_priority({ 'cobalt-neon' }),
+      event = get_event({ 'cobalt-neon' }),
+      opts = {},
+      init = function()
+        theming.apply_overrides('cobalt-neon', {
+          { GitSignsAdd = { fg = { from = 'GitSignsAdd', alter = -0.25 } } },
+          { GitSignsChange = { fg = { from = '@comment.note', attr = 'bg' } } },
+          { WinSeparator = { bg = 'NONE' } },
+        }, true)
+      end,
+    },
+  },
+  ------------------------------------------------------------------------------
+  -- Vscode
+  {
+    {
       'Mofiqul/vscode.nvim',
       cond = get_cond({ 'vscode' }),
       priority = get_priority({ 'vscode' }),
@@ -1459,36 +1493,6 @@ return {
         }, true)
       end,
       dependencies = { 'rktjmp/lush.nvim' },
-    },
-    {
-      'Mofiqul/dracula.nvim',
-      cond = get_cond({ 'dracula' }),
-      priority = get_priority({ 'dracula' }),
-      event = get_event({ 'dracula' }),
-      init = function()
-        theming.apply_overrides('dracula', {
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = 2.4 },
-            },
-          },
-        }, true)
-      end,
-    },
-    {
-      'kylesnowschwartz/cobalt-neon.nvim',
-      cond = get_cond({ 'cobalt-neon' }),
-      priority = get_priority({ 'cobalt-neon' }),
-      event = get_event({ 'cobalt-neon' }),
-      opts = {},
-      init = function()
-        theming.apply_overrides('cobalt-neon', {
-          { GitSignsAdd = { fg = { from = 'GitSignsAdd', alter = -0.25 } } },
-          { GitSignsChange = { fg = { from = '@comment.note', attr = 'bg' } } },
-          { WinSeparator = { bg = 'NONE' } },
-        }, true)
-      end,
     },
   },
   -- }}}
