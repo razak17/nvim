@@ -95,6 +95,7 @@
 - px-to-rem
 - qf
 - readline
+- repeat
 - replace
 - rustaceanvim
 - scratch
