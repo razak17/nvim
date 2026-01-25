@@ -10,7 +10,7 @@ return {
     lazy = false,
     keys = {
       -- stylua: ignore start
-      { '<leader>or', function() Snacks.rename.rename_file() end, desc = 'Rename File' },
+      { '<leader>or', function() Snacks.rename.rename_file() end, desc = 'snacks: rename file' },
       { '<leader>o/', function() Snacks.terminal() end, desc = 'snacks: toggle terminal' },
       { '<leader>ps', function() Snacks.profiler.scratch() end, desc = 'snacks: profiler scratch buffer' },
       { '<leader>pu', function() Snacks.profiler.toggle() end, desc = 'snacks: toggle profiler' },
