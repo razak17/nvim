@@ -101,13 +101,10 @@ return {
     'razak17/tinyunit',
     cond = function() return ar.get_plugin_cond('tinyunit') end,
     keys = {
-      { mode = { 'n', 'x' }, '<leader>tu', desc = 'tinyunit: open' },
+      { mode = { 'n', 'x' }, '<leader>ux', desc = 'tinyunit: open' },
     },
     opts = {
-      keymap = {
-        open = 'tu',
-        close = 'q',
-      },
+      keymap = { open = 'ux', close = 'q' },
     },
   },
 }
