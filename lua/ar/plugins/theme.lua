@@ -1025,6 +1025,19 @@ return {
         }, true)
       end,
     },
+    {
+      'silentium-theme/silentium.nvim',
+      cond = get_cond({ 'silentium' }),
+      priority = get_priority({ 'silentium' }),
+      event = get_event({ 'silentium' }),
+      init = function()
+        theming.apply_overrides('silentium', {
+          {
+            WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } },
+          },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Mild

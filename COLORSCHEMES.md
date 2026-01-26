@@ -179,6 +179,7 @@
 - serene-transparent
 - serenity
 - shadow
+- silentium
 - slate
 - sunbather
 - terafox
