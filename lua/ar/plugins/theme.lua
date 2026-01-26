@@ -595,44 +595,6 @@ return {
       end,
     },
     {
-      'morhetz/gruvbox',
-      cond = get_cond({ 'gruvbox' }),
-      priority = get_priority({ 'gruvbox' }),
-      event = get_event({ 'gruvbox' }),
-      init = function()
-        theming.apply_overrides('gruvbox', {
-          { GruvboxRedSign = { bg = 'NONE' } },
-          { GruvboxGreenSign = { bg = 'NONE' } },
-          { GruvboxAquaSign = { bg = 'NONE' } },
-          { Operator = { link = '@method' } },
-          { ErrorMsg = { link = 'Error' } },
-          {
-            Visual = {
-              bg = { from = 'Visual', alter = -0.25 },
-              fg = 'NONE',
-              reverse = false,
-            },
-          },
-          { NonText = { fg = { from = 'NonText', alter = 0.3 } } },
-          { Dim = { link = 'WinSeparator' } },
-          {
-            WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.6 } },
-          },
-        }, true)
-      end,
-    },
-    {
-      'sainnhe/gruvbox-material',
-      cond = get_cond({ 'gruvbox-material' }),
-      priority = get_priority({ 'gruvbox-material' }),
-      event = get_event({ 'gruvbox-material' }),
-      init = function()
-        theming.apply_overrides('gruvbox-material', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.1 } } },
-        }, true)
-      end,
-    },
-    {
       'dybdeskarphet/gruvbox-minimal.nvim',
       cond = get_cond({ 'gruvbox-minimal' }),
       priority = get_priority({ 'gruvbox-minimal' }),
@@ -1478,6 +1440,49 @@ return {
           { GitSignsAdd = { fg = { from = 'GitSignsAdd', alter = -0.25 } } },
           { GitSignsChange = { fg = { from = '@comment.note', attr = 'bg' } } },
           { WinSeparator = { bg = 'NONE' } },
+        }, true)
+      end,
+    },
+  },
+
+  ------------------------------------------------------------------------------
+  -- Gruvbox
+  {
+    {
+      'morhetz/gruvbox',
+      cond = get_cond({ 'gruvbox' }),
+      priority = get_priority({ 'gruvbox' }),
+      event = get_event({ 'gruvbox' }),
+      init = function()
+        theming.apply_overrides('gruvbox', {
+          { GruvboxRedSign = { bg = 'NONE' } },
+          { GruvboxGreenSign = { bg = 'NONE' } },
+          { GruvboxAquaSign = { bg = 'NONE' } },
+          { Operator = { link = '@method' } },
+          { ErrorMsg = { link = 'Error' } },
+          {
+            Visual = {
+              bg = { from = 'Visual', alter = -0.25 },
+              fg = 'NONE',
+              reverse = false,
+            },
+          },
+          { NonText = { fg = { from = 'NonText', alter = 0.3 } } },
+          { Dim = { link = 'WinSeparator' } },
+          {
+            WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.6 } },
+          },
+        }, true)
+      end,
+    },
+    {
+      'sainnhe/gruvbox-material',
+      cond = get_cond({ 'gruvbox-material' }),
+      priority = get_priority({ 'gruvbox-material' }),
+      event = get_event({ 'gruvbox-material' }),
+      init = function()
+        theming.apply_overrides('gruvbox-material', {
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.1 } } },
         }, true)
       end,
     },
