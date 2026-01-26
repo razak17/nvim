@@ -224,8 +224,7 @@ return {
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
     cond = function()
-      local condition = coding and ts_enabled
-      return ar.get_plugin_cond('nvim-treesitter-textobjects', condition)
+      return ar.get_plugin_cond('nvim-treesitter-textobjects', ts_enabled)
     end,
     branch = 'main',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
