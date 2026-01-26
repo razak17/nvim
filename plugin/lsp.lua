@@ -263,6 +263,10 @@ local function setup_mappings(client, bufnr)
     { 'n', '[e', diagnostic_goto(false, 'ERROR'), desc = 'prev error' },
     { 'n', ']w', diagnostic_goto(true, 'WARN'), desc = 'next warning' },
     { 'n', '[w', diagnostic_goto(false, 'WARN'), desc = 'prev warning' },
+    { 'n', ']i', diagnostic_goto(true, 'INFO'), desc = 'next info' },
+    { 'n', '[i', diagnostic_goto(false, 'INFO'), desc = 'prev info' },
+    { 'n', ']o', diagnostic_goto(true, 'HINT'), desc = 'next hint' },
+    { 'n', '[o', diagnostic_goto(false, 'HINT'), desc = 'prev hint' },
     {
       'n',
       'gL',
