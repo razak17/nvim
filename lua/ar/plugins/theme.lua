@@ -622,6 +622,17 @@ return {
       end,
     },
     {
+      'sainnhe/gruvbox-material',
+      cond = get_cond({ 'gruvbox-material' }),
+      priority = get_priority({ 'gruvbox-material' }),
+      event = get_event({ 'gruvbox-material' }),
+      init = function()
+        theming.apply_overrides('gruvbox-material', {
+          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.1 } } },
+        }, true)
+      end,
+    },
+    {
       'dybdeskarphet/gruvbox-minimal.nvim',
       cond = get_cond({ 'gruvbox-minimal' }),
       priority = get_priority({ 'gruvbox-minimal' }),

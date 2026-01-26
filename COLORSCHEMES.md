@@ -71,6 +71,7 @@
 - github_plus
 - glowbeam
 - gruvbox
+- gruvbox-material
 - gruvbox-minimal
 - gruvdark
 - gruvdark-light
