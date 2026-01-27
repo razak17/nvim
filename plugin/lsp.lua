@@ -453,7 +453,7 @@ local function setup_mappings(client, bufnr)
       vim.diagnostic.setloclist,
       desc = 'toggle loclist diagnostics',
     },
-    { 'n', '<leader>li', '<Cmd>LspInfo<CR>', desc = 'lsp info' },
+    { 'n', '<leader>li', '<Cmd>checkhealth vim.lsp<CR>', desc = 'lsp info' },
     {
       'n',
       '<localleader>lc',
