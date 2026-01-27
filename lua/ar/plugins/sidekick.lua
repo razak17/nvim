@@ -79,23 +79,25 @@ return {
     config = function(_, opts)
       require('sidekick').setup(opts)
 
-      vim.api.nvim_create_autocmd('User', {
-        pattern = 'SidekickNesHide',
-        callback = function()
-          if tiny_diags_disabled_by_nes then
-            tiny_diags_disabled_by_nes = false
-            require('tiny-inline-diagnostic').enable()
-          end
-        end,
-      })
+      if ar.has('tiny-inline-diagnostic.nvim') then
+        vim.api.nvim_create_autocmd('User', {
+          pattern = 'SidekickNesHide',
+          callback = function()
+            if tiny_diags_disabled_by_nes then
+              tiny_diags_disabled_by_nes = false
+              require('tiny-inline-diagnostic').enable()
+            end
+          end,
+        })
 
-      vim.api.nvim_create_autocmd('User', {
-        pattern = 'SidekickNesShow',
-        callback = function()
-          tiny_diags_disabled_by_nes = true
-          require('tiny-inline-diagnostic').disable()
-        end,
-      })
+        vim.api.nvim_create_autocmd('User', {
+          pattern = 'SidekickNesShow',
+          callback = function()
+            tiny_diags_disabled_by_nes = true
+            require('tiny-inline-diagnostic').disable()
+          end,
+        })
+      end
     end,
   },
   {
