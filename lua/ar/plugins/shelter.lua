@@ -44,7 +44,7 @@ return {
     },
   },
   {
-    'ph1losof/shelter.nvim',
+    'razak17/shelter.nvim',
     cond = function()
       if minimal then return ar.get_plugin_cond('shelter.nvim') end
       return get_cond('shelter.nvim', 'shelter')
