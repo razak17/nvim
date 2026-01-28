@@ -736,15 +736,43 @@ end
 ---@param bufnr number
 local function setup_omnifunc_completion(client, bufnr)
   if client:supports_method(M.textDocument_completion) then
-    lsp.completion.enable(true, client.id, bufnr, {
-      autotrigger = true,
-      convert = function(item)
-        return {
-          abbr = item.label:gsub('%b()', ''),
-          kind = lsp.protocol.CompletionItemKind[item.kind] or 'Text',
-        }
-      end,
-    })
+    local client_names = vim.tbl_map(
+      function(cl) return cl.name end,
+      lsp.get_clients({ bufnr = bufnr })
+    )
+    -- https://www.reddit.com/r/neovim/comments/1qp869n/native_tailwindcsscolorizercmp_alternative/
+    if vim.tbl_contains(client_names, 'tailwindcss') then
+      lsp.completion.enable(true, client.id, bufnr, {
+        convert = function(item)
+          local doc = item.documentation
+          if
+            not doc
+            or type(doc) ~= 'string'
+            or not vim.startswith(doc, '#')
+          then
+            return {}
+          end
+          local color = doc:sub(1, 7) -- Make sure to get the full hex code
+          local hl_color = color:sub(2) -- Remove the '#' for hl group name
+          local hl_group = 'lsp_color_' .. hl_color
+          api.nvim_set_hl(0, hl_group, { fg = color, bg = color })
+          return {
+            kind_hlgroup = 'lsp_color_' .. hl_color,
+            kind = 'XX',
+          }
+        end,
+      })
+    else
+      lsp.completion.enable(true, client.id, bufnr, {
+        autotrigger = true,
+        convert = function(item)
+          return {
+            abbr = item.label:gsub('%b()', ''),
+            kind = lsp.protocol.CompletionItemKind[item.kind] or 'Text',
+          }
+        end,
+      })
+    end
     require('ar.compl')(client, bufnr)
     -- api.nvim_set_option_value(
     --   'omnifunc',
