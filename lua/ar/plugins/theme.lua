@@ -59,6 +59,17 @@ return {
   ------------------------------------------------------------------------------
   -- Dark
   {
+  {
+    'voylin/godot_color_theme',
+    cond = get_cond({ 'godot' }),
+    priority = get_priority({ 'godot' }),
+    event = get_event({ 'godot' }),
+    init = function()
+      theming.apply_overrides('godot', {
+        { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.7 } } },
+      }, true)
+    end,
+  },
     {
       'oskarnurm/koda.nvim',
       cond = get_cond({ 'koda' }),

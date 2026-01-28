@@ -70,6 +70,7 @@
 - github_light_tritanopia
 - github_plus
 - glowbeam
+- godot
 - gruvbox
 - gruvbox-material
 - gruvbox-minimal
