@@ -53,6 +53,9 @@ return {
       ar.add_to_select_menu('toggle', {
         ['Toggle Shelter'] = 'Shelter toggle',
       })
+      ar.add_to_select_menu('command_palette', {
+        ['Shelter Peek'] = 'Shelter peek',
+      })
     end,
     build = ':ShelterBuild',
     lazy = false,
