@@ -49,6 +49,11 @@ return {
       if minimal then return ar.get_plugin_cond('shelter.nvim') end
       return get_cond('shelter.nvim', 'shelter')
     end,
+    init = function()
+      ar.add_to_select_menu('toggle', {
+        ['Toggle Shelter'] = 'Shelter toggle',
+      })
+    end,
     build = ':ShelterBuild',
     lazy = false,
     opts = {
