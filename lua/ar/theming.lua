@@ -1,9 +1,18 @@
 local variant = ar.config.colorscheme.variant
 local transparent = ar.config.ui.transparent.enable
 
+---@class HlOverride
+---@field default table?
+---@field popup table?
+---@field completion table?
+---@field lsp table?
+---@field picker table?
+---@field plugin table?
+
+---@param overrides? table
 ---@return table
-local function generate_popup_overrides()
-  local overrides = {
+local function generate_popup_overrides(overrides)
+  local hls = {
     {
       FloatTitle = {
         bg = { from = 'Type', attr = 'fg', alter = -0.45 },
@@ -15,7 +24,7 @@ local function generate_popup_overrides()
   local bg = vim.api.nvim_get_option_value('background', { scope = 'global' })
 
   if variant == 'fill' and not transparent then
-    ar.list_insert(overrides, {
+    ar.list_insert(hls, {
       {
         NormalFloat = {
           bg = { from = 'Normal', alter = bg == 'dark' and 0.25 or -0.1 },
@@ -32,7 +41,7 @@ local function generate_popup_overrides()
   end
 
   if variant == 'outline' or transparent then
-    ar.list_insert(overrides, {
+    ar.list_insert(hls, {
       {
         NormalFloat = {
           bg = { from = 'Normal' },
@@ -42,12 +51,15 @@ local function generate_popup_overrides()
       { FloatBorder = { link = 'VertSplit' } },
     })
   end
-  return overrides
+
+  ar.list_insert(hls, overrides or {})
+  return hls
 end
 
+---@param overrides? table
 ---@return table
-local function generate_completion_overrides()
-  return {
+local function generate_completion_overrides(overrides)
+  local hls = {
     { Pmenu = { link = 'NormalFloat' } },
     { PmenuBorder = { link = 'FloatBorder' } },
     {
@@ -79,11 +91,14 @@ local function generate_completion_overrides()
     { BlinkCmpLabelDescription = { link = 'PmenuExtra' } },
     { BlinkCmpLabelDeprecated = { strikethrough = true, link = 'Comment' } },
   }
+  ar.list_insert(hls, overrides or {})
+  return hls
 end
 
+---@param overrides? table
 ---@return table
-local function generate_lsp_overrides()
-  return {
+local function generate_lsp_overrides(overrides)
+  local hls = {
     {
       LspReferenceText = {
         bg = 'NONE',
@@ -95,11 +110,14 @@ local function generate_lsp_overrides()
     { LspReferenceWrite = { link = 'LspReferenceText', bold = false } },
     { LspReferenceTarget = { inherit = 'Dim', bold = true } },
   }
+  ar.list_insert(hls, overrides or {})
+  return hls
 end
 
+---@param overrides? table
 ---@return table
-local function generate_picker_overrides()
-  local overrides = {
+local function generate_picker_overrides(overrides)
+  local hls = {
     { PickerNormal = { link = 'NormalFloat' } },
     { PickerTitle = { link = 'FloatTitle' } },
     { PickerBorder = { link = 'FloatBorder' } },
@@ -113,7 +131,7 @@ local function generate_picker_overrides()
   }
 
   if variant == 'fill' then
-    ar.list_insert(overrides, {
+    ar.list_insert(hls, {
       { PickerPreview = { bg = { from = 'NormalFloat', alter = -0.1 } } },
       {
         PickerPreviewBorder = {
@@ -132,7 +150,7 @@ local function generate_picker_overrides()
   end
 
   if variant == 'outline' then
-    ar.list_insert(overrides, {
+    ar.list_insert(hls, {
       { PickerPreview = { bg = { from = 'NormalFloat' } } },
       { PickerPreviewBorder = { fg = { from = 'FloatBorder' } } },
       { PickerPrompt = { bg = { from = 'NormalFloat' } } },
@@ -140,7 +158,7 @@ local function generate_picker_overrides()
     })
   end
 
-  ar.list_insert(overrides, {
+  ar.list_insert(hls, {
     { SnacksPickerPrompt = { bg = 'NONE' } },
     { SnacksTitle = { link = 'PickerTitle' } },
     { SnacksInputNormal = { link = 'PickerPrompt' } },
@@ -174,23 +192,27 @@ local function generate_picker_overrides()
     { TelescopePreviewBorder = { link = 'PickerPreviewBorder' } },
   })
 
-  return overrides
+  ar.list_insert(hls, overrides or {})
+  return hls
 end
 
+---@param overrides? table
 ---@return table
-local function generate_plugin_overrides()
-  local overrides = {
+local function generate_plugin_overrides(overrides)
+  local hls = {
     { SnacksNotifierHistory = { link = 'PickerNormal' } },
   }
-  return overrides
+  ar.list_insert(hls, overrides or {})
+  return hls
 end
 
----@param override? table
+---@param overrides? HlOverride
 ---@return table
-local function generate_overrides(override)
-  local overrides = {}
-  if not ar.falsy(override) then ar.list_insert(overrides, override) end
-  ar.list_insert(overrides, {
+local function generate_overrides(overrides)
+  overrides = overrides or {}
+  local hls = {}
+  ar.list_insert(hls, overrides.default or {})
+  ar.list_insert(hls, {
     { Winbar = { link = 'Variable' } },
     { WinbarNC = { link = 'NonText' } },
     { MsgSeparator = { link = 'WinSeparator' } },
@@ -200,21 +222,21 @@ local function generate_overrides(override)
   })
   -- Order matters here
   ar.list_insert(
-    overrides,
-    generate_popup_overrides(),
-    generate_completion_overrides(),
-    generate_lsp_overrides(),
-    generate_picker_overrides(),
-    generate_plugin_overrides()
+    hls,
+    generate_popup_overrides(overrides.popup),
+    generate_completion_overrides(overrides.completion),
+    generate_lsp_overrides(overrides.lsp),
+    generate_picker_overrides(overrides.picker),
+    generate_plugin_overrides(overrides.plugin)
   )
-  return overrides
+  return hls
 end
 
 ---@param theme string
----@param overrides table
+---@param overrides? HlOverride
 ---@param should_generate boolean
 local function apply_overrides(theme, overrides, should_generate)
-  local theme_overrides = overrides or {}
+  local theme_overrides = overrides and overrides.default or {}
   if should_generate then theme_overrides = generate_overrides(overrides) end
   ar.augroup(theme .. '-theme', {
     event = { 'ColorScheme' },

@@ -173,167 +173,189 @@ local function colorscheme_overrides(colorscheme)
   local overrides = {
     -- builtin colorschemes
     ['default'] = theming.generate_overrides({
-      { NormalFloat = { link = 'Normal' } },
-      { CurSearch = { link = 'WildMenu' } },
-      { Folded = { bg = { from = 'CursorLine', alter = -0.2 } } },
-      { Comment = { fg = { from = 'Comment', alter = -0.2 } } },
-      { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.3 } } },
-      { Dim = { link = 'NonText' } },
-      { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.2 } } },
-      {
-        SpellBad = {
-          sp = { from = 'DiffAdd', attr = 'fg', alter = -0.35 },
-          reverse = false,
+      default = {
+        { NormalFloat = { link = 'Normal' } },
+        { CurSearch = { link = 'WildMenu' } },
+        { Folded = { bg = { from = 'CursorLine', alter = -0.2 } } },
+        { Comment = { fg = { from = 'Comment', alter = -0.2 } } },
+        { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.3 } } },
+        { Dim = { link = 'NonText' } },
+        { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.2 } } },
+        {
+          SpellBad = {
+            sp = { from = 'DiffAdd', attr = 'fg', alter = -0.35 },
+            reverse = false,
+          },
         },
+        { DiffAdd = { bg = { from = 'DiffAdd', alter = 0.05 } } },
+        { DiffChange = { bg = 'NONE', fg = '#72A2D2' } },
+        { DiffDelete = { bg = { from = 'Error', alter = -0.15 } } },
       },
-      { DiffAdd = { bg = { from = 'DiffAdd', alter = 0.05 } } },
-      { DiffChange = { bg = 'NONE', fg = '#72A2D2' } },
-      { DiffDelete = { bg = { from = 'Error', alter = -0.15 } } },
     }),
     ['habamax'] = theming.generate_overrides({
-      { Normal = { bg = { from = 'Normal', alter = -0.3 } } },
-      { NormalFloat = { bg = { from = 'Normal', alter = -0.5 } } },
-      {
-        Visual = {
-          bg = { from = 'Visual', alter = 0.5 },
-          fg = 'NONE',
-          reverse = false,
+      default = {
+        { Normal = { bg = { from = 'Normal', alter = -0.3 } } },
+        { NormalFloat = { bg = { from = 'Normal', alter = -0.5 } } },
+        {
+          Visual = {
+            bg = { from = 'Visual', alter = 0.5 },
+            fg = 'NONE',
+            reverse = false,
+          },
         },
-      },
-      { Dim = { link = 'NonText' } },
-      { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.2 } } },
-      {
-        SpellBad = {
-          sp = { from = 'DiffAdd', attr = 'fg', alter = -0.1 },
-          reverse = false,
+        { Dim = { link = 'NonText' } },
+        { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.2 } } },
+        {
+          SpellBad = {
+            sp = { from = 'DiffAdd', attr = 'fg', alter = -0.1 },
+            reverse = false,
+          },
         },
-      },
-      {
-        IncSearch = {
-          inherit = 'IncSearch',
-          bg = { from = 'IncSearch', attr = 'fg' },
-          fg = { from = 'IncSearch', attr = 'bg' },
-          reverse = false,
+        {
+          IncSearch = {
+            inherit = 'IncSearch',
+            bg = { from = 'IncSearch', attr = 'fg' },
+            fg = { from = 'IncSearch', attr = 'bg' },
+            reverse = false,
+          },
         },
-      },
-      {
-        DiffAdd = {
-          bg = { from = 'Added', attr = 'fg', alter = -0.65 },
-          fg = { from = 'Added' },
-          reverse = false,
+        {
+          DiffAdd = {
+            bg = { from = 'Added', attr = 'fg', alter = -0.65 },
+            fg = { from = 'Added' },
+            reverse = false,
+          },
         },
-      },
-      { DiffChange = { reverse = false } },
-      {
-        DiffDelete = {
-          bg = { from = 'Removed', attr = 'fg', alter = -0.55 },
-          fg = { from = 'Removed' },
-          reverse = false,
+        { DiffChange = { reverse = false } },
+        {
+          DiffDelete = {
+            bg = { from = 'Removed', attr = 'fg', alter = -0.55 },
+            fg = { from = 'Removed' },
+            reverse = false,
+          },
         },
       },
     }),
     ['peachpuff'] = theming.generate_overrides({
-      { NormalFloat = { link = 'Normal' } },
-      { Dim = { link = 'LineNr' } },
-      { Visual = { fg = 'NONE' } },
-      { WinSeparator = { fg = { from = 'Dim', alter = 0.5 }, bg = 'NONE' } },
+      default = {
+        { NormalFloat = { link = 'Normal' } },
+        { Dim = { link = 'LineNr' } },
+        { Visual = { fg = 'NONE' } },
+        { WinSeparator = { fg = { from = 'Dim', alter = 0.5 }, bg = 'NONE' } },
+      },
     }),
     ['retrobox'] = theming.generate_overrides({
-      { NormalFloat = { link = 'Normal' } },
-      { ColorColumn = { bg = { from = 'CursorLine', alter = 0.1 } } },
-      { Folded = { bg = { from = 'CursorLine', alter = -0.1 } } },
-      { CursorLine = { link = 'CursorLine' } },
-      { NonText = { fg = { from = 'NonText', alter = 0.4 } } },
-      { Visual = { bg = { from = 'CursorLine', alter = 0.2 }, fg = 'NONE' } },
-      { WinSeparator = { fg = { from = 'VertSplit' }, bg = 'NONE' } },
-      {
-        DiffAdd = {
-          bg = { from = 'Added', attr = 'fg', alter = -0.6 },
-          fg = { from = 'Added' },
-          reverse = false,
+      default = {
+        { NormalFloat = { link = 'Normal' } },
+        { ColorColumn = { bg = { from = 'CursorLine', alter = 0.1 } } },
+        { Folded = { bg = { from = 'CursorLine', alter = -0.1 } } },
+        { CursorLine = { link = 'CursorLine' } },
+        { NonText = { fg = { from = 'NonText', alter = 0.4 } } },
+        { Visual = { bg = { from = 'CursorLine', alter = 0.2 }, fg = 'NONE' } },
+        { WinSeparator = { fg = { from = 'VertSplit' }, bg = 'NONE' } },
+        {
+          DiffAdd = {
+            bg = { from = 'Added', attr = 'fg', alter = -0.6 },
+            fg = { from = 'Added' },
+            reverse = false,
+          },
         },
-      },
-      {
-        DiffChange = {
-          fg = { from = 'Changed', attr = 'fg', alter = 0.65 },
-          reverse = false,
+        {
+          DiffChange = {
+            fg = { from = 'Changed', attr = 'fg', alter = 0.65 },
+            reverse = false,
+          },
         },
-      },
-      {
-        DiffDelete = {
-          bg = { from = 'Removed', attr = 'fg', alter = -0.65 },
-          fg = { from = 'Removed' },
-          reverse = false,
+        {
+          DiffDelete = {
+            bg = { from = 'Removed', attr = 'fg', alter = -0.65 },
+            fg = { from = 'Removed' },
+            reverse = false,
+          },
         },
       },
     }),
     ['slate'] = theming.generate_overrides({
-      { NormalFloat = { link = 'Normal' } },
-      { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
-      { Dim = { link = 'Comment' } },
-      { Visual = { bg = { from = 'Visual', alter = -0.4 }, fg = 'NONE' } },
-      { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.3 } } },
-      {
-        DiffAdd = {
-          bg = { from = 'Added', attr = 'fg', alter = -0.55 },
-          fg = { from = 'Added' },
+      default = {
+        { NormalFloat = { link = 'Normal' } },
+        { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
+        { Dim = { link = 'Comment' } },
+        { Visual = { bg = { from = 'Visual', alter = -0.4 }, fg = 'NONE' } },
+        { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.3 } } },
+        {
+          DiffAdd = {
+            bg = { from = 'Added', attr = 'fg', alter = -0.55 },
+            fg = { from = 'Added' },
+          },
         },
-      },
-      { DiffChange = { bg = 'NONE', fg = '#72A2D2' } },
-      {
-        DiffDelete = {
-          bg = { from = 'Removed', attr = 'fg', alter = -0.6 },
-          fg = { from = 'Removed' },
+        { DiffChange = { bg = 'NONE', fg = '#72A2D2' } },
+        {
+          DiffDelete = {
+            bg = { from = 'Removed', attr = 'fg', alter = -0.6 },
+            fg = { from = 'Removed' },
+          },
         },
       },
     }),
     ['vim'] = theming.generate_overrides({
-      { Normal = { bg = '#24283b' } },
-      { NormalFloat = { link = 'Normal' } },
-      { Comment = { fg = { from = 'Comment', alter = -0.3 } } },
-      { Title = { fg = { from = 'Title', alter = 0.4 } } },
-      { LineNr = { fg = { from = 'Comment' } } },
-      { NonText = { fg = { from = 'Comment' } } },
-      { CursorLine = { bg = { from = 'CursorLine', alter = -0.5 } } },
-      { Conceal = { bg = { from = 'CursorLine' } } },
-      { Folded = { bg = { from = 'CursorLine', alter = 0.15 } } },
-      { Visual = { fg = { from = 'CursorLine', alter = 0.1 } } },
-      { Search = { bg = { from = 'Search', alter = -0.2 } } },
-      { IncSearch = { link = 'Search' } },
-      {
-        WinSeparator = { bg = 'NONE', fg = { from = 'NonText', alter = -0.2 } },
-      },
-      {
-        DiffAdd = {
-          bg = { from = 'Added', attr = 'fg', alter = -0.55 },
-          fg = { from = 'Added' },
+      default = {
+        { Normal = { bg = '#24283b' } },
+        { NormalFloat = { link = 'Normal' } },
+        { Comment = { fg = { from = 'Comment', alter = -0.3 } } },
+        { Title = { fg = { from = 'Title', alter = 0.4 } } },
+        { LineNr = { fg = { from = 'Comment' } } },
+        { NonText = { fg = { from = 'Comment' } } },
+        { CursorLine = { bg = { from = 'CursorLine', alter = -0.5 } } },
+        { Conceal = { bg = { from = 'CursorLine' } } },
+        { Folded = { bg = { from = 'CursorLine', alter = 0.15 } } },
+        { Visual = { fg = { from = 'CursorLine', alter = 0.1 } } },
+        { Search = { bg = { from = 'Search', alter = -0.2 } } },
+        { IncSearch = { link = 'Search' } },
+        {
+          WinSeparator = {
+            bg = 'NONE',
+            fg = { from = 'NonText', alter = -0.2 },
+          },
         },
-      },
-      {
-        DiffChange = { bg = 'NONE', fg = { from = 'DiffChange', alter = 1.2 } },
-      },
-      {
-        DiffDelete = {
-          bg = { from = 'Removed', attr = 'fg', alter = -0.6 },
-          fg = { from = 'Removed' },
+        {
+          DiffAdd = {
+            bg = { from = 'Added', attr = 'fg', alter = -0.55 },
+            fg = { from = 'Added' },
+          },
+        },
+        {
+          DiffChange = {
+            bg = 'NONE',
+            fg = { from = 'DiffChange', alter = 1.2 },
+          },
+        },
+        {
+          DiffDelete = {
+            bg = { from = 'Removed', attr = 'fg', alter = -0.6 },
+            fg = { from = 'Removed' },
+          },
         },
       },
     }),
     ['wildcharm'] = theming.generate_overrides({
-      { NormalFloat = { link = 'Normal' } },
-      { Visual = { link = 'CursorLine' } },
-      { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.45 } } },
-      {
-        DiffAdd = {
-          bg = { from = 'Added', attr = 'fg', alter = -0.65 },
-          fg = { from = 'Added' },
+      default = {
+        { NormalFloat = { link = 'Normal' } },
+        { Visual = { link = 'CursorLine' } },
+        { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.45 } } },
+        {
+          DiffAdd = {
+            bg = { from = 'Added', attr = 'fg', alter = -0.65 },
+            fg = { from = 'Added' },
+          },
         },
-      },
-      { DiffChange = { bg = 'NONE', fg = { from = 'Changed', alter = -0.2 } } },
-      {
-        DiffDelete = {
-          bg = { from = 'Removed', attr = 'fg', alter = -0.55 },
-          fg = { from = 'Removed' },
+        {
+          DiffChange = { bg = 'NONE', fg = { from = 'Changed', alter = -0.2 } },
+        },
+        {
+          DiffDelete = {
+            bg = { from = 'Removed', attr = 'fg', alter = -0.55 },
+            fg = { from = 'Removed' },
+          },
         },
       },
     }),

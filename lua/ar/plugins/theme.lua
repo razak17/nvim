@@ -51,25 +51,30 @@ return {
         { Dim = { link = 'VertSplit' } },
         -- { ['@variable'] = { fg = { from = '@none' } } },
       }
-      ar.list_insert(overrides, theming.generate_completion_overrides())
-      ar.list_insert(overrides, theming.generate_lsp_overrides())
-      theming.apply_overrides('onedark', overrides)
+      ar.list_insert(
+        overrides,
+        theming.generate_completion_overrides(),
+        theming.generate_lsp_overrides()
+      )
+      theming.apply_overrides('onedark', { default = overrides })
     end,
   },
   ------------------------------------------------------------------------------
   -- Dark
   {
-  {
-    'voylin/godot_color_theme',
-    cond = get_cond({ 'godot' }),
-    priority = get_priority({ 'godot' }),
-    event = get_event({ 'godot' }),
-    init = function()
-      theming.apply_overrides('godot', {
-        { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.7 } } },
-      }, true)
-    end,
-  },
+    {
+      'voylin/godot_color_theme',
+      cond = get_cond({ 'godot' }),
+      priority = get_priority({ 'godot' }),
+      event = get_event({ 'godot' }),
+      init = function()
+        theming.apply_overrides('godot', {
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.7 } } },
+          },
+        }, true)
+      end,
+    },
     {
       'oskarnurm/koda.nvim',
       cond = get_cond({ 'koda' }),
@@ -77,7 +82,11 @@ return {
       event = get_event({ 'koda' }),
       init = function()
         theming.apply_overrides('koda', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.75 } } },
+          default = {
+            {
+              WinSeparator = { fg = { from = 'WinSeparator', alter = -0.75 } },
+            },
+          },
         }, true)
       end,
     },
@@ -91,10 +100,12 @@ return {
       },
       init = function()
         theming.apply_overrides('terracotta', {
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = -0.1 },
+          default = {
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = -0.1 },
+              },
             },
           },
         }, true)
@@ -107,12 +118,14 @@ return {
       event = get_event({ 'anticuus' }),
       init = function()
         theming.apply_overrides('anticuus', {
-          { Added = { fg = { from = 'Added', alter = -0.45 } } },
-          { Changed = { fg = { from = 'Changed', alter = -0.15 } } },
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = -0.7 },
+          default = {
+            { Added = { fg = { from = 'Added', alter = -0.45 } } },
+            { Changed = { fg = { from = 'Changed', alter = -0.15 } } },
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = -0.7 },
+              },
             },
           },
         }, true)
@@ -131,12 +144,17 @@ return {
       },
       init = function()
         theming.apply_overrides('heap-dark', {
-          { GitSignsChange = { fg = { from = 'Changed', alter = -0.25 } } },
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = 4.5 },
+          default = {
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = 4.5 },
+              },
             },
+          },
+          plugin = {
+            { GitSignsAdd = { fg = { from = 'Added', alter = -0.45 } } },
+            { GitSignsChange = { fg = { from = 'Changed', alter = -0.2 } } },
           },
         }, true)
       end,
@@ -148,22 +166,23 @@ return {
       event = get_event({ 'rams' }),
       init = function()
         theming.apply_overrides('rams', {
-          { CursorLine = { bg = { from = 'Normal', alter = 0.9 } } },
-          { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
-          { LineNr = { fg = { from = 'LineNr', alter = -0.4 } } },
-          {
-            Visual = {
-              bg = { from = 'CursorLine', alter = 0.3 },
-              reverse = false,
+          default = {
+            { CursorLine = { bg = { from = 'Normal', alter = 0.9 } } },
+            { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
+            { LineNr = { fg = { from = 'LineNr', alter = -0.4 } } },
+            {
+              Visual = {
+                bg = { from = 'CursorLine', alter = 0.3 },
+                reverse = false,
+              },
             },
+            { DiffAdd = { bg = { from = 'DiffAdd', alter = -0.65 } } },
+            { WinSeparator = { fg = { from = 'LineNr', alter = -0.6 } } },
           },
-          { DiffAdd = { bg = { from = 'DiffAdd', alter = -0.65 } } },
-          {
-            GitSignsAdd = {
-              fg = { from = 'DiffAdd', attr = 'bg', alter = 1.1 },
-            },
+          plugin = {
+            { GitSignsAdd = { fg = { from = 'Added', alter = -0.35 } } },
+            { GitSignsChange = { fg = { from = 'Changed', alter = -0.15 } } },
           },
-          { WinSeparator = { fg = { from = 'LineNr', alter = -0.6 } } },
         }, true)
       end,
     },
@@ -174,10 +193,12 @@ return {
       event = get_event({ 'yoda' }),
       init = function()
         theming.apply_overrides('yoda', {
-          { CursorLine = { bg = { from = 'Normal', alter = 2.7 } } },
-          { Folded = { bg = { from = 'CursorLine', alter = 0.2 } } },
-          { Visual = { bg = { from = 'CursorLine', alter = 0.3 } } },
-          { WinSeparator = { fg = { from = 'LineNr', alter = -0.1 } } },
+          default = {
+            { CursorLine = { bg = { from = 'Normal', alter = 2.7 } } },
+            { Folded = { bg = { from = 'CursorLine', alter = 0.2 } } },
+            { Visual = { bg = { from = 'CursorLine', alter = 0.3 } } },
+            { WinSeparator = { fg = { from = 'LineNr', alter = -0.1 } } },
+          },
         }, true)
       end,
     },
@@ -188,7 +209,9 @@ return {
       event = get_event({ 'mapledark' }),
       init = function()
         theming.apply_overrides('mapledark', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
+          },
         }, true)
       end,
       opts = { disable_plugin_highlights = false, plugins = { 'lazy' } },
@@ -198,25 +221,34 @@ return {
       cond = get_cond({ 'vague' }),
       priority = get_priority({ 'vague' }),
       event = get_event({ 'vague' }),
-      opts = {
-        transparent = ar.config.ui.transparent.enable,
-        colors = { floatBorder = '#252530' },
-      },
+      opts = { colors = { floatBorder = '#252530' } },
       init = function()
         local overrides = {
-          { StatusLine = { bg = 'NONE' } },
-          { FloatBorder = { link = 'VertSplit' } },
-          {
-            FloatTitle = { bg = { from = 'Visual' }, fg = { from = 'Normal' } },
+          default = {
+            { StatusLine = { bg = 'NONE' } },
+            { FloatBorder = { link = 'VertSplit' } },
+            {
+              FloatTitle = {
+                bg = { from = 'Visual' },
+                fg = { from = 'Normal' },
+              },
+            },
+            { Winbar = { link = 'Variable' } },
+            { WinbarNC = { link = 'LineNr' } },
+            { WinSeparator = { fg = { from = 'VertSplit', alter = 0.1 } } },
+            { VertSplit = { link = 'WinSeparator' } },
+            { IndentBlanklineChar = { link = 'VertSplit' } },
+            { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
           },
-          { Winbar = { link = 'Variable' } },
-          { WinbarNC = { link = 'LineNr' } },
-          { IndentBlanklineChar = { link = 'VertSplit' } },
-          { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-          {
-            SnacksPickerToggle = { bg = { from = 'FloatTitle' }, italic = true },
+          picker = {
+            {
+              SnacksPickerToggle = {
+                bg = { from = 'FloatTitle' },
+                italic = true,
+              },
+            },
+            { TelescopeTitle = { link = 'FloatTitle' } },
           },
-          { TelescopeTitle = { link = 'FloatTitle' } },
         }
         ar.list_insert(overrides, theming.generate_completion_overrides())
         ar.list_insert(overrides, theming.generate_lsp_overrides())
@@ -231,7 +263,9 @@ return {
       event = get_event({ 'catppuccin' }),
       init = function()
         theming.apply_overrides('catppuccin', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = 2.2 } } },
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = 2.2 } } },
+          },
         }, true)
       end,
     },
@@ -242,7 +276,9 @@ return {
       event = get_event({ 'blackhole' }),
       init = function()
         theming.apply_overrides('blackhole', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
+          },
         }, true)
       end,
     },
@@ -253,13 +289,17 @@ return {
       event = get_event({ 'yugen' }),
       init = function()
         theming.apply_overrides('yugen', {
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = -0.1 },
+          default = {
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = -0.1 },
+              },
             },
           },
-          { WhichKeyBorder = { link = 'FloatBorder' } },
+          plugin = {
+            { WhichKeyBorder = { link = 'FloatBorder' } },
+          },
         }, true)
       end,
     },
@@ -271,10 +311,12 @@ return {
       event = get_event({ 'moonfly' }),
       init = function()
         theming.apply_overrides('moonfly', {
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = -0.1 },
+          default = {
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = -0.1 },
+              },
             },
           },
         }, true)
@@ -287,7 +329,9 @@ return {
       event = get_event({ 'glowbeam' }),
       init = function()
         theming.apply_overrides('glowbeam', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.7 } } },
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.7 } } },
+          },
         }, true)
       end,
     },
@@ -298,10 +342,12 @@ return {
       event = get_event({ 'afterglow' }),
       init = function()
         theming.apply_overrides('afterglow', {
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = -0.7 },
+          default = {
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = -0.7 },
+              },
             },
           },
         }, true)
@@ -314,58 +360,18 @@ return {
       event = get_event({ 'sunbather' }),
       init = function()
         theming.apply_overrides('sunbather', {
-          { Visual = { bg = { from = 'Visual', alter = -0.7 }, fg = 'NONE' } },
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = -0.7 },
+          default = {
+            {
+              Visual = { bg = { from = 'Visual', alter = -0.7 }, fg = 'NONE' },
+            },
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = -0.7 },
+              },
             },
           },
         }, true)
-      end,
-    },
-    {
-      'ianklapouch/wildberries.nvim',
-      cond = get_cond({ 'wildberries' }),
-      priority = get_priority({ 'wildberries' }),
-      event = get_event({ 'wildberries' }),
-      init = function()
-        local overrides = {
-          { LineNr = { fg = { from = 'LineNr', alter = -0.35 } } },
-          { NonText = { fg = { from = 'NonText', alter = 0.4 } } },
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
-          { StatusLine = { bg = 'NONE', reverse = false } },
-          { Winbar = { link = 'Variable' } },
-          { WinbarNC = { link = 'NonText' } },
-          { MsgSeparator = { link = 'WinSeparator' } },
-          { VertSplit = { link = 'WinSeparator' } },
-          { IndentBlanklineChar = { link = 'VertSplit' } },
-          { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-          {
-            GitSignsAdd = {
-              fg = { from = 'DiffAdd', attr = 'bg', alter = 0.4 },
-            },
-          },
-          {
-            GitSignsChange = {
-              fg = { from = 'DiagnosticInfo', attr = 'fg', alter = 0.2 },
-            },
-          },
-        }
-        ar.list_insert(
-          overrides,
-          theming.generate_popup_overrides(),
-          theming.generate_completion_overrides(),
-          theming.generate_lsp_overrides(),
-          theming.generate_picker_overrides(),
-          theming.generate_plugin_overrides(),
-          {
-            { SnacksPickerInput = { link = 'PickerPrompt' } },
-            { SnacksPickerInputBorder = { link = 'PickerPromptBorder' } },
-            { SnacksPickerInputTitle = { link = 'PickerTitle' } },
-          }
-        )
-        theming.apply_overrides('wildberries', overrides)
       end,
     },
     {
@@ -375,11 +381,13 @@ return {
       event = get_event({ 'ferriouscolor' }),
       init = function()
         theming.apply_overrides('ferriouscolor', {
-          { Visual = { bg = { from = 'Visual', alter = -0.4 } } },
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = -0.05 },
+          default = {
+            { Visual = { bg = { from = 'Visual', alter = -0.4 } } },
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = -0.05 },
+              },
             },
           },
         }, true)
@@ -393,7 +401,11 @@ return {
       event = get_event({ 'lemons' }),
       init = function()
         theming.apply_overrides('lemons', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.15 } } },
+          default = {
+            {
+              WinSeparator = { fg = { from = 'WinSeparator', alter = -0.15 } },
+            },
+          },
         }, true)
       end,
     },
@@ -404,7 +416,9 @@ return {
       event = get_event({ 'jellybeans' }),
       init = function()
         theming.apply_overrides('jellybeans', {
-          { WinSeparator = { fg = { from = 'LineNr', alter = -0.35 } } },
+          default = {
+            { WinSeparator = { fg = { from = 'LineNr', alter = -0.35 } } },
+          },
         }, true)
       end,
     },
@@ -428,11 +442,13 @@ return {
       event = get_event({ 'cyberdream' }),
       init = function()
         theming.apply_overrides('cyberdream', {
-          { CursorLine = { bg = { from = 'CursorLine', alter = -0.25 } } },
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = -0.15 },
+          default = {
+            { CursorLine = { bg = { from = 'CursorLine', alter = -0.25 } } },
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = -0.15 },
+              },
             },
           },
         }, true)
@@ -447,11 +463,13 @@ return {
       opts = {},
       init = function()
         theming.apply_overrides('oasis', {
-          -- { Folded = { bg = { from = 'Folded', alter = -0.1 } } },
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = -0.45 },
+          default = {
+            -- { Folded = { bg = { from = 'Folded', alter = -0.1 } } },
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = -0.45 },
+              },
             },
           },
         }, true)
@@ -464,10 +482,12 @@ return {
       event = get_event({ 'yukinord' }),
       init = function()
         theming.apply_overrides('yukinord', {
-          { DiagnosticVirtualTextInfo = { bg = 'NONE' } },
-          { DiagnosticVirtualTextHint = { bg = 'NONE' } },
-          { DiagnosticVirtualTextWarn = { bg = 'NONE' } },
-          { DiagnosticVirtualTextError = { bg = 'NONE' } },
+          default = {
+            { DiagnosticVirtualTextInfo = { bg = 'NONE' } },
+            { DiagnosticVirtualTextHint = { bg = 'NONE' } },
+            { DiagnosticVirtualTextWarn = { bg = 'NONE' } },
+            { DiagnosticVirtualTextError = { bg = 'NONE' } },
+          },
         }, true)
       end,
     },
@@ -478,7 +498,9 @@ return {
       event = get_event({ 'christmas' }),
       init = function()
         theming.apply_overrides('christmas', {
-          { WinSeparator = { fg = { from = 'LineNr', alter = -0.6 } } },
+          default = {
+            { WinSeparator = { fg = { from = 'LineNr', alter = -0.6 } } },
+          },
         }, true)
       end,
     },
@@ -489,10 +511,12 @@ return {
       event = get_event({ 'oxocarbon' }),
       init = function()
         theming.apply_overrides('oxocarbon', {
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'LineNr', alter = -0.2 },
+          default = {
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'LineNr', alter = -0.2 },
+              },
             },
           },
         }, true)
@@ -509,7 +533,11 @@ return {
           ['Batman Colors'] = require('ar.batman_scheme_switcher').colorscheme_menu,
         })
         theming.apply_overrides('batman', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.45 } } },
+          default = {
+            {
+              WinSeparator = { fg = { from = 'WinSeparator', alter = -0.45 } },
+            },
+          },
         }, true)
       end,
     },
@@ -520,7 +548,9 @@ return {
       event = get_event({ 'zen' }),
       init = function()
         theming.apply_overrides('zen', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = 1.45 } } },
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = 1.45 } } },
+          },
         }, true)
       end,
     },
@@ -531,8 +561,12 @@ return {
       event = get_event({ 'Alienocean' }),
       init = function()
         theming.apply_overrides('Alienocean', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.7 } } },
-          { WhichKeyBorder = { link = 'FloatBorder' } },
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.7 } } },
+          },
+          plugin = {
+            { WhichKeyBorder = { link = 'FloatBorder' } },
+          },
         }, true)
       end,
     },
@@ -547,10 +581,12 @@ return {
       event = get_event({ 'deepwater' }),
       init = function()
         theming.apply_overrides('deepwater', {
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = -0.7 },
+          default = {
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = -0.7 },
+              },
             },
           },
         }, true)
@@ -563,16 +599,19 @@ return {
       event = get_event({ 'nightgem' }),
       init = function()
         theming.apply_overrides('nightgem', {
-          { CursorLine = { bg = { from = 'CursorLine', alter = -0.2 } } },
-          { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
-          { Visual = { bg = { from = 'CursorLine', alter = 0.1 } } },
-          { DiffAdd = { bg = { from = 'DiffAdd', alter = -0.15 } } },
-          {
-            GitSignsAdd = {
-              fg = { from = 'DiffAdd', attr = 'bg', alter = 1.1 },
+          default = {
+            { CursorLine = { bg = { from = 'CursorLine', alter = -0.2 } } },
+            { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
+            { Visual = { bg = { from = 'CursorLine', alter = 0.1 } } },
+            { Added = { fg = { from = 'Added', alter = -0.45 } } },
+            { DiffAdd = { bg = { from = 'DiffAdd', alter = -0.15 } } },
+            {
+              DiffChange = {
+                bg = { from = 'Changed', attr = 'fg', alter = -0.35 },
+              },
             },
+            { WinSeparator = { fg = { from = 'Comment' } } },
           },
-          { WinSeparator = { fg = { from = 'Comment' } } },
         }, true)
       end,
     },
@@ -590,7 +629,9 @@ return {
       event = get_event({ 'irises' }),
       init = function()
         theming.apply_overrides('irises', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.7 } } },
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.7 } } },
+          },
         }, true)
       end,
     },
@@ -601,7 +642,9 @@ return {
       event = get_event({ 'melange' }),
       init = function()
         theming.apply_overrides('melange', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
+          },
         }, true)
       end,
     },
@@ -612,11 +655,13 @@ return {
       event = get_event({ 'gruvbox-minimal' }),
       init = function()
         theming.apply_overrides('gruvbox-minimal', {
-          { Visual = { bg = { from = 'Visual', alter = -0.3 } } },
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = -0.7 },
+          default = {
+            { Visual = { bg = { from = 'Visual', alter = -0.3 } } },
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = -0.7 },
+              },
             },
           },
         }, true)
@@ -629,10 +674,12 @@ return {
       event = get_event({ 'zenburn' }),
       init = function()
         theming.apply_overrides('zenburn', {
-          { NonText = { fg = { from = 'NonText', alter = 0.3 } } },
-          { Visual = { bg = { from = 'Visual', alter = 0.65 } } },
-          { Dim = { link = 'Comment' } },
-          { WinSeparator = { fg = { from = 'Dim', alter = -0.3 } } },
+          default = {
+            { NonText = { fg = { from = 'NonText', alter = 0.3 } } },
+            { Visual = { bg = { from = 'Visual', alter = 0.65 } } },
+            { Dim = { link = 'Comment' } },
+            { WinSeparator = { fg = { from = 'Dim', alter = -0.3 } } },
+          },
         }, true)
       end,
     },
@@ -643,7 +690,9 @@ return {
       event = get_event({ 'gruvdark' }),
       init = function()
         theming.apply_overrides('gruvdark', {
-          { Comment = { fg = { from = 'Comment', alter = 0.25 } } },
+          default = {
+            { Comment = { fg = { from = 'Comment', alter = 0.25 } } },
+          },
         }, true)
       end,
     },
@@ -655,8 +704,12 @@ return {
       event = get_event({ 'earthsong', 'earthsong-mute' }),
       init = function()
         theming.apply_overrides('earthsong-mute', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.2 } } },
-          { WhichKeyBorder = { link = 'FloatBorder' } },
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.2 } } },
+          },
+          plugin = {
+            { WhichKeyBorder = { link = 'FloatBorder' } },
+          },
         }, true)
       end,
     },
@@ -678,14 +731,20 @@ return {
       event = get_event({ 'zenbones', 'kanagawabones' }),
       init = function()
         theming.apply_overrides('zenbones', {
-          { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.2 } } },
-          { CursorLine = { bg = { from = 'CursorLine', alter = 0.1 } } },
-          { Folded = { bg = { from = 'Folded', alter = -0.2 } } },
-          { WinSeparator = { fg = { from = 'VertSplit', alter = -0.35 } } },
+          default = {
+            { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.2 } } },
+            { CursorLine = { bg = { from = 'CursorLine', alter = 0.1 } } },
+            { Folded = { bg = { from = 'Folded', alter = -0.2 } } },
+            { WinSeparator = { fg = { from = 'VertSplit', alter = -0.35 } } },
+          },
         }, true)
         theming.apply_overrides('kanagawabones', {
-          { CursorLine = { bg = { from = 'CursorLine', alter = 0.2 } } },
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.15 } } },
+          default = {
+            { CursorLine = { bg = { from = 'CursorLine', alter = 0.2 } } },
+            {
+              WinSeparator = { fg = { from = 'WinSeparator', alter = -0.15 } },
+            },
+          },
         }, true)
       end,
       dependencies = 'rktjmp/lush.nvim',
@@ -698,9 +757,15 @@ return {
       opts = { transparent = ar.config.ui.transparent.enable },
       init = function()
         theming.apply_overrides('conifer', {
-          { DiffAdd = { bg = { from = 'DiffAdd', alter = 3.15 } } },
-          { GitSignsAdd = { fg = { from = 'DiffAdd', attr = 'bg' } } },
-          { WinSeparator = { fg = { from = 'LineNr' } } },
+          default = {
+            { DiffAdd = { bg = { from = 'DiffAdd', alter = 2.45 } } },
+            { DiffChange = { bg = { from = 'DiffChange', alter = 2.45 } } },
+            { WinSeparator = { fg = { from = 'LineNr' } } },
+          },
+          plugin = {
+            { GitSignsAdd = { fg = { from = 'Added', alter = -0.35 } } },
+            { GitSignsChange = { fg = { from = 'Changed', alter = -0.45 } } },
+          },
         }, true)
       end,
     },
@@ -712,21 +777,25 @@ return {
       opts = { transparent = ar.config.ui.transparent.enable },
       init = function()
         theming.apply_overrides('nanode', {
-          { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.2 } } },
-          { Comment = { fg = { from = 'Comment', alter = -0.3 } } },
-          { CursorLine = { bg = { from = 'CursorLine', alter = 0.8 } } },
-          { CursorLineNr = { link = 'String' } },
-          { LineNr = { fg = { from = 'LineNr', alter = -0.3 } } },
-          { Visual = { bg = { from = 'Visual', alter = -0.6 }, fg = 'NONE' } },
-          { Dim = { fg = { from = 'Comment', alter = -0.3 } } },
-          { NonText = { fg = { from = 'NonText', alter = 0.3 } } },
-          { Folded = { bg = { from = 'CursorLine', alter = 0.2 } } },
-          { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.55 } } },
-          { DiffAdd = { bg = { from = 'DiffAdd', alter = 0.85 } } },
-          { GitSignsAdd = { fg = { from = 'DiffAdd', attr = 'bg' } } },
-          { DiffChange = { bg = { from = 'DiffChange', alter = 0.85 } } },
-          { GitSignsChange = { fg = { from = 'DiffChange', attr = 'bg' } } },
-          { WinSeparator = { fg = { from = 'LineNr', alter = -0.4 } } },
+          default = {
+            { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.2 } } },
+            { Comment = { fg = { from = 'Comment', alter = -0.3 } } },
+            { CursorLine = { bg = { from = 'CursorLine', alter = 0.8 } } },
+            { CursorLineNr = { link = 'String' } },
+            { LineNr = { fg = { from = 'LineNr', alter = -0.3 } } },
+            {
+              Visual = { bg = { from = 'Visual', alter = -0.6 }, fg = 'NONE' },
+            },
+            { Dim = { fg = { from = 'Comment', alter = -0.3 } } },
+            { NonText = { fg = { from = 'NonText', alter = 0.3 } } },
+            { Folded = { bg = { from = 'CursorLine', alter = 0.2 } } },
+            { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.55 } } },
+            { WinSeparator = { fg = { from = 'LineNr', alter = -0.4 } } },
+          },
+          plugin = {
+            { GitSignsAdd = { fg = { from = 'Added', alter = -0.35 } } },
+            { GitSignsChange = { fg = { from = 'Changed', alter = -0.15 } } },
+          },
         }, true)
       end,
     },
@@ -737,12 +806,14 @@ return {
       event = get_event({ 'lackluster' }),
       init = function()
         theming.apply_overrides('lackluster', {
-          { Winbar = { link = 'Variable' } },
-          { WinbarNC = { link = 'LineNr' } },
-          { CursorLine = { bg = { from = 'CursorLine', alter = 0.2 } } },
-          { Folded = { bg = { from = 'CursorLine', alter = 0.2 } } },
-          { Visual = { link = 'CursorLine' } },
-          { WinSeparator = { fg = { from = 'LineNr', alter = -0.4 } } },
+          default = {
+            { Winbar = { link = 'Variable' } },
+            { WinbarNC = { link = 'LineNr' } },
+            { CursorLine = { bg = { from = 'CursorLine', alter = 0.2 } } },
+            { Folded = { bg = { from = 'CursorLine', alter = 0.2 } } },
+            { Visual = { link = 'CursorLine' } },
+            { WinSeparator = { fg = { from = 'LineNr', alter = -0.4 } } },
+          },
         }, true)
       end,
       opts = function()
@@ -761,10 +832,15 @@ return {
       event = get_event({ 'oldworld' }),
       init = function()
         theming.apply_overrides('oldworld', {
-          { Winbar = { link = 'Variable' } },
-          { WinbarNC = { link = 'LineNr' } },
-          { DiffAdd = { bg = { from = 'DiffAdd', alter = 1.5 } } },
-          { GitSignsAdd = { fg = { from = 'DiffAdd', attr = 'bg' } } },
+          default = {
+            { Winbar = { link = 'Variable' } },
+            { WinbarNC = { link = 'LineNr' } },
+            { DiffAdd = { bg = { from = 'DiffAdd', alter = 1.5 } } },
+          },
+          default = {
+            { GitSignsAdd = { fg = { from = 'Added', alter = -0.45 } } },
+            { GitSignsChange = { fg = { from = 'Changed', alter = -0.25 } } },
+          },
         }, true)
       end,
     },
@@ -775,7 +851,9 @@ return {
       event = get_event({ 'alabaster' }),
       init = function()
         theming.apply_overrides('alabaster', {
-          { WinSeparator = { fg = { from = 'NonText', alter = -0.4 } } },
+          default = {
+            { WinSeparator = { fg = { from = 'NonText', alter = -0.4 } } },
+          },
         }, true)
       end,
     },
@@ -786,12 +864,15 @@ return {
       event = get_event({ 'monoglow-z' }),
       init = function()
         theming.apply_overrides('monoglow-z', {
-          { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
-          { Visual = { bg = { from = 'CursorLine', alter = 0.35 } } },
-          { DiffAdd = { bg = { from = 'DiffAdd', alter = -0.15 } } },
-          {
-            GitSignsAdd = {
-              fg = { from = 'DiffAdd', attr = 'bg', alter = -0.15 },
+          default = {
+            { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
+            { Visual = { bg = { from = 'CursorLine', alter = 0.35 } } },
+            { DiffAdd = { bg = { from = 'DiffAdd', alter = -0.15 } } },
+          },
+          plugin = {
+            { GitSignsAdd = { fg = { from = 'Added', alter = 0.05 } } },
+            {
+              GitSignsChange = { fg = { from = 'Changed', alter = -0.05 } },
             },
           },
         }, true)
@@ -804,8 +885,10 @@ return {
       event = get_event({ 'backpack' }),
       init = function()
         theming.apply_overrides('backpack', {
-          { Visual = { link = 'CursorLine' } },
-          { Folded = { bg = { from = 'Folded', alter = 0.1 } } },
+          default = {
+            { Visual = { link = 'CursorLine' } },
+            { Folded = { bg = { from = 'Folded', alter = 0.1 } } },
+          },
         }, true)
       end,
     },
@@ -816,23 +899,32 @@ return {
       event = get_event({ 'poimandres' }),
       init = function()
         theming.apply_overrides('poimandres', {
-          { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.55 } } },
-          { Folded = { bg = { from = 'Folded', alter = 0.7 } } },
-          { Visual = { bg = { from = 'Visual', alter = -0.25 }, fg = 'NONE' } },
-          { Dim = { inherit = 'WinSeparator' } },
-          { DiffAdd = { bg = { from = 'DiffAdd', alter = -0.55 } } },
-          { DiffChange = { bg = { from = 'DiffChange', alter = -0.45 } } },
-          { DiffDelete = { bg = { from = 'DiffDelete', alter = -0.25 } } },
-          {
-            WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.7 } },
-          },
-          {
-            GitSignsAdd = {
-              fg = { from = 'DiffAdd', attr = 'bg', alter = 0.2 },
+          default = {
+            { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.55 } } },
+            { Folded = { bg = { from = 'Folded', alter = 0.7 } } },
+            {
+              Visual = { bg = { from = 'Visual', alter = -0.25 }, fg = 'NONE' },
+            },
+            { Dim = { inherit = 'WinSeparator' } },
+            { DiffAdd = { bg = { from = 'DiffAdd', alter = -0.55 } } },
+            { DiffChange = { bg = { from = 'DiffChange', alter = -0.45 } } },
+            { DiffDelete = { bg = { from = 'DiffDelete', alter = -0.25 } } },
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'Dim', alter = -0.7 },
+              },
             },
           },
-          { NeogitDiffAdd = { link = 'DiffAdd' } },
-          { NeogitDiffDelete = { link = 'DiffDelete' } },
+          plugin = {
+            {
+              GitSignsAdd = {
+                fg = { from = 'DiffAdd', attr = 'bg', alter = 1.6 },
+              },
+            },
+            { NeogitDiffAdd = { link = 'DiffAdd' } },
+            { NeogitDiffDelete = { link = 'DiffDelete' } },
+          },
         }, true)
       end,
     },
@@ -843,12 +935,14 @@ return {
       event = get_event({ 'darkmatter' }),
       init = function()
         theming.apply_overrides('darkmatter', {
-          { LineNr = { fg = { from = 'LineNr', alter = -0.25 } } },
-          { Comment = { fg = { from = 'Comment', alter = 0.45 } } },
-          { NonText = { link = 'Comment' } },
-          { Dim = { link = 'Comment' } },
-          { CursorLineNr = { link = 'TSString' } },
-          { WinSeparator = { fg = { from = 'Dim', alter = -0.35 } } },
+          default = {
+            { LineNr = { fg = { from = 'LineNr', alter = -0.25 } } },
+            { Comment = { fg = { from = 'Comment', alter = 0.45 } } },
+            { NonText = { link = 'Comment' } },
+            { Dim = { link = 'Comment' } },
+            { CursorLineNr = { link = 'TSString' } },
+            { WinSeparator = { fg = { from = 'Dim', alter = -0.35 } } },
+          },
         }, true)
       end,
     },
@@ -859,10 +953,12 @@ return {
       event = get_event({ 'ashen' }),
       init = function()
         theming.apply_overrides('ashen', {
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = -0.05 },
+          default = {
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = -0.05 },
+              },
             },
           },
         }, true)
@@ -887,7 +983,11 @@ return {
       event = get_event({ 'rasmus' }),
       init = function()
         theming.apply_overrides('rasmus', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.65 } } },
+          default = {
+            {
+              WinSeparator = { fg = { from = 'WinSeparator', alter = -0.65 } },
+            },
+          },
         }, true)
       end,
     },
@@ -898,7 +998,11 @@ return {
       event = get_event({ 'serene' }),
       init = function()
         theming.apply_overrides('serene', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.35 } } },
+          default = {
+            {
+              WinSeparator = { fg = { from = 'WinSeparator', alter = -0.35 } },
+            },
+          },
         }, true)
       end,
     },
@@ -917,7 +1021,9 @@ return {
       event = get_event({ 'darcubox' }),
       init = function()
         theming.apply_overrides('darcubox', {
-          { WinSeparator = { fg = { from = 'LineNr', alter = -0.25 } } },
+          default = {
+            { WinSeparator = { fg = { from = 'LineNr', alter = -0.25 } } },
+          },
         }, true)
       end,
     },
@@ -928,9 +1034,11 @@ return {
       event = get_event({ 'mono-jade' }),
       init = function()
         theming.apply_overrides('mono-jade', {
-          { CursorLine = { bg = { from = 'CursorLine', alter = -0.45 } } },
-          { Visual = { bg = { from = 'Visual', alter = -0.25 } } },
-          { WinSeparator = { fg = { from = 'LineNr', alter = -0.35 } } },
+          default = {
+            { CursorLine = { bg = { from = 'CursorLine', alter = -0.45 } } },
+            { Visual = { bg = { from = 'Visual', alter = -0.25 } } },
+            { WinSeparator = { fg = { from = 'LineNr', alter = -0.35 } } },
+          },
         }, true)
       end,
     },
@@ -942,15 +1050,17 @@ return {
       -- config = function() require('lavish').apply() end,
       init = function()
         theming.apply_overrides('lavish', {
-          { CursorLine = { bg = { from = 'CursorLine', alter = 0.15 } } },
-          {
-            Visual = {
-              bg = { from = 'Visual', alter = -0.25 },
-              fg = 'NONE',
+          default = {
+            { CursorLine = { bg = { from = 'CursorLine', alter = 0.15 } } },
+            {
+              Visual = {
+                bg = { from = 'Visual', alter = -0.25 },
+                fg = 'NONE',
+              },
             },
+            { NonText = { fg = { from = 'NonText', alter = 1.4 } } },
+            { WinSeparator = { fg = { from = 'LineNr', alter = -0.2 } } },
           },
-          { NonText = { fg = { from = 'NonText', alter = 1.4 } } },
-          { WinSeparator = { fg = { from = 'LineNr', alter = -0.2 } } },
         }, true)
       end,
     },
@@ -966,7 +1076,9 @@ return {
       },
       init = function()
         theming.apply_overrides('evergarden', {
-          { WinSeparator = { fg = { from = 'LineNr', alter = -0.1 } } },
+          default = {
+            { WinSeparator = { fg = { from = 'LineNr', alter = -0.1 } } },
+          },
         }, true)
       end,
     },
@@ -977,7 +1089,9 @@ return {
       event = get_event({ 'oh-lucy', 'oh-lucy-evening' }),
       init = function()
         theming.apply_overrides('oh-lucy', {
-          { WinSeparator = { fg = { from = 'LineNr', alter = -0.25 } } },
+          default = {
+            { WinSeparator = { fg = { from = 'LineNr', alter = -0.25 } } },
+          },
         }, true)
       end,
     },
@@ -994,7 +1108,11 @@ return {
       opts = { theme = 'iceclimber', variant = 'dark' },
       init = function()
         theming.apply_overrides('iceclimber', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.25 } } },
+          default = {
+            {
+              WinSeparator = { fg = { from = 'WinSeparator', alter = -0.25 } },
+            },
+          },
         }, true)
       end,
     },
@@ -1005,8 +1123,10 @@ return {
       event = get_event({ 'silentium' }),
       init = function()
         theming.apply_overrides('silentium', {
-          {
-            WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } },
+          default = {
+            {
+              WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } },
+            },
           },
         }, true)
       end,
@@ -1023,8 +1143,14 @@ return {
       event = get_event({ 'flexoki' }),
       init = function()
         theming.apply_overrides('flexoki', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.35 } } },
-          { WhichKeyBorder = { link = 'FloatBorder' } },
+          default = {
+            {
+              WinSeparator = { fg = { from = 'WinSeparator', alter = -0.35 } },
+            },
+          },
+          default = {
+            { WhichKeyBorder = { link = 'FloatBorder' } },
+          },
         }, true)
       end,
     },
@@ -1035,20 +1161,24 @@ return {
       event = get_event({ 'lunar' }),
       init = function()
         theming.apply_overrides('lunar', {
-          { Winbar = { link = 'Variable' } },
-          { WinbarNC = { link = 'LineNr' } },
-          { ColorColumn = { bg = { from = 'CursorLine', alter = 0.3 } } },
-          { Folded = { bg = { from = 'CursorLine', alter = -0.1 } } },
-          { Todo = { link = 'Constant' } },
-          { WinSeparator = { fg = { from = 'Comment', alter = -0.4 } } },
-          {
-            NeogitDiffAdd = {
-              bg = { from = 'DiffAdd', alter = 1.4 },
-              fg = { from = 'DiffAdd', attr = 'bg', alter = -0.65 },
-              reverse = true,
-            },
+          default = {
+            { Winbar = { link = 'Variable' } },
+            { WinbarNC = { link = 'LineNr' } },
+            { ColorColumn = { bg = { from = 'CursorLine', alter = 0.3 } } },
+            { Folded = { bg = { from = 'CursorLine', alter = -0.1 } } },
+            { Todo = { link = 'Constant' } },
+            { WinSeparator = { fg = { from = 'Comment', alter = -0.4 } } },
           },
-          { NeogitDiffDelete = { link = 'DiffDelete' } },
+          default = {
+            {
+              NeogitDiffAdd = {
+                bg = { from = 'DiffAdd', alter = 1.4 },
+                fg = { from = 'DiffAdd', attr = 'bg', alter = -0.65 },
+                reverse = true,
+              },
+            },
+            { NeogitDiffDelete = { link = 'DiffDelete' } },
+          },
         }, true)
       end,
     },
@@ -1060,10 +1190,14 @@ return {
       event = get_event({ 'morta' }),
       init = function()
         theming.apply_overrides('morta', {
-          { Winbar = { link = 'Variable' } },
-          { WinbarNC = { link = 'NonText' } },
-          { NonText = { fg = { from = 'Comment', alter = -0.15 } } },
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.75 } } },
+          default = {
+            { Winbar = { link = 'Variable' } },
+            { WinbarNC = { link = 'NonText' } },
+            { NonText = { fg = { from = 'Comment', alter = -0.15 } } },
+            {
+              WinSeparator = { fg = { from = 'WinSeparator', alter = -0.75 } },
+            },
+          },
         }, true)
       end,
     },
@@ -1074,8 +1208,10 @@ return {
       event = get_event({ 'thorn' }),
       init = function()
         theming.apply_overrides('thorn', {
-          { NonText = { link = 'Comment' } },
-          { WinSeparator = { fg = { from = 'LineNr' } } },
+          default = {
+            { NonText = { link = 'Comment' } },
+            { WinSeparator = { fg = { from = 'LineNr' } } },
+          },
         }, true)
       end,
     },
@@ -1086,9 +1222,11 @@ return {
       event = get_event({ 'two-firewatch' }),
       init = function()
         theming.apply_overrides('two-firewatch', {
-          { Folded = { bg = { from = 'Folded', alter = -0.35 } } },
-          { Visual = { bg = { from = 'CursorLine', alter = 0.3 } } },
-          { WinSeparator = { fg = { from = 'LineNr', alter = -0.3 } } },
+          default = {
+            { Folded = { bg = { from = 'Folded', alter = -0.35 } } },
+            { Visual = { bg = { from = 'CursorLine', alter = 0.3 } } },
+            { WinSeparator = { fg = { from = 'LineNr', alter = -0.3 } } },
+          },
         }, true)
       end,
     },
@@ -1100,7 +1238,11 @@ return {
       event = get_event({ 'rose-pine' }),
       init = function()
         theming.apply_overrides('rose-pine', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.45 } } },
+          default = {
+            {
+              WinSeparator = { fg = { from = 'WinSeparator', alter = -0.45 } },
+            },
+          },
         }, true)
       end,
     },
@@ -1111,8 +1253,10 @@ return {
       cond = get_cond({ 'night-owl' }),
       init = function()
         theming.apply_overrides('night-owl', {
-          { CursorLine = { bg = { from = 'CursorLine', alter = 0.95 } } },
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = 0.45 } } },
+          default = {
+            { CursorLine = { bg = { from = 'CursorLine', alter = 0.95 } } },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = 0.45 } } },
+          },
         }, true)
       end,
     },
@@ -1126,15 +1270,19 @@ return {
       event = get_event({ 'github_dark_dimmed', 'github_dark_tritanopia' }),
       init = function()
         theming.apply_overrides('github_dark_dimmed', {
-          { Folded = { bg = { from = 'Folded', alter = 0.1 } } },
-          { Type = { fg = { from = 'Type', alter = -0.25 } } },
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = 0.1 } } },
+          default = {
+            { Folded = { bg = { from = 'Folded', alter = 0.1 } } },
+            { Type = { fg = { from = 'Type', alter = -0.25 } } },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = 0.1 } } },
+          },
         }, true)
         theming.apply_overrides('github_dark_tritanopia', {
-          { CursorLine = { bg = { from = 'CursorLine', alter = -0.3 } } },
-          { Folded = { bg = { from = 'Folded', alter = 0.2 } } },
-          { Type = { fg = { from = 'Type', alter = -0.45 } } },
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = 0.3 } } },
+          default = {
+            { CursorLine = { bg = { from = 'CursorLine', alter = -0.3 } } },
+            { Folded = { bg = { from = 'Folded', alter = 0.2 } } },
+            { Type = { fg = { from = 'Type', alter = -0.45 } } },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = 0.3 } } },
+          },
         }, true)
       end,
     },
@@ -1149,8 +1297,12 @@ return {
       end,
       init = function()
         theming.apply_overrides('doom-one', {
-          { CursorLine = { bg = { from = 'CursorLine', alter = 0.05 } } },
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.65 } } },
+          default = {
+            { CursorLine = { bg = { from = 'CursorLine', alter = 0.05 } } },
+            {
+              WinSeparator = { fg = { from = 'WinSeparator', alter = -0.65 } },
+            },
+          },
         }, true)
       end,
     },
@@ -1163,7 +1315,9 @@ return {
       config = function(_, opts) require('everforest').setup(opts) end,
       init = function()
         theming.apply_overrides('everforest', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.2 } } },
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.2 } } },
+          },
         }, true)
       end,
     },
@@ -1174,7 +1328,11 @@ return {
       event = get_event({ 'darkvoid' }),
       init = function()
         theming.apply_overrides('darkvoid', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.65 } } },
+          default = {
+            {
+              WinSeparator = { fg = { from = 'WinSeparator', alter = -0.65 } },
+            },
+          },
         }, true)
       end,
     },
@@ -1185,8 +1343,10 @@ return {
       event = get_event({ 'shadow' }),
       init = function()
         theming.apply_overrides('shadow', {
-          { Folded = { bg = { from = 'Folded', alter = 2.65 } } },
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = 0.45 } } },
+          default = {
+            { Folded = { bg = { from = 'Folded', alter = 2.65 } } },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = 0.45 } } },
+          },
         }, true)
       end,
     },
@@ -1197,15 +1357,20 @@ return {
       event = get_event({ 'naysayer' }),
       init = function()
         theming.apply_overrides('naysayer', {
-          { Folded = { bg = { from = 'CursorLine', alter = 0.15 } } },
-          {
-            Visual = { fg = 'NONE', bg = { from = 'CursorLine', alter = 0.45 } },
-          },
-          { MatchParen = { link = 'Visual' } },
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = -0.65 },
+          default = {
+            { Folded = { bg = { from = 'CursorLine', alter = 0.15 } } },
+            {
+              Visual = {
+                fg = 'NONE',
+                bg = { from = 'CursorLine', alter = 0.45 },
+              },
+            },
+            { MatchParen = { link = 'Visual' } },
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = -0.65 },
+              },
             },
           },
         }, true)
@@ -1219,8 +1384,12 @@ return {
       opts = {},
       init = function()
         theming.apply_overrides('github_plus', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.2 } } },
-          { TreesitterContextBottom = { underline = false } },
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.2 } } },
+          },
+          plugin = {
+            { TreesitterContextBottom = { underline = false } },
+          },
         }, true)
       end,
     },
@@ -1234,7 +1403,9 @@ return {
       end,
       init = function()
         theming.apply_overrides('nordic', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = 1.5 } } },
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = 1.5 } } },
+          },
         }, true)
       end,
     },
@@ -1245,10 +1416,12 @@ return {
       event = get_event({ 'nord' }),
       init = function()
         theming.apply_overrides('nord', {
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'LineNr', alter = -0.2 },
+          default = {
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'LineNr', alter = -0.2 },
+              },
             },
           },
         }, true)
@@ -1261,25 +1434,34 @@ return {
       event = get_event({ 'evangelion' }),
       init = function()
         theming.apply_overrides('evangelion', {
-          { Comment = { bg = 'NONE' } },
-          { SpellBad = { link = 'Comment' } },
-          { Directory = { bg = 'NONE' } },
-          { LineNr = { fg = { from = 'CursorLineNr', alter = -0.55 } } },
-          {
-            Folded = { bg = { from = 'CursorLine', alter = -0.1 }, fg = 'NONE' },
-          },
-          { Visual = { bg = { from = 'Visual', alter = -0.65 }, fg = 'NONE' } },
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = -0.45 },
+          default = {
+            { Comment = { bg = 'NONE' } },
+            { SpellBad = { link = 'Comment' } },
+            { Directory = { bg = 'NONE' } },
+            { LineNr = { fg = { from = 'CursorLineNr', alter = -0.55 } } },
+            {
+              Folded = {
+                bg = { from = 'CursorLine', alter = -0.1 },
+                fg = 'NONE',
+              },
+            },
+            {
+              Visual = { bg = { from = 'Visual', alter = -0.65 }, fg = 'NONE' },
+            },
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = -0.45 },
+              },
             },
           },
-          { GitSignsAdd = { bg = 'NONE' } },
-          { GitSignsChange = { bg = 'NONE' } },
-          { GitSignsDelete = { bg = 'NONE' } },
-          { WhichKeyBorder = { link = 'FloatBorder' } },
-          { WhichKeyFloat = { link = 'Normal' } },
+          plugin = {
+            { GitSignsAdd = { bg = 'NONE' } },
+            { GitSignsChange = { bg = 'NONE' } },
+            { GitSignsDelete = { bg = 'NONE' } },
+            { WhichKeyBorder = { link = 'FloatBorder' } },
+            { WhichKeyFloat = { link = 'Normal' } },
+          },
         }, true)
       end,
     },
@@ -1297,10 +1479,12 @@ return {
       },
       init = function()
         theming.apply_overrides('tomorrow-night-blue', {
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = -0.3 },
+          default = {
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = -0.3 },
+              },
             },
           },
         }, true)
@@ -1311,14 +1495,73 @@ return {
   -- Clown show
   {
     {
+      'ianklapouch/wildberries.nvim',
+      cond = get_cond({ 'wildberries' }),
+      priority = get_priority({ 'wildberries' }),
+      event = get_event({ 'wildberries' }),
+      init = function()
+        local overrides = {
+          default = {
+            { LineNr = { fg = { from = 'LineNr', alter = -0.35 } } },
+            { NonText = { fg = { from = 'NonText', alter = 0.4 } } },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
+            { StatusLine = { bg = 'NONE', reverse = false } },
+            {
+              WinSeparator = {
+                -- bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = -0.2 },
+              },
+            },
+            { Winbar = { link = 'Variable' } },
+            { WinbarNC = { link = 'NonText' } },
+            { MsgSeparator = { link = 'WinSeparator' } },
+            { VertSplit = { link = 'WinSeparator' } },
+            { IndentBlanklineChar = { link = 'VertSplit' } },
+            { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
+          },
+          picker = {},
+          plugin = {
+            {
+              GitSignsAdd = {
+                fg = { from = 'DiffAdd', attr = 'bg', alter = 0.4 },
+              },
+            },
+            {
+              GitSignsChange = {
+                fg = { from = 'DiagnosticInfo', attr = 'fg', alter = 0.2 },
+              },
+            },
+          },
+        }
+        ar.list_insert(
+          overrides,
+          theming.generate_popup_overrides(),
+          theming.generate_completion_overrides(),
+          theming.generate_lsp_overrides(),
+          theming.generate_picker_overrides(),
+          theming.generate_plugin_overrides(),
+          {
+            { SnacksPickerInput = { link = 'PickerPrompt' } },
+            { SnacksPickerInputBorder = { link = 'PickerPromptBorder' } },
+            { SnacksPickerInputTitle = { link = 'PickerTitle' } },
+          }
+        )
+        theming.apply_overrides('wildberries', overrides)
+      end,
+    },
+    {
       'eldritch-theme/eldritch.nvim',
       cond = get_cond({ 'eldritch' }),
       priority = get_priority({ 'eldritch' }),
       event = get_event({ 'eldritch' }),
       init = function()
         theming.apply_overrides('eldritch', {
-          { Visual = { bg = { from = 'Visual', alter = -0.45 } } },
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.55 } } },
+          default = {
+            { Visual = { bg = { from = 'Visual', alter = -0.45 } } },
+            {
+              WinSeparator = { fg = { from = 'WinSeparator', alter = -0.55 } },
+            },
+          },
         }, true)
       end,
       opts = {},
@@ -1330,8 +1573,12 @@ return {
       event = get_event({ 'ronny' }),
       init = function()
         theming.apply_overrides('ronny', {
-          { MatchParen = { link = 'Visual' } },
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.25 } } },
+          default = {
+            { MatchParen = { link = 'Visual' } },
+            {
+              WinSeparator = { fg = { from = 'WinSeparator', alter = -0.25 } },
+            },
+          },
         }, true)
       end,
       opts = {},
@@ -1343,11 +1590,13 @@ return {
       event = get_event({ 'horizon' }),
       init = function()
         theming.apply_overrides('horizon', {
-          { MatchParen = { link = 'Visual' } },
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = -0.55 },
+          default = {
+            { MatchParen = { link = 'Visual' } },
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = -0.55 },
+              },
             },
           },
         }, true)
@@ -1376,18 +1625,17 @@ return {
           theming.generate_popup_overrides(),
           theming.generate_completion_overrides(),
           theming.generate_lsp_overrides(),
-          theming.generate_picker_overrides(),
-          theming.generate_plugin_overrides(),
-          {
+          theming.generate_picker_overrides({
             { SnacksPicker = { link = 'PickerPrompt' } },
             { SnacksPickerBorder = { link = 'PickerPromptBorder' } },
             { SnacksPickerInput = { link = 'PickerPrompt' } },
             { SnacksPickerBoxBorder = { link = 'PickerPromptBorder' } },
             { SnacksPickerInputBorder = { link = 'PickerPromptBorder' } },
             { SnacksPickerInputTitle = { link = 'PickerTitle' } },
-          }
+          }),
+          theming.generate_plugin_overrides()
         )
-        theming.apply_overrides('tokyonight', overrides)
+        theming.apply_overrides('tokyonight', { default = overrides })
       end,
       opts = {},
     },
@@ -1398,7 +1646,9 @@ return {
       event = get_event({ 'nightfox' }),
       init = function()
         theming.apply_overrides('nightfox', {
-          { WinSeparator = { fg = { from = 'LineNr', alter = -0.45 } } },
+          default = {
+            { WinSeparator = { fg = { from = 'LineNr', alter = -0.45 } } },
+          },
         }, true)
       end,
     },
@@ -1409,7 +1659,9 @@ return {
       event = get_event({ 'kanagawa' }),
       init = function()
         theming.apply_overrides('kanagawa', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = 1.45 } } },
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = 1.45 } } },
+          },
         }, true)
       end,
     },
@@ -1420,7 +1672,11 @@ return {
       event = get_event({ 'bamboo' }),
       init = function()
         theming.apply_overrides('bamboo', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.05 } } },
+          default = {
+            {
+              WinSeparator = { fg = { from = 'WinSeparator', alter = -0.05 } },
+            },
+          },
         }, true)
       end,
     },
@@ -1431,10 +1687,12 @@ return {
       event = get_event({ 'dracula' }),
       init = function()
         theming.apply_overrides('dracula', {
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = 2.4 },
+          default = {
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = 2.4 },
+              },
             },
           },
         }, true)
@@ -1448,9 +1706,15 @@ return {
       opts = {},
       init = function()
         theming.apply_overrides('cobalt-neon', {
-          { GitSignsAdd = { fg = { from = 'GitSignsAdd', alter = -0.25 } } },
-          { GitSignsChange = { fg = { from = '@comment.note', attr = 'bg' } } },
-          { WinSeparator = { bg = 'NONE' } },
+          default = {
+            { WinSeparator = { bg = 'NONE' } },
+          },
+          plugin = {
+            { GitSignsAdd = { fg = { from = 'GitSignsAdd', alter = -0.25 } } },
+            {
+              GitSignsChange = { fg = { from = '@comment.note', attr = 'bg' } },
+            },
+          },
         }, true)
       end,
     },
@@ -1466,22 +1730,27 @@ return {
       event = get_event({ 'gruvbox' }),
       init = function()
         theming.apply_overrides('gruvbox', {
-          { GruvboxRedSign = { bg = 'NONE' } },
-          { GruvboxGreenSign = { bg = 'NONE' } },
-          { GruvboxAquaSign = { bg = 'NONE' } },
-          { Operator = { link = '@method' } },
-          { ErrorMsg = { link = 'Error' } },
-          {
-            Visual = {
-              bg = { from = 'Visual', alter = -0.25 },
-              fg = 'NONE',
-              reverse = false,
+          default = {
+            { GruvboxRedSign = { bg = 'NONE' } },
+            { GruvboxGreenSign = { bg = 'NONE' } },
+            { GruvboxAquaSign = { bg = 'NONE' } },
+            { Operator = { link = '@method' } },
+            { ErrorMsg = { link = 'Error' } },
+            {
+              Visual = {
+                bg = { from = 'Visual', alter = -0.25 },
+                fg = 'NONE',
+                reverse = false,
+              },
             },
-          },
-          { NonText = { fg = { from = 'NonText', alter = 0.3 } } },
-          { Dim = { link = 'WinSeparator' } },
-          {
-            WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.6 } },
+            { NonText = { fg = { from = 'NonText', alter = 0.3 } } },
+            { Dim = { link = 'WinSeparator' } },
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'Dim', alter = -0.6 },
+              },
+            },
           },
         }, true)
       end,
@@ -1493,7 +1762,9 @@ return {
       event = get_event({ 'gruvbox-material' }),
       init = function()
         theming.apply_overrides('gruvbox-material', {
-          { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.1 } } },
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.1 } } },
+          },
         }, true)
       end,
     },
@@ -1508,10 +1779,12 @@ return {
       event = get_event({ 'vscode' }),
       init = function()
         theming.apply_overrides('vscode', {
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = -0.1 },
+          default = {
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = -0.1 },
+              },
             },
           },
         }, true)
@@ -1524,10 +1797,12 @@ return {
       event = get_event({ 'arctic' }),
       init = function()
         theming.apply_overrides('arctic', {
-          {
-            WinSeparator = {
-              bg = 'NONE',
-              fg = { from = 'WinSeparator', alter = -0.1 },
+          default = {
+            {
+              WinSeparator = {
+                bg = 'NONE',
+                fg = { from = 'WinSeparator', alter = -0.1 },
+              },
             },
           },
         }, true)
