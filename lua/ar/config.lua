@@ -569,6 +569,7 @@ local config = {
       'agentic.nvim',
       'btw.nvim',
       'cmp-path',
+      'codecompanion.nvim',
       'conflict.nvim',
       'dev-tools.nvim',
       'flatten.nvim',
