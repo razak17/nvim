@@ -62,26 +62,114 @@ local function gp_choose_agent()
 end
 
 local function gp_finder()
-  ar.pick.open('files', {
-    show_empty = true,
-    cwd = fn.stdpath('data') .. '/gp/chats',
-    on_show = function() vim.cmd.stopinsert() end,
+  local gp = require('gp')
+  local dir = gp.config.chat_dir
+  local delete_shortcut = gp.config.chat_finder_mappings.delete
+    or gp.config.chat_shortcut_delete
+
+  local open_chat = function(item, target, toggle)
+    if not item or not item.file then return end
+    if toggle then
+      target = target or gp.resolve_buf_target(gp.config.toggle_target)
+    end
+    gp.open_buf(item.file, target, gp._toggle_kind.chat, toggle)
+  end
+
+  local delete_chat = function(picker, item)
+    if not item or not item.file then return end
+    local file = item.file
+    local refresh = function()
+      gp.helpers.delete_file(file)
+      picker:refresh()
+    end
+    if not gp.config.chat_confirm_delete then
+      refresh()
+      return
+    end
+    vim.ui.input({ prompt = 'Delete ' .. file .. '? [y/N] ' }, function(input)
+      if input and input:lower() == 'y' then refresh() end
+    end)
+  end
+
+  Snacks.picker.grep({
+    cmd = 'rg',
+    args = { '--sortr=path' },
+    layout = {
+      preset = 'wide_with_preview',
+      layout = { height = 50, width = 400 },
+    },
+    formatters = {
+      file = {
+        filename_first = true,
+        filename_only = true,
+        truncate = 60,
+      },
+    },
+    dirs = { dir },
+    search = 'topic: ',
+    -- search = gp.config.chat_finder_pattern,
+    title = 'Gp Chat Finder',
+    live = true,
+    confirm = function(picker, item)
+      picker:close()
+      open_chat(item, gp.BufTarget.current, false)
+    end,
+    actions = {
+      gp_chat_open = function(picker, item)
+        picker:close()
+        open_chat(item, gp.BufTarget.current, false)
+      end,
+      gp_chat_open_popup = function(picker, item)
+        picker:close()
+        open_chat(item, gp.BufTarget.popup, false)
+      end,
+      gp_chat_open_split = function(picker, item)
+        picker:close()
+        open_chat(item, gp.BufTarget.split, false)
+      end,
+      gp_chat_open_vsplit = function(picker, item)
+        picker:close()
+        open_chat(item, gp.BufTarget.vsplit, false)
+      end,
+      gp_chat_open_tab = function(picker, item)
+        picker:close()
+        open_chat(item, gp.BufTarget.tabnew, false)
+      end,
+      gp_chat_open_toggle = function(picker, item)
+        picker:close()
+        open_chat(item, gp.resolve_buf_target(gp.config.toggle_target), true)
+      end,
+      gp_chat_delete = delete_chat,
+    },
+    win = {
+      input = {
+        keys = {
+          [delete_shortcut.shortcut] = {
+            'gp_chat_delete',
+            mode = delete_shortcut.modes,
+          },
+          ['<C-f>'] = { 'gp_chat_open_popup', mode = { 'n', 'i' } },
+          ['<C-x>'] = { 'gp_chat_open_split', mode = { 'n', 'i' } },
+          ['<C-v>'] = { 'gp_chat_open_vsplit', mode = { 'n', 'i' } },
+          ['<C-t>'] = { 'gp_chat_open_tab', mode = { 'n', 'i' } },
+          ['<C-g>t'] = { 'gp_chat_open_toggle', mode = { 'n', 'i' } },
+        },
+      },
+      list = {
+        keys = {
+          [delete_shortcut.shortcut] = {
+            'gp_chat_delete',
+            mode = delete_shortcut.modes,
+          },
+          ['<C-f>'] = { 'gp_chat_open_popup', mode = 'n' },
+          ['<C-x>'] = { 'gp_chat_open_split', mode = 'n' },
+          ['<C-v>'] = { 'gp_chat_open_vsplit', mode = 'n' },
+          ['<C-t>'] = { 'gp_chat_open_tab', mode = 'n' },
+          ['<C-g>t'] = { 'gp_chat_open_toggle', mode = 'n' },
+        },
+      },
+    },
   })
-  -- Snacks.picker.files({
-  --   show_empty = true,
-  --   cwd = fn.stdpath('data') .. '/gp/chats',
-  --   on_show = function() vim.cmd.stopinsert() end,
-  --   -- TODO: Find a way to get newest files first
-  --   -- matcher = { cwd_bonus = true, frecency = true, sort_empty = true },
-  --   transform = function(item) return item end,
-  --   win = {
-  --     input = {
-  --       keys = {
-  --         ['<C-d>'] = 'trash_files',
-  --       },
-  --     },
-  --   },
-  -- })
 end
 
 local mode = { 'n', 'i', 'v' }
