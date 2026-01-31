@@ -789,8 +789,10 @@ return {
             { Dim = { fg = { from = 'Comment', alter = -0.3 } } },
             { NonText = { fg = { from = 'NonText', alter = 0.3 } } },
             { Folded = { bg = { from = 'CursorLine', alter = 0.2 } } },
-            { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.55 } } },
             { WinSeparator = { fg = { from = 'LineNr', alter = -0.4 } } },
+          },
+          popup = {
+            { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.4 } } },
           },
           plugin = {
             { GitSignsAdd = { fg = { from = 'Added', alter = -0.35 } } },
