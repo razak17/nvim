@@ -23,6 +23,8 @@ ar.highlight.plugin('NativeStatuslineHl', {
   { StatusLineBar = { fg = { from = 'Directory' }, bold = true } },
   { StatusLineMode = { fg = { from = 'Special' } } },
   { StatusLineMedium = { fg = { from = 'Normal' } } },
+  { StatusLineMacroRecording = { fg = 'orange' } },
+  { StatusLineMacroExecuting = { fg = 'lightgreen' } },
   { StatusLineLspActive = { fg = { from = 'Directory' }, bold = true } },
   { StatusLineLspError = { fg = { from = 'ErrorMsg' } } },
   { StatusLineLspWarn = { fg = { from = 'WarnMsg' } } },
@@ -262,6 +264,16 @@ local function search_matches()
   return stl.search_matches()
 end
 
+local function macro()
+  if vim.fn.reg_recording() ~= '' then
+    return string.format('%%#StatusLineMacroRecording#%s%% %%*', 'REC')
+  end
+  if vim.fn.reg_executing() ~= '' then
+    return string.format('%%#StatusLineMacroExecuting#%s%% %%*', 'PLAY')
+  end
+  return ''
+end
+
 StatusLine = {}
 
 local readeable_filetypes = {
@@ -308,6 +320,7 @@ StatusLine.render = function()
     '%=',
     '%S ',
     lsp_status(),
+    macro(),
     search_matches(),
     lsp_active(),
     python_env(),
