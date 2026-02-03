@@ -172,6 +172,18 @@ local function colorscheme_overrides(colorscheme)
   local theming = require('ar.theming')
   local overrides = {
     -- builtin colorschemes
+    ['catppuccin'] = theming.generate_overrides({
+      default = {
+        { Normal = { bg = { from = 'Normal', alter = -0.2 } } },
+        {
+          DiffChange = { fg = { from = 'DiffText', attr = 'bg', alter = 0.8 } },
+        },
+        { WinSeparator = { fg = { from = 'NonText', alter = -0.4 } } },
+      },
+      popup = {
+        { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.4 } } },
+      },
+    }),
     ['default'] = theming.generate_overrides({
       default = {
         { NormalFloat = { link = 'Normal' } },

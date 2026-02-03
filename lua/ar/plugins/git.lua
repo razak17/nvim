@@ -223,6 +223,7 @@ return {
 
       ar.highlight.plugin('gitsigns', {
         theme = {
+          ['catppuccin'] = base_hl,
           ['default'] = base_hl,
           ['habamax'] = base_hl,
           ['retrobox'] = base_hl,
