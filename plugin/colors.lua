@@ -226,7 +226,12 @@ local function colorscheme_overrides(colorscheme)
             reverse = false,
           },
         },
-        { DiffChange = { reverse = false } },
+        {
+          DiffChange = {
+            fg = { from = 'DiffText', attr = 'bg', alter = 1.2 },
+            reverse = false,
+          },
+        },
         {
           DiffDelete = {
             bg = { from = 'Removed', attr = 'fg', alter = -0.55 },
