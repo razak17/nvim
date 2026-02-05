@@ -1,6 +1,6 @@
-if not ar or ar.none then return end
+local enabled = ar.plugins.enable and ar.has('slides.nvim')
 
-if not ar.plugins.enable or ar.plugins.minimal then return end
+if not ar or ar.none or not enabled then return end
 
 local fmt = string.format
 local function with_desc(desc)
