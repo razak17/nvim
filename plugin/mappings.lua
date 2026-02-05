@@ -231,8 +231,14 @@ cnoremap(';;', "<C-r>=fnameescape(expand('%:h'))<cr>/")
 nnoremap('<c-s>', '<Cmd>silent! write ++p<CR>')
 -- Buffer Management
 if not ar.has('cybu.nvim') then
-  nnoremap('gB', '<cmd>bprevious<CR>', { desc = 'previous buffer' })
-  nnoremap('gP', '<cmd>bnext<CR>', { desc = 'next buffer' })
+  local function jump(options)
+    return ar.jump(function(opts)
+      if opts.forward then vim.cmd('bnext') end
+      if not opts.forward then vim.cmd('bprevious') end
+    end, options)
+  end
+  nnoremap('gP', jump({ forward = false }), { desc = 'previous buffer' })
+  nnoremap('gN', jump({ forward = true }), { desc = 'next buffer' })
 end
 if not ar.has('snacks.nvim') then
   nnoremap('<leader>qb', ':bdel<CR>', { desc = 'delete buffer' })
