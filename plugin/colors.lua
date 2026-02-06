@@ -192,7 +192,7 @@ local function colorscheme_overrides(colorscheme)
         { Comment = { fg = { from = 'Comment', alter = -0.2 } } },
         { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.3 } } },
         { Dim = { link = 'NonText' } },
-        { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.2 } } },
+        { WinSeparator = { fg = { from = 'Dim', alter = -0.2 } } },
         {
           SpellBad = {
             sp = { from = 'DiffAdd', attr = 'fg', alter = -0.35 },
@@ -216,7 +216,7 @@ local function colorscheme_overrides(colorscheme)
           },
         },
         { Dim = { link = 'NonText' } },
-        { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.2 } } },
+        { WinSeparator = { fg = { from = 'Dim', alter = -0.2 } } },
         {
           SpellBad = {
             sp = { from = 'DiffAdd', attr = 'fg', alter = -0.1 },
@@ -258,7 +258,7 @@ local function colorscheme_overrides(colorscheme)
         { NormalFloat = { link = 'Normal' } },
         { Dim = { link = 'LineNr' } },
         { Visual = { fg = 'NONE' } },
-        { WinSeparator = { fg = { from = 'Dim', alter = 0.5 }, bg = 'NONE' } },
+        { WinSeparator = { fg = { from = 'Dim', alter = 0.5 } } },
       },
     }),
     ['retrobox'] = theming.generate_overrides({
@@ -269,7 +269,7 @@ local function colorscheme_overrides(colorscheme)
         { CursorLine = { link = 'CursorLine' } },
         { NonText = { fg = { from = 'NonText', alter = 0.4 } } },
         { Visual = { bg = { from = 'CursorLine', alter = 0.2 }, fg = 'NONE' } },
-        { WinSeparator = { fg = { from = 'VertSplit' }, bg = 'NONE' } },
+        { WinSeparator = { fg = { from = 'VertSplit' } } },
         {
           DiffAdd = {
             bg = { from = 'Added', attr = 'fg', alter = -0.6 },
@@ -298,7 +298,7 @@ local function colorscheme_overrides(colorscheme)
         { Folded = { bg = { from = 'CursorLine', alter = 0.1 } } },
         { Dim = { link = 'Comment' } },
         { Visual = { bg = { from = 'Visual', alter = -0.4 }, fg = 'NONE' } },
-        { WinSeparator = { bg = 'NONE', fg = { from = 'Dim', alter = -0.3 } } },
+        { WinSeparator = { fg = { from = 'Dim', alter = -0.3 } } },
         {
           DiffAdd = {
             bg = { from = 'Added', attr = 'fg', alter = -0.55 },
@@ -328,12 +328,7 @@ local function colorscheme_overrides(colorscheme)
         { Visual = { fg = { from = 'CursorLine', alter = 0.1 } } },
         { Search = { bg = { from = 'Search', alter = -0.2 } } },
         { IncSearch = { link = 'Search' } },
-        {
-          WinSeparator = {
-            bg = 'NONE',
-            fg = { from = 'NonText', alter = -0.2 },
-          },
-        },
+        { WinSeparator = { fg = { from = 'NonText', alter = -0.2 } } },
         {
           DiffAdd = {
             bg = { from = 'Added', attr = 'fg', alter = -0.55 },

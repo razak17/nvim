@@ -215,6 +215,7 @@ local function generate_overrides(overrides)
   ar.list_insert(hls, {
     { Winbar = { link = 'Variable' } },
     { WinbarNC = { link = 'NonText' } },
+    { WinSeparator = { inherit = 'WinSeparator', bg = 'NONE' } },
     { MsgSeparator = { link = 'WinSeparator' } },
     { VertSplit = { link = 'WinSeparator' } },
     { IndentBlanklineChar = { link = 'VertSplit' } },

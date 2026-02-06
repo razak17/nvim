@@ -101,12 +101,7 @@ return {
       init = function()
         theming.apply_overrides('terracotta', {
           default = {
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = -0.1 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.1 } } },
           },
         }, true)
       end,
@@ -121,12 +116,7 @@ return {
           default = {
             { Added = { fg = { from = 'Added', alter = -0.45 } } },
             { Changed = { fg = { from = 'Changed', alter = -0.15 } } },
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = -0.7 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.7 } } },
           },
         }, true)
       end,
@@ -145,12 +135,7 @@ return {
       init = function()
         theming.apply_overrides('heap-dark', {
           default = {
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = 4.5 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = 4.5 } } },
           },
           plugin = {
             { GitSignsAdd = { fg = { from = 'Added', alter = -0.45 } } },
@@ -290,12 +275,7 @@ return {
       init = function()
         theming.apply_overrides('yugen', {
           default = {
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = -0.1 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.1 } } },
           },
           plugin = {
             { WhichKeyBorder = { link = 'FloatBorder' } },
@@ -312,12 +292,7 @@ return {
       init = function()
         theming.apply_overrides('moonfly', {
           default = {
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = -0.1 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.1 } } },
           },
         }, true)
       end,
@@ -343,12 +318,7 @@ return {
       init = function()
         theming.apply_overrides('afterglow', {
           default = {
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = -0.7 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.7 } } },
           },
         }, true)
       end,
@@ -364,12 +334,7 @@ return {
             {
               Visual = { bg = { from = 'Visual', alter = -0.7 }, fg = 'NONE' },
             },
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = -0.7 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.7 } } },
           },
         }, true)
       end,
@@ -383,12 +348,7 @@ return {
         theming.apply_overrides('ferriouscolor', {
           default = {
             { Visual = { bg = { from = 'Visual', alter = -0.4 } } },
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = -0.05 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.1 } } },
           },
         }, true)
       end,
@@ -444,12 +404,7 @@ return {
         theming.apply_overrides('cyberdream', {
           default = {
             { CursorLine = { bg = { from = 'CursorLine', alter = -0.25 } } },
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = -0.15 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.1 } } },
           },
         }, true)
       end,
@@ -465,12 +420,7 @@ return {
         theming.apply_overrides('oasis', {
           default = {
             -- { Folded = { bg = { from = 'Folded', alter = -0.1 } } },
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = -0.45 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
           },
         }, true)
       end,
@@ -512,12 +462,7 @@ return {
       init = function()
         theming.apply_overrides('oxocarbon', {
           default = {
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'LineNr', alter = -0.2 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'LineNr', alter = -0.2 } } },
           },
         }, true)
       end,
@@ -582,12 +527,7 @@ return {
       init = function()
         theming.apply_overrides('deepwater', {
           default = {
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = -0.7 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.7 } } },
           },
         }, true)
       end,
@@ -657,12 +597,7 @@ return {
         theming.apply_overrides('gruvbox-minimal', {
           default = {
             { Visual = { bg = { from = 'Visual', alter = -0.3 } } },
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = -0.7 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.7 } } },
           },
         }, true)
       end,
@@ -911,12 +846,7 @@ return {
             { DiffAdd = { bg = { from = 'DiffAdd', alter = -0.55 } } },
             { DiffChange = { bg = { from = 'DiffChange', alter = -0.45 } } },
             { DiffDelete = { bg = { from = 'DiffDelete', alter = -0.25 } } },
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'Dim', alter = -0.7 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'Dim', alter = -0.7 } } },
           },
           plugin = {
             {
@@ -956,12 +886,7 @@ return {
       init = function()
         theming.apply_overrides('ashen', {
           default = {
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = -0.05 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.1 } } },
           },
         }, true)
       end,
@@ -1368,12 +1293,7 @@ return {
               },
             },
             { MatchParen = { link = 'Visual' } },
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = -0.65 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.6 } } },
           },
         }, true)
       end,
@@ -1419,12 +1339,7 @@ return {
       init = function()
         theming.apply_overrides('nord', {
           default = {
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'LineNr', alter = -0.2 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'LineNr', alter = -0.2 } } },
           },
         }, true)
       end,
@@ -1450,12 +1365,7 @@ return {
             {
               Visual = { bg = { from = 'Visual', alter = -0.65 }, fg = 'NONE' },
             },
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = -0.45 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
           },
           plugin = {
             { GitSignsAdd = { bg = 'NONE' } },
@@ -1482,12 +1392,7 @@ return {
       init = function()
         theming.apply_overrides('tomorrow-night-blue', {
           default = {
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = -0.3 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.3 } } },
           },
         }, true)
       end,
@@ -1508,12 +1413,7 @@ return {
             { NonText = { fg = { from = 'NonText', alter = 0.4 } } },
             { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.4 } } },
             { StatusLine = { bg = 'NONE', reverse = false } },
-            {
-              WinSeparator = {
-                -- bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = -0.2 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.2 } } },
             { Winbar = { link = 'Variable' } },
             { WinbarNC = { link = 'NonText' } },
             { MsgSeparator = { link = 'WinSeparator' } },
@@ -1594,12 +1494,7 @@ return {
         theming.apply_overrides('horizon', {
           default = {
             { MatchParen = { link = 'Visual' } },
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = -0.55 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.5 } } },
           },
         }, true)
       end,
@@ -1690,12 +1585,7 @@ return {
       init = function()
         theming.apply_overrides('dracula', {
           default = {
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = 2.4 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = 2.4 } } },
           },
         }, true)
       end,
@@ -1708,9 +1598,6 @@ return {
       opts = {},
       init = function()
         theming.apply_overrides('cobalt-neon', {
-          default = {
-            { WinSeparator = { bg = 'NONE' } },
-          },
           plugin = {
             { GitSignsAdd = { fg = { from = 'GitSignsAdd', alter = -0.25 } } },
             {
@@ -1747,12 +1634,7 @@ return {
             },
             { NonText = { fg = { from = 'NonText', alter = 0.3 } } },
             { Dim = { link = 'WinSeparator' } },
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'Dim', alter = -0.6 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'Dim', alter = -0.6 } } },
           },
         }, true)
       end,
@@ -1782,12 +1664,7 @@ return {
       init = function()
         theming.apply_overrides('vscode', {
           default = {
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = -0.1 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.1 } } },
           },
         }, true)
       end,
@@ -1800,12 +1677,7 @@ return {
       init = function()
         theming.apply_overrides('arctic', {
           default = {
-            {
-              WinSeparator = {
-                bg = 'NONE',
-                fg = { from = 'WinSeparator', alter = -0.1 },
-              },
-            },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.1 } } },
           },
         }, true)
       end,
