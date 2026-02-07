@@ -156,6 +156,18 @@ function M.colorscheme_menu()
     close_menu()
   end
 
+  local function on_r()
+    local random_scheme_index = math.random(#schemes)
+    local new_cursor_row = #api.nvim_buf_get_lines(buf, 0, -1, false)
+      - random_scheme_index
+      + 1
+    local current_cursor_row, _ = unpack(api.nvim_win_get_cursor(0))
+    if #schemes > 1 and current_cursor_row == new_cursor_row then
+      return on_r()
+    end
+    print('random_scheme_index:', random_scheme_index)
+    api.nvim_win_set_cursor(0, { new_cursor_row, 0 })
+  end
   api.nvim_create_autocmd(
     'CursorMoved',
     { buffer = buf, callback = on_line_change }
@@ -163,6 +175,7 @@ function M.colorscheme_menu()
 
   map('n', '<CR>', on_enter, { buffer = buf })
   map('n', '<Esc>', on_esc, { buffer = buf })
+  map('n', 'r', on_r, { buffer = buf })
   -- map('n', 'P', on_line_change, { buffer = buf })
   map('n', 'q', on_esc, { buffer = buf })
 end
