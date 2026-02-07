@@ -133,17 +133,19 @@ function M.colorscheme_menu()
     close_menu()
   end
 
+  local previewed = false
   local function on_line_change()
     local scheme_index, _ = unpack(api.nvim_win_get_cursor(win))
     scheme_index = scheme_index - #metalines
     if scheme_index >= 1 and scheme_index <= #schemes then
+      previewed = true
       vim.schedule(function() M.set_colorscheme(schemes[scheme_index]) end)
     end
   end
 
   local function on_esc()
     -- revert to original scheme and close
-    if original_scheme and original_scheme ~= '' then
+    if previewed and original_scheme and original_scheme ~= '' then
       M.set_colorscheme(original_scheme)
     end
     close_menu()
