@@ -133,8 +133,13 @@ function M.colorscheme_menu()
     close_menu()
   end
 
+  local has_moved = false
   local previewed = false
   local function on_line_change()
+    if not has_moved then
+      has_moved = true
+      return
+    end
     local scheme_index, _ = unpack(api.nvim_win_get_cursor(win))
     scheme_index = scheme_index - #metalines
     if scheme_index >= 1 and scheme_index <= #schemes then
