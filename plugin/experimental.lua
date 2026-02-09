@@ -1,3 +1,5 @@
+if not ar then return end
+
 if ar.plugins.minimal or not ar.has('nvim-treesitter') then return end
 
 if

@@ -1,6 +1,8 @@
+if not ar then return end
+
 local enabled = ar.config.plugin.main.mappings.enable
 
-if not ar or ar.none or not enabled then return end
+if ar.none or not enabled then return end
 
 local fn, api, fmt = vim.fn, vim.api, string.format
 local command = ar.command

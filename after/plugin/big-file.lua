@@ -1,6 +1,8 @@
+if not ar then return end
+
 local enabled = ar.config.plugin.custom.big_file.enable
 
-if not ar or ar.none or not enabled then return end
+if ar.none or not enabled then return end
 
 -- https://github.com/hoofcushion/hc-nvim/blob/master/lua/hc-nvim/config/init.lua?plain=1#L85
 ar.bigfile = {

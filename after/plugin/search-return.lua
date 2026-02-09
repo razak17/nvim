@@ -1,6 +1,8 @@
+if not ar then return end
+
 local enabled = ar.config.plugin.custom.search_return.enable
 
-if not ar or ar.none or not enabled then return end
+if ar.none or not enabled then return end
 
 -- https://www.reddit.com/r/neovim/comments/1k27y0t/go_back_to_the_start_of_a_search_for_the_current/
 -- All the ways to start a search, with a description

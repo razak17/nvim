@@ -1,6 +1,8 @@
+if not ar then return end
+
 local enabled = ar.config.plugin.main.tmux.enable
 
-if not ar or ar.none or not enabled or vim.env.TMUX == nil then return end
+if ar.none or not enabled or vim.env.TMUX == nil then return end
 
 local fn, fmt = vim.fn, string.format
 

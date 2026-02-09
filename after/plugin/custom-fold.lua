@@ -1,6 +1,8 @@
+if not ar then return end
+
 local enabled = ar.config.plugin.custom.custom_fold.enable
 
-if not ar or ar.none or not enabled then return end
+if ar.none or not enabled then return end
 
 -- https://www.reddit.com/r/neovim/comments/1fzn1zt/custom_fold_text_function_with_treesitter_syntax/
 local function fold_virt_text(result, s, lnum, coloff)

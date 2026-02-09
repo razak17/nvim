@@ -1,6 +1,7 @@
+if not ar then return end
+
 if
-  not ar
-  or ar.none
+  ar.none
   or not ar.config.ui.winbar.enable
   or (ar.config.ui.winbar.variant ~= 'local' and not ar.plugins.minimal)
 then

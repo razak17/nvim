@@ -1,6 +1,8 @@
+if not ar then return end
+
 local enabled = ar.config.plugin.custom.smart_hl_search.enable
 
-if not ar or ar.none or not enabled then return end
+if ar.none or not enabled then return end
 
 local fn, api, v, cmd = vim.fn, vim.api, vim.v, vim.cmd
 

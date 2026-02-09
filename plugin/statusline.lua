@@ -1,6 +1,7 @@
+if not ar then return end
+
 if
-  not ar
-  or ar.none
+  ar.none
   or not ar.config.ui.statusline.enable
   or (ar.config.ui.statusline.variant ~= 'local' and not ar.plugins.minimal)
 then

@@ -1,6 +1,8 @@
+if not ar then return end
+
 local enabled = ar.config.plugin.custom.spell_all_good.enable
 
-if not ar or ar.none or not enabled then return end
+if ar.none or not enabled then return end
 
 -- Enhanced spell good mapping
 -- Ref: https://www.reddit.com/r/neovim/comments/1otjmh7/enhanced_spell_good_mapping/

@@ -1,6 +1,8 @@
+if not ar then return end
+
 local enabled = ar.config.plugin.custom.large_file.enable
 
-if not ar or ar.none or not enabled then return end
+if ar.none or not enabled then return end
 
 local api, fn, cmd, go = vim.api, vim.fn, vim.cmd, vim.go
 local bo, o, wo, opt_l = vim.bo, vim.o, vim.wo, vim.opt_local

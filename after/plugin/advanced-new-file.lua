@@ -1,6 +1,8 @@
+if not ar then return end
+
 local enabled = ar.config.plugin.custom.advanced_new_file.enable
 
-if not ar or ar.none or not enabled then return end
+if ar.none or not enabled then return end
 
 -- create a new file in the same directory
 local function new_file_in_current_dir()

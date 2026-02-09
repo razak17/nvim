@@ -1,6 +1,8 @@
+if not ar then return end
+
 local enabled = ar.config.plugin.custom.modify_line_end_delimiter.enable
 
-if not ar or ar.none or not enabled then return end
+if ar.none or not enabled then return end
 
 local api = vim.api
 

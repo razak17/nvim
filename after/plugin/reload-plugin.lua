@@ -1,3 +1,5 @@
+if not ar then return end
+
 local enabled = ar.config.plugin.custom.reload_plugin.enable
 local has_lazy = ar.has('lazy.nvim')
 local has_telescope = ar.has('telescope.nvim')

@@ -1,6 +1,8 @@
+if not ar then return end
+
 local enabled = ar.config.plugin.custom.word_web_search.enable
 
-if not ar or ar.none or not enabled then return end
+if ar.none or not enabled then return end
 
 function ar.ddg_search(path)
   ar.web_search(path, 'https://html.duckduckgo.com/html?q=')

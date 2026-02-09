@@ -1,6 +1,8 @@
+if not ar then return end
+
 local enabled = ar.config.plugin.main.env.enable
 
-if not ar or ar.none or not enabled then return end
+if ar.none or not enabled then return end
 
 local api, fn, fs = vim.api, vim.fn, vim.fs
 local fmt = string.format

@@ -1,6 +1,8 @@
+if not ar then return end
+
 local enabled = ar.config.plugin.custom.dump_messages.enable
 
-if not ar or ar.none or not enabled then return end
+if ar.none or not enabled then return end
 
 -- Dump messages in buffer
 -- https://www.reddit.com/r/neovim/comments/1dyngff/a_lua_script_to_dump_messages_to_a_buffer_for/

@@ -1,6 +1,8 @@
+if not ar then return end
+
 local enabled = ar.config.plugin.custom.remote_sync.enable
 
-if not ar or ar.none or not enabled then return end
+if ar.none or not enabled then return end
 
 ar.augroup('remote_sync', {
   event = 'BufWritePost',

@@ -1,6 +1,8 @@
+if not ar then return end
+
 local enabled = ar.config.plugin.custom.yank_ring.enable
 
-if not ar or ar.none or not enabled then return end
+if ar.none or not enabled then return end
 
 -- https://www.reddit.com/r/neovim/comments/1jv03t1/simple_yankring/
 

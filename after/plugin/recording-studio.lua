@@ -1,6 +1,8 @@
+if not ar then return end
+
 local enabled = ar.config.plugin.custom.recording_studio.enable
 
-if not ar or ar.none or not enabled then return end
+if ar.none or not enabled then return end
 
 local L = vim.log.levels
 local fn = vim.fn

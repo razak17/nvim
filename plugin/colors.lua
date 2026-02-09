@@ -1,6 +1,8 @@
+if not ar then return end
+
 local enabled = ar.config.plugin.main.colors.enable
 
-if not ar or ar.none or not enabled then return end
+if ar.none or not enabled then return end
 
 local fmt = string.format
 local highlight = ar.highlight

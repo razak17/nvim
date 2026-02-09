@@ -1,8 +1,10 @@
--- https://github.com/yutkat/wb-only-current-line.nvim
+-- https://github.com/yutkat/wb-only-current-line.nvim if not ar then return end
+
+if not ar then return end
 
 local enabled = ar.config.plugin.custom.wb_current_line.enable
 
-if not ar or ar.none or not enabled then return end
+if ar.none or not enabled then return end
 
 local fn = vim.fn
 
