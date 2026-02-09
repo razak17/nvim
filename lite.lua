@@ -59,9 +59,9 @@ end
 
 vim.opt.rtp:prepend(lazy_path)
 local config = vim.fn.stdpath('config')
-vim.opt.rtp:remove(config .. '/plugin')
+vim.opt.rtp:remove(config)
 vim.opt.rtp:remove(config .. '/after')
-vim.opt.rtp:remove(config .. '/after/plugin')
+vim.opt.packpath:remove(config)
 
 require('lazy').setup({
   spec = {
@@ -132,6 +132,7 @@ require('lazy').setup({
     },
   },
   defaults = { lazy = true },
+  performance = { rtp = { reset = false } },
   change_detection = { notify = false },
   git = { timeout = 720 },
   install = { colorscheme = { colorscheme, 'habamax' } },
