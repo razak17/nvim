@@ -181,7 +181,7 @@ local function colorscheme_overrides(colorscheme)
         { WinSeparator = { fg = { from = 'NonText', alter = -0.4 } } },
       },
       popup = {
-        { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.4 } } },
+        { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.55 } } },
       },
     }),
     ['default'] = theming.generate_overrides({
@@ -202,6 +202,9 @@ local function colorscheme_overrides(colorscheme)
         { DiffAdd = { bg = { from = 'DiffAdd', alter = 0.05 } } },
         { DiffChange = { bg = 'NONE', fg = '#72A2D2' } },
         { DiffDelete = { bg = { from = 'Error', alter = -0.15 } } },
+      },
+      popup = {
+        { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.5 } } },
       },
     }),
     ['habamax'] = theming.generate_overrides({
@@ -291,6 +294,9 @@ local function colorscheme_overrides(colorscheme)
           },
         },
       },
+      popup = {
+        { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.45 } } },
+      },
     }),
     ['slate'] = theming.generate_overrides({
       default = {
@@ -348,6 +354,9 @@ local function colorscheme_overrides(colorscheme)
           },
         },
       },
+      popup = {
+        { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.25 } } },
+      },
     }),
     ['wildcharm'] = theming.generate_overrides({
       default = {
@@ -369,6 +378,9 @@ local function colorscheme_overrides(colorscheme)
             fg = { from = 'Removed' },
           },
         },
+      },
+      popup = {
+        { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.45 } } },
       },
     }),
   }
