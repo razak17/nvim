@@ -63,7 +63,7 @@ return {
     cmd = { 'Nerdy' },
     cond = function() return ar.get_plugin_cond('nerdy.nvim', not minimal) end,
     init = function()
-      ar.add_to_select_menu('command_palette', { ['Nerdy'] = 'Nerdy list' })
+      ar.add_to_select('command_palette', { ['Nerdy'] = 'Nerdy list' })
     end,
     opts = { use_new_command = true },
   },

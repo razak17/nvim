@@ -1,7 +1,7 @@
 vim.bo.textwidth = 100
 vim.opt.spell = true
 
-ar.add_to_select_menu('command_palette', {
+ar.add_to_select('command_palette', {
   ['Interface to Type'] = function()
     require('ar.ts_interface_to_type').interface_to_type()
   end,
@@ -14,7 +14,7 @@ map(
   { buffer = true, desc = 'interface to type' }
 )
 
-ar.add_to_select_menu('command_palette', {
+ar.add_to_select('command_palette', {
   ['Extract Type For K Exploration'] = function()
     require('ar.ts_extract_type').extract_type()
   end,
@@ -28,7 +28,7 @@ map(
   { buffer = true, desc = 'extract type for K exploration' }
 )
 
-ar.add_to_select_menu('command_palette', {
+ar.add_to_select('command_palette', {
   ['Convert Arrow Function'] = function()
     require('ar.ts_convert_arrow_func').arrow_to_function()
   end,

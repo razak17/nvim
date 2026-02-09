@@ -510,10 +510,10 @@ end
 --- Add options to select menu
 ---@param name SelectMenuOptions
 ---@param options table
-function ar.add_to_select_menu(name, options)
-  ar.select_menu[name].options = ar.select_menu[name].options or {}
-  ar.select_menu[name].options =
-    vim.tbl_extend('force', ar.select_menu[name].options, options)
+function ar.add_to_select(name, options)
+  ar.select[name].options = ar.select[name].options or {}
+  ar.select[name].options =
+    vim.tbl_extend('force', ar.select[name].options, options)
 end
 
 function ar.escape_pattern(text) return text:gsub('([^%w])', '%%%1') end

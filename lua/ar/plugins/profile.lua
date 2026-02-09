@@ -45,7 +45,7 @@ return {
           prof.start('*')
         end
       end
-      ar.add_to_select_menu(
+      ar.add_to_select(
         'command_palette',
         { ['Toggle Profile'] = toggle_profile }
       )

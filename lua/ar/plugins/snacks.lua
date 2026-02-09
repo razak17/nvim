@@ -57,7 +57,7 @@ return {
       local notify = vim.notify
       require('snacks').setup(opts)
 
-      ar.add_to_select_menu('command_palette', {
+      ar.add_to_select('command_palette', {
         ['Neovim News'] = function()
           Snacks.win({
             file = api.nvim_get_runtime_file('doc/news.txt', false)[1],
@@ -74,11 +74,11 @@ return {
         end,
       })
 
-      ar.add_to_select_menu('command_palette', {
+      ar.add_to_select('command_palette', {
         ['Close Other Buffers'] = function() Snacks.bufdelete.other() end,
       })
 
-      ar.add_to_select_menu('toggle', {
+      ar.add_to_select('toggle', {
         ['Toggle Light/Dark Background'] = function()
           Snacks.toggle.option(
             'background',
@@ -103,7 +103,7 @@ return {
       })
 
       if should_scroll then
-        ar.add_to_select_menu('toggle', {
+        ar.add_to_select('toggle', {
           ['Toggle Smooth Scrolling'] = function()
             local state = Snacks.scroll.enabled and 'disable' or 'enable'
             Snacks.scroll[state]()

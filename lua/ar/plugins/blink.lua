@@ -29,7 +29,7 @@ local function toggle_blink_auto_show()
   )
 end
 
-ar.add_to_select_menu('command_palette', {
+ar.add_to_select('command_palette', {
   ['Toggle Blink Auto Show'] = toggle_blink_auto_show,
 })
 

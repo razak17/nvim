@@ -18,7 +18,7 @@ return {
     init = function()
       vim.g.whichkey_add_spec({ '<leader>ap', group = 'Copilot' })
 
-      ar.add_to_select_menu('ai', {
+      ar.add_to_select('ai', {
         ['Copilot'] = function()
           ar.create_select_menu('Copilot', {
             ['Toggle Auto Trigger'] = 'lua require("copilot.suggestion").toggle_auto_trigger()',

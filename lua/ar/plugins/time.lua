@@ -11,7 +11,7 @@ return {
     end,
     lazy = false,
     init = function()
-      ar.add_to_select_menu(
+      ar.add_to_select(
         'command_palette',
         { ['Time Spent In Neovim'] = 'Fleeting' }
       )
@@ -25,7 +25,7 @@ return {
     end,
     lazy = false,
     init = function()
-      ar.add_to_select_menu('command_palette', {
+      ar.add_to_select('command_palette', {
         ['Time Since Neovim Config'] = 'lua require"configpulse".find_time()',
       })
     end,
@@ -39,7 +39,7 @@ return {
     cmd = { 'OhneAccidents' },
     opts = { welcomeOnStartup = false },
     init = function()
-      ar.add_to_select_menu('command_palette', {
+      ar.add_to_select('command_palette', {
         ['Days Without Configuring Neovim'] = 'OhneAccidents',
       })
     end,

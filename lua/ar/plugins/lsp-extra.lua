@@ -4,7 +4,7 @@ return {
   {
     'mhanberg/output-panel.nvim',
     init = function()
-      ar.add_to_select_menu('lsp', { ['Output Panel'] = 'OutputPanel' })
+      ar.add_to_select('lsp', { ['Output Panel'] = 'OutputPanel' })
     end,
     event = 'LspAttach',
     cond = function()

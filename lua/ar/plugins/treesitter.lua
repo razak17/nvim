@@ -102,7 +102,7 @@ return {
           end)
         end
 
-        ar.add_to_select_menu('command_palette', {
+        ar.add_to_select('command_palette', {
           ['Install Treesitter Parser'] = function()
             vim.ui.input({
               prompt = 'Enter parser names to install (comma separated): ',

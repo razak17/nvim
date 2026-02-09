@@ -12,10 +12,7 @@ return {
       'ColorizerToggle',
     },
     init = function()
-      ar.add_to_select_menu(
-        'toggle',
-        { ['Toggle Colorizer'] = 'ColorizerToggle' }
-      )
+      ar.add_to_select('toggle', { ['Toggle Colorizer'] = 'ColorizerToggle' })
     end,
   },
   {
@@ -23,7 +20,7 @@ return {
     cond = function() return ar.get_plugin_cond('ccc.nvim', not minimal) end,
     cmd = { 'CccHighlighterToggle', 'CccHighlighterEnable', 'CccPick' },
     init = function()
-      ar.add_to_select_menu('toggle', {
+      ar.add_to_select('toggle', {
         ['Toggle Ccc'] = 'CccHighlighterToggle',
         ['Toggle Pick'] = 'CccPick',
       })
@@ -68,7 +65,7 @@ return {
       return ar.get_plugin_cond('oklch-color-picker.nvim', not minimal)
     end,
     init = function()
-      ar.add_to_select_menu('toggle', {
+      ar.add_to_select('toggle', {
         ['Toggle Color Picker'] = "lua require('oklch-color-picker').pick_under_cursor()",
       })
     end,

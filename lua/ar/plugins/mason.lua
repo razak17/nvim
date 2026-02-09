@@ -69,7 +69,7 @@ return {
     keys = { { '<leader>lm', '<cmd>Mason<CR>', desc = 'mason info' } },
     build = ':MasonUpdate',
     init = function()
-      ar.add_to_select_menu('command_palette', {
+      ar.add_to_select('command_palette', {
         ['Update All Mason Packages'] = 'MasonUpdateAll',
       })
     end,

@@ -207,7 +207,7 @@ return {
           end
         end
 
-        ar.add_to_select_menu('command_palette', {
+        ar.add_to_select('command_palette', {
           ['Find Files In Dir'] = fuzzy_in_cur_dir('files', false),
           ['Find Files In Dir & Children'] = fuzzy_in_cur_dir('files', true),
           ['Live Grep In Dir'] = fuzzy_in_cur_dir('grep'),

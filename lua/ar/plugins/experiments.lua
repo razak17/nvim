@@ -27,7 +27,7 @@ return {
         )
       end
 
-      ar.add_to_select_menu('w3m', {
+      ar.add_to_select('w3m', {
         ['Search in vsplit'] = function() w3m_input('W3mVSplit') end,
         ['Search in split'] = function() w3m_input('W3mVSplit') end,
         ['DuckDuckGo Search'] = function() w3m_input('W3m duck') end,

@@ -1,6 +1,6 @@
 local minimal = ar.plugins.minimal
 
-ar.select_menu.testing = {
+ar.select.testing = {
   title = 'Testing actions',
   options = {},
 }
@@ -22,8 +22,8 @@ local function attach() neotest().run.attach() end
 
 local testing_menu = function()
   ar.create_select_menu(
-    ar.select_menu['testing'].title,
-    ar.select_menu['testing'].options
+    ar.select['testing'].title,
+    ar.select['testing'].options
   )()
 end
 
@@ -43,7 +43,7 @@ return {
         { '<leader>t', group = 'Testing' },
         { '<leader>tn', group = 'Neotest' },
       })
-      ar.add_to_select_menu('testing', {
+      ar.add_to_select('testing', {
         ['Neotest'] = function()
           ar.create_select_menu('Neotest', {
             ['Toggle summary'] = function() toggle_summary() end,
@@ -138,7 +138,7 @@ return {
         { '<leader>tv', group = 'Vim-test' },
       })
 
-      ar.add_to_select_menu('testing', {
+      ar.add_to_select('testing', {
         ['Vim-test'] = function()
           ar.create_select_menu('Vim-test', {
             ['Class'] = 'TestClass',
@@ -243,7 +243,7 @@ return {
         { '<leader>tc', group = 'Coverage' },
       })
 
-      ar.add_to_select_menu('testing', {
+      ar.add_to_select('testing', {
         ['Coverage'] = function()
           ar.create_select_menu('Coverage', {
             ['Load'] = function() require('coverage').load(true) end,
@@ -315,7 +315,7 @@ return {
         { '<leader>tq', group = 'Quicktest' },
       })
 
-      ar.add_to_select_menu('testing', {
+      ar.add_to_select('testing', {
         ['Quicktest'] = function()
           ar.create_select_menu('Quicktest', {
             ['Run line'] = function()

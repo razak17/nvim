@@ -286,7 +286,7 @@ local namespace = {
       },
     },
   },
-  select_menu = {
+  select = {
     ai = { title = 'A.I. actions', options = {} },
     command_palette = { title = 'Command Palette actions', options = {} },
     git = { title = 'Git commands', options = {} },
@@ -557,7 +557,7 @@ local config = {
       numbers = { enable = true },
       pack = { enable = true },
       rooter = { enable = true },
-      select_menu = { enable = true },
+      select = { enable = true },
       tmux = { enable = true },
       whitespace = { enable = true },
     },

@@ -43,7 +43,7 @@ return {
     init = function()
       vim.g.whichkey_add_spec({ '<leader>av', group = 'Avante' })
 
-      ar.add_to_select_menu('ai', {
+      ar.add_to_select('ai', {
         ['Avante'] = function()
           ar.create_select_menu('Avante', {
             ['Toggle Chat'] = 'AvanteToggle',

@@ -18,7 +18,7 @@ return {
         end
       end
 
-      ar.add_to_select_menu(
+      ar.add_to_select(
         'command_palette',
         { ['Toggle Minipairs'] = toggle_minipairs }
       )

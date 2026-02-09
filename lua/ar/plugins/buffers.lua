@@ -63,7 +63,7 @@ return {
     end,
     event = 'VeryLazy',
     init = function()
-      ar.add_to_select_menu('command_palette', {
+      ar.add_to_select('command_palette', {
         ['Toggle Early Retirement'] = toggle_early_retirement,
       })
     end,

@@ -440,7 +440,7 @@ end, {
   complete = function() return { 'grid', 'simple' } end,
 })
 
-ar.add_to_select_menu('command_palette', {
+ar.add_to_select('command_palette', {
   ['Cheatsheet (Grid)'] = 'CheatSheet grid',
   ['Cheatsheet (Simple)'] = 'CheatSheet simple',
 })

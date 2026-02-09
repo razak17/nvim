@@ -29,7 +29,7 @@ return {
         end
       end
 
-      ar.add_to_select_menu('command_palette', {
+      ar.add_to_select('command_palette', {
         ['Command History'] = 'Telescope command_history',
         ['Commands'] = 'Telescope commands',
         ['Find Files'] = 'Telescope find_files',

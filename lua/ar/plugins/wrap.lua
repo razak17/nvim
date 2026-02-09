@@ -9,7 +9,7 @@ return {
     end,
     cmd = { 'ToggleTruncate', 'TemporaryToggle' },
     init = function()
-      ar.add_to_select_menu('toggle', {
+      ar.add_to_select('toggle', {
         ['Toggle Truncate'] = 'ToggleTruncate',
         ['Temporary Truncate'] = 'TemporaryToggle',
       })

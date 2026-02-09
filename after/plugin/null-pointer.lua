@@ -36,4 +36,4 @@ map(
 )
 
 ar.command('NullPointer', ar.null_pointer)
-ar.add_to_select_menu('command_palette', { ['Share Code URL'] = 'NullPointer' })
+ar.add_to_select('command_palette', { ['Share Code URL'] = 'NullPointer' })

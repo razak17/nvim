@@ -102,7 +102,4 @@ ar.command('RemoveComments', remove_comments, {
   nargs = 0,
 })
 
-ar.add_to_select_menu(
-  'command_palette',
-  { ['Remove Comments'] = 'RemoveComments' }
-)
+ar.add_to_select('command_palette', { ['Remove Comments'] = 'RemoveComments' })

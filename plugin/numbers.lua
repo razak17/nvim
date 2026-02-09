@@ -66,7 +66,7 @@ ar.command('ToggleRelativeNumber', function()
     disable_relative_number()
   end
 end)
-ar.add_to_select_menu(
+ar.add_to_select(
   'toggle',
   { ['Toggle Relative Number'] = 'ToggleRelativeNumber' }
 )

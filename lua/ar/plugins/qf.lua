@@ -45,7 +45,7 @@ return {
     'brunobmello25/persist-quickfix.nvim',
     cond = function() return ar.get_plugin_cond('persist-quickfix.nvim') end,
     init = function()
-      ar.add_to_select_menu('command_palette', {
+      ar.add_to_select('command_palette', {
         ['Save Qf List'] = function()
           vim.ui.input({
             prompt = 'List name: ',

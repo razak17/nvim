@@ -64,7 +64,7 @@ local config = {
 
 require('jdtls').start_or_attach(config)
 
-ar.add_to_select_menu('lsp', {
+ar.add_to_select('lsp', {
   ['Java'] = function()
     ar.create_select_menu('Java', {
       ['Organize Imports'] = 'lua require("jdtls").organize_imports()',

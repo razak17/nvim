@@ -474,7 +474,7 @@ return {
       event = get_event({ 'batman' }),
       opts = { theme = 'catwoman', use_persistence = false },
       init = function()
-        ar.add_to_select_menu('command_palette', {
+        ar.add_to_select('command_palette', {
           ['Batman Colors'] = require('ar.batman_scheme_switcher').colorscheme_menu,
         })
         theming.apply_overrides('batman', {

@@ -8,7 +8,7 @@ return {
       )
     end,
     init = function()
-      ar.add_to_select_menu(
+      ar.add_to_select(
         'toggle',
         { ['Toggle Transparency'] = 'TransparentToggle' }
       )

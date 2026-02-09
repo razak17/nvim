@@ -7,7 +7,7 @@ return {
     cond = function() return git_cond('blame.nvim') end,
     cmd = { 'BlameToggle' },
     init = function()
-      ar.add_to_select_menu('git', { ['Toggle Blame'] = 'BlameToggle' })
+      ar.add_to_select('git', { ['Toggle Blame'] = 'BlameToggle' })
     end,
     config = function() require('blame').setup() end,
   },
@@ -24,7 +24,7 @@ return {
     'rbong/vim-flog',
     cond = function() return git_cond('vim-flog') end,
     init = function()
-      ar.add_to_select_menu('git', { ['View Branch Graph'] = 'Flog' })
+      ar.add_to_select('git', { ['View Branch Graph'] = 'Flog' })
     end,
     cmd = { 'Flog', 'Flogsplit', 'Floggit' },
     dependencies = { 'tpope/vim-fugitive', 'tpope/vim-rhubarb' },
@@ -49,7 +49,7 @@ return {
     cond = function() return ar.get_plugin_cond('nvim-gitignore', not minimal) end,
     cmd = { 'Gitignore', 'Licenses' },
     init = function()
-      ar.add_to_select_menu('command_palette', {
+      ar.add_to_select('command_palette', {
         ['Generate Gitignore'] = 'Gitignore',
         ['Generate License'] = 'Licenses',
       })
@@ -89,7 +89,7 @@ return {
     end,
     cmd = { 'AdvancedGitSearch' },
     init = function()
-      ar.add_to_select_menu('git', { ['Git Search'] = 'AdvancedGitSearch' })
+      ar.add_to_select('git', { ['Git Search'] = 'AdvancedGitSearch' })
     end,
     config = function()
       require('telescope').load_extension('advanced_git_search')
@@ -100,7 +100,7 @@ return {
     cond = function() return git_cond('co-author.nvim') end,
     cmd = 'CoAuthor',
     init = function()
-      ar.add_to_select_menu('git', { ['List Authors'] = 'CoAuthor' })
+      ar.add_to_select('git', { ['List Authors'] = 'CoAuthor' })
     end,
   },
   {

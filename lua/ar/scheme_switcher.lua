@@ -183,9 +183,6 @@ end
 ar.command('SwitchColorScheme', M.colorscheme_menu, {})
 ar.command('SwitchColor', M.colorscheme_menu, {})
 
-ar.add_to_select_menu(
-  'command_palette',
-  { ['Color Switcher'] = M.colorscheme_menu }
-)
+ar.add_to_select('command_palette', { ['Color Switcher'] = M.colorscheme_menu })
 
 return M

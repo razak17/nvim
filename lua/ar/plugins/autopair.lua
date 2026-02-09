@@ -45,7 +45,7 @@ return {
         event = { 'RecordingLeave' },
         command = function() require('ultimate-autopair').enable() end,
       })
-      ar.add_to_select_menu('command_palette', {
+      ar.add_to_select('command_palette', {
         ['Toggle Auto-pairing'] = function()
           require('ultimate-autopair').toggle()
           local mode = require('ultimate-autopair').isenabled() and 'enabled'

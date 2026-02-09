@@ -138,7 +138,7 @@ return {
     cond = function() return git_cond('gitsigns.nvim') end,
     event = { 'BufRead', 'BufNewFile' },
     init = function()
-      ar.add_to_select_menu('git', {
+      ar.add_to_select('git', {
         ['Toggle Current Line Blame'] = 'Gitsigns toggle_current_line_blame',
         ['Reset Buffer'] = 'Gitsigns reset_buffer',
       })
@@ -274,7 +274,7 @@ return {
         require('agitator.search_in_added').search_in_added()
       end
 
-      ar.add_to_select_menu('git', {
+      ar.add_to_select('git', {
         ['Time Machine'] = time_machine,
         ['Search Word In Another Branch'] = search_in_another_branch,
         ['Search In Added Files'] = search_in_added,

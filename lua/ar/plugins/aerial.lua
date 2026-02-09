@@ -34,7 +34,7 @@ return {
       cmd = { 'AerialToggle' },
       cond = get_cond,
       init = function()
-        ar.add_to_select_menu('toggle', { ['Toggle Aerial'] = 'AerialToggle' })
+        ar.add_to_select('toggle', { ['Toggle Aerial'] = 'AerialToggle' })
       end,
       opts = {
         lazy_load = false,

@@ -27,7 +27,7 @@ return {
     cond = function() return ar.get_plugin_cond('suda.vim') end,
     lazy = false,
     init = function()
-      ar.add_to_select_menu('command_palette', {
+      ar.add_to_select('command_palette', {
         ['Re-open File With Sudo Permissions'] = 'SudaRead',
         ['Write File With Sudo Permissions'] = 'SudaWrite',
       })

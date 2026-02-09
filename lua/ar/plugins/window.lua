@@ -12,7 +12,7 @@ return {
     cond = function() return ar.get_plugin_cond('windows.nvim', not minimal) end,
     init = function()
       vim.g.whichkey_add_spec({ '<leader>wm', group = 'Maximizer' })
-      ar.add_to_select_menu('command_palette', {
+      ar.add_to_select('command_palette', {
         ['Maximize Window'] = 'lua require("windows.commands").maximize()',
       })
     end,

@@ -51,7 +51,7 @@ return {
       'typescriptreact',
     },
     init = function()
-      ar.add_to_select_menu('command_palette', {
+      ar.add_to_select('command_palette', {
         ['Generate Types From JSON'] = function()
           if not ar.plugin_available('nvim-quicktype') then return end
           vim.cmd('QuickType')
@@ -118,7 +118,7 @@ return {
     end,
     cmd = { 'TemplateString' },
     init = function()
-      ar.add_to_select_menu('toggle', {
+      ar.add_to_select('toggle', {
         ['Toggle Template String'] = 'TemplateString toggle',
       })
     end,
@@ -166,7 +166,7 @@ return {
       'CronExplainedToggle',
     },
     init = function()
-      ar.add_to_select_menu(
+      ar.add_to_select(
         'command_palette',
         { ['Toggle Cronex'] = 'CronExplainedToggle' }
       )
@@ -221,7 +221,7 @@ return {
     cond = function() return ar.get_plugin_cond('venv-selector.nvim', enabled) end,
     branch = 'regexp', -- This is the regexp branch, use this for the new version
     init = function()
-      ar.add_to_select_menu('command_palette', {
+      ar.add_to_select('command_palette', {
         ['Venv Selector: select env'] = 'VenvSelect',
         ['Venv Selector: select cached env'] = 'VenvSelectCached',
       })

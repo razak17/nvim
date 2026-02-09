@@ -11,7 +11,7 @@ return {
       return ar.get_plugin_cond('tailwind-fold.nvim', condition)
     end,
     init = function()
-      ar.add_to_select_menu('toggle', {
+      ar.add_to_select('toggle', {
         ['Toggle Tailwind Fold'] = 'TailwindFoldToggle',
       })
     end,
@@ -65,7 +65,7 @@ return {
       'TailwindSortSelection',
     },
     init = function()
-      ar.add_to_select_menu('lsp', {
+      ar.add_to_select('lsp', {
         ['Toggle Tailwind Tools Fold'] = 'TailwindConcealToggle',
         ['Toggle Tailwind Colors'] = 'TailwindColorToggle',
         ['Sort Tailwind Classes'] = 'TailwindSort',

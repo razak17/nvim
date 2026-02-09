@@ -8,7 +8,7 @@ return {
     end,
     event = 'BufReadPost',
     init = function()
-      ar.add_to_select_menu('toggle', {
+      ar.add_to_select('toggle', {
         ['Toggle Stay Centered'] = 'lua require("stay-centered").toggle()',
       })
     end,

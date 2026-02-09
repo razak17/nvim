@@ -75,7 +75,7 @@ return {
       -- stylua: ignore start
       vim.g.whichkey_add_spec({ '<leader>ac', group = 'CopilotChat', mode = { 'n', 'x' } })
       -- stylua: ignore end
-      ar.add_to_select_menu('ai', {
+      ar.add_to_select('ai', {
         ['CopilotChat'] = function()
           ar.create_select_menu('CopilotChat', {
             ['Toggle Chat'] = 'CopilotChatToggle',

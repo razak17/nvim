@@ -209,7 +209,7 @@ return {
     'GpUnitTests', 'GpExplain', 'GpCodeReview', 'GpBufferChatNew', 'GpActAs',
   },
   init = function()
-    ar.add_to_select_menu('ai', {
+    ar.add_to_select('ai', {
       ['Gp'] = function()
         ar.create_select_menu('Gp', {
           ['New Chat'] = 'GpChatNew',

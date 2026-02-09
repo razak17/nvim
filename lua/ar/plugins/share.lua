@@ -30,7 +30,7 @@ return {
     'LionyxML/nvim-0x0',
     cond = function() return ar.get_plugin_cond('nvim-0x0', not minimal) end,
     init = function()
-      ar.add_to_select_menu('command_palette', {
+      ar.add_to_select('command_palette', {
         ['Upload Current File To 0x0.st'] = function()
           require('nvim-0x0').upload_current_file()
         end,

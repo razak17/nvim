@@ -40,7 +40,7 @@ return {
       return ar.get_plugin_cond('prompt-tower.nvim', ar.ai.enable)
     end,
     init = function()
-      ar.add_to_select_menu('ai', {
+      ar.add_to_select('ai', {
         ['Prompt Tower'] = function()
           ar.create_select_menu('Prompt Tower', {
             ['UI'] = 'PromptTower ui',

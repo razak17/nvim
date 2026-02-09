@@ -58,7 +58,7 @@ return {
     'folke/trouble.nvim',
     init = function()
       vim.g.whichkey_add_spec({ '<localleader>x', group = 'Trouble' })
-      ar.add_to_select_menu('command_palette', {
+      ar.add_to_select('command_palette', {
         ['Trouble Diagnostics'] = 'TroubleToggle',
       })
     end,

@@ -59,7 +59,7 @@ return {
     init = function()
       vim.g.any_jump_disable_default_keybindings = 1
       vim.g.whichkey_add_spec({ '<leader>j', group = 'Any Jump' })
-      ar.add_to_select_menu('lsp', {
+      ar.add_to_select('lsp', {
         ['Jump To Keyword'] = function()
           vim.ui.input({
             prompt = 'Keyword: ',

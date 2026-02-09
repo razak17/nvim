@@ -7,7 +7,7 @@ return {
     cond = function() return git_cond('openingh.nvim') end,
     cmd = { 'OpenInGHFile', 'OpenInGHRepo', 'OpenInGHFileLines' },
     init = function()
-      ar.add_to_select_menu('git', {
+      ar.add_to_select('git', {
         ['Open File In GitHub'] = 'OpenInGHFile',
         ['Open Line In GitHub'] = 'OpenInGHFileLines',
         ['Open Repo In GitHub'] = 'OpenInGHRepo',

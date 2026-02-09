@@ -28,7 +28,7 @@ return {
     init = function()
       local visual_cmd = ar.visual_cmd
       vim.g.whichkey_add_spec({ '<leader>ak', group = 'Codecompanion' })
-      ar.add_to_select_menu('ai', {
+      ar.add_to_select('ai', {
         ['Codecompanion'] = function()
           ar.create_select_menu('Codecompanion', {
             ['Toggle Chat'] = 'CodeCompanionChat Toggle',

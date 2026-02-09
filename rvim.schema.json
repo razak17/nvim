@@ -1322,7 +1322,7 @@
               },
               "type": "object"
             },
-            "select_menu": {
+            "select": {
               "additionalProperties": false,
               "properties": {
                 "enable": {

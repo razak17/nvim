@@ -194,7 +194,7 @@ return {
       cmd = { 'RenderMarkdown' },
       ft = { 'markdown', 'Avante', 'Avante', 'codecompanion' },
       init = function()
-        ar.add_to_select_menu('command_palette', {
+        ar.add_to_select('command_palette', {
           ['Toggle RenderMarkdown'] = 'RenderMarkdown toggle',
         })
       end,

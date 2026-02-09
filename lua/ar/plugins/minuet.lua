@@ -16,7 +16,7 @@ return {
     cmd = { 'Minuet' },
     event = 'InsertEnter',
     init = function()
-      ar.add_to_select_menu('ai', {
+      ar.add_to_select('ai', {
         ['Minuet'] = function()
           ar.create_select_menu('Minuet', {
             ['Toggle Minuet Completion'] = function()

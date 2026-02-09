@@ -16,7 +16,7 @@ return {
     'ck-zhang/obfuscate.nvim',
     cond = function() return ar.get_plugin_cond('obfuscate.nvim', not minimal) end,
     init = function()
-      ar.add_to_select_menu(
+      ar.add_to_select(
         'toggle',
         { ['Toggle Obfuscate'] = 'lua require("obfuscate").toggle()' }
       )
@@ -27,7 +27,7 @@ return {
     cond = function() return get_cond('cloak.nvim', 'cloak') end,
     lazy = false,
     init = function()
-      ar.add_to_select_menu('toggle', { ['Toggle Cloak'] = 'CloakToggle' })
+      ar.add_to_select('toggle', { ['Toggle Cloak'] = 'CloakToggle' })
     end,
     opts = {
       patterns = {
@@ -50,10 +50,10 @@ return {
       return get_cond('shelter.nvim', 'shelter')
     end,
     init = function()
-      ar.add_to_select_menu('toggle', {
+      ar.add_to_select('toggle', {
         ['Toggle Shelter'] = 'Shelter toggle',
       })
-      ar.add_to_select_menu('command_palette', {
+      ar.add_to_select('command_palette', {
         ['Shelter Peek'] = 'Shelter peek',
       })
     end,
@@ -94,10 +94,10 @@ return {
         return keys
       end,
       init = function()
-        ar.add_to_select_menu('toggle', {
+        ar.add_to_select('toggle', {
           ['Toggle Ecolog Shelter'] = 'EcologShelterToggle',
         })
-        ar.add_to_select_menu('command_palette', {
+        ar.add_to_select('command_palette', {
           ['Ecolog Select'] = 'EcologSelect',
           ['Ecolog Goto'] = 'EcologGoto',
           ['Ecolog Goto Var'] = 'EcologGotoVar',

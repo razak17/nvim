@@ -4,7 +4,7 @@
 --------------------------------------------------------------------------------
 local lsp = vim.lsp
 local ms = vim.lsp.protocol.Methods
-local lsp_menus = require('ar.select_menus.lsp')
+local lsp_menus = require('ar.select.lsp')
 local util = require('vim.lsp.util')
 
 local M = {}

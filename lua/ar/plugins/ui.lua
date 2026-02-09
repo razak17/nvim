@@ -76,7 +76,7 @@ return {
     init = function()
       vim.g.whichkey_add_spec({ '<localleader>s', group = 'Strict' })
       local strict = require('strict')
-      ar.add_to_select_menu('command_palette', {
+      ar.add_to_select('command_palette', {
         ['Spaces To Tabs'] = function() strict.convert_spaces_to_tabs() end,
         ['Tabs To Spaces'] = function() strict.remove_trailing_empty_lines() end,
         ['Split Long Lines'] = function() strict.split_overlong_lines() end,

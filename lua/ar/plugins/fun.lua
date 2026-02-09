@@ -25,7 +25,7 @@ return {
     cond = function() return ar.get_plugin_cond('sPoNGe-BoB.NvIm') end,
     cmd = { 'SpOnGeBoBiFy' },
     init = function()
-      ar.add_to_select_menu('toggle', { ['Toggle SpOnGeBoB'] = 'SpOnGeBoBiFy' })
+      ar.add_to_select('toggle', { ['Toggle SpOnGeBoB'] = 'SpOnGeBoBiFy' })
     end,
     -- stylua: ignore
     keys = {
@@ -39,7 +39,7 @@ return {
     end,
     cmd = { 'ToggleIdiot' },
     init = function()
-      ar.add_to_select_menu('toggle', { ['Toggle Idiot'] = 'ToggleIdiot' })
+      ar.add_to_select('toggle', { ['Toggle Idiot'] = 'ToggleIdiot' })
     end,
     config = function()
       local idiot = require('you-are-an-idiot')
@@ -77,7 +77,7 @@ return {
       vim.g.footprintsEnabledByDefault = 0
       vim.g.footprintsOnCurrentLine = 0
 
-      ar.add_to_select_menu('toggle', {
+      ar.add_to_select('toggle', {
         ['Toggle Footprints'] = 'FootprintsToggle',
         ['Enable Footprints'] = 'FootprintsEnable',
         ['Disable Footprints'] = 'FootprintsDisable',

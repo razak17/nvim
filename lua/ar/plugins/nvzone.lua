@@ -6,7 +6,7 @@ return {
     cond = function() return ar.get_plugin_cond('timerly', not minimal) end,
     cmd = 'TimerlyToggle',
     init = function()
-      ar.add_to_select_menu('command_palette', {
+      ar.add_to_select('command_palette', {
         ['Toggle Timer'] = 'TimerlyToggle',
       })
     end,
@@ -16,7 +16,7 @@ return {
     'nvzone/showkeys',
     cond = function() return ar.get_plugin_cond('showkeys', not minimal) end,
     init = function()
-      ar.add_to_select_menu(
+      ar.add_to_select(
         'command_palette',
         { ['Toggle Screencaster'] = 'ShowkeysToggle' }
       )
@@ -34,7 +34,7 @@ return {
     cond = function() return ar.get_plugin_cond('minty', not minimal) end,
     cmd = { 'Shades', 'Huefy' },
     init = function()
-      ar.add_to_select_menu('toggle', {
+      ar.add_to_select('toggle', {
         ['Toggle Color Picker'] = 'Huefy',
       })
     end,

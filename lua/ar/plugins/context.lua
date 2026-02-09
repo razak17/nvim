@@ -21,7 +21,7 @@ return {
     event = { 'BufRead', 'BufNewFile' },
     cmd = { 'TSContext' },
     init = function()
-      ar.add_to_select_menu(
+      ar.add_to_select(
         'command_palette',
         { ['Toggle TS Context'] = 'TSContext toggle' }
       )
@@ -47,7 +47,7 @@ return {
     end,
     cmd = 'NvimContextVtToggle',
     init = function()
-      ar.add_to_select_menu(
+      ar.add_to_select(
         'command_palette',
         { ['Toggle Context Visualizer'] = 'NvimContextVtToggle' }
       )

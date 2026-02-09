@@ -437,12 +437,12 @@ nnoremap('<leader>ue', '<Cmd>EditQuery<CR>', { desc = 'edit query' })
 -- Conceal Level & Cursor
 nnoremap(
   '<localleader>cl',
-  ':lua require"ar.select_menus.toggle".toggle_conceal_level()<CR>',
+  ':lua require"ar.select.toggle".toggle_conceal_level()<CR>',
   { desc = 'toggle conceallevel', silent = true }
 )
 nnoremap(
   '<localleader>cc',
-  ':lua require"ar.select_menus.toggle".toggle_conceal_cursor()<CR>',
+  ':lua require"ar.select.toggle".toggle_conceal_cursor()<CR>',
   { desc = 'toggle concealcursor', silent = true }
 )
 --------------------------------------------------------------------------------
@@ -453,7 +453,7 @@ nnoremap('<leader><localleader>fe', function()
 end, { desc = 'open in file manager' })
 --------------------------------------------------------------------------------
 -- Rustlings
-ar.add_to_select_menu('command_palette', {
+ar.add_to_select('command_palette', {
   ['Rustlings Done'] = function()
     vim.cmd([[%s/\n\n\/\/ I AM NOT DONE//]])
     vim.cmd.w()
@@ -523,7 +523,7 @@ ar.command('Redir', function()
   api.nvim_buf_set_lines(buf, 0, -1, false, output)
   ar.open_buf_centered_popup(buf)
 end)
-ar.add_to_select_menu('command_palette', { ['Open Messages'] = 'Redir' })
+ar.add_to_select('command_palette', { ['Open Messages'] = 'Redir' })
 --------------------------------------------------------------------------------
 -- Reorder numbered list
 -- Works for the list where the numbers are followed by ". ", "). ", or "]. "
