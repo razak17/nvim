@@ -58,6 +58,10 @@ if not vim.uv.fs_stat(lazy_path) then
 end
 
 vim.opt.rtp:prepend(lazy_path)
+local config = vim.fn.stdpath('config')
+vim.opt.rtp:remove(config .. '/plugin')
+vim.opt.rtp:remove(config .. '/after')
+vim.opt.rtp:remove(config .. '/after/plugin')
 
 require('lazy').setup({
   spec = {
