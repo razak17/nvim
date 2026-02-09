@@ -1,3 +1,6 @@
+require('ar.config')
+require('ar.globals')
+require('ar.highlights')
 ------------------------------------------------------------------------------
 -- Options {{{1
 ------------------------------------------------------------------------------
@@ -34,6 +37,62 @@ vim.o.smartindent = true
 ------------------------------------------------------------------------------
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
+------------------------------------------------------------------------------
+-- Colors {{{1
+------------------------------------------------------------------------------
+vim.cmd.colorscheme('habamax')
+local theming = require('ar.theming')
+local hls = theming.generate_overrides({
+  default = {
+    { Normal = { bg = { from = 'Normal', alter = -0.3 } } },
+    { NormalFloat = { bg = { from = 'Normal', alter = -0.5 } } },
+    { StatusLine = { bg = 'NONE' } },
+    {
+      Visual = {
+        bg = { from = 'Visual', alter = 0.5 },
+        fg = 'NONE',
+        reverse = false,
+      },
+    },
+    { Dim = { link = 'NonText' } },
+    { WinSeparator = { fg = { from = 'Dim', alter = -0.2 } } },
+    {
+      SpellBad = {
+        sp = { from = 'DiffAdd', attr = 'fg', alter = -0.1 },
+        reverse = false,
+      },
+    },
+    {
+      IncSearch = {
+        inherit = 'IncSearch',
+        bg = { from = 'IncSearch', attr = 'fg' },
+        fg = { from = 'IncSearch', attr = 'bg' },
+        reverse = false,
+      },
+    },
+    {
+      DiffAdd = {
+        bg = { from = 'Added', attr = 'fg', alter = -0.65 },
+        fg = { from = 'Added' },
+        reverse = false,
+      },
+    },
+    {
+      DiffChange = {
+        fg = { from = 'DiffText', attr = 'bg', alter = 1.2 },
+        reverse = false,
+      },
+    },
+    {
+      DiffDelete = {
+        bg = { from = 'Removed', attr = 'fg', alter = -0.55 },
+        fg = { from = 'Removed' },
+        reverse = false,
+      },
+    },
+  },
+})
+ar.highlight.all(hls)
 ------------------------------------------------------------------------------
 -- Plugns {{{1
 ------------------------------------------------------------------------------
