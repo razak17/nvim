@@ -107,6 +107,14 @@ if ar.lsp.enable then
       ['Goto Workspace Symbol Under Cursor'] = "lua require'ar.select.telescope_lsp'.ws_symbol_under_cursor()",
     })
   end
+  if ar.has('snacks.nvim') and ar.config.picker.variant == 'snacks' then
+    ar.add_to_select('lsp', {
+      ['LSP references'] = "lua require'ar.select.snacks_lsp'.display_lsp_references()",
+      ['Call Heirarchy'] = "lua require'ar.select.snacks_lsp'.display_call_hierarchy()",
+      ['Goto Workspace Symbol'] = "lua require'ar.select.snacks_lsp'.filter_lsp_workspace_symbols()",
+      ['Goto Workspace Symbol Under Cursor'] = "lua require'ar.select.snacks_lsp'.ws_symbol_under_cursor()",
+    })
+  end
   local is_biome = ar.config.lsp.lang.web.biome
     or vim.tbl_contains(ar.config.lsp.override, 'biome')
   if ar.lsp.enable and is_biome then
