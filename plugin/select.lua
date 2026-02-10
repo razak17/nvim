@@ -56,6 +56,14 @@ if ar.is_git_repo() or ar.is_git_env() then
       ['Browse Stashes'] = "lua require'ar.select.telescope_git'.list_stashes()",
     })
   end
+  if ar.has('snacks.nvim') and ar.config.picker.variant == 'snacks' then
+    ar.add_to_select('git', {
+      ['Browse Branches'] = "lua require'ar.select.snacks_git'.browse_branches()",
+      ['Browse Commits'] = "lua require'ar.select.snacks_git'.browse_commits()",
+      ['Browse Buffer Commits'] = "lua require'ar.select.snacks_git'.browse_bcommits()",
+      ['Browse Stashes'] = "lua require'ar.select.snacks_git'.list_stashes()",
+    })
+  end
 
   local git_menu = function()
     ar.create_select_menu(ar.select['git'].title, ar.select['git'].options)()
