@@ -516,7 +516,7 @@ return {
           {
             '<leader>fL',
             function()
-              require('telescope').extensions['software-licenses'].find(
+              require('telescope').extensions.software_licenses.find(
                 ar.telescope.horizontal()
               )
             end,
@@ -527,7 +527,7 @@ return {
           'nvim-telescope/telescope.nvim',
           optional = true,
           opts = function(_, opts)
-            vim.g.telescope_add_extension({ 'software-licenses' }, opts)
+            vim.g.telescope_add_extension({ 'software_licenses' }, opts)
           end,
         },
       },
