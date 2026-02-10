@@ -93,10 +93,10 @@ if ar.lsp.enable then
   })
   if ar.has('telescope.nvim') then
     ar.add_to_select('lsp', {
-      ['LSP references'] = "lua require'ar.select.lsp'.display_lsp_references()",
-      ['Call Heirarchy'] = "lua require'ar.select.lsp'.display_call_hierarchy()",
-      ['Goto Workspace Symbol'] = "lua require'ar.select.lsp'.filter_lsp_workspace_symbols()",
-      ['Goto Workspace Symbol Under Cursor'] = "lua require'ar.select.lsp'.ws_symbol_under_cursor()",
+      ['LSP references'] = "lua require'ar.select.telescope_lsp'.display_lsp_references()",
+      ['Call Heirarchy'] = "lua require'ar.select.telescope_lsp'.display_call_hierarchy()",
+      ['Goto Workspace Symbol'] = "lua require'ar.select.telescope_lsp'.filter_lsp_workspace_symbols()",
+      ['Goto Workspace Symbol Under Cursor'] = "lua require'ar.select.telescope_lsp'.ws_symbol_under_cursor()",
     })
   end
   local is_biome = ar.config.lsp.lang.web.biome
