@@ -889,4 +889,22 @@ return {
       },
     },
   },
+  {
+    'folke/snacks.nvim',
+    optional = true,
+    dependencies = { -- this will only be evaluated if snacks is enabled
+      {
+        desc = ' Image/video gallery browser for Neovim using snacks.nvim ',
+        'TKasperczyk/snacks-gallery.nvim',
+        keys = {
+          {
+            '<leader>oi',
+            function() require('snacks-gallery').open() end,
+            desc = 'Gallery',
+          },
+        },
+        opts = {},
+      },
+    },
+  },
 }

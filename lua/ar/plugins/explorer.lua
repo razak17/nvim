@@ -567,7 +567,7 @@ return {
         desc = 'oil: open cwd',
       },
       {
-        '<leader>oi',
+        '<leader>of',
         "<Cmd>lua require('oil').open_float('.')<CR>",
         desc = 'oil: open float',
       },
