@@ -48,7 +48,7 @@ if ar.is_git_repo() or ar.is_git_env() then
     ['Undo Last Commit'] = "lua require'ar.select.git'.undo_last_commit()",
     ['List Branches'] = "lua require'ar.select.git'.list_branches()",
   })
-  if ar.has('telescope.nvim') then
+  if ar.has('telescope.nvim') and ar.config.picker.variant == 'telescope' then
     ar.add_to_select('git', {
       ['Browse Branches'] = "lua require'ar.select.telescope_git'.browse_branches()",
       ['Browse Commits'] = "lua require'ar.select.telescope_git'.browse_commits()",
@@ -91,7 +91,7 @@ if ar.lsp.enable then
     ['Remove Unused (ts)'] = "lua require'ar.select.lsp'.remove_unused()",
     ['Fix All (ts)'] = "lua require'ar.select.lsp'.fix_all()",
   })
-  if ar.has('telescope.nvim') then
+  if ar.has('telescope.nvim') and ar.config.picker.variant == 'telescope' then
     ar.add_to_select('lsp', {
       ['LSP references'] = "lua require'ar.select.telescope_lsp'.display_lsp_references()",
       ['Call Heirarchy'] = "lua require'ar.select.telescope_lsp'.display_call_hierarchy()",
