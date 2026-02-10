@@ -23,6 +23,22 @@ return {
     end,
   },
   {
+    'zeybek/camouflage.nvim',
+    cond = function() return get_cond('camouflage.nvim', 'camouflage') end,
+    lazy = false,
+    cmd = { 'CamouflageToggle' },
+    init = function()
+      ar.add_to_select('toggle', { ['Toggle Camouflage'] = 'CamouflageToggle' })
+    end,
+    opts = {
+      style = 'stars',
+      integrations = {
+        telescope = false,
+        cmp = { disable_in_masked = false },
+      },
+    },
+  },
+  {
     'laytan/cloak.nvim',
     cond = function() return get_cond('cloak.nvim', 'cloak') end,
     lazy = false,
@@ -188,18 +204,18 @@ return {
           or opts
       end,
     },
-  },
-  {
-    'hrsh7th/nvim-cmp',
-    optional = true,
-    opts = function(_, opts)
-      vim.g.cmp_add_source(opts, {
-        source = {
-          name = 'ecolog',
-          group_index = 1,
-        },
-        menu = { ecolog = '[ECOLOG]' },
-      })
-    end,
+    {
+      'hrsh7th/nvim-cmp',
+      optional = true,
+      opts = function(_, opts)
+        vim.g.cmp_add_source(opts, {
+          source = {
+            name = 'ecolog',
+            group_index = 1,
+          },
+          menu = { ecolog = '[ECOLOG]' },
+        })
+      end,
+    },
   },
 }

@@ -51,7 +51,7 @@ local env = vim.env
 ---@alias ArWhichSession 'persisted' | 'persistence'
 ---@alias ArWhichFilesPicker 'smart-open' | 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick' | 'fff'
 ---@alias ArWhichScroll 'snacks' | 'neoscroll'
----@alias ArWhichShelter 'cloak' | 'ecolog' | 'shelter'
+---@alias ArWhichShelter 'cloak' | 'ecolog' | 'shelter' | 'camouflage'
 ---@alias ArWhichStatuscolumn 'local' | 'heirline'
 ---@alias ArWhichStatusline 'local' | 'heirline'
 ---@alias ArWhichWinbar 'local' | 'dropbar'
@@ -607,7 +607,7 @@ local config = {
   shelter = {
     enable = true,
     ---@type ArWhichShelter
-    variant = 'shelter',
+    variant = 'camouflage',
   },
   ui = {
     ---@type ArWhichBorder

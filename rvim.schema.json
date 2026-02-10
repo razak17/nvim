@@ -1714,7 +1714,7 @@
           "type": "boolean"
         },
         "variant": {
-          "enum": ["cloak", "ecolog", "shelter"],
+          "enum": ["cloak", "ecolog", "shelter", "camouflage"],
           "type": "string"
         }
       },
