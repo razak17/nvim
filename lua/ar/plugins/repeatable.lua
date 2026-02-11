@@ -1,6 +1,9 @@
+local coding = ar.plugins.coding
+
 local function get_cond(plugin, variant)
   return function()
-    local condition = ar.treesitter.enable
+    local condition = coding
+      and ar.treesitter.enable
       and ar.config.repeatable.enable
       and ar.config.repeatable.variant == variant
     return ar.get_plugin_cond(plugin, condition)
