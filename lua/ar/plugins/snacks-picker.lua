@@ -19,12 +19,15 @@ local picker_config = {
     return Snacks.picker.pick(source, opts)
   end,
 }
-if ar.config.picker.variant == 'snacks' then ar.pick.register(picker_config) end
+
+local variant = ar.config.picker.variant
+if variant == 'snacks' then ar.pick.register(picker_config) end
 
 local api, fn = vim.api, vim.fn
 local fmt = string.format
 local border_style = vim.o.winborder
 local diag_icons = ar.ui.codicons.lsp
+local minimal = ar.plugins.minimal
 local show_preview = ar.config.picker.win.show_preview
 
 ---@param source string
@@ -184,7 +187,7 @@ return {
     recommended = true,
     'folke/snacks.nvim',
     init = function()
-      if ar.config.picker.variant == 'snacks' then
+      if variant == 'snacks' then
         local function fuzzy_in_cur_dir(source, recursive)
           return function()
             local current_file = api.nvim_buf_get_name(0)
@@ -220,10 +223,10 @@ return {
       if ar.config.picker.files == 'snacks' then
         table.insert(keys, { '<C-p>', find_files, desc = 'snacks: find files' })
       end
-      if ar.plugins.minimal or ar.config.buffers.variant == 'snacks' then
+      if minimal or ar.config.buffers.variant == 'snacks' then
         table.insert(keys, { '<M-space>', buffers, desc = 'snacks: buffers' })
       end
-      if ar.config.picker.variant == 'snacks' then
+      if variant == 'snacks' then
         -- stylua: ignore
         local picker_mappings = {
           { '<leader>fc', p('files', { cwd = fn.stdpath('config') }), desc = 'find config file' },
@@ -835,7 +838,7 @@ return {
     'razak17/todo-comments.nvim',
     optional = true,
     opts = function()
-      if ar.config.picker.variant == 'snacks' then
+      if variant == 'snacks' then
         local function todos()
           p('todo_comments', {
             layout = { preview = 'main', preset = 'ivy' },
@@ -873,6 +876,7 @@ return {
       {
         desc = 'a progressive search plugin built on top of snacks.nvim ',
         '2kabhishek/seeker.nvim',
+        cond = function() return ar.get_plugin_cond('seeker.nvim') end,
         cmd = { 'Seeker' },
         keys = function()
           if ar.config.picker.files == 'seeker' then
@@ -896,6 +900,9 @@ return {
       {
         desc = ' Image/video gallery browser for Neovim using snacks.nvim ',
         'TKasperczyk/snacks-gallery.nvim',
+        cond = function()
+          return ar.get_plugin_cond('snacks-gallery.nvim', not minimal)
+        end,
         keys = {
           {
             '<leader>oi',
