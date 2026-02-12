@@ -617,7 +617,7 @@ local config = {
     ---@type ArIndentline
     indentline = { enable = true, variant = 'snacks' },
     ---@type ArScroll
-    scroll = { enable = true, variant = 'snacks' },
+    scroll = { enable = false, variant = 'snacks' },
     ---@type ArStatuscolumn
     statuscolumn = { enable = true, variant = 'local' },
     ---@type ArStatusline
