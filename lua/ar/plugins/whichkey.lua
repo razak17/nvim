@@ -62,6 +62,7 @@ return {
           { '<localleader>b', group = 'Buffer' },
           { '<localleader>c', group = 'Conceal' },
           { '<localleader>g', group = 'Git' },
+          { '<localleader>gd', group = 'Diff' },
           { '<localleader>go', group = 'Open' },
           { '<localleader>gy', group = 'Yank' },
           { '<localleader>lr', group = 'Rulebook' },

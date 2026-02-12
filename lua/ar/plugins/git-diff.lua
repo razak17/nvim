@@ -7,7 +7,7 @@ return {
     cond = function() return git_cond('vscode-diff.nvim') end,
     cmd = { 'CodeDiff' },
     keys = {
-      { '<localleader>gd', '<Cmd>CodeDiff<CR>', desc = 'codediff: open' },
+      { '<localleader>gdo', '<Cmd>CodeDiff<CR>', desc = 'codediff: open' },
     },
     opts = {
       keymaps = {
@@ -29,10 +29,10 @@ return {
     },
     -- stylua: ignore
     keys = {
-      { '<localleader>gd', '<Cmd>DiffviewOpen<CR>', desc = 'diffview: open' },
+      { '<localleader>gdd', '<Cmd>DiffviewOpen<CR>', desc = 'diffview: open' },
       {  mode = 'v', '<localleader>gh', [[:'<'>DiffviewFileHistory<CR>]], desc = 'diffview: file history' },
-      { '<localleader>gh', '<Cmd>DiffviewFileHistory<CR>', desc = 'diffview: file history', },
-      { '<localleader>gx', '<cmd>set hidden<cr><cmd>DiffviewClose<cr><cmd>set nohidden<cr>', desc = 'diffview: close all buffers', },
+      { '<localleader>gdh', '<Cmd>DiffviewFileHistory<CR>', desc = 'diffview: file history', },
+      { '<localleader>gdx', '<cmd>set hidden<cr><cmd>DiffviewClose<cr><cmd>set nohidden<cr>', desc = 'diffview: close all buffers', },
     },
     init = function()
       local function show_commit(commit_sha)

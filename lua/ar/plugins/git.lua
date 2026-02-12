@@ -296,7 +296,7 @@ return {
     cmd = 'GitLogDiff',
     -- stylua: ignore
     keys = {
-      { '<localleader>gL', '<Cmd>GitLogDiff<CR>', desc = 'gitlogdiff: log diff' },
+      { '<localleader>gdL', '<Cmd>GitLogDiff<CR>', desc = 'gitlogdiff: log diff' },
     },
     opts = { max_count = 10 },
     dependencies = { 'sindrets/diffview.nvim', 'folke/snacks.nvim' },
