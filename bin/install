@@ -168,7 +168,7 @@ clone_config() {
   echo "Creating virtualenv"
   setup_venv
 
-  [ -e "$HOME/.local/bin/rvim" ] && sudo rm "$HOME/.local/bin/rvim"
+  [ -e "$HOME/.local/bin/rvim" ] && rm "$HOME/.local/bin/rvim"
 
   ln -s "$RV_CONFIG_DIR/bin/rvim" "$HOME/.local/bin/rvim"
 }
