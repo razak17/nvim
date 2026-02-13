@@ -95,7 +95,7 @@
 - px-to-rem
 - qf
 - readline
-- repeat
+- repeatable
 - replace
 - rustaceanvim
 - scratch
@@ -119,7 +119,7 @@
 - telescope-any
 - telescope-extensions
 - telescope-lsp
-- telescope-menu
+- telescope-select
 - telescope-ui-select
 - terminal
 - testing

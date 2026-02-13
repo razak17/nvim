@@ -18,7 +18,7 @@
               "type": "boolean"
             },
             "suggestions": {
-              "enum": ["ghost-text", "completion"],
+              "enum": ["completion", "ghost-text"],
               "type": "string"
             },
             "variant": {
@@ -59,7 +59,7 @@
               "type": "boolean"
             },
             "variant": {
-              "enum": ["tui", "frontend"],
+              "enum": ["frontend", "tui"],
               "type": "string"
             }
           },
@@ -126,7 +126,7 @@
           "type": "boolean"
         },
         "variant": {
-          "enum": ["snacks", "fzf-lua"],
+          "enum": ["fzf-lua", "snacks"],
           "type": "string"
         }
       },
@@ -137,6 +137,7 @@
       "properties": {
         "name": {
           "enum": [
+            "Alienocean",
             "afterglow",
             "alabaster",
             "Alienocean",
@@ -369,7 +370,7 @@
           "type": "string"
         },
         "variant": {
-          "enum": ["cmp", "blink", "mini.completion", "omnifunc"],
+          "enum": ["blink", "cmp", "mini.completion", "omnifunc"],
           "type": "string"
         }
       },
@@ -405,7 +406,7 @@
           "type": "string"
         },
         "variant": {
-          "enum": ["neo-tree", "snacks", "mini.files", "oil", "fyler"],
+          "enum": ["fyler", "mini.files", "neo-tree", "oil", "snacks"],
           "type": "string"
         }
       },
@@ -440,7 +441,7 @@
           "type": "boolean"
         },
         "variant": {
-          "enum": ["nvim-web-devicons", "mini.icons"],
+          "enum": ["mini.icons", "nvim-web-devicons"],
           "type": "string"
         }
       },
@@ -794,7 +795,7 @@
               "type": "boolean"
             },
             "variant": {
-              "enum": ["builtin", "picker", "namu"],
+              "enum": ["builtin", "namu", "picker"],
               "type": "string"
             }
           },
@@ -836,7 +837,7 @@
           "type": "boolean"
         },
         "variant": {
-          "enum": ["native", "nvim-notify", "snacks", "noice"],
+          "enum": ["native", "noice", "nvim-notify", "snacks"],
           "type": "string"
         }
       },
@@ -850,17 +851,17 @@
         },
         "files": {
           "enum": [
-            "smart-open",
-            "snacks",
-            "telescope",
             "fzf-lua",
             "mini.pick",
-            "seeker"
+            "seeker",
+            "smart-open",
+            "snacks",
+            "telescope"
           ],
           "type": "string"
         },
         "variant": {
-          "enum": ["snacks", "telescope", "fzf-lua", "mini.pick"],
+          "enum": ["fzf-lua", "mini.pick", "snacks", "telescope"],
           "type": "string"
         },
         "win": {
@@ -1370,6 +1371,7 @@
             "disabled": {
               "items": {
                 "enum": [
+                  "CopilotChat",
                   "aerial",
                   "ai",
                   "animation",
@@ -1390,7 +1392,6 @@
                   "completion",
                   "context",
                   "copilot",
-                  "CopilotChat",
                   "core",
                   "cursor",
                   "dashboard",
@@ -1489,7 +1490,7 @@
                   "telescope-any",
                   "telescope-extensions",
                   "telescope-lsp",
-                  "telescope-menu",
+                  "telescope-select",
                   "telescope-ui-select",
                   "terminal",
                   "testing",
@@ -1521,6 +1522,7 @@
             "override": {
               "items": {
                 "enum": [
+                  "CopilotChat",
                   "aerial",
                   "ai",
                   "animation",
@@ -1541,7 +1543,6 @@
                   "completion",
                   "context",
                   "copilot",
-                  "CopilotChat",
                   "core",
                   "cursor",
                   "dashboard",
@@ -1640,7 +1641,7 @@
                   "telescope-any",
                   "telescope-extensions",
                   "telescope-lsp",
-                  "telescope-menu",
+                  "telescope-select",
                   "telescope-ui-select",
                   "terminal",
                   "testing",
@@ -1714,7 +1715,7 @@
           "type": "boolean"
         },
         "variant": {
-          "enum": ["cloak", "ecolog", "shelter", "camouflage"],
+          "enum": ["camouflage", "cloak", "ecolog", "shelter"],
           "type": "string"
         }
       },
@@ -1724,7 +1725,7 @@
       "additionalProperties": false,
       "properties": {
         "border": {
-          "enum": ["single", "rounded", "none", "double", "solid", "shadow"],
+          "enum": ["double", "none", "rounded", "shadow", "single", "solid"],
           "type": "string"
         },
         "cmdline": {
@@ -1747,7 +1748,7 @@
               "type": "boolean"
             },
             "variant": {
-              "enum": ["mini.indentscope", "ibl", "snacks", "indentmini"],
+              "enum": ["ibl", "indentmini", "mini.indentscope", "snacks"],
               "type": "string"
             }
           },
@@ -1760,7 +1761,7 @@
               "type": "boolean"
             },
             "variant": {
-              "enum": ["snacks", "neoscroll"],
+              "enum": ["neoscroll", "snacks"],
               "type": "string"
             }
           },
@@ -1773,7 +1774,7 @@
               "type": "boolean"
             },
             "variant": {
-              "enum": ["local", "heirline"],
+              "enum": ["heirline", "local"],
               "type": "string"
             }
           },
@@ -1786,7 +1787,7 @@
               "type": "boolean"
             },
             "variant": {
-              "enum": ["local", "heirline"],
+              "enum": ["heirline", "local"],
               "type": "string"
             }
           },
@@ -1808,7 +1809,7 @@
               "type": "boolean"
             },
             "variant": {
-              "enum": ["local", "dropbar"],
+              "enum": ["dropbar", "local"],
               "type": "string"
             }
           },
