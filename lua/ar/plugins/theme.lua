@@ -515,6 +515,22 @@ return {
         }, true)
       end,
     },
+    {
+      '3dyuval/retro-fallout.nvim',
+      cond = get_cond({ 'retro-fallout' }),
+      priority = get_priority({ 'retro-fallout' }),
+      event = get_event({ 'retro-fallout' }),
+      init = function()
+        theming.apply_overrides('retro-fallout', {
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.5 } } },
+          },
+          popup = {
+            { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.55 } } },
+          },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Warm

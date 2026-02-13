@@ -167,6 +167,7 @@
 - randombones_dark
 - randombones_light
 - rasmus
+- retro-fallout
 - retrobox
 - ronny
 - rose-pine
