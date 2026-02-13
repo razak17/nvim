@@ -225,6 +225,7 @@ local function colorscheme_overrides(colorscheme)
         {
           SpellBad = {
             sp = { from = 'DiffAdd', attr = 'fg', alter = -0.1 },
+            fg = 'NONE',
             reverse = false,
           },
         },
