@@ -185,7 +185,7 @@ return {
     },
   },
   {
-    '2nthony/sortjson.nvim',
+    'razak17/sortjson.nvim',
     cond = function() return ar.get_plugin_cond('sortjson.nvim') end,
     cmd = {
       'SortJSONByAlphaNum',
