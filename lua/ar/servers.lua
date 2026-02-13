@@ -294,7 +294,6 @@ local servers = {
           loadOutDirsFromCheck = true,
           runBuildScripts = true,
         },
-        checkOnSave = not bacon_ls,
         inlay_hints = {
           auto = false,
         },

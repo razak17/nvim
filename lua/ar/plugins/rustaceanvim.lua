@@ -79,7 +79,6 @@ return {
                 loadOutDirsFromCheck = true,
                 buildScripts = { enable = true },
               },
-              checkOnSave = not bacon_ls,
               diagnostics = { enable = not bacon_ls },
               lens = { enable = true },
               procMacro = { enable = true },
