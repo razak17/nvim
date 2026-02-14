@@ -3,6 +3,16 @@ local git_cond = require('ar.utils.git').git_cond
 
 return {
   {
+    'YouSame2/inlinediff-nvim',
+    cond = function() return git_cond('inlinediff-nvim') end,
+    cmd = { 'InlineDiff' },
+    -- stylua: ignore
+    keys = {
+      { '<localleader>gdl', '<Cmd>InlineDiff<CR>', desc = 'inlinediff: toggle' },
+    },
+    opts = {},
+  },
+  {
     'esmuellert/codediff.nvim',
     cond = function() return git_cond('vscode-diff.nvim') end,
     cmd = { 'CodeDiff' },
