@@ -230,14 +230,6 @@ local function colorscheme_overrides(colorscheme)
           },
         },
         {
-          IncSearch = {
-            inherit = 'IncSearch',
-            bg = { from = 'IncSearch', attr = 'fg' },
-            fg = { from = 'IncSearch', attr = 'bg' },
-            reverse = false,
-          },
-        },
-        {
           DiffAdd = {
             bg = { from = 'Added', attr = 'fg', alter = -0.65 },
             fg = { from = 'Added' },
