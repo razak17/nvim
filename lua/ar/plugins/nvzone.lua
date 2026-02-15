@@ -51,4 +51,11 @@ return {
     end,
     dependencies = { 'nvzone/volt' },
   },
+  {
+    'aikhe/wrapped.nvim',
+    cond = function() return ar.get_plugin_cond('wrapped.nvim', not minimal) end,
+    cmd = { 'NvimWrapped' },
+    opts = {},
+    dependencies = { 'nvzone/volt' },
+  },
 }
