@@ -47,6 +47,7 @@ if ar.is_git_repo() or ar.is_git_env() then
     ['Revert Last Commit'] = "lua require'ar.select.git'.revert_last_commit()",
     ['Undo Last Commit'] = "lua require'ar.select.git'.undo_last_commit()",
     ['List Branches'] = "lua require'ar.select.git'.list_branches()",
+    ['Sync Remote'] = "lua require'ar.git_status'.refresh()",
   })
   if ar.has('telescope.nvim') and ar.config.picker.variant == 'telescope' then
     ar.add_to_select('git', {

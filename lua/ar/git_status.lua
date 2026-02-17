@@ -111,11 +111,10 @@ function M.get(buf)
 end
 
 function M.refresh(buf)
+  buf = buf or vim.api.nvim_get_current_buf()
   local root = git_root_for_buf(buf)
   if not root then return end
   schedule_refresh(root)
 end
-
-function M.setup(opts) config = vim.tbl_extend('force', config, opts or {}) end
 
 return M
