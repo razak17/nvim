@@ -8,6 +8,7 @@ then
   return
 end
 
+local fmt = string.format
 local stl = require('ar.statusline')
 
 --------------------------------------------------------------------------------
@@ -32,11 +33,13 @@ ar.highlight.plugin('NativeStatuslineHl', {
   { StatusLineLspHint = { fg = { from = 'DiagnosicHint' } } },
   { StatusLineLspInfo = { fg = { from = 'DiagnosicInfo' } } },
   { StatusLineLspMessages = { fg = { from = 'Comment' } } },
-  { StatusLineGitBranchIcon = { fg = { from = 'DiagnosticSignHint' } } },
+  { StatusLineGitBranch = { fg = 'yellowgreen' } },
+  { StatusLineGitAhead = { link = 'StatusLineGitBranch' } },
+  { StatusLineGitBehind = { link = 'StatusLineLspError' } },
   { StatusLineVirtualEnv = { fg = { from = 'DiagnosticSignHint' } } },
   { StatusLineGitDiffAdded = { fg = { from = 'Added' } } },
   { StatusLineGitDiffChanged = { fg = { from = 'Changed' } } },
-  { StatusLineGitDiffRemoved = { fg = { from = 'Error' } } },
+  { StatusLineGitDiffRemoved = { fg = { from = 'StatusLineLspError' } } },
 })
 
 -- LSP clients attached to buffer
@@ -215,16 +218,15 @@ local function git_diff_removed()
   return ''
 end
 
---- @return string
-local function git_branch_icon() return '%#StatusLineGitBranchIcon#%*' end
-
---- @return string
-local function git_branch()
-  local branch = vim.b.gitsigns_head
-  if branch == '' or branch == nil then branch = stl.pretty_branch() end
-
-  branch = ' ' .. git_branch_icon() .. ' ' .. branch
-  return string.format('%%#StatusLineMedium#%s%%*', branch)
+local function git_status()
+  local remote_status = require('ar.git_status').get()
+  if remote_status == '' then return '' end
+  local parts = vim.split(remote_status, ' ', { trimempty = true })
+  local branch =
+    fmt('%%#StatusLineGitBranch# %s%%*', stl.pretty_branch(parts[1]))
+  local behind = fmt(' %%#StatusLineGitBehind#%s%%*', parts[2])
+  local ahead = fmt(' %%#StatusLineGitAhead#%s%%*', parts[3])
+  return ' ' .. branch .. behind .. ahead
 end
 
 --- @return string
@@ -310,7 +312,7 @@ StatusLine.render = function()
 
   local statusline = {
     bar(),
-    git_branch(),
+    git_status(),
     filename(),
     git_diff(),
     diagnostics_error(),

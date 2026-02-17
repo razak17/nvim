@@ -272,6 +272,7 @@ local function get_statusline_palette(colorscheme)
     habamax = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.2),
       fg = hl.tint(hl.get('Comment', 'fg'), 0.55),
+      pale_red = ar.highlight.get('ErrorMsg', 'fg'),
     },
     peachpuff = {
       bg_dark = hl.get('CursorLine', 'bg'),

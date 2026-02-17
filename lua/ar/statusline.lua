@@ -225,8 +225,8 @@ function M.git_pull() git_push_pull('pull', 'from') end
 
 function M.git_push() git_push_pull('push', 'to') end
 
-function M.pretty_branch()
-  local branch = M.git_branch()
+---@param branch string
+function M.pretty_branch(branch)
   if branch:len() < 15 then return branch end
   local prefix, rest = branch:match('^([^/]+)/(.+)$')
   if prefix then return prefix .. '/' .. ar.abbreviate(rest) end
