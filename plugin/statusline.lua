@@ -234,11 +234,11 @@ local function git_diff()
   local added = git_diff_added()
   if added ~= '' then full = full .. added end
 
-  local changed = git_diff_changed()
-  if changed ~= '' then full = full .. changed end
-
   local removed = git_diff_removed()
   if removed ~= '' then full = full .. removed end
+
+  local changed = git_diff_changed()
+  if changed ~= '' then full = full .. changed end
 
   return full .. ' '
 end
