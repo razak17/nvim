@@ -224,8 +224,14 @@ local function git_status()
   local parts = vim.split(remote_status, ' ', { trimempty = true })
   local branch =
     fmt('%%#StatusLineGitBranch# %s%%*', stl.pretty_branch(parts[1]))
-  local behind = fmt(' %%#StatusLineGitBehind#%s%%*', parts[2])
-  local ahead = fmt(' %%#StatusLineGitAhead#%s%%*', parts[3])
+  local behind = fmt(' %%#StatusLineMedium#%s%%*', parts[2])
+  if parts[2] ~= '0' then
+    behind = fmt(' %%#StatusLineGitBehind#%s%%*', parts[2])
+  end
+  local ahead = fmt(' %%#StatusLineMedium#%s%%*', parts[3])
+  if parts[3] ~= '0' then
+    ahead = fmt(' %%#StatusLineGitAhead#%s%%*', parts[3])
+  end
   return ' ' .. branch .. behind .. ahead
 end
 
