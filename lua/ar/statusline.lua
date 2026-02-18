@@ -1,5 +1,5 @@
 local fn, api, env, fmt = vim.fn, vim.api, vim.env, string.format
-local falsy, icons, codicons = ar.falsy, ar.ui.icons, ar.ui.codicons
+local icons, codicons = ar.ui.icons, ar.ui.codicons
 local separator = icons.separators.dotted_thin_block
 local root_util = require('ar.utils.root')
 local theming = require('ar.theming')
@@ -139,143 +139,34 @@ function M.root_dir(opts)
     end
   end
 
-  return {
-    provider = function() return (opts.icon and opts.icon .. ' ') .. get() end,
-    condition = function() return type(get()) == 'string' end,
-    hl = opts.color,
-  }
+  return { dir = get(), hl = opts.color(), icon = opts.icon }
 end
 
----Return the filename of the current buffer
-M.file_block = {
-  init = function(self)
-    self.filename = api.nvim_buf_get_name(0)
-    self.lfilename = fn.fnamemodify(self.filename, ':.')
-    self.sfilename = fn.fnamemodify(self.filename, ':t')
-  end,
-}
+function M.file_size()
+  local bufnr = api.nvim_get_current_buf()
+  local buf = api.nvim_buf_get_name(bufnr)
 
-M.file_name = {
-  provider = function(self)
-    if self.sfilename == '' then return '[No Name]' end
-    return ' ' .. self.sfilename
-  end,
-  on_click = {
-    callback = function()
-      vim.defer_fn(function() ar.pick('files')() end, 100)
-    end,
-    name = 'find_name',
-  },
-}
+  if vim.bo[bufnr].readonly or vim.bo.bt == 'nowrite' then return '' end
 
-M.long_file_name = {
-  provider = function(self)
-    if self.lfilename == '' then return '[No Name]' end
-    return ' ' .. self.lfilename
-  end,
-}
+  if string.len(buf) == 0 then return '' end
 
-M.pretty_path = {
-  init = function(self)
-    local pretty_path = require('ar.pretty_path').pretty_path()
-    self.dir = ''
-    self.name = ''
-    if type(pretty_path) == 'table' then
-      self.dir = pretty_path.dir
-      self.name = pretty_path.name
-    end
-    self.filename = fn.fnamemodify(self.filename, ':p:h')
-  end,
-  {
-    condition = function(self) return self.filename == '' end,
-    provider = function() return '[No Name]' end,
-    hl = { fg = 'comment', bold = true },
-  },
-  {
-    condition = function(self) return self.filename ~= '' and self.dir ~= '' end,
-    provider = function(self) return ' ' .. self.dir end,
-    hl = { fg = 'comment', bold = true },
-  },
-  {
-    condition = function(self) return self.filename ~= '' and self.name ~= '' end,
-    provider = function(self)
-      if self.dir == '' then return ' ' .. self.name end
-      return self.name
-    end,
-    hl = { fg = 'fg', bold = true },
-  },
-  on_click = {
-    callback = function()
-      vim.defer_fn(function() ar.pick('files')() end, 100)
-    end,
-    name = 'pretty_path',
-  },
-}
+  local suffix = { 'b', 'k', 'M', 'G', 'T', 'P', 'E' }
+  local fsize = fn.getfsize(buf)
+  fsize = (fsize < 0 and 0) or fsize
+  if fsize < 1024 then return ' ' .. fsize .. suffix[1] end
+  local i = math.floor((math.log(fsize) / math.log(1024)))
 
-M.file_size = {
-  condition = function() return vim.bo.bt ~= 'nofile' end,
-  provider = function()
-    local bufnr = api.nvim_get_current_buf()
-    local buf = api.nvim_buf_get_name(bufnr)
+  return string.format(' %.1f%s', fsize / math.pow(1024, i), suffix[i + 1])
+end
 
-    if vim.bo[bufnr].readonly or vim.bo.bt == 'nowrite' then return '' end
-
-    if string.len(buf) == 0 then return '' end
-
-    local suffix = { 'b', 'k', 'M', 'G', 'T', 'P', 'E' }
-    local fsize = fn.getfsize(buf)
-    fsize = (fsize < 0 and 0) or fsize
-    if fsize < 1024 then return ' ' .. fsize .. suffix[1] end
-    local i = math.floor((math.log(fsize) / math.log(1024)))
-
-    return string.format(' %.1f%s', fsize / math.pow(1024, i), suffix[i + 1])
-  end,
-  hl = { fg = 'comment' },
-}
-
-M.file_flags = {
-  {
-    condition = function() return vim.bo.modified end,
-    provider = ' [+]',
-  },
-  {
-    condition = function() return not vim.bo.modifiable or vim.bo.readonly end,
-    provider = function() return ' ' .. codicons.misc.lock end,
-    hl = { fg = 'orange' },
-  },
-}
-
-M.file_icon = {
-  init = function(self)
-    if ar.has('nvim-web-devicons') or ar.has('mini.icons') then
-      self.icon, self.icon_hl =
-        require('nvim-web-devicons').get_icon(fn.expand('%:t'))
-    end
-    if falsy(self.icon) or falsy(self.icon_hl) then
-      self.icon, self.icon_hl =
-        codicons.documents.default_file, 'DevIconDefault'
-    end
-  end,
-  provider = function(self) return self.icon and (' ' .. self.icon) end,
-  on_click = {
-    callback = function() ar.change_filetype() end,
-    name = 'change_ft',
-  },
-  hl = function(self)
-    local bg = vim.api.nvim_get_option_value('background', { scope = 'global' })
-    return {
-      fg = bg == 'dark' and ar.highlight.get(self.icon_hl, 'fg') or 'fg',
-    }
-  end,
-}
-
-M.file_type = {
-  provider = function() return ' ' .. string.lower(vim.bo.filetype) end,
-  on_click = {
-    callback = function() ar.change_filetype() end,
-    name = 'change_ft',
-  },
-}
+function M.file_icon()
+  if ar.has('nvim-web-devicons') or ar.has('mini.icons') then
+    local icon, icon_hl =
+      require('nvim-web-devicons').get_icon(fn.expand('%:t'))
+    return icon, icon_hl
+  end
+  return codicons.documents.default_file, 'DevIconDefault'
+end
 
 local function location_space(total, line_number)
   local t_digits = #tostring(total)

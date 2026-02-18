@@ -43,7 +43,6 @@ return {
     local is_git_repo = conditions.is_git_repo
     local align = { provider = '%=' }
     local utils = require('heirline.utils')
-    local file_block = stl.file_block
 
     ------------------------------------------------------------------------------
     -- Components {{{1
@@ -51,6 +50,112 @@ return {
     local mode_colors = stl.mode_colors
 
     local empty_component = { provider = '' }
+
+    ---Return the filename of the current buffer
+    local file_block = {
+      init = function(self)
+        self.filename = api.nvim_buf_get_name(0)
+        self.lfilename = fn.fnamemodify(self.filename, ':.')
+        self.sfilename = fn.fnamemodify(self.filename, ':t')
+      end,
+    }
+
+    local file_name = {
+      provider = function(self)
+        if self.sfilename == '' then return '[No Name]' end
+        return ' ' .. self.sfilename
+      end,
+      on_click = {
+        callback = function()
+          vim.defer_fn(function() ar.pick('files')() end, 100)
+        end,
+        name = 'find_name',
+      },
+    }
+
+    local file_flags = {
+      {
+        condition = function() return vim.bo.modified end,
+        provider = ' [+]',
+      },
+      {
+        condition = function() return not vim.bo.modifiable or vim.bo.readonly end,
+        provider = function() return ' ' .. codicons.misc.lock end,
+        hl = { fg = 'orange' },
+      },
+    }
+
+    local file_size = {
+      condition = function() return vim.bo.bt ~= 'nofile' end,
+      provider = stl.file_size,
+      hl = { fg = 'comment' },
+    }
+
+    local file_icon = {
+      init = function(self)
+        self.icon, self.icon_hl = stl.file_icon()
+      end,
+      provider = function(self) return self.icon and (' ' .. self.icon) end,
+      hl = function(self)
+        local bg = api.nvim_get_option_value('background', { scope = 'global' })
+        return {
+          fg = bg == 'dark' and ar.highlight.get(self.icon_hl, 'fg') or 'fg',
+        }
+      end,
+      on_click = {
+        callback = function() ar.change_filetype() end,
+        name = 'change_ft',
+      },
+    }
+
+    local file_type = {
+      provider = function() return ' ' .. string.lower(vim.bo.filetype) end,
+      on_click = {
+        callback = function() ar.change_filetype() end,
+        name = 'change_ft',
+      },
+    }
+
+    local pretty_path = {
+      init = function(self)
+        local pretty_path = require('ar.pretty_path').pretty_path()
+        self.dir = ''
+        self.name = ''
+        if type(pretty_path) == 'table' then
+          self.dir = pretty_path.dir
+          self.name = pretty_path.name
+        end
+        self.filename = fn.fnamemodify(self.filename, ':p:h')
+      end,
+      {
+        condition = function(self) return self.filename == '' end,
+        provider = function() return '[No Name]' end,
+        hl = { fg = 'comment', bold = true },
+      },
+      {
+        condition = function(self)
+          return self.filename ~= '' and self.dir ~= ''
+        end,
+        provider = function(self) return ' ' .. self.dir end,
+        hl = { fg = 'comment', bold = true },
+      },
+      {
+        condition = function(self)
+          return self.filename ~= '' and self.name ~= ''
+        end,
+        provider = function(self)
+          if self.dir == '' then return ' ' .. self.name end
+          return self.name
+        end,
+        hl = { fg = 'fg', bold = true },
+      },
+      on_click = {
+        callback = function()
+          vim.defer_fn(function() ar.pick('files')() end, 100)
+        end,
+        name = 'pretty_path',
+      },
+    }
 
     local vim_mode = {
       init = function(self)
@@ -182,8 +287,8 @@ return {
           return false
         end
         local buf = api.nvim_get_current_buf()
-        local file_name = api.nvim_buf_get_name(buf)
-        return require('gp').not_chat(0, file_name) == nil
+        local filename = api.nvim_buf_get_name(buf)
+        return require('gp').not_chat(0, filename) == nil
       end,
       vim_mode,
       { provider = ' ' .. 'Gp', bold = true },
@@ -284,8 +389,17 @@ return {
       condition = function() return vim.bo.buftype == 'help' end,
       vim_mode,
       { provider = ' ' },
-      stl.root_dir(),
-      utils.insert(utils.insert(stl.pretty_path, stl.file_flags)),
+      {
+        init = function(self)
+          local root_dir = stl.root_dir()
+          self.dir = root_dir.dir
+          self.hl = root_dir.hl
+          self.dir_icon = root_dir.icon
+        end,
+        provider = function(self) return self.dir_icon .. ' ' .. self.dir end,
+        hl = function(self) return self.hl end,
+      },
+      utils.insert(utils.insert(pretty_path, file_flags)),
       align,
     }
 
@@ -460,8 +574,8 @@ return {
       -- Filename
       utils.insert(
         { flexible = 4 },
-        utils.insert(file_block, stl.pretty_path, stl.file_flags, stl.file_size),
-        utils.insert(file_block, stl.file_name, stl.file_flags)
+        utils.insert(file_block, pretty_path, file_flags, file_size),
+        utils.insert(file_block, file_name, file_flags)
       ),
       -- Python env
       {
@@ -1027,7 +1141,7 @@ return {
       -- File Type
       utils.insert(
         { flexible = 4 },
-        utils.insert(file_block, stl.file_icon, stl.file_type),
+        utils.insert(file_block, file_icon, file_type),
         empty_component
       ),
       -- Buffers
