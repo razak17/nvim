@@ -389,7 +389,7 @@ local filetypes = ar.p_table({
   ['gitcommit'] = commit_buffer,
   ['grug-far'] = presets.tool_panel,
   ['harpoon'] = presets.tool_panel,
-  ['help'] = presets.tool_panel:with({ cursorline = true }),
+  ['help'] = presets.tool_panel:with({ cursorline = true, statusline = true }),
   ['http'] = presets.statusline_only,
   ['httpResult'] = presets.tool_panel,
   ['lazy'] = presets.tool_panel,
