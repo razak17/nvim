@@ -38,7 +38,7 @@ ar.highlight.plugin('NativeStatuslineHl', {
   { StatusLineGitBehind = { link = 'StatusLineLspError' } },
   { StatusLineVirtualEnv = { fg = { from = 'DiagnosticSignHint' } } },
   { StatusLineGitDiffAdded = { fg = { from = 'Added' } } },
-  { StatusLineGitDiffChanged = { fg = { from = 'Changed' } } },
+  { StatusLineGitDiffChanged = { fg = { from = 'WarningMsg' } } },
   { StatusLineGitDiffRemoved = { fg = { from = 'StatusLineLspError' } } },
 })
 
