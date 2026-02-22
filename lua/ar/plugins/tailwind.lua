@@ -107,4 +107,10 @@ return {
       keymap = { open = 'ux', close = 'q' },
     },
   },
+  {
+    'ruicsh/tailwindcss-shades.nvim',
+    cond = function() return ar.get_plugin_cond('tailwindcss-shades.nvim') end,
+    cmd = { 'TailwindShadesGenerate', 'TailwindShadesGenerateCSSVars' },
+    opts = {},
+  },
 }
