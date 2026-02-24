@@ -16,6 +16,12 @@ end
 
 return {
   {
+    'ruicsh/tailwindcss-dial.nvim',
+    cond = function()
+      return ar.get_plugin_cond('tailwindcss-dial.nvim', coding)
+    end,
+  },
+  {
     'monaqa/dial.nvim',
     cond = function() return ar.get_plugin_cond('dial.nvim', coding) end,
     init = function()
@@ -156,6 +162,11 @@ return {
         dconst({ elements = { 'useState', 'useEffect', 'useCallback' } }),
         augend.paren.alias.quote,
       }
+
+      if ar.has('tailwindcss-dial.nvim') then
+        local tailwindcss_dial = require('tailwindcss-dial')
+        ar.list_insert(ts, { unpack(tailwindcss_dial.augends()) })
+      end
 
       config.augends:register_group({
         default = default,
