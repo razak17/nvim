@@ -1,4 +1,3 @@
-local get_cond = ar.get_plugin_cond
 local coding = ar.plugins.coding
 
 local function inc(mode, group_name)
@@ -18,7 +17,43 @@ end
 return {
   {
     'monaqa/dial.nvim',
-    cond = function() return get_cond('dial.nvim', coding) end,
+    cond = function() return ar.get_plugin_cond('dial.nvim', coding) end,
+    init = function()
+      ---@param group string
+      ---@param args integer
+      local function on_filetype(group, buf)
+        map('n', '<C-a>', inc('normal', group), { buffer = buf })
+        map('n', '<C-x>', dec('normal', group), { buffer = buf })
+      end
+
+      ar.augroup('DialForFts', {
+        event = { 'FileType' },
+        pattern = { 'go' },
+        command = function(arg) on_filetype('go', arg.buf) end,
+      }, {
+        event = { 'FileType' },
+        pattern = { 'lua' },
+        command = function(arg) on_filetype('lua', arg.buf) end,
+      }, {
+        event = { 'FileType' },
+        pattern = { 'markdown' },
+        command = function(arg) on_filetype('md', arg.buf) end,
+      }, {
+        event = { 'FileType' },
+        pattern = {
+          'typescript',
+          'javascript',
+          'typescriptreact',
+          'javascriptreact',
+          'tsx',
+          'jsx',
+          'svelte',
+          'vue',
+          'astro',
+        },
+        command = function(arg) on_filetype('ts', arg.buf) end,
+      })
+    end,
     keys = {
       { '<C-a>', inc('normal'), desc = 'dial: increment' },
       { '<C-x>', dec('normal'), desc = 'dial: decrement' },
@@ -29,11 +64,12 @@ return {
       { mode = { 'x' }, 'g<C-a>', inc('gvisual'), desc = 'dial: gvincrement' },
       { mode = { 'x' }, 'g<C-x>', dec('gvisual'), desc = 'dial: gvdecrement' },
       { '<leader>ii', inc('normal', 'toggler'), desc = 'dial: toggles' },
+      { '<leader>ik', inc('normal', 'case'), desc = 'dial: case' },
     },
     config = function()
       local augend = require('dial.augend')
       local config = require('dial.config')
-      local const_new = augend.constant.new
+      local dconst = augend.constant.new
 
       local default = {
         augend.integer.alias.decimal,
@@ -47,7 +83,9 @@ return {
         augend.constant.alias.de_weekday_full,
         augend.hexcolor.new({ case = 'lower' }),
         augend.semver.alias.semver,
-        const_new({ elements = { 'true', 'false' }, cyclic = true }),
+      }
+
+      local case = {
         augend.case.new({
           types = {
             'camelCase',
@@ -60,116 +98,74 @@ return {
       }
 
       local toggler = {
-        const_new({ elements = { '==', '~=' }, cyclic = true }),
-        const_new({ elements = { '===', '!==' }, cyclic = true }),
-        const_new({ elements = { '!=', '==' }, cyclic = true }),
-        const_new({ elements = { 'true', 'false' }, cyclic = true }),
-        const_new({ elements = { 'True', 'False' }, cyclic = true }),
-        const_new({ elements = { 'new', 'old' }, cyclic = true }),
-        const_new({ elements = { 'yes', 'no' }, cyclic = true }),
-        const_new({ elements = { 'on', 'off' }, cyclic = true }),
-        const_new({ elements = { 'left', 'right' }, cyclic = true }),
-        const_new({ elements = { 'up', 'down' }, cyclic = true }),
-        const_new({ elements = { 'enable', 'disable' }, cyclic = true }),
-        const_new({ elements = { 'vim', 'emacs' }, cyclic = true }),
-        const_new({ elements = { 'let', 'const' }, cyclic = true }),
-        const_new({ elements = { 'margin', 'padding' }, cyclic = true }),
-        const_new({ elements = { '-', '+' }, cyclic = true }),
-        const_new({ elements = { 'onClick', 'onSubmit' }, cyclic = true }),
-        const_new({ elements = { 'public', 'private' }, cyclic = true }),
-        const_new({ elements = { 'string', 'int' }, cyclic = true }),
-        const_new({ elements = { 'leader', 'localleader' }, cyclic = true }),
-        const_new({ elements = { 'chore', 'feat' }, cyclic = true }),
-        const_new({ elements = { 'double', 'single' }, cyclic = true }),
-        const_new({ elements = { 'config', 'opts' }, cyclic = true }),
-        const_new({ elements = { 'pre', 'post' }, cyclic = true }),
-        const_new({ elements = { 'column', 'row' }, cyclic = true }),
-        const_new({ elements = { 'before', 'after' }, cyclic = true }),
-        const_new({ elements = { 'end', 'start' }, cyclic = true }),
-        const_new({ elements = { 'high', 'low' }, cyclic = true }),
-        const_new({ elements = { 'open', 'close' }, cyclic = true }),
-        const_new({ elements = { 'and', 'or' }, cyclic = true }),
-        const_new({ elements = { 'GET', 'POST' }, cyclic = true }),
+        dconst({ elements = { '===', '!==' }, word = false }),
+        dconst({ elements = { '==', '!=' }, word = false }),
+        dconst({ elements = { 'true', 'false' } }),
+        dconst({ elements = { 'True', 'False' } }),
+        dconst({ elements = { 'new', 'old' } }),
+        dconst({ elements = { 'yes', 'no' } }),
+        dconst({ elements = { 'on', 'off' } }),
+        dconst({ elements = { 'left', 'right' } }),
+        dconst({ elements = { 'up', 'down' } }),
+        dconst({ elements = { 'enable', 'disable' } }),
+        dconst({ elements = { 'vim', 'emacs' } }),
+        dconst({ elements = { 'margin', 'padding' } }),
+        dconst({ elements = { '-', '+' } }),
+        dconst({ elements = { 'onClick', 'onSubmit' } }),
+        dconst({ elements = { 'public', 'private' } }),
+        dconst({ elements = { 'string', 'int' } }),
+        dconst({ elements = { 'leader', 'localleader' } }),
+        dconst({ elements = { 'chore', 'feat' } }),
+        dconst({ elements = { 'double', 'single' } }),
+        dconst({ elements = { 'config', 'opts' } }),
+        dconst({ elements = { 'pre', 'post' } }),
+        dconst({ elements = { 'column', 'row' } }),
+        dconst({ elements = { 'before', 'after' } }),
+        dconst({ elements = { 'end', 'start' } }),
+        dconst({ elements = { 'high', 'low' } }),
+        dconst({ elements = { 'open', 'close' } }),
+        dconst({ elements = { 'and', 'or' } }),
+        dconst({ elements = { 'GET', 'POST' } }),
       }
 
       ar.list_insert(default, toggler)
 
+      local go = {
+        dconst({ elements = { '&&', '||' }, word = false }),
+        dconst({ elements = { 'string', 'int', 'bool' } }),
+        unpack(default),
+      }
+
+      local md = { unpack(default), augend.misc.alias.markdown_header }
+
+      local lua = {
+        unpack(default),
+        dconst({ elements = { '==', '~=' }, word = false }),
+        dconst({ elements = { 'api', 'fn' } }),
+        dconst({ elements = { 'cond', 'event', 'init', 'config', 'opts' } }),
+      }
+
+      local ts = {
+        unpack(default),
+        dconst({ elements = { '&&', '||' }, word = false }),
+        dconst({ elements = { 'const', 'let', 'var', 'function' } }),
+        dconst({ elements = { 'import', 'export' } }),
+        dconst({ elements = { 'interface', 'type' } }),
+        dconst({ elements = { 'null', 'undefined' } }),
+        dconst({ elements = { 'string', 'number', 'boolean' } }),
+        dconst({ elements = { 'useState', 'useEffect', 'useCallback' } }),
+        augend.paren.alias.quote,
+      }
+
       config.augends:register_group({
         default = default,
         toggler = toggler,
+        case = case,
+        lua = lua,
+        go = go,
+        md = md,
+        ts = ts,
       })
-
-      config.augends:on_filetype({
-        go = vim
-          .iter({
-            default,
-            {
-              const_new({
-                elements = { '&&', '||' },
-                word = false,
-                cyclic = true,
-              }),
-            },
-          })
-          :flatten()
-          :totable(),
-      })
-
-      config.augends:on_filetype({
-        markdown = vim
-          .iter({ default, { augend.misc.alias.markdown_header } })
-          :flatten()
-          :totable(),
-      })
-
-      local bool = const_new({ elements = { 'True', 'False' }, cyclic = true })
-
-      config.augends:on_filetype({
-        python = vim.iter({ default, { bool } }):flatten():totable(),
-      })
-
-      config.augends:on_filetype({
-        lua = vim
-          .iter({
-            default,
-            {
-              const_new({ elements = { '==', '~=' }, cyclic = true }),
-            },
-          })
-          :flatten()
-          :totable(),
-      })
-
-      local ts = vim
-        .iter({
-          default,
-          {
-            augend.integer.alias.decimal,
-            augend.integer.alias.hex,
-            augend.paren.alias.quote,
-            const_new({ elements = { 'let', 'const' } }),
-            const_new({ elements = { '!=', '==' }, cyclic = true }),
-            const_new({ elements = { '===', '!==' }, cyclic = true }),
-            const_new({ elements = { 'onClick', 'onSubmit' }, cyclic = true }),
-            const_new({ elements = { 'import', 'export' }, cyclic = true }),
-          },
-        })
-        :flatten()
-        :totable()
-
-      vim
-        .iter({
-          'typescript',
-          'javascript',
-          'typescriptreact',
-          'javascriptreact',
-          'tsx',
-          'jsx',
-          'svelte',
-          'vue',
-          'astro',
-        })
-        :each(function(ft) config.augends:on_filetype({ [ft] = ts }) end)
     end,
   },
 }
