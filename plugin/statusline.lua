@@ -58,9 +58,23 @@ end
 
 --- @return string
 local function filename()
-  local fname = vim.fn.expand('%:t')
-  if fname == '' then return '' end
-  return ' ' .. fname .. ' '
+  local file_name = vim.api.nvim_buf_get_name(0)
+  local file_size = stl.file_size()
+  local pretty_path = require('ar.pretty_path').pretty_path()
+  local dir = ''
+  local name = ''
+  if type(pretty_path) == 'table' then
+    dir, name = pretty_path.dir, pretty_path.name
+  end
+  if file_name == '' then return '' end
+  local full = ''
+  if file_name ~= '' and dir ~= '' then
+    full = full .. string.format('%%#Comment# %s%%*', dir)
+  end
+  if file_name ~= '' and name ~= '' then
+    full = full .. string.format('%%#StatusLineMedium#%s%%*', name)
+  end
+  return full .. string.format('%%#Comment#%s%%*', file_size)
 end
 
 --- @param severity integer
@@ -248,7 +262,7 @@ local function git_diff()
   local changed = git_diff_changed()
   if changed ~= '' then full = full .. changed end
 
-  return full .. ' '
+  return ' ' .. full .. ' '
 end
 
 --- @return string
