@@ -1,5 +1,7 @@
 -- Ref: https://github.com/neo451/dot/blob/6b108a76e97b02df7012e5b518ad56513d23ab4c/nvim/.config/nvim/plugin/lsp_dial.lua#L1
 
+local M = {}
+
 local function num2bool(num)
   return num == 1 and true or num == 0 and false or nil
 end
@@ -14,7 +16,7 @@ local function get_lsp_items()
   local results = lsp.buf_request_sync(0, ms.textDocument_completion, params)
   local items = {}
   if results and not vim.tbl_isempty(results) then
-    local result = results[2].result
+    local result = results[1].result
     if result then
       items = vim
         .iter(result.items)
@@ -60,39 +62,24 @@ local function get_enum_index(text, inc)
   return index, next_item
 end
 
-local augend = require('dial.augend')
-local config = require('dial.config')
+function M.augend()
+  local augend = require('dial.augend')
 
-config.augends:register_group({
-  enum = {
-    augend.user.new({
-      find = function(line, _)
-        local wORD = vim.fn.expand('<cWORD>')
-        local s, e = line:find(wORD)
-        if s and e then return { from = s, to = e } end
-      end,
-      add = function(text, addend, cursor)
-        local _, next_item = get_enum_index(text, num2bool(addend))
-        cursor = #text
-        if next_item then
-          return { text = next_item.label, cursor = cursor - 1 }
-        end
-        return { text = text, cursor = cursor - 1 }
-      end,
-    }),
-  },
-})
+  return augend.user.new({
+    find = function(line, _)
+      local wORD = vim.fn.expand('<cWORD>')
+      local s, e = line:find(wORD)
+      if s and e then return { from = s, to = e } end
+    end,
+    add = function(text, addend, cursor)
+      local _, next_item = get_enum_index(text, num2bool(addend))
+      cursor = #text
+      if next_item then
+        return { text = next_item.label, cursor = cursor - 1 }
+      end
+      return { text = text, cursor = cursor - 1 }
+    end,
+  })
+end
 
-map(
-  'n',
-  '<M-n>',
-  require('dial.map').inc_normal('enum'),
-  { noremap = true, desc = 'dial: next enum' }
-)
-
-map(
-  'n',
-  '<M-p>',
-  require('dial.map').dec_normal('enum'),
-  { noremap = true, desc = 'dial: prev enum' }
-)
+return M

@@ -151,6 +151,11 @@ return {
         dconst({ elements = { 'cond', 'event', 'init', 'config', 'opts' } }),
       }
 
+      if ar.lsp.enable then
+        local enum_dial = require('ar.enum_dial')
+        ar.list_insert(lua, { enum_dial.augend() })
+      end
+
       local ts = {
         unpack(default),
         dconst({ elements = { '&&', '||' }, word = false }),

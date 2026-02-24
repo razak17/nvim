@@ -10,5 +10,3 @@ opt.spellfile:prepend(
 )
 
 opt.spelllang:prepend('en')
-
-if ar.has('dial.nvim') and ar.lsp.enable then require('ar.lsp_dial') end
