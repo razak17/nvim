@@ -26,15 +26,27 @@ return {
     'zeybek/camouflage.nvim',
     cond = function() return get_cond('camouflage.nvim', 'camouflage') end,
     lazy = false,
-    cmd = { 'CamouflageToggle' },
+    cmd = {
+      'CamouflageToggle',
+      'CamouflagePwnedCheck',
+      'CamouflagePwnedCheckBuffer',
+    },
     init = function()
       ar.add_to_select('toggle', { ['Toggle Camouflage'] = 'CamouflageToggle' })
     end,
     opts = {
+      enabled = true,
       style = 'stars',
       integrations = {
         telescope = false,
         cmp = { disable_in_masked = false },
+      },
+      pwned = {
+        enabled = true,
+        auto_check = false,
+        check_on_save = true,
+        check_on_change = true,
+        show_sign = true,
       },
     },
   },
