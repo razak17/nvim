@@ -26,7 +26,7 @@ return {
     cond = function() return ar.get_plugin_cond('dial.nvim', coding) end,
     init = function()
       ---@param group string
-      ---@param args integer
+      ---@param buf integer
       local function on_filetype(group, buf)
         map('n', '<C-a>', inc('normal', group), { buffer = buf })
         map('n', '<C-x>', dec('normal', group), { buffer = buf })
@@ -145,10 +145,10 @@ return {
       local md = { unpack(default), augend.misc.alias.markdown_header }
 
       local lua = {
-        unpack(default),
         dconst({ elements = { '==', '~=' }, word = false }),
         dconst({ elements = { 'api', 'fn' } }),
         dconst({ elements = { 'cond', 'event', 'init', 'config', 'opts' } }),
+        unpack(default),
       }
 
       if ar.lsp.enable then
