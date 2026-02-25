@@ -790,7 +790,7 @@ return {
             { WinbarNC = { link = 'LineNr' } },
             { DiffAdd = { bg = { from = 'DiffAdd', alter = 1.5 } } },
           },
-          default = {
+          plugin = {
             { GitSignsAdd = { fg = { from = 'Added', alter = -0.45 } } },
             { GitSignsChange = { fg = { from = 'Changed', alter = -0.25 } } },
           },
@@ -1091,7 +1091,7 @@ return {
               WinSeparator = { fg = { from = 'WinSeparator', alter = -0.35 } },
             },
           },
-          default = {
+          plugin = {
             { WhichKeyBorder = { link = 'FloatBorder' } },
           },
         }, true)
@@ -1112,7 +1112,7 @@ return {
             { Todo = { link = 'Constant' } },
             { WinSeparator = { fg = { from = 'Comment', alter = -0.4 } } },
           },
-          default = {
+          plugin = {
             {
               NeogitDiffAdd = {
                 bg = { from = 'DiffAdd', alter = 1.4 },
