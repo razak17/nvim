@@ -37,9 +37,10 @@ ar.highlight.plugin('NativeStatuslineHl', {
   { StatusLineGitAhead = { link = 'StatusLineGitBranch' } },
   { StatusLineGitBehind = { link = 'StatusLineLspError' } },
   { StatusLineVirtualEnv = { fg = { from = 'DiagnosticSignHint' } } },
-  { StatusLineGitDiffAdded = { fg = { from = 'Added' } } },
+  { StatusLineGitDiffAdded = { fg = 'yellowgreen' } },
   { StatusLineGitDiffChanged = { fg = { from = 'WarningMsg' } } },
   { StatusLineGitDiffRemoved = { fg = { from = 'StatusLineLspError' } } },
+  { StatusLineLazyUpdates = { fg = { from = 'WarningMsg' } } },
 })
 
 -- LSP clients attached to buffer
@@ -69,10 +70,11 @@ local function filename()
   if file_name == '' then return '' end
   local full = ''
   if file_name ~= '' and dir ~= '' then
-    full = full .. string.format('%%#Comment# %s%%*', dir)
+    full = full .. string.format(' %%#Comment#%s%%*', dir)
   end
   if file_name ~= '' and name ~= '' then
-    full = full .. string.format('%%#StatusLineMedium#%s%%*', name)
+    local space = dir == '' and ' ' or ''
+    full = full .. string.format('%s%%#StatusLineMedium#%s%%*', space, name)
   end
   return full .. string.format('%%#Comment#%s%%*', file_size)
 end
@@ -125,6 +127,13 @@ local function python_env()
   local virtual_env = stl.python_env()
   if virtual_env == '' then return '' end
   return string.format('%%#StatusLineVirtualEnv# %s%%*', virtual_env)
+end
+
+--- @return string
+local function lazy()
+  if not ar.has('lazy.nvim') then return '' end
+  local updates = stl.lazy_updates()
+  return string.format('%%#StatusLineLazyUpdates# %s%%*', updates)
 end
 
 --- @return string
@@ -347,6 +356,7 @@ StatusLine.render = function()
     search_matches(),
     lsp_active(),
     python_env(),
+    lazy(),
     filetype(),
     lsp_clients(),
     location(),
