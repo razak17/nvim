@@ -235,7 +235,7 @@ end
 
 ---@param theme string
 ---@param overrides? HlOverride
----@param should_generate boolean
+---@param should_generate? boolean
 local function apply_overrides(theme, overrides, should_generate)
   local theme_overrides = overrides and overrides.default or {}
   if should_generate then theme_overrides = generate_overrides(overrides) end
