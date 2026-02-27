@@ -10,6 +10,22 @@ local lsp = vim.lsp
 local ms = lsp.protocol.Methods
 local util = lsp.util
 
+local function is_cursor_in_string()
+  local ok, node = pcall(vim.treesitter.get_node)
+  if ok and node then
+    while node do
+      if node:type():lower():find('string', 1, true) then return true end
+      node = node:parent()
+    end
+  end
+
+  local line = vim.fn.line('.')
+  local col = vim.fn.col('.')
+  local syn_id = vim.fn.synIDtrans(vim.fn.synID(line, col, 1))
+  local syn_name = vim.fn.synIDattr(syn_id, 'name')
+  return syn_name:lower():find('string', 1, true) ~= nil
+end
+
 ---@return lsp.CompletionItem[]
 local function get_lsp_items()
   local params = util.make_position_params(0, 'utf-8')
@@ -67,8 +83,9 @@ function M.augend()
 
   return augend.user.new({
     find = function(line, _)
+      if not is_cursor_in_string() then return end
       local wORD = vim.fn.expand('<cWORD>')
-      local s, e = line:find(wORD)
+      local s, e = line:find(wORD, 1, true)
       if s and e then return { from = s, to = e } end
     end,
     add = function(text, addend, cursor)
