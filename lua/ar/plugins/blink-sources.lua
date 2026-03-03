@@ -1,5 +1,3 @@
-local minimal = ar.plugins.minimal
-
 local function get_cond(plugin) return ar.get_plugin_cond(plugin) end
 
 return {
