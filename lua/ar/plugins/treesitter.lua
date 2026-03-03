@@ -14,7 +14,7 @@ local ensure_installed = {
     'c', 'cpp', 'bash', 'javascript', 'lua', 'python', 'ruby', 'rust', 'svelte',
     'swift', 'typescript', 'vim',
   },
-  data_formats = { 'json', 'json5', 'jsonc', 'toml', 'xml', 'yaml' },
+  data_formats = { 'json', 'json5', 'toml', 'xml', 'yaml' },
   content = { 'css', 'html', 'markdown', 'markdown_inline' },
   special_filetypes = {
     'diff', 'dockerfile', 'editorconfig', 'git_config', 'git_rebase', 'gitcommit',
