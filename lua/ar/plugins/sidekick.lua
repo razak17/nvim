@@ -81,6 +81,12 @@ return {
         desc = 'sidekick: send file',
       },
       {
+        '<leader>asq',
+        function() require('sidekick.cli').close() end,
+        mode = { 'n', 'x' },
+        desc = 'sidekick: close',
+      },
+      {
         '<c-.>',
         function() require('sidekick.cli').toggle() end,
         mode = { 'n', 't', 'i', 'x' },
