@@ -1,17 +1,49 @@
 local coding = ar.plugins.coding
 
-local function inc(mode, group_name)
-  group_name = group_name or 'default'
-  return function()
-    require('dial.map').manipulate('increment', mode, group_name)
-  end
+---@param increment boolean
+---@param g? boolean
+local function dial(increment, g, group)
+  local mode = vim.fn.mode(true)
+  -- Use visual commands for VISUAL 'v', VISUAL LINE 'V' and VISUAL BLOCK '\22'
+  local is_visual = mode == 'v' or mode == 'V' or mode == '\22'
+  local func = (increment and 'inc' or 'dec')
+    .. (g and '_g' or '_')
+    .. (is_visual and 'visual' or 'normal')
+  group = group or vim.g.dials_by_ft[vim.bo.filetype] or 'default'
+  return require('dial.map')[func](group)
 end
 
-local function dec(mode, group_name)
-  group_name = group_name or 'default'
-  return function()
-    require('dial.map').manipulate('decrement', mode, group_name)
-  end
+local function toggler()
+  local augend = require('dial.augend')
+  return {
+    augend.constant.new({ elements = { '===', '!==' }, word = false }),
+    augend.constant.new({ elements = { '==', '!=' }, word = false }),
+    augend.constant.new({ elements = { 'new', 'old' } }),
+    augend.constant.new({ elements = { 'yes', 'no' } }),
+    augend.constant.new({ elements = { 'on', 'off' } }),
+    augend.constant.new({ elements = { 'left', 'right' } }),
+    augend.constant.new({ elements = { 'up', 'down' } }),
+    augend.constant.new({ elements = { 'enable', 'disable' } }),
+    augend.constant.new({ elements = { 'vim', 'emacs' } }),
+    augend.constant.new({ elements = { 'margin', 'padding' } }),
+    augend.constant.new({ elements = { '-', '+' } }),
+    augend.constant.new({ elements = { 'onClick', 'onSubmit' } }),
+    augend.constant.new({ elements = { 'public', 'private' } }),
+    augend.constant.new({ elements = { 'string', 'int' } }),
+    augend.constant.new({ elements = { 'leader', 'localleader' } }),
+    augend.constant.new({ elements = { 'chore', 'feat' } }),
+    augend.constant.new({ elements = { 'double', 'single' } }),
+    augend.constant.new({ elements = { 'config', 'opts' } }),
+    augend.constant.new({ elements = { 'pre', 'post' } }),
+    augend.constant.new({ elements = { 'column', 'row' } }),
+    augend.constant.new({ elements = { 'before', 'after' } }),
+    augend.constant.new({ elements = { 'end', 'start' } }),
+    augend.constant.new({ elements = { 'high', 'low' } }),
+    augend.constant.new({ elements = { 'open', 'close' } }),
+    augend.constant.new({ elements = { 'and', 'or' } }),
+    augend.constant.new({ elements = { 'GET', 'POST' } }),
+    augend.constant.new({ elements = { 'TODO', 'FIXME' } }),
+  }
 end
 
 return {
@@ -22,63 +54,78 @@ return {
     end,
   },
   {
+    desc = 'Increment and decrement numbers, dates, and more',
     'monaqa/dial.nvim',
     cond = function() return ar.get_plugin_cond('dial.nvim', coding) end,
-    init = function()
-      ---@param group string
-      ---@param buf integer
-      local function on_filetype(group, buf)
-        map('n', '<C-a>', inc('normal', group), { buffer = buf })
-        map('n', '<C-x>', dec('normal', group), { buffer = buf })
-      end
-
-      ar.augroup('DialForFts', {
-        event = { 'FileType' },
-        pattern = { 'go' },
-        command = function(arg) on_filetype('go', arg.buf) end,
-      }, {
-        event = { 'FileType' },
-        pattern = { 'lua' },
-        command = function(arg) on_filetype('lua', arg.buf) end,
-      }, {
-        event = { 'FileType' },
-        pattern = { 'markdown' },
-        command = function(arg) on_filetype('md', arg.buf) end,
-      }, {
-        event = { 'FileType' },
-        pattern = {
-          'typescript',
-          'javascript',
-          'typescriptreact',
-          'javascriptreact',
-          'tsx',
-          'jsx',
-          'svelte',
-          'vue',
-          'astro',
-        },
-        command = function(arg) on_filetype('ts', arg.buf) end,
-      })
-    end,
+    -- stylua: ignore
     keys = {
-      { '<C-a>', inc('normal'), desc = 'dial: increment' },
-      { '<C-x>', dec('normal'), desc = 'dial: decrement' },
-      { 'g<C-a>', inc('gnormal'), desc = 'dial: gincrement' },
-      { 'g<C-x>', dec('gnormal'), desc = 'dial: gdecrement' },
-      { mode = { 'x' }, '<C-a>', inc('visual'), desc = 'dial: vincrement' },
-      { mode = { 'x' }, '<C-x>', dec('visual'), desc = 'dial: vdecrement' },
-      { mode = { 'x' }, 'g<C-a>', inc('gvisual'), desc = 'dial: gvincrement' },
-      { mode = { 'x' }, 'g<C-x>', dec('gvisual'), desc = 'dial: gvdecrement' },
-      { '<leader>ii', inc('normal', 'toggler'), desc = 'dial: toggles' },
-      { '<leader>ik', inc('normal', 'case'), desc = 'dial: case' },
+      { '<C-a>', function() return dial(true) end, expr = true, desc = 'dial: increment', mode = { 'n', 'v' } },
+      { '<C-x>', function() return dial(false) end, expr = true, desc = 'dial: decrement', mode = { 'n', 'v' } },
+      { 'g<C-a>', function() return dial(true, true) end, expr = true, desc = 'dial: increment', mode = { 'n', 'x' } },
+      { 'g<C-x>',function() return dial(false, true) end, expr = true, desc = 'dial: decrement', mode = { 'n', 'x' } },
+      { '<leader>ii', function() return dial(true, false, 'toggler') end, expr = true, desc = 'dial: toggles' },
+      { '<leader>ik', function() return dial(true, false, 'case') end, expr = true, desc = 'dial: case' },
     },
-    config = function()
+    opts = function()
       local augend = require('dial.augend')
-      local config = require('dial.config')
-      local dconst = augend.constant.new
+
+      local logical_alias = augend.constant.new({
+        elements = { '&&', '||' },
+        word = false,
+      })
+
+      local cardinal_numbers = augend.constant.new({
+        elements = {
+          'one',
+          'two',
+          'three',
+          'four',
+          'five',
+          'six',
+          'seven',
+          'eight',
+          'nine',
+          'ten',
+        },
+        word = false,
+      })
+
+      local ordinal_numbers = augend.constant.new({
+        elements = {
+          'first',
+          'second',
+          'third',
+          'fourth',
+          'fifth',
+          'sixth',
+          'seventh',
+          'eighth',
+          'ninth',
+          'tenth',
+        },
+        word = false,
+      })
+
+      local months = augend.constant.new({
+        elements = {
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December',
+        },
+      })
 
       local default = {
         augend.integer.alias.decimal,
+        augend.integer.alias.decimal_int,
         augend.integer.alias.hex,
         augend.integer.alias.binary,
         augend.date.alias['%Y/%m/%d'],
@@ -87,101 +134,111 @@ return {
         augend.date.alias['%-m/%-d'],
         augend.constant.alias.de_weekday,
         augend.constant.alias.de_weekday_full,
-        augend.hexcolor.new({ case = 'lower' }),
-        augend.semver.alias.semver,
+        augend.constant.alias.en_weekday,
+        augend.constant.alias.en_weekday_full,
+        augend.constant.alias.bool,
+        augend.constant.alias.Bool,
+        cardinal_numbers,
+        ordinal_numbers,
+        months,
+        logical_alias,
+        unpack(toggler()),
       }
 
-      local case = {
-        augend.case.new({
-          types = {
-            'camelCase',
-            'snake_case',
-            'PascalCase',
-            'SCREAMING_SNAKE_CASE',
-          },
-          cyclic = true,
+      local css = {
+        augend.hexcolor.new({ case = 'lower' }),
+        augend.hexcolor.new({ case = 'upper' }),
+      }
+
+      local lua = {
+        augend.constant.new({ elements = { '==', '~=' }, word = false }),
+        augend.constant.new({ elements = { 'api', 'fn' } }),
+        augend.constant.new({
+          elements = { 'cond', 'event', 'init', 'config', 'opts' },
         }),
       }
 
-      local toggler = {
-        dconst({ elements = { '===', '!==' }, word = false }),
-        dconst({ elements = { '==', '!=' }, word = false }),
-        dconst({ elements = { 'true', 'false' } }),
-        dconst({ elements = { 'True', 'False' } }),
-        dconst({ elements = { 'new', 'old' } }),
-        dconst({ elements = { 'yes', 'no' } }),
-        dconst({ elements = { 'on', 'off' } }),
-        dconst({ elements = { 'left', 'right' } }),
-        dconst({ elements = { 'up', 'down' } }),
-        dconst({ elements = { 'enable', 'disable' } }),
-        dconst({ elements = { 'vim', 'emacs' } }),
-        dconst({ elements = { 'margin', 'padding' } }),
-        dconst({ elements = { '-', '+' } }),
-        dconst({ elements = { 'onClick', 'onSubmit' } }),
-        dconst({ elements = { 'public', 'private' } }),
-        dconst({ elements = { 'string', 'int' } }),
-        dconst({ elements = { 'leader', 'localleader' } }),
-        dconst({ elements = { 'chore', 'feat' } }),
-        dconst({ elements = { 'double', 'single' } }),
-        dconst({ elements = { 'config', 'opts' } }),
-        dconst({ elements = { 'pre', 'post' } }),
-        dconst({ elements = { 'column', 'row' } }),
-        dconst({ elements = { 'before', 'after' } }),
-        dconst({ elements = { 'end', 'start' } }),
-        dconst({ elements = { 'high', 'low' } }),
-        dconst({ elements = { 'open', 'close' } }),
-        dconst({ elements = { 'and', 'or' } }),
-        dconst({ elements = { 'GET', 'POST' } }),
-      }
-
-      ar.list_insert(default, toggler)
-
-      local go = {
-        dconst({ elements = { '&&', '||' }, word = false }),
-        dconst({ elements = { 'string', 'int', 'bool' } }),
-        unpack(default),
-      }
-
-      local md = { unpack(default), augend.misc.alias.markdown_header }
-
-      local lua = {
-        dconst({ elements = { '==', '~=' }, word = false }),
-        dconst({ elements = { 'api', 'fn' } }),
-        dconst({ elements = { 'cond', 'event', 'init', 'config', 'opts' } }),
-        unpack(default),
-      }
-
       if ar.lsp.enable then
-        local enum_dial = require('ar.enum_dial')
-        ar.list_insert(lua, { enum_dial.augend() })
+        ar.list_insert(lua, { require('ar.enum_dial').augend() })
       end
 
       local ts = {
-        unpack(default),
-        dconst({ elements = { '&&', '||' }, word = false }),
-        dconst({ elements = { 'const', 'let', 'var', 'function' } }),
-        dconst({ elements = { 'import', 'export' } }),
-        dconst({ elements = { 'interface', 'type' } }),
-        dconst({ elements = { 'null', 'undefined' } }),
-        dconst({ elements = { 'string', 'number', 'boolean' } }),
-        dconst({ elements = { 'useState', 'useEffect', 'useCallback' } }),
-        augend.paren.alias.quote,
+        augend.constant.new({ elements = { '&&', '||' }, word = false }),
+        augend.constant.new({
+          elements = { 'const', 'let', 'var', 'function' },
+        }),
+        augend.constant.new({ elements = { 'push', 'pop' } }),
+        augend.constant.new({ elements = { 'import', 'export' } }),
+        augend.constant.new({ elements = { 'interface', 'type' } }),
+        augend.constant.new({ elements = { 'null', 'undefined' } }),
+        augend.constant.new({ elements = { 'log', 'warn', 'error' } }),
+        augend.constant.new({ elements = { 'string', 'number', 'boolean' } }),
+        augend.constant.new({
+          elements = { 'useState', 'useEffect', 'useCallback' },
+        }),
       }
 
+      local tsx = { unpack(ts), unpack(css) }
+
       if ar.has('tailwindcss-dial.nvim') then
-        local tailwindcss_dial = require('tailwindcss-dial')
-        ar.list_insert(ts, { unpack(tailwindcss_dial.augends()) })
+        ar.list_insert(tsx, require('tailwindcss-dial').augends())
       end
 
-      config.augends:register_group({
-        default = default,
-        toggler = toggler,
-        case = case,
-        lua = lua,
-        go = go,
-        md = md,
-        ts = ts,
-      })
+      return {
+        dials_by_ft = {
+          css = 'css',
+          javascript = 'ts',
+          typescript = 'ts',
+          typescriptreact = 'tsx',
+          javascriptreact = 'tsx',
+          astro = 'tsx',
+          svelte = 'tsx',
+          vue = 'tsx',
+          json = 'json',
+          lua = 'lua',
+          markdown = 'md',
+          sass = 'css',
+          scss = 'css',
+        },
+        groups = {
+          default = default,
+          toggler = toggler(),
+          case = {
+            augend.case.new({
+              types = {
+                'camelCase',
+                'snake_case',
+                'PascalCase',
+                'SCREAMING_SNAKE_CASE',
+              },
+            }),
+          },
+          go = {
+            augend.constant.new({ elements = { '&&', '||' }, word = false }),
+            augend.constant.new({ elements = { 'string', 'int', 'bool' } }),
+          },
+          lua = lua,
+          md = {
+            augend.misc.alias.markdown_header,
+            augend.constant.new({ elements = { '[ ]', '[x]' }, word = false }),
+            augend.misc.alias.markdown_header,
+          },
+          ts = ts,
+          tsx = tsx,
+          css = css,
+          json = {
+            augend.semver.alias.semver, -- versioning (v1.1.2)
+          },
+        },
+      }
+    end,
+    config = function(_, opts)
+      -- copy defaults to each group
+      for name, group in pairs(opts.groups) do
+        if name ~= 'default' then ar.list_insert(group, opts.groups.default) end
+      end
+      require('dial.config').augends:register_group(opts.groups)
+      vim.g.dials_by_ft = opts.dials_by_ft
     end,
   },
 }
