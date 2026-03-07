@@ -41,7 +41,7 @@ local function toggler()
     augend.constant.new({ elements = { 'high', 'low' } }),
     augend.constant.new({ elements = { 'open', 'close' } }),
     augend.constant.new({ elements = { 'and', 'or' } }),
-    augend.constant.new({ elements = { 'GET', 'POST' } }),
+    augend.constant.new({ elements = { 'GET', 'POST', 'PUT', 'PATCH' } }),
     augend.constant.new({ elements = { 'TODO', 'FIXME' } }),
   }
 end
