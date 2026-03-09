@@ -218,6 +218,9 @@ local function generate_overrides(overrides)
     { WinSeparator = { inherit = 'WinSeparator', bg = 'NONE' } },
     { MsgSeparator = { link = 'WinSeparator' } },
     { VertSplit = { link = 'WinSeparator' } },
+    { TabLine = { inherit = 'Visual', bg = 'NONE' } },
+    { TabLineFill = { bg = 'NONE' } },
+    { TabLineSel = { fg = { from = 'Normal' } } },
     { IndentBlanklineChar = { link = 'VertSplit' } },
     { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
   })

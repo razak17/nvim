@@ -220,6 +220,7 @@ local function colorscheme_overrides(colorscheme)
             reverse = false,
           },
         },
+        { TabLineSel = { bg = { from = 'CursorLine', alter = 0.2 } } },
         { Dim = { link = 'NonText' } },
         { WinSeparator = { fg = { from = 'Dim', alter = -0.2 } } },
         {
