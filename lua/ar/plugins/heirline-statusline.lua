@@ -98,6 +98,7 @@ return {
       provider = function(self) return self.icon and (' ' .. self.icon) end,
       hl = function(self)
         local bg = api.nvim_get_option_value('background', { scope = 'global' })
+        if not self.icon_hl then return nil end
         return {
           fg = bg == 'dark' and ar.highlight.get(self.icon_hl, 'fg') or 'fg',
         }
