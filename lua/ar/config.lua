@@ -319,7 +319,6 @@ local namespace = {
         'delek.vim',
         'desert.vim',
         'elflord.vim',
-        'evening.vim',
         'industry.vim',
         'koehler.vim',
         'lunaperche.vim',

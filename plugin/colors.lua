@@ -209,6 +209,21 @@ local function colorscheme_overrides(colorscheme)
         { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.5 } } },
       },
     }),
+    ['evening'] = theming.generate_overrides({
+      default = {
+        { ColorColumn = { bg = { from = 'CursorLine', alter = 0.2 } } },
+        { Dim = { link = 'NonText' } },
+        { Folded = { bg = { from = 'Folded', alter = -0.6 } } },
+        { LineNr = { fg = { from = 'NonText', alter = -0.2 } } },
+        { TabLineSel = { bg = { from = 'CursorLine', alter = -0.2 } } },
+        { Variable = { fg = { from = 'NonText' } } },
+        { Visual = { bg = { from = 'Visual', alter = -0.3 }, fg = 'NONE' } },
+        { WinSeparator = { fg = { from = 'Dim', alter = -0.6 } } },
+      },
+      popup = {
+        { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.2 } } },
+      },
+    }),
     ['habamax'] = theming.generate_overrides({
       default = {
         { Normal = { bg = { from = 'Normal', alter = -0.3 } } },

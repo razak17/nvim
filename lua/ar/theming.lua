@@ -214,7 +214,7 @@ local function generate_overrides(overrides)
   ar.list_insert(hls, overrides.default or {})
   ar.list_insert(hls, {
     { Winbar = { link = 'Variable' } },
-    { WinbarNC = { link = 'NonText' } },
+    { WinbarNC = { inherit = 'NonText', bg = 'NONE' } },
     { WinSeparator = { inherit = 'WinSeparator', bg = 'NONE' } },
     { MsgSeparator = { link = 'WinSeparator' } },
     { VertSplit = { link = 'WinSeparator' } },
@@ -271,6 +271,9 @@ local function get_statusline_palette(colorscheme)
       pale_blue = hl.get('DiagnosticInfo', 'fg'),
       forest_green = hl.get('DiffAdd', 'bg'),
       lightgreen = hl.get('DiagnosticVirtualTextHint', 'fg'),
+    },
+    evening = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.4),
     },
     habamax = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.2),
