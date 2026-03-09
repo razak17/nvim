@@ -237,6 +237,13 @@ local function colorscheme_overrides(colorscheme)
         },
         { TabLineSel = { bg = { from = 'CursorLine', alter = 0.2 } } },
         { Dim = { link = 'NonText' } },
+        {
+          ['@string.special.url.comment'] = {
+            inherit = 'Underlined',
+            fg = { from = 'NonText', alter = 0.2 },
+            sp = { from = 'NonText', attr = 'fg', alter = -0.2 },
+          },
+        },
         { WinSeparator = { fg = { from = 'Dim', alter = -0.2 } } },
         {
           SpellBad = {
