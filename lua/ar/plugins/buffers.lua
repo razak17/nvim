@@ -12,7 +12,7 @@ end
 
 return {
   {
-    'jackMort/tide.nvim',
+    'razak17/tide.nvim',
     cond = function() return ar.get_plugin_cond('tide.nvim') end,
     -- event = 'VeryLazy',
     init = function()
