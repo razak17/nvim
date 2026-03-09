@@ -40,6 +40,10 @@ return {
         dictionary = 'uiopbnmsfghjklycvqwertz', -- Key hints for quick access
       },
     },
+    config = function(_, opts)
+      require('tide').setup(opts)
+      ar.highlight.plugin('tide', { { TideBg = { link = 'NormalFloat' } } })
+    end,
     dependencies = {
       'MunifTanjim/nui.nvim',
       'nvim-tree/nvim-web-devicons',
