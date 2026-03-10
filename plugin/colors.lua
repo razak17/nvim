@@ -209,6 +209,19 @@ local function colorscheme_overrides(colorscheme)
         { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.5 } } },
       },
     }),
+    ['desert'] = theming.generate_overrides({
+      default = {
+        { ColorColumn = { bg = { from = 'CursorLine', alter = 0.2 } } },
+        { LineNr = { fg = { from = 'NonText', alter = -0.2 } } },
+        { TabLineSel = { bg = { from = 'CursorLine', alter = -0.2 } } },
+        { Visual = { fg = 'NONE' } },
+        { Todo = { fg = { from = 'NonText', alter = -1.3 } } },
+        { WinSeparator = { fg = { from = 'NonText', alter = -0.5 } } },
+      },
+      -- popup = {
+      --   { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.2 } } },
+      -- },
+    }),
     ['evening'] = theming.generate_overrides({
       default = {
         { ColorColumn = { bg = { from = 'CursorLine', alter = 0.2 } } },
@@ -336,6 +349,27 @@ local function colorscheme_overrides(colorscheme)
             fg = { from = 'Removed' },
           },
         },
+      },
+    }),
+    ['sorbet'] = theming.generate_overrides({
+      default = {
+        { TabLineSel = { bg = { from = 'CursorLine', alter = 0.2 } } },
+        { Visual = { bg = { from = 'CursorLine', alter = 0.2 } } },
+        { WinSeparator = { fg = { from = 'NonText', alter = -0.3 } } },
+      },
+      popup = {
+        { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.2 } } },
+      },
+    }),
+    ['unokai'] = theming.generate_overrides({
+      default = {
+        { TabLineSel = { bg = { from = 'CursorLine', alter = 0.2 } } },
+        { CursorLine = { bg = { from = 'CursorLine', alter = 0.2 } } },
+        { Visual = { bg = { from = 'CursorLine', alter = 0.2 } } },
+        { WinSeparator = { fg = { from = 'NonText', alter = -0.4 } } },
+      },
+      popup = {
+        { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.2 } } },
       },
     }),
     ['vim'] = theming.generate_overrides({

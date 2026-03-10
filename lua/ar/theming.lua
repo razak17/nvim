@@ -218,9 +218,10 @@ local function generate_overrides(overrides)
     { WinSeparator = { inherit = 'WinSeparator', bg = 'NONE' } },
     { MsgSeparator = { link = 'WinSeparator' } },
     { VertSplit = { link = 'WinSeparator' } },
-    { TabLine = { inherit = 'Visual', bg = 'NONE' } },
+    { TabLine = { inherit = 'Visual', bg = 'NONE', reverse = false } },
     { TabLineFill = { bg = 'NONE' } },
     { TabLineSel = { fg = { from = 'Normal' } } },
+    { Visual = { fg = 'NONE', reverse = false } },
     { IndentBlanklineChar = { link = 'VertSplit' } },
     { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
   })
@@ -272,6 +273,9 @@ local function get_statusline_palette(colorscheme)
       forest_green = hl.get('DiffAdd', 'bg'),
       lightgreen = hl.get('DiagnosticVirtualTextHint', 'fg'),
     },
+    desert = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.4),
+    },
     evening = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.4),
     },
@@ -300,6 +304,12 @@ local function get_statusline_palette(colorscheme)
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.1),
       fg = hl.tint(hl.get('Comment', 'fg'), 0.8),
       blue = hl.get('DiffChange', 'bg'),
+    },
+    sorbet = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.4),
+    },
+    unokai = {
+      bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.4),
     },
     vim = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.55),
