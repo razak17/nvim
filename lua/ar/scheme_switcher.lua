@@ -74,12 +74,19 @@ function M.colorscheme_menu()
     style = 'minimal',
   })
 
+  vim.opt_local.winhighlight:append({
+    SchemeSwitcherNormal = 'Normal',
+    SchemeSwitcherFloat = 'NormalFloat',
+    SchemeSwitcherBorder = 'FloatBorder',
+  })
+
   vim.bo[buf].modifiable = false
   vim.wo[win].number = false
   vim.wo[win].relativenumber = false
   vim.wo[win].cursorline = true
   vim.wo[win].scrolloff = 3
-  vim.wo[win].winhighlight = 'Normal:NormalFloat,FloatBorder:FloatBorder'
+  vim.wo[win].winhighlight =
+    'SchemeSwitcherNormal:SchemeSwitcherFloat,SchemeSwitcherBorder:SchemeSwitcherBorder'
 
   -- create namespace for highlights
   local ns = api.nvim_create_namespace('scheme_switcher_highlights')
