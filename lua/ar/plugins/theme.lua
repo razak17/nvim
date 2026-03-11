@@ -531,6 +531,22 @@ return {
         }, true)
       end,
     },
+    {
+      'ZzurabSiprashvili/monokai-night.nvim',
+      cond = get_cond({ 'monokai-night' }),
+      priority = get_priority({ 'monokai-night' }),
+      event = get_event({ 'monokai-night' }),
+      init = function()
+        theming.apply_overrides('monokai-night', {
+          default = {
+            { WinSeparator = { fg = { from = 'NonText', alter = -0.6 } } },
+          },
+          popup = {
+            { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.55 } } },
+          },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Warm
@@ -1624,7 +1640,6 @@ return {
       end,
     },
   },
-
   ------------------------------------------------------------------------------
   -- Gruvbox
   {

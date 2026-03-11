@@ -126,6 +126,7 @@
 - monoglow-light
 - monoglow-void
 - monoglow-z
+- monokai-night
 - moon
 - moonfly
 - morta
