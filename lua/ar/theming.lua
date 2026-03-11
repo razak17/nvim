@@ -128,6 +128,8 @@ local function generate_picker_overrides(overrides)
         italic = true,
       },
     },
+    { PickerDir = { inherit = 'NonText', bg = 'NONE' } },
+    { PickerTotals = { link = 'PickerDir' } },
   }
 
   if variant == 'fill' then
@@ -164,6 +166,8 @@ local function generate_picker_overrides(overrides)
     { SnacksInputNormal = { link = 'PickerPrompt' } },
     { SnacksInputTitle = { link = 'PickerTitle' } },
     { SnacksInputBorder = { link = 'PickerPromptBorder' } },
+    { SnacksPickerDir = { link = 'PickerDir' } },
+    { SnacksPickerTotals = { link = 'PickerTotals' } },
     { SnacksPickerToggle = { link = 'PickerToggle' } },
     { SnacksPicker = { link = 'PickerNormal' } },
     { SnacksPickerTitle = { link = 'PickerTitle' } },
