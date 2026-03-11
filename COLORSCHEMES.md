@@ -33,6 +33,7 @@
 - dayfox
 - deepwater
 - default
+- desert
 - doom-one
 - dracula
 - dracula-soft
@@ -44,6 +45,7 @@
 - eldritch-dark
 - eldritch-minimal
 - evangelion
+- evening
 - everforest
 - evergarden
 - evergarden-fall
@@ -121,14 +123,17 @@
 - mono-jade
 - monoglow
 - monoglow-lack
+- monoglow-light
 - monoglow-void
 - monoglow-z
+- moon
 - moonfly
 - morta
 - nanode
 - naysayer
 - neobones
 - neomodern-day
+- neomodern-light
 - night-owl
 - nightfox
 - nightgem
@@ -183,6 +188,7 @@
 - shadow
 - silentium
 - slate
+- sorbet
 - sunbather
 - terafox
 - terracotta
@@ -199,6 +205,7 @@
 - tokyonight-storm
 - tomorrow-night-blue
 - two-firewatch
+- unokai
 - vague
 - vim
 - vimbones
