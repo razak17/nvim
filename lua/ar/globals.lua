@@ -531,17 +531,28 @@ function ar.load_colorscheme(name)
   return ar.pcall('theme failed to load because', cmd.colorscheme, name)
 end
 
--- Check if root directory is a git repo
+---@param path string
 ---@return boolean
-function ar.is_git_repo()
-  return not ar.falsy(fn.isdirectory(fmt('%s/.git', fn.expand('%:p:h'))))
+function ar.has_git(path)
+  path = path or fn.expand('%:p:h')
+  return not ar.falsy(fn.isdirectory(fmt('%s/.git', path)))
+end
+
+-- Check if root directory is a git repo
+---@param path string
+---@return boolean
+function ar.is_git_repo(path)
+  path = path or fn.expand('%:p:h')
+  return not ar.has_git(fn.isdirectory(fmt('%s/.git', path)))
     or not ar.falsy(vim.b.gitsigns_head)
     or not ar.falsy(vim.b.gitsigns_status_dict)
 end
 
+---@param path string
 ---@return boolean
-function ar.is_git_worktree()
-  return not ar.falsy(fn.filereadable(fmt('%s/.git', fn.expand('%:p:h'))))
+function ar.is_git_worktree(path)
+  path = path or fn.expand('%:p:h')
+  return not ar.falsy(fn.filereadable(fmt('%s/.git', path)))
 end
 
 -- Check if git environment variables are set
