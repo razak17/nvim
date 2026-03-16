@@ -18,7 +18,7 @@ return {
       useLspFoldsWithTreesitterFallback = { enabled = false }, -- required for `autoFold`
       foldtext = {
         enabled = true,
-        padding = 2,
+        padding = { width = 2 },
         lineCount = { template = ' %d', hlgroup = 'Comment' },
         diagnosticsCount = false,
         gitsignsCount = false,
