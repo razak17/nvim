@@ -271,7 +271,8 @@ return {
 
       ar.highlight.plugin('BlinkCmp', hl_defs)
 
-      local symbols = require('lspkind').symbol_map
+      local symbols = {}
+      if ar.has('lspkind.nvim') then symbols = require('lspkind').symbol_map end
       local ai_icons = ar.ui.codicons.ai
       opts.appearance = opts.appearance or {}
       opts.appearance.kind_icons = vim.tbl_extend('keep', {
