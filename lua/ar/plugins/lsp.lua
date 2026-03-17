@@ -86,7 +86,7 @@ return {
         {
           'neovim/nvim-lspconfig',
           cond = function()
-            return ar.get_plugin_cond('nvim-lspconfig.nvim', ar.lsp.enable)
+            return ar.get_plugin_cond('nvim-lspconfig', ar.lsp.enable)
           end,
           config = function()
             require('lspconfig.ui.windows').default_options.border = border
