@@ -72,6 +72,11 @@ local function general_overrides()
     { LspCodeLens = { inherit = 'Comment', bold = true, italic = false } },
     { LspCodeLensSeparator = { bold = false, italic = false } },
     { LspSignatureActiveParameter = { link = 'Visual' } },
+  }
+end
+
+local function diagnostic_overrides()
+  return {
     { DiagnosticFloatTitle = { inherit = 'FloatTitle', bold = true } },
     {
       DiagnosticFloatTitleIcon = {
@@ -438,6 +443,7 @@ local function colorscheme_overrides(colorscheme)
   }
   local hls = general_overrides()
   if overrides[colorscheme] then ar.list_insert(hls, overrides[colorscheme]) end
+  ar.list_insert(hls, diagnostic_overrides())
   if not transparent then ar.list_insert(hls, set_sidebar_highlight()) end
   highlight.all(hls)
 end
