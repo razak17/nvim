@@ -588,6 +588,7 @@ local config = {
       'startup.nvim',
       'suda.vim',
       'telescope-smart-history.nvim',
+      'toggleterm.nvim',
       'ts-comments.nvim',
       'ultimate-autopair.nvim',
       'vim-footprints',

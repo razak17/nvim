@@ -18,6 +18,34 @@ return {
     dependencies = 'nvzone/volt',
   },
   {
+    'ruicsh/termite.nvim',
+    cond = function() return ar.get_plugin_cond('termite.nvim') end,
+    event = 'VeryLazy',
+    cmd = { 'Termite' },
+    opts = {
+      width = 0.4, -- Fraction of editor width for left/right positions (0.0 - 1.0)
+      height = 0.5, -- Fraction of editor height for top/bottom positions (0.0 - 1.0)
+      position = 'right', -- Panel position: "left", "right", "top", or "bottom"
+      shell = nil, -- Shell command (nil = default $SHELL)
+      start_insert = true, -- Enter insert mode when focusing a terminal
+      winbar = false, -- Show winbar with running process or cwd
+      keymaps = {
+        toggle = '<C-\\>', -- Toggle all terminals (terminal mode)
+        create = '<C-t>', -- Create new terminal
+        next = '<C-n>', -- Focus next terminal in stack
+        prev = '<C-p>', -- Focus previous terminal in stack
+        focus_editor = '<C-e>', -- Return focus to editor window
+        normal_mode = '<C-[>', -- Exit terminal insert mode
+        maximize = '<C-z>', -- Maximize/restore focused terminal
+        close = 'q', -- Close current terminal (normal mode)
+      },
+      highlights = {
+        border_active = 'Debug', -- Highlight for active terminal border (string = hl group, table = direct definition)
+        border_inactive = 'WinSeparator', -- Highlight for inactive terminal borders (string = hl group, table = direct definition)
+      },
+    },
+  },
+  {
     'akinsho/toggleterm.nvim',
     cond = function() return ar.get_plugin_cond('toggleterm.nvim') end,
     event = 'VeryLazy',
