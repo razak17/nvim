@@ -47,9 +47,7 @@ local falsy = ar.falsy
 local override = ar.config.lsp.override
 local ts_lang = ar.config.lsp.lang.typescript
 
-if
-  vim.tbl_contains(override, 'ts_ls') or (falsy(override) and ts_lang['ts_ls'])
-then
+if ar.ts_lsp_cond('ts_ls') or ar.ts_lsp_cond('tsgo') then
   local sources = {
     add_missing_imports = 'source.addMissingImports.ts',
     organize_imports = 'source.organizeImports',

@@ -1,6 +1,5 @@
 local api, fn = vim.api, vim.fn
 local diagnostic = vim.diagnostic
-local ts_lsp = ar.config.lsp.lang.typescript
 
 local bool2str = ar.bool2str
 local icons = ar.ui.codicons
@@ -252,7 +251,7 @@ function M.organize_imports()
     vim.cmd('TSToolsOrganizeImports')
   elseif ar.has('nvim-vtsls') then
     vim.cmd('VtsExec organize_imports')
-  elseif ts_lsp['ts_ls'] then
+  elseif ar.ts_lsp_cond('ts_ls') or ar.ts_lsp_cond('tsgo') then
     vim.cmd('OrganizeImports')
   end
 end
@@ -262,7 +261,7 @@ function M.add_missing_imports()
     vim.cmd('TSToolsAddMissingImports')
   elseif ar.has('nvim-vtsls') then
     vim.cmd('VtsExec add_missing_imports')
-  elseif ts_lsp['ts_ls'] then
+  elseif ar.ts_lsp_cond('ts_ls') or ar.ts_lsp_cond('tsgo') then
     vim.cmd('AddMissingImports')
   end
 end
@@ -272,7 +271,7 @@ function M.remove_unused()
     vim.cmd('TSToolsRemoveUnused')
   elseif ar.has('nvim-vtsls') then
     vim.cmd('VtsExec remove_unused')
-  elseif ts_lsp['ts_ls'] then
+  elseif ar.ts_lsp_cond('ts_ls') or ar.ts_lsp_cond('tsgo') then
     vim.cmd('RemoveUnused')
   end
 end

@@ -435,7 +435,23 @@ local lsp_dir_servers = {
 -- mason-lspconfig doesn't enable these by default for some reason.. I have to enable them manually.
 ---@type table<string, vim.lsp.Config|{mason?:boolean, enabled?:boolean}|boolean>
 local manual_servers = {
-  tsgo = {},
+  tsgo = {
+    settings = {
+      typescript = {
+        inlayHints = {
+          parameterNames = {
+            enabled = 'literals',
+            suppressWhenArgumentMatchesName = true,
+          },
+          parameterTypes = { enabled = true },
+          variableTypes = { enabled = true },
+          propertyDeclarationTypes = { enabled = true },
+          functionLikeReturnTypes = { enabled = true },
+          enumMemberValues = { enabled = true },
+        },
+      },
+    },
+  },
 }
 
 ---@param name string
