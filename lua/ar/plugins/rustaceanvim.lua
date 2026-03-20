@@ -32,7 +32,7 @@ return {
               {
                 pattern = { '*.rs' },
                 callback = function()
-                  local _, _ = pcall(vim.lsp.codelens.refresh)
+                  local _, _ = pcall(vim.lsp.codelens.enable)
                 end,
               }
             )

@@ -620,16 +620,7 @@ local function setup_autocommands(client, buf)
       desc = 'LSP: Code Lens',
       buffer = buf,
       -- call via vimscript so that errors are silenced
-      -- command = 'silent! lua vim.lsp.codelens.refresh()',
-      command = function(args)
-        if not args or not args.data then return end
-        if client:supports_method(M.textDocument_codeLens) then
-          lsp.codelens.refresh({
-            bufnr = args.buf,
-            client_id = client.id,
-          })
-        end
-      end,
+      command = 'silent! lua vim.lsp.codelens.enable(true)',
     })
   end
 
@@ -687,7 +678,7 @@ local workspace_diagnostics_exclusions = {
 ---@param client vim.lsp.Client
 ---@param bufnr number
 local function setup_lsp_plugins(client, bufnr)
-  local name = vim.lsp.get_client_by_id(client.id).name
+  local name = lsp.get_client_by_id(client.id).name
   local excluded = vim.tbl_contains(workspace_diagnostics_exclusions, name)
   if ar.has('workspace-diagnostics.nvim') and not excluded then
     require('workspace-diagnostics').populate_workspace_diagnostics(
