@@ -707,7 +707,7 @@ local function setup_colors(client, bufnr)
     client:supports_method(M.textDocument_documentColor)
     or client.capabilities.textDocument.colorProvider -- NOTE: this is needed for tailwind colors
   then
-    lsp.document_color.enable(true, bufnr, { style = 'virtual' })
+    lsp.document_color.enable(true, { bufnr = bufnr }, { style = 'virtual' })
   end
 end
 
