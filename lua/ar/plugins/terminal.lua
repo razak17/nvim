@@ -5,15 +5,21 @@ return {
   {
     'nvzone/floaterm',
     cond = function() return ar.get_plugin_cond('floaterm') end,
-    opts = {},
     cmd = 'FloatermToggle',
-    keys = {
-      {
-        mode = { 't', 'n' },
-        [[<M-\>]],
-        '<Cmd>FloatermToggle<CR>',
-        desc = 'floaterm: toggle terminal',
+    opts = {
+      mappings = {
+        term = function(buf)
+          local function float(dir)
+            return function() require('floaterm.api').cycle_term_bufs(dir) end
+          end
+          map({ 'n', 't' }, '<C-p>', float('prev'), { buffer = buf })
+          map({ 'n', 't' }, '<C-n>', float('next'), { buffer = buf })
+        end,
       },
+    },
+    -- stylua: ignore
+    keys = {
+      { mode = { 'n', 't' }, [[<M-\>]], '<Cmd>FloatermToggle<CR>', desc = 'floaterm: toggle terminal' },
     },
     dependencies = 'nvzone/volt',
   },
