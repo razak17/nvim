@@ -192,6 +192,7 @@
 - silentium
 - slate
 - sorbet
+- sugarpunk
 - sunbather
 - terafox
 - terracotta

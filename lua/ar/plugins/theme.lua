@@ -1641,6 +1641,21 @@ return {
         }, true)
       end,
     },
+    {
+      'nikita-edel/sugarpunk.nvim',
+      cond = get_cond({ 'sugarpunk' }),
+      priority = get_priority({ 'sugarpunk' }),
+      event = get_event({ 'sugarpunk' }),
+      init = function()
+        theming.apply_overrides('sugarpunk', {
+          default = {
+            {
+              WinSeparator = { fg = { from = 'WinSeparator', alter = -0.3 } },
+            },
+          },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Gruvbox
