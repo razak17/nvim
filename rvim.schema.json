@@ -420,6 +420,27 @@
       },
       "type": "object"
     },
+    "formatter": {
+      "additionalProperties": false,
+      "properties": {
+        "typescript": {
+          "additionalProperties": false,
+          "properties": {
+            "biome": {
+              "type": "boolean"
+            },
+            "oxfmt": {
+              "type": "boolean"
+            },
+            "prettier": {
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
     "frecency": {
       "additionalProperties": false,
       "properties": {

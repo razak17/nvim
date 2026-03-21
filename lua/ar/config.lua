@@ -86,6 +86,14 @@ local env = vim.env
 ---@field rename ArExplorerRename
 ---@field variant ArWhichExplorer
 
+---@class ArTypescriptFormatter
+---@field biome boolean
+---@field oxfmt boolean
+---@field prettier boolean
+
+---@class ArFormatter
+---@field typescript ArTypescriptFormatter
+
 ---@class ArGx
 ---@field enable boolean
 ---@field variant ArWhichGx
@@ -431,6 +439,14 @@ local config = {
   debug = { enable = false },
   ---@type ArExplorer
   explorer = { rename = 'snacks', variant = 'snacks' },
+  ---@type ArFormatter
+  formatter = {
+    typescript = {
+      biome = false,
+      oxfmt = false,
+      prettier = true,
+    },
+  },
   frecency = { enable = true },
   ---@type ArGx
   gx = { enable = true, variant = 'local' },

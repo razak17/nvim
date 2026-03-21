@@ -1,8 +1,6 @@
 local api, fn, uv = vim.api, vim.fn, vim.uv
 local border = ar.ui.current.border.default
 local coding = ar.plugins.coding
-local is_biome = ar.config.lsp.lang.web.biome
-  or vim.tbl_contains(ar.config.lsp.override, 'biome')
 
 ---@alias ConformCtx {buf: number, filename: string, dirname: string}
 
@@ -30,6 +28,11 @@ local function has_parser(ctx)
     function() return fn.json_decode(ret).inferredParser end
   )
   return ok and parser and parser ~= vim.NIL
+end
+
+local function ts_formatter_cond(which)
+  if ar.lsp.enable and ar.lsp_enabled('web', 'biome') then return false end
+  return ar.config.formatter.typescript[which]
 end
 
 has_config = ar.memoize(has_config)
@@ -145,11 +148,11 @@ return {
           condition = function(_, ctx)
             return has_parser(ctx)
               and (ar.lsp.prettier.needs_config ~= true or has_config(ctx))
-              and not is_biome
+              and ts_formatter_cond('prettier')
           end,
         },
         biome = {
-          condition = function() return not is_biome or not ar.lsp.enable end,
+          condition = function() return ts_formatter_cond('biome') end,
           require_cwd = true,
         },
         -- https://github.com/mistweaverco/kulala-fmt
@@ -157,6 +160,10 @@ return {
           command = 'kulala-fmt',
           args = { 'format', '$FILENAME' },
           stdin = false,
+        },
+        oxfmt = {
+          condition = function() return ts_formatter_cond('oxfmt') end,
+          require_cwd = false,
         },
       },
       formatters_by_ft = {
@@ -182,10 +189,12 @@ return {
       opts.formatters_by_ft = opts.formatters_by_ft or {}
 
       for _, ft in ipairs(prettier_ft) do
-        if is_biome then
-          opts.formatters_by_ft[ft] = { 'biome' }
-        else
+        if ts_formatter_cond('prettier') then
           opts.formatters_by_ft[ft] = { 'prettier' }
+        elseif ts_formatter_cond('biome') then
+          opts.formatters_by_ft[ft] = { 'biome' }
+        elseif ts_formatter_cond('oxfmt') then
+          opts.formatters_by_ft[ft] = { 'oxfmt' }
         end
       end
 
