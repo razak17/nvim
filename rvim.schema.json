@@ -676,7 +676,13 @@
                 "emmet_language_server": {
                   "type": "boolean"
                 },
+                "emmet_ls": {
+                  "type": "boolean"
+                },
                 "eslint": {
+                  "type": "boolean"
+                },
+                "oxlint": {
                   "type": "boolean"
                 }
               },

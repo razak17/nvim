@@ -27,6 +27,7 @@ local server_langs = {
   eslint = 'web',
   emmet_ls = 'web',
   emmet_language_server = 'web',
+  oxlint = 'web',
 }
 
 local function is_enabled(name)

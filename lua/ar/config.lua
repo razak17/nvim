@@ -61,7 +61,7 @@ local env = vim.env
 ---@alias ArRustLang { rustaceanvim: boolean, rust_analyzer: boolean, bacon_ls: boolean}
 ---@alias ArTailwindLang { tailwindcss: boolean, tailwind-tools: boolean, }
 ---@alias ArTypescriptLang { ts_ls: boolean, typescript-tools: boolean, vtsls: boolean, tsgo: boolean, }
----@alias ArWebLang { biome: boolean,  eslint: boolean, emmet_language_server: boolean, }
+---@alias ArWebLang { biome: boolean,  eslint: boolean, emmet_language_server: boolean, oxlint: boolean, }
 ---@alias ArPickerWin { show_preview: boolean, fullscreen: boolean, }
 
 ---@class ArAIModels
@@ -482,6 +482,7 @@ local config = {
         emmet_language_server = false,
         emmet_ls = false,
         eslint = false,
+        oxlint = false,
       },
     },
     null_ls = { enable = false },
