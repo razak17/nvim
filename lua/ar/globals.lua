@@ -298,11 +298,10 @@ function ar.get_plugin_cond(plugin, cond)
   return cond
 end
 
----@param which 'ts_ls' | 'tsgo' | 'vtsls'
-function ar.ts_lsp_cond(which)
+function ar.lsp_enabled(which, what)
   local override = ar.config.lsp.override
-  if not ar.falsy(override) then return vim.tbl_contains(override, which) end
-  return ar.config.lsp.lang.typescript[which]
+  if not ar.falsy(override) then return vim.tbl_contains(override, what) end
+  return ar.config.lsp.lang[which][what]
 end
 
 --- Check if a plugin is defined in lazy. Useful with lazy loading

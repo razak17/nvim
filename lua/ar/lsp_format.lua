@@ -1,6 +1,4 @@
 local api, lsp = vim.api, vim.lsp
-local is_biome = ar.config.lsp.lang.web.biome
-  or vim.tbl_contains(ar.config.lsp.override, 'biome')
 local conform = ar.has('conform.nvim')
 
 local format_exclusions = {
@@ -92,11 +90,7 @@ local function format(opts)
       bufnr = opts and opts.bufnr or api.nvim_get_current_buf(),
     }
 
-  local has_biome = is_biome
-  if not ar.falsy(ar.config.lsp.override) then
-    has_biome = vim.tbl_contains(ar.config.lsp.override, 'biome')
-  end
-  if has_biome then
+  if ar.lsp_enabled('web', 'biome') then
     local client = lsp.get_clients({ bufnr = opts.bufnr, name = 'biome' })
     if client and client[1] then biome_format(client[1], opts.bufnr) end
     return
