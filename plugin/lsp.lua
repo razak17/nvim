@@ -607,7 +607,7 @@ local function setup_autocommands(client, buf)
             lsp.get_clients({ buffer = buf })
           )
           if #clients >= 1 then
-            format({ bufnr = args.buf, async = #clients == 1 })
+            format.format({ bufnr = args.buf, async = #clients == 1 })
           end
         end
       end,
