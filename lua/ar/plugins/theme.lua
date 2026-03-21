@@ -371,15 +371,17 @@ return {
     },
     {
       'wtfox/jellybeans.nvim',
-      cond = get_cond({ 'jellybeans' }),
-      priority = get_priority({ 'jellybeans' }),
-      event = get_event({ 'jellybeans' }),
+      cond = get_cond({ 'jellybeans', 'jellybeans-warm' }),
+      priority = get_priority({ 'jellybeans', 'jellybeans-warm' }),
+      event = get_event({ 'jellybeans', 'jellybeans-warm' }),
       init = function()
-        theming.apply_overrides('jellybeans', {
+        local overrides = {
           default = {
             { WinSeparator = { fg = { from = 'LineNr', alter = -0.35 } } },
           },
-        }, true)
+        }
+        theming.apply_overrides('jellybeans', overrides, true)
+        theming.apply_overrides('jellybeans-warm', overrides, true)
       end,
     },
     {
