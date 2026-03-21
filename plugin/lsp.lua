@@ -281,6 +281,11 @@ local function setup_mappings(client, bufnr)
       function()
         local enabled = lsp.inlay_hint.is_enabled({ bufnr = bufnr })
         lsp.inlay_hint.enable(not enabled, { bufnr = bufnr })
+        vim.notify(
+          fmt('%s', ar.bool2str(not enabled)),
+          L.INFO,
+          { title = 'Inlay Hints' }
+        )
       end,
       desc = 'toggle inlay hints',
       capability = M.textDocument_inlayHint,
@@ -291,6 +296,11 @@ local function setup_mappings(client, bufnr)
       function()
         local enabled = lsp.semantic_tokens.is_enabled({ bufnr = bufnr })
         lsp.semantic_tokens.enable(not enabled, { bufnr = bufnr })
+        vim.notify(
+          fmt('%s', ar.bool2str(not enabled)),
+          L.INFO,
+          { title = 'Semantic Tokens' }
+        )
       end,
       desc = 'toggle semantic tokens',
       capability = M.textDocument_semanticTokens_full,

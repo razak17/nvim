@@ -1,5 +1,6 @@
 local api, fn = vim.api, vim.fn
 local diagnostic = vim.diagnostic
+local L = vim.log.levels
 
 local bool2str = ar.bool2str
 local icons = ar.ui.codicons
@@ -15,6 +16,7 @@ function M.lsp_clients(bufnr)
 end
 
 local function lsp_notify(msg, type)
+  type = type or L.INFO
   vim.schedule(
     function() vim.notify(msg, type, { title = 'Diagnostic Toggles' }) end
   )
@@ -277,7 +279,7 @@ function M.remove_unused()
     vim.cmd('TSToolsRemoveUnused')
   elseif ar.has('nvim-vtsls') then
     vim.cmd('VtsExec remove_unused')
- elseif
+  elseif
     ar.lsp_enabled('typescript', 'ts_ls')
     or ar.lsp_enabled('typescript', 'tsgo')
   then

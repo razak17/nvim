@@ -315,14 +315,17 @@ function ar.has(plugin)
 end
 
 ---@param plugin string The plugin to search for.
+---@param notify boolean to show notification
 ---@return boolean available # Whether the plugin is available.
-function ar.plugin_available(plugin)
+function ar.plugin_available(plugin, notify)
   if not ar.has(plugin) then
-    vim.notify(
-      fmt('%s is not available', plugin),
-      L.INFO,
-      { title = 'Plugins' }
-    )
+    if notify then
+      vim.notify(
+        fmt('%s is not available', plugin),
+        L.INFO,
+        { title = 'Plugins' }
+      )
+    end
     return false
   end
   return true
