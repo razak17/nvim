@@ -17,6 +17,10 @@ local left_thin_block = separators.left_thin_block
 
 local sep = { text = left_thin_block, texthl = 'StatusColSep' }
 
+local config = {
+  excluded_fts = { 'snacks_picker_input' },
+}
+
 ar.ui.statuscolumn = {}
 
 function ar.ui.statuscolumn.render()
@@ -56,6 +60,8 @@ opt.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
 ar.augroup('StatusCol', {
   event = { 'BufEnter', 'FileType', 'FocusGained', 'TextChanged' },
   command = function(args)
+    local ft = bo[args.buf].ft
+    if vim.tbl_contains(config.excluded_fts, ft) then return end
     local d = decor.get({
       ft = bo[args.buf].ft,
       bt = bo[args.buf].bt,
