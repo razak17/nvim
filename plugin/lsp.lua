@@ -269,13 +269,11 @@ local function setup_mappings(client, bufnr)
     { 'n', '[o', diagnostic_goto(false, 'HINT'), desc = 'prev hint' },
     {
       'n',
-      'gL',
-      function()
-        if not ar.plugin_available('lsplinks.nvim') then return end
-        require('lsplinks').gx()
-      end,
+      'gK',
+      function() require('lsplinks').gx() end,
       desc = 'open lsp links',
       capability = M.documentLinkProvider,
+      disabled = not ar.plugin_available('lsplinks.nvim'),
     },
     {
       'n',
