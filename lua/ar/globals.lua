@@ -484,7 +484,7 @@ function ar.run_command(command, exit_cb, start_cb)
         vim.notify(command[1] .. ' executed successfully', L.INFO)
         if exit_cb then exit_cb() end
       else
-        local info = { command .. ' failed!' }
+        local info = { command[1] .. ' failed!' }
         if res.stderr ~= nil then
           table.insert(info, res.stderr)
           print(res.stderr)
