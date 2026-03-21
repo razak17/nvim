@@ -528,6 +528,22 @@ local ts_overrides = {
     -- files which we *really* don't want.
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentRangeFormattingProvider = false
+
+    local name = lsp.get_client_by_id(client.id).name
+    local ts_servers = { 'ts_ls', 'typescript-tools', 'vtsls' }
+    if vim.tbl_contains(ts_servers, name) then
+      local tsgo = lsp.get_clients({ name = 'tsgo', bufnr = bufnr })[1]
+      if tsgo then
+        lsp.handlers[M.textDocument_publishDiagnostics] = function(
+          err,
+          result,
+          ctx
+        )
+          if lsp.get_client_by_id(ctx.client_id) then return end
+          lsp.diagnostic.on_publish_diagnostics(err, result, ctx)
+        end
+      end
+    end
   end,
 }
 
@@ -545,6 +561,52 @@ local client_overrides = {
       -- is also enabled for.
       -- @see: https://github.com/nvim-telescope/telescope.nvim/issues/964
       client.server_capabilities.workspaceSymbolProvider = false
+    end,
+  },
+  tsgo = {
+    on_attach = function(client, bufnr)
+      if ar.has('twoslash-queries.nvim') then
+        require('twoslash-queries').attach(client, bufnr)
+      end
+
+      local function ts_cond()
+        local override = ar.config.lsp.override
+        if not ar.falsy(override) then
+          return vim.tbl_contains(override, 'ts_ls')
+            or vim.tbl_contains(override, 'typescript-tools')
+            or vim.tbl_contains(override, 'vtsls')
+        end
+        return ar.config.lsp.lang.typescript.ts_ls
+          or ar.config.lsp.lang.typescript['typescript-tools']
+          or ar.config.lsp.lang.typescript.vtsls
+      end
+
+      -- if tsgo is attached alongside another ts server, use tsgo for diagnostics to only
+      if ts_cond() then
+        -- UX / interaction
+        client.server_capabilities.hoverProvider = false
+        client.server_capabilities.completionProvider = nil
+        client.server_capabilities.definitionProvider = false
+        client.server_capabilities.declarationProvider = false
+        client.server_capabilities.implementationProvider = false
+        client.server_capabilities.referencesProvider = false
+        client.server_capabilities.renameProvider = false
+        client.server_capabilities.codeActionProvider = false
+        client.server_capabilities.signatureHelpProvider = nil
+        client.server_capabilities.documentHighlightProvider = false
+        -- symbols / navegation
+        client.server_capabilities.documentSymbolProvider = false
+        client.server_capabilities.workspaceSymbolProvider = false
+        -- format / tokens
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
+        client.server_capabilities.semanticTokensProvider = nil
+        -- other
+        client.server_capabilities.typeDefinitionProvider = false
+        client.server_capabilities.callHierarchyProvider = false
+        client.server_capabilities.selectionRangeProvider = false
+        client.server_capabilities.inlayHintProvider = false
+      end
     end,
   },
   ts_ls = ts_overrides,
