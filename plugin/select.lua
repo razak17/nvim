@@ -94,7 +94,6 @@ if ar.lsp.enable then
     ['Toggle Linting Globally'] = "lua require'ar.select.lsp'.toggle_linting()",
     ['Toggle Format On Save'] = "lua require'ar.select.lsp'.toggle_format_on_save()",
     ['Organize Imports'] = "lua require'ar.select.lsp'.organize_imports()",
-    ['Restart All LSPs'] = "lua require'ar.select.lsp'.lsp_restart_all()",
     ['Add Missing Imports (ts)'] = "lua require'ar.select.lsp'.add_missing_imports()",
     ['Remove Unused Imports (ts)'] = "lua require'ar.select.lsp'.remove_unused_imports()",
     ['Remove Unused (ts)'] = "lua require'ar.select.lsp'.remove_unused()",

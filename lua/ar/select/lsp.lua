@@ -30,44 +30,6 @@ function M.eslint_fix()
   end
 end
 
-function M.lsp_restart_all()
-  -- get clients that would match this buffer but aren't connected
-  local other_matching_configs =
-    require('ar.utils.lsp').get_other_matching_providers(vim.bo.filetype)
-  -- first restart the existing clients
-  for _, client in ipairs(require('ar.utils.lsp').get_managed_clients()) do
-    client.stop()
-    vim.defer_fn(
-      function() require('lspconfig.configs')[client.name].launch() end,
-      500
-    )
-  end
-  -- now restart those that were not connected
-  for _, client in ipairs(other_matching_configs) do
-    vim.defer_fn(
-      function() require('lspconfig.configs')[client.name].launch() end,
-      500
-    )
-  end
-  -- handle null-ls separately as it's not managed by lspconfig
-  local nullls_client = require('null-ls.client').get_client()
-  if nullls_client ~= nil then nullls_client.stop() end
-  vim.defer_fn(function() require('null-ls.client').try_add() end, 500)
-  local current_top_line = fn.line('w0')
-  local current_line = fn.line('.')
-  if vim.bo.modified then
-    vim.cmd(
-      [[echohl ErrorMsg | echo "Reload will work better if you save the file & re-trigger" | echohl None]]
-    )
-  else
-    vim.cmd([[edit]])
-  end
-  -- edit can move the scrollpos, restore it
-  vim.cmd(':' .. current_top_line)
-  vim.cmd('norm! zt') -- set to top of window
-  vim.cmd(':' .. current_line)
-end
-
 local function nvim_lint_create_autocmds()
   local lint = require('lint')
   -- lifted from https://github.com/stevearc/dotfiles/blob/master/.config/nvim/lua/plugins/lint.lua
