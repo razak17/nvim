@@ -155,6 +155,10 @@ return {
           condition = function() return ts_formatter_cond('biome') end,
           require_cwd = true,
         },
+        ['biome-check'] = {
+          condition = function() return ts_formatter_cond('biome-check') end,
+          require_cwd = true,
+        },
         -- https://github.com/mistweaverco/kulala-fmt
         ['kulala-fmt'] = {
           command = 'kulala-fmt',
@@ -193,6 +197,8 @@ return {
           opts.formatters_by_ft[ft] = { 'prettier' }
         elseif ts_formatter_cond('biome') then
           opts.formatters_by_ft[ft] = { 'biome' }
+        elseif ts_formatter_cond('biome-check') then
+          opts.formatters_by_ft[ft] = { 'biome-check' }
         elseif ts_formatter_cond('oxfmt') then
           opts.formatters_by_ft[ft] = { 'oxfmt' }
         end

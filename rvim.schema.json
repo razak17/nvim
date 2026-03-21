@@ -429,6 +429,9 @@
             "biome": {
               "type": "boolean"
             },
+            "biome-check": {
+              "type": "boolean"
+            },
             "oxfmt": {
               "type": "boolean"
             },

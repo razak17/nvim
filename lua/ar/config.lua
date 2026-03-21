@@ -443,6 +443,7 @@ local config = {
   formatter = {
     typescript = {
       biome = false,
+      ['biome-check'] = false,
       oxfmt = false,
       prettier = true,
     },
