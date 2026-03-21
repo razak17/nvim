@@ -135,6 +135,7 @@ local servers = {
     root_markers = { 'package.json', '.git' },
   },
   emmet_language_server = {},
+  gh_actions_ls = {},
   --- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
   gopls = {
     settings = {
@@ -352,6 +353,23 @@ local servers = {
       },
     },
   },
+  tsgo = {
+    settings = {
+      typescript = {
+        inlayHints = {
+          parameterNames = {
+            enabled = 'literals',
+            suppressWhenArgumentMatchesName = true,
+          },
+          parameterTypes = { enabled = true },
+          variableTypes = { enabled = true },
+          propertyDeclarationTypes = { enabled = true },
+          functionLikeReturnTypes = { enabled = false },
+          enumMemberValues = { enabled = true },
+        },
+      },
+    },
+  },
   ty = {},
   pyrefly = {},
   vtsls = {
@@ -430,35 +448,15 @@ local servers = {
 }
 
 ---@type table<string, vim.lsp.Config|{mason?:boolean, enabled?:boolean}|boolean>
-local lsp_dir_servers = {
-  gh_actions_ls = {},
-}
+local lsp_dir_servers = {}
 
 -- mason-lspconfig doesn't enable these by default for some reason.. I have to enable them manually.
 ---@type table<string, vim.lsp.Config|{mason?:boolean, enabled?:boolean}|boolean>
-local manual_servers = {
-  tsgo = {
-    settings = {
-      typescript = {
-        inlayHints = {
-          parameterNames = {
-            enabled = 'literals',
-            suppressWhenArgumentMatchesName = true,
-          },
-          parameterTypes = { enabled = true },
-          variableTypes = { enabled = true },
-          propertyDeclarationTypes = { enabled = true },
-          functionLikeReturnTypes = { enabled = false },
-          enumMemberValues = { enabled = true },
-        },
-      },
-    },
-  },
-}
+local manual_servers = {}
 
 ---@param name string
----@param config lspconfig.Config?
----@return lspconfig.Config
+---@param config vim.lsp.Config?
+---@return vim.lsp.Config
 local function capabilities(name, config)
   config = config or {}
   local has_cmp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
