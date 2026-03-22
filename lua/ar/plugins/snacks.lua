@@ -11,7 +11,6 @@ return {
     keys = {
       -- stylua: ignore start
       { '<leader>or', function() Snacks.rename.rename_file() end, desc = 'snacks: rename file' },
-      { '<leader>o/', function() Snacks.terminal() end, desc = 'snacks: toggle terminal' },
       { '<leader>ps', function() Snacks.profiler.scratch() end, desc = 'snacks: profiler scratch buffer' },
       { '<leader>pu', function() Snacks.profiler.toggle() end, desc = 'snacks: toggle profiler' },
       { '<leader>qb', function() Snacks.bufdelete.delete() end, desc = 'snacks: delete buffer' },
@@ -46,10 +45,6 @@ return {
       quickfile = { enabled = true },
       scroll = { enabled = should_scroll },
       statuscolumn = { enabled = false },
-      terminal = {
-        enabled = true,
-        win = { wo = { winbar = '' } },
-      },
       words = { enabled = ar.lsp.enable },
       zen = {},
     },
@@ -95,7 +90,6 @@ return {
         ['Toggle Relative Number'] = function()
           Snacks.toggle.option('relativenumber', { name = 'Relative Number' })
         end,
-        ['Toggle Terminal'] = function() Snacks.terminal() end,
         ['Toggle Zoom'] = function() Snacks.zen.zoom() end,
         ['Toggle Zen'] = function() Snacks.zen() end,
         ['Toggle Scratch'] = function() Snacks.scratch() end,

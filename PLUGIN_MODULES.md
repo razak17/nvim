@@ -109,6 +109,7 @@
 - snacks-indent
 - snacks-notifier
 - snacks-picker
+- snacks-terminal
 - snacks-ui-select
 - snippets
 - sort
