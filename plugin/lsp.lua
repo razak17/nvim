@@ -307,6 +307,21 @@ local function setup_mappings(client, bufnr)
     },
     {
       'n',
+      '<leader>lL',
+      function()
+        local enabled = lsp.codelens.is_enabled({ bufnr = bufnr })
+        lsp.codelens.enable(not enabled, { bufnr = bufnr })
+        vim.notify(
+          fmt('%s', ar.bool2str(not enabled)),
+          L.INFO,
+          { title = 'Code Lens' }
+        )
+      end,
+      desc = 'toggle code lens',
+      capability = M.textDocument_codeLens,
+    },
+    {
+      'n',
       '<leader>lK',
       function()
         local enabled = lsp.document_color.is_enabled(bufnr)
