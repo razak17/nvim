@@ -684,16 +684,6 @@ local function setup_autocommands(client, buf)
     })
   end
 
-  if client:supports_method(M.textDocument_codeLens) then
-    augroup(('LspCodeLens%d'):format(buf), {
-      event = { 'BufEnter', 'InsertLeave', 'BufWritePost' },
-      desc = 'LSP: Code Lens',
-      buffer = buf,
-      -- call via vimscript so that errors are silenced
-      command = 'silent! lua vim.lsp.codelens.enable(true)',
-    })
-  end
-
   if client:supports_method(M.textDocument_documentHighlight) then
     augroup(('LspReferences%d'):format(buf), {
       event = { 'CursorHold', 'CursorHoldI' },
@@ -794,6 +784,14 @@ local function setup_lsp_foldexpr(client)
 end
 
 ---@param client vim.lsp.Client
+local function setup_lsp_codelens(client)
+  if client:supports_method(M.textDocument_codeLens) then
+    -- call via vimscript so that errors are silenced
+    vim.cmd('silent! lua vim.lsp.codelens.enable(true)')
+  end
+end
+
+---@param client vim.lsp.Client
 ---@param bufnr number
 local function setup_omnifunc_completion(client, bufnr)
   if client:supports_method(M.textDocument_completion) then
@@ -884,6 +882,7 @@ local function on_attach(client, bufnr)
   setup_mappings(client, bufnr)
   setup_lsp_stop_detached()
   setup_lsp_foldexpr(client)
+  setup_lsp_codelens(client)
   setup_semantic_tokens(client, bufnr)
   setup_colors(client, bufnr)
   setup_lsp_plugins(client, bufnr)
