@@ -30,6 +30,10 @@ local augroup, diag_icons, border =
 
 if vim.env.DEVELOPING then lsp.log.set_level(L.DEBUG) end
 
+local C = {
+  codelens = { enable = true },
+}
+
 --------------------------------------------------------------------------------
 --  Related Locations
 --------------------------------------------------------------------------------
@@ -309,10 +313,10 @@ local function setup_mappings(client, bufnr)
       'n',
       '<leader>lL',
       function()
-        local enabled = lsp.codelens.is_enabled({ bufnr = bufnr })
-        lsp.codelens.enable(not enabled, { bufnr = bufnr })
+        lsp.codelens.enable(not C.codelens.enable)
+        C.codelens.enable = not C.codelens.enable
         vim.notify(
-          fmt('%s', ar.bool2str(not enabled)),
+          fmt('%s', ar.bool2str(C.codelens.enable)),
           L.INFO,
           { title = 'Code Lens' }
         )
@@ -800,7 +804,7 @@ end
 
 ---@param client vim.lsp.Client
 local function setup_lsp_codelens(client)
-  if client:supports_method(M.textDocument_codeLens) then
+  if C.codelens.enable and client:supports_method(M.textDocument_codeLens) then
     -- call via vimscript so that errors are silenced
     vim.cmd('silent! lua vim.lsp.codelens.enable(true)')
   end
