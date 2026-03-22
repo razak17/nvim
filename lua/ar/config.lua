@@ -49,6 +49,7 @@ local env = vim.env
 ---@alias ArWhichPicker 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick' | 'seeker'
 ---@alias ArWhichRepeatable 'demicolon' | 'repeatable-move'
 ---@alias ArWhichSession 'persisted' | 'persistence'
+---@alias ArWhichTerminal 'snacks' | 'toggleterm' | 'floaterm' | 'termite'
 ---@alias ArWhichFilesPicker 'smart-open' | 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick' | 'fff'
 ---@alias ArWhichScroll 'snacks' | 'neoscroll'
 ---@alias ArWhichShelter 'cloak' | 'ecolog' | 'shelter' | 'camouflage'
@@ -119,6 +120,10 @@ local env = vim.env
 ---@class ArSession
 ---@field enable boolean
 ---@field variant ArWhichSession
+
+---@class ArTerminal
+---@field enable boolean
+---@field variant ArWhichTerminal
 
 ---@class ArLspLang
 ---@field python ArPythonLang
@@ -515,6 +520,8 @@ local config = {
   },
   ---@type ArNotifier
   notifier = { enable = true, variant = 'snacks' },
+  ---@type ArTerminal
+  terminal = { enable = true, variant = 'snacks' },
   ---@type ArPicker
   picker = {
     enable = true,

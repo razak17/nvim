@@ -1765,6 +1765,19 @@
       },
       "type": "object"
     },
+    "terminal": {
+      "additionalProperties": false,
+      "properties": {
+        "enable": {
+          "type": "boolean"
+        },
+        "variant": {
+          "enum": ["floaterm", "snacks", "termite", "toggleterm"],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ui": {
       "additionalProperties": false,
       "properties": {

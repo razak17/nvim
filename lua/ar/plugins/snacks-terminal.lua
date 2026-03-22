@@ -5,9 +5,11 @@ return {
   -- stylua: ignore
   keys = function(_, keys)
     keys = keys or {}
+    if ar.config.terminal.variant == 'snacks' then
       ar.list_insert(keys, {
-        { '<leader>o/', function() Snacks.terminal.focus() end, desc = 'snacks: toggle terminal' },
+        { mode = { 'n', 't' }, '<C-\\>', function() Snacks.terminal.focus() end, desc = 'snacks: toggle terminal' },
       })
+    end
   end,
   opts = function(_, opts)
     ar.add_to_select('toggle', {

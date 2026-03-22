@@ -1,10 +1,18 @@
 local fn, ui = vim.fn, ar.ui
 local border = ui.current.border.default
 
+local function get_cond(plugin, variant)
+  return function()
+    local condition = ar.config.terminal.enable
+      and ar.config.terminal.variant == variant
+    return ar.get_plugin_cond(plugin, condition)
+  end
+end
+
 return {
   {
     'nvzone/floaterm',
-    cond = function() return ar.get_plugin_cond('floaterm') end,
+    cond = get_cond('floaterm', 'floaterm'),
     cmd = 'FloatermToggle',
     opts = {
       mappings = {
@@ -19,13 +27,13 @@ return {
     },
     -- stylua: ignore
     keys = {
-      { mode = { 'n', 't' }, [[<M-\>]], '<Cmd>FloatermToggle<CR>', desc = 'floaterm: toggle terminal' },
+      { mode = { 'n', 't' }, '<C-\\>', '<Cmd>FloatermToggle<CR>', desc = 'floaterm: toggle terminal' },
     },
     dependencies = 'nvzone/volt',
   },
   {
     'ruicsh/termite.nvim',
-    cond = function() return ar.get_plugin_cond('termite.nvim') end,
+    cond = get_cond('termite.nvim', 'termite'),
     event = 'VeryLazy',
     cmd = { 'Termite' },
     opts = {
@@ -53,7 +61,7 @@ return {
   },
   {
     'akinsho/toggleterm.nvim',
-    cond = function() return ar.get_plugin_cond('toggleterm.nvim') end,
+    cond = get_cond('toggleterm.nvim', 'toggleterm'),
     event = 'VeryLazy',
     opts = {
       open_mapping = [[<c-\>]],
