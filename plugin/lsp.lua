@@ -738,7 +738,9 @@ local function setup_lsp_stop_detached()
         lsp_autostop_pending = nil
         for _, client in ipairs(lsp.get_clients()) do
           if vim.tbl_isempty(client.attached_buffers) then
-            utils.soft_stop(client)
+            utils.soft_stop(client, {
+              on_close = function(c) vim.notify(fmt('%s detached.', c.name)) end,
+            })
           end
         end
       end, 60000)
