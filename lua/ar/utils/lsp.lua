@@ -33,18 +33,15 @@ function M.soft_stop(client_or_id, opts)
   opts.retry = opts.retry or 4
   opts.interval = opts.interval or 500
   opts.on_close = opts.on_close or function() end
-
-  if opts.retry <= 0 then
-    client:stop(true)
-    opts.on_close(client)
-    return
-  end
-  client:stop()
-  ---@diagnostic disable-next-line: invisible
   if client:is_stopped() then
-    opts.on_close(client)
-    return
+    local c = vim.lsp.get_client_by_id(client.id)
+    if not c then
+      opts.on_close(client)
+      return
+    end
   end
+  if opts.retry < 0 then return end
+  client:stop(opts.retry == 0)
   vim.defer_fn(function()
     opts.retry = opts.retry - 1
     M.soft_stop(client, opts)
