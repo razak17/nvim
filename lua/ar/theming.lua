@@ -321,6 +321,9 @@ local function get_statusline_palette(colorscheme)
     wildcharm = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.6),
     },
+    acario_light = {
+      bg_dark = hl.tint(hl.get('Normal', 'bg'), -0.25),
+    },
     afterglow = {
       bg_dark = hl.tint(hl.get('CursorLine', 'bg'), -0.25),
     },

@@ -15,10 +15,14 @@ local stl = require('ar.statusline')
 -- Statusline with no plugin
 -- @see: https://github.com/shivambegin/Neovim/blob/main/lua/config/statusline.lua
 --------------------------------------------------------------------------------
+local bg = vim.api.nvim_get_option_value('background', { scope = 'global' })
 ar.highlight.plugin('NativeStatuslineHl', {
   {
     StatusLine = {
-      bg = { from = 'CursorLine', alter = -0.3 },
+      bg = {
+        from = bg == 'light' and 'Normal' or 'CursorLine',
+        alter = bg == 'light' and -0.05 or -0.3,
+      },
       fg = { from = 'Normal' },
     },
   },
@@ -33,11 +37,19 @@ ar.highlight.plugin('NativeStatuslineHl', {
   { StatusLineLspHint = { fg = { from = 'DiagnosicHint' } } },
   { StatusLineLspInfo = { fg = { from = 'DiagnosicInfo' } } },
   { StatusLineLspMessages = { fg = { from = 'Comment' } } },
-  { StatusLineGitBranch = { fg = 'yellowgreen' } },
+  {
+    StatusLineGitBranch = {
+      fg = bg == 'light' and { from = 'StatusLine' } or 'yellowgreen',
+    },
+  },
   { StatusLineGitAhead = { link = 'StatusLineGitBranch' } },
   { StatusLineGitBehind = { link = 'StatusLineLspError' } },
   { StatusLineVirtualEnv = { fg = { from = 'DiagnosticSignHint' } } },
-  { StatusLineGitDiffAdded = { fg = 'yellowgreen' } },
+  {
+    StatusLineGitDiffAdded = {
+      fg = bg == 'light' and { from = 'StatusLine' } or 'yellowgreen',
+    },
+  },
   { StatusLineGitDiffChanged = { fg = { from = 'WarningMsg' } } },
   { StatusLineGitDiffRemoved = { fg = { from = 'StatusLineLspError' } } },
   { StatusLineLazyUpdates = { fg = { from = 'WarningMsg' } } },
