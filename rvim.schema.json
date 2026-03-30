@@ -138,6 +138,8 @@
         "name": {
           "enum": [
             "Alienocean",
+            "acario_dark",
+            "acario_light",
             "afterglow",
             "alabaster",
             "anticuus",

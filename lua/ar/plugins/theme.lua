@@ -549,6 +549,28 @@ return {
         }, true)
       end,
     },
+    {
+      '0x-ximon/acario.nvim',
+      cond = get_cond({ 'acario_dark', 'acario_light' }),
+      priority = get_priority({ 'acario_dark', 'acario_light' }),
+      event = get_event({ 'acario_dark', 'acario_light' }),
+      init = function()
+        theming.apply_overrides('acario_dark', {
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = 1.2 } } },
+          },
+        }, true)
+        theming.apply_overrides('acario_light', {
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.5 } } },
+            { StatusLine = { bg = 'NONE' } },
+          },
+          popup = {
+            { FloatTitle = { bg = { from = 'Normal', alter = -0.2 } } },
+          },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Warm

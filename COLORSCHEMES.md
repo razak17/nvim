@@ -1,5 +1,7 @@
 ## 🎨 Colorschemes
 
+- acario_dark
+- acario_light
 - afterglow
 - alabaster
 - Alienocean
