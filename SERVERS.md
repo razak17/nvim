@@ -26,6 +26,7 @@
 - lemminx
 - lua_ls
 - marksman
+- oxlint
 - prismals
 - prosemd_lsp
 - pyrefly

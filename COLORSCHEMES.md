@@ -21,6 +21,7 @@
 - catppuccin-latte
 - catppuccin-macchiato
 - catppuccin-mocha
+- catppuccin-nvim
 - christmas
 - cobalt-neon
 - conifer
@@ -108,6 +109,10 @@
 - kanso-pearl
 - kanso-zen
 - koda
+- koda-dark
+- koda-glade
+- koda-light
+- koda-moss
 - lackluster
 - lackluster-dark
 - lackluster-hack
