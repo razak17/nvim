@@ -256,7 +256,9 @@ local servers = {
       },
     },
   },
-  oxlint = {},
+  oxlint = {
+    settings = { fixKind = 'all' },
+  },
   pyright = {
     settings = {
       verboseOutput = true,
