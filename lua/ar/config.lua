@@ -614,6 +614,7 @@ local config = {
       'suda.vim',
       'telescope-smart-history.nvim',
       'toggleterm.nvim',
+      'treesitter-modules.nvim',
       'ts-comments.nvim',
       'ultimate-autopair.nvim',
       'vim-footprints',
