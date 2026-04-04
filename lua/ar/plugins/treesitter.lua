@@ -72,6 +72,20 @@ return {
         local TS = require('nvim-treesitter')
         TS.setup(opts)
 
+        local function jump(options)
+          return ar.jump(function(o)
+            local which = o.forward and 'select_next' or 'select_prev'
+            require('vim.treesitter._select')[which](vim.v.count1)
+          end, options)
+        end
+
+        map({ 'n', 'x', 'o' }, ']n', jump({ forward = true }), {
+          desc = 'next node',
+        })
+        map({ 'n', 'x', 'o' }, '[n', jump({ forward = false }), {
+          desc = 'prev node',
+        })
+
         vim.treesitter.language.register('bash', 'zsh')
 
         -- initialize the installed langs
