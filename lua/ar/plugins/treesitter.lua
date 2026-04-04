@@ -86,6 +86,28 @@ return {
           desc = 'prev node',
         })
 
+        local function pt_jump(options)
+          return ar.jump(function(o)
+            local which = o.forward and 'select_parent' or 'select_child'
+            if vim.treesitter.get_parser(nil, nil, { error = false }) then
+              require('vim.treesitter._select')[which](vim.v.count1)
+              return
+            end
+            if o.forward then
+              vim.lsp.buf.selection_range(vim.v.count1)
+              return
+            end
+            vim.lsp.buf.selection_range(-vim.v.count1)
+          end, options)
+        end
+
+        map({ 'n', 'x', 'o' }, '<A-o>', pt_jump({ forward = true }), {
+          desc = 'parent node',
+        })
+        map({ 'n', 'x', 'o' }, '<A-i>', pt_jump({ forward = false }), {
+          desc = 'child node',
+        })
+
         vim.treesitter.language.register('bash', 'zsh')
 
         -- initialize the installed langs
