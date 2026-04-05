@@ -12,16 +12,17 @@ local transparent = ar.config.ui.transparent.enable
 ---@param overrides? table
 ---@return table
 local function generate_popup_overrides(overrides)
+  local bg = vim.api.nvim_get_option_value('background', { scope = 'global' })
+
   local hls = {
     {
       FloatTitle = {
-        bg = { from = 'Type', attr = 'fg', alter = -0.45 },
-        fg = { from = 'CursorLineNr' },
+        bg = bg == 'dark' and { from = 'Type', attr = 'fg', alter = -0.45 }
+          or { from = 'Normal', alter = -0.2 },
+        fg = bg == 'dark' and { from = 'CursorLineNr' } or { from = 'Normal' },
       },
     },
   }
-
-  local bg = vim.api.nvim_get_option_value('background', { scope = 'global' })
 
   if variant == 'fill' and not transparent then
     ar.list_insert(hls, {
