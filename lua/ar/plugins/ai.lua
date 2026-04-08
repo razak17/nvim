@@ -5,7 +5,7 @@ local function a(action)
 end
 
 return {
-  -- FIX: Causes performance issues in insert mode
+  -- FIX: Causes performance issues (delay) when I hit space key in insert mode
   {
     'carlos-algms/agentic.nvim',
     event = 'VeryLazy',
