@@ -184,7 +184,7 @@ return {
     -- Chat commands
     { '<c-g>n', '<Cmd>GpChatNew<CR>', desc = 'gp: new chat', mode = mode, },
     { '<c-g>f', gp_finder, desc = 'gp: find chat', mode = mode, },
-    { '<c-g><c-g>', '<Cmd>GpChatRespond<CR>', desc = 'gp: respond', mode = mode, },
+    { '<c-g><CR>', '<Cmd>GpChatRespond<CR>', desc = 'gp: respond', mode = mode, },
     { '<c-g>d', '<Cmd>GpChatDelete<CR>', desc = 'gp: delete chat', mode = mode, },
     { '<c-g>s', '<Cmd>GpChatToggle split<CR>', desc = 'gp: toggle chat in horizontal split' },
     { '<c-g>v', '<Cmd>GpChatToggle vsplit<CR>', desc = 'gp: toggle chat in vertical split' },
