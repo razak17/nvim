@@ -1800,7 +1800,7 @@
               "type": "boolean"
             },
             "variant": {
-              "enum": ["builtin", "extui", "noice", "telescope-cmdline"],
+              "enum": ["builtin", "extui", "tiny-cmdline", "noice", "telescope-cmdline"],
               "type": "string"
             }
           },
