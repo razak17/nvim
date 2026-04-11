@@ -8,10 +8,13 @@ local enabled = ar.config.plugin.custom.colorify.enable and not ar.lsp.enable
 if ar.none or not enabled then return end
 
 local api, fn = vim.api, vim.fn
+local L = vim.log.levels
 local get_extmarks = api.nvim_buf_get_extmarks
 local set_extmark = api.nvim_buf_set_extmark
 
 local ns = api.nvim_create_namespace('Colorify')
+
+local M = {}
 
 local config = {
   enabled = true,
@@ -19,6 +22,8 @@ local config = {
   virt_text = ar.ui.icons.misc.block_medium .. ' ',
   highlight = { hex = true, lspvars = true },
 }
+
+local modes = { 'virtual', 'fg', 'bg' }
 
 local function is_dark(hex)
   hex = hex:gsub('#', '')
@@ -33,7 +38,7 @@ local function is_dark(hex)
 end
 
 local function add_hl(hex)
-  local name = 'hex_' .. hex:sub(2)
+  local name = string.format('hex_%s_%s', config.mode, hex:sub(2))
 
   if api.nvim_get_hl(0, { name = name }).fg then return name end
 
@@ -191,7 +196,7 @@ local function lsp_var(buf, line, min, max)
   end
 end
 
-local function attach(buf, event)
+M.attach = function(buf, event)
   local winid = vim.fn.bufwinid(buf)
 
   local min = fn.line('w0', winid) - 1
@@ -221,17 +226,112 @@ local function attach(buf, event)
   if not vim.b[buf].colorify_attached then del_extmarks_on_textchange(buf) end
 end
 
-api.nvim_create_autocmd({
-  'TextChanged',
-  'TextChangedI',
-  'TextChangedP',
-  'VimResized',
-  'LspAttach',
-  'WinScrolled',
-  'BufEnter',
-  'BufRead',
-}, {
-  callback = function(args)
-    if vim.bo[args.buf].bl then attach(args.buf, args.event) end
+local function clear_colors()
+  for _, buf in ipairs(api.nvim_list_bufs()) do
+    api.nvim_buf_clear_namespace(buf, ns, 0, -1)
+  end
+end
+
+local function set_colors()
+  for _, win in ipairs(api.nvim_list_wins()) do
+    local buf = api.nvim_win_get_buf(win)
+    if vim.bo[buf].bl then M.attach(buf) end
+  end
+end
+
+local function disable()
+  config.enabled = false
+  clear_colors()
+  vim.notify('Colorify disabled', L.INFO, {
+    title = 'Colorify',
+  })
+end
+
+local function enable()
+  config.enabled = true
+  set_colors()
+  vim.notify('Colorify enabled', L.INFO, {
+    title = 'Colorify',
+  })
+end
+
+local function toggle()
+  if config.enabled then
+    disable()
+  else
+    enable()
+  end
+end
+
+local function refresh()
+  clear_colors()
+  set_colors()
+end
+
+local function set_mode(mode)
+  if not vim.tbl_contains(modes, mode) then
+    vim.notify('Invalid mode: ' .. mode, L.ERROR, {
+      title = 'Colorify',
+    })
+    return
+  end
+  config.mode = mode
+  refresh()
+  vim.notify('Colorify mode: ' .. config.mode, L.INFO, {
+    title = 'Colorify',
+  })
+end
+
+local function cycle_mode()
+  local idx = 1
+  for i, mode in ipairs(modes) do
+    if mode == config.mode then
+      idx = i
+      break
+    end
+  end
+  set_mode(modes[(idx % #modes) + 1])
+end
+
+local function select_colorify_mode()
+  vim.ui.select(modes, {
+    prompt = 'Select Colorify Mode',
+    format_item = function(item) return item end,
+  }, function(choice)
+    if choice then set_mode(choice) end
+  end)
+end
+
+ar.command('ColorifyToggle', toggle, { desc = 'toggle colorify' })
+
+ar.command('ColorifyModeCycle', cycle_mode, { desc = 'cycle colorify mode' })
+
+ar.command('ColorifyMode', function(args)
+  if args.args == '' then
+    select_colorify_mode()
+    return
+  end
+  set_mode(args.args)
+end, {
+  nargs = '?',
+  desc = 'set colorify mode',
+  complete = function(arg)
+    return vim.tbl_filter(function(m) return m:find(arg) == 1 end, modes)
+  end,
+})
+
+ar.augroup('Colorify', {
+  event = {
+    'TextChanged',
+    'TextChangedI',
+    'TextChangedP',
+    'VimResized',
+    'LspAttach',
+    'WinScrolled',
+    'BufEnter',
+    'BufRead',
+  },
+  command = function(args)
+    if vim.bo[args.buf].bl then M.attach(args.buf, args.event) end
   end,
 })
