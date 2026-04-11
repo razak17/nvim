@@ -302,21 +302,51 @@ local function select_colorify_mode()
   end)
 end
 
-ar.command('ColorifyToggle', toggle, { desc = 'toggle colorify' })
+ar.command('Colorify', function(args)
+  local action = args.fargs[1]
 
-ar.command('ColorifyModeCycle', cycle_mode, { desc = 'cycle colorify mode' })
+  if not action or action == 'toggle' then
+    toggle()
+    return
+  end
 
-ar.command('ColorifyMode', function(args)
-  if args.args == '' then
+  if action == 'cycle' then
+    cycle_mode()
+    return
+  end
+
+  if action == 'select' then
     select_colorify_mode()
     return
   end
-  set_mode(args.args)
+
+  if action == 'mode' then
+    local mode = args.fargs[2]
+
+    if not mode then
+      vim.notify('Usage: Colorify mode <mode>', L.ERROR, {
+        title = 'Colorify',
+      })
+      return
+    end
+
+    set_mode(mode)
+    return
+  end
+
+  vim.notify('Usage: Colorify [toggle|cycle|select|mode <mode>]', L.ERROR, {
+    title = 'Colorify',
+  })
 end, {
-  nargs = '?',
-  desc = 'set colorify mode',
-  complete = function(arg)
-    return vim.tbl_filter(function(m) return m:find(arg) == 1 end, modes)
+  nargs = '*',
+  desc = 'toggle colorify, cycle mode, or set a mode',
+  complete = function(arg, line)
+    local actions = { 'toggle', 'cycle', 'select', 'mode' }
+    local items = actions
+
+    if line:match('^%S+%s+mode%s+') then items = modes end
+
+    return vim.tbl_filter(function(item) return item:find(arg) == 1 end, items)
   end,
 })
 
@@ -332,6 +362,7 @@ ar.augroup('Colorify', {
     'BufRead',
   },
   command = function(args)
+    if not config.enabled then return end
     if vim.bo[args.buf].bl then M.attach(args.buf, args.event) end
   end,
 })
