@@ -246,7 +246,9 @@ local namespace = {
     },
     openai_models = {
       ['gpt-5.4'] = {},
-      ['gpt-5.4-mini'] = {},
+      ['gpt-5.4-mini'] = {
+        system_prompt = require('ar.prompts').caveman,
+      },
       ['gpt-5.2'] = {},
       ['gpt-5.1'] = {},
       ['gpt-5'] = {},

@@ -303,6 +303,9 @@ return {
       default_chat_agent = 'ChatGPT-gpt-5.4',
     }
 
+
+    local defaults = require('gp.defaults')
+
     local function setup_model(model)
       table.insert(opts.agents, {
         provider = model.provider,
@@ -310,7 +313,7 @@ return {
         model = model.model,
         chat = model.chat,
         command = model.command,
-        system_prompt = require('gp.defaults').chat_system_prompt,
+        system_prompt = model.system_prompt or defaults.chat_system_prompt,
       })
     end
 
@@ -373,6 +376,7 @@ return {
           },
           chat = true,
           command = false,
+          system_prompt = config.system_prompt,
         })
       end
     end
