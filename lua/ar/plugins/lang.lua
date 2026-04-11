@@ -281,6 +281,12 @@ return {
     build = 'go install github.com/lotusirous/gostdsym/stdsym@latest', -- optional
     opts = {}, -- see further down below for configuration
   },
+  {
+    'sjclayton/goplexity.nvim',
+    cond = function() return ar.get_plugin_cond('goplexity.nvim') end,
+    cmd = { 'Goplexity' },
+    opts = {},
+  },
   -- CSV
   --------------------------------------------------------------------------------
   {
