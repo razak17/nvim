@@ -175,7 +175,8 @@ end
 local mode = { 'n', 'i', 'v' }
 
 return {
-  'robitx/gp.nvim',
+  -- 'robitx/gp.nvim',
+  'razak17/gp.nvim',
   event = 'VeryLazy',
   cond = function() return ar.get_plugin_cond('gp.nvim', ar.ai.enable) end,
   -- stylua: ignore
