@@ -300,7 +300,7 @@ return {
         { name = 'ChatGPT4o-mini', disable = true },
         { name = 'ChatGPT-o3-mini', disable = true },
       },
-      default_chat_agent = 'ChatGPT-gpt-5.4',
+      default_chat_agent = 'ChatGPT-gpt-5.4-mini',
     }
 
 
