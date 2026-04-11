@@ -301,6 +301,22 @@ return {
         { name = 'ChatGPT-o3-mini', disable = true },
       },
       default_chat_agent = 'ChatGPT-gpt-5.4-mini',
+      chat_shortcut_respond = {
+        modes = { 'n', 'i', 'v', 'x' },
+        shortcut = '<c-g><CR>',
+      },
+      chat_shortcut_delete = {
+        modes = { 'n', 'i', 'v', 'x' },
+        shortcut = '<C-g>d',
+      },
+      chat_shortcut_stop = {
+        modes = { 'n', 'i', 'v', 'x' },
+        shortcut = '<C-g>q',
+      },
+      chat_shortcut_new = {
+        modes = { 'n', 'i', 'v', 'x' },
+        shortcut = '<C-g>n',
+      },
     }
 
 
