@@ -190,6 +190,7 @@ return {
     'GpChatNew', 'GpChatFinder', 'GpChatRespond', 'GpChatDelete', 'GpChatToggle',
     'GpRewrite', 'GpAppend', 'GpPrepend', 'GpEnew', 'GpInputRole', 'GpPopup',
     'GpUnitTests', 'GpExplain', 'GpCodeReview', 'GpBufferChatNew', 'GpPinpoint',
+    'GpCaveman'
   },
   init = function()
     ar.add_to_select('ai', {
@@ -211,6 +212,7 @@ return {
           ['New Buffer Chat'] = 'GpBufferChatNew',
           ['Toggle Vsplit'] = 'GpChatToggle vsplit',
           ['Pinpoint'] = 'GpPinpoint',
+          ['Caveman'] = 'GpCaveman',
         })()
       end,
     })
@@ -248,6 +250,10 @@ return {
         Pinpoint = function(gp, params)
           local chat_system_prompt = ' You are a helpful assistant for finding out what is common between the given items. '
             .. ' Please analyze and summarize the commonalities.'
+          gp.cmd.ChatNew(params, chat_system_prompt)
+        end,
+        Caveman = function(gp, params)
+          local chat_system_prompt = require('ar.prompts').caveman
           gp.cmd.ChatNew(params, chat_system_prompt)
         end,
       },
