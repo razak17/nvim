@@ -189,7 +189,7 @@ return {
   cmd = {
     'GpChatNew', 'GpChatFinder', 'GpChatRespond', 'GpChatDelete', 'GpChatToggle',
     'GpRewrite', 'GpAppend', 'GpPrepend', 'GpEnew', 'GpInputRole', 'GpPopup',
-    'GpUnitTests', 'GpExplain', 'GpCodeReview', 'GpBufferChatNew',
+    'GpUnitTests', 'GpExplain', 'GpCodeReview', 'GpBufferChatNew', 'GpPinpoint',
   },
   init = function()
     ar.add_to_select('ai', {
@@ -210,6 +210,7 @@ return {
           ['Review Code'] = 'GpCodeReview',
           ['New Buffer Chat'] = 'GpBufferChatNew',
           ['Toggle Vsplit'] = 'GpChatToggle vsplit',
+          ['Pinpoint'] = 'GpPinpoint',
         })()
       end,
     })
@@ -243,6 +244,11 @@ return {
             local agent = gp.get_chat_agent()
             gp.cmd.ChatNew(params, input, agent)
           end)
+        end,
+        Pinpoint = function(gp, params)
+          local chat_system_prompt = ' You are a helpful assistant for finding out what is common between the given items. '
+            .. ' Please analyze and summarize the commonalities.'
+          gp.cmd.ChatNew(params, chat_system_prompt)
         end,
       },
       providers = {
