@@ -65,11 +65,6 @@ rocks() {
   luarocks --local --lua-version=5.1 install magick
 }
 
-get_prompts() {
-  mkdir -p "$HOME/.local/share/rvim/site/prompts"
-  curl -o "$RV_DATA_DIR/site/prompts/prompts.csv" https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv
-}
-
 importRvim() {
   echo "Cloning rVim configuration"
   git clone "https://github.com/razak17/nvim" "$RV_CONFIG_DIR"
@@ -143,10 +138,6 @@ install_deps() {
   printf "Would you like to initialize python now (y/n)? "
   read -r answer
   [ "$answer" != "${answer#[Yy]}" ] && pythonPackages
-
-  printf "Would you like to download chat gpt prompts now (y/n)? "
-  read -r answer
-  [ "$answer" != "${answer#[Yy]}" ] && get_prompts
 }
 
 clone_config() {
@@ -184,7 +175,6 @@ while [ "$#" -gt 0 ]; do
   -deps) install_deps ;;
   -dict) generate_dict ;;
   -rocks) rocks ;;
-  -prompts) get_prompts ;;
   *--all*)
     clone_config
     install_deps

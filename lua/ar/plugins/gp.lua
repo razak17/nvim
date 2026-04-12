@@ -1,4 +1,4 @@
-local api, fn = vim.api, vim.fn
+local api = vim.api
 local fmt = string.format
 
 local models = ar.config.ai.models
@@ -16,20 +16,6 @@ local templates = {
     .. '```{{filetype}}\n{{selection}}\n```\n\n'
     .. 'Please analyze for code smells and suggest improvements.',
 }
-
-local function get_csv_items(prompts)
-  local lines = {}
-
-  local items = table.concat(fn.readfile(prompts), '\n')
-  for line in string.gmatch(items, '[^\n]+') do
-    local act, _prompt = string.match(line, '"(.*)","(.*)"')
-    if act ~= 'act' and act ~= nil then
-      _prompt = string.gsub(_prompt, '""', '"')
-      table.insert(lines, { act = act, prompt = _prompt })
-    end
-  end
-  return lines
-end
 
 local function gp_choose_agent()
   local buf = api.nvim_get_current_buf()
@@ -198,13 +184,12 @@ return {
     { '<c-g>x', '<Cmd>GpExplain<CR>', desc = 'gp: explain', mode = mode, },
     { '<c-g>c', '<Cmd>GpCodeReview<CR>', desc = 'gp: code review', mode = mode, },
     { '<c-g>N', '<Cmd>GpBufferChatNew<CR>', desc = 'gp: buffer chat new', mode = mode, },
-    { '<c-g>o', '<Cmd>GpActAs<CR>', desc = 'gp: act as', mode = mode, },
   },
   -- stylua: ignore
   cmd = {
     'GpChatNew', 'GpChatFinder', 'GpChatRespond', 'GpChatDelete', 'GpChatToggle',
     'GpRewrite', 'GpAppend', 'GpPrepend', 'GpEnew', 'GpInputRole', 'GpPopup',
-    'GpUnitTests', 'GpExplain', 'GpCodeReview', 'GpBufferChatNew', 'GpActAs',
+    'GpUnitTests', 'GpExplain', 'GpCodeReview', 'GpBufferChatNew',
   },
   init = function()
     ar.add_to_select('ai', {
@@ -224,7 +209,6 @@ return {
           ['Explain Code Code'] = 'GpExplain',
           ['Review Code'] = 'GpCodeReview',
           ['New Buffer Chat'] = 'GpBufferChatNew',
-          ['Act As'] = 'GpActAs',
           ['Toggle Vsplit'] = 'GpChatToggle vsplit',
         })()
       end,
@@ -258,31 +242,6 @@ return {
             if not input then return end
             local agent = gp.get_chat_agent()
             gp.cmd.ChatNew(params, input, agent)
-          end)
-        end,
-        ActAs = function(gp, params)
-          local prompts =
-            join_paths(fn.stdpath('data'), 'site', 'prompts', 'prompts.csv')
-
-          if not fn.filereadable(prompts) then
-            vim.notify('Prompts file not found', vim.log.levels.ERROR)
-            return
-          end
-
-          local items = vim
-            .iter(get_csv_items(prompts))
-            :map(function(p) return { act = p.act, prompt = p.prompt } end)
-            :totable()
-
-          local select_opts = {
-            prompt = 'Gp Act As:',
-            format_item = function(item) return item.act end,
-          }
-
-          vim.ui.select(items, select_opts, function(choice)
-            if choice == nil then return end
-            local agent = gp.get_command_agent()
-            gp.cmd.ChatNew(params, choice.prompt, agent)
           end)
         end,
       },
