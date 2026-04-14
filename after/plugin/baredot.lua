@@ -10,6 +10,9 @@ ar.baredot = {
   enable = false,
   git_work_tree = '~',
   git_dir = '~/.dots/dotfiles',
+  ignored_directories = {
+    '~/.local/share/rvim/gp/chats',
+  },
 }
 
 local api, fn = vim.api, vim.fn
@@ -23,8 +26,8 @@ local function set_env(enable)
     git_work_tree = fn.expand(ar.baredot.git_work_tree)
     git_dir = fn.expand(ar.baredot.git_dir)
   end
-    vim.env.GIT_WORK_TREE = git_work_tree
-    vim.env.GIT_DIR = git_dir
+  vim.env.GIT_WORK_TREE = git_work_tree
+  vim.env.GIT_DIR = git_dir
 end
 
 ar.command('DotsEnvSet', function() set_env(true) end)
@@ -47,10 +50,23 @@ local function has_git_upwards(path)
   return found ~= nil
 end
 
+local function is_ignored_directory(path)
+  local path_sep = package.config:sub(1, 1)
+  path = ar.norm(path)
+  for _, dir in ipairs(ar.baredot.ignored_directories or {}) do
+    local ignored = ar.norm(dir)
+    if path == ignored or vim.startswith(path, ignored .. path_sep) then
+      return true
+    end
+  end
+  return false
+end
+
 local function update()
   local p = current_path()
+  local ignored = is_ignored_directory(p)
   local has_git = has_git_upwards(p) or ar.has_git(p)
-  ar.baredot.enable = not has_git and not ar.is_git_worktree(p)
+  ar.baredot.enable = not ignored and not has_git and not ar.is_git_worktree(p)
   set_env(ar.baredot.enable)
 end
 
