@@ -18,12 +18,13 @@ local M = {}
 
 local config = {
   enabled = true,
-  mode = 'virtual', -- fg, bg, virtual
   virt_text = ar.ui.icons.misc.block_medium .. ' ',
   highlight = { hex = true, lspvars = true },
 }
 
-local modes = { 'virtual', 'fg', 'bg' }
+local styles = { 'bg', 'fg', 'virtual' }
+
+vim.g.COLORIFY_STYLE = ((vim.g.COLORIFY_STYLE or 1) % #styles) + 1
 
 local function is_dark(hex)
   hex = hex:gsub('#', '')
@@ -38,13 +39,13 @@ local function is_dark(hex)
 end
 
 local function add_hl(hex)
-  local name = string.format('hex_%s_%s', config.mode, hex:sub(2))
+  local name = string.format('hex_%s_%s', vim.g.COLORIFY_STYLE, hex:sub(2))
 
   if api.nvim_get_hl(0, { name = name }).fg then return name end
 
   local fg, bg = hex, hex
 
-  if config.mode == 'bg' then
+  if vim.g.COLORIFY_STYLE == 'bg' then
     fg = is_dark(hex) and 'white' or 'black'
   else
     bg = 'none'
@@ -113,7 +114,7 @@ local function set_hex(buf, line, str)
 
     local opts = { end_col = end_col, hl_group = hl_group }
 
-    if config.mode == 'virtual' then
+    if vim.g.COLORIFY_STYLE == 'virtual' then
       opts.hl_group = nil
       opts.virt_text_pos = 'inline'
       opts.virt_text = { { config.virt_text, hl_group } }
@@ -166,7 +167,7 @@ local function lsp_var(buf, line, min, max)
 
           local opts = { end_col = range_end.character, hl_group = hl_group }
 
-          if config.mode == 'virtual' then
+          if vim.g.COLORIFY_STYLE == 'virtual' then
             opts.hl_group = nil
             opts.virt_text_pos = 'inline'
             opts.virt_text = { { config.virt_text, hl_group } }
@@ -268,37 +269,37 @@ local function refresh()
   set_colors()
 end
 
-local function set_mode(mode)
-  if not vim.tbl_contains(modes, mode) then
-    vim.notify('Invalid mode: ' .. mode, L.ERROR, {
+local function set_style(style)
+  if not vim.tbl_contains(styles, style) then
+    vim.notify('Invalid style: ' .. style, L.ERROR, {
       title = 'Colorify',
     })
     return
   end
-  config.mode = mode
+  vim.g.COLORIFY_STYLE = style
   refresh()
-  vim.notify('Colorify mode: ' .. config.mode, L.INFO, {
+  vim.notify('Colorify style: ' .. vim.g.COLORIFY_STYLE, L.INFO, {
     title = 'Colorify',
   })
 end
 
-local function cycle_mode()
+local function cycle_style()
   local idx = 1
-  for i, mode in ipairs(modes) do
-    if mode == config.mode then
+  for i, style in ipairs(styles) do
+    if style == vim.g.COLORIFY_STYLE then
       idx = i
       break
     end
   end
-  set_mode(modes[(idx % #modes) + 1])
+  set_style(styles[(idx % #styles) + 1])
 end
 
-local function select_colorify_mode()
-  vim.ui.select(modes, {
-    prompt = 'Select Colorify Mode',
+local function select_colorify_style()
+  vim.ui.select(styles, {
+    prompt = 'Select Colorify Style',
     format_item = function(item) return item end,
   }, function(choice)
-    if choice then set_mode(choice) end
+    if choice then set_style(choice) end
   end)
 end
 
@@ -311,40 +312,40 @@ ar.command('Colorify', function(args)
   end
 
   if action == 'cycle' then
-    cycle_mode()
+    cycle_style()
     return
   end
 
   if action == 'select' then
-    select_colorify_mode()
+    select_colorify_style()
     return
   end
 
-  if action == 'mode' then
-    local mode = args.fargs[2]
+  if action == 'style' then
+    local style = args.fargs[2]
 
-    if not mode then
-      vim.notify('Usage: Colorify mode <mode>', L.ERROR, {
+    if not style then
+      vim.notify('Usage: Colorify style <style>', L.ERROR, {
         title = 'Colorify',
       })
       return
     end
 
-    set_mode(mode)
+    set_style(style)
     return
   end
 
-  vim.notify('Usage: Colorify [toggle|cycle|select|mode <mode>]', L.ERROR, {
+  vim.notify('Usage: Colorify [toggle|cycle|select|style <style>]', L.ERROR, {
     title = 'Colorify',
   })
 end, {
   nargs = '*',
-  desc = 'toggle colorify, cycle mode, or set a mode',
+  desc = 'toggle colorify, cycle style, or set a style',
   complete = function(arg, line)
-    local actions = { 'toggle', 'cycle', 'select', 'mode' }
+    local actions = { 'toggle', 'cycle', 'select', 'style' }
     local items = actions
 
-    if line:match('^%S+%s+mode%s+') then items = modes end
+    if line:match('^%S+%s+style%s+') then items = styles end
 
     return vim.tbl_filter(function(item) return item:find(arg) == 1 end, items)
   end,
