@@ -22,7 +22,7 @@ local config = {
   highlight = { hex = true, lspvars = false },
 }
 
-local styles = { 'bg', 'fg', 'virtual' }
+local styles = { 'background', 'foreground', 'virtual' }
 
 vim.g.COLORIFY_STYLE = ((vim.g.COLORIFY_STYLE or 1) % #styles) + 1
 
@@ -45,7 +45,7 @@ local function add_hl(hex)
 
   local fg, bg = hex, hex
 
-  if vim.g.COLORIFY_STYLE == 'bg' then
+  if vim.g.COLORIFY_STYLE == 'background' then
     fg = is_dark(hex) and 'white' or 'black'
   else
     bg = 'none'
