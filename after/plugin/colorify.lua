@@ -3,7 +3,7 @@
 
 if not ar then return end
 
-local enabled = ar.config.plugin.custom.colorify.enable and not ar.lsp.enable
+local enabled = ar.config.plugin.custom.colorify.enable
 
 if ar.none or not enabled then return end
 
@@ -19,7 +19,7 @@ local M = {}
 local config = {
   enabled = true,
   virt_text = ar.ui.icons.misc.block_medium .. ' ',
-  highlight = { hex = true, lspvars = true },
+  highlight = { hex = true, lspvars = false },
 }
 
 local styles = { 'bg', 'fg', 'virtual' }
