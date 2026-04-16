@@ -788,7 +788,13 @@ local function setup_colors(client, bufnr)
     client:supports_method(M.textDocument_documentColor)
     or client.capabilities.textDocument.colorProvider -- NOTE: this is needed for tailwind colors
   then
-    lsp.document_color.enable(true, { bufnr = bufnr }, { style = 'virtual' })
+    lsp.document_color.enable(true, { bufnr = bufnr }, { style = 'background' })
+    map(
+      'n',
+      '<leader>oc',
+      require('ar.lsp_color').cycle_style,
+      { buffer = bufnr, desc = 'cycle color style' }
+    )
   end
 end
 
