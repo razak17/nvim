@@ -269,8 +269,11 @@ local function refresh()
   set_colors()
 end
 
-local function set_style(style)
+---@param style string
+---@param notify boolean?
+local function set_style(style, notify)
   if not vim.tbl_contains(styles, style) then
+    if not notify then return end
     vim.notify('Invalid style: ' .. style, L.ERROR, {
       title = 'Colorify',
     })
@@ -278,6 +281,7 @@ local function set_style(style)
   end
   vim.g.COLORIFY_STYLE = style
   refresh()
+  if not notify then return end
   vim.notify('Colorify style: ' .. vim.g.COLORIFY_STYLE, L.INFO, {
     title = 'Colorify',
   })
@@ -291,7 +295,7 @@ local function cycle_style()
       break
     end
   end
-  set_style(styles[(idx % #styles) + 1])
+  set_style(styles[(idx % #styles) + 1], true)
 end
 
 local function select_colorify_style()
