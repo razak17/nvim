@@ -25,6 +25,9 @@ end
 function M.cycle_style()
   local idx = ((styles_map[vim.g.DOCUMENT_COLOR_STYLE] or 1) % #styles)
   M.set_style(styles[(idx % #styles) + 1])
+  if ar.config.plugin.custom.colorify.enable then
+    vim.cmd('Colorify style ' .. styles[(idx % #styles) + 1])
+  end
 end
 
 return M

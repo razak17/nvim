@@ -286,6 +286,13 @@ local function set_style(style, notify)
   end
   vim.g.COLORIFY_STYLE = style
   refresh()
+  local client_names = vim.tbl_map(
+    function(cl) return cl.name end,
+    vim.lsp.get_clients({ bufnr = bufnr })
+  )
+  if vim.tbl_contains(client_names, 'tailwindcss') then
+    require('ar.lsp_color').set_style(style)
+  end
   if not notify then return end
   vim.notify('Colorify style: ' .. vim.g.COLORIFY_STYLE, L.INFO, {
     title = 'Colorify',
@@ -305,6 +312,12 @@ local function select_colorify_style()
     if choice then set_style(choice) end
   end)
 end
+map(
+  'n',
+  '<leader><leader>c',
+  cycle_style,
+  { buffer = bufnr, desc = 'colorify: cycle color style' }
+)
 
 ar.command('Colorify', function(args)
   local action = args.fargs[1]
