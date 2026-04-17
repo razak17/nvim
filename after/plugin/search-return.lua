@@ -23,7 +23,7 @@ for key, desc in pairs(mark_search_keys) do
 end
 
 -- Clear search highlight when jumping back to beginning
-map('n', '[S', function()
+map('n', '`S', function()
   vim.cmd('normal! `s')
   vim.cmd.nohlsearch()
 end, { desc = 'return to start of search' })
