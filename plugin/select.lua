@@ -88,6 +88,7 @@ if ar.lsp.enable then
     ['Toggle Virtual Lines'] = "lua require'ar.select.lsp'.toggle_virtual_lines()",
     ['Toggle Diagnostic Signs'] = "lua require'ar.select.lsp'.toggle_signs()",
     ['Toggle Diagnostics'] = "lua require'ar.select.lsp'.toggle_diagnostics()",
+    ['Toggle Document Color'] = "lua require'ar.select.lsp'.toggle_document_color()",
     ['Toggle Inline Completion'] = "lua require'ar.select.lsp'.toggle_inline_completion()",
     ['Toggle Hover Diagnostics'] = "lua require'ar.select.lsp'.toggle_hover_diagnostics()",
     ['Toggle Hover Diagnostics (go_to)'] = "lua require'ar.select.lsp'.toggle_hover_diagnostics_go_to()",

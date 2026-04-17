@@ -145,6 +145,12 @@ function M.toggle_inline_completion()
   lsp_notify(string.format('inline completion %s', bool2str(not enabled)))
 end
 
+function M.toggle_document_color()
+  local enabled = vim.lsp.document_color.is_enabled()
+  vim.lsp.document_color.enable(not enabled)
+  lsp_notify(string.format('document color %s', bool2str(not enabled)))
+end
+
 function M.toggle_signs()
   local config = diagnostic.config()
   if type(config and config.signs) == 'boolean' then
