@@ -15,7 +15,9 @@ return {
         { TinyCmdlineBorder = { link = 'FloatBorder' } },
       })
     end,
-    opts = {},
+    opts = {
+      position = { x = '50%', y = '10%' },
+    },
     config = function(_, opts)
       local is_blink = ar.config.completion.variant == 'blink'
       if ar.completion.enable and is_blink then
