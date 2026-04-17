@@ -23,8 +23,13 @@ local config = {
 }
 
 local styles = { 'background', 'foreground', 'virtual' }
+local styles_map = {
+  background = 1,
+  foreground = 2,
+  virtual = 3,
+}
 
-vim.g.COLORIFY_STYLE = ((vim.g.COLORIFY_STYLE or 1) % #styles) + 1
+vim.g.COLORIFY_STYLE = vim.g.COLORIFY_STYLE or 'background'
 
 local function is_dark(hex)
   hex = hex:gsub('#', '')
@@ -288,13 +293,7 @@ local function set_style(style, notify)
 end
 
 local function cycle_style()
-  local idx = 1
-  for i, style in ipairs(styles) do
-    if style == vim.g.COLORIFY_STYLE then
-      idx = i
-      break
-    end
-  end
+  local idx = ((styles_map[vim.g.COLORIFY_STYLE] or 1) % #styles)
   set_style(styles[(idx % #styles) + 1], true)
 end
 
