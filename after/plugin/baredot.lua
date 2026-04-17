@@ -13,6 +13,9 @@ ar.baredot = {
   ignored_directories = {
     '~/.local/share/rvim/gp/chats',
   },
+  ignored_filetypes = {
+    'NeogitStatus',
+  },
 }
 
 local api, fn = vim.api, vim.fn
@@ -63,6 +66,7 @@ local function is_ignored_directory(path)
 end
 
 local function update()
+  if vim.tbl_contains(ar.baredot.ignored_filetypes, vim.bo.ft) then return end
   local p = current_path()
   local ignored = is_ignored_directory(p)
   local has_git = has_git_upwards(p) or ar.has_git(p)
