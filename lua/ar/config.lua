@@ -32,7 +32,7 @@ local env = vim.env
 ---@alias ArWhichCmdline 'builtin' | 'extui' | 'tiny-cmdline' | 'noice' | 'telescope-cmdline'
 ---@alias ArCompletion 'cmp' | 'blink' | 'mini.completion' | 'omnifunc'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
----@alias ArWhichDashboard 'builtin' | 'alpha' | 'snacks'
+---@alias ArWhichDashboard 'builtin' | 'legacy' | | 'alpha' | 'snacks'
 ---@alias ArWhichExplorer 'neo-tree' | 'snacks' | 'mini.files' | 'oil' | 'fyler'
 ---@alias ArWhichGx 'local' | 'plugin'
 ---@alias ArWhichIcon 'nvim-web-devicons' | 'mini.icons'
@@ -424,7 +424,7 @@ local config = {
     variant = 'outline',
   },
   ---@type ArDashboard
-  dashboard = { enable = true, variant = 'builtin' },
+  dashboard = { enable = true, variant = 'legacy' },
   debug = { enable = false },
   ---@type ArExplorer
   explorer = { rename = 'snacks', variant = 'snacks' },

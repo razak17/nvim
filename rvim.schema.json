@@ -401,7 +401,7 @@
           "type": "boolean"
         },
         "variant": {
-          "enum": ["alpha", "snacks"],
+          "enum": ["builtin", "legacy", "alpha", "snacks"],
           "type": "string"
         }
       },
@@ -1402,7 +1402,7 @@
             }
           },
           "type": "object"
-        },
+        }
       },
       "type": "object"
     },
@@ -1800,7 +1800,13 @@
               "type": "boolean"
             },
             "variant": {
-              "enum": ["builtin", "extui", "tiny-cmdline", "noice", "telescope-cmdline"],
+              "enum": [
+                "builtin",
+                "extui",
+                "tiny-cmdline",
+                "noice",
+                "telescope-cmdline"
+              ],
               "type": "string"
             }
           },
