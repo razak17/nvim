@@ -1,6 +1,6 @@
 if not ar then return end
 
-local enabled = ar.config.plugin.custom.custom_fold.enable
+local enabled = ar.config.plugin.extra.custom_fold.enable
 
 if ar.none or not enabled then return end
 

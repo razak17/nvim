@@ -1,6 +1,6 @@
 if not ar then return end
 
-local enabled = ar.config.plugin.custom.advanced_new_file.enable
+local enabled = ar.config.plugin.extra.advanced_new_file.enable
 
 if ar.none or not enabled then return end
 

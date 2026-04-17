@@ -932,7 +932,121 @@
     "plugin": {
       "additionalProperties": false,
       "properties": {
-        "custom": {
+        "core": {
+          "additionalProperties": false,
+          "properties": {
+            "autocommands": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "colors": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "env": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "experimental": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "filetypes": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "mappings": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "numbers": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "pack": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "rooter": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "select": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "tmux": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "whitespace": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "extra": {
           "additionalProperties": false,
           "properties": {
             "accelerated_jk": {
@@ -1289,120 +1403,6 @@
           },
           "type": "object"
         },
-        "main": {
-          "additionalProperties": false,
-          "properties": {
-            "autocommands": {
-              "additionalProperties": false,
-              "properties": {
-                "enable": {
-                  "type": "boolean"
-                }
-              },
-              "type": "object"
-            },
-            "colors": {
-              "additionalProperties": false,
-              "properties": {
-                "enable": {
-                  "type": "boolean"
-                }
-              },
-              "type": "object"
-            },
-            "env": {
-              "additionalProperties": false,
-              "properties": {
-                "enable": {
-                  "type": "boolean"
-                }
-              },
-              "type": "object"
-            },
-            "experimental": {
-              "additionalProperties": false,
-              "properties": {
-                "enable": {
-                  "type": "boolean"
-                }
-              },
-              "type": "object"
-            },
-            "filetypes": {
-              "additionalProperties": false,
-              "properties": {
-                "enable": {
-                  "type": "boolean"
-                }
-              },
-              "type": "object"
-            },
-            "mappings": {
-              "additionalProperties": false,
-              "properties": {
-                "enable": {
-                  "type": "boolean"
-                }
-              },
-              "type": "object"
-            },
-            "numbers": {
-              "additionalProperties": false,
-              "properties": {
-                "enable": {
-                  "type": "boolean"
-                }
-              },
-              "type": "object"
-            },
-            "pack": {
-              "additionalProperties": false,
-              "properties": {
-                "enable": {
-                  "type": "boolean"
-                }
-              },
-              "type": "object"
-            },
-            "rooter": {
-              "additionalProperties": false,
-              "properties": {
-                "enable": {
-                  "type": "boolean"
-                }
-              },
-              "type": "object"
-            },
-            "select": {
-              "additionalProperties": false,
-              "properties": {
-                "enable": {
-                  "type": "boolean"
-                }
-              },
-              "type": "object"
-            },
-            "tmux": {
-              "additionalProperties": false,
-              "properties": {
-                "enable": {
-                  "type": "boolean"
-                }
-              },
-              "type": "object"
-            },
-            "whitespace": {
-              "additionalProperties": false,
-              "properties": {
-                "enable": {
-                  "type": "boolean"
-                }
-              },
-              "type": "object"
-            }
-          },
-          "type": "object"
-        }
       },
       "type": "object"
     },

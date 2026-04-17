@@ -1,6 +1,6 @@
 if not ar then return end
 
-local enabled = ar.config.plugin.custom.surf_plugins.enable
+local enabled = ar.config.plugin.extra.surf_plugins.enable
 local has_lazy = ar.has('lazy.nvim')
 
 if

@@ -1,6 +1,6 @@
 if not ar then return end
 
-local enabled = ar.config.plugin.custom.null_pointer.enable
+local enabled = ar.config.plugin.extra.null_pointer.enable
 
 if ar.none or not enabled then return end
 

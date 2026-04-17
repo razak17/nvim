@@ -1,6 +1,6 @@
 if not ar then return end
 
-local enabled = ar.config.plugin.main.filetypes.enable
+local enabled = ar.config.plugin.core.filetypes.enable
 
 if ar.none or not enabled then return end
 

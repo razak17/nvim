@@ -32,7 +32,7 @@ return {
   {
     'kevinhwang91/nvim-ufo',
     cond = function()
-      local condition = not ar.config.plugin.custom.custom_fold.enable
+      local condition = not ar.config.plugin.extra.custom_fold.enable
         and not minimal
       return ar.get_plugin_cond('nvim-ufo', condition)
     end,

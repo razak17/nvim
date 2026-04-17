@@ -514,7 +514,21 @@ local config = {
     win = { show_preview = false, fullscreen = true },
   },
   plugin = {
-    custom = {
+    core = {
+      autocommands = { enable = true },
+      colors = { enable = true },
+      env = { enable = true },
+      experimental = { enable = true },
+      filetypes = { enable = true },
+      mappings = { enable = true },
+      numbers = { enable = true },
+      pack = { enable = true },
+      rooter = { enable = true },
+      select = { enable = true },
+      tmux = { enable = true },
+      whitespace = { enable = true },
+    },
+    extra = {
       accelerated_jk = { enable = true },
       advanced_new_file = { enable = true },
       auto_cursorline = { enable = true },
@@ -553,20 +567,6 @@ local config = {
       wb_current_line = { enable = true },
       word_web_search = { enable = true },
       yank_ring = { enable = true },
-    },
-    main = {
-      autocommands = { enable = true },
-      colors = { enable = true },
-      env = { enable = true },
-      experimental = { enable = true },
-      filetypes = { enable = true },
-      mappings = { enable = true },
-      numbers = { enable = true },
-      pack = { enable = true },
-      rooter = { enable = true },
-      select = { enable = true },
-      tmux = { enable = true },
-      whitespace = { enable = true },
     },
   },
   plugins = {

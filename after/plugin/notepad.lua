@@ -1,6 +1,6 @@
 if not ar then return end
 
-local enabled = ar.config.plugin.custom.notepad.enable
+local enabled = ar.config.plugin.extra.notepad.enable
 
 if ar.none or not enabled then return end
 

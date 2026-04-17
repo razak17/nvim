@@ -1,6 +1,6 @@
 if not ar then return end
 
-local enabled = ar.config.plugin.custom.auto_cursorline.enable
+local enabled = ar.config.plugin.extra.auto_cursorline.enable
 
 if ar.none or not enabled then return end
 

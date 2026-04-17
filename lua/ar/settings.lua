@@ -88,7 +88,7 @@ o.foldlevelstart = 99
 o.foldlevel = 99
 opt.foldmethod = 'expr'
 opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-if not ar.config.plugin.custom.custom_fold.enable then opt.foldtext = '' end
+if not ar.config.plugin.extra.custom_fold.enable then opt.foldtext = '' end
 opt.foldcolumn = ar.config.ui.statuscolumn.enable and '0' or '2'
 opt.foldnestmax = 10
 --------------------------------------------------------------------------------
@@ -163,7 +163,7 @@ o.signcolumn = 'yes:1'
 o.ruler = false
 -- o.cmdheight = 0
 o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→', '↴'
-if not ar.config.plugin.custom.auto_cursorline.enable then
+if not ar.config.plugin.extra.auto_cursorline.enable then
   o.cursorline = true
 end
 local function safe_winborder()
@@ -245,7 +245,7 @@ o.emoji = false
 --------------------------------------------------------------------------------
 -- Cursor {{{1
 --------------------------------------------------------------------------------
-opt.guicursor = "" -- block cursor
+opt.guicursor = '' -- block cursor
 -- opt.guicursor = "n-v-c:block,i-ci-ve:block,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175" -- block cursor
 opt.cursorlineopt = { 'both' }
 --------------------------------------------------------------------------------

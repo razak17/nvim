@@ -1,6 +1,6 @@
 if not ar then return end
 
-local enabled = ar.config.plugin.custom.yank_ring.enable
+local enabled = ar.config.plugin.extra.yank_ring.enable
 
 if ar.none or not enabled then return end
 

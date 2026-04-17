@@ -1,6 +1,6 @@
 if not ar then return end
 
-local enabled = ar.config.plugin.custom.replace_word.enable
+local enabled = ar.config.plugin.extra.replace_word.enable
 
 if ar.none or not enabled then return end
 

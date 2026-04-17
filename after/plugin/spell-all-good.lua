@@ -1,6 +1,6 @@
 if not ar then return end
 
-local enabled = ar.config.plugin.custom.spell_all_good.enable
+local enabled = ar.config.plugin.extra.spell_all_good.enable
 
 if ar.none or not enabled then return end
 

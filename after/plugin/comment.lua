@@ -1,6 +1,6 @@
 if not ar then return end
 
-local enabled = ar.config.plugin.custom.comment.enable
+local enabled = ar.config.plugin.extra.comment.enable
 
 if ar.none or not enabled then return end
 

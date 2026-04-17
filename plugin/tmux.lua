@@ -1,6 +1,6 @@
 if not ar then return end
 
-local enabled = ar.config.plugin.main.tmux.enable
+local enabled = ar.config.plugin.core.tmux.enable
 
 if ar.none or not enabled or vim.env.TMUX == nil then return end
 

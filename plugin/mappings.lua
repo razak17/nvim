@@ -1,6 +1,6 @@
 if not ar then return end
 
-local enabled = ar.config.plugin.main.mappings.enable
+local enabled = ar.config.plugin.core.mappings.enable
 
 if ar.none or not enabled then return end
 
@@ -74,7 +74,7 @@ map({ 'n', 'x' }, '<leader>C', '"_C', { desc = 'cut' })
 -- Credit: JGunn Choi ?il | inner line
 ----------------------------------------------------------------------------
 -- Yank all
-if not ar.config.plugin.custom.sticky_yank.enable then
+if not ar.config.plugin.extra.sticky_yank.enable then
   nnoremap('<localleader>Y', ':%y+<CR>', { desc = 'yank all' })
 end
 -- Select all

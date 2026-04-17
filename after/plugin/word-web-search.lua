@@ -1,6 +1,6 @@
 if not ar then return end
 
-local enabled = ar.config.plugin.custom.word_web_search.enable
+local enabled = ar.config.plugin.extra.word_web_search.enable
 
 if ar.none or not enabled then return end
 

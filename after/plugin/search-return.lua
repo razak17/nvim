@@ -1,6 +1,6 @@
 if not ar then return end
 
-local enabled = ar.config.plugin.custom.search_return.enable
+local enabled = ar.config.plugin.extra.search_return.enable
 
 if ar.none or not enabled then return end
 

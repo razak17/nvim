@@ -1,6 +1,6 @@
 if not ar then return end
 
-local enabled = ar.config.plugin.custom.dump_messages.enable
+local enabled = ar.config.plugin.extra.dump_messages.enable
 
 if ar.none or not enabled then return end
 

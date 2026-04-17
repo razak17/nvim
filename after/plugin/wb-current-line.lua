@@ -2,7 +2,7 @@
 
 if not ar then return end
 
-local enabled = ar.config.plugin.custom.wb_current_line.enable
+local enabled = ar.config.plugin.extra.wb_current_line.enable
 
 if ar.none or not enabled then return end
 
