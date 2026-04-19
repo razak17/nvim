@@ -1,5 +1,6 @@
 ## 🎨 Colorschemes
 
+- aalto
 - acario_dark
 - acario_light
 - afterglow

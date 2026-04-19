@@ -1119,6 +1119,22 @@ return {
   -- Mild
   {
     {
+      'micdzu/aalto.nvim',
+      cond = get_cond({ 'aalto' }),
+      priority = get_priority({ 'aalto' }),
+      event = get_event({ 'aalto' }),
+      init = function()
+        theming.apply_overrides('aalto', {
+          default = {
+            {
+              WinSeparator = { fg = { from = 'WinSeparator', alter = -0.45 } },
+            },
+          },
+        }, true)
+      end,
+    },
+
+    {
       'nuvic/flexoki-nvim',
       name = 'flexoki',
       cond = get_cond({ 'flexoki' }),
