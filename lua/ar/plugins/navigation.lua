@@ -62,4 +62,12 @@ return {
       { mode = 'i', '<C-\\>', function() require('in-and-out').in_and_out() end },
     },
   },
+  {
+    'swaits/tiny-jump.nvim',
+    cond = function() return ar.get_plugin_cond('flash.nvimtiny-jump', minimal) end,
+    -- stylua: ignore
+    keys = {
+      { mode = { 'n', 'x', 'o' }, 's', function() require('tiny-jump').start() end },
+    },
+  },
 }
