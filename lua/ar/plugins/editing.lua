@@ -235,40 +235,69 @@ return {
     end,
     keys = {
       {
-        '<leader><leader>ro',
-        function() require('telescope').extensions.refactoring.refactors() end,
-        desc = 'refactoring: open',
+        '<leader><leader>rc',
+        function()
+          return require('refactoring.debug').cleanup({ restore_view = true })
+            .. 'ag'
+        end,
+        desc = 'refactoring: cleanup debug statements',
+        expr = true,
+      },
+      {
         mode = { 'n', 'x' },
+        '<leader><leader>rf',
+        function() return require('refactoring.debug').extract_func() end,
+        desc = 'refactoring: extract func',
+      },
+      {
+        mode = { 'n', 'x' },
+        '<leader><leader>rF',
+        function() return require('refactoring.debug').extract_func_to_file() end,
+        desc = 'refactoring: extract func to file',
+      },
+      {
+        mode = { 'n', 'x' },
+        '<leader><leader>ri',
+        function() return require('refactoring').inline_var() end,
+        desc = 'refactoring: inline var',
+        expr = true,
       },
       {
         '<leader><leader>rk',
-        function() require('refactoring').select_refactor() end,
+        function() return require('refactoring').select_refactor() end,
         desc = 'refactoring: select refactor',
         mode = { 'n', 'x' },
       },
       {
-        '<leader><leader>rf',
-        function() require('refactoring').debug.printf({ below = false }) end,
-        desc = 'refactoring: Insert printf statement',
-      },
-      {
         '<leader><leader>rp',
-        function() require('refactoring').debug.print_var({ normal = true }) end,
-        desc = 'refactoring: insert print statement',
+        function()
+          return require('refactoring.debug').print_var({
+            output_location = 'below',
+          }) .. 'iw'
+        end,
+        desc = 'refactoring: print variable',
+        expr = true,
       },
       {
-        '<leader><leader>rp',
-        function() require('refactoring').debug.print_var({}) end,
-        desc = 'refactoring: insert print statement',
-        mode = { 'x' },
+        '<leader><leader>rP',
+        function()
+          return require('refactoring.debug').print_loc({
+            output_location = 'below',
+          })
+        end,
+        desc = 'refactoring: print location',
+        expr = true,
       },
       {
-        '<leader><leader>rc',
-        function() require('refactoring').debug.cleanup() end,
-        desc = 'refactoring: cleanup debug statements',
+        mode = { 'n', 'x' },
+        '<leader><leader>rx',
+        function() return require('refactoring').extract_var() end,
+        desc = 'refactoring: extract var',
+        expr = true,
       },
     },
     opts = {},
+    dependencies = { 'lewis6991/async.nvim' },
   },
   {
     'max397574/better-escape.nvim',
