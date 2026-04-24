@@ -107,7 +107,7 @@ return {
     'saghen/blink.cmp',
     optional = true,
     opts = function(_, opts)
-      if get_cond() then
+      if get_cond() and ai_suggestions == 'completion' then
         local blink_opts = vim.g.blink_add_source({ 'minuet' }, {
           minuet = {
             enabled = function()
@@ -145,7 +145,7 @@ return {
     optional = true,
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
-      if not get_cond() then return opts end
+      if not get_cond() or ai_suggestions == 'ghost-text' then return opts end
       local ai_icons = ar.ui.codicons.ai
       opts = vim.g.cmp_add_source(opts, {
         source = {
