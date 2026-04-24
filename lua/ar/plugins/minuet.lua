@@ -71,15 +71,9 @@ return {
             },
           },
         },
-        claude = {
-          max_tokens = 512,
-          model = 'claude-3-5-sonnet-20241022',
-        },
+        claude = {},
         openai = {
-          optional = {
-            max_tokens = 256,
-            top_p = 0.9,
-          },
+          optional = { max_completion_tokens = 128, reasoning_effort = 'none' },
         },
       },
       virtualtext = ai_suggestions == 'ghost-text' and {
@@ -99,12 +93,12 @@ return {
       } or {},
     },
     config = function(_, opts)
-      if models.gemini then
+      if models.openai then
+        opts.provider = 'openai'
+      elseif models.gemini then
         opts.provider = 'gemini'
       elseif models.claude then
         opts.provider = 'claude'
-      elseif models.openai then
-        opts.provider = 'openai'
       end
       require('minuet').setup(opts)
     end,
