@@ -17,6 +17,7 @@ ar.add_to_select('toggle', {
   ['Toggle Color Pencils'] = 'lua require"ar.select.toggle".color_my_pencils()',
   ['Toggle Alpha Green'] = 'lua require"ar.select.toggle".alpha_green()',
   ['Toggle Guides'] = 'lua require"ar.select.toggle".toggle_guides()',
+  ['Toggle Notify'] = 'lua require"ar.select.toggle".toggle_notify()',
 })
 
 local toggle_menu = function()

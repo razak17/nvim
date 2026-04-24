@@ -30,6 +30,7 @@ local config = {
       qfFileName = { fg = '#aed75f' },
     },
   },
+  notify = { enabled = true },
   toggle_guides = { enabled = true },
 }
 
@@ -127,6 +128,20 @@ function M.toggle_guides()
     vim.wo[win].colorcolumn = enabled and '800' or '80'
   end
   config.toggle_guides.enabled = not enabled
+end
+
+local original_notify = vim.notify
+function M.toggle_notify()
+  local enabled = config.notify.enabled
+  if enabled then
+    mappings_notify('notify disabled')
+    ---@diagnostic disable-next-line: duplicate-set-field
+    vim.notify = function() end
+  else
+    mappings_notify('notify enabled')
+    vim.notify = original_notify
+  end
+  config.notify.enabled = not enabled
 end
 
 return M
