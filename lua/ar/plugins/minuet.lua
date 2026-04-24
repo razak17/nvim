@@ -82,8 +82,8 @@ return {
           },
         },
       },
-      virtualtext = {
-        auto_trigger_ft = ai_suggestions == 'ghost-text' and { '*' } or {},
+      virtualtext = ai_suggestions == 'ghost-text' and {
+        auto_trigger_ft = {},
         auto_trigger_ignore_ft = ar.config.ai.ignored_filetypes,
         keymap = {
           accept = '<A-u>',
@@ -96,7 +96,7 @@ return {
           dismiss = '<A-\\>',
         },
         show_on_completion_menu = true,
-      },
+      } or {},
     },
     config = function(_, opts)
       if models.gemini then
