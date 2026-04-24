@@ -108,7 +108,6 @@ return {
       end
       require('minuet').setup(opts)
     end,
-    dependencies = { 'nvim-lua/plenary.nvim' },
   },
   {
     'saghen/blink.cmp',
