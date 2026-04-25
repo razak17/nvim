@@ -26,7 +26,7 @@ ar.ui.statuscolumn = {}
 function ar.ui.statuscolumn.render()
   local win = vim.g.statusline_winid
 
-  if wo[win].signcolumn == 'no' or vim.bo.ft == '' then return '' end
+  if wo[win].signcolumn == 'no' then return '' end
 
   local lnum, relnum, virtnum = v.lnum, v.relnum, v.virtnum
   local buf = api.nvim_win_get_buf(win)
@@ -60,6 +60,11 @@ opt.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
 ar.augroup('StatusCol', {
   event = { 'BufEnter', 'FileType', 'FocusGained', 'TextChanged' },
   command = function(args)
+    local filepath = vim.api.nvim_buf_get_name(args.buf)
+    if filepath == '' then
+      vim.opt_local.statuscolumn = ''
+      return
+    end
     local ft = bo[args.buf].ft
     if vim.tbl_contains(config.excluded_fts, ft) then return end
     local d = decor.get({
@@ -69,6 +74,6 @@ ar.augroup('StatusCol', {
       setting = 'statuscolumn',
     })
     if not d or ar.falsy(d) then return end
-    if d.ft == false then vim.opt_local.statuscolumn = '' end
+    if ar.falsy(d.ft) or ar.falsy(d.bt) then vim.opt_local.statuscolumn = '' end
   end,
 })
