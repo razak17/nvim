@@ -49,7 +49,7 @@ return {
         else
           idiot.run()
         end
-      end, { desc = 'Toggles YouAreAnIdiot' })
+      end, { desc = 'Toggle YouAreAnIdiot' })
     end,
   },
   {
