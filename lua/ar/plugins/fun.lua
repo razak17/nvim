@@ -53,10 +53,10 @@ return {
     end,
   },
   {
-    desc = 'Vim plugin: footprints. Highlight last edited lines.',
-    'axlebedev/vim-footprints',
-    cond = function() return ar.get_plugin_cond('vim-footprints', not minimal) end,
-    lazy = false,
+    desc = 'nVim plugin: footprints. Highlight last edited lines.',
+    'axlebedev/nvim-footprints',
+    cond = function() return ar.get_plugin_cond('nvim-footprints', not minimal) end,
+    event = 'VeryLazy',
     cmd = {
       'FootprintsToggle',
       'FootprintsEnable',
@@ -69,14 +69,6 @@ return {
       'FootprintsCurrentLineDisable',
     },
     init = function()
-      vim.g.footprintsColor = ar.highlight.get('CursorLine', 'bg')
-      vim.g.footprintsTermColor = '208'
-      vim.g.footprintsEasingFunction = 'linear'
-      vim.g.footprintsHistoryDepth = 20
-      vim.g.footprintsExcludeFiletypes = { 'magit', 'nerdtree', 'diff' }
-      vim.g.footprintsEnabledByDefault = 0
-      vim.g.footprintsOnCurrentLine = 0
-
       ar.add_to_select('toggle', {
         ['Toggle Footprints'] = 'FootprintsToggle',
         ['Enable Footprints'] = 'FootprintsEnable',
@@ -89,5 +81,14 @@ return {
         ['Disable Footprints Current Line'] = 'FootprintsCurrentLineDisable',
       })
     end,
+    opts = {
+      footprintsColor = ar.highlight.get('CursorLine', 'bg'),
+      footprintsTermColor = '208',
+      footprintsEasingFunction = 'linear',
+      footprintsHistoryDepth = 20,
+      footprintsExcludeFiletypes = { 'magit', 'nerdtree', 'diff' },
+      footprintsEnabledByDefault = 0,
+      footprintsOnCurrentLine = 0,
+    },
   },
 }

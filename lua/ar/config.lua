@@ -602,7 +602,7 @@ local config = {
       'treesitter-modules.nvim',
       'ts-comments.nvim',
       'ultimate-autopair.nvim',
-      'vim-footprints',
+      'nvim-footprints',
       'vim-matchup',
     },
     modules = {
