@@ -510,24 +510,26 @@ return {
         },
       },
       {
-        'chip/telescope-software-licenses.nvim',
-        cond = get_cond('telescope-software-licenses.nvim'),
-        keys = {
-          {
-            '<leader>fL',
-            function()
+        'razak17/software-licenses.nvim',
+        keys = function()
+          if ar.config.picker.variant == 'telescope' then
+            local function licenses()
               require('telescope').extensions.software_licenses.find(
                 ar.telescope.horizontal()
               )
-            end,
-            desc = 'software licenses',
-          },
-        },
+            end
+            return {
+              { '<leader>fL', licenses, desc = 'software licenses' },
+            }
+          end
+        end,
         specs = {
           'nvim-telescope/telescope.nvim',
           optional = true,
           opts = function(_, opts)
-            vim.g.telescope_add_extension({ 'software_licenses' }, opts)
+            if ar.config.picker.variant == 'telescope' then
+              vim.g.telescope_add_extension({ 'software_licenses' }, opts)
+            end
           end,
         },
       },
