@@ -229,6 +229,7 @@ return {
       if variant == 'snacks' then
         -- stylua: ignore
         local picker_mappings = {
+          { '<leader>fB', p('lines'), desc = 'buffer lines' },
           { '<leader>fc', p('files', { cwd = fn.stdpath('config') }), desc = 'find config file' },
           { '<leader>ff', p('files'), desc = 'find files' },
           { '<leader>fgb', p('git_branches'), desc = 'find git branches' },
@@ -249,7 +250,6 @@ return {
           { '<leader>fK', p('colorschemes'), desc = 'colorschemes' },
           { '<leader>fla', lazy, desc = 'all plugins' },
           { '<leader>flL', p('lsp_config'), desc = 'lsp servers' },
-          { '<leader>fL', p('lines'), desc = 'buffer lines' },
           { '<leader>fm', p('man'), desc = 'man pages' },
           { '<leader>fn', p('notifications'), desc = 'notification history' },
           { '<leader>fo', p('recent'), desc = 'recent' },
