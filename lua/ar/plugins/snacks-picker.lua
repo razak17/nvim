@@ -310,7 +310,7 @@ return {
             small_no_preview = {
               layout = {
                 box = 'horizontal',
-                height = ar.config.picker.win.fullscreen and 50 or 0.65,
+                height = ar.config.picker.win.fullscreen and 60 or 0.65,
                 width = ar.config.picker.win.fullscreen and 400 or 0.6,
                 border = 'none',
                 {
@@ -330,7 +330,7 @@ return {
               preset = 'small_no_preview',
               layout = {
                 -- width = 0.99,
-                height = ar.config.picker.win.fullscreen and 50 or 0.75,
+                height = ar.config.picker.win.fullscreen and 60 or 0.75,
                 width = ar.config.picker.win.fullscreen and 400 or 0.9,
                 [2] = { -- as second column
                   win = 'preview',
@@ -344,7 +344,7 @@ return {
             large_with_preview = {
               preset = 'wide_with_preview',
               layout = {
-                height = ar.config.picker.win.fullscreen and 50 or 0.9,
+                height = ar.config.picker.win.fullscreen and 60 or 0.9,
                 width = ar.config.picker.win.fullscreen and 400 or 0.9,
                 [2] = { width = 0.6 }, -- second win is the preview
               },
@@ -352,7 +352,7 @@ return {
             big_preview = {
               preset = 'wide_with_preview',
               layout = {
-                height = ar.config.picker.win.fullscreen and 50 or 0.85,
+                height = ar.config.picker.win.fullscreen and 60 or 0.85,
                 [2] = { width = 0.6 }, -- second win is the preview
               },
             },
