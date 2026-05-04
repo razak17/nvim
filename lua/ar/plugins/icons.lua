@@ -1,5 +1,7 @@
+local coding = ar.plugins.coding
 local minimal = ar.plugins.minimal
 local variant = ar.config.icons.variant
+local picker = ar.config.picker.variant
 
 local function plugin_cond(plugin, v)
   if ar.config.explorer.variant == 'fyler' then
@@ -66,5 +68,29 @@ return {
       ar.add_to_select('command_palette', { ['Nerdy'] = 'Nerdy list' })
     end,
     opts = { use_new_command = true },
+  },
+  {
+    'SaptanshuWanjari/icon-picker.nvim',
+    -- stylua: ignore
+    keys = {
+      { '<leader>fI', '<Cmd>IconPicker<CR>', desc = 'icon_picker: open' },
+      { mode = 'i', '<C-g>i', '<Esc><Cmd>IconPicker<CR>', desc = 'icon_picker: open' },
+    },
+    cmd = { 'IconPicker' },
+    cond = function() return ar.get_plugin_cond('icon-picker.nvim', coding) end,
+    opts = {
+      command = 'IconPicker',
+      keymaps = { normal = nil, insert = nil },
+      picker = {
+        toggle_source_key = '<C-t>',
+        notify_source_toggle = false,
+        stopinsert_on_open = true,
+        snacks = {
+          layout = { preset = 'large_with_preview' },
+        },
+        ui = picker == 'telescope' and picker or 'snacks',
+      },
+    },
+    config = function(_, opts) require('icon_picker').setup(opts) end,
   },
 }
