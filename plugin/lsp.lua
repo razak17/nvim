@@ -943,7 +943,7 @@ augroup('LspSetupAutoCommands', {
   event = 'DiagnosticChanged',
   desc = 'Update the diagnostic locations',
   command = function(args)
-    if not ar.config.lsp.omnifunc.enable then
+    if ar.config.completion.variant ~= 'omnifunc' then
       diagnostic.setloclist({ open = false })
     end
     if ar.falsy(args.data) or not args.data.diagnostics then return end

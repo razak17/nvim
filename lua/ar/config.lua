@@ -185,7 +185,6 @@ local env = vim.env
 ---@field inlay_hint ArCond
 ---@field lang ArLspLang
 ---@field null_ls ArCond
----@field omnifunc ArCond
 ---@field override table
 ---@field progress ArLspProgress
 ---@field rename ArLspRename
@@ -492,7 +491,6 @@ local config = {
       },
     },
     null_ls = { enable = false },
-    omnifunc = { enable = true },
     override = {},
     progress = { enable = true, variant = 'builtin', spinner = 'circle' },
     rename = { enable = true, variant = 'inc-rename' },

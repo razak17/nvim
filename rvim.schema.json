@@ -736,15 +736,6 @@
           },
           "type": "object"
         },
-        "omnifunc": {
-          "additionalProperties": false,
-          "properties": {
-            "enable": {
-              "type": "boolean"
-            }
-          },
-          "type": "object"
-        },
         "override": {
           "items": {
             "enum": [
