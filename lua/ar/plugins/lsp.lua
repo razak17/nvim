@@ -32,7 +32,7 @@ local server_langs = {
 
 local function is_enabled(name)
   local ai_cmp = ar.config.ai.completion.variant
-  if name == 'copilot' and (not ar.ai.enable or ai_cmp ~= 'builtin') then
+  if name == 'copilot' and (not ar.ai.enable or ai_cmp ~= 'native') then
     return false
   end
   local disabled = ar.lsp_disabled(name)

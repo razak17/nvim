@@ -130,8 +130,8 @@ return {
           ['Ecolog Goto'] = 'EcologGoto',
           ['Ecolog Goto Var'] = 'EcologGotoVar',
         })
-        if ar.config.completion.variant == 'omnifunc' then
-          ar.augroup('EcologOmniFunc', {
+        if ar.config.completion.variant == 'native' then
+          ar.augroup('EcologNativeComp', {
             event = { 'FileType' },
             pattern = { 'javascript', 'typescript', 'python', 'lua' },
             command = function(args)

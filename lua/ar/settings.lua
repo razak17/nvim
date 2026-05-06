@@ -227,7 +227,10 @@ o.smartindent = true
 o.pumborder = safe_winborder()
 o.pumheight = 15
 o.confirm = true -- make vim prompt me to save before doing destructive things
-if ar.config.completion.variant == 'omnifunc' then o.complete = 'o' end
+if ar.config.completion.variant == 'native' then
+  opt.complete:append('o')
+  o.autocomplete = true
+end
 opt.completeopt = { 'fuzzy', 'menuone', 'noselect', 'popup' }
 o.hlsearch = true
 o.autowriteall = true -- automatically :write before running commands and changing files

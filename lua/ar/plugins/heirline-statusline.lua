@@ -1008,7 +1008,7 @@ return {
             condition = function()
               return ar.lsp.enable
                 and ar.ai.enable
-                and ar.config.ai.completion.variant == 'builtin'
+                and ar.config.ai.completion.variant == 'native'
             end,
             {
               condition = function(self)

@@ -441,7 +441,7 @@ local function setup_mappings(client, bufnr)
       lsp.inline_completion.get,
       desc = 'current inline completion',
       capability = M.textDocument_inlineCompletion,
-      disabled = ar.config.ai.completion.variant ~= 'builtin',
+      disabled = ar.config.ai.completion.variant ~= 'native',
     },
     {
       'i',
@@ -449,14 +449,14 @@ local function setup_mappings(client, bufnr)
       function() lsp.inline_completion.select({ count = 1 }) end,
       desc = 'previous copilot suggestion',
       capability = M.textDocument_inlineCompletion,
-      disabled = ar.config.ai.completion.variant ~= 'builtin',
+      disabled = ar.config.ai.completion.variant ~= 'native',
     },
     {
       'i',
       '<M-[>',
       function() lsp.inline_completion.select({ count = -1 }) end,
       desc = 'next Copilot suggestion',
-      disabled = ar.config.ai.completion.variant ~= 'builtin',
+      disabled = ar.config.ai.completion.variant ~= 'native',
     },
     {
       'n',
@@ -859,7 +859,6 @@ local function setup_omnifunc_completion(client, bufnr)
         end,
       })
     end
-    require('ar.compl')(client, bufnr)
     -- api.nvim_set_option_value(
     --   'omnifunc',
     --   'v:lua.vim.lsp.omnifunc',
@@ -872,7 +871,7 @@ end
 ---@param bufnr number
 local function setup_completion(client, bufnr)
   local variant = ar.config.completion.variant
-  if variant == 'omnifunc' then setup_omnifunc_completion(client, bufnr) end
+  if variant == 'native' then setup_omnifunc_completion(client, bufnr) end
   if variant == 'mini.completion' and ar.has('mini.completion') then
     vim.bo[bufnr].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
   end
@@ -881,7 +880,7 @@ end
 ---@param client vim.lsp.Client
 ---@param bufnr number
 local function setup_inline_completion(client, bufnr)
-  if ar.config.ai.completion.variant ~= 'builtin' then return end
+  if ar.config.ai.completion.variant ~= 'native' then return end
   if client:supports_method(M.textDocument_inlineCompletion) then
     lsp.inline_completion.enable(true, { buffer = bufnr })
   end
@@ -943,7 +942,7 @@ augroup('LspSetupAutoCommands', {
   event = 'DiagnosticChanged',
   desc = 'Update the diagnostic locations',
   command = function(args)
-    if ar.config.completion.variant ~= 'omnifunc' then
+    if ar.config.completion.variant ~= 'native' then
       diagnostic.setloclist({ open = false })
     end
     if ar.falsy(args.data) or not args.data.diagnostics then return end

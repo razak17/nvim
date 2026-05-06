@@ -23,14 +23,14 @@ local env = vim.env
 ---@field servers table
 
 ---@alias ArAIModel 'claude' | 'gemini' | 'openai' | 'copilot'
----@alias ArAICompletion 'builtin' | 'copilot' | 'minuet'
+---@alias ArAICompletion 'native' | 'copilot' | 'minuet'
 ---@alias ArAISuggestions 'ghost-text' | 'completion'
 ---@alias ArAIWhichOpencode 'tui' | 'frontend'
 ---@alias ArExplorerRename 'local' | 'snacks'
 ---@alias ArWhichBorder 'single' | 'rounded' | 'none' | 'double' | 'solid' | 'shadow'
 ---@alias ArWhichBuffers 'snacks' | 'fzf-lua'
 ---@alias ArWhichCmdline 'builtin' | 'extui' | 'tiny-cmdline' | 'noice' | 'telescope-cmdline'
----@alias ArCompletion 'cmp' | 'blink' | 'mini.completion' | 'omnifunc'
+---@alias ArCompletion 'native' | 'blink' | 'cmp' | 'mini.completion'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
 ---@alias ArWhichDashboard 'builtin' | 'legacy' | | 'alpha' | 'snacks'
 ---@alias ArWhichExplorer 'neo-tree' | 'snacks' | 'mini.files' | 'oil' | 'fyler'
@@ -364,7 +364,7 @@ local config = {
     completion = {
       enable = false,
       ---@type ArAICompletion
-      variant = 'builtin',
+      variant = 'native',
       ---@type ArAISuggestions
       suggestions = 'ghost-text',
     },
