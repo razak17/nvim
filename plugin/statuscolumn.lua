@@ -60,12 +60,12 @@ opt.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
 ar.augroup('StatusCol', {
   event = { 'BufEnter', 'FileType', 'FocusGained', 'TextChanged' },
   command = function(args)
-    local filepath = vim.api.nvim_buf_get_name(args.buf)
-    if filepath == '' then
+    local ft = bo[args.buf].ft
+    local filepath = api.nvim_buf_get_name(args.buf)
+    if ft == '' and filepath == '' then
       vim.opt_local.statuscolumn = ''
       return
     end
-    local ft = bo[args.buf].ft
     if vim.tbl_contains(config.excluded_fts, ft) then return end
     local d = decor.get({
       ft = bo[args.buf].ft,
