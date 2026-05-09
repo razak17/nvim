@@ -395,7 +395,7 @@
       },
       "type": "object"
     },
-    "dashboard": {
+    "intro": {
       "additionalProperties": false,
       "properties": {
         "enable": {

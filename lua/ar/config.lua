@@ -32,7 +32,7 @@ local env = vim.env
 ---@alias ArWhichCmdline 'builtin' | 'extui' | 'tiny-cmdline' | 'noice' | 'telescope-cmdline'
 ---@alias ArCompletion 'native' | 'blink' | 'cmp' | 'mini.completion'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
----@alias ArWhichDashboard 'builtin' | 'legacy' | | 'alpha' | 'snacks'
+---@alias ArWhichIntro 'builtin' | 'legacy' | | 'alpha' | 'snacks'
 ---@alias ArWhichExplorer 'neo-tree' | 'snacks' | 'mini.files' | 'oil' | 'fyler'
 ---@alias ArWhichGx 'local' | 'plugin'
 ---@alias ArWhichIcon 'nvim-web-devicons' | 'mini.icons'
@@ -79,9 +79,9 @@ local env = vim.env
 ---@field enable boolean
 ---@field variant ArWhichCmdline
 
----@class ArDashboard
+---@class ArIntro
 ---@field enable boolean
----@field variant ArWhichDashboard
+---@field variant ArWhichIntro
 
 ---@class ArExplorer
 ---@field rename ArExplorerRename
@@ -422,8 +422,8 @@ local config = {
     ---@type 'fill' | 'outline'
     variant = 'outline',
   },
-  ---@type ArDashboard
-  dashboard = { enable = true, variant = 'legacy' },
+  ---@type ArIntro
+  intro = { enable = true, variant = 'legacy' },
   debug = { enable = false },
   ---@type ArExplorer
   explorer = { rename = 'snacks', variant = 'snacks' },
