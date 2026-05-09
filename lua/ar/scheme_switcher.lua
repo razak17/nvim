@@ -9,17 +9,15 @@ local M = {}
 
 function M.get_current_colorscheme()
   local file = io.open(set_colorscheme_file_path, 'r')
-  local colorscheme = ar.config.colorscheme
-  if not file or not ar.plugins.enable or ar.plugins.minimal then
-    return colorscheme.use_in_minimal_mode and colorscheme.name or 'habamax'
-  end
-  if colorscheme.name ~= '' then return colorscheme.name end
+  local colorscheme = ar.config.colorscheme.name
+  if not ar.plugins.enable then return 'habamax' end
+  if colorscheme ~= '' then return colorscheme end
   if file then
-    local ccs = file:read('*l')
+    local ccs = file:read('*l') or ''
     file:close()
-    if not ccs or ccs == '' then return 'default' end
-    return ccs
+    return ccs ~= '' and ccs or 'default'
   end
+  return 'habamax'
 end
 
 function M.save_current_colorscheme(colorscheme)

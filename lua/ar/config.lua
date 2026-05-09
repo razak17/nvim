@@ -417,7 +417,7 @@ local config = {
     },
   },
   colorscheme = {
-    use_in_minimal_mode = false,
+    all = false,
     name = '',
     ---@type 'fill' | 'outline'
     variant = 'outline',
