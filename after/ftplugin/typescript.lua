@@ -47,7 +47,9 @@ local falsy = ar.falsy
 local override = ar.config.lsp.override
 local ts_lang = ar.config.lsp.lang.typescript
 
-if ar.lsp_enabled('ts_ls') or ar.lsp_enabled('typescript', 'tsgo') then
+local function ts_cond(what) return ar.lsp_enabled('typescript', what) end
+
+if ts_cond('ts_ls') or ts_cond('tsgo') then
   local sources = {
     add_missing_imports = 'source.addMissingImports.ts',
     organize_imports = 'source.organizeImports',
