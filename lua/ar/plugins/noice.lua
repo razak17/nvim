@@ -1,13 +1,11 @@
 local fn, L = vim.fn, vim.log.levels
 
 local is_cmp = ar.config.completion.variant == 'cmp'
+local is_noice = ar.config.ui.cmdline.variant == 'noice'
 
 return {
   'folke/noice.nvim',
-  cond = function()
-    local condition = ar.config.ui.cmdline.variant == 'noice'
-    return ar.get_plugin_cond('noice.nvim', condition)
-  end,
+  cond = function() return ar.get_plugin_cond('noice.nvim', is_noice) end,
   event = 'VeryLazy',
   -- lazy = false,
   init = function()
