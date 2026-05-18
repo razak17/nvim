@@ -313,4 +313,16 @@ return {
       { 'saghen/blink.compat', opts = {} },
     },
   },
+  {
+    'so1ve/blink-noice-docs.nvim',
+    cond = function()
+      local is_noice = ar.config.ui.cmdline.variant == 'noice'
+      return ar.get_plugin_cond(
+        'blink-noice-docs.nvim',
+        ar.completion.enable and is_blink and is_noice
+      )
+    end,
+    event = { 'InsertEnter', 'CmdlineEnter' },
+    config = function(_, opts) require('blink-noice-docs').setup(opts) end,
+  },
 }
