@@ -325,7 +325,7 @@ return {
     if vim.o.filetype == 'lazy' then vim.cmd([[messages clear]]) end
 
     local bg = vim.api.nvim_get_option_value('background', { scope = 'global' })
-    local variant = ar.config.colorscheme.variant
+    local colorscheme_variant = ar.config.colorscheme.variant
     local transparent = ar.config.ui.transparent.enable
 
     -- stylua: ignore
@@ -345,7 +345,7 @@ return {
       { NoiceConfirmBorder = { link = 'FloatBorder' } },
     }
 
-    if variant == 'fill' and not transparent then
+    if colorscheme_variant == 'fill' and not transparent then
       ar.list_insert(overrides, {
         {
           NoicePopupBaseGroup = {
@@ -360,7 +360,7 @@ return {
       })
     end
 
-    if variant == 'outline' or transparent then
+    if colorscheme_variant == 'outline' or transparent then
       ar.list_insert(overrides, {
         { NoicePopupBaseGroup = { link = 'FloatBorder' } },
       })

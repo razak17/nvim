@@ -17,6 +17,31 @@ return {
     end
   end,
   opts = function(_, opts)
+    local colorscheme_variant = ar.config.colorscheme.variant
+    local transparent = ar.config.ui.transparent.enable
+
+    local overrides = {
+      { SnacksNotifierHistory = { link = 'PickerNormal' } },
+    }
+
+    if colorscheme_variant == 'fill' and not transparent then
+      ar.list_insert(overrides, {
+        { SnacksNotifier = { link = 'NormalFloat' } },
+        { SnacksNotifierError = { link = 'NormalFloat' } },
+        { SnacksNotifierWarn = { link = 'NormalFloat' } },
+        { SnacksNotifierInfo = { link = 'NormalFloat' } },
+        { SnacksNotifierDebug = { link = 'NormalFloat' } },
+        { SnacksNotifierTrace = { link = 'NormalFloat' } },
+        { SnacksNotifierBorderError = { link = 'FloatBorder' } },
+        { SnacksNotifierBorderWarn = { link = 'FloatBorder' } },
+        { SnacksNotifierBorderInfo = { link = 'FloatBorder' } },
+        { SnacksNotifierBorderDebug = { link = 'FloatBorder' } },
+        { SnacksNotifierBorderTrace = { link = 'FloatBorder' } },
+      })
+    end
+
+    ar.highlight.plugin('snacks-notifier', overrides)
+
     return vim.tbl_deep_extend('force', opts or {}, {
       styles = vim.tbl_deep_extend('force', opts.styles or {}, {
         notification = { border = border },
