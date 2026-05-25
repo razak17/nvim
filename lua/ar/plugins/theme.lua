@@ -1513,7 +1513,6 @@ return {
           theming.generate_completion_overrides(),
           theming.generate_lsp_overrides(),
           theming.generate_picker_overrides(),
-          theming.generate_plugin_overrides(),
           {
             { SnacksPickerInput = { link = 'PickerPrompt' } },
             { SnacksPickerInputBorder = { link = 'PickerPromptBorder' } },
@@ -1601,8 +1600,7 @@ return {
             { SnacksPickerBoxBorder = { link = 'PickerPromptBorder' } },
             { SnacksPickerInputBorder = { link = 'PickerPromptBorder' } },
             { SnacksPickerInputTitle = { link = 'PickerTitle' } },
-          }),
-          theming.generate_plugin_overrides()
+          })
         )
         theming.apply_overrides('tokyonight', { default = overrides })
       end,

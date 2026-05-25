@@ -201,16 +201,6 @@ local function generate_picker_overrides(overrides)
   return hls
 end
 
----@param overrides? table
----@return table
-local function generate_plugin_overrides(overrides)
-  local hls = {
-    { SnacksNotifierHistory = { link = 'PickerNormal' } },
-  }
-  ar.list_insert(hls, overrides or {})
-  return hls
-end
-
 ---@param overrides? HlOverride
 ---@return table
 local function generate_overrides(overrides)
@@ -236,8 +226,7 @@ local function generate_overrides(overrides)
     generate_popup_overrides(overrides.popup),
     generate_completion_overrides(overrides.completion),
     generate_lsp_overrides(overrides.lsp),
-    generate_picker_overrides(overrides.picker),
-    generate_plugin_overrides(overrides.plugin)
+    generate_picker_overrides(overrides.picker)
   )
   return hls
 end
@@ -480,7 +469,6 @@ return {
   generate_completion_overrides = generate_completion_overrides,
   generate_lsp_overrides = generate_lsp_overrides,
   generate_picker_overrides = generate_picker_overrides,
-  generate_plugin_overrides = generate_plugin_overrides,
   generate_overrides = generate_overrides,
   apply_overrides = apply_overrides,
   get_statusline_palette = get_statusline_palette,
