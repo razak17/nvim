@@ -655,64 +655,74 @@ local function setup_semantic_tokens(client, bufnr)
 end
 
 ---@param client vim.lsp.Client
----@param buf integer
-local function setup_autocommands(client, buf)
-  if client:supports_method(M.textDocument_hover) then
-    augroup(('LspHoverDiagnostics%d'):format(buf), {
-      event = { 'CursorHold' },
-      buffer = buf,
-      desc = 'LSP: Show diagnostics',
-      command = function()
-        if not ar.config.lsp.hover_diagnostics.enable then return end
-        if
-          vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win)
-        then
-          return
+---@param bufnr number
+local function setup_hover_diagnostics(client, bufnr)
+  if not client:supports_method(M.textDocument_hover) then return end
+  augroup(('LspHoverDiagnostics%d'):format(bufnr), {
+    event = { 'CursorHold' },
+    buffer = bufnr,
+    desc = 'LSP: Show diagnostics',
+    command = function()
+      if vim.b.lsp_hover_win and api.nvim_win_is_valid(vim.b.lsp_hover_win) then
+        return
+      end
+      vim.diagnostic.open_float({
+        scope = ar.config.lsp.hover_diagnostics.scope,
+      })
+    end,
+  })
+end
+
+---@param client vim.lsp.Client
+---@param bufnr number
+local function setup_format_on_save(client, bufnr)
+  if not client:supports_method(M.textDocument_formatting) then return end
+  augroup(('LspFormatting%d'):format(bufnr), {
+    event = 'BufWritePre',
+    buffer = bufnr,
+    desc = 'LSP: Format on save',
+    command = function(args)
+      if
+        not vim.g.formatting_disabled
+        and not vim.b[args.buf].formatting_disabled
+      then
+        local clients = vim.tbl_filter(
+          function(c) return c:supports_method(M.textDocument_formatting) end,
+          lsp.get_clients({ buffer = args.buf })
+        )
+        if #clients >= 1 then
+          format.format({ bufnr = args.buf, async = #clients == 1 })
         end
-        vim.diagnostic.open_float({
-          scope = ar.config.lsp.hover_diagnostics.scope,
-        })
-      end,
-    })
+      end
+    end,
+  })
+end
+
+---@param client vim.lsp.Client
+---@param bufnr integer
+local function setup_autocommands(client, bufnr)
+  if ar.config.lsp.hover_diagnostics.enable then
+    setup_hover_diagnostics(client, bufnr)
   end
 
-  if client:supports_method(M.textDocument_inlayHint, { bufnr = buf }) then
-    lsp.inlay_hint.enable(ar.config.lsp.inlay_hint.enable, { bufnr = buf })
+  if client:supports_method(M.textDocument_inlayHint, { bufnr = bufnr }) then
+    lsp.inlay_hint.enable(ar.config.lsp.inlay_hint.enable, { bufnr = bufnr })
   end
 
-  if client:supports_method(M.textDocument_formatting) then
-    augroup(('LspFormatting%d'):format(buf), {
-      event = 'BufWritePre',
-      buffer = buf,
-      desc = 'LSP: Format on save',
-      command = function(args)
-        if
-          not vim.g.formatting_disabled
-          and not vim.b[buf].formatting_disabled
-          and ar.config.lsp.format_on_save.enable
-        then
-          local clients = vim.tbl_filter(
-            function(c) return c:supports_method(M.textDocument_formatting) end,
-            lsp.get_clients({ buffer = buf })
-          )
-          if #clients >= 1 then
-            format.format({ bufnr = args.buf, async = #clients == 1 })
-          end
-        end
-      end,
-    })
+  if ar.config.lsp.format_on_save.enable then
+    setup_format_on_save(client, bufnr)
   end
 
   if client:supports_method(M.textDocument_documentHighlight) then
-    augroup(('LspReferences%d'):format(buf), {
+    augroup(('LspReferences%d'):format(bufnr), {
       event = { 'CursorHold', 'CursorHoldI' },
-      buffer = buf,
+      buffer = bufnr,
       desc = 'LSP: References',
       command = function() lsp.buf.document_highlight() end,
     }, {
       event = 'CursorMoved',
       desc = 'LSP: References Clear',
-      buffer = buf,
+      buffer = bufnr,
       command = function() lsp.buf.clear_references() end,
     })
   end
