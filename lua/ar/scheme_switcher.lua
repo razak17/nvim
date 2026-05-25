@@ -149,7 +149,15 @@ function M.colorscheme_menu()
     scheme_index = scheme_index - #metalines
     if scheme_index >= 1 and scheme_index <= #schemes then
       previewed = true
-      vim.schedule(function() M.set_colorscheme(schemes[scheme_index]) end)
+      vim.schedule(function()
+        -- When the previous colorscheme in scheme switcher is light mode, these colorschemes inherit the light mode colors.
+        -- So set dark mode manually
+        local overrides = { 'retrobox' }
+        if vim.tbl_contains(overrides, schemes[scheme_index]) then
+          vim.o.background = 'dark'
+        end
+        M.set_colorscheme(schemes[scheme_index])
+      end)
     end
   end
 
