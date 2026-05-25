@@ -33,7 +33,6 @@
 - [batman.nvim](https://github.com/the-coding-doggo/batman.nvim)
 - [better-escape.nvim](https://github.com/max397574/better-escape.nvim)
 - [better-ts-errors.nvim](https://github.com/razak17/better-ts-errors.nvim)
-- [better-type-hover](https://github.com/Sebastian-Nielsen/better-type-hover)
 - [blackhole](https://github.com/biisal/blackhole)
 - [blame.nvim](https://github.com/FabijanZulj/blame.nvim)
 - [blink-calc](https://github.com/joelazar/blink-calc)

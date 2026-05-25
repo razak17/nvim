@@ -126,12 +126,4 @@ return {
       })
     end,
   },
-  {
-    'Sebastian-Nielsen/better-type-hover',
-    cond = function() return ar.get_plugin_cond('better-type-hover', enabled) end,
-    ft = { 'typescript', 'typescriptreact' },
-    config = function()
-      require('better-type-hover').setup({ openTypeDocKeymap = 'dK' })
-    end,
-  },
 }
