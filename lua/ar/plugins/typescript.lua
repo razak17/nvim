@@ -126,4 +126,22 @@ return {
       })
     end,
   },
+  {
+    'nemanjamalesija/ts-expand-hover.nvim',
+    cond = function()
+      return ar.get_plugin_cond('ts-expand-hover.nvim', enabled)
+    end,
+    ft = { 'typescript', 'typescriptreact' },
+    keys = {
+      {
+        '<leader>K',
+        function() require('ts_expand_hover').hover() end,
+        desc = 'ts-expand-hover: open',
+      },
+    },
+    opts = {
+      keymaps = { hover = false },
+      float = { border = ar.ui.current.border.default },
+    },
+  },
 }
