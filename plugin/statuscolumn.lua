@@ -18,7 +18,7 @@ local left_thin_block = separators.left_thin_block
 local sep = { text = left_thin_block, texthl = 'StatusColSep' }
 
 local config = {
-  excluded_fts = { 'snacks_picker_input' },
+  excluded_fts = {},
 }
 
 ar.ui.statuscolumn = {}
@@ -37,14 +37,13 @@ function ar.ui.statuscolumn.render()
 
   local d = decor.get({
     ft = bo.ft,
-    bt = bo.bt,
     fname = fn.bufname(0),
     setting = 'statuscolumn',
   })
 
   if not d or ar.falsy(d) then goto continue end
 
-  if ar.falsy(d.ft) or ar.falsy(d.bt) then return '' end
+  if ar.falsy(d.ft) then return '' end
 
   ::continue::
   local lnum, relnum, virtnum = v.lnum, v.relnum, v.virtnum
