@@ -28,7 +28,7 @@ local env = vim.env
 ---@alias ArAIWhichOpencode 'tui' | 'frontend'
 ---@alias ArExplorerRename 'local' | 'snacks'
 ---@alias ArWhichBorder 'single' | 'rounded' | 'none' | 'double' | 'solid' | 'shadow'
----@alias ArWhichBuffers 'snacks' | 'fzf-lua'
+---@alias ArWhichBuffers 'snacks' | 'fzf-lua' | 'telescope'
 ---@alias ArWhichCmdline 'builtin' | 'extui' | 'tiny-cmdline' | 'noice' | 'telescope-cmdline'
 ---@alias ArCompletion 'native' | 'blink' | 'cmp' | 'mini.completion'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'

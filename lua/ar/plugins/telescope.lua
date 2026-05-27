@@ -425,10 +425,14 @@ return {
       if ar.config.picker.files == 'telescope' then
         table.insert(mappings, { '<C-p>', find_files, desc = 'find files' })
       end
+
+      if ar.config.buffers.variant == 'telescope' then
+        table.insert(mappings, { '<M-space>', b('buffers'), desc = 'buffers' })
+      end
+
       if ar.config.picker.variant == 'telescope' then
         -- stylua: ignore
         local telescope_mappings = {
-          { '<M-space>', b('buffers'), desc = 'buffers' },
           { mode = { 'n', 'x' }, '<leader>f?', help_tags, desc = 'help tags' },
           { '<leader>fb', b('current_buffer_fuzzy_find'), desc = 'find in current buffer', },
           { '<leader>fc', nvim_config, desc = 'nvim config' },
