@@ -14,6 +14,7 @@ return {
       { '<leader>ps', function() Snacks.profiler.scratch() end, desc = 'snacks: profiler scratch buffer' },
       { '<leader>pu', function() Snacks.profiler.toggle() end, desc = 'snacks: toggle profiler' },
       { '<leader>qb', function() Snacks.bufdelete.delete() end, desc = 'snacks: delete buffer' },
+      { '<leader>qi', function() Snacks.bufdelete.invisible() end, desc = 'snacks: delete invisible buffers' },
       { mode = { 'n', 'x' }, '<leader>rL', function() Snacks.debug.run() end, desc = 'snacks: run lua' },
       -- stylua: ignore end
     },
