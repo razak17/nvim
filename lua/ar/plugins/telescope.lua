@@ -72,10 +72,7 @@ local api, env, fn = vim.api, vim.env, vim.fn
 local fmt, ui = string.format, ar.ui
 local datapath = fn.stdpath('data')
 local minimal = ar.plugins.minimal
-local enabled = not ar.plugin_disabled('telescope.nvim')
-local min_enabled = enabled and not minimal
-local is_telescope = ar.config.picker.variant == 'telescope'
-local picker_enabled = min_enabled and is_telescope
+local picker_enabled = not minimal and ar.config.picker.variant == 'telescope'
 local border = ui.current.border.telescope
 local show_preview = ar.config.picker.win.show_preview
 
@@ -418,8 +415,8 @@ ar.telescope = vim.tbl_extend('force', ar.telescope, {
 return {
   {
     'nvim-telescope/telescope.nvim',
-    cond = function() return ar.get_plugin_cond('telescope.nvim', min_enabled) end,
-    -- NOTE: usind cmd causes issues with dressing and frecency
+    cond = function() return ar.get_plugin_cond('telescope.nvim', not minimal) end,
+    -- NOTE: using cmd causes issues with frecency
     cmd = { 'Telescope' },
     event = 'VeryLazy',
     keys = function(_, keys)
@@ -428,7 +425,7 @@ return {
       if ar.config.picker.files == 'telescope' then
         table.insert(mappings, { '<C-p>', find_files, desc = 'find files' })
       end
-      if is_telescope then
+      if ar.config.picker.variant == 'telescope' then
         -- stylua: ignore
         local telescope_mappings = {
           { '<M-space>', b('buffers'), desc = 'buffers' },
