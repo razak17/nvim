@@ -423,7 +423,7 @@ local config = {
     variant = 'outline',
   },
   ---@type ArIntro
-  intro = { enable = true, variant = 'legacy' },
+  intro = { enable = true, variant = 'builtin' },
   debug = { enable = false },
   ---@type ArExplorer
   explorer = { rename = 'snacks', variant = 'snacks' },
