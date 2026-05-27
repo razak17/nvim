@@ -39,9 +39,8 @@ augroup('ClearCommandLineMessages', {
 augroup('TextYankHighlight', {
   event = { 'TextYankPost' },
   command = function()
-    (vim.hl or vim.highlight).on_yank({
+    vim.hl.hl_op({
       timeout = 200,
-      visual = true,
       priority = 250, -- With priority higher than the LSP references one.
       higroup = 'IncSearch',
     })
