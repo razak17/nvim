@@ -126,7 +126,7 @@
           "type": "boolean"
         },
         "variant": {
-          "enum": ["fzf-lua", "snacks", "telescope"],
+          "enum": ["fzf-lua", "snacks", "telescope", "buffer-sticks"],
           "type": "string"
         }
       },

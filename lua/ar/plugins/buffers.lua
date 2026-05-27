@@ -120,31 +120,11 @@ return {
     'razak17/buffer-sticks.nvim',
     event = { 'VeryLazy' },
     cond = function()
-      return ar.get_plugin_cond('buffer-sticks.nvim', not minimal)
+      local cond = not minimal and ar.config.buffers.variant == 'buffer-sticks'
+      return ar.get_plugin_cond('buffer-sticks.nvim', cond)
     end,
     keys = {
-      {
-        '<leader><leader>o',
-        function() BufferSticks.jump() end,
-        desc = 'jump to buffer',
-      },
-      {
-        '<leader><leader>q',
-        function() BufferSticks.close() end,
-        desc = 'close buffer',
-      },
-      {
-        '<leader><leader>p',
-        function()
-          BufferSticks.list({
-            action = function(buffer, leave)
-              print('Selected: ' .. buffer.name)
-              leave()
-            end,
-          })
-        end,
-        desc = 'buffer picker',
-      },
+      { '<M-space>', function() BufferSticks.jump() end, desc = 'buffers' },
     },
     opts = {
       highlights = {
