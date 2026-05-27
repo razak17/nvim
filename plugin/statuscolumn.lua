@@ -28,6 +28,25 @@ function ar.ui.statuscolumn.render()
 
   if wo[win].signcolumn == 'no' then return '' end
 
+  local ft = bo.ft
+  local filepath = api.nvim_buf_get_name(0)
+
+  if ft == '' and filepath == '' then return '' end
+
+  if vim.tbl_contains(config.excluded_fts, ft) then return '' end
+
+  local d = decor.get({
+    ft = bo.ft,
+    bt = bo.bt,
+    fname = fn.bufname(0),
+    setting = 'statuscolumn',
+  })
+
+  if not d or ar.falsy(d) then goto continue end
+
+  if ar.falsy(d.ft) or ar.falsy(d.bt) then return '' end
+
+  ::continue::
   local lnum, relnum, virtnum = v.lnum, v.relnum, v.virtnum
   local buf = api.nvim_win_get_buf(win)
   local line_count = api.nvim_buf_line_count(buf)
@@ -56,24 +75,3 @@ ar.highlight.plugin('statuscolumn', {
 })
 
 opt.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
-
-ar.augroup('StatusCol', {
-  event = { 'BufEnter', 'FileType', 'FocusGained', 'TextChanged' },
-  command = function(args)
-    local ft = bo[args.buf].ft
-    local filepath = api.nvim_buf_get_name(args.buf)
-    if ft == '' and filepath == '' then
-      vim.opt_local.statuscolumn = ''
-      return
-    end
-    if vim.tbl_contains(config.excluded_fts, ft) then return end
-    local d = decor.get({
-      ft = bo[args.buf].ft,
-      bt = bo[args.buf].bt,
-      fname = fn.bufname(args.buf),
-      setting = 'statuscolumn',
-    })
-    if not d or ar.falsy(d) then return end
-    if ar.falsy(d.ft) or ar.falsy(d.bt) then vim.opt_local.statuscolumn = '' end
-  end,
-})
