@@ -202,45 +202,6 @@ return {
       opts = { disable_plugin_highlights = false, plugins = { 'lazy' } },
     },
     {
-      'vague2k/vague.nvim',
-      cond = get_cond({ 'vague' }),
-      priority = get_priority({ 'vague' }),
-      event = get_event({ 'vague' }),
-      opts = { colors = { floatBorder = '#252530' } },
-      init = function()
-        local overrides = {
-          default = {
-            { StatusLine = { bg = 'NONE' } },
-            { FloatBorder = { link = 'VertSplit' } },
-            {
-              FloatTitle = {
-                bg = { from = 'Visual' },
-                fg = { from = 'Normal' },
-              },
-            },
-            { Winbar = { link = 'Variable' } },
-            { WinbarNC = { link = 'LineNr' } },
-            { WinSeparator = { fg = { from = 'VertSplit', alter = 0.1 } } },
-            { VertSplit = { link = 'WinSeparator' } },
-            { IndentBlanklineChar = { link = 'VertSplit' } },
-            { IndentBlanklineContextChar = { link = 'IndentBlanklineChar' } },
-          },
-          picker = {
-            {
-              SnacksPickerToggle = {
-                bg = { from = 'FloatTitle' },
-                italic = true,
-              },
-            },
-            { TelescopeTitle = { link = 'FloatTitle' } },
-          },
-        }
-        ar.list_insert(overrides, theming.generate_completion_overrides())
-        ar.list_insert(overrides, theming.generate_lsp_overrides())
-        theming.apply_overrides('vague', overrides)
-      end,
-    },
-    {
       'catppuccin/nvim',
       name = 'catppuccin',
       cond = get_cond({ 'catppuccin' }),

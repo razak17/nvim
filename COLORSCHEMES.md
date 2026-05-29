@@ -218,7 +218,6 @@
 - tomorrow-night-blue
 - two-firewatch
 - unokai
-- vague
 - vim
 - vimbones
 - vscode
