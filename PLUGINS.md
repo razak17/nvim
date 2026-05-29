@@ -525,7 +525,6 @@
 - [undotree](https://github.com/mbbill/undotree)
 - [unnest.nvim](https://github.com/brianhuster/unnest.nvim)
 - [urlview.nvim](https://github.com/axieax/urlview.nvim)
-- [vague.nvim](https://github.com/vague2k/vague.nvim)
 - [VectorCode](https://github.com/Davidyz/VectorCode)
 - [venv-selector.nvim](https://github.com/linux-cultist/venv-selector.nvim)
 - [vim-afterglow](https://github.com/danilo-augusto/vim-afterglow)

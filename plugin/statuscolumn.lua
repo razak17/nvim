@@ -19,6 +19,7 @@ local sep = { text = left_thin_block, texthl = 'StatusColSep' }
 
 local config = {
   excluded_fts = {},
+  skipped_fts = {'neo-tree'},
 }
 
 ar.ui.statuscolumn = {}
@@ -40,6 +41,8 @@ function ar.ui.statuscolumn.render()
     fname = fn.bufname(0),
     setting = 'statuscolumn',
   })
+
+  if vim.tbl_contains(config.skipped_fts, ft) then goto continue end
 
   if not d or ar.falsy(d) then goto continue end
 
