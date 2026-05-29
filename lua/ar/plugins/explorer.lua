@@ -417,21 +417,18 @@ return {
       }
     end,
     config = function(_, opts)
+      local transparent = ar.config.ui.transparent.enable
       highlight.plugin('NeoTree', {
-        theme = {
-          ['onedark'] = {
-            { NeoTreeNormal = { link = 'PanelBackground' } },
-            { NeoTreeNormalNC = { link = 'PanelBackground' } },
-            { NeoTreeRootName = { bold = false, italic = false } },
-            { NeoTreeStatusLine = { link = 'PanelBackground' } },
-            {
-              NeoTreeTabActive = {
-                bg = ar.config.ui.transparent and 'NONE'
-                  or { from = 'FloatTitle' },
-              },
-            },
+        { NeoTreeNormal = { link = 'PanelBackground' } },
+        { NeoTreeNormalNC = { link = 'PanelBackground' } },
+        { NeoTreeRootName = { bold = false, italic = false } },
+        { NeoTreeStatusLine = { link = 'PanelBackground' } },
+        {
+          NeoTreeTabActive = {
+            bg = transparent and 'NONE' or { from = 'FloatTitle' },
           },
         },
+        { NeoTreeTitleBar = { link = 'FloatTitle' } },
       })
       require('neo-tree').setup(opts)
 
