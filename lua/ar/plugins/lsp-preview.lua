@@ -82,6 +82,7 @@ return {
   },
   {
     'WilliamHsieh/overlook.nvim',
+    init = function() vim.g.whichkey_add_spec({ '<C-w>p', group = 'Overlook' }) end,
     cond = get_cond('overlook.nvim'),
     opts = { ui = { border = vim.o.winborder } },
     -- stylua: ignore
