@@ -60,6 +60,7 @@
 - lazydev
 - leetcode
 - live-preview
+- licenses
 - log
 - lsp
 - lsp-code-actions
