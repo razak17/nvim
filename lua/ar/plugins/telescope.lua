@@ -512,7 +512,7 @@ return {
 
       opts = vim.tbl_extend('force', opts or {}, {
         defaults = {
-          prompt_prefix = fmt(' %s  ', ui.codicons.misc.search_alt),
+          prompt_prefix = fmt(' %s ', ui.codicons.misc.search_alt),
           selection_caret = fmt(' %s', ui.icons.misc.separator),
           -- ref: LazyVim
           -- open files in the first window that is an actual file.
