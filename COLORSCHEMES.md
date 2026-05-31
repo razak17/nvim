@@ -25,6 +25,7 @@
 - catppuccin-nvim
 - christmas
 - cobalt-neon
+- cole
 - conifer
 - conifer-lunar
 - conifer-solar

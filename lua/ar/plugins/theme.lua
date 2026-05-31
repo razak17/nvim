@@ -532,6 +532,19 @@ return {
         }, true)
       end,
     },
+    {
+      'thekylehuang/cole.nvim',
+      cond = get_cond({ 'cole' }),
+      priority = get_priority({ 'cole' }),
+      event = get_event({ 'cole' }),
+      init = function()
+        theming.apply_overrides('cole', {
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.7 } } },
+          },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Warm
