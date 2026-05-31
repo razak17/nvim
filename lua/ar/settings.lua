@@ -229,13 +229,12 @@ o.pumheight = 15
 o.confirm = true -- make vim prompt me to save before doing destructive things
 if ar.config.completion.variant == 'native' then
   opt.complete:append('o')
-  -- o.autocomplete = true
-  local excluded_fts = { 'snacks_picker_input' }
   ar.augroup('Autocomplete', {
     event = { 'BufEnter' },
     command = function(args)
-      local ft = vim.bo[args.buf].ft
-      vim.bo[args.buf].autocomplete = not vim.tbl_contains(excluded_fts, ft)
+      -- disable completion if a pop up window
+      if not vim.fn.win_gettype() == 'popup' then return end
+      vim.bo[args.buf].autocomplete = false
     end,
   })
 end
