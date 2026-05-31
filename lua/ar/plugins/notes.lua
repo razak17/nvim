@@ -21,31 +21,40 @@ return {
       { '<leader><localleader>os', '<Cmd>Obsidian search<CR>', desc = 'obsidian: search', },
       { '<leader><localleader>ot', '<Cmd>Obsidian template<CR>', desc = 'obsidian: insert template', },
     },
-    opts = {
-      legacy_commands = false,
-      checkbox = {
-        order = {
-          [' '] = { char = '', hl_group = 'ObsidianTodo' },
-          ['x'] = { char = '', hl_group = 'ObsidianDone' },
-          ['>'] = { char = '', hl_group = 'ObsidianRightArrow' },
-          ['~'] = { char = '󰰱', hl_group = 'ObsidianTilde' },
-          ['!'] = { char = '', hl_group = 'ObsidianImportant' },
+    opts = function()
+      local function get_picker()
+        local variant = ar.config.picker.variant
+        if variant == 'telescope' then return 'telescope.nvim' end
+        if variant == 'snacks' then return 'snacks.picker' end
+        return variant
+      end
+      return {
+        legacy_commands = false,
+        checkbox = {
+          order = {
+            [' '] = { char = '', hl_group = 'ObsidianTodo' },
+            ['x'] = { char = '', hl_group = 'ObsidianDone' },
+            ['>'] = { char = '', hl_group = 'ObsidianRightArrow' },
+            ['~'] = { char = '󰰱', hl_group = 'ObsidianTilde' },
+            ['!'] = { char = '', hl_group = 'ObsidianImportant' },
+          },
         },
-      },
-      ui = {
-        enable = false,
-        bullets = { char = '•', hl_group = 'ObsidianBullet' },
-      },
-      workspaces = {
-        { name = 'personal', path = sync('obsidian') },
-      },
-      notes_subdir = 'Zettelkasten',
-      daily_notes = { folder = 'Daily Notes' },
-      templates = {
-        folder = sync('obsidian') .. '/99 - Meta/00 - Templates',
-        date_format = '%Y-%m-%d-%a',
-        time_format = '%H:%M',
-      },
-    },
+        picker = { name = get_picker() },
+        ui = {
+          enable = false,
+          bullets = { char = '•', hl_group = 'ObsidianBullet' },
+        },
+        workspaces = {
+          { name = 'personal', path = sync('obsidian') },
+        },
+        notes_subdir = 'Zettelkasten',
+        daily_notes = { folder = 'Daily Notes' },
+        templates = {
+          folder = sync('obsidian') .. '/99 - Meta/00 - Templates',
+          date_format = '%Y-%m-%d-%a',
+          time_format = '%H:%M',
+        },
+      }
+    end,
   },
 }
