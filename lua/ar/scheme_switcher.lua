@@ -70,6 +70,8 @@ function M.colorscheme_menu()
     width = width,
     height = height,
     style = 'minimal',
+    title = 'Scheme Switcher',
+    title_pos = 'left',
   })
 
   vim.opt_local.winhighlight:append({
