@@ -377,7 +377,6 @@ local config = {
       'DressingInput',
       'NeogitCommitMessage',
       'TelescopePrompt',
-      'TelescopePrompt',
       'dap-repl',
       'fzf',
       'gitcommit',
