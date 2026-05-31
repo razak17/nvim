@@ -488,9 +488,6 @@ return {
           default = {
             { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.5 } } },
           },
-          popup = {
-            { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.55 } } },
-          },
         }, true)
       end,
     },
@@ -504,9 +501,6 @@ return {
           default = {
             { WinSeparator = { fg = { from = 'NonText', alter = -0.6 } } },
           },
-          popup = {
-            { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.55 } } },
-          },
         }, true)
       end,
     },
@@ -519,6 +513,9 @@ return {
         theming.apply_overrides('acario_dark', {
           default = {
             { WinSeparator = { fg = { from = 'WinSeparator', alter = 1.2 } } },
+          },
+          popup = {
+            { FloatTitle = { fg = { from = 'Variable' } } },
           },
         }, true)
         theming.apply_overrides('acario_light', {
@@ -755,9 +752,6 @@ return {
             { NonText = { fg = { from = 'NonText', alter = 0.3 } } },
             { Folded = { bg = { from = 'CursorLine', alter = 0.2 } } },
             { WinSeparator = { fg = { from = 'LineNr', alter = -0.4 } } },
-          },
-          popup = {
-            { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.4 } } },
           },
           plugin = {
             { GitSignsAdd = { fg = { from = 'Added', alter = -0.35 } } },

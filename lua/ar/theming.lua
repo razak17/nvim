@@ -19,7 +19,7 @@ local function generate_popup_overrides(overrides)
       FloatTitle = {
         bg = bg == 'dark' and { from = 'Type', attr = 'fg', alter = -0.45 }
           or { from = 'Normal', alter = -0.2 },
-        fg = bg == 'dark' and { from = 'CursorLineNr' } or { from = 'Normal' },
+        fg = bg == 'dark' and { from = 'Title' } or { from = 'Normal' },
       },
     },
   }
