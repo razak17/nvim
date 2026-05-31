@@ -19,7 +19,7 @@ local sep = { text = left_thin_block, texthl = 'StatusColSep' }
 
 local config = {
   excluded_fts = {},
-  skipped_fts = {'neo-tree'},
+  skipped_fts = { 'neo-tree' },
 }
 
 ar.ui.statuscolumn = {}
@@ -34,19 +34,9 @@ function ar.ui.statuscolumn.render()
 
   if ft == '' and filepath == '' then return '' end
 
-  if vim.tbl_contains(config.excluded_fts, ft) then return '' end
-
-  local d = decor.get({
-    ft = bo.ft,
-    fname = fn.bufname(0),
-    setting = 'statuscolumn',
-  })
-
   if vim.tbl_contains(config.skipped_fts, ft) then goto continue end
 
-  if not d or ar.falsy(d) then goto continue end
-
-  if ar.falsy(d.ft) then return '' end
+  if vim.tbl_contains(config.excluded_fts, ft) then return '' end
 
   ::continue::
   local lnum, relnum, virtnum = v.lnum, v.relnum, v.virtnum
@@ -77,3 +67,16 @@ ar.highlight.plugin('statuscolumn', {
 })
 
 opt.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
+
+ar.augroup('StatusCol', {
+  event = { 'BufEnter', 'FileType', 'FocusGained', 'TextChanged' },
+  command = function(args)
+    local d = decor.get({
+      ft = bo[args.buf].ft,
+      fname = fn.bufname(args.buf),
+      setting = 'statuscolumn',
+    })
+    if not d or ar.falsy(d) then return end
+    if ar.falsy(d.ft) then vim.opt_local.statuscolumn = '' end
+  end,
+})
