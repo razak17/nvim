@@ -539,7 +539,7 @@ local config = {
       dump_messages = { enable = true },
       git_conflict = { enable = false },
       interceptor = { enable = true },
-      large_file = { enable = true },
+      large_file = { enable = false },
       last_place = { enable = true },
       modify_line_end_delimiter = { enable = true },
       notepad = { enable = true },

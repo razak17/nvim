@@ -8,7 +8,7 @@ local api, fn, cmd, go = vim.api, vim.fn, vim.cmd, vim.go
 local bo, o, wo, opt_l = vim.bo, vim.o, vim.wo, vim.opt_local
 
 ar.large_file = {
-  enable = false,
+  enable = enabled,
   exclusions = { 'NeogitCommitMessage' },
   -- 1MB if lsp is enabled else 500KB
   limit = ar.lsp.enable and 1024 or 500,
