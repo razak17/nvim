@@ -120,16 +120,7 @@ return {
   {
     'ibhagwan/fzf-lua',
     cmd = 'FzfLua',
-    cond = function()
-      if
-        ar.config.picker.variant == 'fzf-lua'
-        or ar.config.picker.files == 'fzf-lua'
-        or ar.config.buffers.variant == 'fzf-lua'
-      then
-        return ar.get_plugin_cond('fzf-lua')
-      end
-      return ar.get_plugin_cond('fzf-lua', not minimal)
-    end,
+    cond = function() return ar.get_plugin_cond('fzf-lua', not minimal) end,
     init = function()
       vim.g.whichkey_add_spec({
         { '<localleader>f', group = 'Picker' },

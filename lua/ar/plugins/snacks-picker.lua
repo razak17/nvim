@@ -220,13 +220,13 @@ return {
     end,
     keys = function(_, keys)
       keys = keys or {}
-      if ar.config.picker.files == 'snacks' then
+      if minimal or ar.config.picker.files == 'snacks' then
         table.insert(keys, { '<C-p>', find_files, desc = 'snacks: find files' })
       end
       if minimal or ar.config.buffers.variant == 'snacks' then
         table.insert(keys, { '<M-space>', buffers, desc = 'snacks: buffers' })
       end
-      if variant == 'snacks' then
+      if minimal or variant == 'snacks' then
         -- stylua: ignore
         local picker_mappings = {
           { '<leader>fB', p('lines'), desc = 'buffer lines' },
