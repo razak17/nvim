@@ -6,6 +6,11 @@ if ar.none or not enabled then return end
 
 local decor = ar.ui.decorations
 
+local config = {
+  ---@type "disable" | "dashed"
+  unfocused_mode = 'disable',
+}
+
 ---@param buf number
 ---@return boolean
 function ar.ui.show_cursorline(buf)
@@ -38,20 +43,37 @@ ar.augroup('ShowCursorline', {
 
 -- https://github.com/folke/dot/blob/cb1d6f956e0ef1848e57a57c1678d8635980d6c5/nvim/lua/config/autocmds.lua#L1C1-L17C3
 -- show cursor line only in active window
-ar.augroup('AutoCursorline', {
-  event = { 'InsertLeave', 'WinEnter' },
-  command = function()
-    if vim.w.auto_cursorline then
-      vim.wo.cursorline = true
-      vim.w.auto_cursorline = nil
-    end
-  end,
-}, {
-  event = { 'InsertEnter', 'WinLeave' },
-  command = function()
-    if vim.wo.cursorline then
-      vim.w.auto_cursorline = true
-      vim.wo.cursorline = false
-    end
-  end,
-})
+if config.unfocused_mode == 'disable' then
+  ar.augroup('AutoCursorline', {
+    event = { 'InsertLeave', 'WinEnter' },
+    command = function()
+      if vim.w.auto_cursorline then
+        vim.wo.cursorline = true
+        vim.w.auto_cursorline = nil
+      end
+    end,
+  }, {
+    event = { 'InsertEnter', 'WinLeave' },
+    command = function()
+      if vim.wo.cursorline then
+        vim.w.auto_cursorline = true
+        vim.wo.cursorline = false
+      end
+    end,
+  })
+end
+
+-- https://github.com/justinmk/config/blob/7664195f49ac1103ff663986b2292c38ab7a8282/.config/nvim/lua/my/winning.lua#L112
+if config.unfocused_mode == 'dashed' then
+  ar.augroup('WheresMyCursorLine', {
+    event = { 'VimEnter', 'WinEnter', 'TabEnter' },
+    command = function()
+      vim.cmd('setlocal winhighlight-=CursorLine:CursorLineNC')
+    end,
+  }, {
+    event = { 'WinLeave' },
+    command = function()
+      vim.cmd('setlocal winhighlight+=CursorLine:CursorLineNC')
+    end,
+  })
+end
