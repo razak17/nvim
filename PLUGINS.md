@@ -379,7 +379,6 @@
 - [openingh.nvim](https://github.com/razak17/openingh.nvim)
 - [org-list.nvim](https://github.com/hamidi-dev/org-list.nvim)
 - [output-panel.nvim](https://github.com/mhanberg/output-panel.nvim)
-- [overlook.nvim](https://github.com/WilliamHsieh/overlook.nvim)
 - [overseer.nvim](https://github.com/stevearc/overseer.nvim)
 - [oxocarbon.nvim](https://github.com/nyoom-engineering/oxocarbon.nvim)
 - [package-info.nvim](https://github.com/razak17/package-info.nvim)
