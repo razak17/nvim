@@ -1122,15 +1122,6 @@
               },
               "type": "object"
             },
-            "custom_fold": {
-              "additionalProperties": false,
-              "properties": {
-                "enable": {
-                  "type": "boolean"
-                }
-              },
-              "type": "object"
-            },
             "dump_messages": {
               "additionalProperties": false,
               "properties": {

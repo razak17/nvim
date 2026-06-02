@@ -1,10 +1,16 @@
-local minimal = ar.plugins.minimal
 local coding = ar.plugins.coding
+
+local function get_cond(plugin, variant)
+  return function()
+    local condition = ar.config.fold.variant == variant
+    return ar.get_plugin_cond(plugin, condition)
+  end
+end
 
 return {
   {
     'chrisgrieser/nvim-origami',
-    cond = function() return ar.get_plugin_cond('nvim-origami', not minimal) end,
+    cond = get_cond('nvim-origami', 'origami'),
     keys = {
       -- { 'h', function() require('origami').h() end, desc = 'close fold' },
       { 'l', function() require('origami').l() end, desc = 'open fold' },
@@ -31,11 +37,7 @@ return {
   },
   {
     'kevinhwang91/nvim-ufo',
-    cond = function()
-      local condition = not ar.config.plugin.extra.custom_fold.enable
-        and not minimal
-      return ar.get_plugin_cond('nvim-ufo', condition)
-    end,
+    cond = get_cond('nvim-ufo', 'ufo'),
     event = 'UIEnter', -- needed for folds to load in time and comments being closed
     init = function() vim.opt.foldexpr = '0' end,
     -- stylua: ignore

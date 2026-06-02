@@ -88,7 +88,7 @@ o.foldlevelstart = 99
 o.foldlevel = 99
 opt.foldmethod = 'expr'
 opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-if not ar.config.plugin.extra.custom_fold.enable then opt.foldtext = '' end
+if ar.config.fold.variant ~= 'custom' then opt.foldtext = '' end
 opt.foldcolumn = ar.config.ui.statuscolumn.enable and '0' or '2'
 opt.foldnestmax = 10
 --------------------------------------------------------------------------------

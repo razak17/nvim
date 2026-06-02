@@ -27,6 +27,7 @@ local env = vim.env
 ---@alias ArAISuggestions 'ghost-text' | 'completion'
 ---@alias ArAIWhichOpencode 'tui' | 'frontend'
 ---@alias ArExplorerRename 'local' | 'snacks'
+---@alias ArWhichFold 'native' | 'origami' | 'ufo' | 'custom'
 ---@alias ArWhichBorder 'single' | 'rounded' | 'none' | 'double' | 'solid' | 'shadow'
 ---@alias ArWhichBuffers 'snacks' | 'fzf-lua' | 'telescope' | 'buffer-sticks'
 ---@alias ArWhichCmdline 'builtin' | 'extui' | 'tiny-cmdline' | 'noice' | 'telescope-cmdline'
@@ -86,6 +87,10 @@ local env = vim.env
 ---@class ArExplorer
 ---@field rename ArExplorerRename
 ---@field variant ArWhichExplorer
+
+---@class ArFold
+---@field enable boolean
+---@field variant ArWhichFold
 
 ---@class ArTypescriptFormatter
 ---@field biome boolean
@@ -426,6 +431,8 @@ local config = {
   debug = { enable = false },
   ---@type ArExplorer
   explorer = { rename = 'snacks', variant = 'snacks' },
+  ---@type ArFold
+  fold = { enable = true, variant = 'native' },
   ---@type ArFormatter
   formatter = {
     typescript = {
@@ -535,7 +542,6 @@ local config = {
       colorify = { enable = true },
       comment = { enable = true },
       copilot_commit_message = { enable = true },
-      custom_fold = { enable = false },
       dump_messages = { enable = true },
       git_conflict = { enable = false },
       interceptor = { enable = true },
@@ -587,7 +593,6 @@ local config = {
       'lsplinks.nvim',
       'neoconf.nvim',
       'nvim-toggler',
-      'nvim-ufo',
       'pair-lens.nvim',
       'persistent-breakpoints.nvim',
       'readline.nvim',
