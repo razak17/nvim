@@ -358,10 +358,7 @@ nnoremap('<C-c>', '<Esc>')
 --------------------------------------------------------------------------------
 -- GX - replicate netrw functionality
 --------------------------------------------------------------------------------
-if
-  (ar.config.gx.enable and ar.config.gx.variant == 'local')
-  or ar.plugins.minimal
-then
+if ar.config.gx.enable and ar.config.gx.variant == 'local' then
   map('n', 'gx', function()
     -- ref: https://github.com/theopn/theovim/blob/main/lua/core.lua#L178
     -- Find the URL in the current line and open it in a browser

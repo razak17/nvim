@@ -471,7 +471,7 @@
           "type": "boolean"
         },
         "variant": {
-          "enum": ["local", "plugin"],
+          "enum": ["custom", "gx.nvim"],
           "type": "string"
         }
       },

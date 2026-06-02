@@ -35,7 +35,7 @@ local env = vim.env
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
 ---@alias ArWhichIntro 'builtin' | 'legacy' | | 'alpha' | 'snacks'
 ---@alias ArWhichExplorer 'neo-tree' | 'snacks' | 'mini.files' | 'oil' | 'fyler'
----@alias ArWhichGx 'local' | 'plugin'
+---@alias ArWhichGx 'custom' | 'gx.nvim'
 ---@alias ArWhichIcon 'nvim-web-devicons' | 'mini.icons'
 ---@alias ArWhichImage 'image.nvim' | 'snacks'
 ---@alias ArWhichIndentline 'mini.indentscope' | 'ibl' | 'snacks' | 'indentmini'
@@ -448,7 +448,7 @@ local config = {
   },
   frecency = { enable = true },
   ---@type ArGx
-  gx = { enable = true, variant = 'local' },
+  gx = { enable = true, variant = 'custom' },
   ---@type ArIcons
   icons = { enable = true, variant = 'mini.icons' },
   image = {

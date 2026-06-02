@@ -5,8 +5,7 @@ return {
     'chrishrb/gx.nvim',
     cond = function()
       local condition = ar.config.gx.enable
-        and ar.config.gx.variant == 'plugin'
-        and not minimal
+        and ar.config.gx.variant == 'gx.nvim'
       return ar.get_plugin_cond('gx.nvim', condition)
     end,
     keys = { { 'gx', '<Cmd>Browse<cr>', mode = { 'n', 'x' } } },
