@@ -22,7 +22,7 @@
               "type": "string"
             },
             "variant": {
-              "enum": ["native", "copilot", "minuet"],
+              "enum": ["copilot", "minuet", "native"],
               "type": "string"
             }
           },
@@ -126,7 +126,7 @@
           "type": "boolean"
         },
         "variant": {
-          "enum": ["fzf-lua", "snacks", "telescope", "buffer-sticks"],
+          "enum": ["buffer-sticks", "fzf-lua", "snacks", "telescope"],
           "type": "string"
         }
       },
@@ -135,6 +135,9 @@
     "colorscheme": {
       "additionalProperties": false,
       "properties": {
+        "all": {
+          "type": "boolean"
+        },
         "name": {
           "enum": [
             "Alienocean",
@@ -371,9 +374,6 @@
           ],
           "type": "string"
         },
-        "all": {
-          "type": "boolean"
-        },
         "variant": {
           "enum": ["fill", "outline"],
           "type": "string"
@@ -389,20 +389,7 @@
           "type": "string"
         },
         "variant": {
-          "enum": ["native", "blink", "cmp", "mini.completion"],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "intro": {
-      "additionalProperties": false,
-      "properties": {
-        "enable": {
-          "type": "boolean"
-        },
-        "variant": {
-          "enum": ["builtin", "legacy", "alpha", "snacks"],
+          "enum": ["blink", "cmp", "mini.completion", "native"],
           "type": "string"
         }
       },
@@ -498,6 +485,19 @@
         },
         "variant": {
           "enum": ["image.nvim", "snacks"],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "intro": {
+      "additionalProperties": false,
+      "properties": {
+        "enable": {
+          "type": "boolean"
+        },
+        "variant": {
+          "enum": ["alpha", "btw", "builtin", "legacy", "snacks", "startup"],
           "type": "string"
         }
       },
@@ -1788,9 +1788,9 @@
               "enum": [
                 "builtin",
                 "extui",
-                "tiny-cmdline",
                 "noice",
-                "telescope-cmdline"
+                "telescope-cmdline",
+                "tiny-cmdline"
               ],
               "type": "string"
             }
@@ -1830,7 +1830,7 @@
               "type": "boolean"
             },
             "variant": {
-              "enum": ["heirline", "custom"],
+              "enum": ["custom", "heirline"],
               "type": "string"
             }
           },
@@ -1843,7 +1843,7 @@
               "type": "boolean"
             },
             "variant": {
-              "enum": ["heirline", "custom"],
+              "enum": ["custom", "heirline"],
               "type": "string"
             }
           },
@@ -1865,7 +1865,7 @@
               "type": "boolean"
             },
             "variant": {
-              "enum": ["dropbar", "local"],
+              "enum": ["custom", "dropbar"],
               "type": "string"
             }
           },

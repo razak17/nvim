@@ -33,7 +33,7 @@ local env = vim.env
 ---@alias ArWhichCmdline 'builtin' | 'extui' | 'tiny-cmdline' | 'noice' | 'telescope-cmdline'
 ---@alias ArCompletion 'native' | 'blink' | 'cmp' | 'mini.completion'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
----@alias ArWhichIntro 'builtin' | 'legacy' | | 'alpha' | 'snacks'
+---@alias ArWhichIntro 'builtin' | 'legacy' | | 'alpha' | 'snacks' | 'startup' | 'btw'
 ---@alias ArWhichExplorer 'neo-tree' | 'snacks' | 'mini.files' | 'oil' | 'fyler'
 ---@alias ArWhichGx 'custom' | 'gx.nvim'
 ---@alias ArWhichIcon 'nvim-web-devicons' | 'mini.icons'
@@ -56,7 +56,7 @@ local env = vim.env
 ---@alias ArWhichShelter 'cloak' | 'ecolog' | 'shelter' | 'camouflage'
 ---@alias ArWhichStatuscolumn 'custom' | 'heirline'
 ---@alias ArWhichStatusline 'custom' | 'heirline'
----@alias ArWhichWinbar 'local' | 'dropbar'
+---@alias ArWhichWinbar 'custom' | 'dropbar'
 
 ---@alias ArCond {enable: boolean,}
 ---@alias ArPythonLang { basedpyright: boolean, ruff: boolean, ty: boolean, jedi_language_server: boolean, pyrefly: boolean, }
@@ -581,7 +581,6 @@ local config = {
     disabled = {
       'VectorCode',
       'agentic.nvim',
-      'btw.nvim',
       'cmp-path',
       'codecompanion.nvim',
       'conflict.nvim',
@@ -601,7 +600,6 @@ local config = {
       'persistent-breakpoints.nvim',
       'readline.nvim',
       'rest.nvim',
-      'startup.nvim',
       'suda.vim',
       'telescope-smart-history.nvim',
       'toggleterm.nvim',
@@ -636,7 +634,7 @@ local config = {
     ---@type ArStatusline
     statusline = { enable = true, variant = 'custom' },
     ---@type ArWinbar
-    winbar = { enable = true, variant = 'dropbar' },
+    winbar = { enable = true, variant = 'custom' },
     transparent = { enable = true },
   },
 }

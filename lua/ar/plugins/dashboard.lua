@@ -1,5 +1,4 @@
 local fmt = string.format
-local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 ar.dashboard = {}
 
@@ -42,15 +41,17 @@ function ar.dashboard.session(command)
   vim.notify('Invalid command or session variant', 'error')
 end
 
+local function get_cond(plugin, variant)
+  return function()
+    local condition = ar.config.intro.variant == variant
+    return ar.get_plugin_cond(plugin, condition)
+  end
+end
+
 return {
   {
     'goolord/alpha-nvim',
-    cond = function()
-      local condition = not minimal
-        and ar.config.intro.enable
-        and ar.config.intro.variant == 'alpha'
-      return ar.get_plugin_cond('alpha-nvim', condition)
-    end,
+    cond = get_cond('alpha-nvim', 'alpha'),
     event = 'VimEnter',
     keys = { { '<leader>;', '<cmd>Alpha<CR>', desc = 'alpha' } },
     opts = function()
@@ -246,10 +247,7 @@ return {
   },
   {
     'startup-nvim/startup.nvim',
-    cond = function()
-      local condition = minimal and niceties
-      return ar.get_plugin_cond('startup.nvim', condition)
-    end,
+    cond = get_cond('startup.nvim', 'startup'),
     lazy = false,
     opts = function()
       local header = {
@@ -341,10 +339,7 @@ return {
   },
   {
     'letieu/btw.nvim',
-    cond = function()
-      local condition = minimal and niceties
-      return ar.get_plugin_cond('btw.nvim', condition)
-    end,
+    cond = get_cond('btw.nvim', 'btw'),
     lazy = false,
     opts = {},
   },

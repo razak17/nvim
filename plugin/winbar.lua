@@ -3,7 +3,7 @@ if not ar then return end
 if
   ar.none
   or not ar.config.ui.winbar.enable
-  or (ar.config.ui.winbar.variant ~= 'local' and not ar.plugins.minimal)
+  or ar.config.ui.winbar.variant ~= 'local'
 then
   return
 end
