@@ -43,7 +43,7 @@ return {
       local condition = not minimal
         and indentline_enable
         and indentline_variant == 'ibl'
-      return ar.get_plugin_cond('nvim-ufo', condition)
+      return ar.get_plugin_cond('indent-blankline.nvim', condition)
     end,
     event = 'UIEnter',
     main = 'ibl',
