@@ -38,7 +38,12 @@ ar.augroup('ShowCursorline', {
   command = function(args) vim.wo.cursorline = ar.ui.show_cursorline(args.buf) end,
 }, {
   event = { 'BufLeave', 'InsertEnter' },
-  command = function() vim.wo.cursorline = false end,
+  command = function(arg)
+    if arg.event == 'BufLeave' and config.unfocused_mode == 'dashed' then
+      return
+    end
+    vim.wo.cursorline = false
+  end,
 })
 
 -- https://github.com/folke/dot/blob/cb1d6f956e0ef1848e57a57c1678d8635980d6c5/nvim/lua/config/autocmds.lua#L1C1-L17C3
