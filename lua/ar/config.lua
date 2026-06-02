@@ -126,6 +126,10 @@ local env = vim.env
 ---@field enable boolean
 ---@field variant ArWhichSession
 
+---@class ArShelter
+---@field enable boolean
+---@field variant ArWhichShelter
+
 ---@class ArTerminal
 ---@field enable boolean
 ---@field variant ArWhichTerminal
@@ -616,11 +620,8 @@ local config = {
   repeatable = { enable = true, variant = 'repeatable-move' },
   ---@type ArSession
   session = { enable = true, variant = 'persisted' },
-  shelter = {
-    enable = true,
-    ---@type ArWhichShelter
-    variant = 'camouflage',
-  },
+  ---@type ArShelter
+  shelter = { enable = true, variant = 'shelter' },
   ui = {
     ---@type ArWhichBorder
     border = 'single',

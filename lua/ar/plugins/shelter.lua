@@ -4,10 +4,8 @@ local is_fzf = ar.config.picker.variant == 'fzf-lua'
 local is_snacks = ar.config.picker.variant == 'snacks'
 local is_blink = ar.config.completion.variant == 'blink'
 
-local cond = not minimal and ar.config.shelter.enable
-
 local function get_cond(plugin, which)
-  local condition = cond and variant == which
+  local condition = ar.config.shelter.enable and variant == which
   return ar.get_plugin_cond(plugin, condition)
 end
 
@@ -73,10 +71,7 @@ return {
   },
   {
     'razak17/shelter.nvim',
-    cond = function()
-      if minimal then return ar.get_plugin_cond('shelter.nvim') end
-      return get_cond('shelter.nvim', 'shelter')
-    end,
+    cond = function() return get_cond('shelter.nvim', 'shelter') end,
     init = function()
       ar.add_to_select('toggle', {
         ['Toggle Shelter'] = 'Shelter toggle',
