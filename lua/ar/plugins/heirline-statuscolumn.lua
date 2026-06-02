@@ -1,6 +1,5 @@
 local fn, v, api = vim.fn, vim.v, vim.api
 
-local minimal = ar.plugins.minimal
 local sep = ar.ui.icons.separators
 
 return {
@@ -11,7 +10,7 @@ return {
     local cond = ar.config.ui.statuscolumn.enable
       and ar.config.ui.statuscolumn.variant == 'heirline'
 
-    if not cond or minimal then return opts end
+    if not cond then return opts end
 
     local conditions = require('heirline.conditions')
     local is_git_repo = conditions.is_git_repo

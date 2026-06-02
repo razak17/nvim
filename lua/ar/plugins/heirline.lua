@@ -1,8 +1,8 @@
 local fn, api = vim.fn, vim.api
 local bo = vim.bo
 local decor = ar.ui.decorations
-local minimal = ar.plugins.minimal
-local variant = ar.config.ui.statusline.variant
+local statusline = ar.config.ui.statusline
+local statuscolumn = ar.config.ui.statuscolumn
 
 local buftypes = { 'nofile', 'prompt', 'help', 'quickfix' }
 
@@ -44,7 +44,11 @@ return {
   {
     'rebelot/heirline.nvim',
     event = 'BufWinEnter',
-    cond = function() return ar.get_plugin_cond('heirline.nvim', not minimal) end,
+    cond = function()
+      local condition = statusline.variant == 'heirline'
+        or statuscolumn.variant == 'heirline'
+      return ar.get_plugin_cond('heirline.nvim', condition)
+    end,
     init = function()
       ar.augroup('Heirline', {
         event = 'ColorScheme',
@@ -59,7 +63,9 @@ return {
     config = function(_, opts)
       local conditions = require('heirline.conditions')
 
-      if ar.config.ui.statusline.enable and variant == 'heirline' then
+      if
+        ar.config.ui.statusline.enable and statusline.variant == 'heirline'
+      then
         opts.statusline = vim.tbl_deep_extend('force', opts.statusline or {}, {
           static = {
             filetypes = filetypes,
@@ -84,7 +90,10 @@ return {
         })
       end
 
-      if ar.config.ui.statuscolumn.enable and variant == 'heirline' then
+      if
+        ar.config.ui.statuscolumn.enable
+        and statuscolumn.variant == 'heirline'
+      then
         opts.statuscolumn =
           vim.tbl_deep_extend('force', opts.statuscolumn or {}, {
             condition = function()

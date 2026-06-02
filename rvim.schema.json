@@ -1830,7 +1830,7 @@
               "type": "boolean"
             },
             "variant": {
-              "enum": ["heirline", "local"],
+              "enum": ["heirline", "custom"],
               "type": "string"
             }
           },
@@ -1843,7 +1843,7 @@
               "type": "boolean"
             },
             "variant": {
-              "enum": ["heirline", "local"],
+              "enum": ["heirline", "custom"],
               "type": "string"
             }
           },

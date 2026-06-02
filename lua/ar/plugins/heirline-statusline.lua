@@ -1,6 +1,5 @@
 local fn, v, api = vim.fn, vim.v, vim.api
 
-local minimal = ar.plugins.minimal
 local sep = ar.ui.icons.separators
 local icons, codicons = ar.ui.icons, ar.ui.codicons
 local falsy = ar.falsy
@@ -35,7 +34,7 @@ return {
     local cond = ar.config.ui.statusline.enable
       and ar.config.ui.statusline.variant == 'heirline'
 
-    if not cond or minimal then return opts end
+    if not cond then return opts end
 
     local separator = sep.dotted_thin_block
     local stl = require('ar.statusline')

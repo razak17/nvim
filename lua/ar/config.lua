@@ -54,8 +54,8 @@ local env = vim.env
 ---@alias ArWhichFilesPicker 'smart-open' | 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick' | 'fff'
 ---@alias ArWhichScroll 'snacks' | 'neoscroll'
 ---@alias ArWhichShelter 'cloak' | 'ecolog' | 'shelter' | 'camouflage'
----@alias ArWhichStatuscolumn 'local' | 'heirline'
----@alias ArWhichStatusline 'local' | 'heirline'
+---@alias ArWhichStatuscolumn 'custom' | 'heirline'
+---@alias ArWhichStatusline 'custom' | 'heirline'
 ---@alias ArWhichWinbar 'local' | 'dropbar'
 
 ---@alias ArCond {enable: boolean,}
@@ -631,9 +631,9 @@ local config = {
     ---@type ArScroll
     scroll = { enable = false, variant = 'snacks' },
     ---@type ArStatuscolumn
-    statuscolumn = { enable = true, variant = 'local' },
+    statuscolumn = { enable = true, variant = 'custom' },
     ---@type ArStatusline
-    statusline = { enable = true, variant = 'heirline' },
+    statusline = { enable = true, variant = 'custom' },
     ---@type ArWinbar
     winbar = { enable = true, variant = 'dropbar' },
     transparent = { enable = true },
