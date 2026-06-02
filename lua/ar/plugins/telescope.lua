@@ -71,8 +71,6 @@ end
 local api, env, fn = vim.api, vim.env, vim.fn
 local fmt, ui = string.format, ar.ui
 local datapath = fn.stdpath('data')
-local minimal = ar.plugins.minimal
-local picker_enabled = not minimal and ar.config.picker.variant == 'telescope'
 local border = ui.current.border.telescope
 local show_preview = ar.config.picker.win.show_preview
 
@@ -415,7 +413,12 @@ ar.telescope = vim.tbl_extend('force', ar.telescope, {
 return {
   {
     'nvim-telescope/telescope.nvim',
-    cond = function() return ar.get_plugin_cond('telescope.nvim', not minimal) end,
+    cond = function()
+      local condition = ar.config.buffers.variant == 'telescope'
+        or ar.config.picker.files == 'telescope'
+        or ar.config.picker.variant == 'telescope'
+      return ar.get_plugin_cond('telescope.nvim', condition)
+    end,
     -- NOTE: using cmd causes issues with frecency
     cmd = { 'Telescope' },
     event = 'VeryLazy',
@@ -825,7 +828,7 @@ return {
       },
       {
         'molecule-man/telescope-menufacture',
-        cond = picker_enabled,
+        cond = ar.config.picker.variant == 'telescope',
         specs = {
           'nvim-telescope/telescope.nvim',
           optional = true,
