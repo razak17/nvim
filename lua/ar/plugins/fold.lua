@@ -104,7 +104,7 @@ return {
           width,
           truncate
         )
-          local hlgroup = 'NonText'
+          local hlgroup = 'Comment'
           local icon = ''
           local new_virt_text = {}
           local suffix = ('  %s %d'):format(icon, end_lnum - lnum)
