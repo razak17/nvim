@@ -914,22 +914,4 @@ return {
       },
     },
   },
-  {
-    'folke/snacks.nvim',
-    optional = true,
-    dependencies = { -- this will only be evaluated if snacks is enabled
-      'razak17/software-licenses.nvim',
-      keys = function()
-        if ar.config.picker.variant == 'snacks' then
-          return {
-            {
-              '<leader>fL',
-              '<Cmd>SoftwareLicenses snacks<CR>',
-              desc = 'software licenses',
-            },
-          }
-        end
-      end,
-    },
-  },
 }

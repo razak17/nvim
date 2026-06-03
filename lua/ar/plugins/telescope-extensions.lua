@@ -509,30 +509,6 @@ return {
           end,
         },
       },
-      {
-        'razak17/software-licenses.nvim',
-        keys = function()
-          if ar.config.picker.variant == 'telescope' then
-            local function licenses()
-              require('telescope').extensions.software_licenses.find(
-                ar.telescope.horizontal()
-              )
-            end
-            return {
-              { '<leader>fL', licenses, desc = 'software licenses' },
-            }
-          end
-        end,
-        specs = {
-          'nvim-telescope/telescope.nvim',
-          optional = true,
-          opts = function(_, opts)
-            if ar.config.picker.variant == 'telescope' then
-              vim.g.telescope_add_extension({ 'software_licenses' }, opts)
-            end
-          end,
-        },
-      },
     },
   },
 }
