@@ -42,13 +42,13 @@ function ar.ui.winbar.render()
   local buffer_count = get_buffer_count()
   local host = fn.systemlist('hostname')[1]
 
-  local left = '%#Debug#%m '
-  local buf_count = '%#Directory#(' .. buffer_count .. ') '
-  local file_path = '%#Normal#' .. home_replaced .. '%*%='
+  local left = '%#WinBar1#%m '
+  local buf_count = '%#WinBar2#(' .. buffer_count .. ') '
+  local file_path = '%#WinBar1#' .. home_replaced .. '%*%='
   if config.pretty_path and pretty_path ~= '' then
-    file_path = '%#Normal#' .. pretty_path.dir .. pretty_path.name .. '%*%='
+    file_path = '%#WinBar1#' .. pretty_path.dir .. pretty_path.name .. '%*%='
   end
-  local hostname = '%#Normal#' .. host
+  local hostname = '%#WinBar1#' .. host
 
   return table.concat({
     left,
