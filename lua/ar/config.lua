@@ -417,7 +417,7 @@ local config = {
     ---@type ArCompletionIcons
     icons = 'lspkind',
     ---@type ArCompletion
-    variant = 'mini.completion',
+    variant = 'native',
     snippets = {
       enable = true,
       ---@type 'minimal' | 'friendly-snippets'
