@@ -29,17 +29,10 @@ return {
 
       ar.augroup('MiniCompletionDisable', {
         event = { 'FileType' },
-        desc = 'Disable completion for certain files',
+        desc = 'Disable completion for popups',
         command = function()
-          local ignored_filetypes = {
-            'TelescopePrompt',
-            'minifiles',
-            'snacks_picker_input',
-            'fff_input',
-          }
-          if vim.tbl_contains(ignored_filetypes, vim.bo.filetype) then
-            vim.b.minicompletion_disable = true
-          end
+          if not vim.fn.win_gettype() == 'popup' then return end
+          vim.b.minicompletion_disable = true
         end,
       })
     end,
