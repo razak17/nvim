@@ -231,8 +231,8 @@ if ar.config.completion.variant == 'native' then
   opt.complete:append('o')
   ar.augroup('Autocomplete', {
     event = { 'BufEnter' },
+    desc = 'Disable completion for popups',
     command = function(args)
-      -- disable completion if a pop up window
       if not vim.fn.win_gettype() == 'popup' then return end
       vim.bo[args.buf].autocomplete = false
     end,
