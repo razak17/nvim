@@ -876,15 +876,12 @@ return {
       {
         desc = 'a progressive search plugin built on top of snacks.nvim ',
         '2kabhishek/seeker.nvim',
-        cond = function() return ar.get_plugin_cond('seeker.nvim') end,
-        cmd = { 'Seeker' },
-        keys = function()
-          if ar.config.picker.files == 'seeker' then
-            return {
-              { '<C-p>', '<Cmd>Seeker files<CR>', desc = 'seeker: files' },
-            }
-          end
+        cond = function()
+          local enabled = ar.config.picker.files == 'seeker'
+          return ar.get_plugin_cond('seeker.nvim', enabled)
         end,
+        cmd = { 'Seeker' },
+        keys = { { '<C-p>', '<Cmd>Seeker files<CR>', desc = 'seeker: files' } },
         opts = {
           picker_opts = {
             layout = { preset = 'centered_with_main_preview' },
