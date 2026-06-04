@@ -11,6 +11,7 @@ return {
     optional = true,
     dependencies = { -- this will only be evaluated if snacks is enabled
       'razak17/software-licenses.nvim',
+      cond = ar.get_plugin_cond('software-licenses.nvim'),
       keys = function()
         if ar.config.picker.variant == 'snacks' then
           return {
@@ -30,6 +31,7 @@ return {
     dependencies = {
       {
         'razak17/software-licenses.nvim',
+        cond = ar.get_plugin_cond('software-licenses.nvim'),
         keys = function()
           if ar.config.picker.variant == 'telescope' then
             local function licenses()
