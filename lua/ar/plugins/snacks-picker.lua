@@ -254,7 +254,7 @@ return {
           { '<leader>fn', p('notifications'), desc = 'notification history' },
           { '<leader>fo', p('recent'), desc = 'recent' },
           { '<leader>fO', notes, desc = 'notes' },
-          { '<leader>fp', p('projects'), desc = 'projects' },
+          -- { '<leader>fp', p('projects'), desc = 'projects' },
           { '<leader>fP', p('lazy'), desc = 'search for plugin spec' },
           { '<leader>fr', p('resume'), desc = 'resume' },
           { '<leader>fs', grep_string, desc = 'grep' },
