@@ -1,7 +1,6 @@
 local highlight = ar.highlight
 local coding = ar.plugins.coding
 local ts_enabled = ar.treesitter.enable
-local ts_extra_enabled = ar.ts_extra_enabled
 local ts = require('ar.utils.treesitter')
 
 -- https://github.com/rachartier/dotfiles/blob/main/.config/nvim/lua/plugins/utils/treesitter.lua?plain=1#L1
@@ -381,10 +380,7 @@ return {
   },
   {
     'windwp/nvim-ts-autotag',
-    cond = function()
-      local condition = coding and ts_extra_enabled
-      return ar.get_plugin_cond('nvim-ts-autotag', condition)
-    end,
+    cond = function() return ar.get_plugin_cond('nvim-ts-autotag', coding) end,
     ft = {
       'typescriptreact',
       'javascript',
@@ -398,10 +394,7 @@ return {
   {
     'andymass/vim-matchup',
     event = { 'BufReadPre', 'BufNewFile' },
-    cond = function()
-      local condition = coding and ts_extra_enabled
-      return ar.get_plugin_cond('vim-matchup', condition)
-    end,
+    cond = function() return ar.get_plugin_cond('vim-matchup', coding) end,
     keys = {
       { '[[', '<plug>(matchup-[%)', mode = { 'n', 'x' } },
       { ']]', '<plug>(matchup-]%)', mode = { 'n', 'x' } },

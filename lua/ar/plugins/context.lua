@@ -41,10 +41,7 @@ return {
   },
   {
     'andersevenrud/nvim_context_vt',
-    cond = function()
-      local condition = coding and ar.ts_extra_enabled
-      return ar.get_plugin_cond('nvim_context_vt', condition)
-    end,
+    cond = function() return ar.get_plugin_cond('nvim_context_vt', coding) end,
     cmd = 'NvimContextVtToggle',
     init = function()
       ar.add_to_select(
@@ -60,10 +57,7 @@ return {
   },
   {
     'nabekou29/pair-lens.nvim',
-    cond = function()
-      local condition = coding and ar.ts_extra_enabled
-      return ar.get_plugin_cond('pair-lens.nvim', condition)
-    end,
+    cond = function() return ar.get_plugin_cond('pair-lens.nvim', coding) end,
     event = { 'BufReadPre', 'BufNewFile' },
     cmd = { 'PairLensToggle', 'PairLensEnable', 'PairLensDisable' },
     opts = {},

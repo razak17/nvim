@@ -181,7 +181,7 @@ return {
     {
       'MeanderingProgrammer/render-markdown.nvim',
       cond = function()
-        return ar.get_plugin_cond('render-markdown.nvim', not minimal)
+        return ar.get_plugin_cond('render-markdown.nvim', coding)
       end,
       cmd = { 'RenderMarkdown' },
       ft = { 'markdown', 'Avante', 'Avante', 'codecompanion' },
@@ -198,7 +198,7 @@ return {
         },
         file_types = { 'markdown', 'Avante' },
         heading = {
-          enabled = not ar.ts_extra_enabled,
+          enabled = true,
           sign = false, --  { '󰫎 ' }
           icons = { '󰎤 ', '󰎧 ', '󰎪 ', '󰎭 ', '󰎱 ', '󰎳 ' },
         },

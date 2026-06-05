@@ -1,4 +1,4 @@
-local minimal = ar.plugins.minimal
+local coding = ar.plugins.coding
 
 -- Gets a property at path
 ---@param tbl table the table to access
@@ -22,17 +22,14 @@ local function get_at_path(tbl, path)
   return result
 end
 
-local function get_cond()
-  local condition = not minimal and ar.ts_extra_enabled
-  return ar.get_plugin_cond('aerial.nvim', condition)
-end
+local function get_cond() return ar.get_plugin_cond('aerial.nvim', coding) end
 
 return {
   {
     {
       'stevearc/aerial.nvim',
       cmd = { 'AerialToggle' },
-      cond = get_cond,
+      -- cond = get_cond,
       init = function()
         ar.add_to_select('toggle', { ['Toggle Aerial'] = 'AerialToggle' })
       end,
@@ -113,7 +110,6 @@ return {
           { default = true, italic = true }
         )
         require('aerial').setup(opts)
-        require('telescope').load_extension('aerial')
       end,
     },
     {

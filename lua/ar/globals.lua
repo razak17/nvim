@@ -402,10 +402,6 @@ function ar.set_default(option, value)
   return true
 end
 
-function ar.ts_extra_enabled()
-  return ar.treesitter.enable and ar.treesitter.extra.enable
-end
-
 -- Ref: https://github.com/LazyVim/LazyVim/blob/ec5981dfb1222c3bf246d9bcaa713d5cfa486fbd/lua/lazyvim/util/init.lua?plain=1#L250
 --- Gets a path to a package in the Mason registry.
 --- Prefer this to `get_package`, since the package might not always be
