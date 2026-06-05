@@ -20,7 +20,6 @@ return {
   {
     'saxon1964/neovim-tips',
     cond = function() return ar.get_plugin_cond('neovim-tips', not minimal) end,
-    event = { 'VeryLazy' },
     version = '*', -- Only update on tagged releases
     -- stylua: ignore
     cmd = { 'NeovimTips', 'NeovimTipsAdd', 'NeovimTipsEdit', 'NeovimTipsRandom',
