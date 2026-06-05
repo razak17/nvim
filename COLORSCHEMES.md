@@ -232,3 +232,4 @@
 - zenburn
 - zenburned
 - zenwritten
+- zephyr-nvim

@@ -1442,6 +1442,21 @@ return {
   -- Clown show
   {
     {
+      'razak17/zephyr-nvim',
+      cond = get_cond({ 'zephyr' }),
+      priority = get_priority({ 'zephyr' }),
+      event = get_event({ 'zephyr' }),
+      init = function()
+        theming.apply_overrides('zephyr', {
+          default = {
+            { Normal = { bg = { from = 'Normal', alter = -0.5 } } },
+            { Visual = { bg = { from = 'Visual', alter = -0.7 } } },
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = -0.7 } } },
+          },
+        }, true)
+      end,
+    },
+    {
       'ianklapouch/wildberries.nvim',
       cond = get_cond({ 'wildberries' }),
       priority = get_priority({ 'wildberries' }),

@@ -370,7 +370,8 @@
             "zenbones",
             "zenburn",
             "zenburned",
-            "zenwritten"
+            "zenwritten",
+            "zephyr-nvim"
           ],
           "type": "string"
         },
