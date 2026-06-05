@@ -21,10 +21,13 @@ return {
     'nvim-mini/mini.trailspace',
     cond = function() return ar.get_plugin_cond('mini.trailspace', not minimal) end,
     init = function()
-      local trailspace = require('mini.trailspace')
       ar.add_to_select('command_palette', {
-        ['Remove Trailing Empty Lines'] = trailspace.trim_last_lines,
-        ['Remove Trailing Spaces'] = trailspace.trim,
+        ['Remove Trailing Empty Lines'] = function()
+          require('mini.trailspace').trim_last_lines()
+        end,
+        ['Remove Trailing Spaces'] = function()
+          require('mini.trailspace').trim()
+        end,
       })
     end,
     opts = {},
