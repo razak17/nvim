@@ -1,5 +1,5 @@
 local ui, highlight = ar.ui, ar.highlight
-local minimal = ar.plugins.minimal
+local coding, minimal = ar.plugins.coding, ar.plugins.minimal
 
 -- Example for configuring Neovim to load user-installed installed Lua rocks:
 local rocks_dir = vim.env.HOME .. '/.luarocks/share/lua/5.1'
@@ -132,29 +132,24 @@ return {
     },
     opts = {},
   },
-  -- https://github.com/AntonVanAssche/md-headers.nvim
   {
     'AntonVanAssche/md-headers.nvim',
-    cond = function()
-      return ar.get_plugin_cond('md-headers.nvim', ar.ts_extra_enabled)
-    end,
-    cmd = { 'MarkdownHeaders', 'MarkdownHeadersClosest' },
+    cond = function() return ar.get_plugin_cond('md-headers.nvim', coding) end,
+    cmd = { 'MDHeaders', 'MDHeadersCurrent', 'MDHeadersQuickfix' },
     -- stylua: ignore
     keys = {
-      { '<localleader>mh', '<cmd>MarkdownHeaders<CR>', desc = 'md-header: headers', },
-      { '<localleader>mn', '<cmd>MarkdownHeadersClosest<CR>', desc = 'md-header: closest', },
+      { '<localleader>mh', '<Cmd>MDHeaders<CR>', desc = 'md-header: headers', },
+      { '<localleader>mn', '<Cmd>MDHeadersCurrent<CR>', desc = 'md-header: current', },
     },
-    opts = { borderchars = ui.current.border.rectangle },
+    opts = {
+      borderchars = ui.current.border.rectangle,
+    },
     config = function(_, opts)
-      highlight.plugin('md-headers', {
-        theme = {
-          ['onedark'] = {
-            { MarkdownHeadersBorder = { inherit = 'FloatBorder' } },
-            { MarkdownHeadersTitle = { inherit = 'FloatTitle' } },
-          },
-        },
-      })
       require('md-headers').setup(opts)
+      highlight.plugin('md-headers', {
+        { MarkdownHeadersBorder = { link = 'FloatBorder' } },
+        { MarkdownHeadersTitle = { link = 'FloatTitle' } },
+      })
     end,
   },
   {
