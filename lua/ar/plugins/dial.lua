@@ -47,6 +47,60 @@ local function toggler()
   }
 end
 
+local function accent_marks()
+  local augend = require('dial.augend')
+  return {
+    augend.constant.new({
+      elements = {
+        'a',
+        'à',
+        'á',
+        'â',
+        'ã',
+        'ä',
+        'å',
+        'ā',
+      },
+      word = false,
+    }),
+    augend.constant.new({
+      elements = {
+        'A',
+        'À',
+        'Á',
+        'Â',
+        'Ã',
+        'Ä',
+        'Å',
+        'Ā',
+      },
+      word = false,
+    }),
+    augend.constant.new({
+      elements = {
+        'e',
+        'è',
+        'é',
+        'ê',
+        'ë',
+        'ē',
+      },
+      word = false,
+    }),
+    augend.constant.new({
+      elements = {
+        'E',
+        'È',
+        'É',
+        'Ê',
+        'Ë',
+        'Ē',
+      },
+      word = false,
+    }),
+  }
+end
+
 return {
   {
     'ruicsh/tailwindcss-dial.nvim',
@@ -144,6 +198,7 @@ return {
         months,
         logical_alias,
         unpack(toggler()),
+        unpack(accent_marks()),
       }
 
       local css = {
@@ -204,6 +259,7 @@ return {
         groups = {
           default = default,
           toggler = toggler(),
+          accent_marks = accent_marks(),
           case = {
             augend.case.new({
               types = {
