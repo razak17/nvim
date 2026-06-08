@@ -334,6 +334,7 @@ return {
         }),
         grep = {
           prompt = ' ',
+          profile = 'ivy',
           winopts = { title = ' 󰈭 Grep ' },
           -- fzf_opts = {
           --   ['--keep-right'] = '',
@@ -349,6 +350,7 @@ return {
         },
         lsp = {
           cwd_only = true,
+          profile = 'ivy',
           symbols = {
             symbol_style = 1,
             symbol_icons = lsp_kind.symbols,
