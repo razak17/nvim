@@ -23,7 +23,7 @@ return {
   },
   {
     'chrisgrieser/nvim-rulebook',
-    cond = function() return ar.get_plugin_cond('nvim-rulebook', ar.lsp.enable) end,
+    cond = function() return ar.get_plugin_cond('nvim-rulebook') end,
     init = function()
       vim.g.whichkey_add_spec({ '<leader>l?', group = 'Rulebook' })
     end,
