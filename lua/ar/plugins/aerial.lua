@@ -28,8 +28,8 @@ return {
   {
     {
       'stevearc/aerial.nvim',
-      cmd = { 'AerialToggle' },
-      -- cond = get_cond,
+      cmd = { 'AerialToggle', 'AerialOpenAll' },
+      cond = get_cond,
       init = function()
         ar.add_to_select('toggle', { ['Toggle Aerial'] = 'AerialToggle' })
       end,
@@ -113,21 +113,57 @@ return {
       end,
     },
     {
+
+      'folke/snacks.nvim',
+      optional = true,
+      dependencies = { -- this will only be evaluated if snacks is enabled
+        {
+          'stevearc/aerial.nvim',
+          optional = true,
+          -- stylua: ignore
+          keys = {
+            { '<leader>fd', function() require('aerial').snacks_picker() end, desc = 'aerial' },
+          },
+        },
+      },
+    },
+    {
+
+      'ibhagwan/fzf-lua',
+      optional = true,
+      dependencies = {
+        {
+          'stevearc/aerial.nvim',
+          optional = true,
+          -- stylua: ignore
+          keys = {
+            { '<leader>fd', function() require('aerial').fzf_lua_picker({profile = 'ivy'}) end, desc = 'aerial' },
+          },
+        },
+      },
+    },
+    {
       'nvim-telescope/telescope.nvim',
       optional = true,
-      keys = function(_, keys)
-        if get_cond() then
-          table.insert(keys or {}, {
-            '<leader>fd',
-            function() require('telescope').extensions.aerial.aerial({}) end,
-            desc = 'aerial',
-          })
-        end
-      end,
-      opts = function(_, opts)
-        return get_cond() and vim.g.telescope_add_extension({ 'aerial' }, opts)
-          or opts
-      end,
+      dependencies = { -- this will only be evaluated if telescope is enabled
+        {
+          'stevearc/aerial.nvim',
+          optional = true,
+          -- stylua: ignore
+          keys = {
+            { '<leader>fd', function() require('telescope').extensions.aerial.aerial({}) end, desc = 'aerial' },
+          },
+          specs = {
+            'nvim-telescope/telescope.nvim',
+            optional = true,
+            opts = function(_, opts)
+              return get_cond()
+                  and vim.g.telescope_add_extension({ 'aerial' }, opts)
+                or opts
+            end,
+          },
+        },
+      },
     },
   },
 }
