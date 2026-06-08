@@ -165,7 +165,7 @@ local servers = {
     },
   },
   graphql = {},
-  -- jdtls = {},
+  jdtls = {},
   jedi_language_server = {},
   jsonls = {
     settings = {
