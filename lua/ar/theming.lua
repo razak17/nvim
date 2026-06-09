@@ -208,6 +208,14 @@ local function generate_overrides(overrides)
   local hls = {}
   ar.list_insert(hls, overrides.default or {})
   ar.list_insert(hls, {
+    {
+      CursorLineNC = {
+        fg = 'NONE',
+        sp = { from = 'Normal', attr = 'fg', alter = -0.7 },
+        bg = 'NONE',
+        underdashed = true,
+      },
+    },
     { Winbar = { link = 'Variable' } },
     { WinbarNC = { inherit = 'NonText', bg = 'NONE' } },
     { WinSeparator = { inherit = 'WinSeparator', bg = 'NONE' } },
