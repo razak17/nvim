@@ -113,7 +113,6 @@ return {
       end,
     },
     {
-
       'folke/snacks.nvim',
       optional = true,
       dependencies = { -- this will only be evaluated if snacks is enabled
@@ -128,7 +127,6 @@ return {
       },
     },
     {
-
       'ibhagwan/fzf-lua',
       optional = true,
       dependencies = {
