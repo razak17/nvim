@@ -144,4 +144,9 @@ return {
       float = { border = ar.ui.current.border.default },
     },
   },
+  {
+    'xeind/vallow.nvim',
+    cmd = { 'Vallow', 'VallowRefresh', 'VallowSearch' },
+    opts = {},
+  },
 }
