@@ -419,6 +419,19 @@
       },
       "type": "object"
     },
+    "fold": {
+      "additionalProperties": false,
+      "properties": {
+        "enable": {
+          "type": "boolean"
+        },
+        "variant": {
+          "enum": ["custom", "native", "origami", "ufo"],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "formatter": {
       "additionalProperties": false,
       "properties": {
