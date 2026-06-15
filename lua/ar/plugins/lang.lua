@@ -279,7 +279,15 @@ return {
     cmd = { 'GoDoc' }, -- optional
     version = '*',
     build = 'go install github.com/lotusirous/gostdsym/stdsym@latest', -- optional
-    opts = {}, -- see further down below for configuration
+    opts = function()
+      local function get_picker()
+        local variant = ar.config.picker.variant
+        if variant == 'fzf-lua' then return 'fzf_lua' end
+        if variant == 'mini.pick' then return 'mini' end
+        return variant
+      end
+      return { picker = { type = get_picker() } }
+    end, -- see further down below for configuration
   },
   {
     'sjclayton/goplexity.nvim',
