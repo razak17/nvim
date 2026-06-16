@@ -13,9 +13,11 @@ local ignore_filetype =
 ar.augroup('LastPlace', {
   event = { 'BufWinEnter', 'FileType' },
   command = function()
-    if vim.tbl_contains(ignore_buftype, vim.bo.buftype) then return end
+    if vim.bo.ft == '' then return end
 
-    if vim.tbl_contains(ignore_filetype, vim.bo.filetype) then
+    if vim.tbl_contains(ignore_buftype, vim.bo.bt) then return end
+
+    if vim.tbl_contains(ignore_filetype, vim.bo.ft) then
       -- reset cursor to first line
       vim.cmd('normal! gg')
       return
