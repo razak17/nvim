@@ -406,13 +406,9 @@ return {
     },
     config = function()
       highlight.plugin('vim-matchup', {
-        theme = {
-          ['onedark'] = {
-            { MatchWord = { inherit = 'LspReferenceText', underline = true } },
-            { MatchParenCursor = { link = 'MatchParen' } },
-            { MatchParenOffscreen = { link = 'MatchParen' } },
-          },
-        },
+        { MatchWord = { inherit = 'LspReferenceText', underline = true } },
+        { MatchParenCursor = { link = 'MatchParen' } },
+        { MatchParenOffscreen = { link = 'MatchParen' } },
       })
       vim.g.matchup_surround_enabled = 1
       vim.g.matchup_matchparen_nomode = 'i'
