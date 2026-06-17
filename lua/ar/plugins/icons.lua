@@ -73,7 +73,7 @@ return {
     'SaptanshuWanjari/icon-picker.nvim',
     -- stylua: ignore
     keys = {
-      { '<leader>fI', '<Cmd>IconPicker<CR>', desc = 'icon_picker: open' },
+      { '<leader>oI', '<Cmd>IconPicker<CR>', desc = 'icon_picker: open' },
       { mode = 'i', '<C-g>i', '<Esc><Cmd>IconPicker<CR>', desc = 'icon_picker: open' },
     },
     cmd = { 'IconPicker' },
