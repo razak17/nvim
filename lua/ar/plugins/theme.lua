@@ -336,13 +336,14 @@ return {
       priority = get_priority({ 'jellybeans', 'jellybeans-warm' }),
       event = get_event({ 'jellybeans', 'jellybeans-warm' }),
       init = function()
-        local overrides = {
+        theming.apply_overrides({
+          'jellybeans',
+          'jellybeans-warm',
+        }, {
           default = {
             { WinSeparator = { fg = { from = 'LineNr', alter = -0.35 } } },
           },
-        }
-        theming.apply_overrides('jellybeans', overrides, true)
-        theming.apply_overrides('jellybeans-warm', overrides, true)
+        }, true)
       end,
     },
     {

@@ -239,17 +239,25 @@ local function generate_overrides(overrides)
   return hls
 end
 
----@param theme string
+---@param themes string|table
 ---@param overrides? HlOverride
 ---@param should_generate? boolean
-local function apply_overrides(theme, overrides, should_generate)
+local function apply_overrides(themes, overrides, should_generate)
   local theme_overrides = overrides and overrides.default or {}
   if should_generate then theme_overrides = generate_overrides(overrides) end
-  ar.augroup(theme .. '-theme', {
-    event = { 'ColorScheme' },
-    pattern = { theme },
-    command = function() ar.highlight.all(theme_overrides) end,
-  })
+  local function overrides_augroup(th)
+    ar.augroup(th .. '-theme', {
+      event = { 'ColorScheme' },
+      pattern = { th },
+      command = function() ar.highlight.all(theme_overrides) end,
+    })
+  end
+
+  if type(themes) == 'table' then
+    vim.tbl_map(function(t) overrides_augroup(t) end, themes)
+    return
+  end
+  overrides_augroup(themes)
 end
 
 local function get_statusline_palette(colorscheme)
