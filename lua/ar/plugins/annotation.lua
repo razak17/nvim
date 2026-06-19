@@ -1,9 +1,9 @@
-local minimal = ar.plugins.minimal
+local coding = ar.plugins.coding
 
 return {
   {
     'danymat/neogen',
-    cond = function() return ar.get_plugin_cond('neogen', not minimal) end,
+    cond = function() return ar.get_plugin_cond('neogen', coding) end,
     -- stylua: ignore
     keys = {
       { '<localleader>nd', function() require('neogen').generate() end, desc = 'neogen: generate doc', },

@@ -1,5 +1,4 @@
 local coding = ar.plugins.coding
-local minimal = ar.plugins.minimal
 
 return {
   {
@@ -30,28 +29,8 @@ return {
   },
   {
     'zerochae/endpoint.nvim',
-    cond = function() return ar.get_plugin_cond('endpoint.nvim', not minimal) end,
+    cond = function() return ar.get_plugin_cond('endpoint.nvim', not coding) end,
     cmd = { 'Endpoint', 'EndpointRefresh' },
     opts = {},
-  },
-  --------------------------------------------------------------------------------
-  -- Disabled
-  --------------------------------------------------------------------------------
-  {
-    'rest-nvim/rest.nvim',
-    cond = function() return ar.get_plugin_cond('rest.nvim', not minimal) end,
-    ft = { 'http', 'json' },
-    init = function() vim.g.whichkey_add_spec({ '<leader>rr', group = 'Rest' }) end,
-    -- stylua: ignore
-    keys = {
-      { '<leader>rrs', '<Plug>RestNvim', desc = 'rest: run', buffer = 0 },
-      { '<leader>rrp', '<Plug>RestNvimPreview', desc = 'rest: preview', buffer = 0, },
-      { '<leader>rrl', '<Plug>RestNvimLast', desc = 'rest: run last', buffer = 0, },
-    },
-    opts = { skip_ssl_verification = true },
-    config = function(_, opts) require('rest-nvim').setup(opts) end,
-    dependencies = {
-      { 'vhyrro/luarocks.nvim', opts = {} },
-    },
   },
 }

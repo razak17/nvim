@@ -2,7 +2,6 @@
 
 - aerial
 - ai
-- animation
 - annotation
 - api
 - autopair

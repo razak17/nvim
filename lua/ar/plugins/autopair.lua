@@ -1,8 +1,6 @@
 local api = vim.api
 local minimal = ar.plugins.minimal
 local coding = ar.plugins.coding
-local enabled = not minimal and coding
-local get_cond = ar.get_plugin_cond
 local is_blink = ar.has('blink.cmp')
 local is_cmp = ar.has('nvim-cmp')
 
@@ -10,8 +8,8 @@ return {
   {
     'windwp/nvim-autopairs',
     cond = function()
-      local condition = enabled and ar.config.completion.variant ~= 'native'
-      return get_cond('nvim-autopairs', condition)
+      local condition = coding and ar.config.completion.variant ~= 'native'
+      return ar.get_plugin_cond('nvim-autopairs', condition)
     end,
     event = 'InsertEnter',
     config = function()
@@ -35,7 +33,9 @@ return {
   },
   {
     'altermo/ultimate-autopair.nvim',
-    cond = function() return get_cond('ultimate-autopair.nvim', enabled) end,
+    cond = function()
+      return ar.get_plugin_cond('ultimate-autopair.nvim', coding)
+    end,
     event = { 'InsertEnter', 'CmdlineEnter' },
     init = function()
       ar.augroup('UltimateAutoPair', {
