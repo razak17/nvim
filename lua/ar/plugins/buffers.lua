@@ -53,11 +53,17 @@ return {
     desc = 'Vim plugin that enables surfing through buffers based on viewing history per window ',
     'ton/vim-bufsurf',
     event = 'VeryLazy',
-    cond = function() return ar.get_plugin_cond('vim-bufsurf', not minimal) end,
-    keys = {
-      { '[b', '<Plug>(buf-surf-back)', desc = 'vim-bufsurf: back' },
-      { ']b', '<Plug>(buf-surf-forward)', desc = 'vim-bufsurf: forward' },
-    },
+    cond = function() return ar.get_plugin_cond('vim-bufsurf') end,
+    config = function()
+      local function jump(options)
+        return ar.jump(function(opts)
+          if opts.forward then vim.cmd('BufSurfForward') end
+          if not opts.forward then vim.cmd('BufSurfBack') end
+        end, options)
+      end
+      map('n', 'gP', jump({ forward = false }), { desc = 'previous buffer' })
+      map('n', 'gN', jump({ forward = true }), { desc = 'next buffer' })
+    end,
   },
   {
     desc = 'Send buffers into early retirement by automatically closing them after x minutes of inactivity.',

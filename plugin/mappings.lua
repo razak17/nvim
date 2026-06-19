@@ -232,7 +232,7 @@ cnoremap(';;', "<C-r>=fnameescape(expand('%:h'))<cr>/")
 -- even if the file isn't changed so that things like hot reload work
 nnoremap('<c-s>', '<Cmd>silent! write ++p<CR>')
 -- Buffer Management
-if not ar.has('cybu.nvim') then
+if not ar.has('vim-bufsurf') then
   local function jump(options)
     return ar.jump(function(opts)
       if opts.forward then vim.cmd('bnext') end
