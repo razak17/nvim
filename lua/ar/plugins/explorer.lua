@@ -157,6 +157,7 @@ return {
   },
   {
     'nvim-neo-tree/neo-tree.nvim',
+    lazy = false,
     cond = function() return plugin_cond('neo-tree.nvim', 'neo-tree') end,
     branch = 'v3.x',
     cmd = { 'Neotree' },
@@ -201,6 +202,7 @@ return {
       end
 
       return {
+        clipboard = { sync = 'universal' },
         close_if_last_window = true,
         sources = { 'filesystem', 'git_status', 'document_symbols' },
         enable_opened_markers = true,
