@@ -1163,7 +1163,6 @@ return {
         }, true)
       end,
     },
-
     {
       'nuvic/flexoki-nvim',
       name = 'flexoki',
