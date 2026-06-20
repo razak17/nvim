@@ -55,11 +55,4 @@ return {
       vim.cmd([[NvimContextVtToggle]])
     end,
   },
-  {
-    'nabekou29/pair-lens.nvim',
-    cond = function() return ar.get_plugin_cond('pair-lens.nvim', coding) end,
-    event = { 'BufReadPre', 'BufNewFile' },
-    cmd = { 'PairLensToggle', 'PairLensEnable', 'PairLensDisable' },
-    opts = {},
-  },
 }

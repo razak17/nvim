@@ -595,7 +595,6 @@ local config = {
       'lsplinks.nvim',
       'neoconf.nvim',
       'nvim-toggler',
-      'pair-lens.nvim',
       'persistent-breakpoints.nvim',
       'readline.nvim',
       'rest.nvim',
