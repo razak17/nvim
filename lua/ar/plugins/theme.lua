@@ -744,6 +744,7 @@ return {
         theming.apply_overrides({
           'duckbones',
           'forestbones',
+          'kanagawabones',
           'neobones',
           'nordbones',
           'randombones',
@@ -757,17 +758,9 @@ return {
         }, {
           default = {
             { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.2 } } },
-            { CursorLine = { bg = { from = 'CursorLine', alter = 0.1 } } },
+            { CursorLine = { bg = { from = 'CursorLine', alter = 0.4 } } },
             { Folded = { bg = { from = 'Folded', alter = -0.2 } } },
             { WinSeparator = { fg = { from = 'VertSplit', alter = -0.35 } } },
-          },
-        }, true)
-        theming.apply_overrides('kanagawabones', {
-          default = {
-            { CursorLine = { bg = { from = 'CursorLine', alter = 0.2 } } },
-            {
-              WinSeparator = { fg = { from = 'WinSeparator', alter = -0.15 } },
-            },
           },
         }, true)
       end,
