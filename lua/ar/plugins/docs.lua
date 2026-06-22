@@ -4,7 +4,7 @@ return {
   {
     'emmanueltouzery/apidocs.nvim',
     cond = function() return ar.get_plugin_cond('apidocs.nvim', not minimal) end,
-    cmd = { 'ApidocsInstall', 'ApidocsOpen' },
+    cmd = { 'ApidocsInstall', 'ApidocsOpen', 'ApidocsSearch' },
     opts = {},
   },
   {

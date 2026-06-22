@@ -3,7 +3,6 @@ local minimal = ar.plugins.minimal
 local get_cond = ar.get_plugin_cond
 
 return {
-
   {
     'godlygeek/tabular',
     cmd = { 'Tabularize' },
