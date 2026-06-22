@@ -92,7 +92,8 @@ augroup('WinBehavior', {
 }, {
   event = { 'TermOpen' },
   command = function()
-    if falsy(vim.bo.filetype) or not falsy(vim.bo.buftype) == '' then
+    if ar.kitty_scrollback.enable then return end
+    if falsy(vim.bo.filetype) or not falsy(vim.bo.buftype) then
       cmd.startinsert()
     end
   end,

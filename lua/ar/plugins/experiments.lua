@@ -3,10 +3,12 @@ local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 return {
   {
     'mikesmithgh/kitty-scrollback.nvim',
-    cond = function()
-      return ar.get_plugin_cond('kitty-scrollback.nvim', not minimal)
-    end,
-    cmd = { 'KittyScrollbackGenerateKittens', 'KittyScrollbackCheckHealth' },
+    cond = function() return ar.get_plugin_cond('kitty-scrollback.nvim') end,
+    cmd = {
+      'KittyScrollbackGenerateKittens',
+      'KittyScrollbackCheckHealth',
+      'KittyScrollbackGenerateCommandLineEditing',
+    },
     event = { 'User KittyScrollbackLaunch' },
     config = function()
       require('kitty-scrollback').setup({
