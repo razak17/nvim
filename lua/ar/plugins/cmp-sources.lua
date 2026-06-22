@@ -1,9 +1,9 @@
 ---@diagnostic disable: redundant-parameter
 
 local codicons = ar.ui.codicons
-local minimal = ar.plugins.minimal
+local is_cmp = ar.config.completion.variant == 'cmp'
 
-local function get_cond(plugin) return ar.get_plugin_cond(plugin, not minimal) end
+local function get_cond(plugin) return ar.get_plugin_cond(plugin, is_cmp) end
 
 return {
   {
