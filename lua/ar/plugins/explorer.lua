@@ -82,62 +82,56 @@ return {
     -- stylua: ignore
     keys = {
       { '-', '<Cmd>Fyler kind=replace<CR>', desc = 'fyler float' },
-      { '<C-n>', '<Cmd>Fyler kind=float<CR>', desc = 'fyler float' },
+      { '<C-n>', '<Cmd>Fyler kind=floating<CR>', desc = 'fyler float' },
       { '<leader>ee', '<Cmd>Fyler kind=split_right_most<CR>', desc = 'toggle tree' },
     },
     opts = {
+      auto_confirm_simple_mutation = false,
+      extensions = {
+        git = {
+          enabled = true,
+          inline = true,
+          icons = {
+            [' M'] = { icon = codicons.git.mod, hl = 'FylerGitModified' },
+            ['M '] = { icon = codicons.git.added, hl = 'FylerGitStaged' },
+            ['MM'] = { icon = codicons.git.added, hl = 'FylerGitStaged' },
+            ['??'] = { icon = icons.git.untracked, hl = 'FylerGitUntracked' },
+            [' D'] = { icon = codicons.git.removed, hl = 'FylerGitDeleted' },
+            ['D '] = { icon = codicons.git.removed, hl = 'FylerGitStaged' },
+            ['R '] = { icon = codicons.git.renamed, hl = 'FylerGitRenamed' },
+            ['UU'] = { icon = icons.git.untracked, hl = 'FylerGitConflict' },
+            ['!!'] = { icon = codicons.git.ignored, hl = 'FylerGitIgnored' },
+          },
+        },
+        trash = {
+          enabled = true,
+        },
+      },
+      hooks = { on_rename = function(src, dst) on_rename(src, dst) end },
       integrations = {
         icon = ar_icons == 'mini.icons' and 'mini_icons' or 'nvim-web-devicons',
       },
-      hooks = { on_rename = function(src, dst) on_rename(src, dst) end },
-      views = {
-        finder = {
-          confirm_simple = true,
-          default_explorer = true,
-          delete_to_trash = true,
-          git_status = {
-            enabled = true,
-            symbols = {
-              Untracked = icons.git.untracked,
-              Added = codicons.git.added,
-              Modified = codicons.git.mod,
-              Deleted = codicons.git.removed,
-              Renamed = codicons.git.renamed,
-              Copied = codicons.git.copied,
-              Conflict = icons.git.branch,
-              Ignored = codicons.git.ignored,
-            },
-          },
-          indentscope = { group = 'FylerIndentMarker' },
-          win = {
-            border = vim.o.winborder,
-            kind = 'float',
-            win_opts = {
-              number = false,
-              relativenumber = false,
-              cursorline = true,
-              winhighlight = 'NormalFloat:NormalFloat,NormalNC:NormalFloat',
-            },
-            kinds = {
-              float = {
-                height = '70%',
-                width = '40%',
-                top = '10%',
-                left = '30%',
-              },
-              split_left = { width = '40' },
-              split_left_most = {
-                width = '40',
-                win_opts = { winfixwidth = true },
-              },
-              split_right = { width = '40' },
-              split_right_most = {
-                width = '40',
-                win_opts = { winfixwidth = true },
-              },
-            },
-          },
+      kind = 'float',
+      kind_presets = {
+        floating = {
+          border = vim.o.winborder,
+          height = '70%',
+          width = '40%',
+          top = '10%',
+          left = '30%',
         },
+        split_left = { width = '40' },
+        split_left_most = { width = '40' },
+        split_right = { width = '40' },
+        split_right_most = { width = '40' },
+      },
+      ui = { indent_guides = true },
+      win_opts = {
+        winfixwidth = true,
+        number = false,
+        relativenumber = false,
+        cursorline = true,
+        winhighlight = 'NormalFloat:NormalFloat,NormalNC:NormalFloat',
       },
     },
     config = function(_, opts)
