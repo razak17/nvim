@@ -36,9 +36,6 @@
 - file-path
 - fold
 - ft
-- fun
-- games
-- ghost
 - git
 - git-conflict
 - git-diff
@@ -58,8 +55,8 @@
 - lang
 - lazydev
 - leetcode
-- live-preview
 - licenses
+- live-preview
 - log
 - lsp
 - lsp-code-actions
@@ -87,11 +84,13 @@
 - noice
 - notes
 - notify
+- nvumi
 - nvzone
 - opencode
 - picker
 - pipe
 - profile
+- project
 - px-to-rem
 - qf
 - readline

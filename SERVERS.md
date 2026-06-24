@@ -21,6 +21,7 @@
 - gh_actions_ls
 - gopls
 - graphql
+- jdtls
 - jedi_language_server
 - jsonls
 - lemminx
