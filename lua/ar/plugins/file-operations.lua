@@ -1,4 +1,4 @@
-local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
+local minimal = ar.plugins.minimal
 
 return {
   {
@@ -35,10 +35,7 @@ return {
   },
   {
     'bgaillard/readonly.nvim',
-    cond = function()
-      local condition = not minimal and niceties
-      return ar.get_plugin_cond('readonly.nvim', condition)
-    end,
+    cond = function() return ar.get_plugin_cond('readonly.nvim', not minimal) end,
     lazy = false,
     opts = {
       secured_files = {
