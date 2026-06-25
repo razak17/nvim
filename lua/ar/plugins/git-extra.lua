@@ -3,15 +3,6 @@ local git_cond = require('ar.utils.git').git_cond
 
 return {
   {
-    'FabijanZulj/blame.nvim',
-    cond = function() return git_cond('blame.nvim') end,
-    cmd = { 'BlameToggle' },
-    init = function()
-      ar.add_to_select('git', { ['Toggle Blame'] = 'BlameToggle' })
-    end,
-    config = function() require('blame').setup() end,
-  },
-  {
     'niuiic/git-log.nvim',
     cond = function() return git_cond('git-log.nvim') end,
     -- stylua: ignore
@@ -19,22 +10,6 @@ return {
       { mode = { 'n', 'x' }, '<leader>gL', "<Cmd>lua require'git-log'.check_log()<CR>", desc = 'git-log: show line/selection log' },
     },
     dependencies = { 'niuiic/omega.nvim' },
-  },
-  {
-    'rbong/vim-flog',
-    cond = function() return git_cond('vim-flog') end,
-    init = function()
-      ar.add_to_select('git', { ['View Branch Graph'] = 'Flog' })
-    end,
-    cmd = { 'Flog', 'Flogsplit', 'Floggit' },
-    dependencies = { 'tpope/vim-fugitive', 'tpope/vim-rhubarb' },
-  },
-  {
-    'SuperBo/fugit2.nvim',
-    cond = function() return git_cond('fugit2.nvim') end,
-    cmd = { 'Fugit2', 'Fugit2Blame', 'Fugit2Diff', 'Fugit2Graph' },
-    opts = { width = 100 },
-    dependencies = { 'nvim-lua/plenary.nvim' },
   },
   {
     'Mauritz8/gitstatus.nvim',
@@ -62,30 +37,9 @@ return {
     opts = {},
   },
   {
-    'ldelossa/gh.nvim',
-    cond = function() return git_cond('gh.nvim') end,
-    -- stylua: ignore
-    cmd = {
-      'GHCloseCommit', 'GHExpandCommit', 'GHOpenToCommit', 'GHPopOutCommit',
-      'GHCollapseCommit', 'GHPreviewIssue', 'LTPanel', 'GHStartReview',
-      'GHCloseReview', 'GHDeleteReview', 'GHExpandReview', 'GHSubmitReview',
-      'GHCollapseReview', 'GHClosePR', 'GHPRDetails', 'GHExpandPR', 'GHOpenPR',
-      'GHPopOutPR', 'GHRefreshPR', 'GHOpenToPR', 'GHCollapsePR', 'GHCreateThread',
-      'GHNextThread', 'GHToggleThread',
-    },
-    dependencies = {
-      {
-        'ldelossa/litee.nvim',
-        config = function() require('litee.lib').setup() end,
-      },
-    },
-    config = function() require('litee.gh').setup() end,
-  },
-  {
     'aaronhallaert/advanced-git-search.nvim',
     cond = function()
-      return git_cond('advanced-git-search.nvim')
-        and (not ar.plugin_disabled('telescope.nvim') and not minimal)
+      return git_cond('advanced-git-search.nvim') and ar.config.picker.variant == 'telescope'
     end,
     cmd = { 'AdvancedGitSearch' },
     init = function()
@@ -94,6 +48,7 @@ return {
     config = function()
       require('telescope').load_extension('advanced_git_search')
     end,
+    dependencies = { 'tpope/vim-fugitive', 'tpope/vim-rhubarb' },
   },
   {
     '2kabhishek/co-author.nvim',
