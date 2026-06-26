@@ -24,7 +24,7 @@ return {
     dependencies = { 'sindrets/diffview.nvim', 'folke/snacks.nvim' },
   },
   {
-    'Mauritz8/gitstatus.nvim',
+    'https://codeberg.org/mauritz/gitstatus.nvim',
     cond = function() return git_cond('gitstatus.nvim') end,
     cmd = { 'Gitstatus' },
     keys = {
