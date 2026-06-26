@@ -12,6 +12,18 @@ return {
     dependencies = { 'niuiic/omega.nvim' },
   },
   {
+    'Salanoid/gitlogdiff.nvim',
+    main = 'gitlogdiff',
+    cond = function() return git_cond('gitlogdiff.nvim') end,
+    cmd = 'GitLogDiff',
+    -- stylua: ignore
+    keys = {
+      { '<localleader>gdL', '<Cmd>GitLogDiff<CR>', desc = 'gitlogdiff: log diff' },
+    },
+    opts = { max_count = 10 },
+    dependencies = { 'sindrets/diffview.nvim', 'folke/snacks.nvim' },
+  },
+  {
     'Mauritz8/gitstatus.nvim',
     cond = function() return git_cond('gitstatus.nvim') end,
     cmd = { 'Gitstatus' },
@@ -39,7 +51,8 @@ return {
   {
     'aaronhallaert/advanced-git-search.nvim',
     cond = function()
-      return git_cond('advanced-git-search.nvim') and ar.config.picker.variant == 'telescope'
+      return git_cond('advanced-git-search.nvim')
+        and ar.config.picker.variant == 'telescope'
     end,
     cmd = { 'AdvancedGitSearch' },
     init = function()
