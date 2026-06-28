@@ -260,6 +260,10 @@ nnoremap('<localleader>bo', function()
   end
 end, { desc = 'close other buffers' })
 nnoremap('<leader>od', function()
+  if not ar.has('snacks.nvim') then
+    vim.notify('Requires snacks.nvim')
+    return
+  end
   if fn.confirm('Move file to trash?', '&Yes\n&No') == 1 then
     ar.config.autosave.enable = not ar.config.autosave.enable
     local file = fn.expand('%:p')
