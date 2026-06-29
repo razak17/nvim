@@ -43,7 +43,6 @@
 - git-repo
 - gitpad
 - gp
-- grapple
 - heirline
 - heirline-statuscolumn
 - heirline-statusline
@@ -129,7 +128,6 @@
 - todo
 - toggle
 - tools
-- trailblazer
 - translate
 - transparent
 - treesitter
