@@ -268,6 +268,9 @@ return {
         { name = 'ChatGPT4o', disable = true },
         { name = 'ChatGPT4o-mini', disable = true },
         { name = 'ChatGPT-o3-mini', disable = true },
+        { name = 'ChatClaude-3-5-Haiku', disable = true },
+        { name = 'ChatClaude-3-7-Sonnet', disable = true },
+        { name = 'ChatClaude-Sonnet-4-Thinking', disable = true },
       },
       default_chat_agent = 'ChatGPT-gpt-5.4-mini',
       chat_shortcut_respond = {
@@ -340,17 +343,16 @@ return {
       end
     end
     if models.claude then
-      setup_model({
-        provider = 'anthropic',
-        name = 'ChatClaude-3-5-Sonnet',
-        model = {
-          model = 'claude-3-5-sonnet-20240620',
-          temperature = 0.8,
-          top_p = 1,
-        },
-        chat = true,
-        command = false,
-      })
+      for model, config in pairs(ar.ai.claude_models) do
+        setup_model({
+          provider = 'anthropic',
+          name = fmt('ChatClaude-%s', model),
+          model = { model = model },
+          chat = true,
+          command = false,
+          system_prompt = config.system_prompt,
+        })
+      end
     end
     if models.openai then
       for model, config in pairs(ar.ai.openai_models) do

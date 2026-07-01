@@ -233,6 +233,15 @@ local env = vim.env
 local namespace = {
   ai = {
     enable = env.RVIM_AI_ENABLED == '1',
+    claude_models = {
+      ['claude-haiku-4.5'] = {},
+      ['claude-sonnet-4-5'] = {},
+      ['claude-opus-4-5'] = {},
+      ['claude-sonnet-4-6'] = {},
+      ['claude-opus-4-7'] = {},
+      ['claude-opus-4-8'] = {},
+      ['claude-sonnet-5'] = {},
+    },
     copilot_models = {
       ['claude-sonnet-4'] = {},
       ['claude-sonnet-4.5'] = {},
@@ -364,7 +373,7 @@ local config = {
   ai = {
     ---@type ArAIModels
     models = {
-      claude = false,
+      claude = true,
       copilot = true,
       gemini = true,
       openai = true,
