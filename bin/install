@@ -7,10 +7,6 @@ asktoinstallgit() {
   echo "git not found, please install git" && exit
 }
 
-asktoinstallgo() {
-  echo "Please install go before continuing with install" && exit
-}
-
 asktoinstallnode() {
   echo "Please install node before continuing with install" && exit
 }
@@ -142,8 +138,6 @@ install_deps() {
 
 clone_config() {
   (command -v git >/dev/null && echo "git installed, moving on...") || asktoinstallgit
-
-  (command -v go >/dev/null && echo "go installed, moving on...") || asktoinstallgo
 
   (command -v pip >/dev/null && echo "pip installed, moving on...") || asktoinstallpip
 
