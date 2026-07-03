@@ -133,7 +133,7 @@ install_deps() {
 
   printf "Would you like to initialize python now (y/n)? "
   read -r answer
-  [ "$answer" != "${answer#[Yy]}" ] && pythonPackages
+  [ "$answer" != "${answer#[Yy]}" ] && python_packages
 }
 
 clone_config() {
