@@ -11,7 +11,7 @@ local ts = require('ar.utils.treesitter')
 local ensure_installed = {
   programming_langs = {
     'c', 'cpp', 'bash', 'javascript', 'lua', 'python', 'ruby', 'rust', 'svelte',
-    'swift', 'typescript', 'vim',
+    'swift', 'typescript', 'tsx', 'vim',
   },
   data_formats = { 'json', 'json5', 'toml', 'xml', 'yaml' },
   content = { 'css', 'html', 'markdown', 'markdown_inline' },
@@ -27,6 +27,28 @@ local ensure_installed = {
     'vimdoc',
   },
 }
+
+local function jump(options)
+  return ar.jump(function(o)
+    local which = o.forward and 'select_next' or 'select_prev'
+    require('vim.treesitter._select')[which](vim.v.count1)
+  end, options)
+end
+
+local function pt_jump(options)
+  return ar.jump(function(o)
+    local which = o.forward and 'select_parent' or 'select_child'
+    if vim.treesitter.get_parser(nil, nil, { error = false }) then
+      require('vim.treesitter._select')[which](vim.v.count1)
+      return
+    end
+    if o.forward then
+      vim.lsp.buf.selection_range(vim.v.count1)
+      return
+    end
+    vim.lsp.buf.selection_range(-vim.v.count1)
+  end, options)
+end
 
 return {
   {
@@ -71,34 +93,12 @@ return {
         local TS = require('nvim-treesitter')
         TS.setup(opts)
 
-        local function jump(options)
-          return ar.jump(function(o)
-            local which = o.forward and 'select_next' or 'select_prev'
-            require('vim.treesitter._select')[which](vim.v.count1)
-          end, options)
-        end
-
         map({ 'n', 'x', 'o' }, ']n', jump({ forward = true }), {
           desc = 'next node',
         })
         map({ 'n', 'x', 'o' }, '[n', jump({ forward = false }), {
           desc = 'prev node',
         })
-
-        local function pt_jump(options)
-          return ar.jump(function(o)
-            local which = o.forward and 'select_parent' or 'select_child'
-            if vim.treesitter.get_parser(nil, nil, { error = false }) then
-              require('vim.treesitter._select')[which](vim.v.count1)
-              return
-            end
-            if o.forward then
-              vim.lsp.buf.selection_range(vim.v.count1)
-              return
-            end
-            vim.lsp.buf.selection_range(-vim.v.count1)
-          end, options)
-        end
 
         map({ 'n', 'x', 'o' }, '<A-o>', pt_jump({ forward = true }), {
           desc = 'parent node',
@@ -112,10 +112,10 @@ return {
         -- initialize the installed langs
         ts.get_installed(true)
 
+        -- flatten ensure_installed
         local to_install =
           vim.iter(vim.tbl_values(opts.ensure_installed)):flatten():totable()
 
-        -- flatten ensure_installed
         local install = vim.tbl_filter(
           function(lang) return not ts.have(lang) end,
           to_install
