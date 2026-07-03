@@ -6,8 +6,9 @@ M._queries = {} ---@type table<string,boolean>
 ---@param update boolean?
 function M.get_installed(update)
   if update then
-    M._installed = {}
-    for _, lang in ipairs(require('nvim-treesitter').get_installed('parsers')) do
+    M._installed, M._queries = {}, {}
+    for _, path in ipairs(vim.api.nvim_get_runtime_file('parser/*', true)) do
+      local lang = vim.fn.fnamemodify(path, ':t:r')
       M._installed[lang] = lang
     end
   end

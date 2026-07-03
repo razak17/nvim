@@ -28,164 +28,112 @@ local ensure_installed = {
   },
 }
 
-local function jump(options)
-  return ar.jump(function(o)
-    local which = o.forward and 'select_next' or 'select_prev'
-    require('vim.treesitter._select')[which](vim.v.count1)
-  end, options)
-end
-
-local function pt_jump(options)
-  return ar.jump(function(o)
-    local which = o.forward and 'select_parent' or 'select_child'
-    if vim.treesitter.get_parser(nil, nil, { error = false }) then
-      require('vim.treesitter._select')[which](vim.v.count1)
-      return
-    end
-    if o.forward then
-      vim.lsp.buf.selection_range(vim.v.count1)
-      return
-    end
-    vim.lsp.buf.selection_range(-vim.v.count1)
-  end, options)
-end
-
 return {
   {
-    {
-      'nvim-treesitter/nvim-treesitter',
-      cond = function()
-        return ar.get_plugin_cond('nvim-treesitter', ts_enabled)
-      end,
-      branch = 'main',
-      lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
-      event = { 'VeryLazy' },
-      cmd = { 'TSUpdate', 'TSInstall', 'TSLog', 'TSUninstall' },
-      build = function()
-        local TS = require('nvim-treesitter')
-        if not TS.get_installed then
-          vim.notify(
-            'Please restart Neovim and run `:TSUpdate` to use the `nvim-treesitter` **main** branch.',
-            vim.log.levels.ERROR
-          )
-          return
-        end
-        -- make sure we're using the latest treesitter util
-        package.loaded['nvim-treesitter'] = nil
-        ts.ensure_treesitter_cli(
-          function() TS.update(nil, { summary = true }) end
-        )
-      end,
-      enabled = true,
-      ---@alias ar.TSFeat { enable?: boolean, disable?: string[] }
-      ---@class ar.TSConfig: TSConfig
-      opts = {
-        indent = {
-          enable = true,
-          disable = { 'bash', 'zsh', 'markdown', 'javascript' },
-        },
-        highlight = { enable = true },
-        folds = { enable = true },
-        ensure_installed = ensure_installed,
-        install_dir = vim.fn.stdpath('data') .. '/treesitter',
+    'romus204/tree-sitter-manager.nvim',
+    cond = function()
+      return ar.get_plugin_cond('tree-sitter-manager.nvim', ts_enabled)
+    end,
+    lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
+    event = { 'VeryLazy' },
+    cmd = { 'TSManager', 'TSInstall', 'TSUninstall', 'TSUpdate' },
+    build = function()
+      ts.ensure_treesitter_cli(function() vim.cmd('TSUpdate') end)
+    end,
+    init = function()
+      local parser_path = vim.fn.stdpath('data') .. '/treesitter'
+      vim.opt.rtp:prepend(parser_path)
+    end,
+    ---@alias ar.TSFeat { enable?: boolean, disable?: string[] }
+    ---@class ar.TSConfig: TSConfig
+    opts = {
+      indent = {
+        enable = true,
+        disable = { 'bash', 'zsh', 'markdown', 'javascript' },
       },
-      config = function(_, opts)
-        local TS = require('nvim-treesitter')
-        TS.setup(opts)
+      highlight = { enable = true },
+      folds = { enable = true },
+    },
+    config = function(_, opts)
+      -- flatten ensure_installed
+      local to_install =
+        vim.iter(vim.tbl_values(ensure_installed)):flatten():totable()
 
-        map({ 'n', 'x', 'o' }, ']n', jump({ forward = true }), {
-          desc = 'next node',
-        })
-        map({ 'n', 'x', 'o' }, '[n', jump({ forward = false }), {
-          desc = 'prev node',
-        })
+      require('tree-sitter-manager').setup({
+        auto_install = true,
+        highlight = false,
+        ensure_installed = to_install,
+        parser_dir = vim.fn.stdpath('data') .. '/treesitter/parser',
+        query_dir = vim.fn.stdpath('data') .. '/treesitter/queries',
+      })
 
-        map({ 'n', 'x', 'o' }, '<A-o>', pt_jump({ forward = true }), {
-          desc = 'parent node',
-        })
-        map({ 'n', 'x', 'o' }, '<A-i>', pt_jump({ forward = false }), {
-          desc = 'child node',
-        })
+      local function jump(options)
+        return ar.jump(function(o)
+          local which = o.forward and 'select_next' or 'select_prev'
+          require('vim.treesitter._select')[which](vim.v.count1)
+        end, options)
+      end
 
-        vim.treesitter.language.register('bash', 'zsh')
+      map({ 'n', 'x', 'o' }, ']n', jump({ forward = true }), {
+        desc = 'next node',
+      })
+      map({ 'n', 'x', 'o' }, '[n', jump({ forward = false }), {
+        desc = 'prev node',
+      })
 
-        -- initialize the installed langs
-        ts.get_installed(true)
+      local function pt_jump(options)
+        return ar.jump(function(o)
+          local which = o.forward and 'select_parent' or 'select_child'
+          if vim.treesitter.get_parser(nil, nil, { error = false }) then
+            require('vim.treesitter._select')[which](vim.v.count1)
+            return
+          end
+          if o.forward then
+            vim.lsp.buf.selection_range(vim.v.count1)
+            return
+          end
+          vim.lsp.buf.selection_range(-vim.v.count1)
+        end, options)
+      end
 
-        -- flatten ensure_installed
-        local to_install =
-          vim.iter(vim.tbl_values(opts.ensure_installed)):flatten():totable()
+      map({ 'n', 'x', 'o' }, '<A-o>', pt_jump({ forward = true }), {
+        desc = 'parent node',
+      })
+      map({ 'n', 'x', 'o' }, '<A-i>', pt_jump({ forward = false }), {
+        desc = 'child node',
+      })
 
-        local install = vim.tbl_filter(
-          function(lang) return not ts.have(lang) end,
-          to_install
-        )
+      vim.treesitter.language.register('bash', 'zsh')
 
-        local function install_parsers(parsers)
-          ts.ensure_treesitter_cli(function()
-            TS.install(parsers, { summary = true }):await(function()
-              ts.get_installed(true) -- refresh the installed langs
-            end)
-          end)
-        end
+      -- initialize the installed langs
+      ts.get_installed(true)
 
-        local function uninstall_parsers(parsers)
-          ts.ensure_treesitter_cli(function()
-            TS.uninstall(parsers, { summary = true }):await(function()
-              ts.get_installed(true) -- refresh the installed langs
-            end)
-          end)
-        end
+      ---@param feat string
+      ---@param query string
+      ---@param ft string
+      local function enabled(feat, query, ft)
+        local lang = vim.treesitter.language.get_lang(ft)
+        local f = opts[feat] or {} ---@type ar.TSFeat
+        return f.enable ~= false
+          and not vim.tbl_contains(f.disable or {}, lang)
+          and ts.have(ft, query)
+      end
 
-        ar.add_to_select('command_palette', {
-          ['Install Treesitter Parser'] = function()
-            vim.ui.input({
-              prompt = 'Enter parser names to install (comma separated): ',
-            }, function(input)
-              if not input or input == '' then return end
-              local parsers = vim.split(input, ',', { trimempty = true })
-              install_parsers(parsers)
-            end)
-          end,
-          ['Uninstall Treesitter Parser'] = function()
-            local installed =
-              require('nvim-treesitter').get_installed('parsers')
-            table.sort(installed)
-            vim.ui.select(installed, {
-              prompt = 'Select parser to uninstall: ',
-            }, function(choice)
-              if not choice then return end
-              uninstall_parsers({ choice })
-            end)
-          end,
-        })
+      ar.augroup('ar_treesitter_manager', {
+        event = 'FileType',
+        command = function(ev)
+          local parser_name = vim.treesitter.language.get_lang(ev.match)
+          if not parser_name then return end
 
-        -- install missing parsers
-        if #install > 0 then install_parsers(install) end
-
-        ---@param feat string
-        ---@param query string
-        ---@param ft string
-        local function enabled(feat, query, ft)
-          local lang = vim.treesitter.language.get_lang(ft)
-          local f = opts[feat] or {} ---@type ar.TSFeat
-          return f.enable ~= false
-            and not vim.tbl_contains(f.disable or {}, lang)
-            and ts.have(ft, query)
-        end
-
-        -- start treesitter
-        ---@param ft string
-        local function start(ft, bufnr)
-          if not ts.have(ft) then return end
+          if not ts.have(ev.match) then return end
 
           -- highlighting
-          if enabled('highlight', 'highlights', ft) then
+          if enabled('highlight', 'highlights', ev.match) then
             pcall(vim.treesitter.start, bufnr)
           end
 
           -- indents
-          if enabled('indent', 'indents', ft) then
+          if enabled('indent', 'indents', ev.match) then
             ar.set_default(
               'indentexpr',
               "v:lua.require'ar.utils.treesitter'.indentexpr()"
@@ -193,7 +141,7 @@ return {
           end
 
           -- folds
-          if enabled('folds', 'folds', ft) then
+          if enabled('folds', 'folds', ev.match) then
             if ar.set_default('foldmethod', 'expr') then
               ar.set_default(
                 'foldexpr',
@@ -201,40 +149,9 @@ return {
               )
             end
           end
-        end
-
-        ar.augroup('ar_treesitter', {
-          event = 'FileType',
-          command = function(ev)
-            local P = require('nvim-treesitter.parsers')
-            local parser_name = vim.treesitter.language.get_lang(ev.match)
-            if not parser_name then return end
-
-            -- auto install
-            if P[ev.match] ~= nil and not ts.have(ev.match) then
-              ts.ensure_treesitter_cli(function()
-                TS.install({ parser_name }, { summary = true }):await(function()
-                  ts.get_installed(true) -- refresh the installed langs
-                  start(ev.match, ev.buf)
-                end)
-              end)
-              return
-            end
-
-            start(ev.match, ev.buf)
-          end,
-        })
-      end,
-    },
-    {
-      'hrsh7th/nvim-cmp',
-      optional = true,
-      opts = function(_, opts)
-        vim.g.cmp_add_source(opts, {
-          menu = { treesitter = '[TS]' },
-        })
-      end,
-    },
+        end,
+      })
+    end,
   },
   {
     'MeanderingProgrammer/treesitter-modules.nvim',
