@@ -320,7 +320,7 @@ o.matchtime = 1
 --------------------------------------------------------------------------------
 -- Spelling {{{1
 --------------------------------------------------------------------------------
-opt.spellsuggest:prepend({ 12 })
+opt.spellsuggest = 'best'
 opt.spelloptions:append({ 'camel', 'noplainbuffer' })
 opt.spellcapcheck = '' -- don't check for capital letters at start of sentence
 -- https://vi.stackexchange.com/questions/15051/how-can-i-use-multiple-spell-files-at-the-same-time
