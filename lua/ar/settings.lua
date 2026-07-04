@@ -155,7 +155,7 @@ o.pumblend = 0 -- Make popup window translucent,
 o.showfulltag = true -- Show tag and tidy search in completion
 o.sidescrolloff = 5
 o.scrolloff = 7
-o.scrolloffpad = 7
+if vim.fn.has('nvim-0.13') == 1 then o.scrolloffpad = 7 end
 -- o.concealcursor = 'niv'
 o.conceallevel = 2
 o.breakindentopt = 'sbr'
