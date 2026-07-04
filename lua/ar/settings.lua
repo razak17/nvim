@@ -334,6 +334,6 @@ o.mousefocus = true
 o.mousemoveevent = true
 opt.mousescroll = { 'ver:1', 'hor:6' }
 --------------------------------------------------------------------------------
-o.exrc = ar.has('nvim-0.9')
+o.exrc = vim.fn.has('nvim-0.9') == 1
 -- https://www.reddit.com/r/neovim/comments/1t6jytb/add_exit_option_to_neovim_context_menu/
 vim.cmd([[amenu PopUp.Exit\ (q) :qall<CR>]])
