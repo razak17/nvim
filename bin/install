@@ -37,7 +37,7 @@ setup_venv() {
 }
 
 python_packages() {
-  mkdir -p "$RV_DATA_DIR/venv/bin/python3"
+  mkdir -p "$RV_DATA_DIR/venv/bin"
   "$RV_DATA_DIR/venv/bin/python3" -m pip install -U setuptools neovim-remote python-dotenv requests pynvim==0.5.0 prompt-toolkit
 }
 
