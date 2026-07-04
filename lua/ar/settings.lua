@@ -120,7 +120,7 @@ o.wildmenu = ar.plugins.minimal or (cmp ~= 'blink' and cmp ~= 'cmp')
 -- o.wildmenu =true
 o.wildmode = 'full' -- 'list:full' -- Shows a menu bar as opposed to an enormous list
 o.wildignorecase = true -- Ignore case when completing file names and directories
-opt.wildignore = {
+local wildignore = {
   '*.o',
   '*.obj',
   '*.dll',
@@ -143,8 +143,7 @@ opt.wildignore = {
   '*/.next/*',
   '*/node_modules/*',
 }
-opt.wildignore =
-  vim.tbl_extend('force', opt.wildignore, ui.colorscheme.disabled)
+opt.wildignore = vim.tbl_extend('force', wildignore, ui.colorscheme.disabled)
 opt.wildoptions = { 'pum', 'fuzzy' }
 -- NOTE: causes codicons to be rendered funny in cmp window
 o.pumblend = 0 -- Make popup window translucent,
