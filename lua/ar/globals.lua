@@ -443,10 +443,6 @@ function ar.dir_lsp_disabled(dir)
   return ar.dirs_match(ar.config.lsp.disabled.directories, fmt('%s', dir))
 end
 
----Get whether using nightly version of neovim
-local LATEST_NIGHTLY_MINOR = 10
-function ar.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
-
 function ar.reload_all()
   cmd('checktime')
   vim.schedule(
