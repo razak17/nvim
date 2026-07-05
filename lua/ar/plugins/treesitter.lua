@@ -179,7 +179,6 @@ return {
       return ar.get_plugin_cond('nvim-treesitter-textobjects', ts_enabled)
     end,
     branch = 'main',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
     event = { 'BufRead' },
     keys = {
       {

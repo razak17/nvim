@@ -1,6 +1,8 @@
 if not ar then return end
 
-if not ar.has('nvim-treesitter') then return end
+local has_query, _ = pcall(vim.treesitter.query.get, 'lua', 'highlights')
+
+if not has_query then return end
 
 local variant = ar.config.ui.cmdline.variant
 

@@ -1,9 +1,8 @@
 if not ar then return end
 
 local enabled = ar.config.plugin.extra.remove_comments.enable
-local ts_avilable = ar.has('nvim-treesitter')
 
-if ar.none or not enabled or not ts_avilable then return end
+if ar.none or not enabled then return end
 
 local api = vim.api
 

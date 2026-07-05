@@ -199,7 +199,6 @@ return {
     'razak17/stringbreaker.nvim',
     cond = function() return ar.get_plugin_cond('stringbreaker.nvim') end,
     cmd = { 'BreakString', 'SaveString' },
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function() require('string-breaker').setup() end,
   },
   {
