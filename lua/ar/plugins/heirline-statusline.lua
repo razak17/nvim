@@ -879,7 +879,7 @@ return {
           init = function(self)
             self.curwin = api.nvim_get_current_win()
             self.curbuf = api.nvim_win_get_buf(self.curwin)
-            local ignored = { 'copilot', 'dev-tools', 'null-ls' }
+            local ignored = { 'copilot', 'null-ls' }
             self.client_names = stl.get_lsp_servers({ ignored = ignored })
             local icon = ar.config.lsp.null_ls.enable and codicons.misc.connect
               or codicons.misc.disconnect

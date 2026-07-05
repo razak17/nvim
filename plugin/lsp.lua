@@ -762,7 +762,6 @@ local workspace_diagnostics_exclusions = {
   'kulala',
   'render-markdown',
   'injected',
-  'dev-tools',
   'copilot',
 }
 

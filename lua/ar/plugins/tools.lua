@@ -215,7 +215,6 @@ return {
         'kulala',
         'render-markdown',
         'injected',
-        'dev-tools',
       }
 
       ar.augroup('ConformFormat', {

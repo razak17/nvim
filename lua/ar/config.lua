@@ -592,7 +592,6 @@ local config = {
       'cmp-path',
       'codecompanion.nvim',
       'conflict.nvim',
-      'dev-tools.nvim',
       'flatten.nvim',
       'fold-imports.nvim',
       'garbage-day.nvim',
