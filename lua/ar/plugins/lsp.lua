@@ -78,7 +78,8 @@ return {
       cond = function()
         return ar.get_plugin_cond('mason-lspconfig.nvim', ar.lsp.enable)
       end,
-      event = { 'BufReadPre' },
+      -- event = { 'BufReadPre' },
+      lazy = false, -- Don't lazy load. Causes highlight issues on :restart
       config = function()
         require('mason-lspconfig').setup({ automatic_enable = get_servers() })
       end,
