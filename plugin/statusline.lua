@@ -372,26 +372,6 @@ end
 
 vim.opt.statusline = '%!v:lua.StatusLine.render()'
 
-ar.augroup('NativeStatusline', {
-  event = { 'VimEnter' },
-  command = function(args)
-    local decs = ar.ui.decorations.get({
-      ft = vim.bo[args.buf].ft,
-      fname = vim.fn.bufname(args.buf),
-      setting = 'statusline',
-    })
-    if vim.bo.ft == '' and args.match == '' then
-      stl.intro_statusline(args.buf)
-      return
-    end
-    if not decs or ar.falsy(decs) then return end
-    if decs.ft == false or decs.fname == false then
-      stl.intro_statusline(args.buf)
-    end
-  end,
-})
-
-
 local has_bg = false
 
 ar.augroup('NativeStatuslineBg', {
@@ -410,6 +390,15 @@ ar.augroup('NativeStatuslineBg', {
         },
       })
       has_bg = true
+    end
+    local decs = ar.ui.decorations.get({
+      ft = vim.bo[args.buf].ft,
+      fname = vim.fn.bufname(args.buf),
+      setting = 'statusline',
+    })
+    if not decs or ar.falsy(decs) then return end
+    if decs.ft == false or decs.fname == false then
+      stl.intro_statusline(args.buf)
     end
   end,
 })
