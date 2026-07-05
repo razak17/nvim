@@ -245,7 +245,7 @@ end
 if not ar.has('snacks.nvim') then
   nnoremap('<leader>qb', ':bdel<CR>', { desc = 'delete buffer' })
 end
-if not ar.plugins.enable then
+if ar.config.explorer.variant == 'builtin' or not ar.plugins.enable then
   nnoremap('<C-n>', ':Ex<CR>', { desc = 'explorer' })
 end
 if not ar.plugins.enable or ar.plugins.minimal then
