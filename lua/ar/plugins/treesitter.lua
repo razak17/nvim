@@ -154,26 +154,6 @@ return {
     end,
   },
   {
-    'MeanderingProgrammer/treesitter-modules.nvim',
-    cond = function()
-      local condition = coding and ts_enabled
-      return ar.get_plugin_cond('treesitter-modules.nvim', condition)
-    end,
-    event = { 'BufRead' },
-    opts = {
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = '<A-o>',
-          node_incremental = '<A-n>',
-          scope_incremental = '<A-p>',
-          node_decremental = '<A-u>',
-        },
-      },
-    },
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
-  },
-  {
     'nvim-treesitter/nvim-treesitter-textobjects',
     cond = function()
       return ar.get_plugin_cond('nvim-treesitter-textobjects', ts_enabled)
