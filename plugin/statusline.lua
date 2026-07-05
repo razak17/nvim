@@ -17,15 +17,7 @@ local stl = require('ar.statusline')
 --------------------------------------------------------------------------------
 local bg = vim.api.nvim_get_option_value('background', { scope = 'global' })
 ar.highlight.plugin('NativeStatuslineHl', {
-  {
-    StatusLine = {
-      bg = {
-        from = bg == 'light' and 'Normal' or 'CursorLine',
-        alter = bg == 'light' and -0.05 or -0.3,
-      },
-      fg = { from = 'Normal' },
-    },
-  },
+  { StatusLine = { bg = 'NONE', fg = { from = 'Normal' } } },
   { StatusLineBar = { fg = { from = 'Directory' }, bold = true } },
   { StatusLineMode = { fg = { from = 'Special' } } },
   { StatusLineMedium = { fg = { from = 'Normal' } } },
@@ -395,6 +387,29 @@ ar.augroup('NativeStatusline', {
     if not decs or ar.falsy(decs) then return end
     if decs.ft == false or decs.fname == false then
       stl.intro_statusline(args.buf)
+    end
+  end,
+})
+
+
+local has_bg = false
+
+ar.augroup('NativeStatuslineBg', {
+  event = { 'BufEnter' },
+  command = function(args)
+    if not has_bg and args.match ~= '' then
+      ar.highlight.all({
+        {
+          StatusLine = {
+            inherit = 'StatusLine',
+            bg = {
+              from = bg == 'light' and 'Normal' or 'CursorLine',
+              alter = bg == 'light' and -0.05 or -0.3,
+            },
+          },
+        },
+      })
+      has_bg = true
     end
   end,
 })
