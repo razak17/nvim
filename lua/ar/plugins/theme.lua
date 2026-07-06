@@ -1150,6 +1150,20 @@ return {
         }, true)
       end,
     },
+    {
+      'vossenwout/guts.nvim',
+      cond = get_cond({ 'guts' }),
+      priority = get_priority({ 'guts' }),
+      event = get_event({ 'guts' }),
+      init = function()
+        theming.apply_overrides('guts', {
+          default = {
+            { CursorLine = { bg = { from = 'CursorColumn' } } },
+            { Visual = { bg = { from = 'CursorColumn', alter = 0.2 } } },
+          },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Mild

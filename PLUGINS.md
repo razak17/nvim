@@ -161,6 +161,7 @@
 - [gruvbox](https://github.com/morhetz/gruvbox)
 - [gruvdark.nvim](https://github.com/darianmorat/gruvdark.nvim)
 - [guess-indent.nvim](https://github.com/nmac427/guess-indent.nvim)
+- [guts.nvim](https://github.com/vossenwout/guts.nvim)
 - [gx.nvim](https://github.com/chrishrb/gx.nvim)
 - [heirline.nvim](https://github.com/rebelot/heirline.nvim)
 - [hierarchy.nvim](https://github.com/razak17/hierarchy.nvim)
