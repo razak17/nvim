@@ -543,6 +543,19 @@ return {
         }, true)
       end,
     },
+    {
+      'ryovoid/dracula-night',
+      cond = get_cond({ 'dracula-night' }),
+      priority = get_priority({ 'dracula-night' }),
+      event = get_event({ 'dracula-night' }),
+      init = function()
+        theming.apply_overrides('dracula-night', {
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = 1.8 } } },
+          },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Warm

@@ -108,6 +108,7 @@
 - [dial.nvim](https://github.com/monaqa/dial.nvim)
 - [diffview.nvim](https://github.com/sindrets/diffview.nvim)
 - [doom-one.nvim](https://github.com/NTBBloodbath/doom-one.nvim)
+- [dracula-night](https://github.com/ryovoid/dracula-night)
 - [dracula.nvim](https://github.com/Mofiqul/dracula.nvim)
 - [dropbar.nvim](https://github.com/Bekaboo/dropbar.nvim)
 - [due.nvim](https://github.com/NFrid/due.nvim)

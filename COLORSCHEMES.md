@@ -41,6 +41,7 @@
 - desert
 - doom-one
 - dracula
+- dracula-night
 - dracula-soft
 - duckbones
 - duskfox
