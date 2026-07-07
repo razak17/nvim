@@ -19,10 +19,12 @@ local sep = { text = left_thin_block, texthl = 'StatusColSep' }
 
 local config = {
   excluded_fts = {},
-  skipped_fts = { 'neo-tree' },
+  skipped_fts = { 'neo-tree', 'snacks_picker_input' },
 }
 
 ar.ui.statuscolumn = {}
+
+local function is_popup() return fn.win_gettype() == 'popup' end
 
 function ar.ui.statuscolumn.render()
   local win = vim.g.statusline_winid
@@ -30,9 +32,8 @@ function ar.ui.statuscolumn.render()
   if wo[win].signcolumn == 'no' then return '' end
 
   local ft = bo.ft
-  local filepath = api.nvim_buf_get_name(0)
 
-  if ft == '' and filepath == '' then return '' end
+  if is_popup() then goto continue end
 
   if vim.tbl_contains(config.skipped_fts, ft) then goto continue end
 
@@ -71,8 +72,14 @@ opt.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
 ar.augroup('StatusCol', {
   event = { 'BufEnter', 'FileType', 'FocusGained', 'TextChanged' },
   command = function(args)
+    local ft = bo[args.buf].ft
+    local filepath = api.nvim_buf_get_name(0)
+    if ft == '' and filepath == '' then
+      vim.opt_local.statuscolumn = ''
+      return
+    end
     local d = decor.get({
-      ft = bo[args.buf].ft,
+      ft = ft,
       fname = fn.bufname(args.buf),
       setting = 'statuscolumn',
     })
