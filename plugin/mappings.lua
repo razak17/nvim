@@ -425,6 +425,21 @@ end
 nnoremap(']s', sp_jump({ forward = true }), { desc = 'next misspelt word' })
 nnoremap('[s', sp_jump({ forward = false }), { desc = 'prev misspelt word' })
 --------------------------------------------------------------------------------
+-- Folds
+--------------------------------------------------------------------------------
+local function fold_jump(o)
+  return ar.jump(function(opts)
+    if opts.forward then
+      vim.cmd.normal({ vim.v.count1 .. ']z', bang = true })
+    end
+    if not opts.forward then
+      vim.cmd(vim.cmd.normal({ vim.v.count1 .. '[z', bang = true }))
+    end
+  end, o)
+end
+nnoremap(']z', fold_jump({ forward = true }), { desc = 'end of fold' })
+nnoremap('[z', fold_jump({ forward = false }), { desc = 'start of fold' })
+--------------------------------------------------------------------------------
 -- Completion
 --------------------------------------------------------------------------------
 -- cycle the completion menu with <TAB>
