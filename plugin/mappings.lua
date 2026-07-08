@@ -410,6 +410,21 @@ nnoremap(
   { desc = 'loclist prev' }
 )
 --------------------------------------------------------------------------------
+-- Spelling Mistakes
+--------------------------------------------------------------------------------
+local function sp_jump(o)
+  return ar.jump(function(opts)
+    if opts.forward then
+      vim.cmd.normal({ vim.v.count1 .. ']s', bang = true })
+    end
+    if not opts.forward then
+      vim.cmd(vim.cmd.normal({ vim.v.count1 .. '[s', bang = true }))
+    end
+  end, o)
+end
+nnoremap(']s', sp_jump({ forward = true }), { desc = 'next misspelt word' })
+nnoremap('[s', sp_jump({ forward = false }), { desc = 'prev misspelt word' })
+--------------------------------------------------------------------------------
 -- Completion
 --------------------------------------------------------------------------------
 -- cycle the completion menu with <TAB>
