@@ -233,11 +233,11 @@ cnoremap(';;', "<C-r>=fnameescape(expand('%:h'))<cr>/")
 nnoremap('<c-s>', '<Cmd>silent! write ++p<CR>')
 -- Buffer Management
 if not ar.has('vim-bufsurf') then
-  local function jump(options)
+  local function jump(o)
     return ar.jump(function(opts)
       if opts.forward then vim.cmd('bnext') end
       if not opts.forward then vim.cmd('bprevious') end
-    end, options)
+    end, o)
   end
   nnoremap('gP', jump({ forward = false }), { desc = 'previous buffer' })
   nnoremap('gN', jump({ forward = true }), { desc = 'next buffer' })
@@ -381,12 +381,34 @@ if ar.config.gx.enable and ar.config.gx.variant == 'custom' then
   end, { desc = 'open link' })
 end
 --------------------------------------------------------------------------------
+-- Quick/Location List
+--------------------------------------------------------------------------------
 nnoremap('<leader>Lq', ar.list.qf.toggle, { desc = 'toggle quickfix list' })
 nnoremap('<leader>Ll', ar.list.loc.toggle, { desc = 'toggle location list' })
-nnoremap('<leader>j', '<Cmd>cnext<CR>', { desc = 'qflist next' })
-nnoremap('<leader>k', '<Cmd>cprev<CR>', { desc = 'qflist previous' })
-nnoremap('<localleader>j', '<Cmd>lnext<CR>', { desc = 'loclist next' })
-nnoremap('<localleader>k', '<Cmd>lprev<CR>', { desc = 'loclist previous' })
+local function qf_jump(o)
+  return ar.jump(function(opts)
+    if opts.forward then vim.cmd('cnext' .. vim.v.count1) end
+    if not opts.forward then vim.cmd('cprev' .. vim.v.count1) end
+  end, o)
+end
+nnoremap('<leader>j', qf_jump({ forward = true }), { desc = 'qflist next' })
+nnoremap('<leader>k', qf_jump({ forward = false }), { desc = 'qflist prev' })
+local function ll_jump(o)
+  return ar.jump(function(opts)
+    if opts.forward then vim.cmd('lnext' .. vim.v.count1) end
+    if not opts.forward then vim.cmd('lprev' .. vim.v.count1) end
+  end, o)
+end
+nnoremap(
+  '<localleader>j',
+  ll_jump({ forward = true }),
+  { desc = 'loclist next' }
+)
+nnoremap(
+  '<localleader>k',
+  ll_jump({ forward = false }),
+  { desc = 'loclist prev' }
+)
 --------------------------------------------------------------------------------
 -- Completion
 --------------------------------------------------------------------------------
