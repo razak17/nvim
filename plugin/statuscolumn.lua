@@ -73,7 +73,7 @@ ar.augroup('StatusCol', {
   event = { 'BufEnter', 'FileType', 'FocusGained', 'TextChanged' },
   command = function(args)
     local ft = bo[args.buf].ft
-    local filepath = api.nvim_buf_get_name(0)
+    local filepath = api.nvim_buf_get_name(args.buf)
     if ft == '' and filepath == '' then
       vim.opt_local.statuscolumn = ''
       return
