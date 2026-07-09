@@ -374,7 +374,7 @@ vim.opt.statusline = '%!v:lua.StatusLine.render()'
 
 local has_bg = false
 
-ar.augroup('NativeStatuslineBg', {
+ar.augroup('Statusline', {
   event = { 'BufEnter' },
   command = function(args)
     if not has_bg and args.match ~= '' then
