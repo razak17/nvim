@@ -316,10 +316,11 @@ local readeable_filetypes = {
   ['tsplayground'] = true,
 }
 
-local function terminal_buffer()
-  local icon = ar.ui.codicons.misc.terminal .. ' '
-  local tname, _ = api.nvim_buf_get_name(0):gsub('.*:', '')
-  return ' ' .. icon .. tname
+local function terminal_buffer(hl)
+  local buf = api.nvim_get_current_buf()
+  local icon = ar.ui.codicons.misc.terminal
+  local tname, _ = api.nvim_buf_get_name(buf):gsub('.*:', '')
+  return string.format('%%#%s# %s %%*', hl, icon .. ' ' .. tname)
 end
 
 StatusLine.render = function()
@@ -327,7 +328,7 @@ StatusLine.render = function()
   if mode_str == 't' or mode_str == 'nt' then
     return table.concat({
       bar(),
-      terminal_buffer(),
+      terminal_buffer('StatusLineMode'),
       '%=',
       '%=',
     })
