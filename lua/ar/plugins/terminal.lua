@@ -57,6 +57,7 @@ return {
         border_active = 'Debug', -- Highlight for active terminal border (string = hl group, table = direct definition)
         border_inactive = 'WinSeparator', -- Highlight for inactive terminal borders (string = hl group, table = direct definition)
       },
+      wo = { signcolumn = 'no' },
     },
   },
   {
