@@ -18,26 +18,40 @@ local left_thin_block = separators.left_thin_block
 local sep = { text = left_thin_block, texthl = 'StatusColSep' }
 
 local config = {
-  excluded_fts = {},
+  excluded_bts = { 'terminal' },
+  excluded_fts = { 'blink-cmp-menu' },
+  skipped_bts = { 'terminal' },
   skipped_fts = { 'neo-tree', 'snacks_picker_input' },
 }
 
 ar.ui.statuscolumn = {}
 
-local function is_popup() return fn.win_gettype() == 'popup' end
+local function excluded(what, value)
+  local tbl = config['excluded_' .. what]
+  if not tbl then return false end
+  return vim.tbl_contains(tbl, value)
+end
+
+local function skipped(what, value)
+  local tbl = config['skipped_' .. what]
+  if not tbl then return false end
+  return vim.tbl_contains(tbl, value)
+end
 
 function ar.ui.statuscolumn.render()
   local win = vim.g.statusline_winid
 
   if wo[win].signcolumn == 'no' then return '' end
 
-  local ft = bo.ft
+  if fn.win_gettype() == 'popup' then goto continue end
 
-  if is_popup() then goto continue end
+  if skipped('bts', bo.bt) then goto continue end
 
-  if vim.tbl_contains(config.skipped_fts, ft) then goto continue end
+  if skipped('fts', bo.ft) then goto continue end
 
-  if vim.tbl_contains(config.excluded_fts, ft) then return '' end
+  if excluded('bts', bo.bt) then return '' end
+
+  if excluded('fts', bo.ft) then return '' end
 
   ::continue::
   local lnum, relnum, virtnum = v.lnum, v.relnum, v.virtnum
