@@ -11,6 +11,8 @@ end
 local api, fn, bo, fmt = vim.api, vim.fn, vim.bo, string.format
 local stl = require('ar.statusline')
 
+ar.ui.statusline = {}
+
 --------------------------------------------------------------------------------
 -- Statusline with no plugin
 -- @see: https://github.com/shivambegin/Neovim/blob/main/lua/config/statusline.lua
@@ -63,7 +65,8 @@ end
 
 --- @return string
 local function filename()
-  local file_name = api.nvim_buf_get_name(0)
+  local buf = api.nvim_get_current_buf()
+  local file_name = api.nvim_buf_get_name(buf)
   local file_size = stl.file_size()
   local pretty_path = require('ar.pretty_path').pretty_path()
   local dir = ''
@@ -108,7 +111,8 @@ local vim_mode = { mode = nil, hl = nil }
 local function generate_mode_hl(mode)
   local mode_to_str = mode and stl.mode_to_str[mode]
   local hl_name = 'StatusBorderActive' .. mode_to_str
-  api.nvim_set_hl(0, hl_name, { fg = stl.mode_colors[mode:sub(1, 1)] })
+  local buf = api.nvim_get_current_buf()
+  api.nvim_set_hl(buf, hl_name, { fg = stl.mode_colors[mode:sub(1, 1)] })
   return hl_name
 end
 
@@ -285,10 +289,10 @@ local function location()
   return string.format('%%#StatusLineMedium#%s%% %%*', loc)
 end
 
---- @param hlgroup string
-local function formatted_filetype(hlgroup)
+--- @param hl string
+local function formatted_filetype(hl)
   local filetype = bo.ft or fn.expand('%:e', false)
-  return string.format('%%#%s# %s %%*', hlgroup, filetype)
+  return string.format('%%#%s# %s %%*', hl, filetype)
 end
 
 local function filetype() return string.format(' {ft:%s}', bo.ft):lower() end
@@ -323,7 +327,7 @@ local function terminal_buffer(hl)
   return string.format('%%#%s# %s %%*', hl, icon .. ' ' .. tname)
 end
 
-StatusLine.render = function()
+function ar.ui.statusline.render()
   local mode_str = api.nvim_get_mode().mode
   if mode_str == 't' or mode_str == 'nt' then
     return table.concat({
@@ -342,8 +346,6 @@ StatusLine.render = function()
       formatted_filetype('StatusLineMode'),
       '%=',
       '%=',
-      location(),
-      bar(),
     })
   end
 
@@ -372,7 +374,7 @@ StatusLine.render = function()
   })
 end
 
-vim.opt.statusline = '%!v:lua.StatusLine.render()'
+vim.opt.statusline = '%!v:lua.ar.ui.statusline.render()'
 
 local has_bg = false
 

@@ -288,7 +288,7 @@ return {
         end
         local buf = api.nvim_get_current_buf()
         local filename = api.nvim_buf_get_name(buf)
-        return require('gp').not_chat(0, filename) == nil
+        return require('gp').not_chat(buf, filename) == nil
       end,
       vim_mode,
       { provider = ' ' .. 'Gp', bold = true },
