@@ -18,7 +18,7 @@ local left_thin_block = separators.left_thin_block
 local sep = { text = left_thin_block, texthl = 'StatusColSep' }
 
 local config = {
-  excluded_bts = { 'terminal' },
+  excluded_bts = { 'terminal', 'nofile' },
   excluded_fts = { 'blink-cmp-menu' },
   skipped_bts = { 'terminal' },
   skipped_fts = { 'neo-tree', 'snacks_picker_input' },
