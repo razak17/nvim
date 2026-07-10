@@ -32,6 +32,7 @@ vim.o.tabstop = 2
 vim.o.softtabstop = -1
 vim.o.cindent = true -- Increase indent on line after opening brace
 vim.o.smartindent = true
+vim.o.laststatus = 3
 ------------------------------------------------------------------------------
 -- Leader {{{1
 ------------------------------------------------------------------------------
@@ -104,6 +105,15 @@ o.backup = false
 o.undofile = true
 o.undolevels = 10000
 o.swapfile = false
+------------------------------------------------------------------------------
+-- Keymaps {{{1
+------------------------------------------------------------------------------
+vim.keymap.set(
+  'n',
+  '<localleader>Q',
+  ':restart<CR>',
+  { desc = 'restart', silent = true }
+)
 ------------------------------------------------------------------------------
 -- Plugns {{{1
 ------------------------------------------------------------------------------
@@ -245,7 +255,7 @@ require('lazy').setup({
     },
     {
       'williamboman/mason-lspconfig.nvim',
-      event = { 'BufReadPre' },
+      lazy = false,
       config = function()
         require('mason-lspconfig').setup({ automatic_enable = { 'lua_ls' } })
       end,
