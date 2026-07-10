@@ -8,14 +8,14 @@ then
   return
 end
 
-local fmt = string.format
+local api, fn, bo, fmt = vim.api, vim.fn, vim.bo, string.format
 local stl = require('ar.statusline')
 
 --------------------------------------------------------------------------------
 -- Statusline with no plugin
 -- @see: https://github.com/shivambegin/Neovim/blob/main/lua/config/statusline.lua
 --------------------------------------------------------------------------------
-local bg = vim.api.nvim_get_option_value('background', { scope = 'global' })
+local bg = api.nvim_get_option_value('background', { scope = 'global' })
 ar.highlight.plugin('NativeStatuslineHl', {
   { StatusLine = { bg = 'NONE', fg = { from = 'Normal' } } },
   { StatusLineBar = { fg = { from = 'Directory' }, bold = true } },
@@ -49,7 +49,7 @@ ar.highlight.plugin('NativeStatuslineHl', {
 
 -- LSP clients attached to buffer
 local function lsp_clients()
-  local current_buf = vim.api.nvim_get_current_buf()
+  local current_buf = api.nvim_get_current_buf()
 
   local clients = vim.lsp.get_clients({ bufnr = current_buf })
   if next(clients) == nil then return '' end
@@ -63,7 +63,7 @@ end
 
 --- @return string
 local function filename()
-  local file_name = vim.api.nvim_buf_get_name(0)
+  local file_name = api.nvim_buf_get_name(0)
   local file_size = stl.file_size()
   local pretty_path = require('ar.pretty_path').pretty_path()
   local dir = ''
@@ -108,7 +108,7 @@ local vim_mode = { mode = nil, hl = nil }
 local function generate_mode_hl(mode)
   local mode_to_str = mode and stl.mode_to_str[mode]
   local hl_name = 'StatusBorderActive' .. mode_to_str
-  vim.api.nvim_set_hl(0, hl_name, { fg = stl.mode_colors[mode:sub(1, 1)] })
+  api.nvim_set_hl(0, hl_name, { fg = stl.mode_colors[mode:sub(1, 1)] })
   return hl_name
 end
 
@@ -116,7 +116,7 @@ ar.augroup('NativeStatuslineMode', {
   event = { 'ModeChanged', 'VimEnter' },
   pattern = '*',
   command = function()
-    local mode = vim.fn.mode(1)
+    local mode = fn.mode(1)
     vim_mode.mode = stl.mode_to_str[mode]
     vim_mode.hl = generate_mode_hl(mode)
     vim.cmd.redrawstatus()
@@ -144,7 +144,7 @@ end
 local function lsp_active()
   if not rawget(vim, 'lsp') then return '' end
 
-  local current_buf = vim.api.nvim_get_current_buf()
+  local current_buf = api.nvim_get_current_buf()
   local clients = vim.lsp.get_clients({ bufnr = current_buf })
 
   local space = '%#StatusLineMedium# %*'
@@ -287,13 +287,11 @@ end
 
 --- @param hlgroup string
 local function formatted_filetype(hlgroup)
-  local filetype = vim.bo.filetype or vim.fn.expand('%:e', false)
+  local filetype = bo.ft or fn.expand('%:e', false)
   return string.format('%%#%s# %s %%*', hlgroup, filetype)
 end
 
-local function filetype()
-  return string.format(' {ft:%s}', vim.bo.filetype):lower()
-end
+local function filetype() return string.format(' {ft:%s}', bo.ft):lower() end
 
 local function search_matches()
   if vim.v.hlsearch == 0 then return '' end
@@ -301,10 +299,10 @@ local function search_matches()
 end
 
 local function macro()
-  if vim.fn.reg_recording() ~= '' then
+  if fn.reg_recording() ~= '' then
     return string.format('%%#StatusLineMacroRecording#%s%% %%*', 'REC')
   end
-  if vim.fn.reg_executing() ~= '' then
+  if fn.reg_executing() ~= '' then
     return string.format('%%#StatusLineMacroExecuting#%s%% %%*', 'PLAY')
   end
   return ''
@@ -319,20 +317,18 @@ local readeable_filetypes = {
 }
 
 StatusLine.render = function()
-  local mode_str = vim.api.nvim_get_mode().mode
+  local mode_str = api.nvim_get_mode().mode
   if mode_str == 't' or mode_str == 'nt' then
     return table.concat({
       bar(),
       '%=',
       '%=',
-      location(),
-      bar(),
     })
   end
 
-  if vim.bo.ft == '' then return table.concat({ '%#Normal#%' }) end
+  if bo.ft == '' then return table.concat({ '%#Normal#%' }) end
 
-  if readeable_filetypes[vim.bo.filetype] or vim.o.modifiable == false then
+  if readeable_filetypes[bo.ft] or vim.o.modifiable == false then
     return table.concat({
       bar(),
       formatted_filetype('StatusLineMode'),
@@ -343,7 +339,7 @@ StatusLine.render = function()
     })
   end
 
-  local statusline = {
+  return table.concat({
     bar(),
     git_status(),
     filename(),
@@ -365,9 +361,7 @@ StatusLine.render = function()
     lsp_clients(),
     location(),
     bar(),
-  }
-
-  return table.concat(statusline)
+  })
 end
 
 vim.opt.statusline = '%!v:lua.StatusLine.render()'
@@ -392,8 +386,8 @@ ar.augroup('Statusline', {
       has_bg = true
     end
     local decs = ar.ui.decorations.get({
-      ft = vim.bo[args.buf].ft,
-      fname = vim.fn.bufname(args.buf),
+      ft = bo[args.buf].ft,
+      fname = fn.bufname(args.buf),
       setting = 'statusline',
     })
     if not decs or ar.falsy(decs) then return end
