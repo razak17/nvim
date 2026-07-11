@@ -246,7 +246,11 @@ if not ar.has('snacks.nvim') then
   nnoremap('<leader>qb', ':bdel<CR>', { desc = 'delete buffer' })
 end
 if ar.config.explorer.variant == 'builtin' or not ar.plugins.enable then
-  nnoremap('<C-n>', ':Ex<CR>', { desc = 'explorer' })
+  nnoremap(
+    '<C-n>',
+    function() vim.cmd(math.ceil(fn.winwidth(0) * 0.20) .. 'vs | Ex') end,
+    { desc = 'explorer' }
+  )
 end
 if not ar.plugins.enable or ar.plugins.minimal then
   nnoremap('<leader>;', '<Cmd>intro<CR>', { desc = 'intro' })
