@@ -338,7 +338,10 @@ function ar.ui.statusline.render()
     })
   end
 
-  if bo.ft == '' then return table.concat({ '%#Normal#%' }) end
+  local filepath = api.nvim_buf_get_name(api.nvim_get_current_buf())
+  if bo.ft == '' and filepath == '' then
+    return table.concat({ '%#Normal#%' })
+  end
 
   if readeable_filetypes[bo.ft] or vim.o.modifiable == false then
     return table.concat({
