@@ -387,6 +387,11 @@ nnoremap('<leader>Lq', ar.list.qf.toggle, { desc = 'toggle quickfix list' })
 nnoremap('<leader>Ll', ar.list.loc.toggle, { desc = 'toggle location list' })
 local function qf_jump(o)
   return ar.jump(function(opts)
+    local qf_list = fn.getqflist()
+    if #qf_list == 0 then
+      vim.notify('Quickfix list is empty', vim.log.levels.INFO)
+      return
+    end
     if opts.forward then vim.cmd('cnext' .. vim.v.count1) end
     if not opts.forward then vim.cmd('cprev' .. vim.v.count1) end
   end, o)
@@ -395,6 +400,11 @@ nnoremap('<leader>j', qf_jump({ forward = true }), { desc = 'qflist next' })
 nnoremap('<leader>k', qf_jump({ forward = false }), { desc = 'qflist prev' })
 local function ll_jump(o)
   return ar.jump(function(opts)
+    local ll_list = fn.getloclist(0)
+    if #ll_list == 0 then
+      vim.notify('Location list is empty', vim.log.levels.INFO)
+      return
+    end
     if opts.forward then vim.cmd('lnext' .. vim.v.count1) end
     if not opts.forward then vim.cmd('lprev' .. vim.v.count1) end
   end, o)
