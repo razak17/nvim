@@ -33,7 +33,6 @@ if vim.env.DEVELOPING then lsp.log.set_level(L.DEBUG) end
 local C = {
   codelens = { enable = true },
 }
-
 --------------------------------------------------------------------------------
 --  Related Locations
 --------------------------------------------------------------------------------
@@ -202,7 +201,6 @@ lsp.buf.references = function()
     end,
   })
 end
-
 --------------------------------------------------------------------------------
 --  Truncate typescript inlay hints
 --------------------------------------------------------------------------------
@@ -227,7 +225,48 @@ end
 --   end
 --   inlay_hint_handler(err, result, ctx, config)
 -- end
-
+--------------------------------------------------------------------------------
+-- LspRestart / LspStop
+--------------------------------------------------------------------------------
+ar.command('LspRestart', function(args)
+  local client = vim.lsp.get_clients({ name = args.args })
+  utils.restart(client[1], {
+    on_restart = function(c)
+      local cc = vim.lsp.get_client_by_id(c)
+      if cc then vim.notify(fmt('%s restarted.', cc.name)) end
+    end,
+  })
+end, {
+  nargs = 1,
+  complete = function(arg)
+    local servers = vim.tbl_map(
+      function(cl) return cl.name end,
+      lsp.get_clients()
+    )
+    return vim.tbl_filter(
+      function(srv) return srv:find(arg, 1, true) == 1 end,
+      servers
+    )
+  end,
+})
+ar.command('LspStop', function(args)
+  local client = vim.lsp.get_clients({ name = args.args })
+  utils.soft_stop(client[1], {
+    on_close = function(c) vim.notify(fmt('%s stopped.', c.name)) end,
+  })
+end, {
+  nargs = 1,
+  complete = function(arg)
+    local servers = vim.tbl_map(
+      function(cl) return cl.name end,
+      lsp.get_clients()
+    )
+    return vim.tbl_filter(
+      function(srv) return srv:find(arg, 1, true) == 1 end,
+      servers
+    )
+  end,
+})
 --------------------------------------------------------------------------------
 -- Mappings
 --------------------------------------------------------------------------------
@@ -525,7 +564,6 @@ local function setup_mappings(client, bufnr)
     end
   end)
 end
-
 --------------------------------------------------------------------------------
 -- LSP SETUP/TEARDOWN
 --------------------------------------------------------------------------------
@@ -963,7 +1001,6 @@ augroup('LspSetupAutoCommands', {
 --------------------------------------------------------------------------------
 local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
-
 --------------------------------------------------------------------------------
 -- Signs
 --------------------------------------------------------------------------------
