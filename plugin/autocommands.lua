@@ -160,7 +160,11 @@ augroup('Utilities', {
   end,
 }, {
   event = 'FileType',
-  command = function() opt.formatoptions:remove({ 'c', 'r', 'o' }) end,
+  command = function()
+    vim.opt_local.formatoptions:remove('c')
+    vim.opt_local.formatoptions:remove('r')
+    vim.opt_local.formatoptions:remove('o')
+  end,
 }, {
   event = { 'BufHidden' },
   desc = 'Delete [No Name] buffers',
