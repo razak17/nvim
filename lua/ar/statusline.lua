@@ -457,13 +457,14 @@ end
 
 function M.search_matches()
   local ok, search = pcall(fn.searchcount)
-  if ok and search.total then search = search end
-  if search.current == 0 or search.total == 0 then return '' end
-  return string.format(
-    ' %d/%d',
-    search.current,
-    math.min(search.total, search.maxcount)
-  )
+  if not ok or type(search) ~= 'table' then return '' end
+
+  local current = tonumber(search.current)
+  local total = tonumber(search.total)
+  if not current or not total or current == 0 or total == 0 then return '' end
+
+  local maxcount = tonumber(search.maxcount) or total
+  return string.format(' %d/%d', current, math.min(total, maxcount))
 end
 
 function M.word_count() return '' .. tostring(fn.wordcount().words) .. ' words' end
