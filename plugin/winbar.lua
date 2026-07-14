@@ -18,7 +18,7 @@ local config = {
 
 ar.ui.winbar = {}
 
-local fn, bo = vim.fn, vim.bo
+local api, fn, bo = vim.api, vim.fn, vim.bo
 local decor = ar.ui.decorations
 
 local function get_winbar_path()
@@ -26,17 +26,17 @@ local function get_winbar_path()
   return full_path:gsub(fn.expand('$HOME'), '~')
 end
 
-local function get_buffer_count()
-  local buffers = fn.execute('ls')
-  local count = 0
-  -- Match only lines that represent buffers, typically starting with a number followed by a space
-  for line in string.gmatch(buffers, '[^\r\n]+') do
-    if string.match(line, '^%s*%d+') then count = count + 1 end
-  end
-  return count
-end
+local function get_buffer_count() return #fn.getbufinfo({ buflisted = 1 }) end
 
 function ar.ui.winbar.render()
+  local filepath = api.nvim_buf_get_name(0)
+
+  if bo.ft == '' and filepath == '' then return end
+
+  if fn.win_gettype() == 'popup' then return end
+
+  if bo.bt == 'terminal' then return end
+
   local home_replaced = get_winbar_path()
   local pretty_path = require('ar.pretty_path').pretty_path()
   local buffer_count = get_buffer_count()
@@ -58,25 +58,45 @@ function ar.ui.winbar.render()
   }, '')
 end
 
--- vim.opt.winbar = [[%!v:lua.ar.ui.winbar.render()]]
+local function refresh_window(win)
+  if not api.nvim_win_is_valid(win) then return end
+  if api.nvim_win_get_config(win).relative ~= '' then return end
+
+  local buf = api.nvim_win_get_buf(win)
+  local d = decor.get({
+    ft = bo[buf].ft,
+    fname = fn.bufname(buf),
+    setting = 'winbar',
+  })
+
+  if not d or ar.falsy(d) then
+    local winbar = api.nvim_win_call(win, ar.ui.winbar.render)
+    api.nvim_set_option_value('winbar', winbar or '', { win = win })
+    return
+  end
+
+  if ar.falsy(d.ft) then
+    api.nvim_set_option_value('winbar', '', { win = win })
+  end
+end
+
+local refresh_pending = false
+local function refresh_all_windows()
+  if refresh_pending then return end
+  refresh_pending = true
+
+  vim.schedule(function()
+    refresh_pending = false
+    for _, win in ipairs(api.nvim_list_wins()) do
+      refresh_window(win)
+    end
+  end)
+end
 
 ar.augroup('Winbar', {
-  event = { 'BufEnter', 'FileType' },
-  command = function(args)
-    local ft = bo[args.buf].ft
-    if not ft or ft == '' then return end
-    local d = decor.get({
-      ft = bo[args.buf].ft,
-      bt = bo[args.buf].bt,
-      fname = fn.bufname(args.buf),
-      setting = 'winbar',
-    })
-    if not d or ar.falsy(d) then
-      vim.wo.winbar = ar.ui.winbar.render()
-      return
-    end
-    if d.ft == false or d.bt == false or d.fname == false then
-      vim.wo.winbar = ''
-    end
-  end,
+  event = { 'BufEnter', 'FileType', 'FocusGained', 'TextChanged' },
+  command = function() refresh_window(api.nvim_get_current_win()) end,
+}, {
+  event = { 'BufAdd', 'BufDelete', 'BufWipeout' },
+  command = refresh_all_windows,
 })
