@@ -396,6 +396,10 @@ local function qf_jump(o)
       vim.notify('Quickfix list is empty', vim.log.levels.INFO)
       return
     end
+    if #qf_list == 1 then
+      vim.notify('Only one item in quickfix list', vim.log.levels.INFO)
+      return
+    end
     if opts.forward then vim.cmd('cnext' .. vim.v.count1) end
     if not opts.forward then vim.cmd('cprev' .. vim.v.count1) end
   end, o)
@@ -407,6 +411,10 @@ local function ll_jump(o)
     local ll_list = fn.getloclist(0)
     if #ll_list == 0 then
       vim.notify('Location list is empty', vim.log.levels.INFO)
+      return
+    end
+    if #ll_list == 1 then
+      vim.notify('Only one item in location list', vim.log.levels.INFO)
       return
     end
     if opts.forward then vim.cmd('lnext' .. vim.v.count1) end
