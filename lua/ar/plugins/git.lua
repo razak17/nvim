@@ -40,6 +40,7 @@ return {
       },
       integrations = { diffview = true },
       graph_style = 'kitty',
+      treesitter_diff_highlight = true,
     },
     config = function(_, opts)
       local base_hl = {
