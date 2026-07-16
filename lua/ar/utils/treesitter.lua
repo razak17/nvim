@@ -39,7 +39,9 @@ function M.have(what, query)
   return true
 end
 
-function M.foldexpr() return M.have() and vim.treesitter.foldexpr() or '0' end
+function M.foldexpr()
+  return M.have(nil, 'folds') and vim.treesitter.foldexpr() or '0'
+end
 
 function M.indentexpr()
   return M.have() and require('nvim-treesitter').indentexpr() or -1
