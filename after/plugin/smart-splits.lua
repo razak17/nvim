@@ -37,6 +37,7 @@ local config = {
       'vscode-diff-explorer',
       'codecompanion',
       'kulala_ui',
+      'query',
     },
     buftypes = {
       -- 'nofile',
