@@ -44,7 +44,14 @@ function M.foldexpr()
 end
 
 function M.indentexpr()
-  return M.have() and require('nvim-treesitter').indentexpr() or -1
+  local indentexpr
+  if ar.has('tree-sitter-manager.nvim') then
+    indentexpr = require('ar.ts_indent').indentexpr
+  elseif ar.has('nvim-treesitter') then
+    indentexpr = require('nvim-treesitter').indentexpr
+  end
+  if not indentexpr then return -1 end
+  return M.have(nil, 'indents') and indentexpr() or -1
 end
 
 ---@param cb fun()
