@@ -95,18 +95,18 @@ opt.foldnestmax = 10
 -- Grepprg {{{1
 --------------------------------------------------------------------------------
 -- Use faster grep alternatives if possible
-if ar and not ar.falsy(fn.executable('rg')) then
+if not ar.falsy(fn.executable('rg')) then
   vim.o.grepprg = [[rg --glob "!.git" --no-heading --vimgrep --follow $*]]
   vim.o.grepprg =
     [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]]
   opt.grepformat = opt.grepformat ^ { '%f:%l:%c:%m' }
   goto continue
-elseif ar and not ar.falsy(fn.executable('ag')) then
+elseif not ar.falsy(fn.executable('ag')) then
   vim.o.grepprg = [[ag --nogroup --nocolor --vimgrep]]
   opt.grepformat = opt.grepformat ^ { '%f:%l:%c:%m' }
 end
 ::continue::
-if ar and not ar.falsy(fn.executable('fd')) then
+if not ar.falsy(fn.executable('fd')) then
   function ar.fd_findfunc(cmdarg, _cmdcomplete)
     return require('ar.findfunc').fd_findfunc(cmdarg, _cmdcomplete)
   end
@@ -227,13 +227,13 @@ o.pumborder = safe_winborder()
 o.pumheight = 15
 o.confirm = true -- make vim prompt me to save before doing destructive things
 if ar.config.completion.variant == 'native' then
+  o.autocomplete = true
   opt.complete:append('o')
   ar.augroup('Autocomplete', {
     event = { 'BufEnter' },
     desc = 'Disable completion for popups',
     command = function(args)
-      if not vim.fn.win_gettype() == 'popup' then return end
-      vim.bo[args.buf].autocomplete = false
+      vim.bo[args.buf].autocomplete = vim.fn.win_gettype() ~= 'popup'
     end,
   })
 end
