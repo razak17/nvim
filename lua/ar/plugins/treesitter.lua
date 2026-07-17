@@ -129,7 +129,7 @@ return {
 
           -- highlighting
           if enabled('highlight', 'highlights', ev.match) then
-            pcall(vim.treesitter.start, bufnr)
+            pcall(vim.treesitter.start, ev.buf)
           end
 
           -- indents

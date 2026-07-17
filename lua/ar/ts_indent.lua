@@ -346,6 +346,6 @@ function M.get_indent(lnum)
   return indent
 end
 
-function M.indentexpr() return get_indent(vim.v.lnum) end
+function M.indentexpr() return M.get_indent(vim.v.lnum) end
 
 return M
