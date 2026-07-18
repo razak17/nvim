@@ -405,6 +405,7 @@
   "whop.nvim": { "branch": "main", "commit": "474febb71a8d6f189530ce292d82b510a167bc95" },
   "windows.nvim": { "branch": "main", "commit": "c7492552b23d0ab30325e90b56066ec51242adc8" },
   "winshift.nvim": { "branch": "main", "commit": "37468ed6f385dfb50402368669766504c0e15583" },
+  "workspace-diagnostics.nvim": { "branch": "main", "commit": "a35321d8401878cc9558e357acfd0da58b582739" },
   "wrapped.nvim": { "branch": "master", "commit": "d475a9380a8d642d2844b47db292fb63c5f0fae3" },
   "wrapping-paper.nvim": { "branch": "main", "commit": "661d026455deea984b45e1ae8677da19d0ecb389" },
   "yank-path.nvim": { "branch": "main", "commit": "e660248de1e4c91a760f510fc165c172a19cc1d5" },

@@ -80,8 +80,7 @@ return {
     opts = {},
   },
   {
-    -- 'artemave/workspace-diagnostics.nvim',
-    'razak17/workspace-diagnostics.nvim',
+    'artemave/workspace-diagnostics.nvim',
     cond = function()
       return ar.get_plugin_cond('workspace-diagnostics.nvim', enabled)
     end,
