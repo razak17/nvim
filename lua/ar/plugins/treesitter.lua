@@ -36,7 +36,8 @@ return {
         return ar.get_plugin_cond('nvim-treesitter', ts_enabled)
       end,
       branch = 'main',
-      lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
+      -- lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
+      lazy = false, -- Don't lazy load. Errors out on :restart, mainly in lua files
       event = { 'VeryLazy' },
       cmd = { 'TSUpdate', 'TSInstall', 'TSLog', 'TSUninstall' },
       build = function()
