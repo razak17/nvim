@@ -1129,15 +1129,6 @@
               },
               "type": "object"
             },
-            "copilot_commit_message": {
-              "additionalProperties": false,
-              "properties": {
-                "enable": {
-                  "type": "boolean"
-                }
-              },
-              "type": "object"
-            },
             "dump_messages": {
               "additionalProperties": false,
               "properties": {

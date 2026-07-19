@@ -553,7 +553,6 @@ local config = {
       cheatsheet = { enable = true },
       colorify = { enable = true },
       comment = { enable = true },
-      copilot_commit_message = { enable = true },
       dump_messages = { enable = true },
       git_conflict = { enable = false },
       interceptor = { enable = true },
