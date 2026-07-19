@@ -3,6 +3,8 @@ local diagnostic = vim.diagnostic
 
 local M = {}
 
+local ts_servers = { 'tsgo', 'ts_ls', 'typescript-tools', 'vtsls', 'svelte' }
+
 --- Get diagnostics (LSP Diagnostic) at the cursor
 --- Grab the code from https://github.com/neovim/neovim/issues/21985
 --- TODO: This PR (https://github.com/neovim/neovim/pull/22883) extends
@@ -57,17 +59,34 @@ local function translate_ts_error(message, code)
   return message
 end
 
----@param result { diagnostics: table }
+---@param diagnostics lsp.Diagnostic[]?
+---@param is_ts_server boolean
+local function process_diagnostics(diagnostics, is_ts_server)
+  if ar.falsy(diagnostics) or not is_ts_server then return end
+
+  for idx = #diagnostics, 1, -1 do
+    if diagnostics ~= nil then
+      local entry = diagnostics[idx]
+      entry.message = translate_ts_error(entry.message, entry.code)
+      if vim.tbl_contains(ar.lsp.disabled_codes.ts, entry.code) then
+        table.remove(diagnostics, idx)
+      end
+    end
+  end
+end
+
+---@param result lsp.PublishDiagnosticsParams|lsp.DocumentDiagnosticReport
 ---@param ctx lsp.HandlerContext
 function M.on_publish_diagnostics(result, ctx)
   local client = vim.lsp.get_client_by_id(ctx.client_id)
-  local ts_servers = { 'tsgo', 'ts_ls', 'vtsls', 'svelte' }
-  for idx, entry in ipairs(result.diagnostics) do
-    if client and (vim.tbl_contains(ts_servers, client.name)) then
-      entry.message = translate_ts_error(entry.message, entry.code)
-    end
-    if vim.tbl_contains(ar.lsp.disabled_codes.ts, entry.code) then
-      table.remove(result.diagnostics, idx)
+  local is_ts_server = client ~= nil
+    and vim.tbl_contains(ts_servers, client.name)
+
+  process_diagnostics(result.diagnostics or result.items, is_ts_server)
+
+  for _, related_result in pairs(result.relatedDocuments or {}) do
+    if related_result.kind == 'full' then
+      process_diagnostics(related_result.items, is_ts_server)
     end
   end
 end

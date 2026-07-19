@@ -58,9 +58,26 @@ end
 local publish_handler = lsp.handlers[M.textDocument_publishDiagnostics]
 -- stylua: ignore
 lsp.handlers[M.textDocument_publishDiagnostics] = function(err, result, ctx, config)
-  result.diagnostics = vim.tbl_map(show_related_locations, result.diagnostics)
-  lsp_diag.on_publish_diagnostics(result, ctx)
-  publish_handler(err, result, ctx, config)
+  if not err and result and result.diagnostics then
+    result.diagnostics = vim.tbl_map(show_related_locations, result.diagnostics)
+    lsp_diag.on_publish_diagnostics(result, ctx)
+  end
+  return publish_handler(err, result, ctx, config)
+end
+-- pull diagnostics (for example, tsgo)
+local diagnostic_handler = lsp.handlers[M.textDocument_diagnostic]
+lsp.handlers[M.textDocument_diagnostic] = function(err, result, ctx, config)
+  if not err and result and result.items then
+    result.items = vim.tbl_map(show_related_locations, result.items)
+    for _, related_result in pairs(result.relatedDocuments or {}) do
+      if related_result.kind == 'full' then
+        related_result.items =
+          vim.tbl_map(show_related_locations, related_result.items)
+      end
+    end
+    lsp_diag.on_publish_diagnostics(result, ctx)
+  end
+  return diagnostic_handler(err, result, ctx, config)
 end
 --------------------------------------------------------------------------------
 --  Smart Definitions
