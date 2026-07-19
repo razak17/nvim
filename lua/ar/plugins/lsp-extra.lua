@@ -34,6 +34,7 @@ return {
       { '<leader>l?l', function() require('rulebook').lookupRule() end, desc = 'rulebook: lookup rule' },
       { '<leader>l?y', function() require('rulebook').yankDiagnosticCode() end, desc = 'rulebook: yank diagnostic code' },
     },
+    cmd = { 'Rulebook' },
     opts = {
       suppressFormatter = {
         -- use `biome` instead of `prettier`
