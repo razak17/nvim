@@ -50,7 +50,7 @@ local env = vim.env
 ---@alias ArWhichPicker 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick'
 ---@alias ArWhichRepeatable 'demicolon' | 'repeatable-move'
 ---@alias ArWhichSession 'persisted' | 'persistence'
----@alias ArWhichTerminal 'snacks' | 'toggleterm' | 'floaterm' | 'termite'
+---@alias ArWhichTerminal 'custom' | 'snacks' | 'toggleterm' | 'floaterm' | 'termite'
 ---@alias ArWhichFilesPicker 'smart-open' | 'snacks' | 'telescope' | 'fzf-lua' | 'mini.pick' | 'seeker'
 ---@alias ArWhichScroll 'snacks' | 'neoscroll'
 ---@alias ArWhichShelter 'cloak' | 'ecolog' | 'shelter' | 'camouflage'

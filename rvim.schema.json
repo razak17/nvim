@@ -1777,7 +1777,7 @@
           "type": "boolean"
         },
         "variant": {
-          "enum": ["floaterm", "snacks", "termite", "toggleterm"],
+          "enum": ["custom", "floaterm", "snacks", "termite", "toggleterm"],
           "type": "string"
         }
       },
