@@ -638,7 +638,7 @@ local client_overrides = {
           or ar.config.lsp.lang.typescript.vtsls
       end
 
-      -- if tsgo is attached alongside another ts server, use tsgo for diagnostics to only
+      -- if tsgo is attached alongside another ts server, use tsgo for diagnostics only
       if ts_cond() then
         -- UX / interaction
         client.server_capabilities.hoverProvider = false
