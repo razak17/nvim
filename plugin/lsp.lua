@@ -33,33 +33,10 @@ if vim.env.DEVELOPING then lsp.log.set_level(L.DEBUG) end
 local C = {
   codelens = { enable = true },
 }
---------------------------------------------------------------------------------
---  Related Locations
---------------------------------------------------------------------------------
--- This relates to https://github.com/neovim/neovim/issues/19649#issuecomment-1327287313
--- neovim does not currently correctly report the related locations for diagnostics.
--- TODO: once a PR for this is merged delete this workaround
-
-local function show_related_locations(diag)
-  local related_info = diag.relatedInformation
-  if not related_info or #related_info == 0 then return diag end
-  for _, info in ipairs(related_info) do
-    diag.message = ('%s\n%s(%d:%d)%s'):format(
-      diag.message,
-      fn.fnamemodify(vim.uri_to_fname(info.location.uri), ':p:.'),
-      info.location.range.start.line + 1,
-      info.location.range.start.character + 1,
-      not ar.falsy(info.message) and (': %s'):format(info.message) or ''
-    )
-  end
-  return diag
-end
-
 local publish_handler = lsp.handlers[M.textDocument_publishDiagnostics]
 -- stylua: ignore
 lsp.handlers[M.textDocument_publishDiagnostics] = function(err, result, ctx, config)
   if not err and result and result.diagnostics then
-    result.diagnostics = vim.tbl_map(show_related_locations, result.diagnostics)
     lsp_diag.on_publish_diagnostics(result, ctx)
   end
   return publish_handler(err, result, ctx, config)
@@ -68,13 +45,6 @@ end
 local diagnostic_handler = lsp.handlers[M.textDocument_diagnostic]
 lsp.handlers[M.textDocument_diagnostic] = function(err, result, ctx, config)
   if not err and result and result.items then
-    result.items = vim.tbl_map(show_related_locations, result.items)
-    for _, related_result in pairs(result.relatedDocuments or {}) do
-      if related_result.kind == 'full' then
-        related_result.items =
-          vim.tbl_map(show_related_locations, related_result.items)
-      end
-    end
     lsp_diag.on_publish_diagnostics(result, ctx)
   end
   return diagnostic_handler(err, result, ctx, config)
