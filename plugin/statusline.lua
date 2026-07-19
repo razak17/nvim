@@ -58,7 +58,7 @@ local function lsp_clients()
 
   local c = {}
   for _, client in pairs(clients) do
-    table.insert(c, client.name)
+    if not client:is_stopped() then table.insert(c, client.name) end
   end
   return ' 󰌘 ' .. table.concat(c, '|')
 end
