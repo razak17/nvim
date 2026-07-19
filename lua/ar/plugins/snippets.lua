@@ -80,6 +80,7 @@ return {
           history = false,
           region_check_events = 'CursorMoved,CursorHold,InsertEnter',
           delete_check_events = 'InsertLeave',
+          cut_selection_keys = '<C-x>',
           ext_opts = {
             [types.choiceNode] = {
               active = {
@@ -107,8 +108,6 @@ return {
             snippet = ls.snippet,
           },
         })
-
-        require('luasnip').config.setup({ store_selection_keys = '<C-x>' })
 
         require('luasnip.loaders.from_lua').lazy_load()
 
