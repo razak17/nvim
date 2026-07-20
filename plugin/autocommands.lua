@@ -6,7 +6,7 @@ if ar.none or not enabled then return end
 
 local augroup = ar.augroup
 
-local fn, api, env, cmd, opt = vim.fn, vim.api, vim.env, vim.cmd, vim.opt
+local fn, api, env, cmd = vim.fn, vim.api, vim.env, vim.cmd
 local falsy = ar.falsy
 local config_path = fn.stdpath('config')
 
@@ -45,14 +45,7 @@ augroup('TextYankHighlight', {
         priority = 250, -- With priority higher than the LSP references one.
         higroup = 'IncSearch',
       })
-      return
     end
-    (vim.hl or vim.highlight).on_yank({
-      timeout = 200,
-      visual = true,
-      priority = 250, -- With priority higher than the LSP references one.
-      higroup = 'IncSearch',
-    })
   end,
 })
 
