@@ -20,7 +20,17 @@ return {
       'TailwindFoldEnable',
       'TailwindFoldDisable',
     },
-    opts = { min_chars = 5, symbol = '󱏿' },
+    opts = {
+      min_chars = 5,
+      symbol = '󱏿',
+      on_toggle = function(enabled)
+        vim.notify(
+          string.format('tailwind fold %s', ar.bool2str(enabled)),
+          vim.log.levels.INFO,
+          { title = 'Tailwind Fold' }
+        )
+      end,
+    },
     ft = {
       'html',
       'clojure',
