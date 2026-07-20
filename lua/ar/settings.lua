@@ -96,7 +96,6 @@ opt.foldnestmax = 10
 --------------------------------------------------------------------------------
 -- Use faster grep alternatives if possible
 if not ar.falsy(fn.executable('rg')) then
-  vim.o.grepprg = [[rg --glob "!.git" --no-heading --vimgrep --follow $*]]
   vim.o.grepprg =
     [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]]
   opt.grepformat = opt.grepformat ^ { '%f:%l:%c:%m' }
@@ -152,8 +151,6 @@ o.pumblend = 0 -- Make popup window translucent,
 --------------------------------------------------------------------------------
 -- o.showcmd = false
 o.showfulltag = true -- Show tag and tidy search in completion
-o.sidescrolloff = 5
-o.scrolloff = 7
 if vim.fn.has('nvim-0.13') == 1 then o.scrolloffpad = 7 end
 -- o.concealcursor = 'niv'
 o.conceallevel = 2
@@ -244,7 +241,6 @@ opt.clipboard = { 'unnamedplus' }
 o.laststatus = 3
 o.showtabline = 0
 o.termguicolors = true
-opt.diffopt:append('linematch:50')
 --------------------------------------------------------------------------------
 -- Emoji {{{1
 --------------------------------------------------------------------------------
