@@ -1,4 +1,4 @@
-local mason_root = vim.env.MASON or (fn.stdpath('data') .. '/mason')
+local mason_root = vim.env.MASON or (vim.fn.stdpath('data') .. '/mason')
 
 return {
   init_options = {
