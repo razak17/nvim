@@ -79,8 +79,8 @@ settings({
   },
   graphql = {
     function()
-      vim.opt.iskeyword:append('$,@-@')
-      vim.opt.formatoptions:remove('t')
+      opt_l.iskeyword:append('$,@-@')
+      opt_l.formatoptions:remove('t')
     end,
   },
   html = {
@@ -92,8 +92,8 @@ settings({
     function()
       cmd([[setlocal tw=120 linebreak textwidth=0]]) -- Make lines longer, and don't break them automatically
 
-      vim.opt.matchpairs:append('<:>')
-      vim.opt.indentkeys:remove('*<Return>')
+      opt_l.matchpairs:append('<:>')
+      opt_l.indentkeys:remove('*<Return>')
     end,
   },
   httpResult = {
@@ -248,14 +248,14 @@ settings({
     opt = { spell = true },
     function()
       vim.schedule(function() opt_l.syntax = 'off' end) -- FIXME: if the syntax isn't delayed it still gets enabled
-      vim.opt.iskeyword:append(':,#')
+      opt_l.iskeyword:append(':,#')
     end,
   },
   yaml = {
     opt = { foldlevel = 99 },
     function()
-      vim.opt.iskeyword:append('-,$,#')
-      vim.opt.indentkeys:append('<:>')
+      opt_l.iskeyword:append('-,$,#')
+      opt_l.indentkeys:append('<:>')
     end,
   },
 })
