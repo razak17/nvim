@@ -387,34 +387,6 @@ if ar.config.gx.enable and ar.config.gx.variant == 'custom' then
   end, { desc = 'open link' })
 end
 --------------------------------------------------------------------------------
--- Quick/Location List
---------------------------------------------------------------------------------
-nnoremap('<leader>Lq', ar.list.qf.toggle, { desc = 'toggle quickfix list' })
-nnoremap('<leader>Ll', ar.list.loc.toggle, { desc = 'toggle location list' })
-local function repeatable_list_jump(list, opts)
-  return ar.jump(function(o) list.jump(o.forward) end, opts)
-end
-nnoremap(
-  '<leader>j',
-  repeatable_list_jump(ar.list.qf, { forward = true }),
-  { desc = 'qflist next' }
-)
-nnoremap(
-  '<leader>k',
-  repeatable_list_jump(ar.list.qf, { forward = false }),
-  { desc = 'qflist prev' }
-)
-nnoremap(
-  '<localleader>j',
-  repeatable_list_jump(ar.list.loc, { forward = true }),
-  { desc = 'loclist next' }
-)
-nnoremap(
-  '<localleader>k',
-  repeatable_list_jump(ar.list.loc, { forward = false }),
-  { desc = 'loclist prev' }
-)
---------------------------------------------------------------------------------
 -- Spelling Mistakes
 --------------------------------------------------------------------------------
 local function sp_jump(o)

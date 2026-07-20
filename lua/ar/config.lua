@@ -536,6 +536,7 @@ local config = {
       env = { enable = true },
       experimental = { enable = true },
       filetypes = { enable = true },
+      lists = { enable = true },
       mappings = { enable = true },
       numbers = { enable = true },
       pack = { enable = true },

@@ -169,41 +169,6 @@ settings({
   org = {
     opt = { spell = true },
   },
-  qf = {
-    opt = {
-      wrap = false,
-      number = false,
-      signcolumn = 'yes',
-      buflisted = false,
-      winfixheight = true,
-    },
-    -- stylua: ignore
-    mappings = {
-      { 'n', 'dd', '<Cmd>QfListDelete<CR>', { buffer = 0, desc = 'delete current quickfix entry' } },
-      { 'x', 'd', ':QfListDelete<CR>', { buffer = 0, desc = 'delete selected quickfix entry' } },
-      {
-        'n',
-        'w',
-        function()
-          local qf_entry = ar.list.current_entry()
-          if not qf_entry or qf_entry.bufnr == 0 then return end
-          ar.open_with_window_picker(function()
-            api.nvim_set_current_buf(qf_entry.bufnr)
-          end)
-        end,
-        { buffer = 0, desc = 'open entry with window picker' },
-      },
-      { 'n', 'H', ':colder<CR>', { buffer = 0 } },
-      { 'n', 'L', ':cnewer<CR>', { buffer = 0 } },
-    },
-    function()
-      -- force quickfix to open beneath all other splits
-      cmd.wincmd('J')
-      ar.adjust_split_height(5, 10)
-      -- stylua: ignore
-      api.nvim_buf_create_user_command(0, 'QfListDelete', ar.list.qf.delete, { range = true })
-    end,
-  },
   rust = {
     opt = { spell = true },
     plugins = {

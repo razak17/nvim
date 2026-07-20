@@ -988,6 +988,15 @@
               },
               "type": "object"
             },
+            "lists": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
             "mappings": {
               "additionalProperties": false,
               "properties": {
