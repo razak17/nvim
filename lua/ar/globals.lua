@@ -638,15 +638,11 @@ end
 ---@field opt vim.Option
 ---@field plugins {[string]: fun(module: table)}
 
----@param args {[1]: string, [2]: string, [3]: string, [string]: boolean | integer}[]
+---@param args {[1]: string, [2]: string, [3]: string, [4]?: vim.keymap.set.Opts}[]
 ---@param buf integer
 local function apply_ft_mappings(args, buf)
   vim.iter(args):each(function(m)
-    -- assert(#m == 3, 'map args must be a table with at least 3 items')
-    local opts = vim.iter(m):fold({ buffer = buf }, function(acc, key, item)
-      if type(key) == 'string' then acc[key] = item end
-      return acc
-    end)
+    local opts = vim.tbl_extend('force', { buffer = buf }, m[4] or {})
     map(m[1], m[2], m[3], opts)
   end)
 end
