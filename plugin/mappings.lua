@@ -391,6 +391,10 @@ end
 --------------------------------------------------------------------------------
 nnoremap('<leader>Lq', ar.list.qf.toggle, { desc = 'toggle quickfix list' })
 nnoremap('<leader>Ll', ar.list.loc.toggle, { desc = 'toggle location list' })
+local function list_jump(cmd)
+  local ok, err = pcall(vim.cmd, cmd .. vim.v.count1)
+  if not ok and not tostring(err):find('E553:', 1, true) then error(err, 0) end
+end
 local function qf_jump(o)
   return ar.jump(function(opts)
     local qf_list = fn.getqflist()
@@ -402,8 +406,8 @@ local function qf_jump(o)
       vim.notify('Only one item in quickfix list', vim.log.levels.INFO)
       return
     end
-    if opts.forward then vim.cmd('cnext' .. vim.v.count1) end
-    if not opts.forward then vim.cmd('cprev' .. vim.v.count1) end
+    if opts.forward then list_jump('cnext') end
+    if not opts.forward then list_jump('cprev') end
   end, o)
 end
 nnoremap('<leader>j', qf_jump({ forward = true }), { desc = 'qflist next' })
@@ -419,8 +423,8 @@ local function ll_jump(o)
       vim.notify('Only one item in location list', vim.log.levels.INFO)
       return
     end
-    if opts.forward then vim.cmd('lnext' .. vim.v.count1) end
-    if not opts.forward then vim.cmd('lprev' .. vim.v.count1) end
+    if opts.forward then list_jump('lnext') end
+    if not opts.forward then list_jump('lprev') end
   end, o)
 end
 nnoremap(
