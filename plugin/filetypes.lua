@@ -185,13 +185,11 @@ settings({
         'n',
         'w',
         function()
-          local qf_list = fn.getqflist()
-          local line = api.nvim_win_get_cursor(0)
-          local qf_entry = qf_list[line[1]]
+          local qf_entry = ar.list.current_entry()
+          if not qf_entry or qf_entry.bufnr == 0 then return end
           ar.open_with_window_picker(function()
             api.nvim_set_current_buf(qf_entry.bufnr)
-          end
-          )
+          end)
         end,
         { buffer = 0, desc = 'open entry with window picker' },
       },

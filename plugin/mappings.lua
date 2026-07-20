@@ -391,50 +391,27 @@ end
 --------------------------------------------------------------------------------
 nnoremap('<leader>Lq', ar.list.qf.toggle, { desc = 'toggle quickfix list' })
 nnoremap('<leader>Ll', ar.list.loc.toggle, { desc = 'toggle location list' })
-local function list_jump(cmd)
-  local ok, err = pcall(vim.cmd, cmd .. vim.v.count1)
-  if not ok and not tostring(err):find('E553:', 1, true) then error(err, 0) end
-end
-local function qf_jump(o)
-  return ar.jump(function(opts)
-    local qf_list = fn.getqflist()
-    if #qf_list == 0 then
-      vim.notify('Quickfix list is empty', vim.log.levels.INFO)
-      return
-    end
-    if #qf_list == 1 then
-      vim.notify('Only one item in quickfix list', vim.log.levels.INFO)
-      return
-    end
-    if opts.forward then list_jump('cnext') end
-    if not opts.forward then list_jump('cprev') end
-  end, o)
-end
-nnoremap('<leader>j', qf_jump({ forward = true }), { desc = 'qflist next' })
-nnoremap('<leader>k', qf_jump({ forward = false }), { desc = 'qflist prev' })
-local function ll_jump(o)
-  return ar.jump(function(opts)
-    local ll_list = fn.getloclist(0)
-    if #ll_list == 0 then
-      vim.notify('Location list is empty', vim.log.levels.INFO)
-      return
-    end
-    if #ll_list == 1 then
-      vim.notify('Only one item in location list', vim.log.levels.INFO)
-      return
-    end
-    if opts.forward then list_jump('lnext') end
-    if not opts.forward then list_jump('lprev') end
-  end, o)
+local function repeatable_list_jump(list, opts)
+  return ar.jump(function(o) list.jump(o.forward) end, opts)
 end
 nnoremap(
+  '<leader>j',
+  repeatable_list_jump(ar.list.qf, { forward = true }),
+  { desc = 'qflist next' }
+)
+nnoremap(
+  '<leader>k',
+  repeatable_list_jump(ar.list.qf, { forward = false }),
+  { desc = 'qflist prev' }
+)
+nnoremap(
   '<localleader>j',
-  ll_jump({ forward = true }),
+  repeatable_list_jump(ar.list.loc, { forward = true }),
   { desc = 'loclist next' }
 )
 nnoremap(
   '<localleader>k',
-  ll_jump({ forward = false }),
+  repeatable_list_jump(ar.list.loc, { forward = false }),
   { desc = 'loclist prev' }
 )
 --------------------------------------------------------------------------------
