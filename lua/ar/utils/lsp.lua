@@ -141,13 +141,16 @@ function M.restart(client_or_id, opts)
   local config = client.config
   M.soft_stop(client, {
     on_close = function()
+      local restarted_client_id
       for buf, _ in pairs(attached_buffers) do
         if not vim.api.nvim_buf_is_valid(buf) then return end
         vim.api.nvim_buf_call(buf, function()
           ---@cast config lsp.config
-          local id = M.start(config)
-          if id and opts and opts.on_restart then opts.on_restart(id) end
+          restarted_client_id = M.start(config) or restarted_client_id
         end)
+      end
+      if restarted_client_id and opts and opts.on_restart then
+        opts.on_restart(restarted_client_id)
       end
     end,
   })
