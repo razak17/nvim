@@ -25,6 +25,7 @@ local config = {
       'neo-tree',
       'NeogitCommitMessage',
       'NeogitStatus',
+      'NeogitCommitView',
       'oil',
       'qf',
       'starter',
