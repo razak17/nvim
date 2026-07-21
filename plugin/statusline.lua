@@ -83,7 +83,11 @@ local function filename()
     local space = dir == '' and ' ' or ''
     full = full .. string.format('%s%%#StatusLineMedium#%s%%*', space, name)
   end
-  return full .. string.format('%%#Comment#%s%%*', file_size)
+  full = full .. string.format('%%#Comment#%s%%*', file_size)
+  if bo.modified then
+    full = full .. string.format('%%#StatusLineLspWarn#%s%%*', ' [+]')
+  end
+  return full
 end
 
 --- @param severity integer
