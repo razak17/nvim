@@ -95,7 +95,7 @@ return {
               },
             },
           },
-          enable_autosnippets = true,
+          enable_autosnippets = ar.config.completion.variant ~= 'native',
           snip_env = {
             fmt = fmt,
             m = extras.match,
