@@ -2,12 +2,6 @@ local minimal, niceties = ar.plugins.minimal, ar.plugins.niceties
 
 return {
   {
-    'mrjones2014/smart-splits.nvim',
-    cond = function() return ar.get_plugin_cond('smart-splits.nvim') end,
-    opts = {},
-    build = './kitty/install-kittens.bash',
-  },
-  {
     'anuvyklack/windows.nvim',
     cond = function() return ar.get_plugin_cond('windows.nvim', not minimal) end,
     init = function()
