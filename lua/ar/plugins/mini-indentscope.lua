@@ -1,5 +1,4 @@
 local separators = ar.ui.icons.separators
-local minimal = ar.plugins.minimal
 
 return {
   {
@@ -7,8 +6,7 @@ return {
     cond = function()
       local indentline_enable = ar.config.ui.indentline.enable
       local indentline_variant = ar.config.ui.indentline.variant
-      local condition = not minimal
-        and indentline_enable
+      local condition = indentline_enable
         and indentline_variant == 'mini.indentscope'
       return ar.get_plugin_cond('mini.indentscope', condition)
     end,

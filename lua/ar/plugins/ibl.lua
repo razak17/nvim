@@ -1,4 +1,3 @@
-local minimal = ar.plugins.minimal
 local ui, highlight = ar.ui, ar.highlight
 local separators = ui.icons.separators
 local left_thin_block = ui.icons.separators.left_thin_block
@@ -9,9 +8,7 @@ return {
   {
     'nvimdev/indentmini.nvim',
     cond = function()
-      local condition = not minimal
-        and indentline_enable
-        and indentline_variant == 'indentmini'
+      local condition = indentline_enable and indentline_variant == 'indentmini'
       return ar.get_plugin_cond('indentmini.nvim', condition)
     end,
     event = 'UIEnter',
@@ -27,12 +24,8 @@ return {
     },
     config = function(_, opts)
       ar.highlight.plugin('indentmini', {
-        theme = {
-          ['onedark'] = {
-            { IndentLineCurrent = { link = 'IndentBlanklineContextChar' } },
-            { IndentLine = { link = 'IndentBlanklineChar' } },
-          },
-        },
+        { IndentLineCurrent = { link = 'IndentBlanklineContextChar' } },
+        { IndentLine = { link = 'IndentBlanklineChar' } },
       })
       require('indentmini').setup(opts)
     end,
@@ -40,9 +33,7 @@ return {
   {
     'lukas-reineke/indent-blankline.nvim',
     cond = function()
-      local condition = not minimal
-        and indentline_enable
-        and indentline_variant == 'ibl'
+      local condition = indentline_enable and indentline_variant == 'ibl'
       return ar.get_plugin_cond('indent-blankline.nvim', condition)
     end,
     event = 'UIEnter',
