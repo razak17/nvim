@@ -249,6 +249,30 @@ function M.package_info()
   return pkg_info.get_status()
 end
 
+---@param bufnr integer
+function M.lsp_diagnostics(bufnr)
+  bufnr = bufnr or api.nvim_get_current_buf()
+  local diag_icons = {
+    { severity = 'error', icon = codicons.lsp.error },
+    { severity = 'warn', icon = codicons.lsp.warn },
+    { severity = 'info', icon = codicons.lsp.info },
+    { severity = 'hint', icon = codicons.lsp.hint },
+  }
+  local diags = {}
+  for _, d in ipairs(diag_icons) do
+    local severity, icon = d.severity, d.icon
+    local s = vim.diagnostic.severity[string.upper(severity)]
+    local count = vim.diagnostic.count(bufnr, { severity = s })[s] or 0
+    if count > 0 then
+      table.insert(
+        diags,
+        string.format('%%#DiagnosticSign%s# %s %s%%*', severity, icon, count)
+      )
+    end
+  end
+  return diags
+end
+
 function M.get_lsp_servers(opts)
   local curwin = api.nvim_get_current_win()
   local curbuf = api.nvim_win_get_buf(curwin)

@@ -90,17 +90,6 @@ local function filename()
   return full
 end
 
---- @param severity integer
---- @return integer
-local function get_lsp_diagnostics_count(severity)
-  if not rawget(vim, 'lsp') then return 0 end
-
-  local count = vim.diagnostic.count(0, { serverity = severity })[severity]
-  if count == nil then return 0 end
-
-  return count
-end
-
 --- @param type string
 --- @return integer
 local function get_git_diff(type)
@@ -167,42 +156,6 @@ local function lsp_active()
   return ''
 end
 
---- @return string
-local function diagnostics_error()
-  local count = get_lsp_diagnostics_count(vim.diagnostic.severity.ERROR)
-  if count > 0 then
-    return string.format('%%#StatusLineLspError#  %s%%*', count)
-  end
-  return ''
-end
-
---- @return string
-local function diagnostics_warn()
-  local count = get_lsp_diagnostics_count(vim.diagnostic.severity.WARN)
-  if count > 0 then
-    return string.format('%%#StatusLineLspWarn#  %s%%*', count)
-  end
-  return ''
-end
-
---- @return string
-local function diagnostics_hint()
-  local count = get_lsp_diagnostics_count(vim.diagnostic.severity.HINT)
-  if count > 0 then
-    return string.format('%%#StatusLineLspHint# 󰌵 %s%%*', count)
-  end
-  return ''
-end
-
---- @return string
-local function diagnostics_info()
-  local count = get_lsp_diagnostics_count(vim.diagnostic.severity.INFO)
-  if count > 0 then
-    return string.format('%%#StatusLineLspInfo#  %s%%*', count)
-  end
-  return ''
-end
-
 --- @class LspProgress
 --- @field msg string?
 local lsp_progress = { msg = nil }
@@ -252,6 +205,9 @@ local function git_diff_removed()
   end
   return ''
 end
+
+--- @return string
+local function lsp_diagnostics() return table.concat(stl.lsp_diagnostics(), '') end
 
 local function git_status()
   local remote_status = require('ar.git_status').get()
@@ -361,10 +317,7 @@ function ar.ui.statusline.render()
     git_status(),
     filename(),
     git_diff(),
-    diagnostics_error(),
-    diagnostics_warn(),
-    diagnostics_info(),
-    diagnostics_hint(),
+    lsp_diagnostics(),
     '%=',
     '%=',
     '%S ',
