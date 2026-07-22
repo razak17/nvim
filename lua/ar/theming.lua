@@ -72,8 +72,8 @@ local function generate_completion_overrides(overrides)
       },
     },
     { PmenuMatch = { fg = { from = 'Normal' }, bold = true } },
-    { PmenuExtra = { bg = 'NONE', fg = { from = 'NonText' } } },
-    { PmenuSel = { bg = { from = 'Visual' }, fg = 'NONE', reverse = false } },
+    { PmenuExtra = { inherit = 'NonText', bg = 'NONE' } },
+    { PmenuSel = { inherit = 'Visual', fg = 'NONE', reverse = false } },
     { PmenuExtraSel = { link = 'PmenuSel' } },
     {
       PmenuKindSel = {
@@ -84,13 +84,14 @@ local function generate_completion_overrides(overrides)
       },
     },
     { PmenuThumb = { bg = { from = 'PmenuThumb', alter = -0.4 } } },
+    { PmenuDeprecated = { inherit = 'Comment', strikethrough = true } },
     { BlinkCmpDocBorder = { link = 'PmenuBorder' } },
     { BlinkCmpSource = { link = 'PmenuKind' } },
     { BlinkCmpLabel = { fg = { from = 'Pmenu' } } },
     { BlinkCmpLabelDetail = { link = 'PmenuExtra' } },
     { BlinkCmpLabelMatch = { link = 'PmenuMatch' } },
     { BlinkCmpLabelDescription = { link = 'PmenuExtra' } },
-    { BlinkCmpLabelDeprecated = { strikethrough = true, link = 'Comment' } },
+    { BlinkCmpLabelDeprecated = { link = 'PmenuDeprecated' } },
   }
   ar.list_insert(hls, overrides or {})
   return hls
