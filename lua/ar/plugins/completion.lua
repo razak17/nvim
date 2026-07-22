@@ -59,29 +59,22 @@ return {
         )
         :totable()
 
-      highlight.plugin('Cmp', {
+      hl_defs = vim.tbl_extend('force', hl_defs, {
+        { CmpItemAbbrMatch = { link = 'PmenuMatch' } },
+        { CmpItemAbbrMatchFuzzy = { link = 'PmenuMatch' } },
+        { CmpItemMenu = { link = 'PmenuKind' } },
+        { CmpItemAbbrDeprecated = { link = 'PmenuDeprecated' } },
+      })
+
+      highlight.plugin('Cmp', hl_defs)
+
+      highlight.plugin('CmpOverrides', {
         theme = {
-          ['onedark'] = vim.tbl_extend('force', hl_defs, {
-            { CmpItemAbbr = { fg = { from = 'MsgSeparator' } } },
-            {
-              CmpItemAbbrDeprecated = {
-                strikethrough = true,
-                inherit = 'Comment',
-              },
-            },
-            { CmpItemAbbrMatch = { fg = { from = 'WildMenu' }, bold = true } },
-            { CmpItemAbbrMatchFuzzy = { fg = { from = 'WildMenu' } } },
-            {
-              CmpItemMenu = {
-                fg = { from = 'Comment' },
-                italic = true,
-                bold = true,
-              },
-            },
+          ['onedark'] = {
             { CmpItemKindNerdFont = { fg = { from = 'Directory' } } },
             { CmpItemKindLab = { fg = { from = 'Directory' } } },
             { CmpItemKindDynamic = { fg = { from = 'Directory' } } },
-          }),
+          },
         },
       })
 
