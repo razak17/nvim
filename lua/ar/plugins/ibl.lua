@@ -77,18 +77,19 @@ return {
   },
   {
     'shellRaining/hlchunk.nvim',
-    cond = function() return ar.get_plugin_cond('hlchunk.nvim', not minimal) end,
+    cond = function() return ar.get_plugin_cond('hlchunk.nvim') end,
     event = 'BufRead',
     config = function()
       require('hlchunk').setup({
         indent = {
+          enable = false,
           chars = { '▏' },
-          style = {
-            { fg = highlight.get('IndentBlanklineChar', 'fg') },
-          },
+          style = highlight.get('IndentBlanklineChar', 'fg'),
         },
         blank = { enable = false },
         chunk = {
+          enable = true,
+          use_treesitter = ar.treesitter.enable,
           chars = {
             horizontal_line = '─',
             vertical_line = '│',
@@ -96,12 +97,10 @@ return {
             left_bottom = '└',
             right_arrow = '─',
           },
-          style = highlight.tint(
-            highlight.get('IndentBlanklineContextChar', 'fg'),
-            -0.2
-          ),
+          style = highlight.get('IndentBlanklineContextChar', 'fg'),
         },
         line_num = {
+          enable = true,
           style = highlight.get('CursorLineNr', 'fg'),
         },
       })
