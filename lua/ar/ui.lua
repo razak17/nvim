@@ -420,8 +420,9 @@ local filetypes = ar.p_table({
   ['scheme_switcher'] = presets.statusline_only,
   ['slide'] = presets.tool_panel:with({ winbar = 'ignore' }),
   ['snacks_notif_history'] = presets.tool_panel,
-  ['snacks_picker_input'] = presets.statusline_only:with({
+  ['snacks_picker_input'] = presets.tool_panel:with({
     statuscolumn = true,
+    statusline = false,
   }),
   ['starter'] = presets.tool_panel:with({ statusline = false }),
   ['startify'] = presets.statusline_only,
