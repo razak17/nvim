@@ -1816,7 +1816,7 @@
               "type": "boolean"
             },
             "variant": {
-              "enum": ["ibl", "indentmini", "mini.indentscope", "snacks"],
+              "enum": [ "hlchunk", "ibl", "indentmini", "mini.indentscope", "snacks" ],
               "type": "string"
             }
           },

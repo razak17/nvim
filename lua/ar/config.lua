@@ -38,7 +38,7 @@ local env = vim.env
 ---@alias ArWhichGx 'custom' | 'gx.nvim'
 ---@alias ArWhichIcon 'nvim-web-devicons' | 'mini.icons'
 ---@alias ArWhichImage 'image.nvim' | 'snacks'
----@alias ArWhichIndentline 'mini.indentscope' | 'ibl' | 'snacks' | 'indentmini'
+---@alias ArWhichIndentline 'mini.indentscope' | 'ibl' | 'snacks' | 'indentmini' | 'hlchunk'
 ---@alias ArWhichLspCodeAction 'builtin' | 'tiny-code-action'
 ---@alias ArWhichLspProgress 'builtin' | 'noice'
 ---@alias ArWhichLspProgressSpinner 'dots' | 'circle'
