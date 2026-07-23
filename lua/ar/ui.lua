@@ -199,9 +199,9 @@ ar.ui.codicons = {
     trace = '✎',
   },
   lsp_alt = {
-    error = '󰅙', -- alt: 
-    warn = '󰀦',
-    info = '󰋼', --  ℹ 󰙎 
+    error = '', -- alt:  󰅙
+    warn = '', -- alt: 󰀦
+    info = '', --  ℹ 󰙎  󰋼
     hint = '󰌵',
   },
   misc = {
