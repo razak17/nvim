@@ -77,7 +77,8 @@ return {
                   .. '/'
                   .. vim.fn.fnamemodify(full_path, ':t')
               end
-              local ft_icon = ar.ui.codicons.documents.default_file
+              local codicons = ar.ui.codicons
+              local ft_icon = codicons.documents.default_file
               local ft_color = 'DevIconDefault'
               local modified = vim.bo[props.buf].modified and 'bold,italic'
                 or 'bold'
@@ -88,7 +89,7 @@ return {
               end
 
               local function get_git_signs()
-                local status_dict = vim.b.gitsigns_status_dict
+                local status_dict = vim.b[props.buf].gitsigns_status_dict
                 if not status_dict then return {} end
                 local has_changes = status_dict.added ~= 0
                   or status_dict.removed ~= 0
@@ -97,26 +98,26 @@ return {
                 if not has_changes then return {} end
 
                 local labels = {}
-                local git_codicons = ar.ui.codicons.git
+                local git_codicons = codicons.git
 
                 if not ar.falsy(status_dict.added) then
                   table.insert(labels, {
                     git_codicons.added .. ' ' .. status_dict.added .. ' ',
-                    group = 'DiagnosticSignHint',
+                    group = 'StatusLineGitDiffAdded',
                   })
                 end
 
                 if not ar.falsy(status_dict.removed) then
                   table.insert(labels, {
                     git_codicons.removed .. ' ' .. status_dict.removed .. ' ',
-                    group = 'DiagnosticSignEror',
+                    group = 'StatusLineGitDiffRemoved',
                   })
                 end
 
                 if not ar.falsy(status_dict.changed) then
                   table.insert(labels, {
                     git_codicons.mod .. ' ' .. status_dict.changed .. ' ',
-                    group = 'DiagnosticSignInfo',
+                    group = 'StatusLineGitDiffChanged',
                   })
                 end
 
@@ -126,19 +127,18 @@ return {
               end
 
               local function get_diagnostic_label()
-                local lsp_codicons = ar.ui.codicons.lsp
-                local icons = {
-                  error = lsp_codicons.error .. ' ',
-                  warn = lsp_codicons.warn .. ' ',
-                  info = lsp_codicons.info .. ' ',
-                  hint = lsp_codicons.hint .. ' ',
+                local diag_icons = {
+                  { severity = 'error', icon = codicons.lsp.error .. ' ' },
+                  { severity = 'warn', icon = codicons.lsp.warn .. ' ' },
+                  { severity = 'info', icon = codicons.lsp.info .. ' ' },
+                  { severity = 'hint', icon = codicons.lsp.hint .. ' ' },
                 }
                 local label = {}
-
-                for severity, icon in pairs(icons) do
-                  local n = #vim.diagnostic.get(props.buf, {
-                    severity = vim.diagnostic.severity[string.upper(severity)],
-                  })
+                for _, d in ipairs(diag_icons) do
+                  local severity, icon = d.severity, d.icon
+                  local s = vim.diagnostic.severity[string.upper(d.severity)]
+                  local n = vim.diagnostic.count(props.buf, { severity = s })[s]
+                    or 0
                   if n > 0 then
                     table.insert(
                       label,
