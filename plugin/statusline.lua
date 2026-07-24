@@ -20,6 +20,7 @@ ar.ui.statusline = {}
 local bg = api.nvim_get_option_value('background', { scope = 'global' })
 ar.highlight.plugin('NativeStatuslineHl', {
   { StatusLine = { bg = 'NONE', fg = { from = 'Normal' } } },
+  { StatusLineNC = { inherit = 'StatusLine', bg = 'NONE' } },
   { StatusLineBar = { fg = { from = 'Directory' }, bold = true } },
   { StatusLineMode = { fg = { from = 'Special' } } },
   { StatusLineMedium = { fg = { from = 'Normal' } } },
