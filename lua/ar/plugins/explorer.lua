@@ -55,6 +55,7 @@ local function snacks_show_image(path, win_opts)
     win:show()
     local opts = Snacks.config.merge({}, Snacks.image.config.doc, {
       on_update_pre = function()
+        if win_opts == nil then return end
         win.opts.width = win_opts.width
         win.opts.height = win_opts.height
         win:show()
