@@ -12,6 +12,7 @@ return {
 
     if not cond then return opts end
 
+    local decor = ar.ui.decorations
     local conditions = require('heirline.conditions')
     local is_git_repo = conditions.is_git_repo
     local align = { provider = '%=' }
@@ -23,10 +24,19 @@ return {
 
     local inactive_statuscolumn = {
       hl = { bg = 'NONE', fg = 'fg' },
-      condition = function(self)
+      condition = function()
+        local buf = api.nvim_get_current_buf()
+        local ft = vim.bo[buf].ft
+        local filepath = api.nvim_buf_get_name(buf)
+
+        local decs = decor.get({
+          ft = ft,
+          fname = fn.bufname(buf),
+          setting = 'statuscolumn',
+        })
         return conditions.buffer_matches({
-          filetype = self.force_inactive_filetypes,
-        }) or vim.bo.ft == ''
+          buftype = { 'terminal', 'nofile', 'prompt' },
+        }) or (decs and decs.ft == false) or (ft == '' and filepath == '')
       end,
       { provider = '' },
       align,
