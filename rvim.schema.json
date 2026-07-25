@@ -415,7 +415,7 @@
           "type": "string"
         },
         "variant": {
-          "enum": ["builtin", "fyler", "mini.files", "neo-tree", "oil", "snacks"],
+          "enum": ["fyler", "mini.files", "neo-tree", "oil", "snacks"],
           "type": "string"
         }
       },
