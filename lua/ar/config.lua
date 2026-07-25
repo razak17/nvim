@@ -33,7 +33,7 @@ local env = vim.env
 ---@alias ArWhichCmdline 'builtin' | 'extui' | 'tiny-cmdline' | 'noice' | 'telescope-cmdline'
 ---@alias ArCompletion 'native' | 'blink' | 'cmp' | 'mini.completion'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
----@alias ArWhichIntro 'builtin' | 'legacy' | | 'alpha' | 'snacks' | 'startup' | 'btw'
+---@alias ArWhichIntro 'builtin' | 'legacy' | 'alpha' | 'snacks' | 'startup' | 'btw'
 ---@alias ArWhichExplorer 'builtin' | 'neo-tree' | 'snacks' | 'mini.files' | 'oil' | 'fyler'
 ---@alias ArWhichGx 'custom' | 'gx.nvim'
 ---@alias ArWhichIcon 'nvim-web-devicons' | 'mini.icons'
