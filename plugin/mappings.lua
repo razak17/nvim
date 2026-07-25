@@ -445,7 +445,7 @@ vnoremap(
 xnoremap('<leader>ul', [[:g/\v^ *$/d<CR>]], { desc = 'remove empty lines' })
 --------------------------------------------------------------------------------
 nnoremap('<leader>ui', vim.show_pos, { desc = 'inspect pos' })
-nnoremap('<leader>uI', '<Cmd>Inspect<CR>', { desc = 'inspect tree' })
+nnoremap('<leader>uI', '<Cmd>InspectTree<CR>', { desc = 'inspect tree' })
 --------------------------------------------------------------------------------
 -- Inspect treesitter tree
 nnoremap('<leader>ut', function()
