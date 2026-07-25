@@ -292,7 +292,7 @@ ar.ui.lsp = {
 -- UI Settings
 --------------------------------------------------------------------------------
 ---@class Decorations {
----@field winbar boolean
+---@field winbar 'ignore' | boolean
 ---@field number 'ignore' | boolean
 ---@field statusline 'minimal' | boolean
 ---@field statuscolumn boolean
@@ -359,6 +359,7 @@ local buftypes = {
 local filetypes = ar.p_table({
   ['^Neogit.*'] = presets.statusline_only:with({ cursorline = true }),
   ['^copilot.*'] = presets.tool_panel,
+  ['^git.*'] = presets.tool_panel,
   ['aerial'] = presets.tool_panel,
   ['agitator'] = presets.tool_panel,
   ['alpha'] = presets.tool_panel:with({ statusline = false }),
@@ -382,6 +383,11 @@ local filetypes = ar.p_table({
   ['DiffviewFileHistory'] = presets.tool_panel,
   ['DiffviewFiles'] = presets.tool_panel,
   ['DressingInput'] = presets.tool_panel,
+  ['filebuf'] = presets.tool_panel:with({
+    winbar = 'ignore',
+    cursorline = true,
+  }),
+  ['^frecency$'] = presets.tool_panel,
   ['fugitive'] = presets.statusline_only:with({ cursorline = true }),
   ['fyler'] = presets.tool_panel:with({ cursorline = true }),
   ['fzf'] = presets.tool_panel,
@@ -402,6 +408,7 @@ local filetypes = ar.p_table({
     winbar = 'ignore',
     cursorline = true,
   }),
+  ['^neo--tree--popup$'] = presets.tool_panel,
   ['NeogitCommitMessage'] = commit_buffer,
   ['neotest.*'] = presets.tool_panel,
   ['netrw'] = presets.tool_panel,
@@ -428,8 +435,8 @@ local filetypes = ar.p_table({
   ['startify'] = presets.statusline_only,
   ['startup'] = presets.tool_panel:with({ statusline = false }),
   ['toggleterm'] = presets.statusline_only:with({ winbar = 'ignore' }),
-  ['telescopeprompt'] = presets.statusline_only,
-  ['TelescopePrompt'] = presets.statusline_only,
+  ['telescopeprompt'] = presets.tool_panel,
+  ['TelescopePrompt'] = presets.tool_panel,
   ['tinyunit'] = presets.tool_panel,
   ['Trouble'] = presets.tool_panel,
   ['tsplayground'] = presets.tool_panel,

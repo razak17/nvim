@@ -299,12 +299,25 @@ function ar.ui.statusline.render()
     })
   end
 
-  local filepath = api.nvim_buf_get_name(api.nvim_get_current_buf())
-  if bo.ft == '' and filepath == '' then
+  local buf = api.nvim_get_current_buf()
+  local ft = bo[buf].ft
+  local filepath = api.nvim_buf_get_name(buf)
+
+  local decs = ar.ui.decorations.get({
+    ft = bo[api.nvim_get_current_buf()].ft,
+    fname = fn.bufname(api.nvim_get_current_buf()),
+    setting = 'statusline',
+  })
+
+  if (decs and decs.ft == false) or (ft == '' and filepath == '') then
     return table.concat({ '%#Normal#%' })
   end
 
-  if readeable_filetypes[bo.ft] or vim.o.modifiable == false then
+  if
+    readeable_filetypes[ft]
+    or vim.o.modifiable == false
+    or (decs and decs.ft == 'minimal')
+  then
     return table.concat({
       bar(),
       formatted_filetype('StatusLineMode'),

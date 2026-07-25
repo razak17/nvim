@@ -521,13 +521,17 @@ return {
     }
 
     local minimal_statusline = {
-      condition = function(self)
-        return conditions.buffer_matches({ filetype = self.filetypes })
+      condition = function()
+        local decs = ar.ui.decorations.get({
+          ft = vim.bo[api.nvim_get_current_buf()].ft,
+          fname = fn.bufname(api.nvim_get_current_buf()),
+          setting = 'statusline',
+        })
+        return (decs and decs.ft == 'minimal')
       end,
       vim_mode,
       { provider = ' ' },
       {
-        condition = function() return vim.bo.filetype ~= 'help' end,
         provider = function() return string.lower(vim.bo.ft) end,
         hl = { fg = 'fg' },
       },
@@ -536,10 +540,16 @@ return {
 
     local inactive_statusline = {
       hl = { bg = 'NONE', fg = 'fg' },
-      condition = function(self)
-        return conditions.buffer_matches({
-          filetype = self.force_inactive_filetypes,
-        }) or vim.bo.ft == ''
+      condition = function()
+        local buf = api.nvim_get_current_buf()
+        local ft = vim.bo[buf].ft
+        local filepath = api.nvim_buf_get_name(buf)
+        local decs = ar.ui.decorations.get({
+          ft = vim.bo[buf].ft,
+          fname = fn.bufname(buf),
+          setting = 'statusline',
+        })
+        return (decs and decs.ft == false) or (ft == '' and filepath == '')
       end,
       { provider = ' ' },
       align,
