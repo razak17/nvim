@@ -415,7 +415,14 @@
           "type": "string"
         },
         "variant": {
-          "enum": ["fyler", "mini.files", "neo-tree", "oil", "snacks"],
+          "enum": [
+            "filebuf",
+            "fyler",
+            "mini.files",
+            "neo-tree",
+            "oil",
+            "snacks"
+          ],
           "type": "string"
         }
       },
@@ -1816,7 +1823,13 @@
               "type": "boolean"
             },
             "variant": {
-              "enum": [ "hlchunk", "ibl", "indentmini", "mini.indentscope", "snacks" ],
+              "enum": [
+                "hlchunk",
+                "ibl",
+                "indentmini",
+                "mini.indentscope",
+                "snacks"
+              ],
               "type": "string"
             }
           },

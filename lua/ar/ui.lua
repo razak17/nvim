@@ -295,7 +295,7 @@ ar.ui.lsp = {
 ---@field winbar 'ignore' | boolean
 ---@field number 'ignore' | boolean
 ---@field statusline 'minimal' | boolean
----@field statuscolumn boolean
+---@field statuscolumn  boolean
 ---@field colorcolumn boolean | string
 ---@field cursorline boolean | string
 

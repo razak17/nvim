@@ -76,6 +76,19 @@ end
 
 return {
   {
+    'HuntFeng/filebuf.nvim',
+    cond = function() return plugin_cond('filebuf.nvim', 'filebuf') end,
+    cmd = { 'Filebuf' },
+    keys = {
+      { '<C-n>', '<Cmd>Filebuf<CR>', desc = 'filebuf: open' },
+    },
+    opts = {
+      permanent_delete = false,
+      show_hidden = false,
+      hijack_netrw = true,
+    },
+  },
+  {
     'A7Lavinraj/fyler.nvim',
     cond = function() return plugin_cond('fyler.nvim', 'fyler') end,
     cmd = { 'Fyler' },
