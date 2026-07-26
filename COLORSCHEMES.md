@@ -86,6 +86,11 @@
 - gruvdark-light
 - gyokuro
 - habamax
+- hardhat
+- hardhat-diffused
+- hardhat-light
+- hardhat-m1
+- hardhat-vivid
 - heap
 - heap-dark
 - hojicha

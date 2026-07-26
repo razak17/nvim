@@ -556,6 +556,24 @@ return {
         }, true)
       end,
     },
+    {
+      'g-kirti/hardhat.nvim',
+      cond = get_cond({ 'hardhat', 'hardhat-vivid' }),
+      priority = get_priority({ 'hardhat', 'hardhat-vivid' }),
+      event = get_event({ 'hardhat', 'hardhat-vivid' }),
+      init = function()
+        theming.apply_overrides('hardhat', {
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = 1.8 } } },
+          },
+        }, true)
+        theming.apply_overrides('hardhat-vivid', {
+          default = {
+            { WinSeparator = { fg = { from = 'WinSeparator', alter = 3.5 } } },
+          },
+        }, true)
+      end,
+    },
   },
   ------------------------------------------------------------------------------
   -- Warm

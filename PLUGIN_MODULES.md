@@ -46,7 +46,6 @@
 - heirline
 - heirline-statuscolumn
 - heirline-statusline
-- hydra
 - ibl
 - icons
 - incline
