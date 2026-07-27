@@ -1195,6 +1195,15 @@
               },
               "type": "object"
             },
+            "local_search": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
             "modify_line_end_delimiter": {
               "additionalProperties": false,
               "properties": {

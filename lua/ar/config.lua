@@ -559,6 +559,7 @@ local config = {
       interceptor = { enable = true },
       large_file = { enable = false },
       last_place = { enable = true },
+      local_search = { enable = true },
       modify_line_end_delimiter = { enable = true },
       notepad = { enable = true },
       null_pointer = { enable = true },
