@@ -598,7 +598,6 @@ local config = {
       'garbage-day.nvim',
       'git-conflict.nvim',
       'goplexity.nvim',
-      'hlchunk.nvim',
       'incline.nvim',
       'inlayhint-filler.nvim',
       'lsplinks.nvim',
