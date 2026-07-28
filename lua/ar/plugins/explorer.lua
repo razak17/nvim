@@ -77,7 +77,7 @@ end
 
 return {
   {
-    'razak17/filebuf.nvim',
+    'HuntFeng/filebuf.nvim',
     cond = function() return plugin_cond('filebuf.nvim', 'filebuf') end,
     cmd = { 'Filebuf' },
     keys = {
