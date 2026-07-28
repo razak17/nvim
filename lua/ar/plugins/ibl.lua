@@ -70,7 +70,7 @@ return {
     'shellRaining/hlchunk.nvim',
     cond = function()
       local condition = indentline_enable and indentline_variant == 'hlchunk'
-      return ar.get_plugin_cond('hlchunk.nvim.nvim', condition)
+      return ar.get_plugin_cond('hlchunk.nvim', condition)
     end,
     event = 'BufRead',
     config = function()
