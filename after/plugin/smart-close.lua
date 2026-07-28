@@ -52,6 +52,7 @@ ar.augroup('SmartClose', {
     if smart_close_exclusions[buf.ft] then return end
 
     local is_eligible = is_unmapped
+      or fn.win_gettype() == 'popup'
       or vim.wo.previewwindow
       or smart_close_filetypes[buf.ft]
       or smart_close_buftypes[buf.bt]
