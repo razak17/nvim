@@ -31,6 +31,7 @@
   "bmessages.nvim": { "branch": "main", "commit": "985c6973bc27888598a03f4766a2481248a599b2" },
   "boundary.nvim": { "branch": "develop", "commit": "365d972bf864244e4aeab4798362d8e77cfd8748" },
   "btw.nvim": { "branch": "master", "commit": "47f6419e90d3383987fd06e8f3e06a4bc032ac83" },
+  "buffer-sticks.nvim": { "branch": "main", "commit": "303f350089f82282a2e51f04c40a34538cde96a0" },
   "bullets.vim": { "branch": "master", "commit": "3f667eeca58bd4ba411b41edefef51e7fed1a2b1" },
   "camouflage.nvim": { "branch": "main", "commit": "1e0903ca9f484ac31b36151fa12eadd81c0ad12e" },
   "capture.vim": { "branch": "master", "commit": "857ee11cfe1193948d3d45dcb8d511fded8533fb" },

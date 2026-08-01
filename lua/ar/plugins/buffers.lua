@@ -85,7 +85,7 @@ return {
   },
   {
     desc = 'A cosmetic buffers indicator & picker ',
-    'razak17/buffer-sticks.nvim',
+    'ahkohd/buffer-sticks.nvim',
     event = { 'VeryLazy' },
     cond = function()
       local cond = not minimal and ar.config.buffers.variant == 'buffer-sticks'
