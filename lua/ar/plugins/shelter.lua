@@ -84,7 +84,7 @@ return {
     lazy = false,
     opts = {
       default_mode = 'full', -- 'partial' | 'full' | 'none'
-      env_filetypes = { 'dotenv', 'sh', 'conf', 'config' },
+      env_filetypes = { 'dotenv', 'sh', 'conf', 'config', 'env' },
       highlight_group = 'Comment',
       mask_char = '*',
       skip_comments = false,
