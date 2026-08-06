@@ -354,6 +354,7 @@ return {
   -- Regex
   --------------------------------------------------------------------------------
   {
+    desc = 'Describe the regexp under the cursor',
     'bennypowers/nvim-regexplainer',
     cond = function()
       return ar.get_plugin_cond('nvim-regexplainer', not minimal)
