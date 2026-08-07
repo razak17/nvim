@@ -3,7 +3,6 @@ local coding = ar.plugins.coding
 return {
   {
     'mistweaverco/kulala.nvim',
-    branch = 'develop',
     cond = function() return ar.get_plugin_cond('kulala.nvim', coding) end,
     ft = { 'http' },
     init = function()
