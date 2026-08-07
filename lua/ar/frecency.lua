@@ -96,6 +96,9 @@ end
 
 --- Save the current frecency state to a file.
 function M.save_state()
+  local directory = fn.fnamemodify(config.filepath, ':h')
+  fn.mkdir(directory, 'p')
+
   local file, err = io.open(config.filepath, 'w')
   if not file then
     error('Error opening file for writing: ' .. tostring(err))
