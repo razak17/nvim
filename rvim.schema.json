@@ -1096,6 +1096,15 @@
               },
               "type": "object"
             },
+            "autosave": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
             "auto_cursorline": {
               "additionalProperties": false,
               "properties": {

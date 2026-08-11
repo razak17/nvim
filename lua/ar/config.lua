@@ -548,6 +548,7 @@ local config = {
     extra = {
       accelerated_jk = { enable = true },
       advanced_new_file = { enable = true },
+      autosave = { enable = true },
       auto_cursorline = { enable = true },
       baredot = { enable = true },
       big_file = { enable = true },
