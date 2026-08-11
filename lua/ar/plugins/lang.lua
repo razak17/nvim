@@ -74,7 +74,7 @@ return {
     },
     event = 'BufRead package.json',
     config = function()
-      vim.g.whichkey_add_spec({ '<localleader>P', group = 'Package Info' })
+      vim.g.whichkey_add_spec({ '<leader><leader>P', group = 'Package Info' })
 
       highlight.plugin('package-info', {
         theme = {
