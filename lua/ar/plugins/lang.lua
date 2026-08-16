@@ -88,6 +88,10 @@ return {
       require('package-info').setup({
         autostart = false,
         hide_up_to_date = true,
+        win = {
+          border = 'single',
+          highlight = 'Normal:NormalFloat,FloatBorder:FloatBorder',
+        },
       })
     end,
   },
