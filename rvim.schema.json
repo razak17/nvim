@@ -396,6 +396,19 @@
           "enum": ["lspkind", "mini.icons"],
           "type": "string"
         },
+        "snippets": {
+          "additionalProperties": false,
+          "properties": {
+            "enable": {
+              "type": "boolean"
+            },
+            "variant": {
+              "enum": ["friendly-snippets", "minimal"],
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
         "variant": {
           "enum": ["blink", "cmp", "mini.completion", "native"],
           "type": "string"
