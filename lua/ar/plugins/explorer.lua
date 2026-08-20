@@ -179,8 +179,8 @@ return {
       local function on_move(data) on_rename(data.source, data.destination) end
 
       local function disable_autosave()
-        ar.config.autosave.current = ar.config.autosave.enable
-        if ar.config.autosave.current then ar.config.autosave.enable = false end
+        ar.config.autosave.current = ar.config.plugin.extra.autosave.enable
+        if ar.config.autosave.current then ar.config.plugin.extra.autosave.enable = false end
       end
 
       local function custom_open_with_window_picker(state)
@@ -271,7 +271,7 @@ return {
           {
             event = events.FILE_RENAMED,
             handler = function()
-              ar.config.autosave.enable = ar.config.autosave.current
+              ar.config.plugin.extra.autosave.enable = ar.config.autosave.current
             end,
           },
           {

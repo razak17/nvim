@@ -28,9 +28,7 @@ local function is_ignored_directory(buf)
   local path = ar.norm(vim.fn.fnamemodify(name, ':p'))
   local path_with_separators = '/' .. path .. '/'
 
-  for _, directory in
-    ipairs(ar.config.autosave.config.ignored_directories or {})
-  do
+  for _, directory in ipairs(config.ignored_directories or {}) do
     local ignored = ar.norm(directory)
     if ignored ~= '' then
       if ignored:find('/', 1, true) then
@@ -53,7 +51,7 @@ local function can_save(buf)
     and not vim.bo[buf].readonly
     and not vim.tbl_contains(config.ignored_filetypes, vim.bo[buf].filetype)
     and not is_ignored_directory(buf)
-    and ar.config.autosave.enable
+    and ar.config.plugin.extra.autosave
   -- and ar.kitty_scrollback.enable
 end
 

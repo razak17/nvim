@@ -262,11 +262,11 @@ nnoremap('<leader>od', function()
     return
   end
   if fn.confirm('Move file to trash?', '&Yes\n&No') == 1 then
-    ar.config.autosave.enable = not ar.config.autosave.enable
+    ar.config.plugin.extra.autosave.enable = not ar.config.plugin.extra.autosave.enable
     local file = fn.expand('%:p')
     ar.trash_file(file, true)
     Snacks.bufdelete.delete()
-    ar.config.autosave.enable = not ar.config.autosave.enable
+    ar.config.plugin.extra.autosave.enable = not ar.config.plugin.extra.autosave.enable
   end
 end, { desc = 'trash file' })
 nnoremap('<leader>oD', function()
