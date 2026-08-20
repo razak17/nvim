@@ -41,7 +41,7 @@
 - taplo
 - tinymist
 - ts_ls
-- tsgo
+- tsc
 - ty
 - typescript-tools
 - vimls

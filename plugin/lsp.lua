@@ -41,7 +41,7 @@ lsp.handlers[M.textDocument_publishDiagnostics] = function(err, result, ctx, con
   end
   return publish_handler(err, result, ctx, config)
 end
--- pull diagnostics (for example, tsgo)
+-- pull diagnostics (for example, tsc)
 local diagnostic_handler = lsp.handlers[M.textDocument_diagnostic]
 lsp.handlers[M.textDocument_diagnostic] = function(err, result, ctx, config)
   if not err and result and result.items then
@@ -576,8 +576,8 @@ local ts_overrides = {
     local name = lsp.get_client_by_id(client.id).name
     local ts_servers = { 'ts_ls', 'typescript-tools', 'vtsls' }
     if vim.tbl_contains(ts_servers, name) then
-      local tsgo = lsp.get_clients({ name = 'tsgo', bufnr = bufnr })[1]
-      if tsgo then
+      local tsc = lsp.get_clients({ name = 'tsc', bufnr = bufnr })[1]
+      if tsc then
         lsp.handlers[M.textDocument_publishDiagnostics] = function(
           err,
           result,
@@ -607,7 +607,7 @@ local client_overrides = {
       client.server_capabilities.workspaceSymbolProvider = false
     end,
   },
-  tsgo = {
+  tsc = {
     on_attach = function(client, bufnr)
       if ar.has('twoslash-queries.nvim') then
         require('twoslash-queries').attach(client, bufnr)
@@ -625,7 +625,7 @@ local client_overrides = {
           or ar.config.lsp.lang.typescript.vtsls
       end
 
-      -- if tsgo is attached alongside another ts server, use tsgo for diagnostics only
+      -- if tsc is attached alongside another ts server, use tsc for diagnostics only
       if ts_cond() then
         -- UX / interaction
         client.server_capabilities.hoverProvider = false

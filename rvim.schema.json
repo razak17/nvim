@@ -618,7 +618,7 @@
                   "taplo",
                   "tinymist",
                   "ts_ls",
-                  "tsgo",
+                  "tsc",
                   "ty",
                   "typescript-tools",
                   "vimls",
@@ -732,7 +732,7 @@
                 "ts_ls": {
                   "type": "boolean"
                 },
-                "tsgo": {
+                "tsc": {
                   "type": "boolean"
                 },
                 "typescript-tools": {
@@ -820,7 +820,7 @@
               "taplo",
               "tinymist",
               "ts_ls",
-              "tsgo",
+              "tsc",
               "ty",
               "typescript-tools",
               "vimls",

@@ -223,7 +223,7 @@ function M.organize_imports()
     vim.cmd('VtsExec organize_imports')
   elseif
     ar.lsp_enabled('typescript', 'ts_ls')
-    or ar.lsp_enabled('typescript', 'tsgo')
+    or ar.lsp_enabled('typescript', 'tsc')
   then
     vim.cmd('OrganizeImports')
   end
@@ -236,7 +236,7 @@ function M.add_missing_imports()
     vim.cmd('VtsExec add_missing_imports')
   elseif
     ar.lsp_enabled('typescript', 'ts_ls')
-    or ar.lsp_enabled('typescript', 'tsgo')
+    or ar.lsp_enabled('typescript', 'tsc')
   then
     vim.cmd('AddMissingImports')
   end
@@ -249,7 +249,7 @@ function M.remove_unused()
     vim.cmd('VtsExec remove_unused')
   elseif
     ar.lsp_enabled('typescript', 'ts_ls')
-    or ar.lsp_enabled('typescript', 'tsgo')
+    or ar.lsp_enabled('typescript', 'tsc')
   then
     vim.cmd('RemoveUnused')
   end

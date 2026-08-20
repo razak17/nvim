@@ -364,7 +364,7 @@ local servers = {
       },
     },
   },
-  tsgo = {
+  tsc = {
     settings = {
       typescript = {
         inlayHints = {

@@ -11,14 +11,14 @@ local format_exclusions = {
     javascript = {
       'quick_lint_js',
       'ts_ls',
-      'tsgo',
+      'tsc',
       'vts_ls',
       'typescript-tools',
     },
     json = { 'jsonls' },
-    typescript = { 'ts_ls', 'tsgo', 'vts_ls', 'typescript-tools' },
-    typescriptreact = { 'ts_ls', 'tsgo', 'vts_ls', 'typescript-tools' },
-    javascriptreact = { 'ts_ls', 'tsgo', 'vts_ls', 'typescript-tools' },
+    typescript = { 'ts_ls', 'tsc', 'vts_ls', 'typescript-tools' },
+    typescriptreact = { 'ts_ls', 'tsc', 'vts_ls', 'typescript-tools' },
+    javascriptreact = { 'ts_ls', 'tsc', 'vts_ls', 'typescript-tools' },
     svelte = { 'svelte' },
   },
 }

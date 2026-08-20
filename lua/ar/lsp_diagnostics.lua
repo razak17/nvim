@@ -3,7 +3,7 @@ local diagnostic = vim.diagnostic
 
 local M = {}
 
-local ts_servers = { 'tsgo', 'ts_ls', 'typescript-tools', 'vtsls', 'svelte' }
+local ts_servers = { 'tsc', 'ts_ls', 'typescript-tools', 'vtsls', 'svelte' }
 
 --- Get LSP diagnostics containing the cursor.
 ---@return lsp.Diagnostic[]
