@@ -175,6 +175,7 @@ return {
         ['markdown.mdx'] = { 'prettier', 'markdownlint-cli2', 'markdown-toc' },
         lua = { 'stylua' },
         go = { 'goimports', 'goimports-reviser' },
+        rust = { 'rustfmt' },
         sh = { 'shfmt' },
         python = ar.lsp_disabled('ruff') and { 'isort', 'autopep8' }
           or not ar.lsp.enable and { 'black', 'yapf' }
@@ -243,7 +244,8 @@ return {
     -- stylua: ignore
     ft = {
       'javascript', 'javascript.jsx', 'javascriptreact', 'lua', 'python', 'rst',
-      'sh', 'typescript', 'typescript.tsx', 'typescriptreact', 'vim', 'yaml', 'go'
+      'sh', 'typescript', 'typescript.tsx', 'typescriptreact', 'vim', 'yaml', 'go',
+      'rust',
     },
     opts = {
       linters_by_ft = {
@@ -251,6 +253,7 @@ return {
         vim = { 'vint' },
         yaml = { 'yamllint' },
         go = { 'golangcilint' },
+        rust = { 'clippy' },
         python = ar.lsp_disabled('ruff') and { 'mypy' } or {},
       },
       linters = {},
