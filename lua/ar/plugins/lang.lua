@@ -337,12 +337,12 @@ return {
         desc = 'align CSV clear',
       },
       {
-        '<localleader>cj',
+        '<localleader>ck',
         "<Cmd>lua require('decisive').align_csv_prev_col()<CR>",
         desc = 'align CSV prev col',
       },
       {
-        '<localleader>caK',
+        '<localleader>cj',
         "<Cmd>lua require('decisive').align_csv_next_col()<CR>",
         desc = 'align CSV next col',
         silent = true,
