@@ -187,3 +187,36 @@ augroup('Fugitive', {
   pattern = 'fugitive://*',
   command = 'set bufhidden=delete',
 })
+
+if ar.has('mini.icons') then
+  local dir_extmarks_ns = vim.api.nvim_create_namespace('dir_icons')
+  ar.augroup('DirIcons', {
+    event = 'User',
+    desc = 'Let mini.icons decide the appropriate icon for each file or directory in the listing and place it before each name as an inline extmark; also mark empty directories for clarity',
+    pattern = 'DirReadPost',
+    command = function(args)
+      local MiniIcons = require('mini.icons')
+      local directory = api.nvim_buf_get_name(args.buf)
+      vim.api.nvim_buf_clear_namespace(args.buf, dir_extmarks_ns, 0, -1)
+      local file_names = vim.api.nvim_buf_get_lines(args.buf, 0, -1, true)
+      if #file_names == 1 and file_names[1] == '' then
+        vim.api.nvim_buf_set_extmark(args.buf, dir_extmarks_ns, 0, 0, {
+          virt_text = { { '<directory empty>', 'DiagnosticWarn' } },
+          virt_text_pos = 'inline',
+        })
+        return
+      end
+      for i, filename in ipairs(file_names) do
+        local is_directory = filename:sub(-1) == '/'
+        local name = is_directory and filename:sub(1, -2)
+          or vim.fs.joinpath(directory, filename)
+        local icon, hl =
+          MiniIcons.get(is_directory and 'directory' or 'file', name)
+        vim.api.nvim_buf_set_extmark(args.buf, dir_extmarks_ns, i - 1, 0, {
+          virt_text = { { icon, hl }, { ' ', hl } },
+          virt_text_pos = 'inline',
+        })
+      end
+    end,
+  })
+end
