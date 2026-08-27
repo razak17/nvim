@@ -325,29 +325,36 @@ return {
     'emmanueltouzery/decisive.nvim',
     cond = function() return ar.get_plugin_cond('decisive.nvim', not minimal) end,
     ft = { 'csv' },
-    keys = {
-      {
-        '<localleader>ci',
-        "<Cmd>lua require('decisive').align_csv({})<CR>",
-        desc = 'align CSV',
-      },
-      {
-        '<localleader>cx',
-        "<Cmd>lua require('decisive').align_csv_clear({})<CR>",
-        desc = 'align CSV clear',
-      },
-      {
-        '<localleader>ck',
-        "<Cmd>lua require('decisive').align_csv_prev_col()<CR>",
-        desc = 'align CSV prev col',
-      },
-      {
-        '<localleader>cj',
-        "<Cmd>lua require('decisive').align_csv_next_col()<CR>",
-        desc = 'align CSV next col',
-        silent = true,
-      },
-    },
+    keys = function()
+      local function jump(options)
+        return ar.jump(function(opt)
+          if opt.forward then require('decisive').align_csv_next_col() end
+          if not opt.forward then require('decisive').align_csv_prev_col() end
+        end, options)
+      end
+      return {
+        {
+          '<localleader>ci',
+          "<Cmd>lua require('decisive').align_csv({})<CR>",
+          desc = 'decisive: align',
+        },
+        {
+          '<localleader>cx',
+          "<Cmd>lua require('decisive').align_csv_clear({})<CR>",
+          desc = 'decisive: clear',
+        },
+        {
+          '<localleader>cp',
+          jump({ forward = false }),
+          desc = 'decisive: prev col',
+        },
+        {
+          '<localleader>cn',
+          jump({ forward = true }),
+          desc = 'decisive: next col',
+        },
+      }
+    end,
   },
   {
     'hat0uma/csvview.nvim',
