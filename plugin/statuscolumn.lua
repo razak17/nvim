@@ -19,9 +19,7 @@ local sep = { text = left_thin_block, texthl = 'StatusColSep' }
 
 local config = {
   excluded_bts = { 'terminal', 'nofile', 'prompt' },
-  excluded_fts = { 'blink-cmp-menu' },
-  skipped_bts = { 'terminal' },
-  skipped_fts = { 'neo-tree', 'snacks_picker_input' },
+  excluded_fts = {},
 }
 
 ar.ui.statuscolumn = {}
@@ -32,30 +30,15 @@ local function excluded(what, value)
   return vim.tbl_contains(tbl, value)
 end
 
-local function skipped(what, value)
-  local tbl = config['skipped_' .. what]
-  if not tbl then return false end
-  return vim.tbl_contains(tbl, value)
-end
-
 function ar.ui.statuscolumn.render()
   local win = vim.g.statusline_winid
 
   if wo[win].signcolumn == 'no' then return '' end
+  local buf = api.nvim_get_current_buf()
 
-  if fn.win_gettype() == 'popup' then goto continue end
-
-  if skipped('bts', bo.bt) then goto continue end
-
-  if skipped('fts', bo.ft) then goto continue end
-
-  if excluded('bts', bo.bt) then return '' end
-
-  if excluded('fts', bo.ft) then return '' end
-
-  ::continue::
+  -- ::continue::
   local lnum, relnum, virtnum = v.lnum, v.relnum, v.virtnum
-  local buf = api.nvim_win_get_buf(win)
+  buf = api.nvim_win_get_buf(win)
   local line_count = api.nvim_buf_line_count(buf)
   local statuscol = require('ar.statuscolumn')
   local icon, spacer = statuscol.icon, statuscol.space
