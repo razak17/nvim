@@ -34,7 +34,7 @@ local env = vim.env
 ---@alias ArCompletion 'native' | 'blink' | 'cmp' | 'mini.completion'
 ---@alias ArCompletionIcons 'lspkind' | 'mini.icons'
 ---@alias ArWhichIntro 'builtin' | 'legacy' | 'alpha' | 'snacks' | 'startup' | 'btw'
----@alias ArWhichExplorer 'neo-tree' | 'snacks' | 'mini.files' | 'oil' | 'fyler' | 'filebuf'
+---@alias ArWhichExplorer 'neo-tree' | 'snacks' | 'mini.files' | 'oil' | 'fyler' | 'filebuf' | 'dir'
 ---@alias ArWhichGx 'custom' | 'gx.nvim'
 ---@alias ArWhichIcon 'nvim-web-devicons' | 'mini.icons'
 ---@alias ArWhichImage 'image.nvim' | 'snacks'
@@ -442,7 +442,7 @@ local config = {
   intro = { enable = true, variant = 'builtin' },
   debug = { enable = false },
   ---@type ArExplorer
-  explorer = { rename = 'snacks', variant = 'snacks' },
+  explorer = { rename = 'snacks', variant = 'dir' },
   ---@type ArFold
   fold = { enable = true, variant = 'native' },
   ---@type ArFormatter

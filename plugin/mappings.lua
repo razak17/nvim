@@ -245,6 +245,10 @@ end
 if not ar.has('snacks.nvim') then
   nnoremap('<leader>qb', ':bdel<CR>', { desc = 'delete buffer' })
 end
+if ar.config.explorer.variant == 'dir' or not ar.plugins.enable then
+  nnoremap('-', '<Plug>(nvim-dir-up)', { desc = 'dir' })
+  nnoremap('<C-n>', '<Plug>(nvim-dir-up)', { desc = 'dir' })
+end
 if not ar.plugins.enable or ar.plugins.minimal then
   nnoremap('<leader>;', '<Cmd>intro<CR>', { desc = 'intro' })
 end
@@ -262,11 +266,13 @@ nnoremap('<leader>od', function()
     return
   end
   if fn.confirm('Move file to trash?', '&Yes\n&No') == 1 then
-    ar.config.plugin.extra.autosave.enable = not ar.config.plugin.extra.autosave.enable
+    ar.config.plugin.extra.autosave.enable =
+      not ar.config.plugin.extra.autosave.enable
     local file = fn.expand('%:p')
     ar.trash_file(file, true)
     Snacks.bufdelete.delete()
-    ar.config.plugin.extra.autosave.enable = not ar.config.plugin.extra.autosave.enable
+    ar.config.plugin.extra.autosave.enable =
+      not ar.config.plugin.extra.autosave.enable
   end
 end, { desc = 'trash file' })
 nnoremap('<leader>oD', function()

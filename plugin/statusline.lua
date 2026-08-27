@@ -303,7 +303,12 @@ function ar.ui.statusline.render()
   local ft = bo[buf].ft
   local filepath = api.nvim_buf_get_name(buf)
 
-  if vim.tbl_contains({ 'neo-tree', 'snacks_picker_list', 'filebuf' }, ft) then
+  if
+    vim.tbl_contains(
+      { 'neo-tree', 'snacks_picker_list', 'filebuf', 'directory' },
+      ft
+    )
+  then
     local path = fn.fnamemodify(fn.getcwd(), ':~')
     local cwd = string.format('%%#%s# %s %%*', 'StatusLineMode', path)
     return table.concat({

@@ -29,7 +29,10 @@ return {
       bufdelete = { enabled = true },
       debug = { enabled = true },
       dim = { enabled = true },
-      explorer = { enabled = ar.config.explorer.variant == 'snacks' },
+      explorer = {
+        enabled = ar.config.explorer.variant == 'snacks',
+        replace_netrw = false,
+      },
       image = {
         enabled = ar.config.image.variant == 'snacks',
         doc = {

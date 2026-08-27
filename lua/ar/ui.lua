@@ -382,6 +382,7 @@ local filetypes = ar.p_table({
   ['diff'] = presets.statusline_only,
   ['DiffviewFileHistory'] = presets.tool_panel,
   ['DiffviewFiles'] = presets.tool_panel,
+  ['directory'] = presets.tool_panel,
   ['DressingInput'] = presets.tool_panel,
   ['filebuf'] = presets.tool_panel:with({
     winbar = 'ignore',
