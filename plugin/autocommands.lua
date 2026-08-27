@@ -195,6 +195,7 @@ if ar.has('mini.icons') then
     desc = 'Let mini.icons decide the appropriate icon for each file or directory in the listing and place it before each name as an inline extmark; also mark empty directories for clarity',
     pattern = 'DirReadPost',
     command = function(args)
+      vim.bo[args.buf].buflisted = false
       local MiniIcons = require('mini.icons')
       local directory = api.nvim_buf_get_name(args.buf)
       vim.api.nvim_buf_clear_namespace(args.buf, dir_extmarks_ns, 0, -1)
