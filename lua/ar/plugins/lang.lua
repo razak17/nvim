@@ -301,27 +301,6 @@ return {
   -- CSV
   --------------------------------------------------------------------------------
   {
-    'vidocqh/data-viewer.nvim',
-    cond = function()
-      return ar.get_plugin_cond('data-viewer.nvim', not minimal)
-    end,
-    -- ft = { 'csv', 'tsv', 'sqlite' },
-    cmd = { 'DataViewer', 'DataViewerClose' },
-    opts = {},
-    config = function(_, opts)
-      highlight.plugin('data-viewer', {
-        theme = {
-          ['onedark'] = {
-            { DataViewerColumn0 = { link = 'Keyword' } },
-            { DataViewerColumn1 = { link = 'String' } },
-            { DataViewerColumn2 = { link = 'Function' } },
-          },
-        },
-      })
-      require('data-viewer').setup(opts)
-    end,
-  },
-  {
     'emmanueltouzery/decisive.nvim',
     cond = function() return ar.get_plugin_cond('decisive.nvim', not minimal) end,
     ft = { 'csv' },
@@ -355,12 +334,6 @@ return {
         },
       }
     end,
-  },
-  {
-    'hat0uma/csvview.nvim',
-    cond = function() return ar.get_plugin_cond('csvview.nvim') end,
-    cmd = { 'CsvViewToggle', 'CsvViewEnable', 'CsvViewDisable' },
-    config = function() require('csvview').setup() end,
   },
   -- Regex
   --------------------------------------------------------------------------------
