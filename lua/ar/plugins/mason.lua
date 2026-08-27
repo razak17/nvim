@@ -18,10 +18,14 @@ local function get_linters()
       .iter(pairs(lint.linters_by_ft))
       :map(function(_, l)
         if type(l) == 'table' and not ar.falsy(l) then
-          if vim.tbl_contains(l, 'golangcilint') then
+          if
+            vim.tbl_contains(l, 'golangcilint') or vim.tbl_contains(l, 'clippy')
+          then
             table.insert(linters, 'golangci-lint')
             local others = vim.tbl_filter(
-              function(v) return v ~= 'golangcilint' end,
+              function(v)
+                return not vim.tbl_contains({ 'golangcilint', 'clippy' }, v)
+              end,
               l
             )
             if #others > 0 then
@@ -52,7 +56,11 @@ local function get_all_packages()
           if f.name == 'prettier' then return f.name end
           return f.command
         end)
-        :filter(function(f) return f ~= '' and f ~= nil and f ~= 'injected' end)
+        :filter(
+          function(f)
+            return not vim.tbl_contains({ '', nil, 'injected', 'rustfmt' }, f)
+          end
+        )
         :totable()
       formatters = ar.unique(formatters)
       vim.list_extend(packages, formatters)
@@ -106,11 +114,14 @@ return {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     cond = function() return ar.get_plugin_cond('mason-tool-installer.nvim') end,
     cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
-    opts = function(_, opts)
-      opts.run_on_start = false
-      opts.ensure_installed = get_all_packages()
-      return opts
+    opts = {
+      run_on_start = false,
+      ensure_installed = { 'codelldb' },
+    },
+    config = function(_, opts)
+      opts.ensure_installed =
+        vim.list_extend(opts.ensure_installed or {}, get_all_packages())
+      require('mason-tool-installer').setup(opts)
     end,
-    config = function(_, opts) require('mason-tool-installer').setup(opts) end,
   },
 }
