@@ -213,7 +213,7 @@ function ar.adjust_split_height(minheight, maxheight)
 
   if not line then line = 0 end
 
-  api.nvim_win_set_height(0, math.max(math.min(line, maxheight), minheight))
+  api.nvim_win_resize(0, -1, math.max(math.min(line, maxheight), minheight))
 end
 
 --- Call the given function and use `vim.notify` to notify of any errors
