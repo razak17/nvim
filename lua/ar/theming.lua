@@ -121,7 +121,7 @@ end
 local function generate_picker_overrides(overrides)
   local hls = {
     { PickerNormal = { link = 'NormalFloat' } },
-    { PickerTitle = { link = 'FloatTitle' } },
+    { PickerTitle = { inherit = 'FloatTitle', fg = { from = 'Normal' } } },
     { PickerBorder = { link = 'FloatBorder' } },
     {
       PickerToggle = {
