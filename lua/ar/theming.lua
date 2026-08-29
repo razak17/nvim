@@ -134,7 +134,7 @@ local function generate_picker_overrides(overrides)
     { PickerTotals = { link = 'PickerDir' } },
   }
 
-  if variant == 'fill' then
+  if variant == 'fill' and not transparent then
     ar.list_insert(hls, {
       { PickerPreview = { bg = { from = 'NormalFloat', alter = -0.1 } } },
       {
@@ -153,7 +153,7 @@ local function generate_picker_overrides(overrides)
     })
   end
 
-  if variant == 'outline' then
+  if variant == 'outline' or transparent then
     ar.list_insert(hls, {
       { PickerPreview = { bg = { from = 'NormalFloat' } } },
       { PickerPreviewBorder = { fg = { from = 'FloatBorder' } } },
