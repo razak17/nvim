@@ -295,7 +295,7 @@ return {
         },
       },
       {
-        'telescope-helpgrep.nvim',
+        'catgoose/telescope-helpgrep.nvim',
         cond = get_cond('telescope-helpgrep.nvim'),
         keys = {
           {
