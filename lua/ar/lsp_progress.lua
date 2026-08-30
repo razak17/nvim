@@ -3,6 +3,7 @@
 local api, o = vim.api, vim.o
 local border_style = vim.o.winborder
 local border_enabled = border_style ~= 'none'
+local stale_timeout = 5 * 60 * 1000
 
 local M = {
   -- Maintain the total number of current windows
@@ -44,6 +45,7 @@ local function init_or_reset(client)
   client.message = nil
   client.pos = M.total_wins + 1
   client.timer = nil
+  client.generation = client.generation or 0
 end
 
 -- Get the row position of the current floating window. If it is the first one, it is placed just
@@ -66,14 +68,77 @@ local function win_update_config(client)
   })
 end
 
--- Close the window and delete the associated buffer
---- @param winid integer
---- @param bufnr integer
+-- Close the window and delete the associated buffer when provided.
+--- @param winid integer?
+--- @param bufnr integer?
 local function close_window(winid, bufnr)
-  if api.nvim_win_is_valid(winid) then api.nvim_win_close(winid, true) end
-  if api.nvim_buf_is_valid(bufnr) then
+  if winid and api.nvim_win_is_valid(winid) then
+    api.nvim_win_close(winid, true)
+  end
+  if bufnr and api.nvim_buf_is_valid(bufnr) then
     api.nvim_buf_delete(bufnr, { force = true })
   end
+end
+
+-- Close only the float, preserving its buffer for a replacement in another tab.
+---@param client LspProgressClient
+---@return boolean
+local function close_client_window(client)
+  if client.winid == nil then return true end
+  local success = guard(function() close_window(client.winid, nil) end)
+  if success then
+    client.winid = nil
+    M.total_wins = math.max(0, M.total_wins - 1)
+  end
+  return success
+end
+
+-- Close all resources associated with a client's progress display.
+---@param client LspProgressClient
+---@return boolean
+local function cleanup_client(client)
+  local had_window = client.winid ~= nil
+  local success = guard(
+    function() close_window(client.winid, client.bufnr) end
+  )
+  if not success then return false end
+
+  if client.timer then
+    client.timer:stop()
+    client.timer:close()
+  end
+  if had_window then M.total_wins = math.max(0, M.total_wins - 1) end
+
+  local closed_pos = client.pos
+  init_or_reset(client)
+  for _, c in pairs(M.clients) do
+    if
+      c.winid ~= nil
+      and api.nvim_win_is_valid(c.winid)
+      and c.pos > closed_pos
+    then
+      c.pos = c.pos - 1
+      guard(function() win_update_config(c) end)
+    end
+  end
+  return true
+end
+
+-- Close completed progress after a short delay, or abandoned progress after
+-- five minutes without another event. Repeating handles transient textlock.
+---@param client LspProgressClient
+---@param timeout integer
+local function arm_cleanup(client, timeout)
+  client.timer:stop()
+  local generation = client.generation
+  client.timer:start(
+    timeout,
+    100,
+    vim.schedule_wrap(function()
+      if client.generation ~= generation then return end
+      cleanup_client(client)
+    end)
+  )
 end
 
 -- Show the progress message in floating window
@@ -85,6 +150,9 @@ local function show_message(client)
     or not api.nvim_win_is_valid(winid)
     or api.nvim_win_get_tabpage(winid) ~= api.nvim_get_current_tabpage() -- Switch to another tab
   then
+    -- A float cannot move between tabpages. Close the old one before opening
+    -- its replacement so it does not become an unreachable orphan.
+    if not close_client_window(client) then return end
     local success = guard(function()
       winid = api.nvim_open_win(client.bufnr, false, {
         relative = 'editor',
@@ -127,7 +195,13 @@ local function handler(args)
 
   ---@type LspProgressClient
   local cur_client = M.clients[client_id]
-  cur_client.name = vim.lsp.get_client_by_id(client_id).name
+  local lsp_client = vim.lsp.get_client_by_id(client_id)
+  if not lsp_client then
+    cleanup_client(cur_client)
+    return
+  end
+  cur_client.name = lsp_client.name
+  cur_client.generation = (cur_client.generation or 0) + 1
   -- Create buffer for the floating window showing the progress message and the timer used to close
   -- the window when progress report is done.
   cur_client.bufnr = cur_client.bufnr or api.nvim_create_buf(false, true)
@@ -140,52 +214,25 @@ local function handler(args)
   -- Show progress message in floating window
   show_message(cur_client)
 
-  -- Close the window when finished and adjust the positions of other windows if they exist.
-  -- Let the window stay briefly on the screen before closing it (say 2s). When closing, attempt to
-  -- close at intervals (say 100ms) to handle the potential textlock. We can use uv.timer to
-  -- implement it.
-  if cur_client.is_done then
-    cur_client.timer:start(
-      2000,
-      100,
-      vim.schedule_wrap(function()
-        -- To handle the scenario 1
-        if not cur_client.is_done and cur_client.winid ~= nil then
-          cur_client.timer:stop()
-          return
-        end
-        local success = false
-        -- Close the window if it has not been closed yet
-        if cur_client.winid ~= nil and cur_client.bufnr ~= nil then
-          success = guard(
-            function() close_window(cur_client.winid, cur_client.bufnr) end
-          )
-        end
-        -- If the window is closed successfully, stop the timer, adjust the positions of other windows
-        -- and reset properties of the client
-        if success then
-          cur_client.timer:stop()
-          cur_client.timer:close()
-          M.total_wins = M.total_wins - 1
-          -- Move all windows above this closed window down by one position
-          for _, c in ipairs(M.clients) do
-            if c.winid ~= nil and c.pos > cur_client.pos then
-              c.pos = c.pos - 1
-              win_update_config(c)
-            end
-          end
-          -- Reset the properties
-          init_or_reset(cur_client)
-        end
-      end)
-    )
-  end
+  arm_cleanup(cur_client, cur_client.is_done and 2000 or stale_timeout)
 end
 
 ar.augroup('lsp_progress', {
   event = { 'LspProgress' },
   pattern = { 'begin', 'report', 'end' },
   command = function(args) handler(args) end,
+}, {
+  event = 'LspDetach',
+  command = function(args)
+    vim.schedule(function()
+      local client_id = args.data.client_id
+      local client = vim.lsp.get_client_by_id(client_id)
+      if client and not client:is_stopped() and next(client.attached_buffers) then
+        return
+      end
+      if M.clients[client_id] then cleanup_client(M.clients[client_id]) end
+    end)
+  end,
 }, {
   event = { 'VimResized', 'TermLeave', 'WinEnter' },
   command = function()

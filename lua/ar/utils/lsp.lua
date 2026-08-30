@@ -23,6 +23,7 @@ M.default_config = {
 --- @field message string?
 --- @field pos integer?
 --- @field timer (uv.uv_timer_t)?
+--- @field generation integer?
 
 ---@class (partial) lsp.config : vim.lsp.Config
 ---@field requires? string[] additional executables required to start the language server
