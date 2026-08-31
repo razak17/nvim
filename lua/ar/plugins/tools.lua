@@ -253,7 +253,6 @@ return {
         vim = { 'vint' },
         yaml = { 'yamllint' },
         go = { 'golangcilint' },
-        rust = { 'clippy' },
         python = ar.lsp_disabled('ruff') and { 'mypy' } or {},
       },
       linters = {},
