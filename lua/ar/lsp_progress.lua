@@ -6,8 +6,6 @@ local border_enabled = border_style ~= 'none'
 local stale_timeout = 5 * 60 * 1000
 
 local M = {
-  -- Maintain the total number of current windows
-  total_wins = 0,
   ---@type table<LspProgressClient>
   clients = {},
 }
@@ -43,29 +41,36 @@ local function init_or_reset(client)
   client.winid = nil
   client.bufnr = nil
   client.message = nil
-  client.pos = M.total_wins + 1
   client.timer = nil
   client.generation = client.generation or 0
 end
 
--- Get the row position of the current floating window. If it is the first one, it is placed just
--- right above the statusline; if not, it is placed on top of others.
-local function get_win_row()
-  return vim.o.lines - (border_enabled and 5 or 3)
-  -- return vim.o.lines - vim.o.cmdheight - 1 - pos * (border_enabled and 3 or 1)
+-- Place the float at the bottom-right, above the command area and statusline.
+---@param message string
+---@return vim.api.keyset.win_config
+local function get_win_config(message)
+  local border_size = border_enabled and 2 or 0
+  local statusline_height = o.laststatus == 0 and 0 or 1
+  local width = math.min(
+    math.max(1, api.nvim_strwidth(message)),
+    math.max(1, o.columns - border_size)
+  )
+  return {
+    relative = 'editor',
+    width = width,
+    height = 1,
+    row = math.max(
+      0,
+      o.lines - o.cmdheight - statusline_height - border_size - 1
+    ),
+    col = math.max(0, o.columns - width - border_size),
+  }
 end
 
 -- Update the window config
 --- @param client LspProgressClient
 local function win_update_config(client)
-  api.nvim_win_set_config(client.winid, {
-    relative = 'editor',
-    width = #client.message,
-    height = 1,
-    row = get_win_row(client.pos),
-    -- row = vim.o.lines - 3,
-    col = o.columns - #client.message,
-  })
+  api.nvim_win_set_config(client.winid, get_win_config(client.message))
 end
 
 -- Close the window and delete the associated buffer when provided.
@@ -86,10 +91,7 @@ end
 local function close_client_window(client)
   if client.winid == nil then return true end
   local success = guard(function() close_window(client.winid, nil) end)
-  if success then
-    client.winid = nil
-    M.total_wins = math.max(0, M.total_wins - 1)
-  end
+  if success then client.winid = nil end
   return success
 end
 
@@ -97,30 +99,14 @@ end
 ---@param client LspProgressClient
 ---@return boolean
 local function cleanup_client(client)
-  local had_window = client.winid ~= nil
-  local success = guard(
-    function() close_window(client.winid, client.bufnr) end
-  )
+  local success = guard(function() close_window(client.winid, client.bufnr) end)
   if not success then return false end
 
   if client.timer then
     client.timer:stop()
     client.timer:close()
   end
-  if had_window then M.total_wins = math.max(0, M.total_wins - 1) end
-
-  local closed_pos = client.pos
   init_or_reset(client)
-  for _, c in pairs(M.clients) do
-    if
-      c.winid ~= nil
-      and api.nvim_win_is_valid(c.winid)
-      and c.pos > closed_pos
-    then
-      c.pos = c.pos - 1
-      guard(function() win_update_config(c) end)
-    end
-  end
   return true
 end
 
@@ -154,22 +140,15 @@ local function show_message(client)
     -- its replacement so it does not become an unreachable orphan.
     if not close_client_window(client) then return end
     local success = guard(function()
-      winid = api.nvim_open_win(client.bufnr, false, {
-        relative = 'editor',
-        width = #client.message,
-        height = 1,
-        row = get_win_row(client.pos),
-        -- row = vim.o.lines - 3,
-        col = o.columns - #client.message,
-        focusable = false,
-        style = 'minimal',
-        noautocmd = true,
-        border = border_style,
-      })
+      local config = get_win_config(client.message)
+      config.focusable = false
+      config.style = 'minimal'
+      config.noautocmd = true
+      config.border = border_style
+      winid = api.nvim_open_win(client.bufnr, false, config)
     end)
     if not success then return end
     client.winid = winid
-    M.total_wins = M.total_wins + 1
   else
     win_update_config(client)
   end
@@ -217,6 +196,14 @@ local function handler(args)
   arm_cleanup(cur_client, cur_client.is_done and 2000 or stale_timeout)
 end
 
+local function update_windows()
+  for _, client in pairs(M.clients) do
+    if client.winid ~= nil and api.nvim_win_is_valid(client.winid) then
+      guard(function() win_update_config(client) end)
+    end
+  end
+end
+
 ar.augroup('lsp_progress', {
   event = { 'LspProgress' },
   pattern = { 'begin', 'report', 'end' },
@@ -227,7 +214,11 @@ ar.augroup('lsp_progress', {
     vim.schedule(function()
       local client_id = args.data.client_id
       local client = vim.lsp.get_client_by_id(client_id)
-      if client and not client:is_stopped() and next(client.attached_buffers) then
+      if
+        client
+        and not client:is_stopped()
+        and next(client.attached_buffers)
+      then
         return
       end
       if M.clients[client_id] then cleanup_client(M.clients[client_id]) end
@@ -235,11 +226,5 @@ ar.augroup('lsp_progress', {
   end,
 }, {
   event = { 'VimResized', 'TermLeave', 'WinEnter' },
-  command = function()
-    for _, c in pairs(M.clients) do
-      if c.winid ~= nil and vim.api.nvim_win_is_valid(c.winid) then
-        guard(function() win_update_config(c) end)
-      end
-    end
-  end,
+  command = update_windows,
 })

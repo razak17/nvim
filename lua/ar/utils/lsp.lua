@@ -21,7 +21,6 @@ M.default_config = {
 --- @field winid integer?
 --- @field bufnr integer?
 --- @field message string?
---- @field pos integer?
 --- @field timer (uv.uv_timer_t)?
 --- @field generation integer?
 
