@@ -60,7 +60,10 @@ end
 
 local function refresh_window(win)
   if not api.nvim_win_is_valid(win) then return end
-  if api.nvim_win_get_config(win).relative ~= '' then return end
+  if api.nvim_win_get_config(win).relative ~= '' then
+    api.nvim_set_option_value('winbar', '', { win = win })
+    return
+  end
 
   local buf = api.nvim_win_get_buf(win)
   local d = decor.get({
@@ -94,7 +97,7 @@ local function refresh_all_windows()
 end
 
 ar.augroup('Winbar', {
-  event = { 'BufEnter', 'FileType', 'FocusGained', 'TextChanged' },
+  event = { 'BufEnter', 'FileType', 'FocusGained', 'TextChanged', 'WinEnter' },
   command = function() refresh_window(api.nvim_get_current_win()) end,
 }, {
   event = { 'BufAdd', 'BufDelete', 'BufWipeout' },
