@@ -831,14 +831,17 @@ end
 --- open in centered popup
 ---@param bufnr integer
 ---@param readonly? boolean
-function ar.open_buf_centered_popup(bufnr, readonly)
+---@param opts? vim.api.keyset.win_config
+---@return integer winid
+function ar.open_buf_centered_popup(bufnr, readonly, opts)
+  opts = opts or {}
   local o = vim.o
-  local width = math.ceil(o.columns * 0.8)
-  local height = math.ceil(o.lines * 0.8)
+  local width = opts.width or math.ceil(o.columns * 0.8)
+  local height = opts.height or math.ceil(o.lines * 0.8)
   local col = math.ceil((o.columns - width) / 2)
   local row = math.ceil((o.lines - height) / 2)
 
-  local opts = {
+  local win_opts = vim.tbl_extend('force', {
     relative = 'editor',
     width = width,
     height = height,
@@ -846,8 +849,8 @@ function ar.open_buf_centered_popup(bufnr, readonly)
     row = row,
     border = vim.o.winborder,
     style = 'minimal',
-  }
-  api.nvim_open_win(bufnr, true, opts)
+  }, opts)
+  local winid = api.nvim_open_win(bufnr, true, win_opts)
   map('n', 'q', ar.smart_close, { buffer = bufnr, nowait = true })
 
   if readonly then
@@ -856,6 +859,7 @@ function ar.open_buf_centered_popup(bufnr, readonly)
     api.nvim_set_option_value('buftype', 'nofile', { buf = bufnr })
     api.nvim_set_option_value('modifiable', false, { buf = bufnr })
   end
+  return winid
 end
 
 -- https://github.com/Wansmer/nvim-config/blob/main/lua/utils.lua?plain=1#L283
