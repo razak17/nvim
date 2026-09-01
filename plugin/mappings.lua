@@ -246,8 +246,39 @@ if not ar.has('snacks.nvim') then
   nnoremap('<leader>qb', ':bdel<CR>', { desc = 'delete buffer' })
 end
 if ar.config.explorer.variant == 'dir' or not ar.plugins.enable then
-  nnoremap('-', '<Plug>(nvim-dir-up)', { desc = 'dir' })
-  nnoremap('<C-n>', '<Plug>(nvim-dir-up)', { desc = 'dir' })
+  local function find_dir_float()
+    for _, win in ipairs(api.nvim_list_wins()) do
+      local buf = api.nvim_win_get_buf(win)
+      if
+        api.nvim_win_get_config(win).relative ~= ''
+        and vim.bo[buf].filetype == 'directory'
+      then
+        return win
+      end
+    end
+  end
+
+  local function open_dir_float(path)
+    local win = find_dir_float()
+    if win then
+      api.nvim_set_current_win(win)
+      return
+    end
+
+    local buf = fn.bufadd(vim.fs.normalize(path))
+    fn.bufload(buf)
+    vim.bo[buf].bufhidden = 'wipe'
+    ar.open_buf_centered_popup(buf, true, {
+      title = fmt('Directory: %s', vim.fs.basename(path)),
+      title_pos = 'center',
+      width = math.ceil(vim.o.columns * 0.45),
+    })
+  end
+  nnoremap(
+    '<C-n>',
+    function() open_dir_float(fn.getcwd()) end,
+    { desc = 'dir: root' }
+  )
 end
 if not ar.plugins.enable or ar.plugins.minimal then
   nnoremap('<leader>;', '<Cmd>intro<CR>', { desc = 'intro' })
