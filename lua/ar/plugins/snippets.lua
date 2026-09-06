@@ -84,14 +84,12 @@ return {
           ext_opts = {
             [types.choiceNode] = {
               active = {
-                hl_mode = 'combine',
-                virt_text = { { '●', 'Operator' } },
+                virt_text = { { ' ', 'TSTextReference' } },
               },
             },
             [types.insertNode] = {
               active = {
-                hl_mode = 'combine',
-                virt_text = { { '●', 'Type' } },
+                virt_text = { { ' ', 'TSEmphasis' } },
               },
             },
           },
