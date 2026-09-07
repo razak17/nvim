@@ -10,8 +10,12 @@ local function get_clangd_cmd()
     or 'clangd'
   -- stylua: ignore
   return {
-    cmd, '--all-scopes-completion', '--background-index',
-    '--cross-file-rename', '--header-insertion=never',
+    cmd,
+    '--all-scopes-completion',
+    '--background-index',
+    '--cross-file-rename',
+    '--header-insertion=never',
+    '--fallback-style={BasedOnStyle: LLVM, IndentWidth: 4, ContinuationIndentWidth: 4, TabWidth: 4, UseTab: Never}',
   }
 end
 
