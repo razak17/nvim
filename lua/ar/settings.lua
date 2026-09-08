@@ -239,10 +239,13 @@ end
 opt.completeopt = { 'fuzzy', 'menuone', 'noselect', 'popup' }
 o.hlsearch = true
 o.autowriteall = true -- automatically :write before running commands and changing files
-opt.clipboard = { 'unnamedplus' }
 o.laststatus = 3
 o.showtabline = 0
 o.termguicolors = true
+--------------------------------------------------------------------------------
+-- Clipboard {{{1
+--------------------------------------------------------------------------------
+opt.clipboard = { 'unnamedplus' }
 --------------------------------------------------------------------------------
 -- Emoji {{{1
 --------------------------------------------------------------------------------
