@@ -30,6 +30,7 @@ local config = {
       qfFileName = { fg = '#aed75f' },
     },
   },
+  diagnostic_underline = { enabled = true, highlights = {} },
   notify = { enabled = true },
   toggle_guides = { enabled = true },
 }
@@ -116,6 +117,21 @@ function M.color_my_pencils()
     end
   end
   config.color_my_pencils.enabled = not enabled
+end
+
+function M.toggle_diagnostic_underline()
+  local state = config.diagnostic_underline
+  for _, severity in ipairs({ 'Error', 'Warn', 'Info', 'Hint', 'Ok' }) do
+    local hl = 'DiagnosticUnderline' .. severity
+    if state.enabled then
+      state.highlights[hl] = api.nvim_get_hl(0, { name = hl })
+      api.nvim_set_hl(0, hl, {})
+    else
+      api.nvim_set_hl(0, hl, state.highlights[hl])
+    end
+  end
+  state.enabled = not state.enabled
+  mappings_notify('diagnostic underline ' .. ar.bool2str(state.enabled))
 end
 
 function M.toggle_guides()
