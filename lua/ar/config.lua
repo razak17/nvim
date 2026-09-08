@@ -578,7 +578,7 @@ local config = {
       smart_tilde = { enable = true },
       spell_all_good = { enable = true },
       sticky_note = { enable = false },
-      sticky_yank = { enable = true },
+      sticky_yank = { enable = false },
       surf_plugins = { enable = true },
       tab_search = { enable = true },
       wb_current_line = { enable = true },
