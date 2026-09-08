@@ -509,7 +509,6 @@
 - [whop.nvim](https://github.com/biozz/whop.nvim)
 - [wildberries.nvim](https://github.com/ianklapouch/wildberries.nvim)
 - [windows.nvim](https://github.com/anuvyklack/windows.nvim)
-- [winshift.nvim](https://github.com/sindrets/winshift.nvim)
 - [workspace-diagnostics.nvim](https://github.com/razak17/workspace-diagnostics.nvim)
 - [wrapped.nvim](https://github.com/aikhe/wrapped.nvim)
 - [wrapping-paper.nvim](https://github.com/benlubas/wrapping-paper.nvim)
