@@ -434,6 +434,7 @@
         },
         "variant": {
           "enum": [
+            "dir",
             "filebuf",
             "fyler",
             "mini.files",
