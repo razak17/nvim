@@ -1,5 +1,4 @@
 local api = vim.api
-local minimal = ar.plugins.minimal
 local coding = ar.plugins.coding
 local is_blink = ar.has('blink.cmp')
 local is_cmp = ar.has('nvim-cmp')

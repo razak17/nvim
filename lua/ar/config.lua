@@ -603,6 +603,7 @@ local config = {
       'inlayhint-filler.nvim',
       'lsplinks.nvim',
       'neoconf.nvim',
+      'nvim-autopairs',
       'nvim-toggler',
       'persistent-breakpoints.nvim',
       'readline.nvim',
