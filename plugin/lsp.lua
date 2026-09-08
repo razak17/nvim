@@ -1015,8 +1015,6 @@ diagnostic.config({
   virtual_lines = virtual_lines_variant == 'builtin',
   virtual_text = ar.config.lsp.virtual_text.enable and {
     spacing = 1,
-    -- BUG: when set to true, virtual text override does not work (severe diagnostics are not shown first)
-    current_line = false,
     prefix = '',
     format = function(d)
       -- Use shorter, nicer names for some sources:
@@ -1031,7 +1029,7 @@ diagnostic.config({
           string.format('%s %s', message, special_sources[d.source] or d.source)
       end
       if d.code then message = string.format('%s[%s]', message, d.code) end
-      return message
+      return string.format('%s %s', message, d.message)
     end,
   } or false,
   float = {
@@ -1053,16 +1051,29 @@ diagnostic.config({
   },
 })
 
--- Override the virtual text diagnostic handler so that the most severe diagnostic is shown first.
+-- Show every diagnostic on a line, with the most severe diagnostics first.
 local show_handler = diagnostic.handlers.virtual_text.show
 assert(show_handler)
 local hide_handler = diagnostic.handlers.virtual_text.hide
 diagnostic.handlers.virtual_text = {
   show = function(ns, bufnr, diagnostics, opts)
-    table.sort(
-      diagnostics,
-      function(diag1, diag2) return diag1.severity > diag2.severity end
-    )
+    diagnostics = vim.list_extend({}, diagnostics)
+    table.sort(diagnostics, function(a, b)
+      if a.severity ~= b.severity then return a.severity < b.severity end
+      if a.lnum ~= b.lnum then return a.lnum < b.lnum end
+      return a.col < b.col
+    end)
+    opts = vim.deepcopy(opts)
+    local prefix = opts.virtual_text.prefix or '■'
+    -- The builtin handler prints every prefix, but only the last message.
+    -- Include earlier messages in their prefixes, after formatting is applied.
+    opts.virtual_text.prefix = function(d, i, total)
+      local text = prefix
+      if type(prefix) == 'function' then text = prefix(d, i, total) end
+      text = text or ''
+      if i == total then return text end
+      return text .. ' ' .. d.message:gsub('\r', ''):gsub('\n', '  ') .. ' | '
+    end
     return show_handler(ns, bufnr, diagnostics, opts)
   end,
   hide = hide_handler,
