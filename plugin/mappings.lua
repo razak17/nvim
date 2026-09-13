@@ -163,11 +163,6 @@ nnoremap('J', 'mzJ`z')
 -- Keep search terms in the middle
 nnoremap('n', 'nzzzv')
 nnoremap('N', 'Nzzzv')
--- Window Movement
-nnoremap('<C-h>', '<C-w>h')
-nnoremap('<C-j>', '<C-w>j')
-nnoremap('<C-k>', '<C-w>k')
-nnoremap('<C-l>', '<C-w>l')
 -----------------------------------------------------------------------------//
 -- Quick find/replace
 -----------------------------------------------------------------------------//
