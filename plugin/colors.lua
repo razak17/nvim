@@ -253,6 +253,7 @@ local function colorscheme_overrides(colorscheme)
             reverse = false,
           },
         },
+        { MCursor = { bg = '#7685b1', fg = { from = 'NonText', alter = -2 } } },
         { TabLineSel = { bg = { from = 'CursorLine', alter = 0.2 } } },
         { Dim = { link = 'NonText' } },
         {
