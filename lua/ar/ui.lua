@@ -394,6 +394,10 @@ local filetypes = ar.p_table({
   ['fzf'] = presets.tool_panel,
   ['gitgraph'] = presets.statusline_only,
   ['gitcommit'] = commit_buffer,
+  ['gitconfig'] = presets.minimal_editing:with({
+    winbar = 'ignore',
+    statuscolumn = true,
+  }),
   ['grug-far'] = presets.tool_panel,
   ['harpoon'] = presets.tool_panel,
   ['help'] = presets.tool_panel:with({ cursorline = true, statusline = true }),
