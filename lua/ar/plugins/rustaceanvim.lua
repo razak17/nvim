@@ -51,6 +51,14 @@ return {
           end,
         },
         server = {
+          cmd_env = {
+            PATH = vim.fs.joinpath(
+              vim.env.CARGO_HOME or vim.fn.expand('~/.cargo'),
+              'bin'
+            )
+              .. ':'
+              .. vim.env.PATH,
+          },
         -- stylua: ignore
           on_attach = function(_, bufnr)
             local rlsp = vim.cmd.RustLsp

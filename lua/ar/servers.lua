@@ -297,6 +297,12 @@ local servers = {
     },
   },
   rust_analyzer = {
+    cmd_env = {
+      PATH = vim.fs.joinpath(
+        vim.env.CARGO_HOME or vim.fn.expand('~/.cargo'),
+        'bin'
+      ) .. ':' .. vim.env.PATH,
+    },
     capabilities = {
       experimental = { serverStatusNotification = true },
     },
