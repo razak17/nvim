@@ -8,7 +8,7 @@ then
   return
 end
 
-local fn, v, api, opt, wo, bo = vim.fn, vim.v, vim.api, vim.opt, vim.wo, vim.bo
+local fn, v, api, wo, bo = vim.fn, vim.v, vim.api, vim.wo, vim.bo
 local ui = ar.ui
 local decor = ui.decorations
 local separators = ui.icons.separators
@@ -64,7 +64,7 @@ ar.highlight.plugin('statuscolumn', {
   { StatusColSep = { link = 'VertSplit' } },
 })
 
-opt.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
+-- opt.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
 
 ar.augroup('StatusCol', {
   event = { 'BufEnter', 'FileType', 'FocusGained', 'TextChanged' },
@@ -87,10 +87,14 @@ ar.augroup('StatusCol', {
     then
       local sc = api.nvim_get_option_value('statuscolumn', { scope = 'local' })
       if sc == '' then
-        opt.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
+        wo.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
       end
       return
     end
-    if ar.falsy(d.ft) then vim.opt_local.statuscolumn = '' end
+    if ar.falsy(d.ft) then
+      vim.opt_local.statuscolumn = ''
+      return
+    end
+    wo.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
   end,
 })
