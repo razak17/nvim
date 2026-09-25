@@ -89,7 +89,7 @@ install_py_deps() {
 
 install_js_packages() {
   local pkg_manager="$1"
-  local packages=(tree-sitter-cli neovim five-server)
+  local packages=(tree-sitter-cli neovim)
 
   case "$pkg_manager" in
   npm | pnpm) "$pkg_manager" install -g "${packages[@]}" ;;
