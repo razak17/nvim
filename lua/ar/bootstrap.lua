@@ -18,6 +18,28 @@ g.maplocalleader = ','
 -- Set Providers
 --------------------------------------------------------------------------------
 vim.g.python3_host_prog = join_paths(data, 'venv', 'bin', 'python3')
+if g.node_host_prog == nil and g.loaded_node_provider ~= 0 and vim.fn.executable('pnpm') == 1 then
+  -- pnpm 11 stores global packages in isolated directories that Nvim cannot detect.
+  local ok, result = pcall(function()
+    return vim.system({ 'pnpm', 'list', '-g', '--json' }, { text = true }):wait(2000)
+  end)
+  if ok and result.code == 0 then
+    local decoded, installs = pcall(vim.json.decode, result.stdout)
+    if decoded and type(installs) == 'table' then
+      for _, install in ipairs(installs) do
+        local deps = type(install) == 'table' and install.dependencies
+        local host = type(deps) == 'table' and deps.neovim
+        if type(host) == 'table' and type(host.path) == 'string' then
+          local entry = join_paths(host.path, 'bin', 'cli.js')
+          if vim.fn.filereadable(entry) == 1 then
+            g.node_host_prog = entry
+            break
+          end
+        end
+      end
+    end
+  end
+end
 for _, v in pairs({ 'python', 'ruby', 'perl' }) do
   g['loaded_' .. v .. '_provider'] = 0
 end
