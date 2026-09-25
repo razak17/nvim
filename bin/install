@@ -38,20 +38,18 @@ setup_venv() {
 
 python_packages() {
   mkdir -p "$RV_DATA_DIR/venv/bin"
-  "$RV_DATA_DIR/venv/bin/python3" -m pip install -U setuptools neovim-remote python-dotenv requests pynvim==0.5.0 prompt-toolkit
+  "$RV_DATA_DIR/venv/bin/python3" -m pip install -U setuptools neovim-remote python-dotenv requests pynvim prompt-toolkit
 }
 
-npm_deps() {
-  pkg_manager="$1"
-  if [ "$pkg_manager" = "npm" ]; then
-    npm install -g tree-sitter-cli neovim five-server
-  fi
-  if [ "$pkg_manager" = "pnpm" ]; then
-    pnpm install -g tree-sitter-cli neovim five-server
-  fi
-  if [ "$pkg_manager" = "yarn" ]; then
-    yarn global add tree-sitter-cli neovim five-server
-  fi
+install_js_packages() {
+  local pkg_manager="$1"
+  local packages=(tree-sitter-cli neovim five-server)
+
+  case "$pkg_manager" in
+  npm|pnpm) "$pkg_manager" install -g "${packages[@]}" ;;
+  yarn) yarn global add "${packages[@]}" ;;
+  bun) bun add -g "${packages[@]}" ;;
+  esac
 }
 
 archExtra() {
@@ -67,43 +65,29 @@ importRvim() {
   git clone "https://github.com/razak17/nvim" "$RV_CONFIG_DIR"
 }
 
-validate_node_installation() {
-  pkg_manager="$1"
-
-  if [ "$pkg_manager" = "npm" ]; then
-    manager_home="$(npm config get prefix 2>/dev/null)"
-  fi
-  if [ "$pkg_manager" = "pnpm" ]; then
-    manager_home="$(pnpm config get prefix 2>/dev/null)"
-  fi
-  if [ "$pkg_manager" = "yarn" ]; then
-    manager_home="$(yarn global bin 2>/dev/null)"
-  fi
-
-  if [ ! -d "$manager_home" ] || [ ! -w "$manager_home" ]; then
-    echo "[$pkg_manager] not found."
+install_js_deps() {
+  local pkg_manager
+  printf "Which package manager would you like to use (pnpm, yarn, npm, bun)? "
+  if ! read -r pkg_manager; then
+    echo "No package manager selected." >&2
     return 1
   fi
 
-  return 0
-}
+  case "$pkg_manager" in
+  npm|pnpm|yarn|bun) ;;
+  *)
+    echo "Unknown package manager: $pkg_manager" >&2
+    return 1
+    ;;
+  esac
 
-install_nodejs_deps() {
-  printf "Which package manager would you like to use (pnpm, yarn, npm)? "
-  pkg_managers=("pnpm" "yarn" "npm")
+  if ! command -v "$pkg_manager" >/dev/null 2>&1; then
+    echo "[$pkg_manager] not found. Please install it and add it to PATH." >&2
+    return 1
+  fi
 
-  read -r answer
-  for pkg_manager in "${pkg_managers[@]}"; do
-    if [ "$answer" = "$pkg_manager" ]; then
-      if validate_node_installation "$pkg_manager"; then
-        echo "Proceed to Install"
-        npm_deps "$pkg_manager"
-        return
-      fi
-      return
-    fi
-  done
-  echo "Unknown package manager"
+  echo "Installing JavaScript dependencies with $pkg_manager"
+  install_js_packages "$pkg_manager"
 }
 
 generate_dict() {
@@ -120,9 +104,11 @@ generate_dict() {
 }
 
 install_deps() {
-  printf "Would you like to install node packages now (y/n)? "
+  printf "Would you like to install JavaScript packages now (y/n)? "
   read -r answer
-  [ "$answer" != "${answer#[Yy]}" ] && install_nodejs_deps
+  if [[ "$answer" = [Yy]* ]]; then
+    install_js_deps || return $?
+  fi
 
   printf "Would you like to install extra arch packages now (y/n)? "
   read -r answer
@@ -134,7 +120,9 @@ install_deps() {
 
   printf "Would you like to initialize python now (y/n)? "
   read -r answer
-  [ "$answer" != "${answer#[Yy]}" ] && python_packages
+  if [[ "$answer" = [Yy]* ]]; then
+    python_packages
+  fi
 }
 
 clone_config() {
@@ -166,13 +154,13 @@ while [ "$#" -gt 0 ]; do
   case "$curr" in
   -venv) setup_venv ;;
   -py) python_packages ;;
-  -npm) install_nodejs_deps ;;
-  -deps) install_deps ;;
+  --js-deps|-npm) install_js_deps || exit $? ;;
+  -deps) install_deps || exit $? ;;
   -dict) generate_dict ;;
   -rocks) rocks ;;
   *--all*)
     clone_config
-    install_deps
+    install_deps || exit $?
     generate_dict
     ;;
   *) echo "Unavailable command... $curr" ;;
