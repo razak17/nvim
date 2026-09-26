@@ -122,6 +122,7 @@ return {
   },
   {
     'wallpants/github-preview.nvim',
+    build = 'bun install --frozen-lockfile',
     cond = function()
       return ar.get_plugin_cond('github-preview.nvim', not minimal)
     end,
