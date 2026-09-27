@@ -313,6 +313,13 @@ if ar.config.explorer.variant == 'dir' or not ar.plugins.enable then
     function() open_dir_float(fn.getcwd()) end,
     { desc = 'dir: root' }
   )
+  nnoremap('-', function()
+    local path = api.nvim_buf_get_name(0)
+    local dir = path == '' and fn.getcwd()
+      or fn.fnamemodify(vim.fs.normalize(path), ':h')
+    open_dir_float(dir)
+  end, { desc = 'dir: current' })
+
 end
 if not ar.plugins.enable or ar.plugins.minimal then
   nnoremap('<leader>;', '<Cmd>intro<CR>', { desc = 'intro' })
