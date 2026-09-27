@@ -5,6 +5,13 @@
 -- display directory path in win bar
 vim.opt_local.winbar = '[dir] %f'
 
+map('n', '<BS>', '<Plug>(nvim-dir-up)', {
+  buffer = true,
+  remap = true,
+  nowait = true,
+  desc = 'open parent directory',
+})
+
 --- Run function on buffer
 ---  fn fun(bufnr: number) Function that's executed for every buffer that matches path
 ---  opts {directory: boolean} Options - if directory == true, interpret path as a directory and run function on all buffers that are inside this directory
