@@ -25,7 +25,7 @@ return {
       'olimorris/persisted.nvim',
       cond = get_cond('persisted.nvim', 'persisted'),
       event = 'BufReadPre',
-      cmd = { 'SessionLoad', 'SessionLoadLast', 'SessionSelect', 'SessionStop' },
+      cmd = { 'Persisted' },
       init = function()
         ar.augroup('PersistedEvents', {
           event = { 'User' },
