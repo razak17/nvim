@@ -12,7 +12,6 @@ return {
       'TodoFzfLua',
       'TodoTrouble',
       'TodoQuickFix',
-      'TodoDots',
     },
     init = function()
       vim.g.whichkey_add_spec({ '<localleader>t', group = 'TODO' })
