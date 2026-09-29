@@ -19,9 +19,10 @@ return {
               and width < 1
             then
               pcall(
-                vim.api.nvim_win_set_width,
+                vim.api.nvim_win_resize,
                 terminal.win,
-                math.floor(vim.o.columns * width)
+                math.floor(vim.o.columns * width),
+                -1
               )
             end
           end
