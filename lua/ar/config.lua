@@ -231,6 +231,8 @@ local env = vim.env
 ---@field colorscheme ArUIColorscheme
 
 local namespace = {
+  ---@type 'vim.pack' | 'lazy'
+  package_manager = 'vim.pack',
   ai = {
     enable = env.RVIM_AI_ENABLED == '1',
     claude_models = {
@@ -648,5 +650,6 @@ local config = {
 
 _G.ar = ar or namespace
 _G.ar.config = config
+_G.ar.pack = {}
 _G.ar.pick = require('ar.pick')
 _G.map = vim.keymap.set

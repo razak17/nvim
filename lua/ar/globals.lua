@@ -128,9 +128,6 @@ end
 ---@param opts { forward: boolean }
 ---@return function
 function ar.demicolon_jump(callback, opts)
-  if not ar.has('demicolon.nvim') then
-    return function() return callback(opts) end
-  end
   return function() require('demicolon.jump').repeatably_do(callback, opts) end
 end
 
@@ -138,25 +135,34 @@ end
 ---@param opts { forward: boolean }
 ---@return function
 function ar.repeatable_jump(callback, opts)
-  if not ar.has('repeatable-move.nvim') then
-    return function() return callback(opts) end
-  end
   local repeat_move = require('repeatable_move').make_repeatable_move_pair
-  local function next() callback({ forward = true }) end
-  local function prev() callback({ forward = false }) end
-  local next_repeat, prev_repeat = repeat_move(next, prev)
+  local next_repeat, prev_repeat = repeat_move(
+    function() callback({ forward = true }) end,
+    function() callback({ forward = false }) end
+  )
   return opts.forward and next_repeat or prev_repeat
 end
 
 ---@param callback function
----@param opts { next: boolean }
+---@param opts { forward: boolean }
 ---@return function
 function ar.jump(callback, opts)
-  if ar.has('demicolon.nvim') then return ar.demicolon_jump(callback, opts) end
-  if ar.has('repeatable-move.nvim') then
-    return ar.repeatable_jump(callback, opts)
+  local has_demicolon, has_repeatable
+
+  if ar.package_manager == 'lazy' then
+    has_demicolon = ar.has('demicolon.nvim')
+    has_repeatable = ar.has('repeatable-move.nvim')
   end
-  return function() return callback(opts) end
+  if ar.package_manager == 'vim.pack' then
+    has_demicolon = package.loaded['demicolon']
+    has_repeatable = package.loaded['repeatable_move']
+  end
+
+  return function()
+    if has_demicolon then return ar.demicolon_jump(callback, opts)() end
+    if has_repeatable then return ar.repeatable_jump(callback, opts)() end
+    return function() callback(opts) end
+  end
 end
 
 --- Remove duplicates from a table
@@ -308,10 +314,29 @@ end
 --- when a plugin is not necessarily loaded yet.
 ---@param plugin string The plugin to search for.
 ---@return boolean available # Whether the plugin is available.
-function ar.has(plugin)
+function ar.lazy_has(plugin)
   local lazy_config_avail, lazy_config = pcall(require, 'lazy.core.config')
   if not lazy_config_avail then return false end
   return lazy_config.plugins[plugin] ~= nil
+end
+
+---@param plugin string The plugin to search for.
+---@return boolean available # Whether the plugin is available.
+function ar.pack.has(plugin)
+  local has_config, pack_config = pcall(vim.pack.get, { plugin })
+  if not has_config then return false end
+  local has = false
+  if pack_config and pack_config[1] then has = true end
+  return has
+end
+
+---@param plugin string The plugin to search for.
+---@return boolean available # Whether the plugin is available.
+function ar.has(plugin)
+  if ar.package_manager == 'lazy' then return ar.lazy_has(plugin) end
+  if ar.package_manager == 'vim.pack' then return ar.pack.has(plugin) end
+  return false
+  -- return ar.lazy_has(plugin)
 end
 
 ---@param plugin string The plugin to search for.
@@ -961,6 +986,17 @@ end
 -- API Wrappers
 --------------------------------------------------------------------------------
 -- Thin wrappers over API functions to make their usage easier/terser
+
+--- Create a command that will load a module when called
+---@param name string
+---@param load fun() | nil
+function ar.pack.cmd(name, load)
+  vim.api.nvim_create_user_command(name, function(info)
+    vim.api.nvim_del_user_command(name)
+    if load and type(load) == 'function' then load() end
+    vim.cmd(name .. ' ' .. (info.args or ''))
+  end, { nargs = '?' })
+end
 
 local autocmd_keys =
   { 'event', 'buffer', 'pattern', 'desc', 'command', 'group', 'once', 'nested' }
