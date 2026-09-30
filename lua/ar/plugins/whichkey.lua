@@ -120,11 +120,4 @@ return {
     { '<c-w><space>', show({ keys = '<c-w>', loop = true }), desc = 'which-key: window hydra mode' },
     { '<leader>wk', '<Cmd>WhichKey<CR>', desc = 'which-key: all keymaps' },
   },
-  init = function()
-    ar.augroup('WhichKeyMode', {
-      event = { 'FileType' },
-      pattern = { 'which_key' },
-      command = 'set laststatus=0 noshowmode | autocmd BufLeave <buffer> set laststatus=2',
-    })
-  end,
 }
