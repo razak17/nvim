@@ -1,5 +1,6 @@
 ---@diagnostic disable: redundant-parameter
 
+local minimal = ar.plugins.minimal
 local codicons = ar.ui.codicons
 local is_cmp = ar.config.completion.variant == 'cmp'
 
