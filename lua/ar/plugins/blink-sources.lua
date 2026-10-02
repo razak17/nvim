@@ -10,6 +10,7 @@ return {
         cond = get_cond('blink-ripgrep.nvim'),
         specs = {
           'saghen/blink.cmp',
+          opts_extend = { 'sources.default' },
           opts = {
             sources = {
               default = { 'ripgrep' },
@@ -36,6 +37,7 @@ return {
         cond = get_cond('blink-emoji.nvim'),
         specs = {
           'saghen/blink.cmp',
+          opts_extend = { 'sources.default' },
           opts = {
             sources = {
               default = { 'emoji' },
@@ -57,6 +59,7 @@ return {
         cond = get_cond('blink-calc'),
         specs = {
           'saghen/blink.cmp',
+          opts_extend = { 'sources.default' },
           opts = {
             sources = {
               default = { 'calc' },
@@ -76,6 +79,7 @@ return {
         cond = get_cond('blink-cmp-tmux'),
         specs = {
           'saghen/blink.cmp',
+          opts_extend = { 'sources.default' },
           opts = {
             sources = {
               default = { 'tmux' },
@@ -100,6 +104,7 @@ return {
         cond = get_cond('blink-cmp-fuzzy-path'),
         specs = {
           'saghen/blink.cmp',
+          opts_extend = { 'sources.default' },
           opts = {
             sources = {
               default = { 'fuzzy-path' },

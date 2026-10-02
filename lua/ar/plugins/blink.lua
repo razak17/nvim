@@ -57,14 +57,7 @@ return {
       return ar.get_plugin_cond('blink.cmp', ar.completion.enable and is_blink)
     end,
     event = { 'InsertEnter', 'CmdlineEnter' },
-    version = '*', -- REQUIRED `version` needed to download pre-built binary
-    opts_extend = {
-      'sources.completion.enabled_providers',
-      -- 'sources.compat',
-      'sources.default',
-      'cmdline.sources',
-      'term.sources',
-    },
+    build = function() require('blink.cmp').build():pwait() end,
     opts = function(_, opts)
       local sources = get_sources()
       opts = opts or {}
@@ -307,10 +300,23 @@ return {
         }
       end
 
+      -- HACK: Some blink community sources depend on the old v1 lib that blink shipped
+      -- with. Shim in the new `blink.lib` and functions that those community sources need
+      -- from the v1 stuff until they're updated.
+      -- https://github.com/saghen/blink.cmp/discussions/2502
+      package.loaded['blink.cmp.lib.async'] = (function()
+        local task = require('blink.lib.task')
+        task.empty = task.resolve
+        task.on_completion = task.on_resolve
+        task.on_failure = task.on_reject
+        task.task = task
+        return task
+      end)()
+
       require('blink.cmp').setup(opts)
     end,
     dependencies = {
-      { 'saghen/blink.compat', opts = {} },
+      { 'saghen/blink.lib' },
     },
   },
   {
