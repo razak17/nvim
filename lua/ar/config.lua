@@ -576,7 +576,7 @@ local config = {
       smart_close = { enable = true },
       smart_hl_search = { enable = true },
       smart_spelling = { enable = true },
-      smart_splits = { enable = true },
+      smart_splits = { enable = false },
       smart_tilde = { enable = true },
       spell_all_good = { enable = true },
       sticky_note = { enable = false },
