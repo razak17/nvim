@@ -988,12 +988,16 @@ end
 -- Thin wrappers over API functions to make their usage easier/terser
 
 --- Create a command that will load a module when called
----@param name string
+---@param name string | table
 ---@param load fun() | nil
 function ar.pack.cmd(name, load)
-  vim.api.nvim_create_user_command(name, function(info)
-    vim.api.nvim_del_user_command(name)
-    if load and type(load) == 'function' then load() end
+  if type(name) == 'table' then
+    vim.iter(name):each(function(c) ar.pack.cmd(c, load) end)
+    return
+  end
+  api.nvim_create_user_command(name, function(info)
+    api.nvim_del_user_command(name)
+    if load then load() end
     vim.cmd(name .. ' ' .. (info.args or ''))
   end, { nargs = '?' })
 end

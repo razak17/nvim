@@ -59,4 +59,6 @@ if vim.g.neovide then require('ar.neovide') end
 --------------------------------------------------------------------------------
 -- Plugins
 --------------------------------------------------------------------------------
-if ar.plugins.enable then require('ar.lazy') end
+if ar.plugins.enable and ar.package_manager == 'lazy' then
+  require('ar.lazy')
+end
