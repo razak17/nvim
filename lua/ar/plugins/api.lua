@@ -3,7 +3,9 @@ local coding = ar.plugins.coding
 return {
   {
     'mistweaverco/kulala.nvim',
-    cond = function() return ar.get_plugin_cond('kulala.nvim', coding) end,
+    cond = function()
+      return ar.get_plugin_cond('kulala.nvim', coding and false)
+    end,
     ft = { 'http' },
     init = function()
       vim.g.whichkey_add_spec({ '<leader>rk', group = 'Kulala' })
