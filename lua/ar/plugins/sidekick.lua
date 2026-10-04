@@ -1,4 +1,3 @@
-local minimal = ar.plugins.minimal
 local tiny_diags_disabled_by_nes = false
 
 return {

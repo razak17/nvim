@@ -8,7 +8,6 @@ local disabled = not ar.lsp.enable
 
 if disabled then return end
 
-
 local lsp, fn, api, fmt = vim.lsp, vim.fn, vim.api, string.format
 local L, S = lsp.log_levels, vim.diagnostic.severity
 local M = vim.lsp.protocol.Methods
