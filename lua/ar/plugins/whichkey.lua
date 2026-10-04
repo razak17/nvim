@@ -114,6 +114,23 @@ return {
     end
     return opts
   end,
+  config = function(_, opts)
+    local wk = require('which-key')
+    wk.setup(opts)
+
+    if ar.lsp.enable then
+      vim.g.whichkey_add_spec({
+        { '<leader>la', group = 'Code Actions', mode = { 'n', 'x' } },
+      })
+
+      if ar.has('mason.nvim') or ar.has('conform.nvim') then
+        vim.g.whichkey_add_spec({
+          { '<leader>l', group = 'LSP', mode = { 'n', 'x' } },
+          { '<localleader>l', group = 'LSP', mode = { 'n', 'x' } },
+        })
+      end
+    end
+  end,
   -- stylua: ignore
   keys = {
     { '<leader>?', show({ global = false }), desc = 'which-key: buffer keymaps' },
