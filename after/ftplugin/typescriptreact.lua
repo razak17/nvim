@@ -29,7 +29,9 @@ map(
 if not ar.has('mini.surround') then return end
 
 -- Set specific surrounding in 'mini.surround'
-local ts_input = require('mini.surround').gen_spec.input.treesitter
+local ok, surround = pcall(require, 'mini.surround')
+if not ok then return end
+local ts_input = surround.gen_spec.input.treesitter
 vim.b.minisurround_config = {
   custom_surroundings = {
     t = {
