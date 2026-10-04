@@ -323,7 +323,7 @@ end
 ---@param plugin string The plugin to search for.
 ---@return boolean available # Whether the plugin is available.
 function ar.pack.has(plugin)
-  local has_config, pack_config = pcall(vim.pack.get, { plugin })
+  local has_config, pack_config = pcall(vim.pack.get, { plugin }, { info = false })
   if not has_config then return false end
   local has = false
   if pack_config and pack_config[1] then has = true end
