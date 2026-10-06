@@ -1,47 +1,47 @@
 ## 📦 Plugin Modules
 
-- [ ] aerial
+- [x] aerial
 - [ ] ai
 - [ ] annotation
 - [ ] api
 - [ ] autopair
 - [ ] avante
-- [ ] blink
-- [ ] blink-sources
+- [x] blink
+- [x] blink-sources
 - [ ] buffers
 - [ ] cmdline
-- [ ] cmp-sources
+- [x] cmp-sources
 - [ ] code-block
 - [ ] code-runner
 - [ ] codecompanion
 - [ ] colorizer
 - [ ] comment
-- [ ] completion
+- [x] completion
 - [ ] context
-- [ ] copilot
+- [x] copilot
 - [ ] CopilotChat
-- [ ] core
+- [x] core
 - [ ] cursor
 - [ ] dashboard
 - [ ] db
 - [ ] debugger
-- [ ] dial
+- [x] dial
 - [ ] diff
 - [ ] docs
 - [ ] dropbar
-- [ ] editing
+- [x] editing
 - [ ] experiments
-- [ ] explorer
+- [x] explorer
 - [ ] file-operations
-- [ ] file-path
+- [x] file-path
 - [ ] fold
 - [ ] ft
-- [ ] git
+- [x] git
 - [ ] git-conflict
 - [ ] git-diff
 - [ ] git-extra
 - [ ] git-repo
-- [ ] gitpad
+- [x] gitpad
 - [ ] gp
 - [ ] heirline
 - [ ] heirline-statuscolumn
@@ -49,14 +49,14 @@
 - [ ] ibl
 - [ ] icons
 - [ ] incline
-- [ ] init
+- [x] init
 - [ ] lang
-- [ ] lazydev
+- [x] lazydev
 - [ ] leetcode
 - [ ] licenses
 - [ ] live-preview
 - [ ] log
-- [ ] lsp
+- [x] lsp
 - [ ] lsp-code-actions
 - [ ] lsp-diagnostics
 - [ ] lsp-extra
@@ -66,15 +66,15 @@
 - [ ] lsp-symbols
 - [ ] markdown
 - [ ] marks
-- [ ] mason
+- [x] mason
 - [ ] mcphub
-- [ ] mini
-- [ ] mini-ai
-- [ ] mini-completion
-- [ ] mini-indentscope
-- [ ] mini-pairs
-- [ ] mini-pick
-- [ ] mini-surround
+- [x] mini
+- [x] mini-ai
+- [x] mini-completion
+- [x] mini-indentscope
+- [x] mini-pairs
+- [x] mini-pick
+- [x] mini-surround
 - [ ] minuet
 - [ ] motion
 - [ ] multicursor
@@ -85,51 +85,51 @@
 - [ ] nvumi
 - [ ] nvzone
 - [ ] opencode
-- [ ] picker
-- [ ] pipe
+- [x] picker
+- [x] pipe
 - [ ] profile
 - [ ] project
 - [ ] px-to-rem
 - [ ] qf
-- [ ] readline
-- [ ] repeatable
+- [x] readline
+- [x] repeatable
 - [ ] replace
-- [ ] rustaceanvim
+- [x] rustaceanvim
 - [ ] scratch
 - [ ] session
 - [ ] share
-- [ ] shelter
-- [ ] sidekick
-- [ ] snacks
-- [ ] snacks-dashboard
-- [ ] snacks-git
-- [ ] snacks-indent
-- [ ] snacks-notifier
-- [ ] snacks-picker
-- [ ] snacks-terminal
-- [ ] snacks-ui-select
-- [ ] snippets
+- [x] shelter
+- [x] sidekick
+- [x] snacks
+- [x] snacks-dashboard
+- [x] snacks-git
+- [x] snacks-indent
+- [x] snacks-notifier
+- [x] snacks-picker
+- [x] snacks-terminal
+- [x] snacks-ui-select
+- [x] snippets
 - [ ] sort
 - [ ] surf
 - [ ] swap
 - [ ] tailwind
-- [ ] telescope
-- [ ] telescope-any
-- [ ] telescope-extensions
-- [ ] telescope-lsp
-- [ ] telescope-select
-- [ ] telescope-ui-select
-- [ ] terminal
+- [x] telescope
+- [x] telescope-any
+- [x] telescope-extensions
+- [x] telescope-lsp
+- [x] telescope-select
+- [x] telescope-ui-select
+- [x] terminal
 - [ ] testing
 - [ ] theme
 - [ ] time
 - [ ] tips
 - [ ] todo
 - [ ] toggle
-- [ ] tools
+- [x] tools
 - [ ] translate
 - [ ] transparent
-- [ ] treesitter
+- [x] treesitter
 - [ ] typescript
 - [ ] typr
 - [ ] ui
@@ -138,6 +138,5 @@
 - [ ] vectorcode
 - [ ] whichkey
 - [ ] window
-- [ ] window-picker
+- [x] window-picker
 - [ ] wrap
-
