@@ -200,15 +200,15 @@ local function colorscheme_overrides(colorscheme)
         { ColorColumn = { bg = { from = 'ColorColumn', alter = -0.3 } } },
         { Dim = { link = 'NonText' } },
         { WinSeparator = { fg = { from = 'Dim', alter = -0.2 } } },
+        { DiffAdd = { bg = { from = 'DiffAdd', alter = 0.05 } } },
+        { DiffChange = { bg = 'NONE', fg = '#72A2D2' } },
+        { DiffDelete = { bg = { from = 'Error', alter = -0.15 } } },
         {
           SpellBad = {
             sp = { from = 'DiffAdd', attr = 'fg', alter = -0.35 },
             reverse = false,
           },
         },
-        { DiffAdd = { bg = { from = 'DiffAdd', alter = 0.05 } } },
-        { DiffChange = { bg = 'NONE', fg = '#72A2D2' } },
-        { DiffDelete = { bg = { from = 'Error', alter = -0.15 } } },
       },
       popup = {
         { FloatTitle = { bg = { from = 'FloatTitle', alter = -0.5 } } },
@@ -265,13 +265,6 @@ local function colorscheme_overrides(colorscheme)
         },
         { WinSeparator = { fg = { from = 'Dim', alter = -0.2 } } },
         {
-          SpellBad = {
-            sp = { from = 'DiffAdd', attr = 'fg', alter = -0.1 },
-            fg = 'NONE',
-            reverse = false,
-          },
-        },
-        {
           DiffAdd = {
             bg = { from = 'Added', attr = 'fg', alter = -0.65 },
             fg = { from = 'Added' },
@@ -288,6 +281,13 @@ local function colorscheme_overrides(colorscheme)
           DiffDelete = {
             bg = { from = 'Removed', attr = 'fg', alter = -0.55 },
             fg = { from = 'Removed' },
+            reverse = false,
+          },
+        },
+        {
+          SpellBad = {
+            sp = { from = 'DiffAdd', attr = 'fg', alter = -0.35 },
+            fg = 'NONE',
             reverse = false,
           },
         },
