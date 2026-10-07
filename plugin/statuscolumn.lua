@@ -64,7 +64,13 @@ ar.highlight.plugin('statuscolumn', {
   { StatusColSep = { link = 'VertSplit' } },
 })
 
--- opt.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
+-- vim.opt.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
+
+local function set_statuscol()
+  local sc = api.nvim_get_option_value('statuscolumn', { scope = 'local' })
+  if sc ~= '' then return end
+  wo.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
+end
 
 ar.augroup('StatusCol', {
   event = { 'BufEnter', 'FileType', 'FocusGained', 'TextChanged' },
@@ -85,16 +91,13 @@ ar.augroup('StatusCol', {
       not d
       or ar.falsy(d) and (not excluded('fts', ft) and not excluded('bts', bt))
     then
-      local sc = api.nvim_get_option_value('statuscolumn', { scope = 'local' })
-      if sc == '' then
-        wo.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
-      end
+      set_statuscol()
       return
     end
     if ar.falsy(d.ft) then
       vim.opt_local.statuscolumn = ''
       return
     end
-    wo.statuscolumn = [[%!v:lua.ar.ui.statuscolumn.render()]]
+    set_statuscol()
   end,
 })
