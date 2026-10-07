@@ -17,5 +17,4 @@ vim
   .iter(plugins_list)
   :map(function(path) return string.match(path, 'lua/ar/pack/(.+)%.lua$') end)
   :filter(function(f) return f ~= 'init' and not module_disabled(f) end)
-  :map(function(module) require('ar.pack.' .. module) end)
-  :totable()
+  :each(function(module) require('ar.pack.' .. module) end)

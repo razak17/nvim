@@ -162,7 +162,7 @@ o.signcolumn = 'yes:1'
 o.ruler = false
 -- o.cmdheight = 0
 o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→', '↴'
-if not ar.config.plugin.extra.auto_cursorline.enable then
+if not ar.config.plugin.extra['auto-cursorline'].enable then
   o.cursorline = true
 end
 local function safe_winborder()

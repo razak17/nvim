@@ -74,7 +74,7 @@ map({ 'n', 'x' }, '<leader>C', '"_C', { desc = 'cut' })
 -- Credit: JGunn Choi ?il | inner line
 ----------------------------------------------------------------------------
 -- Yank all
-if not ar.config.plugin.extra.sticky_yank.enable then
+if not ar.config.plugin.extra['sticky-yank'].enable then
   nnoremap('<localleader>Y', ':%y+<CR>', { desc = 'yank all' })
 end
 -- Select all

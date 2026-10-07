@@ -62,3 +62,4 @@ if vim.g.neovide then require('ar.neovide') end
 if not ar.plugins.enable then return end
 if ar.package_manager == 'lazy' then require('ar.lazy') end
 if ar.package_manager == 'vim.pack' then require('ar.pack') end
+if not ar.none then require('ar.extras') end
