@@ -6,7 +6,6 @@ return {
   --------------------------------------------------------------------------------
   {
     'selimacerbas/mdkite.nvim',
-    lazy = false,
     cond = function() return ar.get_plugin_cond('mdkite.nvim', not minimal) end,
     cmd = { 'MdKite' },
     opts = {},
@@ -70,6 +69,12 @@ return {
   --------------------------------------------------------------------------------
   -- HTML
   --------------------------------------------------------------------------------
+  {
+    'selimacerbas/kitehost.nvim',
+    cond = function() return ar.get_plugin_cond('kitehost.nvim', not minimal) end,
+    cmd = { 'KiteHost' },
+    opts = {},
+  },
   {
     'brianhuster/live-preview.nvim',
     cmd = { 'LivePreview' },
