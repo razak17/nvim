@@ -7,11 +7,6 @@ return {
   -- Web Dev (Typescript)
   --------------------------------------------------------------------------------
   {
-    'brianhuster/live-preview.nvim',
-    cmd = { 'LivePreview' },
-    cond = function() return ar.get_plugin_cond('live-preview') end,
-  },
-  {
     'Redoxahmii/json-to-types.nvim',
     cond = function()
       return ar.get_plugin_cond('json-to-types.nvim', not minimal)

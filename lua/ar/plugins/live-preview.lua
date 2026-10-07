@@ -1,6 +1,9 @@
 local minimal = ar.plugins.minimal
 
 return {
+  --------------------------------------------------------------------------------
+  -- Markdown
+  --------------------------------------------------------------------------------
   {
     'selimacerbas/mdkite.nvim',
     lazy = false,
@@ -10,14 +13,15 @@ return {
     dependencies = { 'selimacerbas/kitehost.nvim' },
   },
   {
-    'hat0uma/prelive.nvim',
-    cond = function() return ar.get_plugin_cond('prelive.nvim', not minimal) end,
+    'wallpants/github-preview.nvim',
+    build = 'bun install --frozen-lockfile',
+    cond = function()
+      return ar.get_plugin_cond('github-preview.nvim', not minimal)
+    end,
     cmd = {
-      'PreLiveGo',
-      'PreLiveStatus',
-      'PreLiveClose',
-      'PreLiveCloseAll',
-      'PreLiveLog',
+      'GithubPreviewStart',
+      'GithubPreviewStop',
+      'GithubPreviewToggle',
     },
     opts = {},
   },
@@ -62,5 +66,25 @@ return {
       -- clear cache every time we open neovim
       vim.fn['previm#wipe_cache']()
     end,
+  },
+  --------------------------------------------------------------------------------
+  -- HTML
+  --------------------------------------------------------------------------------
+  {
+    'brianhuster/live-preview.nvim',
+    cmd = { 'LivePreview' },
+    cond = function() return ar.get_plugin_cond('live-preview') end,
+  },
+  {
+    'hat0uma/prelive.nvim',
+    cond = function() return ar.get_plugin_cond('prelive.nvim', not minimal) end,
+    cmd = {
+      'PreLiveGo',
+      'PreLiveStatus',
+      'PreLiveClose',
+      'PreLiveCloseAll',
+      'PreLiveLog',
+    },
+    opts = {},
   },
 }

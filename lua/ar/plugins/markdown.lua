@@ -121,19 +121,6 @@ return {
     config = function(_, opts) require('due_nvim').setup(opts) end,
   },
   {
-    'wallpants/github-preview.nvim',
-    build = 'bun install --frozen-lockfile',
-    cond = function()
-      return ar.get_plugin_cond('github-preview.nvim', not minimal)
-    end,
-    cmd = {
-      'GithubPreviewStart',
-      'GithubPreviewStop',
-      'GithubPreviewToggle',
-    },
-    opts = {},
-  },
-  {
     'AntonVanAssche/md-headers.nvim',
     cond = function() return ar.get_plugin_cond('md-headers.nvim', coding) end,
     cmd = { 'MDHeaders', 'MDHeadersCurrent', 'MDHeadersQuickfix' },
