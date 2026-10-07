@@ -216,7 +216,6 @@
 - [lunar.nvim](https://github.com/lunarvim/lunar.nvim)
 - [lush.nvim](https://github.com/rktjmp/lush.nvim)
 - [makurai-nvim](https://github.com/Skardyy/makurai-nvim)
-- [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim)
 - [markmap.nvim](https://github.com/Zeioth/markmap.nvim)
 - [mason-extra-cmds](https://github.com/Zeioth/mason-extra-cmds)
 - [mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim)

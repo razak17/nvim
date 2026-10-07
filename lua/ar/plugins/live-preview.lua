@@ -2,21 +2,12 @@ local minimal = ar.plugins.minimal
 
 return {
   {
-    'iamcco/markdown-preview.nvim',
+    'selimacerbas/mdkite.nvim',
     lazy = false,
-    cond = function()
-      return ar.get_plugin_cond('markdown-preview.nvim', not minimal)
-    end,
-    build = function() vim.fn['mkdp#util#install']() end,
-    cmd = {
-      'MarkdownPreview',
-      'MarkdownPreviewStop',
-      'MarkdownPreviewToggle',
-    },
-    config = function()
-      vim.g.mkdp_auto_start = 0
-      vim.g.mkdp_auto_close = 1
-    end,
+    cond = function() return ar.get_plugin_cond('mdkite.nvim', not minimal) end,
+    cmd = { 'MdKite' },
+    opts = {},
+    dependencies = { 'selimacerbas/kitehost.nvim' },
   },
   {
     'hat0uma/prelive.nvim',
