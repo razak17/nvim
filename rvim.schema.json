@@ -987,6 +987,15 @@
               },
               "type": "object"
             },
+            "dir": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
             "env": {
               "additionalProperties": false,
               "properties": {
@@ -1092,7 +1101,7 @@
         "extra": {
           "additionalProperties": false,
           "properties": {
-            "accelerated_jk": {
+            "accelerated-jk": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1101,7 +1110,7 @@
               },
               "type": "object"
             },
-            "advanced_new_file": {
+            "advanced-new-file": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1137,7 +1146,7 @@
               },
               "type": "object"
             },
-            "big_file": {
+            "big-file": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1173,7 +1182,7 @@
               },
               "type": "object"
             },
-            "dump_messages": {
+            "dump-messages": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1182,7 +1191,7 @@
               },
               "type": "object"
             },
-            "git_conflict": {
+            "git-conflict": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1200,7 +1209,7 @@
               },
               "type": "object"
             },
-            "large_file": {
+            "large-file": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1209,7 +1218,7 @@
               },
               "type": "object"
             },
-            "last_place": {
+            "last-place": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1218,7 +1227,7 @@
               },
               "type": "object"
             },
-            "local_search": {
+            "local-search": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1227,7 +1236,7 @@
               },
               "type": "object"
             },
-            "modify_line_end_delimiter": {
+            "modify-line-end-delimiter": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1245,7 +1254,7 @@
               },
               "type": "object"
             },
-            "null_pointer": {
+            "null-pointer": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1263,7 +1272,7 @@
               },
               "type": "object"
             },
-            "recording_studio": {
+            "recording-studio": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1272,7 +1281,7 @@
               },
               "type": "object"
             },
-            "reload_plugin": {
+            "reload-plugin": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1281,7 +1290,7 @@
               },
               "type": "object"
             },
-            "remote_sync": {
+            "remote-sync": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1290,7 +1299,7 @@
               },
               "type": "object"
             },
-            "remove_comments": {
+            "remove-comments": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1299,7 +1308,7 @@
               },
               "type": "object"
             },
-            "replace_word": {
+            "replace-word": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1308,7 +1317,7 @@
               },
               "type": "object"
             },
-            "search_return": {
+            "search-return": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1317,7 +1326,7 @@
               },
               "type": "object"
             },
-            "smart_close": {
+            "smart-close": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1326,7 +1335,7 @@
               },
               "type": "object"
             },
-            "smart_hl_search": {
+            "smart-hl-search": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1335,7 +1344,7 @@
               },
               "type": "object"
             },
-            "smart_spelling": {
+            "smart-spelling": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1344,7 +1353,7 @@
               },
               "type": "object"
             },
-            "smart_splits": {
+            "smart-splits": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1353,7 +1362,7 @@
               },
               "type": "object"
             },
-            "smart_tilde": {
+            "smart-tilde": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1362,7 +1371,7 @@
               },
               "type": "object"
             },
-            "spell_all_good": {
+            "spell-all-good": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1371,7 +1380,7 @@
               },
               "type": "object"
             },
-            "sticky_note": {
+            "sticky-note": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1380,7 +1389,7 @@
               },
               "type": "object"
             },
-            "sticky_yank": {
+            "sticky-yank": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1389,7 +1398,7 @@
               },
               "type": "object"
             },
-            "surf_plugins": {
+            "surf-plugins": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1398,7 +1407,7 @@
               },
               "type": "object"
             },
-            "tab_search": {
+            "tab-search": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1416,7 +1425,7 @@
               },
               "type": "object"
             },
-            "wb_current_line": {
+            "wb-current-line": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1425,7 +1434,7 @@
               },
               "type": "object"
             },
-            "word_web_search": {
+            "word-web-search": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
@@ -1434,7 +1443,7 @@
               },
               "type": "object"
             },
-            "yank_ring": {
+            "yank-ring": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
