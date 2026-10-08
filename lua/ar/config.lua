@@ -535,6 +535,7 @@ local config = {
     core = {
       autocommands = { enable = true },
       colors = { enable = true },
+      dir = { enable = true },
       env = { enable = true },
       experimental = { enable = true },
       filetypes = { enable = true },
