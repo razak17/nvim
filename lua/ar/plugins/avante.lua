@@ -1,7 +1,5 @@
 local models = ar.config.ai.models
 
-local model_names = vim.tbl_keys(ar.ai.copilot_models)
-
 local function get_copilot_providers()
   local providers_table = {
     copilot = {
@@ -15,7 +13,8 @@ local function get_copilot_providers()
       },
     },
   }
-  for _, model_name in ipairs(model_names) do
+  for _, config in ipairs(ar.ai.copilot_models) do
+    local model_name = config.model
     local provider_key = 'copilot-' .. model_name
     providers_table[provider_key] = {
       __inherited_from = 'copilot',
@@ -132,7 +131,7 @@ return {
       if models.claude then
         set_provider('claude')
       elseif models.copilot then
-        set_provider('copilot', 'copilot-claude-opus-4.5')
+        set_provider('copilot', 'copilot-' .. ar.ai.copilot_models[1].model)
         opts.providers = get_copilot_providers()
       elseif models.openai then
         set_provider('openai')

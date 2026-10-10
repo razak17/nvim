@@ -275,7 +275,7 @@ return {
         set_adapter_and_strategy('copilot', 'claude-opus-4.5')
       elseif models.openai then
         -- https://platform.openai.com/docs/models
-        set_adapter_and_strategy('openai', 'gpt-4.1')
+        set_adapter_and_strategy('openai', ar.ai.openai_models[1].model)
       elseif models.gemini then
         set_adapter_and_strategy('gemini', 'gemini-2.5-flash-preview-05-20')
       end

@@ -272,7 +272,7 @@ return {
         { name = 'ChatClaude-3-7-Sonnet', disable = true },
         { name = 'ChatClaude-Sonnet-4-Thinking', disable = true },
       },
-      default_chat_agent = 'ChatGPT-gpt-5.4-mini',
+      default_chat_agent = 'ChatCopilot-' .. ar.ai.copilot_models[1].model,
       chat_shortcut_respond = {
         modes = { 'n', 'i', 'v', 'x' },
         shortcut = '<c-g><CR>',
@@ -309,12 +309,12 @@ return {
     end
 
     if models.copilot then
-      for model, config in pairs(ar.ai.copilot_models) do
+      for _, config in ipairs(ar.ai.copilot_models) do
         setup_model({
           provider = 'copilot',
-          name = fmt('ChatCopilot-%s', model),
+          name = fmt('ChatCopilot-%s', config.model),
           model = {
-            model = model,
+            model = config.model,
             temperature = config.temp or 1.1,
             top_p = config.top_p or 1,
             max_tokens = config.max_tokens or 128000,
@@ -343,11 +343,11 @@ return {
       end
     end
     if models.claude then
-      for model, config in pairs(ar.ai.claude_models) do
+      for _, config in ipairs(ar.ai.claude_models) do
         setup_model({
           provider = 'anthropic',
-          name = fmt('ChatClaude-%s', model),
-          model = { model = model },
+          name = fmt('ChatClaude-%s', config.model),
+          model = { model = config.model },
           chat = true,
           command = false,
           system_prompt = config.system_prompt,
@@ -355,12 +355,12 @@ return {
       end
     end
     if models.openai then
-      for model, config in pairs(ar.ai.openai_models) do
+      for _, config in ipairs(ar.ai.openai_models) do
         setup_model({
           provider = 'openai',
-          name = fmt('ChatGPT-%s', model),
+          name = fmt('ChatGPT-%s', config.model),
           model = {
-            model = model,
+            model = config.model,
             temperature = config.temp or 1.1,
             top_p = config.top_p or 1,
           },

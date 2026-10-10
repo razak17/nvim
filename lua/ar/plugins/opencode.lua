@@ -154,7 +154,9 @@ return {
       default_global_keymaps = false, -- If false, disables all default global keymaps
       default_mode = 'build', -- 'build' or 'plan' or any custom configured. @see [OpenCode Agents](https://opencode.ai/docs/modes/)
       keymap_prefix = '', -- Default keymap prefix for global keymaps change to your preferred prefix and it will be applied to all keymaps starting with <leader>o
-      quick_chat = { default_model = 'openai/gpt-5.2-codex' },
+      quick_chat = {
+        default_model = 'openai/' .. ar.ai.openai_models[1].model,
+      },
       ui = {
         input = {
           text = { wrap = true },
