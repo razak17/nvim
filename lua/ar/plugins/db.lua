@@ -185,7 +185,8 @@ return {
       config = function()
         vim.g.db_ui_notification_width = 1
         vim.g.db_ui_debug = 1
-        vim.g.db_ui_save_location = join_paths(vim.fn.stdpath('data'), 'db_ui')
+        vim.g.db_ui_save_location =
+          vim.fs.joinpath(vim.fn.stdpath('data'), 'db_ui')
         vim.g.db_ui_use_nerd_fonts = 1
 
         ar.augroup('dad-bod', {

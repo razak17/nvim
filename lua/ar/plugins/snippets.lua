@@ -32,7 +32,8 @@ local function change_choice()
 end
 
 local function get_snippets_list()
-  local modules_dir = join_paths(fn.stdpath('config'), 'lua', 'ar', 'snippets')
+  local modules_dir =
+    vim.fs.joinpath(fn.stdpath('config'), 'lua', 'ar', 'snippets')
   local tmp = vim.split(fn.globpath(modules_dir, '*.lua'), '\n')
   return vim
     .iter(tmp)
@@ -110,12 +111,12 @@ return {
         require('luasnip.loaders.from_lua').lazy_load()
 
         local paths = {
-          join_paths(fn.stdpath('config'), 'snippets'),
+          vim.fs.joinpath(fn.stdpath('config'), 'snippets'),
         }
 
         if ar.config.completion.snippets.variant == 'friendly-snippets' then
           paths = vim.list_extend(paths, {
-            join_paths(fn.stdpath('data'), 'lazy', 'friendly-snippets'),
+            vim.fs.joinpath(fn.stdpath('data'), 'lazy', 'friendly-snippets'),
           })
         end
 

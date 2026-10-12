@@ -508,7 +508,7 @@ local load = function(event)
       menu = { dictionary = '[DICT]' },
     })
     local en_dict =
-      join_paths(vim.fn.stdpath('data'), 'site', 'spell', 'en.dict')
+      vim.fs.joinpath(vim.fn.stdpath('data'), 'site', 'spell', 'en.dict')
     require('cmp_dictionary').setup({ paths = { en_dict } })
   end
 

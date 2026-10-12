@@ -2,14 +2,7 @@ if not ar then return end
 
 local has_lazy = ar.has('lazy.nvim')
 
-if
-  not ar
-  or ar.none
-  or not ar.plugins.enable
-  or not has_lazy
-then
-  return
-end
+if not ar or ar.none or not ar.plugins.enable or not has_lazy then return end
 
 local function surf_plugins()
   local items = vim

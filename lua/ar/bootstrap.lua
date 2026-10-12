@@ -17,7 +17,7 @@ g.maplocalleader = ','
 --------------------------------------------------------------------------------
 -- Set Providers
 --------------------------------------------------------------------------------
-vim.g.python3_host_prog = join_paths(data, 'venv', 'bin', 'python3')
+vim.g.python3_host_prog = vim.fs.joinpath(data, 'venv', 'bin', 'python3')
 -- if g.node_host_prog == nil and g.loaded_node_provider ~= 0 and vim.fn.executable('pnpm') == 1 then
 --   -- pnpm 11 stores global packages in isolated directories that Nvim cannot detect.
 --   local ok, result = pcall(function()
@@ -30,7 +30,7 @@ vim.g.python3_host_prog = join_paths(data, 'venv', 'bin', 'python3')
 --         local deps = type(install) == 'table' and install.dependencies
 --         local host = type(deps) == 'table' and deps.neovim
 --         if type(host) == 'table' and type(host.path) == 'string' then
---           local entry = join_paths(host.path, 'bin', 'cli.js')
+--           local entry = vim.fs.joinpath(host.path, 'bin', 'cli.js')
 --           if vim.fn.filereadable(entry) == 1 then
 --             g.node_host_prog = entry
 --             break

@@ -577,7 +577,11 @@ local function get_opts(opts)
       winblend = 0,
       history = {
         limit = 100,
-        path = join_paths(datapath, 'databases', 'telescope_history.sqlite3'),
+        path = vim.fs.joinpath(
+          datapath,
+          'databases',
+          'telescope_history.sqlite3'
+        ),
       },
       cache_picker = { num_pickers = 3 },
       file_ignore_patterns = {

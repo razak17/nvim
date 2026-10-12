@@ -14,7 +14,9 @@ local function get_cond(names)
 end
 
 if get_cond({ 'onedark' }) then
-  vim.opt.rtp:append(join_paths(vim.g.projects_dir, 'plugins', 'onedark.nvim'))
+  vim.opt.rtp:append(
+    vim.fs.joinpath(vim.g.projects_dir, 'plugins', 'onedark.nvim')
+  )
   -- vim.pack.add(
   --   { 'https://github.com/razak17/onedark.nvim' },
   --   { confirm = false }

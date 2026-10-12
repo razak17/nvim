@@ -31,7 +31,7 @@ return {
             local datapath = vim.fn.stdpath('data')
             vim.g.telescope_add_extension({ 'frecency' }, opts, {
               frecency = {
-                db_root = join_paths(datapath, 'databases'),
+                db_root = vim.fs.joinpath(datapath, 'databases'),
                 default_workspace = 'CWD',
                 show_filter_column = false,
                 show_scores = true,

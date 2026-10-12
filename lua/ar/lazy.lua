@@ -1,7 +1,7 @@
 local api, fn = vim.api, vim.fn
 local data = fn.stdpath('data')
 
-local lazy_path = join_paths(data, 'lazy', 'lazy.nvim')
+local lazy_path = vim.fs.joinpath(data, 'lazy', 'lazy.nvim')
 if not vim.uv.fs_stat(lazy_path) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
   -- stylua: ignore start
@@ -21,7 +21,7 @@ vim.opt.rtp:prepend(lazy_path)
 local scheme_switcher = require('ar.scheme_switcher')
 local colorscheme = scheme_switcher.get_current_colorscheme()
 if ar.plugins.profile then
-  local snacks = join_paths(data, 'lazy', 'snacks.nvim')
+  local snacks = vim.fs.joinpath(data, 'lazy', 'snacks.nvim')
   vim.opt.rtp:append(snacks)
   require('snacks.profiler').startup({
     startup = { event = 'VimEnter' }, -- stop profiler on this event. Defaults to `VimEnter`
@@ -34,7 +34,7 @@ require('lazy').setup({
   git = { timeout = 720 },
   --- @type table
   dev = {
-    path = join_paths(vim.g.projects_dir, 'plugins'),
+    path = vim.fs.joinpath(vim.g.projects_dir, 'plugins'),
     patterns = { 'razak17' },
     fallback = true,
   },
@@ -56,7 +56,10 @@ require('lazy').setup({
   },
   performance = {
     rtp = {
-      paths = { join_paths(data, 'site'), join_paths(data, 'site', 'after') },
+      paths = {
+        vim.fs.joinpath(data, 'site'),
+        vim.fs.joinpath(data, 'site', 'after'),
+      },
     },
   },
 })

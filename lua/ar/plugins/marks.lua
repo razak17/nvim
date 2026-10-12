@@ -76,7 +76,7 @@ return {
       auto_save_trailblazer_state_on_exit = true,
       auto_load_trailblazer_state_on_enter = false,
       trail_mark_symbol_line_indicators_enabled = true,
-      custom_session_storage_dir = join_paths(
+      custom_session_storage_dir = vim.fs.joinpath(
         vim.fn.stdpath('data'),
         'trailblazer'
       ),

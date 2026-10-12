@@ -160,8 +160,10 @@ function M.close_nonvisible_buffers()
 end
 
 function M.toggle_autosave()
-  ar.config.plugin.extra.autosave.enable = not ar.config.plugin.extra.autosave.enable
-  local status = ar.config.plugin.extra.autosave.enable and 'enabled' or 'disabled'
+  ar.config.plugin.extra.autosave.enable =
+    not ar.config.plugin.extra.autosave.enable
+  local status = ar.config.plugin.extra.autosave.enable and 'enabled'
+    or 'disabled'
   vim.notify(fmt('Autosave has been %s', status))
 end
 

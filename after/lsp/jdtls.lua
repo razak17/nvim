@@ -3,7 +3,7 @@ local mason_root = vim.env.MASON or (vim.fn.stdpath('data') .. '/mason')
 return {
   init_options = {
     bundles = {
-      join_paths(
+      vim.fs.joinpath(
         mason_root,
         'share',
         'java-debug-adapter',

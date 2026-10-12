@@ -18,8 +18,8 @@ local pythonPath = function()
   local cwd = fn.getcwd()
   local dirs = { 'venv', '.venv', 'env', '.env' }
   for _, dir in ipairs(dirs) do
-    if fn.executable(join_paths(cwd, dir, 'bin', 'python')) == 1 then
-      return join_paths(cwd, dir, 'bin', 'python')
+    if fn.executable(vim.fs.joinpath(cwd, dir, 'bin', 'python')) == 1 then
+      return vim.fs.joinpath(cwd, dir, 'bin', 'python')
     end
   end
   return debugpy_path

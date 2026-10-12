@@ -1,15 +1,7 @@
 if not ar then return end
 
-local fn, api, cmd, uv, fmt = vim.fn, vim.api, vim.cmd, vim.uv, string.format
+local fn, api, cmd, fmt = vim.fn, vim.api, vim.cmd, string.format
 local L = vim.log.levels
-
----Join path segments that were passed as input
----@return string
-function join_paths(...)
-  local path_sep = uv.os_uname().version:match('Windows') and '\\' or '/'
-  local result = table.concat({ ... }, path_sep)
-  return result
-end
 
 function ar.sync_dir(path)
   return fmt('%s/Notes/%s', fn.expand('$SYNC_DIR'), path)
@@ -323,7 +315,11 @@ end
 ---@param plugin string The plugin to search for.
 ---@return boolean available # Whether the plugin is available.
 function ar.pack.has(plugin)
-  local has_config, pack_config = pcall(vim.pack.get, { plugin }, { info = false })
+  local has_config, pack_config = pcall(
+    vim.pack.get,
+    { plugin },
+    { info = false }
+  )
   if not has_config then return false end
   local has = false
   if pack_config and pack_config[1] then has = true end

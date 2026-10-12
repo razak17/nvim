@@ -291,7 +291,7 @@ opt.sessionoptions = {
 -- What to save for views and sessions:
 opt.viewoptions = { 'cursor', 'folds' } -- save/restore just these (with `:{mk,load}view`)
 o.virtualedit = 'block' -- allow cursor to move where there is no text in visual block mode
--- opt.shadafile = join_paths(vim.fn.stdpath('cache'), 'shada', 'as.shada')
+-- opt.shadafile = vim.fs.joinpath(vim.fn.stdpath('cache'), 'shada', 'as.shada')
 --------------------------------------------------------------------------------
 -- Jumplist
 --------------------------------------------------------------------------------
@@ -326,7 +326,8 @@ opt.spelloptions:append({ 'camel', 'noplainbuffer' })
 opt.spellcapcheck = '' -- don't check for capital letters at start of sentence
 -- https://vi.stackexchange.com/questions/15051/how-can-i-use-multiple-spell-files-at-the-same-time
 ---@diagnostic disable-next-line: assign-type-mismatch
-opt.spellfile = join_paths(vim.fn.stdpath('config'), 'spell', 'en.utf-8.add')
+opt.spellfile =
+  vim.fs.joinpath(vim.fn.stdpath('config'), 'spell', 'en.utf-8.add')
 --------------------------------------------------------------------------------
 -- Mouse {{{1
 --------------------------------------------------------------------------------

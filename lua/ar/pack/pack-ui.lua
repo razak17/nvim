@@ -3,7 +3,7 @@ local loaded = false
 local function load()
   if loaded then return end
 
-  local path = join_paths(vim.g.projects_dir, 'plugins', 'nvim-pack-ui')
+  local path = vim.fs.joinpath(vim.g.projects_dir, 'plugins', 'nvim-pack-ui')
   vim.opt.rtp:prepend(path)
   dofile(path .. '/plugin/pack-ui.lua')
 

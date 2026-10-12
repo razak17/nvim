@@ -4,14 +4,7 @@ local has_lazy = ar.has('lazy.nvim')
 local has_telescope = ar.has('telescope.nvim')
 local ar_picker = ar.config.picker.variant
 
-if
-  not ar
-  or ar.none
-  or not ar.plugins.enable
-  or not has_lazy
-then
-  return
-end
+if not ar or ar.none or not ar.plugins.enable or not has_lazy then return end
 
 if ar_picker ~= 'telescope' then
   map('n', '<leader>oL', function()

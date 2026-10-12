@@ -554,7 +554,7 @@ return {
           winblend = 0,
           history = {
             limit = 100,
-            path = join_paths(
+            path = vim.fs.joinpath(
               datapath,
               'databases',
               'telescope_history.sqlite3'
