@@ -27,7 +27,6 @@ return {
   {
     'previm/previm',
     cond = function() return ar.get_plugin_cond('previm', not minimal) end,
-    ft = { 'markdown' },
     cmd = { 'PrevimOpen', 'PrevimRefresh', 'PrevimWipeCache' },
     config = function()
       vim.g.previm_open_cmd = 'zen'
