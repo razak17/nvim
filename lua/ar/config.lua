@@ -637,6 +637,10 @@ local config = {
 
 _G.ar = ar or namespace
 _G.ar.config = config
-_G.ar.pack = {}
+_G.ar.pack = {
+  defaults = { lazy = true },
+  dev = { path = vim.fs.joinpath(vim.g.projects_dir, 'plugins') },
+  loaded = {},
+}
 _G.ar.pick = require('ar.pick')
 _G.map = vim.keymap.set

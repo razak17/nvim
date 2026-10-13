@@ -314,20 +314,6 @@ end
 
 ---@param plugin string The plugin to search for.
 ---@return boolean available # Whether the plugin is available.
-function ar.pack.has(plugin)
-  local has_config, pack_config = pcall(
-    vim.pack.get,
-    { plugin },
-    { info = false }
-  )
-  if not has_config then return false end
-  local has = false
-  if pack_config and pack_config[1] then has = true end
-  return has
-end
-
----@param plugin string The plugin to search for.
----@return boolean available # Whether the plugin is available.
 function ar.has(plugin)
   if ar.package_manager == 'lazy' then return ar.lazy_has(plugin) end
   if ar.package_manager == 'vim.pack' then return ar.pack.has(plugin) end
@@ -612,10 +598,7 @@ end
 ---@return function
 function ar.create_select_menu(prompt, options_table)
   local frecency = require('ar.frecency')
-  local option_names = vim
-    .iter(options_table)
-    :map(function(i, _) return i end)
-    :totable()
+  local option_names = vim.tbl_keys(options_table)
   if ar.config.frecency.enable then
     frecency.initialize()
     table.sort(option_names, function(a, b)
@@ -646,6 +629,286 @@ function ar.create_select_menu(prompt, options_table)
     end)
   end
   return menu
+end
+
+--------------------------------------------------------------------------------
+--  vim.pack
+--------------------------------------------------------------------------------
+
+--- Check if a plugin is available in vim.pack
+---@param plugin string The plugin to search for.
+---@return boolean available # Whether the plugin is available.
+function ar.pack.has(plugin)
+  local has_config, pack_config = pcall(
+    vim.pack.get,
+    { plugin },
+    { info = false }
+  )
+  if not has_config then return false end
+  local has = false
+  if pack_config and pack_config[1] then has = true end
+  return has
+end
+
+--- Create a command that will load a module when called
+---@param name string|string[]
+---@param load? fun()
+function ar.pack.cmd(name, load)
+  if type(name) == 'table' then
+    vim.iter(name):each(function(c) ar.pack.cmd(c, load) end)
+    return
+  end
+  api.nvim_create_user_command(name, function(info)
+    pcall(api.nvim_del_user_command, name)
+    if load then load() end
+    vim.cmd(name .. ' ' .. (info.args or ''))
+  end, { nargs = '?' })
+end
+
+---@class PackDependency
+---@field src string
+---@field dev? boolean
+---@field build? fun(args: AutocmdArgs):nil
+---@field cond? boolean
+---@field cmd? string[]
+---@field ft? string[]
+---@field setup? fun():nil
+
+---@class PackKey
+---@field [1] string
+---@field [2] string|fun()
+---@field mode? string|string[]
+---@field desc? string
+---@field noremap? boolean
+---@field silent? boolean
+
+---@class PackSpec
+---@field src string
+---@field dev? boolean Load from ar.pack.dev.path instead of installing from src.
+---@field lazy? boolean Defaults to ar.pack.defaults.lazy.
+---@field init? fun():nil
+---@field build? fun(args: AutocmdArgs):nil
+---@field cond? boolean
+---@field cmd? string[]
+---@field ft? string[]
+---@field setup? fun():nil
+---@field dependencies? PackDependency[]
+---@field keys? PackKey[]|fun(load: fun()):PackKey[]|nil
+---@field event? string|string[]
+
+---@param src string
+---@param f fun(args: AutocmdArgs):nil
+local function build(src, f)
+  local name = src:match('([^/]+)$')
+  ar.augroup(name .. '_build', {
+    event = 'PackChanged',
+    command = function(args)
+      local data = args.data
+      if data.spec.name ~= name then return end
+      if data.kind == 'install' or data.kind == 'update' then
+        if f then f(args) end
+      end
+    end,
+  })
+end
+
+local dev_package_root
+
+---@param spec PackSpec|PackDependency
+local function load_dev(spec)
+  local name = spec.src:gsub('/+$', ''):match('([^/]+)$')
+  assert(name, 'Invalid dev plugin source: ' .. spec.src)
+  name = name:gsub('%.git$', '')
+  local path = vim.fs.joinpath(vim.fn.expand(ar.pack.dev.path), name)
+  local resolved = vim.uv.fs_realpath(path)
+  if not resolved or vim.fn.isdirectory(resolved) ~= 1 then
+    error('Dev plugin directory not found: ' .. path)
+  end
+
+  if not dev_package_root then
+    dev_package_root = vim.fn.tempname()
+    vim.fn.mkdir(
+      vim.fs.joinpath(dev_package_root, 'pack', 'ar-dev', 'opt'),
+      'p'
+    )
+    vim.opt.packpath:prepend(dev_package_root)
+  end
+  -- A unique package name avoids matching an installed remote package.
+  local package_name = 'ar-dev-' .. vim.fn.sha256(resolved)
+  local link =
+    vim.fs.joinpath(dev_package_root, 'pack', 'ar-dev', 'opt', package_name)
+  if not vim.uv.fs_lstat(link) then
+    local ok, err = vim.uv.fs_symlink(resolved, link, { dir = true })
+    assert(ok, err)
+  end
+  vim.cmd.packadd(package_name)
+end
+
+---@param spec PackSpec|PackDependency
+local function load_spec(spec)
+  if spec.cond == false or ar.pack.loaded[spec.src] then return end
+  for _, dep in ipairs(spec.dependencies or {}) do
+    load_spec(dep)
+  end
+  if spec.dev then
+    load_dev(spec)
+  else
+    vim.pack.add({ spec.src }, { confirm = false })
+  end
+  if spec.setup then spec.setup() end
+  ar.pack.loaded[spec.src] = true
+end
+
+---@param load fun()
+local function on_very_lazy(load)
+  local function schedule_load()
+    vim.schedule(function()
+      if vim.v.exiting ~= vim.NIL then return end
+      load()
+    end)
+  end
+
+  if vim.v.vim_did_enter == 1 then
+    schedule_load()
+  else
+    vim.api.nvim_create_autocmd('VimEnter', {
+      once = true,
+      callback = schedule_load,
+    })
+  end
+end
+
+---@param spec PackSpec
+local function add_spec(spec)
+  if ar.pack.loaded[spec.src] then return end
+  if spec.cond == nil then spec.cond = true end
+  if not spec.cond then return end
+  if spec.lazy == nil then spec.lazy = ar.pack.defaults.lazy end
+  if spec.init then spec.init() end
+  if spec.build and not spec.dev then build(spec.src, spec.build) end
+  local function load() load_spec(spec) end
+  if spec.cmd then ar.pack.cmd(spec.cmd, load) end
+  if spec.event then
+    local events = type(spec.event) == 'string' and { spec.event } or spec.event
+    for _, event in ipairs(events) do
+      if event == 'VeryLazy' then
+        on_very_lazy(load)
+      else
+        vim.api.nvim_create_autocmd(event, {
+          once = true,
+          callback = function() load() end,
+        })
+      end
+    end
+  end
+  if spec.ft then
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = spec.ft,
+      once = true,
+      callback = load,
+    })
+  end
+  if spec.keys then
+    if type(spec.keys) == 'function' then spec.keys = spec.keys(load) end
+    if type(spec.keys) ~= 'table' then
+      if not spec.lazy then load() end
+      return
+    end
+    for _, key in ipairs(spec.keys) do
+      local lhs, rhs = key[1], key[2]
+      local modes = key.mode or 'n'
+      if key.noremap == nil then key.noremap = true end
+      if key.silent == nil then key.silent = true end
+      local opts =
+        { desc = key.desc, noremap = key.noremap, silent = key.silent }
+      local replay = vim.api.nvim_replace_termcodes(lhs, true, false, true)
+      vim.keymap.set(modes, lhs, function()
+        load()
+        vim.keymap.set(modes, lhs, rhs, opts)
+        if type(rhs) == 'function' then
+          rhs()
+        else
+          vim.api.nvim_feedkeys(replay, 'mi', false)
+        end
+      end, opts)
+    end
+  end
+  if not spec.lazy then load() end
+end
+
+--- Register one plugin spec or a list of specs with vim.pack. Lists register
+--- in order; an empty list does nothing. Supports command, filetype, key, or event
+--- loading. lazy defaults to ar.pack.defaults.lazy when omitted. Set lazy = false
+--- to load immediately, even with triggers. With lazy = true, loading requires a
+--- trigger or use as a dependency; no triggers means no automatic loading.
+--- Any supplied trigger can load it. Filetype triggers handle future FileType events.
+---
+--- event accepts an autocmd event name or list, such as 'InsertEnter' or
+--- { 'BufReadPost', 'BufNewFile' }. Only future events trigger loading; the event
+--- is not replayed for handlers registered by the plugin during loading.
+--- 'VeryLazy' schedules loading after VimEnter, or on the next scheduled callback
+--- if startup has finished. It can appear in event lists and does not emit a
+--- global User VeryLazy event. Scheduled loading is skipped while exiting.
+---
+--- keys entries contain a lhs and a string or function action, with optional
+--- mode and desc fields. The default mode is normal. On first use, the plugin
+--- loads, the trigger becomes the real mapping, and the pressed key is replayed.
+--- Counts and registers on the first press are not explicitly preserved.
+---
+--- init runs when ar.pack.add() is called, before registering triggers or loading
+--- the plugin. This runs during startup when the calling module loads then.
+--- Use init for globals or other configuration that must precede plugin loading.
+--- It runs on each registration; cond = false skips it.
+---
+--- Dependencies load before the plugin, and setup runs after vim.pack.add().
+--- Each source URL loads and configures once through this wrapper, so use the
+--- same full URL in standalone entries and dependencies. Installation does not
+--- prompt for confirmation. Set cond = false to skip loading and trigger creation.
+---
+--- dev = true loads ar.pack.dev.path/<repository-name> through a temporary native
+--- package symlink. The default dev directory is ~/projects. A trailing .git is
+--- removed from the repository name. Missing checkouts raise an error; there is
+--- no remote fallback. Dev plugins skip PackChanged build hooks and keep src as
+--- their loaded-cache key. Dependencies can also set dev = true.
+---
+--- An optional build callback receives PackChanged arguments on install or
+--- update. Its hook is skipped when cond is false. Dependency entries
+--- use src, dev, cond, and setup; their cmd, ft, and build fields are not registered.
+---
+--- e.g.
+--- ```lua
+---   ar.pack.add({
+---     src = 'https://github.com/folke/todo-comments.nvim',
+---     cond = ar.get_plugin_cond('todo-comments.nvim'),
+---     cmd = { 'TodoQuickFix' },
+---     keys = {
+---       { '<leader>tq', '<Cmd>TodoQuickFix<CR>', desc = 'Todo quickfix' },
+---     },
+---     dependencies = {
+---       { src = 'https://github.com/nvim-lua/plenary.nvim' },
+---     },
+---     setup = function()
+---       require('todo-comments').setup({ signs = false })
+---     end,
+---   })
+--- ```
+---
+--- A list uses the same spec format for each entry:
+--- ```lua
+---   ar.pack.add({
+---     { src = 'https://github.com/stevearc/oil.nvim' },
+---     { src = 'https://github.com/folke/todo-comments.nvim' },
+---   })
+--- ```
+---@param specs PackSpec|PackSpec[]
+function ar.pack.add(specs)
+  if specs.src then
+    add_spec(specs)
+  else
+    for _, spec in ipairs(specs) do
+      add_spec(spec)
+    end
+  end
 end
 
 --------------------------------------------------------------------------------
@@ -699,9 +962,10 @@ end
 --- has value over autocommands, unless ftplugin files specifically have that value
 ---@param map {[string|string[]]: FiletypeSettings | {[integer]: fun(args: AutocmdArgs) | string}}
 function ar.filetype_settings(map)
-  local commands = vim.iter(map):map(function(ft, settings)
+  local commands = {}
+  for ft, settings in pairs(map) do
     local name = type(ft) == 'table' and table.concat(ft, ',') or ft
-    return {
+    commands[#commands + 1] = {
       pattern = ft,
       event = 'FileType',
       desc = ('ft settings for %s'):format(name),
@@ -721,8 +985,8 @@ function ar.filetype_settings(map)
         end)
       end,
     }
-  end)
-  ar.augroup('filetype-settings', unpack(commands:totable()))
+  end
+  ar.augroup('filetype-settings', unpack(commands))
 end
 
 ---@param str string
@@ -739,12 +1003,14 @@ end
 -- Open media files
 ---------------------------------------------------------------------------------
 
+---@return string[]
 function ar.get_media()
   local media = ar.media
-  return vim
-    .iter({ media.audio, media.doc, media.image, media.video })
-    :flatten()
-    :totable()
+  local extensions = {}
+  for _, group in ipairs({ media.audio, media.doc, media.image, media.video }) do
+    vim.list_extend(extensions, group)
+  end
+  return extensions
 end
 
 --- search current word or go to file
@@ -983,30 +1249,18 @@ end
 --------------------------------------------------------------------------------
 -- Thin wrappers over API functions to make their usage easier/terser
 
---- Create a command that will load a module when called
----@param name string|string[]
----@param load? fun()
-function ar.pack.cmd(name, load)
-  if type(name) == 'table' then
-    vim.iter(name):each(function(c) ar.pack.cmd(c, load) end)
-    return
-  end
-  api.nvim_create_user_command(name, function(info)
-    pcall(api.nvim_del_user_command, name)
-    if load then load() end
-    vim.cmd(name .. ' ' .. (info.args or ''))
-  end, { nargs = '?' })
-end
-
 local autocmd_keys =
   { 'event', 'buffer', 'pattern', 'desc', 'command', 'group', 'once', 'nested' }
 --- Validate the keys passed to ar.augroup are valid
 ---@param name string
 ---@param command Autocommand
 local function validate_autocmd(name, command)
-  local incorrect = vim.iter(command):map(function(key, _)
-    if not vim.tbl_contains(autocmd_keys, key) then return key end
-  end)
+  local incorrect = {}
+  for key in pairs(command) do
+    if not vim.tbl_contains(autocmd_keys, key) then
+      table.insert(incorrect, key)
+    end
+  end
 
   if #incorrect > 0 then
     vim.schedule(function()
@@ -1106,12 +1360,12 @@ end
 ---@param list table
 ---@param ... table
 function ar.list_insert(list, ...)
-  local tbl = vim.iter({ ... }):flatten():totable()
-  if not list or not tbl then return end
-  if type(list) ~= 'table' or type(tbl) ~= 'table' then return end
-  for _, v in pairs(tbl) do
-    table.insert(list, v)
+  if type(list) ~= 'table' then return end
+  local values = {}
+  for _, items in ipairs({ ... }) do
+    vim.list_extend(values, items)
   end
+  vim.list_extend(list, values)
 end
 
 --- source: https://github.com/tjdevries/lazy-require.nvim
