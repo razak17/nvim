@@ -112,8 +112,7 @@ ar.pack.add({
   src = 'https://github.com/folke/which-key.nvim',
   -- Load immediately if a UI is already attached.
   lazy = #vim.api.nvim_list_uis() == 0,
-  -- event = 'UIEnter',
-  -- cmd = { 'WhichKey' },
+  event = 'UIEnter',
   keys = {
     {
       '<leader>?',

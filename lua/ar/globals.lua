@@ -828,7 +828,7 @@ local function add_spec(spec)
         if type(rhs) == 'function' then
           rhs()
         else
-        vim.api.nvim_feedkeys(replay, 'mi', false)
+          vim.api.nvim_feedkeys(replay, 'mi', false)
         end
       end, opts)
     end

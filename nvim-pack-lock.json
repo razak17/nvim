@@ -16,6 +16,10 @@
       "rev": "ce2f889718f13b22eb8cdeb6738a74f7bbea06a4",
       "src": "https://github.com/mariocesar/beside.nvim"
     },
+    "better-escape.nvim": {
+      "rev": "3f4bc0b326606264ff75967f59091b5ddada0554",
+      "src": "https://github.com/max397574/better-escape.nvim"
+    },
     "blink-calc": {
       "rev": "1b75c20cbb21c95bf08694eed605fa0bdbbe5ca2",
       "src": "https://github.com/joelazar/blink-calc"
@@ -123,6 +127,10 @@
     "dial.nvim": {
       "rev": "f2634758455cfa52a8acea6f142dcd6271a1bf57",
       "src": "https://github.com/monaqa/dial.nvim"
+    },
+    "duplicate.nvim": {
+      "rev": "ab057af7872c44e6fbd48df9b03983c8e67c50a7",
+      "src": "https://github.com/hinell/duplicate.nvim"
     },
     "ecolog.nvim": {
       "rev": "558ddee4d7151af6a37cd40c517243b63ba493ce",
@@ -285,6 +293,10 @@
       "rev": "25c0010222602b7319f24f3601f0016aa5a759b4",
       "src": "https://github.com/chrisgrieser/nvim-tinygit"
     },
+    "nvim-treehopper": {
+      "rev": "e3861c0231631c6af317d6746bb78fdb428a58f3",
+      "src": "https://github.com/mfussenegger/nvim-treehopper"
+    },
     "nvim-treesitter": {
       "rev": "910fdf6f49e9dee7e7257c7d11a76b040fdfb9de",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
@@ -307,8 +319,7 @@
     },
     "nvim-window-picker": {
       "rev": "6382540b2ae5de6c793d4aa2e3fe6dbb518505ec",
-      "src": "https://github.com/s1n7ax/nvim-window-picker",
-      "version": "2.0.0 - 3.0.0"
+      "src": "https://github.com/s1n7ax/nvim-window-picker"
     },
     "obfuscate.nvim": {
       "rev": "29ecb9c5ba4bae4ba214df567f9eca6da2a8ec93",

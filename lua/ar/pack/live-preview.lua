@@ -1,0 +1,103 @@
+local minimal = ar.plugins.minimal
+
+ar.pack.add({
+  --------------------------------------------------------------------------------
+  -- Markdown
+  --------------------------------------------------------------------------------
+  {
+    src = 'https://github.com/selimacerbas/mdkite.nvim',
+    cond = ar.get_plugin_cond('mdkite.nvim', not minimal),
+    cmd = { 'MdKite' },
+    setup = function() require('mdkite').setup() end,
+    dependencies = {
+      {
+        src = 'https://github.com/selimacerbas/kitehost.nvim',
+        setup = function() require('kitehost').setup() end,
+      },
+    },
+  },
+  {
+    src = 'https://github.com/wallpants/github-preview.nvim',
+    cond = ar.get_plugin_cond('github-preview.nvim', not minimal),
+    build = function(args)
+      local result = vim
+        .system(
+          { 'bun', 'install', '--frozen-lockfile' },
+          { cwd = args.data.path, text = true }
+        )
+        :wait()
+      if result.code ~= 0 then
+        error('github-preview build failed: ' .. (result.stderr or ''))
+      end
+    end,
+    cmd = { 'GithubPreviewStart', 'GithubPreviewStop', 'GithubPreviewToggle' },
+    setup = function() require('github-preview').setup() end,
+  },
+  {
+    src = 'https://github.com/wallpants/previm/previm',
+    cond = ar.get_plugin_cond('previm', not minimal),
+    cmd = { 'PrevimOpen', 'PrevimRefresh', 'PrevimWipeCache' },
+    setup = function()
+      vim.g.previm_open_cmd = 'zen'
+      vim.g.previm_enable_realtime = 0
+      vim.g.previm_code_language_show = 1
+      vim.g.previm_disable_default_css = 1
+      vim.g.previm_custom_css_path = vim.fn.stdpath('config')
+        .. '/css/previm-gh-dark.css'
+      local hljs_ghdark_css = 'highlight-gh-dark.css'
+      vim.g.previm_extra_libraries = {
+        {
+          name = 'highlight-gh-dark',
+          files = {
+            {
+              type = 'css',
+              -- must use previm jailed path due to chrome running in firejail
+              path = '_/css/lib/highlight-gh-dark.css',
+            },
+          },
+        },
+      }
+      -- Copy our custom code highlight css to the jailbreak folder
+      if
+        not vim.uv.fs_copyfile(
+          vim.fn.stdpath('config') .. '/css/' .. hljs_ghdark_css,
+          vim.pack.get({ 'previm' })[1].path
+            .. '/preview/_/css/lib/'
+            .. hljs_ghdark_css
+        )
+      then
+        vim.notify(
+          string.format("Unable to copy '%s' to previm jail.", hljs_ghdark_css)
+        )
+      end
+      -- clear cache every time we open neovim
+      vim.fn['previm#wipe_cache']()
+    end,
+  },
+  --------------------------------------------------------------------------------
+  -- HTML
+  --------------------------------------------------------------------------------
+  {
+    src = 'https://github.com/selimacerbas/kitehost.nvim',
+    cond = ar.get_plugin_cond('kitehost.nvim', not minimal),
+    cmd = { 'KiteHost' },
+    setup = function() require('kitehost').setup() end,
+  },
+  {
+    src = 'https://github.com/brianhuster/live-preview.nvim',
+    cond = ar.get_plugin_cond('live-preview'),
+    cmd = { 'LivePreview' },
+  },
+  {
+    src = 'https://github.com/wallpants/hat0uma/prelive.nvim',
+    cond = ar.get_plugin_cond('prelive.nvim', not minimal),
+    cmd = {
+      'PreLiveGo',
+      'PreLiveStatus',
+      'PreLiveClose',
+      'PreLiveCloseAll',
+      'PreLiveLog',
+    },
+    setup = function() require('prelive').setup() end,
+  },
+})
