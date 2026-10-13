@@ -1,16 +1,14 @@
-if not ar.get_plugin_cond('which-key.nvim') then return end
+local pending = {}
+local ready = false
 
----Set up plugin-specific groups cleanly with the plugin config.
 ---@param spec wk.Spec
 vim.g.whichkey_add_spec = function(spec)
-  if not ar.has('which-key.nvim') then return end
-  local ok, _ = pcall(require, 'which-key')
-  if not ok then return end
-  -- Deferred to ensure spec is loaded after whichkey itself
-  vim.defer_fn(function() require('which-key').add(spec) end, 1500)
+  if ready then
+    require('which-key').add(spec)
+  else
+    pending[#pending + 1] = spec
+  end
 end
-
-vim.pack.add({ 'https://github.com/folke/which-key.nvim' }, { confirm = false })
 
 local function get_opts()
   local opts = {
@@ -110,47 +108,47 @@ local function get_opts()
   return opts
 end
 
-local function show(o)
-  o = o or {}
-  return function() require('which-key').show(o) end
-end
-
-local function load()
-  vim.schedule(function()
-    if vim.v.exiting ~= vim.NIL then return end
-
-    vim.pack.add({
-      'https://github.com/folke/which-key.nvim',
-    }, { confirm = false })
-
-    require('which-key').setup(get_opts())
-
+ar.pack.add({
+  src = 'https://github.com/folke/which-key.nvim',
+  -- Load immediately if a UI is already attached.
+  lazy = #vim.api.nvim_list_uis() == 0,
+  -- event = 'UIEnter',
+  -- cmd = { 'WhichKey' },
+  keys = {
+    {
+      '<leader>?',
+      function() require('which-key').show({ global = false }) end,
+      desc = 'which-key: buffer keymaps',
+    },
+    {
+      '<c-w><space>',
+      function() require('which-key').show({ keys = '<c-w>', loop = true }) end,
+      desc = 'which-key: window hydra mode',
+    },
+    {
+      '<leader>wk',
+      '<Cmd>WhichKey<CR>',
+      desc = 'which-key: all keymaps',
+    },
+  },
+  setup = function()
+    local wk = require('which-key')
+    wk.setup(get_opts())
+    ready = true
+    for _, spec in ipairs(pending) do
+      wk.add(spec)
+    end
+    pending = {}
     if ar.lsp.enable then
-      vim.g.whichkey_add_spec({
+      wk.add({
         { '<leader>la', group = 'Code Actions', mode = { 'n', 'x' } },
       })
-
       if ar.has('mason.nvim') or ar.has('conform.nvim') then
-        vim.g.whichkey_add_spec({
+        wk.add({
           { '<leader>l', group = 'LSP', mode = { 'n', 'x' } },
           { '<localleader>l', group = 'LSP', mode = { 'n', 'x' } },
         })
       end
     end
-  end)
-end
-
-if vim.v.vim_did_enter == 1 then
-  load()
-else
-  vim.api.nvim_create_autocmd('UIEnter', {
-    once = true,
-    callback = load,
-  })
-end
-
--- stylua: ignore start
-map('n', '<leader>?', show({ global = false }), { desc = 'which-key: buffer keymaps' })
-map('n', '<c-w><space>', show({ keys = '<c-w', loop = true }), { desc = 'which-key: window hydra mode' })
-map('n', '<leader>wk', '<Cmd>WhichKey<CR>', { desc = 'which-key: all keymaps' })
--- stylua: ignore end
+  end,
+})

@@ -1,5 +1,3 @@
-local border = ar.ui.current.border.default
-
 local function get_lsp_servers()
   local servers = require('ar.servers').list
   return vim.iter(servers):fold({}, function(acc, key)
@@ -69,71 +67,55 @@ local function get_all_packages()
   return packages
 end
 
-if ar.get_plugin_cond('mason.nvim') then
-  vim.api.nvim_create_autocmd('PackChanged', {
-    group = vim.api.nvim_create_augroup('MasonBuild', { clear = true }),
-    callback = function(ev)
-      local name, kind = ev.data.spec.name, ev.data.kind
-      if name == 'mason.nvim' and (kind == 'install' or kind == 'update') then
-        vim.cmd('MasonUpdate')
-      end
+ar.pack.add({
+  {
+    src = 'https://github.com/mason-org/mason.nvim',
+    build = function() vim.cmd('MasonUpdate') end,
+    lazy = false,
+    keys = {
+      { '<leader>lm', '<cmd>Mason<CR>', desc = 'mason info' },
+    },
+    setup = function()
+      require('mason').setup({
+        ui = {
+          border = ar.ui.current.border.default,
+          height = 0.8,
+          icons = {
+            package_pending = ' ',
+            package_installed = '󰄳 ',
+            package_uninstalled = ' 󰚌',
+          },
+        },
+        registries = {
+          'lua:mason-registry.index',
+          'github:mason-org/mason-registry',
+          'github:nvim-java/mason-registry',
+        },
+        providers = { 'mason.providers.registry-api', 'mason.providers.client' },
+      })
     end,
-  })
-  vim.pack.add({
-    'https://github.com/mason-org/mason.nvim',
-  }, { confirm = false })
-  require('mason').setup({
-    ui = {
-      border = border,
-      height = 0.8,
-      icons = {
-        package_pending = ' ',
-        package_installed = '󰄳 ',
-        package_uninstalled = ' 󰚌',
-      },
-    },
-    registries = {
-      'lua:mason-registry.index',
-      'github:mason-org/mason-registry',
-      'github:nvim-java/mason-registry',
-    },
-    providers = { 'mason.providers.registry-api', 'mason.providers.client' },
-  })
-  map('n', '<leader>lm', '<cmd>Mason<CR>', { desc = 'mason info' })
-end
-
-if ar.get_plugin_cond('mason-extra-cmds') then
-  local loaded = false
-  local function load()
-    if loaded then return end
-    vim.pack.add({
-      'https://github.com/Zeioth/mason-extra-cmds',
-    }, { confirm = false })
-    require('mason-extra-cmds').setup({})
-    loaded = true
-  end
-  ar.pack.cmd('MasonUpdateAll', load)
-  ar.add_to_select('command_palette', {
-    ['Update All Mason Packages'] = 'MasonUpdateAll',
-  })
-  ar.pack.cmd('MasonUpdateAll', load)
-end
-
-if ar.get_plugin_cond('mason-tool-installer.nvim') then
-  local loaded = false
-  local function load()
-    if loaded then return end
-    vim.pack.add({
-      'https://github.com/mason-tool-installer.nvim',
-    }, { confirm = false })
-    local opts = {
-      run_on_start = false,
-      ensure_installed = { 'codelldb' },
-    }
-    opts.ensure_installed =
-      vim.list_extend(opts.ensure_installed or {}, get_all_packages())
-    require('mason-tool-installer').setup(opts)
-    loaded = true
-  end
-  ar.pack.cmd({ 'MasonToolsInstall', 'MasonToolsUpdate' }, load)
-end
+  },
+  {
+    src = 'https://github.com/Zeioth/mason-extra-cmds',
+    cmd = { 'MasonUpdateAll' },
+    init = function()
+      ar.add_to_select('command_palette', {
+        ['Update All Mason Packages'] = 'MasonUpdateAll',
+      })
+    end,
+    setup = function() require('mason-extra-cmds').setup() end,
+  },
+  {
+    src = 'https://github.com/mason-tool-installer.nvim',
+    cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
+    setup = function()
+      local opts = {
+        run_on_start = false,
+        ensure_installed = { 'codelldb' },
+      }
+      opts.ensure_installed =
+        vim.list_extend(opts.ensure_installed or {}, get_all_packages())
+      require('mason-tool-installer').setup(opts)
+    end,
+  },
+})
