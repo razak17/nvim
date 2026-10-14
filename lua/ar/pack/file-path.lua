@@ -1,7 +1,7 @@
 ar.pack.add({
   {
     src = 'https://github.com/ywpkwon/yank-path.nvim',
-    cond = function() return ar.get_plugin_cond('yank-path.nvim') end,
+    cond = ar.get_plugin_cond('yank-path.nvim'),
     cmd = { 'YankPath' },
     keys = {
       {
@@ -14,9 +14,7 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/chrisgrieser/nvim-genghis',
-    cond = function()
-      return ar.get_plugin_cond('nvim-genghis', ar.plugins.coding)
-    end,
+    cond = ar.get_plugin_cond('nvim-genghis', ar.plugins.coding),
     event = { 'BufReadPost', 'BufNewFile' },
     keys = function(load)
       vim.g.whichkey_add_spec({ '<leader><localleader>f', group = 'Path' })

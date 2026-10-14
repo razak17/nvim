@@ -121,7 +121,7 @@ local enabled = ar.config.buffers.variant == 'fzf-lua'
 ar.pack.add({
   {
     src = 'https://github.com/ibhagwan/fzf-lua',
-    cond = function() return ar.get_plugin_cond('fzf-lua', enabled) end,
+    cond = ar.get_plugin_cond('fzf-lua', enabled),
     lazy = false,
     setup = function()
       ar.pack.add({
@@ -442,7 +442,7 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/piersolenski/import.nvim',
-    cond = function() return ar.get_plugin_cond('import.nvim', not minimal) end,
+    cond = ar.get_plugin_cond('import.nvim', not minimal),
     cmd = { 'Import' },
     keys = {
       { '<leader>fi', '<Cmd>Import<CR>', desc = 'import' },

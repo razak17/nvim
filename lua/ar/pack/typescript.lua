@@ -159,6 +159,7 @@ ar.pack.add({
     src = 'https://github.com/xeind/vallow.nvim',
     cond = function() return ar.get_plugin_cond('vallow.nvim', enabled) end,
     cmd = { 'Vallow', 'VallowRefresh', 'VallowSearch' },
+    opts = {},
     setup = function() require('vallow').setup() end,
   },
 })

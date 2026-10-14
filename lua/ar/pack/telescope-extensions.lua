@@ -58,12 +58,10 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/jonarrien/telescope-cmdline.nvim',
-    cond = function()
-      return ar.get_plugin_cond(
-        'telescope-cmdline.nvim',
-        ar.config.ui.cmdline.variant == 'telescope-cmdline'
-      )
-    end,
+    cond = ar.get_plugin_cond(
+      'telescope-cmdline.nvim',
+      ar.config.ui.cmdline.variant == 'telescope-cmdline'
+    ),
     lazy = false,
     setup = function()
       local opts = ar.telescope.opts
@@ -83,12 +81,10 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/danielfalk/smart-open.nvim',
-    cond = function()
-      return ar.get_plugin_cond(
-        'smart-open.nvim',
-        ar.config.picker.files == 'smart-open'
-      )
-    end,
+    cond = ar.get_plugin_cond(
+      'smart-open.nvim',
+      ar.config.picker.files == 'smart-open'
+    ),
     lazy = false,
     setup = function()
       local opts = ar.telescope.opts
