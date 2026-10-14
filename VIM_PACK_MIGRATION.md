@@ -59,7 +59,7 @@
 - [x] lsp
 - [ ] lsp-code-actions
 - [ ] lsp-diagnostics
-- [ ] lsp-extra
+- [x] lsp-extra
 - [ ] lsp-inlay-hints
 - [ ] lsp-lens
 - [ ] lsp-preview
@@ -130,13 +130,13 @@
 - [ ] translate
 - [ ] transparent
 - [x] treesitter
-- [ ] typescript
+- [x] typescript
 - [ ] typr
 - [ ] ui
-- [ ] undo
+- [x] undo
 - [ ] url
 - [ ] vectorcode
-- [ ] whichkey
+- [x] whichkey
 - [ ] window
 - [x] window-picker
 - [ ] wrap

@@ -16,7 +16,6 @@ vim.g.blink_add_source = function(source, provider, opts)
   return opts
 end
 
-local api = vim.api
 local fmt = string.format
 local cmp_utils = require('ar.utils.cmp')
 local ui = ar.ui
@@ -186,7 +185,7 @@ ar.pack.add({
             function(cmp)
               if
                 cmp_utils.has_words_before()
-                or api.nvim_get_mode().mode == 'c'
+                or vim.api.nvim_get_mode().mode == 'c'
               then
                 return cmp.show()
               end
@@ -197,7 +196,7 @@ ar.pack.add({
             'select_prev',
             'snippet_backward',
             function(cmp)
-              if api.nvim_get_mode().mode == 'c' then return cmp.show() end
+              if vim.api.nvim_get_mode().mode == 'c' then return cmp.show() end
             end,
             'fallback',
           },

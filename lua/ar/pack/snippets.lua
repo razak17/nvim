@@ -47,19 +47,23 @@ local friendly = ar.get_plugin_cond(
   'friendly-snippets',
   coding and ar.config.completion.snippets.variant == 'friendly-snippets'
 )
+
 if friendly then
-  vim.pack.add(
-    { 'https://github.com/rafamadriz/friendly-snippets' },
-    { confirm = false }
-  )
+  ar.pack.add({
+    src = 'https://github.com/rafamadriz/friendly-snippets',
+    lazy = false,
+  })
 end
 
 if ar.get_plugin_cond('nvim-snips') then
-  vim.pack.add({
-    'https://github.com/razak17/nvim-ts-utils',
-    { src = 'https://github.com/s1n7ax/nvim-snips', name = 'snips' },
-  }, { confirm = false })
+  ar.pack.add({
+    src = 'https://github.com/s1n7ax/nvim-snips',
+    name = 'snips',
+    lazy = false,
+    dependencies = { { src = 'https://github.com/razak17/nvim-ts-utils' } },
+  })
 end
+
 if not get_cond() then return end
 
 local function build(path)
@@ -70,87 +74,9 @@ local function build(path)
     error('LuaSnip jsregexp build failed: ' .. (result.stderr or ''))
   end
 end
-vim.api.nvim_create_autocmd('PackChanged', {
-  group = vim.api.nvim_create_augroup('LuaSnipBuild', { clear = true }),
-  callback = function(event)
-    local data = event.data
-    if
-      data.spec.name == 'LuaSnip'
-      and (data.kind == 'install' or data.kind == 'update')
-    then
-      build(data.path)
-    end
-  end,
-})
 
-local loaded = false
-local function load()
-  if loaded then return end
-  vim.pack.add({ 'https://github.com/L3MON4D3/LuaSnip' }, { confirm = false })
-  local ls = require('luasnip')
-  local types = require('luasnip.util.types')
-  local extras = require('luasnip.extras')
-  local fmt = require('luasnip.extras.fmt').fmt
+local load
 
-  ls.config.set_config({
-    history = false,
-    region_check_events = 'CursorMoved,CursorHold,InsertEnter',
-    delete_check_events = 'InsertLeave',
-    cut_selection_keys = '<C-x>',
-    ext_opts = {
-      [types.choiceNode] = {
-        active = {
-          virt_text = { { ' ', 'TSTextReference' } },
-        },
-      },
-      [types.insertNode] = {
-        active = {
-          virt_text = { { ' ', 'TSEmphasis' } },
-        },
-      },
-    },
-    enable_autosnippets = ar.config.completion.variant ~= 'native',
-    snip_env = {
-      fmt = fmt,
-      m = extras.match,
-      t = ls.text_node,
-      f = ls.function_node,
-      c = ls.choice_node,
-      d = ls.dynamic_node,
-      i = ls.insert_node,
-      l = extras.lambda,
-      snippet = ls.snippet,
-    },
-  })
-
-  require('luasnip.loaders.from_lua').lazy_load()
-
-  local paths = {
-    vim.fs.joinpath(fn.stdpath('config'), 'snippets'),
-  }
-
-  if friendly then
-    paths = vim.list_extend(paths, {
-      vim.pack.get({ 'friendly-snippets' })[1].path,
-    })
-  end
-
-  require('luasnip.loaders.from_vscode').lazy_load({ paths = paths })
-
-  ls.filetype_extend('NeogitCommitMessage', { 'gitcommit' })
-
-  if ar.treesitter.enable and ar.has('snips') then
-    local snippets_list = get_snippets_list()
-    for _, module_path in ipairs(snippets_list) do
-      local ok, snip = pcall(require, module_path)
-      if ok then snip.setup() end
-    end
-  end
-  loaded = true
-end
-ar.snippets = { load = load }
-
-vim.api.nvim_create_autocmd('InsertEnter', { once = true, callback = load })
 local mappings = {
   {
     '<leader>S',
@@ -171,12 +97,78 @@ local mappings = {
     mode = { 'i', 's' },
   },
 }
-for _, mapping in ipairs(mappings) do
-  vim.keymap.set(mapping.mode or 'n', mapping[1], function()
-    load()
-    return mapping[2]()
-  end, { desc = mapping.desc })
-end
+
+ar.pack.add({
+  src = 'https://github.com/L3MON4D3/LuaSnip',
+  event = 'InsertEnter',
+  build = function(event) build(event.data.path) end,
+  keys = function(loader)
+    load = loader
+    ar.snippets = { load = loader }
+    return mappings
+  end,
+  setup = function()
+    local ls = require('luasnip')
+    local types = require('luasnip.util.types')
+    local extras = require('luasnip.extras')
+    local fmt = require('luasnip.extras.fmt').fmt
+
+    ls.config.set_config({
+      history = false,
+      region_check_events = 'CursorMoved,CursorHold,InsertEnter',
+      delete_check_events = 'InsertLeave',
+      cut_selection_keys = '<C-x>',
+      ext_opts = {
+        [types.choiceNode] = {
+          active = {
+            virt_text = { { ' ', 'TSTextReference' } },
+          },
+        },
+        [types.insertNode] = {
+          active = {
+            virt_text = { { ' ', 'TSEmphasis' } },
+          },
+        },
+      },
+      enable_autosnippets = ar.config.completion.variant ~= 'native',
+      snip_env = {
+        fmt = fmt,
+        m = extras.match,
+        t = ls.text_node,
+        f = ls.function_node,
+        c = ls.choice_node,
+        d = ls.dynamic_node,
+        i = ls.insert_node,
+        l = extras.lambda,
+        snippet = ls.snippet,
+      },
+    })
+
+    require('luasnip.loaders.from_lua').lazy_load()
+
+    local paths = {
+      vim.fs.joinpath(fn.stdpath('config'), 'snippets'),
+    }
+
+    if friendly then
+      paths = vim.list_extend(paths, {
+        vim.pack.get({ 'friendly-snippets' })[1].path,
+      })
+    end
+
+    require('luasnip.loaders.from_vscode').lazy_load({ paths = paths })
+
+    ls.filetype_extend('NeogitCommitMessage', { 'gitcommit' })
+
+    if ar.treesitter.enable and ar.has('snips') then
+      local snippets_list = get_snippets_list()
+      for _, module_path in ipairs(snippets_list) do
+        local ok, snip = pcall(require, module_path)
+        if ok then snip.setup() end
+      end
+    end
+  end,
+})
 
 if ar.config.completion.variant == 'blink' then
   ar.pack.blink_opts = vim.tbl_deep_extend('force', ar.pack.blink_opts or {}, {
@@ -210,11 +202,11 @@ then
   vim.keymap.set('n', '<leader>fS', function()
     load()
     if not require('ar.pack.telescope') then return end
-    vim.pack.add(
-      { 'https://github.com/benfowler/telescope-luasnip.nvim' },
-      { confirm = false }
-    )
-    vim.g.telescope_add_extension({ 'luasnip' })
+    ar.pack.add({
+      src = 'https://github.com/benfowler/telescope-luasnip.nvim',
+      lazy = false,
+      setup = function() vim.g.telescope_add_extension({ 'luasnip' }) end,
+    })
     require('telescope').extensions.luasnip.luasnip({})
   end, { desc = 'luasnip: available snippets' })
 end

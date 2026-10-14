@@ -1,13 +1,17 @@
-if not ar.has('snacks.nvim') then return end
+if not ar.get_plugin_cond('snacks.nvim') then return end
 
 local border = ar.ui.current.border.default
 
-ar.snacks_opts = vim.tbl_deep_extend('force', ar.snacks_opts or {}, {
-  styles = vim.tbl_deep_extend('force', ar.snacks_opts.styles or {}, {
-    blame_line = { border = border },
-    git = { border = border },
-    lazygit = { border = border },
-  }),
+ar.pack.snacks_opts = vim.tbl_deep_extend('force', ar.pack.snacks_opts or {}, {
+  styles = vim.tbl_deep_extend(
+    'force',
+    (ar.pack.snacks_opts or {}).styles or {},
+    {
+      blame_line = { border = border },
+      git = { border = border },
+      lazygit = { border = border },
+    }
+  ),
   git = { enabled = true },
   gitbrowse = { enabled = true },
 })

@@ -1,6 +1,4 @@
-if not ar.has('snacks.nvim') then return end
-
-local fn = vim.fn
+if not ar.get_plugin_cond('snacks.nvim') then return end
 
 local dashboard = {
   enabled = ar.config.intro.variant == 'snacks',
@@ -59,7 +57,7 @@ local dashboard = {
         icon = ' ',
         key = 'c',
         desc = 'Config',
-        action = ":lua Snacks.dashboard.pick('files', {cwd = fn.stdpath('config')})",
+        action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
       },
       {
         icon = '󰒲 ',
@@ -87,12 +85,12 @@ local dashboard = {
     footer = { '%s', align = 'center' },
     header = { '%s', align = 'center' },
     file = function(item, ctx)
-      local fname = fn.fnamemodify(item.file, ':~')
-      fname = ctx.width and #fname > ctx.width and fn.pathshorten(fname)
+      local fname = vim.fn.fnamemodify(item.file, ':~')
+      fname = ctx.width and #fname > ctx.width and vim.fn.pathshorten(fname)
         or fname
       if #fname > ctx.width then
-        local dir = fn.fnamemodify(fname, ':h')
-        local file = fn.fnamemodify(fname, ':t')
+        local dir = vim.fn.fnamemodify(fname, ':h')
+        local file = vim.fn.fnamemodify(fname, ':t')
         if dir and file then
           file = file:sub(-(ctx.width - #dir - 2))
           fname = dir .. '/…' .. file
@@ -111,6 +109,6 @@ local dashboard = {
   },
 }
 
-ar.snacks_opts = vim.tbl_deep_extend('force', ar.snacks_opts or {}, {
+ar.pack.snacks_opts = vim.tbl_deep_extend('force', ar.pack.snacks_opts or {}, {
   dashboard = dashboard,
 })

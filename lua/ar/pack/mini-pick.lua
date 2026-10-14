@@ -2,58 +2,7 @@ local enabled = ar.config.picker.files == 'mini.pick'
   or ar.config.picker.variant == 'mini.pick'
 if not ar.get_plugin_cond('mini.pick', enabled) then return end
 
-local loaded = false
-local function load()
-  if loaded then return end
-  vim.pack.add({
-    'https://github.com/nvim-mini/mini.extra',
-    'https://github.com/nvim-mini/mini.pick',
-  }, { confirm = false })
-  local picker = require('mini.pick')
-  local opts = { delay = { async = 10, busy = 30 } }
-
-  if ar.config.picker.variant == 'mini.pick' then
-    vim.ui.select = picker.ui_select
-  end
-
-  local parsed_matches = function()
-    local qflist = {}
-    local matches = picker.get_picker_matches().all
-
-    for _, match in ipairs(matches) do
-      if type(match) == 'table' then
-        table.insert(qflist, match)
-      else
-        local path, lnum, col, search =
-          string.match(match, '(.-)%z(%d+)%z(%d+)%z%s*(.+)')
-        local text = path
-          and string.format('%s [%s:%s]  %s', path, lnum, col, search)
-        local filename = path or vim.trim(match):match('%s+(.+)')
-
-        table.insert(qflist, {
-          filename = filename or match,
-          lnum = lnum or 1,
-          col = col or 1,
-          text = text or match,
-        })
-      end
-    end
-
-    return qflist
-  end
-
-  opts.mappings = opts.mappings or {}
-  opts.mappings.send_to_qflist = {
-    char = '<C-q>',
-    func = function()
-      vim.fn.setqflist(parsed_matches(), 'r')
-      if picker.is_picker_active() then picker.stop() end
-      vim.cmd('copen')
-    end,
-  }
-  picker.setup(opts)
-  loaded = true
-end
+local load
 
 local fn = vim.fn
 
@@ -258,17 +207,61 @@ if ar.config.picker.variant == 'mini.pick' then
   end
   vim.iter(picker_mappings):each(function(m) table.insert(mappings, m) end)
 end
-for _, mapping in ipairs(mappings) do
-  map('n', mapping[1], mapping[2], { desc = mapping.desc })
-end
 
-ar.pack.cmd('Pick', load)
+ar.pack.add({
+  src = 'https://github.com/nvim-mini/mini.pick',
+  event = 'VeryLazy',
+  cmd = { 'Pick' },
+  dependencies = {
+    { src = 'https://github.com/nvim-mini/mini.extra' },
+  },
+  keys = function(loader)
+    load = loader
+    return mappings
+  end,
+  setup = function()
+    local picker = require('mini.pick')
+    local opts = { delay = { async = 10, busy = 30 } }
 
-if vim.v.vim_did_enter == 1 then
-  vim.schedule(load)
-else
-  vim.api.nvim_create_autocmd('VimEnter', {
-    once = true,
-    callback = function() vim.schedule(load) end,
-  })
-end
+    if ar.config.picker.variant == 'mini.pick' then
+      vim.ui.select = picker.ui_select
+    end
+
+    local parsed_matches = function()
+      local qflist = {}
+      local matches = picker.get_picker_matches().all
+
+      for _, match in ipairs(matches) do
+        if type(match) == 'table' then
+          table.insert(qflist, match)
+        else
+          local path, lnum, col, search =
+            string.match(match, '(.-)%z(%d+)%z(%d+)%z%s*(.+)')
+          local text = path
+            and string.format('%s [%s:%s]  %s', path, lnum, col, search)
+          local filename = path or vim.trim(match):match('%s+(.+)')
+
+          table.insert(qflist, {
+            filename = filename or match,
+            lnum = lnum or 1,
+            col = col or 1,
+            text = text or match,
+          })
+        end
+      end
+
+      return qflist
+    end
+
+    opts.mappings = opts.mappings or {}
+    opts.mappings.send_to_qflist = {
+      char = '<C-q>',
+      func = function()
+        vim.fn.setqflist(parsed_matches(), 'r')
+        if picker.is_picker_active() then picker.stop() end
+        vim.cmd('copen')
+      end,
+    }
+    picker.setup(opts)
+  end,
+})

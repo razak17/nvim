@@ -7,4 +7,9 @@ ar.pack.add({
     lazy = false,
     setup = function() require('lspkind').init({ preset = 'codicons' }) end,
   },
+  {
+    src = 'https://github.com/mariocesar/beside.nvim',
+    cmd = { 'Beside' },
+    setup = function() require('beside').setup() end,
+  },
 })

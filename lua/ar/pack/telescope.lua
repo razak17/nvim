@@ -841,48 +841,48 @@ local function build_fzf(path)
     error('telescope-fzf-native build failed: ' .. (result.stderr or ''))
   end
 end
-vim.api.nvim_create_autocmd('PackChanged', {
-  group = api.nvim_create_augroup('TelescopeFzfBuild', { clear = true }),
-  callback = function(event)
-    local data = event.data
-    if
-      data.spec.name == 'telescope-fzf-native.nvim'
-      and (data.kind == 'install' or data.kind == 'update')
-    then
-      build_fzf(data.path)
+
+ar.pack.add({
+  src = 'https://github.com/nvim-telescope/telescope.nvim',
+  lazy = false,
+  setup = function()
+    ar.pack.add({
+      src = 'https://github.com/nvim-telescope/telescope-fzf-native.nvim',
+      lazy = false,
+      build = function(event) build_fzf(event.data.path) end,
+    })
+    local fzf = vim.pack.get({ 'telescope-fzf-native.nvim' })[1]
+    if fzf and vim.fn.glob(fzf.path .. '/build/libfzf.*') == '' then
+      build_fzf(fzf.path)
+    end
+    local opts = get_opts(ar.telescope.opts or {})
+    vim.g.telescope_add_extension({ 'fzf' }, opts, { fzf = { fuzzy = true } })
+    if ar.config.picker.variant == 'telescope' then
+      ar.pack.add({
+        src = 'https://github.com/molecule-man/telescope-menufacture',
+        lazy = false,
+      })
+      vim.g.telescope_add_extension({ 'menufacture' }, opts, {
+        menufacture = {
+          mappings = { main_menu = { [{ 'i', 'n' }] = '<A-m>' } },
+        },
+      })
+    end
+    ar.telescope.opts = opts
+    configure(opts)
+    ar.telescope.ready = true
+    for _, mapping in ipairs(get_keys()) do
+      vim.keymap.set(
+        mapping.mode or 'n',
+        mapping[1],
+        mapping[2],
+        { desc = mapping.desc }
+      )
     end
   end,
+  dependencies = {
+    { src = 'https://github.com/nvim-lua/plenary.nvim' },
+    { src = 'https://github.com/kkharji/sqlite.lua' },
+  },
 })
-vim.pack.add({
-  'https://github.com/nvim-lua/plenary.nvim',
-  'https://github.com/kkharji/sqlite.lua',
-  'https://github.com/nvim-telescope/telescope.nvim',
-  'https://github.com/nvim-telescope/telescope-fzf-native.nvim',
-}, { confirm = false })
-local fzf = vim.pack.get({ 'telescope-fzf-native.nvim' })[1]
-if fzf and vim.fn.glob(fzf.path .. '/build/libfzf.*') == '' then
-  build_fzf(fzf.path)
-end
-local opts = get_opts(ar.telescope.opts or {})
-vim.g.telescope_add_extension({ 'fzf' }, opts, { fzf = { fuzzy = true } })
-if ar.config.picker.variant == 'telescope' then
-  vim.pack.add(
-    { 'https://github.com/molecule-man/telescope-menufacture' },
-    { confirm = false }
-  )
-  vim.g.telescope_add_extension({ 'menufacture' }, opts, {
-    menufacture = { mappings = { main_menu = { [{ 'i', 'n' }] = '<A-m>' } } },
-  })
-end
-ar.telescope.opts = opts
-configure(opts)
-ar.telescope.ready = true
-for _, mapping in ipairs(get_keys()) do
-  vim.keymap.set(
-    mapping.mode or 'n',
-    mapping[1],
-    mapping[2],
-    { desc = mapping.desc }
-  )
-end
 return true

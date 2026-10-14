@@ -1,4 +1,4 @@
-if not ar.has('snacks.nvim') then return end
+if not ar.get_plugin_cond('snacks.nvim') then return end
 
 if ar.config.terminal.variant ~= 'snacks' then return end
 
@@ -31,7 +31,7 @@ ar.add_to_select('toggle', {
   ['Toggle Terminal'] = function() Snacks.terminal.focus() end,
 })
 
-ar.snacks_opts = vim.tbl_deep_extend('force', ar.snacks_opts or {}, {
+ar.pack.snacks_opts = vim.tbl_deep_extend('force', ar.pack.snacks_opts or {}, {
   terminal = {
     enabled = true,
     win = {

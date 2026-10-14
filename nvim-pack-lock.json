@@ -246,8 +246,7 @@
     },
     "neo-tree.nvim": {
       "rev": "1a14083046d96e88e361d1da00761c40d45012f3",
-      "src": "https://github.com/nvim-neo-tree/neo-tree.nvim",
-      "version": "'v3.x'"
+      "src": "https://github.com/nvim-neo-tree/neo-tree.nvim"
     },
     "neogit": {
       "rev": "70708be9664b7fcdd010eb07bdc3ebc9311c2027",
@@ -285,9 +284,17 @@
       "rev": "3e8d598d3b5f8338a41699c436e5fa11d2666cf0",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
+    "nvim-lspimport": {
+      "rev": "9c1c61a5020faeb1863bb66eb4b2a9107e641876",
+      "src": "https://github.com/stevanmilic/nvim-lspimport"
+    },
     "nvim-pack-ui": {
       "rev": "f36e3cfd4859052b5751c681edb80feed0b87966",
       "src": "https://codeberg.org/cryptomilk/nvim-pack-ui"
+    },
+    "nvim-rulebook": {
+      "rev": "0572382adde2eb03bde68da23c2aaac3577f503a",
+      "src": "https://github.com/chrisgrieser/nvim-rulebook"
     },
     "nvim-tinygit": {
       "rev": "25c0010222602b7319f24f3601f0016aa5a759b4",
@@ -461,6 +468,10 @@
     "treesj": {
       "rev": "9f349ba62c524f065d6f43254d731ddf8319b9bf",
       "src": "https://github.com/Wansmer/treesj"
+    },
+    "undotree": {
+      "rev": "6fa6b57cda8459e1e4b2ca34df702f55242f4e4d",
+      "src": "https://github.com/mbbill/undotree"
     },
     "unnest.nvim": {
       "rev": "dbe0da4a593eeb432d770fbe7a2f4f2c078d9b10",
