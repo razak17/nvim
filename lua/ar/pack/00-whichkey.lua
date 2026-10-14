@@ -77,6 +77,7 @@ local function get_opts()
       {
         mode = { 'x' },
         { '<leader><leader>', group = 'Advanced' },
+        { '<leader>[', group = 'Replace all' },
         { '<leader>a', group = 'Actions' },
         { '<leader>d', group = 'Delete' },
         { '<leader>f', group = 'File' },

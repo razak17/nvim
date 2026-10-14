@@ -68,7 +68,7 @@ end
 if ar.get_plugin_cond('nerdy.nvim', not minimal) then
   local loaded = false
 
-  local load = function()
+  local function load()
     if loaded then return end
 
     vim.pack.add(
@@ -89,7 +89,7 @@ end
 if ar.get_plugin_cond('icon-picker.nvim', coding) then
   local loaded = false
 
-  local load = function()
+  local function load()
     if loaded then return end
 
     vim.pack.add(

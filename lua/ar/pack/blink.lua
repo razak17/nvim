@@ -267,8 +267,8 @@ ar.pack.add({
 
     ar.highlight.plugin('BlinkCmp', hl_defs)
 
-    ar.blink_opts =
-      vim.tbl_deep_extend('force', ar.blink_opts or {}, get_opts())
+    ar.pack.blink_opts =
+      vim.tbl_deep_extend('force', ar.pack.blink_opts or {}, get_opts())
 
     if
       ar.get_plugin_cond(
@@ -276,19 +276,19 @@ ar.pack.add({
         ar.config.shelter.enable and ar.config.shelter.variant == 'ecolog'
       )
     then
-      ar.blink_opts = vim.g.blink_add_source({ 'ecolog' }, {
+      ar.pack.blink_opts = vim.g.blink_add_source({ 'ecolog' }, {
         ecolog = {
           name = '[ECOLOG]',
           module = 'ecolog.integrations.cmp.blink_cmp',
         },
-      }, ar.blink_opts)
+      }, ar.pack.blink_opts)
     end
 
     local symbols = {}
     if ar.has('lspkind.nvim') then symbols = require('lspkind').symbol_map end
     local ai_icons = ar.ui.codicons.ai
-    ar.blink_opts.appearance = ar.blink_opts.appearance or {}
-    ar.blink_opts.appearance.kind_icons = vim.tbl_extend('keep', {
+    ar.pack.blink_opts.appearance = ar.pack.blink_opts.appearance or {}
+    ar.pack.blink_opts.appearance.kind_icons = vim.tbl_extend('keep', {
       Color = ui.icons.misc.block_alt, -- Use block instead of icon for color items to make swatches more usable
       Copilot = ui.codicons.misc.octoface,
       claude = ai_icons.claude,
@@ -304,16 +304,16 @@ ar.pack.add({
 
     if show_index then
       table.insert(
-        ar.blink_opts.completion.menu.draw.columns,
+        ar.pack.blink_opts.completion.menu.draw.columns,
         1,
         { 'item_idx' }
       )
       table.insert(
-        ar.blink_opts.completion.menu.draw.columns,
+        ar.pack.blink_opts.completion.menu.draw.columns,
         2,
         { 'seperator' }
       )
-      ar.blink_opts.completion.menu.draw.components = {
+      ar.pack.blink_opts.completion.menu.draw.components = {
         item_idx = {
           text = function(ctx)
             return ctx.idx == 10 and '0'
@@ -332,10 +332,10 @@ ar.pack.add({
     local function add(url, opts)
       ar.pack.add({ src = url, lazy = false })
       if opts.sources then
-        ar.blink_opts = vim.g.blink_add_source(
+        ar.pack.blink_opts = vim.g.blink_add_source(
           opts.sources.default or {},
           opts.sources.providers or {},
-          ar.blink_opts
+          ar.pack.blink_opts
         )
       end
     end
@@ -446,22 +446,24 @@ ar.pack.add({
     end)()
 
     if require('ar.pack.lazydev') then
-      ar.blink_opts = vim.g.blink_add_source({ 'lazydev' }, {
+      ar.pack.blink_opts = vim.g.blink_add_source({ 'lazydev' }, {
         lazydev = {
           name = '[LAZYDEV]',
           module = 'lazydev.integrations.blink',
           score_offset = 100, -- show at a higher priority than lsp
         },
       }, opts)
-      ar.blink_opts.sources.per_filetype = vim.tbl_deep_extend(
+      ar.pack.blink_opts.sources.per_filetype = vim.tbl_deep_extend(
         'force',
-        ar.blink_opts.sources.per_filetype or {},
+        ar.pack.blink_opts.sources.per_filetype or {},
         { lua = { inherit_defaults = true, 'lazydev' } }
       )
     end
 
-    if ar.copilot then ar.blink_opts = ar.copilot.blink(ar.blink_opts) end
-    require('blink.cmp').setup(ar.blink_opts)
+    if ar.pack.copilot then
+      ar.pack.blink_opts = ar.pack.copilot.blink(ar.pack.blink_opts)
+    end
+    require('blink.cmp').setup(ar.pack.blink_opts)
   end,
   dependencies = {
     { src = 'https://github.com/saghen/blink.lib' },

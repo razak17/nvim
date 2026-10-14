@@ -237,7 +237,7 @@ end
 
 if ar.get_plugin_cond('nvim-treesitter-textobjects', ts_enabled) then
   local loaded = false
-  local load = function()
+  local function load()
     if loaded then return end
     vim.pack.add(
       { 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects' },
@@ -332,7 +332,7 @@ if ar.get_plugin_cond('nvim-treesitter-textobjects', ts_enabled) then
 end
 
 if ar.get_plugin_cond('nvim-ts-autotag', coding) then
-  local load = function()
+  local function load()
     vim.pack.add(
       { 'https://github.com/windwp/nvim-ts-autotag' },
       { confirm = false }
@@ -355,7 +355,7 @@ end
 
 if ar.get_plugin_cond('vim-matchup', coding) then
   local loaded = false
-  local load = function()
+  local function load()
     if loaded then return end
     vim.pack.add(
       { 'https://github.com/andymass/vim-matchup' },

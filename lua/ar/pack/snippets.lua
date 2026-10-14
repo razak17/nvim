@@ -179,7 +179,7 @@ for _, mapping in ipairs(mappings) do
 end
 
 if ar.config.completion.variant == 'blink' then
-  ar.blink_opts = vim.tbl_deep_extend('force', ar.blink_opts or {}, {
+  ar.pack.blink_opts = vim.tbl_deep_extend('force', ar.pack.blink_opts or {}, {
     snippets = {
       preset = 'luasnip',
       expand = function(snippet)
