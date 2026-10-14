@@ -477,6 +477,10 @@
       "rev": "dbe0da4a593eeb432d770fbe7a2f4f2c078d9b10",
       "src": "https://github.com/brianhuster/unnest.nvim"
     },
+    "vellum.nvim": {
+      "rev": "c9a8665c5d306bf56c6df89896fed8bfaf3110b3",
+      "src": "https://github.com/blackhat-7/vellum.nvim"
+    },
     "vim-matchup": {
       "rev": "0106b1afd4a2f7e1098037b5ceb161bab7471088",
       "src": "https://github.com/andymass/vim-matchup"

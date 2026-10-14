@@ -1,12 +1,10 @@
-local minimal = ar.plugins.minimal
-
 ar.pack.add({
   --------------------------------------------------------------------------------
   -- Markdown
   --------------------------------------------------------------------------------
   {
     src = 'https://github.com/selimacerbas/mdkite.nvim',
-    cond = ar.get_plugin_cond('mdkite.nvim', not minimal),
+    cond = ar.get_plugin_cond('mdkite.nvim', not ar.plugins.minimal),
     cmd = { 'MdKite' },
     setup = function() require('mdkite').setup() end,
     dependencies = {
@@ -18,7 +16,7 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/wallpants/github-preview.nvim',
-    cond = ar.get_plugin_cond('github-preview.nvim', not minimal),
+    cond = ar.get_plugin_cond('github-preview.nvim', not ar.plugins.minimal),
     build = function(event)
       local result = vim
         .system(
@@ -34,6 +32,17 @@ ar.pack.add({
     setup = function() require('github-preview').setup() end,
   },
   {
+    src = 'https://github.com/blackhat-7/vellum.nvim',
+    cond = function() return ar.get_plugin_cond('vellum.nvim') end,
+    cmd = { 'Vellum' },
+    build = function(event)
+      vim.notify('vellum.nvim: building renderer…')
+      dofile(event.data.path .. '/build.lua')
+      vim.notify('vellum.nvim: build done')
+    end,
+    setup = function() require('vellum').setup() end,
+  },
+  {
     src = 'https://github.com/mariocesar/beside.nvim',
     cond = function() return ar.get_plugin_cond('beside.nvim') end,
     cmd = { 'Beside' },
@@ -41,7 +50,7 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/wallpants/previm/previm',
-    cond = ar.get_plugin_cond('previm', not minimal),
+    cond = ar.get_plugin_cond('previm', not ar.plugins.minimal),
     cmd = { 'PrevimOpen', 'PrevimRefresh', 'PrevimWipeCache' },
     setup = function()
       vim.g.previm_open_cmd = 'zen'
@@ -85,7 +94,7 @@ ar.pack.add({
   --------------------------------------------------------------------------------
   {
     src = 'https://github.com/selimacerbas/kitehost.nvim',
-    cond = ar.get_plugin_cond('kitehost.nvim', not minimal),
+    cond = ar.get_plugin_cond('kitehost.nvim', not ar.plugins.minimal),
     cmd = { 'KiteHost' },
     setup = function() require('kitehost').setup() end,
   },
@@ -96,7 +105,7 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/wallpants/hat0uma/prelive.nvim',
-    cond = ar.get_plugin_cond('prelive.nvim', not minimal),
+    cond = ar.get_plugin_cond('prelive.nvim', not ar.plugins.minimal),
     cmd = {
       'PreLiveGo',
       'PreLiveStatus',
