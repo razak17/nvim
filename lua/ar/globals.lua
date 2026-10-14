@@ -667,9 +667,10 @@ end
 
 ---@class PackDependency
 ---@field src string
+---@field version? string|vim.VersionRange
 ---@field dev? boolean
 ---@field build? fun(args: AutocmdArgs):nil
----@field cond? boolean
+---@field cond? boolean|fun():boolean
 ---@field cmd? string[]
 ---@field ft? string[]
 ---@field setup? fun():nil
@@ -684,11 +685,12 @@ end
 
 ---@class PackSpec
 ---@field src string
+---@field version? string|vim.VersionRange
 ---@field dev? boolean Load from ar.pack.dev.path instead of installing from src.
 ---@field lazy? boolean Defaults to ar.pack.defaults.lazy.
 ---@field init? fun():nil
 ---@field build? fun(args: AutocmdArgs):nil
----@field cond? boolean
+---@field cond? boolean|fun():boolean
 ---@field cmd? string[]
 ---@field ft? string[]
 ---@field setup? fun():nil
@@ -745,15 +747,26 @@ local function load_dev(spec)
 end
 
 ---@param spec PackSpec|PackDependency
+---@return boolean
+local function check_condition(spec)
+  if type(spec.cond) == 'function' then spec.cond = spec.cond() end
+  if spec.cond == nil then spec.cond = true end
+  return spec.cond
+end
+
+---@param spec PackSpec|PackDependency
 local function load_spec(spec)
-  if spec.cond == false or ar.pack.loaded[spec.src] then return end
+  if ar.pack.loaded[spec.src] or not check_condition(spec) then return end
   for _, dep in ipairs(spec.dependencies or {}) do
     load_spec(dep)
   end
   if spec.dev then
     load_dev(spec)
   else
-    vim.pack.add({ spec.src }, { confirm = false })
+    vim.pack.add(
+      { { src = spec.src, version = spec.version } },
+      { confirm = false }
+    )
   end
   if spec.setup then spec.setup() end
   ar.pack.loaded[spec.src] = true
@@ -781,8 +794,7 @@ end
 ---@param spec PackSpec
 local function add_spec(spec)
   if ar.pack.loaded[spec.src] then return end
-  if spec.cond == nil then spec.cond = true end
-  if not spec.cond then return end
+  if not check_condition(spec) then return end
   if spec.lazy == nil then spec.lazy = ar.pack.defaults.lazy end
   if spec.init then spec.init() end
   if spec.build and not spec.dev then build(spec.src, spec.build) end
@@ -864,12 +876,16 @@ end
 --- Each source URL loads and configures once through this wrapper, so use the
 --- same full URL in standalone entries and dependencies. Installation does not
 --- prompt for confirmation. Set cond = false to skip loading and trigger creation.
+--- cond also accepts a function returning a boolean. Its result is cached on the
+--- spec at registration, or on first load for dependency-only specs. A false
+--- result also skips init and build hooks.
 ---
 --- dev = true loads ar.pack.dev.path/<repository-name> through a temporary native
 --- package symlink. The default dev directory is ~/projects. A trailing .git is
 --- removed from the repository name. Missing checkouts raise an error; there is
 --- no remote fallback. Dev plugins skip PackChanged build hooks and keep src as
 --- their loaded-cache key. Dependencies can also set dev = true.
+--- version is forwarded to vim.pack for remote plugins and dependencies.
 ---
 --- An optional build callback receives PackChanged arguments on install or
 --- update. Its hook is skipped when cond is false. Dependency entries
