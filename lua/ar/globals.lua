@@ -667,6 +667,8 @@ end
 
 ---@class PackDependency
 ---@field src string
+---@field load? boolean Forwarded to native package loading; false skips plugin scripts.
+---@field name? string
 ---@field version? string|vim.VersionRange
 ---@field dev? boolean
 ---@field build? fun(args: AutocmdArgs):nil
@@ -685,6 +687,8 @@ end
 
 ---@class PackSpec
 ---@field src string
+---@field load? boolean Forwarded to native package loading; false skips plugin scripts.
+---@field name? string
 ---@field version? string|vim.VersionRange
 ---@field dev? boolean Load from ar.pack.dev.path instead of installing from src.
 ---@field lazy? boolean Defaults to ar.pack.defaults.lazy.
@@ -700,8 +704,9 @@ end
 
 ---@param src string
 ---@param f fun(args: AutocmdArgs):nil
-local function build(src, f)
-  local name = src:match('([^/]+)$')
+---@param name? string
+local function build(src, f, name)
+  name = name or src:match('([^/]+)$')
   ar.augroup(name .. '_build', {
     event = 'PackChanged',
     command = function(args)
@@ -743,7 +748,7 @@ local function load_dev(spec)
     local ok, err = vim.uv.fs_symlink(resolved, link, { dir = true })
     assert(ok, err)
   end
-  vim.cmd.packadd(package_name)
+  vim.cmd.packadd({ package_name, bang = spec.load == false })
 end
 
 ---@param spec PackSpec|PackDependency
@@ -764,8 +769,8 @@ local function load_spec(spec)
     load_dev(spec)
   else
     vim.pack.add(
-      { { src = spec.src, version = spec.version } },
-      { confirm = false }
+      { { src = spec.src, name = spec.name, version = spec.version } },
+      { confirm = false, load = spec.load }
     )
   end
   if spec.setup then spec.setup() end
@@ -797,7 +802,7 @@ local function add_spec(spec)
   if not check_condition(spec) then return end
   if spec.lazy == nil then spec.lazy = ar.pack.defaults.lazy end
   if spec.init then spec.init() end
-  if spec.build and not spec.dev then build(spec.src, spec.build) end
+  if spec.build and not spec.dev then build(spec.src, spec.build, spec.name) end
   local function load() load_spec(spec) end
   if spec.cmd then ar.pack.cmd(spec.cmd, load) end
   if spec.event then
@@ -854,6 +859,8 @@ end
 --- to load immediately, even with triggers. With lazy = true, loading requires a
 --- trigger or use as a dependency; no triggers means no automatic loading.
 --- Any supplied trigger can load it. Filetype triggers handle future FileType events.
+--- load = false uses native :packadd! behavior: add runtime paths without sourcing
+--- plugin scripts immediately. setup still runs; lazy controls registration timing.
 ---
 --- event accepts an autocmd event name or list, such as 'InsertEnter' or
 --- { 'BufReadPost', 'BufNewFile' }. Only future events trigger loading; the event
@@ -885,7 +892,8 @@ end
 --- removed from the repository name. Missing checkouts raise an error; there is
 --- no remote fallback. Dev plugins skip PackChanged build hooks and keep src as
 --- their loaded-cache key. Dependencies can also set dev = true.
---- version is forwarded to vim.pack for remote plugins and dependencies.
+--- name and version are forwarded to vim.pack for remote plugins and dependencies.
+--- Build hooks match the explicit name when supplied.
 ---
 --- An optional build callback receives PackChanged arguments on install or
 --- update. Its hook is skipped when cond is false. Dependency entries
