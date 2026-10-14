@@ -19,11 +19,11 @@ ar.pack.add({
   {
     src = 'https://github.com/wallpants/github-preview.nvim',
     cond = ar.get_plugin_cond('github-preview.nvim', not minimal),
-    build = function(args)
+    build = function(event)
       local result = vim
         .system(
           { 'bun', 'install', '--frozen-lockfile' },
-          { cwd = args.data.path, text = true }
+          { cwd = event.data.path, text = true }
         )
         :wait()
       if result.code ~= 0 then
@@ -32,6 +32,12 @@ ar.pack.add({
     end,
     cmd = { 'GithubPreviewStart', 'GithubPreviewStop', 'GithubPreviewToggle' },
     setup = function() require('github-preview').setup() end,
+  },
+  {
+    src = 'https://github.com/mariocesar/beside.nvim',
+    cond = function() return ar.get_plugin_cond('beside.nvim') end,
+    cmd = { 'Beside' },
+    setup = function() require('beside').setup() end,
   },
   {
     src = 'https://github.com/wallpants/previm/previm',
