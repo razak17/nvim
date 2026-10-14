@@ -1,4 +1,4 @@
-if not ar.has('snacks.nvim') then return end
+if not ar.get_plugin_cond('snacks.nvim') then return end
 
 if ar.config.notifier.variant ~= 'snacks' then return end
 
@@ -31,17 +31,21 @@ end
 
 ar.highlight.plugin('snacks-notifier', overrides)
 
-ar.snacks_opts = vim.tbl_deep_extend('force', ar.snacks_opts or {}, {
-  styles = vim.tbl_deep_extend('force', ar.snacks_opts.styles or {}, {
-    notification = { border = border },
-    notification_history = {
-      border = vim.o.winborder,
-      wo = {
-        winblend = ar.config.ui.transparent.enable and 0 or 5,
-        wrap = true,
+ar.pack.snacks_opts = vim.tbl_deep_extend('force', ar.pack.snacks_opts or {}, {
+  styles = vim.tbl_deep_extend(
+    'force',
+    (ar.pack.snacks_opts or {}).styles or {},
+    {
+      notification = { border = border },
+      notification_history = {
+        border = vim.o.winborder,
+        wo = {
+          winblend = ar.config.ui.transparent.enable and 0 or 5,
+          wrap = true,
+        },
       },
-    },
-  }),
+    }
+  ),
   notifier = {
     border = border,
     enabled = ar.config.notifier.variant == 'snacks',

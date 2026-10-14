@@ -1,10 +1,10 @@
-if not ar.has('snacks.nvim') then return end
+if not ar.get_plugin_cond('snacks.nvim') then return end
 
 local separators = ar.ui.icons.separators
 local ar_indent = ar.config.ui.indentline
 local indent_char = separators.left_thin_block
 
-ar.snacks_opts = vim.tbl_deep_extend('force', ar.snacks_opts or {}, {
+ar.pack.snacks_opts = vim.tbl_deep_extend('force', ar.pack.snacks_opts or {}, {
   indent = {
     indent = { enabled = false }, -- show indent lines for current scope only
     enabled = ar_indent.enable and ar_indent.variant == 'snacks',

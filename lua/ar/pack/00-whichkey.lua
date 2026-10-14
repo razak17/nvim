@@ -111,6 +111,7 @@ end
 
 ar.pack.add({
   src = 'https://github.com/folke/which-key.nvim',
+  cond = function() return ar.get_plugin_cond('which-key.nvim') end,
   -- Load immediately if a UI is already attached.
   lazy = #vim.api.nvim_list_uis() == 0,
   event = 'UIEnter',

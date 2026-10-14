@@ -1,4 +1,4 @@
-if not ar.has('snacks.nvim') then return end
+if not ar.get_plugin_cond('snacks.nvim') then return end
 
 if
   ar.config.picker.variant ~= 'snacks' and ar.config.picker.files ~= 'snacks'
@@ -185,7 +185,7 @@ local function window_picker_action(picker, _, action)
   end
 end
 
-ar.snacks_opts = vim.tbl_deep_extend('force', ar.snacks_opts or {}, {
+ar.pack.snacks_opts = vim.tbl_deep_extend('force', ar.pack.snacks_opts or {}, {
   picker = {
     layouts = {
       small_no_preview = {
@@ -812,41 +812,29 @@ if ar.lsp.enable then
   end
 end
 
-local loaded = {
-  ['snacks-gallery'] = false,
-  seeker = false,
-}
-
-local function load(plugin, url, opts)
-  if not plugin then return end
-
-  if loaded[plugin] then return end
-
-  vim.pack.add({ url }, { confirm = false })
-
-  if opts and opts.setup then opts.setup() end
-
-  loaded[plugin] = true
-end
-
-if ar.get_plugin_cond('seeker.nvim', ar.config.picker.files == 'seeker') then
-  map('n', '<C-p>', function()
-    load('seeker', 'https://github.com/2kabhishek/seeker.nvim', {
-      setup = function()
-        require('seeker').setup({
-          picker_opts = {
-            layout = { preset = 'centered_with_main_preview' },
-          },
-        })
-      end,
+ar.pack.add({
+  src = 'https://github.com/2kabhishek/seeker.nvim',
+  cond = ar.get_plugin_cond('seeker.nvim', ar.config.picker.files == 'seeker'),
+  keys = {
+    { '<C-p>', '<Cmd>Seeker files<CR>', desc = 'seeker: files' },
+  },
+  setup = function()
+    require('seeker').setup({
+      picker_opts = {
+        layout = { preset = 'centered_with_main_preview' },
+      },
     })
-    vim.cmd('Seeker files')
-  end, { desc = 'seeker: files' })
-end
+  end,
+})
 
-if ar.get_plugin_cond('snacks-gallery.nvim', not minimal) then
-  map('n', '<leader>oi', function()
-    load('snacks-gallery', 'https://github.com/TKasperczyk/snacks-gallery.nvim')
-    require('snacks-gallery').open()
-  end, { desc = 'gallery' })
-end
+ar.pack.add({
+  src = 'https://github.com/TKasperczyk/snacks-gallery.nvim',
+  cond = ar.get_plugin_cond('snacks-gallery.nvim', not minimal),
+  keys = {
+    {
+      '<leader>oi',
+      function() require('snacks-gallery').open() end,
+      desc = 'gallery',
+    },
+  },
+})

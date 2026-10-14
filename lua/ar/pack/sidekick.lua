@@ -1,15 +1,10 @@
 if not ar.get_plugin_cond('sidekick.nvim', ar.ai.enable) then return end
 
 local tiny_diags_disabled_by_nes = false
-local loaded = false
+local load
 local keys
 
-local function load()
-  if loaded then return end
-  vim.pack.add(
-    { 'https://github.com/folke/sidekick.nvim' },
-    { confirm = false }
-  )
+local function setup()
   local opts = {
     nes = {
       enabled = true,
@@ -50,7 +45,6 @@ local function load()
   end
   -- Replace the bootstrap mapping with the real expression mapping.
   map('n', keys[1][1], keys[1][2], { expr = true, desc = keys[1].desc })
-  loaded = true
 end
 
 if vim.g.whichkey_add_spec then
@@ -122,21 +116,28 @@ keys = {
   },
 }
 
-for _, key in ipairs(keys) do
-  if key.expr then
-    map(key.mode or 'n', key[1], function()
-      load()
-      vim.api.nvim_feedkeys(vim.keycode(key[1]), 'mi', false)
-    end, { desc = key.desc })
-  else
-    map(key.mode or 'n', key[1], function()
-      load()
-      return key[2]()
-    end, { desc = key.desc })
-  end
-end
+ar.pack.add({
+  src = 'https://github.com/folke/sidekick.nvim',
+  setup = setup,
+  keys = function(loader)
+    load = loader
+    for _, key in ipairs(keys) do
+      if key.expr then
+        map(key.mode or 'n', key[1], function()
+          load()
+          vim.api.nvim_feedkeys(vim.keycode(key[1]), 'mi', false)
+        end, { desc = key.desc })
+      else
+        map(key.mode or 'n', key[1], function()
+          load()
+          return key[2]()
+        end, { desc = key.desc })
+      end
+    end
+  end,
+})
 
-ar.snacks_opts = vim.tbl_deep_extend('force', ar.snacks_opts or {}, {
+ar.pack.snacks_opts = vim.tbl_deep_extend('force', ar.pack.snacks_opts or {}, {
   picker = {
     actions = {
       sidekick_send = function(...)

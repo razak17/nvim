@@ -1,3 +1,5 @@
+if not ar.get_plugin_cond('aerial.nvim', ar.plugins.coding) then return end
+
 -- Gets a property at path
 ---@param tbl table the table to access
 ---@param path string the '.' separated path
@@ -22,7 +24,6 @@ end
 
 ar.pack.add({
   src = 'https://github.com/stevearc/aerial.nvim',
-  cond = ar.get_plugin_cond('aerial.nvim', ar.plugins.coding),
   cmd = { 'AerialToggle', 'AerialOpenAll' },
   init = function()
     ar.add_to_select('toggle', { ['Toggle Aerial'] = 'AerialToggle' })

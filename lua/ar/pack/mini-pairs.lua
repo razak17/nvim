@@ -1,15 +1,9 @@
-local coding = ar.plugins.coding
+if not ar.get_plugin_cond('mini.pairs', ar.plugins.coding) then return true end
 
-if not ar.get_plugin_cond('mini.pairs', coding) then return end
-
-local function load()
-  vim.schedule(function()
-    if vim.v.exiting ~= vim.NIL then return end
-
-    vim.pack.add({
-      'https://github.com/nvim-mini/mini.pairs',
-    }, { confirm = false })
-
+ar.pack.add({
+  src = 'https://github.com/nvim-mini/mini.pairs',
+  event = 'VeryLazy',
+  setup = function()
     require('mini.pairs').setup({
       modes = { insert = true, command = true, terminal = false },
       skip_next = [=[[%w%%%'%[%"%.%`%$]]=],
@@ -40,14 +34,5 @@ local function load()
       'command_palette',
       { ['Toggle Minipairs'] = toggle_minipairs }
     )
-  end)
-end
-
-if vim.v.vim_did_enter == 1 then
-  load()
-else
-  vim.api.nvim_create_autocmd('UIEnter', {
-    once = true,
-    callback = load,
-  })
-end
+  end,
+})

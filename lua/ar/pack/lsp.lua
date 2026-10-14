@@ -70,40 +70,37 @@ local function get_servers()
   return enabled_servers
 end
 
-if ar.get_plugin_cond('mason-lspconfig.nvim', ar.lsp.enable) then
-  vim.pack.add({
-    'https://github.com/mason-org/mason.nvim',
-    'https://github.com/neovim/nvim-lspconfig',
-    'https://github.com/williamboman/mason-lspconfig.nvim',
-  }, { confirm = false })
-  require('lspconfig.ui.windows').default_options.border = border
-  require('mason-lspconfig').setup({ automatic_enable = get_servers() })
-  if ar.config.completion.variant == 'cmp' then
-    ar.cmp_opts = vim.g.cmp_add_source(ar.cmp_opts, {
-      source = {
-        name = 'nvim_lsp',
-        priority = 1000,
-        group_index = 1,
-      },
-      menu = { nvim_lsp = '[LSP]' },
-    })
-  end
-end
-if
-  ar.get_plugin_cond(
-    'nvim-lsp-file-operations',
-    not ar.plugins.minimal and enabled
-  )
-then
-  local function load()
-    vim.pack.add({
-      'https://github.com/antosha417/nvim-lsp-file-operations',
-    }, { confirm = false })
-    require('lsp-file-operations').setup({})
-  end
-
-  vim.api.nvim_create_autocmd('LspAttach', {
-    once = true,
-    callback = load,
-  })
-end
+ar.pack.add({
+  {
+    src = 'https://github.com/williamboman/mason-lspconfig.nvim',
+    cond = ar.get_plugin_cond('mason.nvim', ar.lsp.enable),
+    lazy = false, -- Don't lazy load. Causes highlight issues on :restart
+    setup = function()
+      require('lspconfig.ui.windows').default_options.border = border
+      require('mason-lspconfig').setup({ automatic_enable = get_servers() })
+      if ar.config.completion.variant == 'cmp' then
+        ar.cmp_opts = vim.g.cmp_add_source(ar.cmp_opts, {
+          source = {
+            name = 'nvim_lsp',
+            priority = 1000,
+            group_index = 1,
+          },
+          menu = { nvim_lsp = '[LSP]' },
+        })
+      end
+    end,
+    dependencies = {
+      { src = 'https://github.com/mason-org/mason.nvim' },
+      { src = 'https://github.com/neovim/nvim-lspconfig' },
+    },
+  },
+  {
+    src = 'https://github.com/antosha417/nvim-lsp-file-operations',
+    cond = ar.get_plugin_cond(
+      'nvim-lsp-file-operations',
+      not ar.plugins.minimal and enabled
+    ),
+    event = { 'LspAttach' },
+    setup = function() require('lsp-file-operations').setup() end,
+  },
+})

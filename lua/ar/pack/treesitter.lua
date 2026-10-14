@@ -1,260 +1,301 @@
-local highlight = ar.highlight
-local coding = ar.plugins.coding
 local ts_enabled = ar.treesitter.enable
 local ts = require('ar.utils.treesitter')
 
-if ar.get_plugin_cond('nvim-treesitter', ts_enabled) then
-  if vim.v.exiting ~= vim.NIL then return end
+-- stylua: ignore
+local ensure_installed = {
+  programming_langs = {
+    'c', 'cpp', 'bash', 'javascript', 'lua', 'python', 'ruby', 'rust', 'svelte',
+    'swift', 'typescript', 'tsx', 'vim',
+  },
+  data_formats = { 'json', 'json5', 'toml', 'xml', 'yaml' },
+  content = { 'css', 'html', 'markdown', 'markdown_inline' },
+  special_filetypes = {
+    'diff', 'dockerfile', 'editorconfig', 'git_config', 'git_rebase', 'gitcommit',
+    'gitattributes', 'gitignore', 'just', 'make', 'query', -- treesitter query files
+    'requirements',
+  },
+  embedded_langs = {
+    'comment', 'graphql', 'jsdoc', 'luadoc', 'luap', -- lua patterns
+    -- 'regex', -- causes cursor to shift to the left when grepping in snacks picker
+    'rst', -- python reST
+    'vimdoc',
+  },
+}
 
-    -- stylua: ignore
-    local ensure_installed = {
-      programming_langs = {
-        'c', 'cpp', 'bash', 'javascript', 'lua', 'python', 'ruby', 'rust', 'svelte',
-        'swift', 'typescript', 'tsx', 'vim',
-      },
-      data_formats = { 'json', 'json5', 'toml', 'xml', 'yaml' },
-      content = { 'css', 'html', 'markdown', 'markdown_inline' },
-      special_filetypes = {
-        'diff', 'dockerfile', 'editorconfig', 'git_config', 'git_rebase', 'gitcommit',
-        'gitattributes', 'gitignore', 'just', 'make', 'query', -- treesitter query files
-        'requirements',
-      },
-      embedded_langs = {
-        'comment', 'graphql', 'jsdoc', 'luadoc', 'luap', -- lua patterns
-        -- 'regex', -- causes cursor to shift to the left when grepping in snacks picker
-        'rst', -- python reST
-        'vimdoc',
-      },
-    }
-
-  vim.api.nvim_create_autocmd('PackChanged', {
-    group = vim.api.nvim_create_augroup('TreesitterBuild', { clear = true }),
-    callback = function(ev)
-      local name, kind = ev.data.spec.name, ev.data.kind
-      if
-        name == 'nvim-treesitter'
-        and (kind == 'install' or kind == 'update')
-      then
-        local TS = require('nvim-treesitter')
-        if not TS.get_installed then
-          vim.notify(
-            'Please restart Neovim and run `:TSUpdate` to use the `nvim-treesitter` **main** branch.',
-            vim.log.levels.ERROR
-          )
-          return
-        end
-        -- make sure we're using the latest treesitter util
-        package.loaded['nvim-treesitter'] = nil
-        ts.ensure_treesitter_cli(
-          function() TS.update(nil, { summary = true }) end
+ar.pack.add({
+  {
+    src = 'https://github.com/nvim-treesitter/nvim-treesitter',
+    cond = ar.get_plugin_cond('nvim-treesitter', ts_enabled),
+    lazy = false,
+    load = false,
+    build = function()
+      local TS = require('nvim-treesitter')
+      if not TS.get_installed then
+        vim.notify(
+          'Please restart Neovim and run `:TSUpdate` to use the `nvim-treesitter` **main** branch.',
+          vim.log.levels.ERROR
         )
-      end
-    end,
-  })
-
-  vim.pack.add(
-    { 'https://github.com/nvim-treesitter/nvim-treesitter' },
-    { confirm = false, load = false }
-  )
-
-  ---@alias ar.TSFeat { enable?: boolean, disable?: string[] }
-  ---@class ar.TSConfig: TSConfig
-  ar.treesitter_opts = {
-    indent = {
-      enable = true,
-      disable = { 'bash', 'zsh', 'markdown', 'javascript' },
-    },
-    highlight = { enable = true },
-    folds = { enable = true },
-    ensure_installed = ensure_installed,
-    install_dir = vim.fn.stdpath('data') .. '/treesitter',
-  }
-
-  if ar.config.completion.variant == 'cmp' then
-    ar.cmp_opts = vim.g.cmp_add_source(ar.cmp_opts, {
-      menu = { treesitter = '[TS]' },
-    })
-  end
-
-  local TS = require('nvim-treesitter')
-  TS.setup(ar.treesitter_opts)
-
-  local function jump(options)
-    return ar.jump(function(o)
-      local which = o.forward and 'select_next' or 'select_prev'
-      require('vim.treesitter._select')[which](vim.v.count1)
-    end, options)
-  end
-
-  map({ 'n', 'x', 'o' }, ']n', jump({ forward = true }), {
-    desc = 'next node',
-  })
-  map({ 'n', 'x', 'o' }, '[n', jump({ forward = false }), {
-    desc = 'prev node',
-  })
-
-  local function pt_jump(options)
-    return ar.jump(function(o)
-      local which = o.forward and 'select_parent' or 'select_child'
-      if vim.treesitter.get_parser(nil, nil, { error = false }) then
-        require('vim.treesitter._select')[which](vim.v.count1)
         return
       end
-      if o.forward then
-        vim.lsp.buf.selection_range(vim.v.count1)
-        return
-      end
-      vim.lsp.buf.selection_range(-vim.v.count1)
-    end, options)
-  end
-
-  map({ 'n', 'x', 'o' }, '<A-o>', pt_jump({ forward = true }), {
-    desc = 'parent node',
-  })
-  map({ 'n', 'x', 'o' }, '<A-i>', pt_jump({ forward = false }), {
-    desc = 'child node',
-  })
-
-  vim.treesitter.language.register('bash', 'zsh')
-
-  -- initialize the installed langs
-  ts.get_installed(true)
-
-  local to_install = vim
-    .iter(vim.tbl_values(ar.treesitter_opts.ensure_installed))
-    :flatten()
-    :totable()
-
-  -- flatten ensure_installed
-  local install = vim.tbl_filter(
-    function(lang) return not ts.have(lang) end,
-    to_install
-  )
-
-  local function install_parsers(parsers)
-    ts.ensure_treesitter_cli(function()
-      TS.install(parsers, { summary = true }):await(function()
-        ts.get_installed(true) -- refresh the installed langs
-      end)
-    end)
-  end
-
-  local function uninstall_parsers(parsers)
-    ts.ensure_treesitter_cli(function()
-      TS.uninstall(parsers, { summary = true }):await(function()
-        ts.get_installed(true) -- refresh the installed langs
-      end)
-    end)
-  end
-
-  ar.add_to_select('command_palette', {
-    ['Install Treesitter Parser'] = function()
-      vim.ui.input({
-        prompt = 'Enter parser names to install (comma separated): ',
-      }, function(input)
-        if not input or input == '' then return end
-        local parsers = vim.split(input, ',', { trimempty = true })
-        install_parsers(parsers)
-      end)
-    end,
-    ['Uninstall Treesitter Parser'] = function()
-      local installed = require('nvim-treesitter').get_installed('parsers')
-      table.sort(installed)
-      vim.ui.select(installed, {
-        prompt = 'Select parser to uninstall: ',
-      }, function(choice)
-        if not choice then return end
-        uninstall_parsers({ choice })
-      end)
-    end,
-  })
-
-  -- install missing parsers
-  if #install > 0 then install_parsers(install) end
-
-  ---@param feat string
-  ---@param query string
-  ---@param ft string
-  local function enabled(feat, query, ft)
-    local lang = vim.treesitter.language.get_lang(ft)
-    local f = ar.treesitter_opts[feat] or {} ---@type ar.TSFeat
-    return f.enable ~= false
-      and not vim.tbl_contains(f.disable or {}, lang)
-      and ts.have(ft, query)
-  end
-
-  -- start treesitter
-  ---@param ft string
-  local function start(ft, bufnr)
-    if not ts.have(ft) then return end
-
-    -- highlighting
-    if enabled('highlight', 'highlights', ft) then
-      pcall(vim.treesitter.start, bufnr)
-    end
-
-    -- indents
-    if enabled('indent', 'indents', ft) then
-      ar.set_default(
-        'indentexpr',
-        "v:lua.require'ar.utils.treesitter'.indentexpr()"
+      -- make sure we're using the latest treesitter util
+      package.loaded['nvim-treesitter'] = nil
+      ts.ensure_treesitter_cli(
+        function() TS.update(nil, { summary = true }) end
       )
-    end
+    end,
+    setup = function()
+      ---@alias ar.TSFeat { enable?: boolean, disable?: string[] }
+      ---@class ar.TSConfig: TSConfig
+      ar.treesitter_opts = {
+        indent = {
+          enable = true,
+          disable = { 'bash', 'zsh', 'markdown', 'javascript' },
+        },
+        highlight = { enable = true },
+        folds = { enable = true },
+        ensure_installed = ensure_installed,
+        install_dir = vim.fn.stdpath('data') .. '/treesitter',
+      }
 
-    -- folds
-    if enabled('folds', 'folds', ft) then
-      if ar.set_default('foldmethod', 'expr') then
-        ar.set_default(
-          'foldexpr',
-          "v:lua.require'ar.utils.treesitter'.foldexpr()"
-        )
+      if ar.config.completion.variant == 'cmp' then
+        ar.cmp_opts = vim.g.cmp_add_source(ar.cmp_opts, {
+          menu = { treesitter = '[TS]' },
+        })
       end
-    end
-  end
 
-  ar.augroup('ar_treesitter', {
-    event = 'FileType',
-    command = function(ev)
-      local P = require('nvim-treesitter.parsers')
-      local parser_name = vim.treesitter.language.get_lang(ev.match)
-      if not parser_name then return end
+      local TS = require('nvim-treesitter')
+      TS.setup(ar.treesitter_opts)
 
-      -- auto install
-      if P[ev.match] ~= nil and not ts.have(ev.match) then
+      local function jump(options)
+        return ar.jump(function(o)
+          local which = o.forward and 'select_next' or 'select_prev'
+          require('vim.treesitter._select')[which](vim.v.count1)
+        end, options)
+      end
+
+      map({ 'n', 'x', 'o' }, ']n', jump({ forward = true }), {
+        desc = 'next node',
+      })
+      map({ 'n', 'x', 'o' }, '[n', jump({ forward = false }), {
+        desc = 'prev node',
+      })
+
+      local function pt_jump(options)
+        return ar.jump(function(o)
+          local which = o.forward and 'select_parent' or 'select_child'
+          if vim.treesitter.get_parser(nil, nil, { error = false }) then
+            require('vim.treesitter._select')[which](vim.v.count1)
+            return
+          end
+          if o.forward then
+            vim.lsp.buf.selection_range(vim.v.count1)
+            return
+          end
+          vim.lsp.buf.selection_range(-vim.v.count1)
+        end, options)
+      end
+
+      map({ 'n', 'x', 'o' }, '<A-o>', pt_jump({ forward = true }), {
+        desc = 'parent node',
+      })
+      map({ 'n', 'x', 'o' }, '<A-i>', pt_jump({ forward = false }), {
+        desc = 'child node',
+      })
+
+      vim.treesitter.language.register('bash', 'zsh')
+
+      -- initialize the installed langs
+      ts.get_installed(true)
+
+      local to_install = vim
+        .iter(vim.tbl_values(ar.treesitter_opts.ensure_installed))
+        :flatten()
+        :totable()
+
+      -- flatten ensure_installed
+      local install = vim.tbl_filter(
+        function(lang) return not ts.have(lang) end,
+        to_install
+      )
+
+      local function install_parsers(parsers)
         ts.ensure_treesitter_cli(function()
-          TS.install({ parser_name }, { summary = true }):await(function()
+          TS.install(parsers, { summary = true }):await(function()
             ts.get_installed(true) -- refresh the installed langs
-            start(ev.match, ev.buf)
           end)
         end)
-        return
       end
 
-      start(ev.match, ev.buf)
+      local function uninstall_parsers(parsers)
+        ts.ensure_treesitter_cli(function()
+          TS.uninstall(parsers, { summary = true }):await(function()
+            ts.get_installed(true) -- refresh the installed langs
+          end)
+        end)
+      end
+
+      ar.add_to_select('command_palette', {
+        ['Install Treesitter Parser'] = function()
+          vim.ui.input({
+            prompt = 'Enter parser names to install (comma separated): ',
+          }, function(input)
+            if not input or input == '' then return end
+            local parsers = vim.split(input, ',', { trimempty = true })
+            install_parsers(parsers)
+          end)
+        end,
+        ['Uninstall Treesitter Parser'] = function()
+          local installed = require('nvim-treesitter').get_installed('parsers')
+          table.sort(installed)
+          vim.ui.select(installed, {
+            prompt = 'Select parser to uninstall: ',
+          }, function(choice)
+            if not choice then return end
+            uninstall_parsers({ choice })
+          end)
+        end,
+      })
+
+      -- install missing parsers
+      if #install > 0 then install_parsers(install) end
+
+      ---@param feat string
+      ---@param query string
+      ---@param ft string
+      local function enabled(feat, query, ft)
+        local lang = vim.treesitter.language.get_lang(ft)
+        local f = ar.treesitter_opts[feat] or {} ---@type ar.TSFeat
+        return f.enable ~= false
+          and not vim.tbl_contains(f.disable or {}, lang)
+          and ts.have(ft, query)
+      end
+
+      -- start treesitter
+      ---@param ft string
+      local function start(ft, bufnr)
+        if not ts.have(ft) then return end
+
+        -- highlighting
+        if enabled('highlight', 'highlights', ft) then
+          pcall(vim.treesitter.start, bufnr)
+        end
+
+        -- indents
+        if enabled('indent', 'indents', ft) then
+          ar.set_default(
+            'indentexpr',
+            "v:lua.require'ar.utils.treesitter'.indentexpr()"
+          )
+        end
+
+        -- folds
+        if enabled('folds', 'folds', ft) then
+          if ar.set_default('foldmethod', 'expr') then
+            ar.set_default(
+              'foldexpr',
+              "v:lua.require'ar.utils.treesitter'.foldexpr()"
+            )
+          end
+        end
+      end
+
+      ar.augroup('ar_treesitter', {
+        event = 'FileType',
+        command = function(ev)
+          local P = require('nvim-treesitter.parsers')
+          local parser_name = vim.treesitter.language.get_lang(ev.match)
+          if not parser_name then return end
+
+          -- auto install
+          if P[ev.match] ~= nil and not ts.have(ev.match) then
+            ts.ensure_treesitter_cli(function()
+              TS.install({ parser_name }, { summary = true }):await(function()
+                ts.get_installed(true) -- refresh the installed langs
+                start(ev.match, ev.buf)
+              end)
+            end)
+            return
+          end
+
+          start(ev.match, ev.buf)
+        end,
+      })
     end,
-  })
-end
-
-if ar.get_plugin_cond('nvim-treesitter-textobjects', ts_enabled) then
-  local loaded = false
-  local function load()
-    if loaded then return end
-    vim.pack.add(
-      { 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects' },
-      { confirm = false }
-    )
-
-    require('nvim-treesitter-textobjects').setup({
-      select = {
-        enable = not coding,
-        lookahead = true,
-        selection_modes = {
-          ['@parameter.outer'] = 'v', -- charwise
-          ['@function.outer'] = 'V', -- linewise
-          ['@class.outer'] = '<c-v>', -- blockwise
+  },
+  {
+    src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
+    cond = ar.get_plugin_cond('nvim-treesitter-textobjects', ts_enabled),
+    event = 'BufRead',
+    keys = function(load)
+      map({ 'n', 'x', 'o' }, 'a=', function()
+        load()
+        require('nvim-treesitter-textobjects.select').select_textobject(
+          '@assignment.outer',
+          'textobjects'
+        )
+      end, { desc = 'Select inner part of an assignment' })
+      map({ 'n', 'x', 'o' }, 'i=', function()
+        load()
+        require('nvim-treesitter-textobjects.select').select_textobject(
+          '@assignment.inner',
+          'textobjects'
+        )
+      end, { desc = 'Select inner part of an assignment' })
+      map({ 'n', 'x', 'o' }, 'L=', function()
+        load()
+        require('nvim-treesitter-textobjects.select').select_textobject(
+          '@assignment.lhs',
+          'textobjects'
+        )
+      end, { desc = 'Select left hand side of an assignment' })
+      map({ 'n', 'x', 'o' }, 'R=', function()
+        load()
+        require('nvim-treesitter-textobjects.select').select_textobject(
+          '@assignment.rhs',
+          'textobjects'
+        )
+      end, { desc = 'Select right hand side of an assignment' })
+      map({ 'n', 'x', 'o' }, 'a:', function()
+        load()
+        require('nvim-treesitter-textobjects.select').select_textobject(
+          '@property.outer',
+          'textobjects'
+        )
+      end, { desc = 'Select outer part of an object property' })
+      map({ 'n', 'x', 'o' }, 'i:', function()
+        load()
+        require('nvim-treesitter-textobjects.select').select_textobject(
+          '@property.inner',
+          'textobjects'
+        )
+      end, { desc = 'Select inner part of an object property' })
+      map({ 'n', 'x', 'o' }, 'L:', function()
+        load()
+        require('nvim-treesitter-textobjects.select').select_textobject(
+          '@property.lhs',
+          'textobjects'
+        )
+      end, { desc = 'Select left part of an object property' })
+      map({ 'n', 'x', 'o' }, 'R:', function()
+        load()
+        require('nvim-treesitter-textobjects.select').select_textobject(
+          '@property.rhs',
+          'textobjects'
+        )
+      end, { desc = 'Select right part of an object property' })
+    end,
+    setup = function()
+      require('nvim-treesitter-textobjects').setup({
+        select = {
+          enable = not ar.plugins.coding,
+          lookahead = true,
+          selection_modes = {
+            ['@parameter.outer'] = 'v', -- charwise
+            ['@function.outer'] = 'V', -- linewise
+            ['@class.outer'] = '<c-v>', -- blockwise
+          },
+          include_surrounding_whitespace = true,
         },
-        include_surrounding_whitespace = true,
-      },
         -- stylua: ignore
         move = {
           enable = true,
@@ -264,83 +305,13 @@ if ar.get_plugin_cond('nvim-treesitter-textobjects', ts_enabled) then
           goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer", ["[a"] = "@parameter.inner" },
           goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer", ["[A"] = "@parameter.inner" },
         },
-    })
-    loaded = true
-  end
-
-  vim.api.nvim_create_autocmd({ 'BufRead' }, {
-    once = true,
-    callback = load,
-  })
-
-  map({ 'n', 'x', 'o' }, 'a=', function()
-    load()
-    require('nvim-treesitter-textobjects.select').select_textobject(
-      '@assignment.outer',
-      'textobjects'
-    )
-  end, { desc = 'Select inner part of an assignment' })
-  map({ 'n', 'x', 'o' }, 'i=', function()
-    load()
-    require('nvim-treesitter-textobjects.select').select_textobject(
-      '@assignment.inner',
-      'textobjects'
-    )
-  end, { desc = 'Select inner part of an assignment' })
-  map({ 'n', 'x', 'o' }, 'L=', function()
-    load()
-    require('nvim-treesitter-textobjects.select').select_textobject(
-      '@assignment.lhs',
-      'textobjects'
-    )
-  end, { desc = 'Select left hand side of an assignment' })
-  map({ 'n', 'x', 'o' }, 'R=', function()
-    load()
-    require('nvim-treesitter-textobjects.select').select_textobject(
-      '@assignment.rhs',
-      'textobjects'
-    )
-  end, { desc = 'Select right hand side of an assignment' })
-  map({ 'n', 'x', 'o' }, 'a:', function()
-    load()
-    require('nvim-treesitter-textobjects.select').select_textobject(
-      '@property.outer',
-      'textobjects'
-    )
-  end, { desc = 'Select outer part of an object property' })
-  map({ 'n', 'x', 'o' }, 'i:', function()
-    load()
-    require('nvim-treesitter-textobjects.select').select_textobject(
-      '@property.inner',
-      'textobjects'
-    )
-  end, { desc = 'Select inner part of an object property' })
-  map({ 'n', 'x', 'o' }, 'L:', function()
-    load()
-    require('nvim-treesitter-textobjects.select').select_textobject(
-      '@property.lhs',
-      'textobjects'
-    )
-  end, { desc = 'Select left part of an object property' })
-  map({ 'n', 'x', 'o' }, 'R:', function()
-    load()
-    require('nvim-treesitter-textobjects.select').select_textobject(
-      '@property.rhs',
-      'textobjects'
-    )
-  end, { desc = 'Select right part of an object property' })
-end
-
-if ar.get_plugin_cond('nvim-ts-autotag', coding) then
-  local function load()
-    vim.pack.add(
-      { 'https://github.com/windwp/nvim-ts-autotag' },
-      { confirm = false }
-    )
-    require('nvim-ts-autotag').setup({})
-  end
-  vim.api.nvim_create_autocmd('FileType', {
-    pattern = {
+      })
+    end,
+  },
+  {
+    src = 'https://github.com/windwp/nvim-ts-autotag',
+    cond = ar.get_plugin_cond('nvim-ts-autotag', ar.plugins.coding),
+    ft = {
       'typescriptreact',
       'javascript',
       'javascriptreact',
@@ -348,41 +319,31 @@ if ar.get_plugin_cond('nvim-ts-autotag', coding) then
       'vue',
       'svelte',
     },
-    once = true,
-    callback = load,
-  })
-end
-
-if ar.get_plugin_cond('vim-matchup', coding) then
-  local loaded = false
-  local function load()
-    if loaded then return end
-    vim.pack.add(
-      { 'https://github.com/andymass/vim-matchup' },
-      { confirm = false }
-    )
-
-    highlight.plugin('vim-matchup', {
-      { MatchWord = { inherit = 'LspReferenceText', underline = true } },
-      { MatchParenCursor = { link = 'MatchParen' } },
-      { MatchParenOffscreen = { link = 'MatchParen' } },
-    })
-    vim.g.matchup_surround_enabled = 1
-    vim.g.matchup_matchparen_nomode = 'i'
-    vim.g.matchup_matchparen_deferred = 1
-    vim.g.matchup_matchparen_deferred_show_delay = 400
-    vim.g.matchup_matchparen_deferred_hide_delay = 400
-    vim.g.matchup_matchparen_offscreen = {}
-    loaded = true
-  end
-
-  vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
-    once = true,
-    callback = load,
-  })
-
-  map('n', '<localleader>lW', function()
-    load()
-    vim.cmd('MatchupWhereAmI?')
-  end, { desc = 'matchup: where am i' })
-end
+    setup = function() require('nvim-ts-autotag').setup() end,
+  },
+  {
+    src = 'https://github.com/andymass/vim-matchup',
+    cond = ar.get_plugin_cond('vim-matchup', ar.plugins.coding),
+    event = { 'BufReadPre', 'BufNewFile' },
+    keys = {
+      {
+        '<localleader>lW',
+        '<Cmd>MatchupWhereAmI?<CR>',
+        desc = 'matchup: where am i',
+      },
+    },
+    setup = function()
+      ar.highlight.plugin('vim-matchup', {
+        { MatchWord = { inherit = 'LspReferenceText', underline = true } },
+        { MatchParenCursor = { link = 'MatchParen' } },
+        { MatchParenOffscreen = { link = 'MatchParen' } },
+      })
+      vim.g.matchup_surround_enabled = 1
+      vim.g.matchup_matchparen_nomode = 'i'
+      vim.g.matchup_matchparen_deferred = 1
+      vim.g.matchup_matchparen_deferred_show_delay = 400
+      vim.g.matchup_matchparen_deferred_hide_delay = 400
+      vim.g.matchup_matchparen_offscreen = {}
+    end,
+  },
+})

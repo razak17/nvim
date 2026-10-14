@@ -4,17 +4,19 @@ local function get_cond(plugin, variant)
   return ar.get_plugin_cond(plugin, condition)
 end
 
-if get_cond('persisted.nvim', 'persisted') then
-  local loaded = false
-
-  local function load()
-    if loaded then return end
-
-    vim.pack.add(
-      { 'https://github.com/olimorris/persisted.nvim' },
-      { confirm = false }
-    )
-
+ar.pack.add({
+  src = 'https://github.com/olimorris/persisted.nvim',
+  cond = function() return get_cond('persisted.nvim', 'persisted') end,
+  cmd = { 'Persisted' },
+  event = 'BufReadPre',
+  -- stylua: ignore
+  keys = {
+    { '<leader>ql', '<Cmd>Persisted load<CR>', desc = 'restore session' },
+    { '<leader>qL', '<Cmd>Persisted load_last<CR>', desc = 'restore last session' },
+    { '<leader>qo', '<Cmd>Persisted select<CR>', desc = 'list session' },
+    { '<leader>qd', '<Cmd>Persisted stop<CR>', desc = "don't save current session" },
+  },
+  setup = function()
     local opts = {
       follow_cwd = true, -- Change the session file to match any change in the cwd?
       use_git_branch = true,
@@ -27,30 +29,5 @@ if get_cond('persisted.nvim', 'persisted') then
     }
 
     require('persisted').setup(opts)
-    loaded = true
-  end
-
-  ar.pack.cmd('Persisted', load)
-
-  vim.api.nvim_create_autocmd({ 'BufReadPre' }, {
-    once = true,
-    callback = load,
-  })
-
-  map('n', '<leader>ql', function()
-    load()
-    vim.cmd('Persisted load')
-  end, { desc = 'restore session', silent = true })
-  map('n', '<leader>qL', function()
-    load()
-    vim.cmd('Persisted load_last')
-  end, { desc = 'restore last session', silent = true })
-  map('n', '<leader>qo', function()
-    load()
-    vim.cmd('Persisted select')
-  end, { desc = 'list session', silent = true })
-  map('n', '<leader>qd', function()
-    load()
-    vim.cmd('Persisted stop')
-  end, { desc = "don't save current session", silent = true })
-end
+  end,
+})

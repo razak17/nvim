@@ -71,6 +71,7 @@ ar.pack.add({
   {
     src = 'https://github.com/mason-org/mason.nvim',
     build = function() vim.cmd('MasonUpdate') end,
+    cond = function() return ar.get_plugin_cond('mason.nvim') end,
     lazy = false,
     keys = {
       { '<leader>lm', '<cmd>Mason<CR>', desc = 'mason info' },
@@ -97,6 +98,7 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/Zeioth/mason-extra-cmds',
+    cond = function() return ar.get_plugin_cond('mason-extra-cmds') end,
     cmd = { 'MasonUpdateAll' },
     init = function()
       ar.add_to_select('command_palette', {
@@ -107,6 +109,7 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/mason-tool-installer.nvim',
+    cond = function() return ar.get_plugin_cond('mason-tool-installer.nvim') end,
     cmd = { 'MasonToolsInstall', 'MasonToolsUpdate' },
     setup = function()
       local opts = {
