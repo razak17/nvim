@@ -52,6 +52,8 @@ end
 require('ar.settings')
 require('ar.highlights')
 require('ar.ui')
+require('ar.core')
+require('ar.extras')
 --------------------------------------------------------------------------------
 -- Neovide
 --------------------------------------------------------------------------------
@@ -62,5 +64,3 @@ if vim.g.neovide then require('ar.neovide') end
 if not ar.plugins.enable then return end
 if ar.package_manager == 'lazy' then require('ar.lazy') end
 if ar.package_manager == 'vim.pack' then require('ar.pack') end
-require('ar.core')
-require('ar.extras')
