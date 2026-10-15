@@ -3,6 +3,7 @@ if not ar then return end
 local api, fn = vim.api, vim.fn
 
 local config = { enable = true }
+local pending = {}
 
 if not config then return end
 
@@ -27,12 +28,18 @@ end
 ---@param fpath string The file path given to the program
 ---@param fname string The file name used in notifications
 ---@param prog string? The program to execute against the file path
--- TODO: when disabled then enabled again, causes errors with deleting buffer
 local function open_in_prog(buf, fpath, fname, prog)
+  if pending[buf] then return end
+  pending[buf] = true
   notify(string.format('Opening `%s`', fname), 'Open File in External Program')
   if prog == nil then ar.open_media(fpath) end
   if prog ~= nil then vim.system({ prog, fpath }, { detach = true }) end
-  vim.schedule(function() api.nvim_buf_delete(buf, { force = true }) end)
+  vim.schedule(function()
+    if api.nvim_buf_is_valid(buf) then
+      api.nvim_buf_delete(buf, { force = true })
+    end
+    pending[buf] = nil
+  end)
 end
 
 ar.command('InterceptToggle', function()
