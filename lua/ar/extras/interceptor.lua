@@ -33,7 +33,13 @@ local function open_in_prog(buf, fpath, fname, prog)
   pending[buf] = true
   notify(string.format('Opening `%s`', fname), 'Open File in External Program')
   if prog == nil then ar.open_media(fpath) end
-  if prog ~= nil then vim.system({ prog, fpath }, { detach = true }) end
+  if prog ~= nil then
+    vim.system({ prog, fpath }, {
+      detach = true,
+      stdout = false,
+      stderr = false,
+    })
+  end
   vim.schedule(function()
     if api.nvim_buf_is_valid(buf) then
       api.nvim_buf_delete(buf, { force = true })
