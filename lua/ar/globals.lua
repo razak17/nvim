@@ -1079,7 +1079,7 @@ function ar.open_media(path, notify)
   if is_doc then exe = apps.pdf end
   if is_img then exe = apps.image end
   if exe and fn.executable(exe) then
-    vim.system({ exe, path }, { detach = true })
+    vim.system({ exe, path }, { detach = true, stdout = false, stderr = false })
     return
   end
 
