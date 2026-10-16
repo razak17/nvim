@@ -1,5 +1,3 @@
-local models = ar.config.ai.models
-
 local function a(action)
   return function() require('agentic')[action]() end
 end
