@@ -60,7 +60,16 @@ local function get_servers()
     :map(function(name)
       local config = ar_servers.get(name)
       if not config then return nil end -- skip if config missing
-      vim.lsp.config(name, config)
+      if name == 'tsc' then
+        vim.lsp.config('tsc', {
+          capabilities = { experimental = { hoverVerbosityLevel = true } },
+          -- Optional. The server cuts long types at 500 characters and shows
+          -- "... N more ..." in their place. Raise the cap to see big types whole.
+          settings = { ['js/ts'] = { maximumHoverLength = 5000 } },
+        })
+      else
+        vim.lsp.config(name, config)
+      end
       return name
     end)
     :filter(function(x) return x ~= nil end)
