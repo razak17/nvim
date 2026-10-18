@@ -6,6 +6,7 @@
 --  |__|    \___/   |__|__|_|  /
 --                           \/
 --------------------------------------------------------------------------------
+vim.g._start_time = vim.uv.hrtime()
 if vim.g.vscode then return end -- if using vscode
 
 local g, fn, env = vim.g, vim.fn, vim.env
