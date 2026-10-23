@@ -1,7 +1,9 @@
 ar.pack.add({
   {
     src = 'https://github.com/willothy/flatten.nvim',
-    cond = ar.get_plugin_cond('flatten.nvim', not ar.plugins.minimal),
+    cond = function()
+      return ar.get_plugin_cond('flatten.nvim', not ar.plugins.minimal)
+    end,
     setup = function()
       require('flatten').setup({
         window = { open = 'tab' },
@@ -30,6 +32,8 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/brianhuster/unnest.nvim',
-    cond = ar.get_plugin_cond('unnest.nvim', not ar.plugins.minimal),
+    cond = function()
+      return ar.get_plugin_cond('unnest.nvim', not ar.plugins.minimal)
+    end,
   },
 })

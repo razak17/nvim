@@ -814,7 +814,9 @@ end
 
 ar.pack.add({
   src = 'https://github.com/2kabhishek/seeker.nvim',
-  cond = ar.get_plugin_cond('seeker.nvim', ar.config.picker.files == 'seeker'),
+  cond = function()
+    return ar.get_plugin_cond('seeker.nvim', ar.config.picker.files == 'seeker')
+  end,
   keys = {
     { '<C-p>', '<Cmd>Seeker files<CR>', desc = 'seeker: files' },
   },
@@ -829,7 +831,7 @@ ar.pack.add({
 
 ar.pack.add({
   src = 'https://github.com/TKasperczyk/snacks-gallery.nvim',
-  cond = ar.get_plugin_cond('snacks-gallery.nvim', not minimal),
+  cond = function() ar.get_plugin_cond('snacks-gallery.nvim', not minimal) end,
   keys = {
     {
       '<leader>oi',

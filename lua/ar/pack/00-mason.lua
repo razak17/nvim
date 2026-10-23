@@ -118,6 +118,11 @@ ar.pack.add({
       }
       opts.ensure_installed =
         vim.list_extend(opts.ensure_installed or {}, get_all_packages())
+      for _, tool in ipairs(ar.pack.dap_tools or {}) do
+        if not vim.tbl_contains(opts.ensure_installed, tool) then
+          table.insert(opts.ensure_installed, tool)
+        end
+      end
       require('mason-tool-installer').setup(opts)
     end,
   },

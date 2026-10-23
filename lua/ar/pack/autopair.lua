@@ -1,0 +1,127 @@
+ar.pack.add({
+  {
+    src = 'https://github.com/windwp/nvim-autopairs',
+    cond = function()
+      local condition = ar.plugins.coding
+        and ar.config.completion.variant ~= 'native'
+      return ar.get_plugin_cond('nvim-autopairs', condition)
+    end,
+    event = 'InsertEnter',
+    setup = function()
+      local autopairs = require('nvim-autopairs')
+      autopairs.setup({
+        close_triple_quotes = true,
+        disable_filetype = { 'neo-tree-popup' },
+        check_ts = true,
+        fast_wrap = { map = '<c-e>' },
+        ts_config = {
+          lua = { 'string' },
+          dart = { 'string' },
+          javascript = { 'template_string' },
+        },
+      })
+      if ar.completion.enable and ar.config.completion.variant == 'cmp' then
+        -- Completion may load later in the same InsertEnter event.
+        vim.schedule(function()
+          local cmp = package.loaded.cmp
+          if not cmp then return end
+          local integration = require('nvim-autopairs.completion.cmp')
+          cmp.event:on('confirm_done', integration.on_confirm_done())
+        end)
+      end
+    end,
+  },
+  {
+    src = 'https://github.com/altermo/ultimate-autopair.nvim',
+    cond = function()
+      return ar.get_plugin_cond('ultimate-autopair.nvim', ar.plugins.coding)
+    end,
+    event = { 'InsertEnter', 'CmdlineEnter' },
+    keys = function(load)
+      ar.augroup('UltimateAutoPair', {
+        event = { 'RecordingEnter' },
+        command = function()
+          load()
+          require('ultimate-autopair').disable()
+        end,
+      }, {
+        event = { 'RecordingLeave' },
+        command = function()
+          load()
+          require('ultimate-autopair').enable()
+        end,
+      })
+      ar.add_to_select('command_palette', {
+        ['Toggle Auto-pairing'] = function()
+          load()
+          require('ultimate-autopair').toggle()
+          local mode = require('ultimate-autopair').isenabled() and 'enabled'
+            or 'disabled'
+          vim.notify(mode, nil, { title = 'Auto-pairing', icon = '' })
+        end,
+      })
+    end,
+    -- https://github.com/chrisgrieser/.config/blob/788aa7dc619410086e972d6da4177af29827d3e9/nvim/lua/plugin-specs/ultimate-autopair.lua?plain=1#L30
+    setup = function()
+      require('ultimate-autopair').setup({
+        bs = {
+          space = 'balance',
+          cmap = false, -- keep my `<BS>` mapping for the cmdline
+        },
+        fastwarp = {
+          map = '<M-f>',
+          rmap = '<M-F>', -- backwards
+          hopout = true,
+          nocursormove = true,
+          multiline = false,
+        },
+        cr = { autoclose = false },
+        tabout = { enable = false, map = '<Nop>' },
+        extensions = { -- disable in these filetypes
+          filetype = {
+            nft = { 'TelescopePrompt', 'snacks_picker_input', 'rip-substitute' },
+          },
+        },
+        config_internal_pairs = {
+          { "'", "'", nft = { 'markdown', 'gitcommit' } }, -- used as apostrophe
+          { '"', '"', nft = { 'vim' } }, -- uses as comments in vimscript
+          { -- disable codeblocks, see https://github.com/Saghen/blink.cmp/issues/1692
+            '`',
+            '`',
+            cond = function()
+              local mdCodeblock = vim.bo.ft == 'markdown'
+                and vim.api.nvim_get_current_line():find('^[%s`]*$')
+              return not mdCodeblock
+            end,
+          },
+          { '```', '```', nft = { 'markdown' } },
+        },
+        -- INFO custom keys need to be "appended" to the opts as a list
+        { '**', '**', ft = { 'markdown' } }, -- bold
+        { [[\"]], [[\"]], ft = { 'zsh', 'json', 'applescript' } }, -- escaped quote
+        -- commit scope (= only first word) for commit messages
+        {
+          '(',
+          '): ',
+          ft = { 'gitcommit' },
+          cond = function(_)
+            return not vim.api.nvim_get_current_line():find(' ')
+          end,
+        },
+        -- for keymaps like `<C-a>`
+        { '<', '>', ft = { 'vim' } },
+        {
+          '<',
+          '>',
+          ft = { 'lua' },
+          cond = function(fn)
+            -- FIX https://github.com/altermo/ultimate-autopair.nvim/issues/88
+            local in_lua_lua =
+              vim.endswith(vim.api.nvim_buf_get_name(0), '/ftplugin/lua.lua')
+            return not in_lua_lua and fn.in_string()
+          end,
+        },
+      })
+    end,
+  },
+})

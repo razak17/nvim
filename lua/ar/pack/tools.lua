@@ -37,10 +37,12 @@ has_parser = ar.memoize(has_parser)
 ar.pack.add({
   {
     src = 'https://github.com/stevearc/conform.nvim',
-    cond = ar.get_plugin_cond(
-      'conform.nvim',
-      ar.plugins.coding and not ar.config.lsp.null_ls.enable
-    ),
+    cond = function()
+      return ar.get_plugin_cond(
+        'conform.nvim',
+        ar.plugins.coding and not ar.config.lsp.null_ls.enable
+      )
+    end,
     cmd = { 'ConformInfo' },
     event = { 'BufReadPre', 'BufNewFile' },
     keys = {
@@ -166,10 +168,12 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/mfussenegger/nvim-lint',
-    cond = ar.get_plugin_cond(
-      'nvim-lint',
-      ar.plugins.coding and ar.lsp.enable and not ar.config.lsp.null_ls.enable
-    ),
+    cond = function()
+      return ar.get_plugin_cond(
+        'nvim-lint',
+        ar.plugins.coding and ar.lsp.enable and not ar.config.lsp.null_ls.enable
+      )
+    end,
     -- stylua: ignore
     ft = {
       'javascript', 'javascript.jsx', 'javascriptreact', 'lua', 'python', 'rst',

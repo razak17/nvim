@@ -196,7 +196,7 @@ return {
         }, {
           event = { 'FileType' },
           pattern = { 'dbout' },
-          command = function() vim.api.nvim_win_resize(0, 40) end,
+          command = function() vim.api.nvim_win_resize(0, 40, -1) end,
         })
       end,
     },

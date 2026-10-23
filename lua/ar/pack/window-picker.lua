@@ -1,7 +1,7 @@
 ar.pack.add({
   {
     src = 'https://github.com/s1n7ax/nvim-window-picker',
-    cond = ar.get_plugin_cond('nvim-window-picker'),
+    cond = function() return ar.get_plugin_cond('nvim-window-picker') end,
     lazy = false,
     keys = {
       {

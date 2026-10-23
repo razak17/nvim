@@ -1,0 +1,61 @@
+local function a(action)
+  return function() require('agentic')[action]() end
+end
+
+ar.pack.add({
+  -- FIX: Causes performance issues (delay) when I hit space key in insert mode
+  {
+    src = 'https://github.com/carlos-algms/agentic.nvim',
+    event = 'VeryLazy',
+    cond = function() return ar.get_plugin_cond('agentic.nvim', ar.ai.enable) end,
+    init = function()
+      vim.g.whichkey_add_spec({
+        '<leader>aa',
+        group = 'Agentic',
+        mode = { 'n', 'x' },
+      })
+    end,
+    -- stylua: ignore
+    keys = {
+      { mode = { 'n', 'x', 'i' }, '<leader>aao', a('toggle'), desc = 'agentic: toggle' },
+      { mode = { 'n', 'x' }, '<leader>aac', a('add_selection_or_file_to_context'), desc = 'agentic: add file or selection to context' },
+      { mode = { 'n', 'x' }, '<leader>aaf', a('add_file'), desc = 'agentic: add file to context' },
+      { mode = { 'n', 'x' }, '<leader>aas', a('add_selection'), desc = 'agentic: add selection to context' },
+      { mode = { 'n', 'x', 'i' }, '<leader>aan', a('new_session'), desc = 'agentic: new session' },
+    },
+    setup = function()
+      require('agentic').setup({ provider = 'opencode-acp' })
+      ar.highlight.plugin(
+        'agentic.nvim',
+        { { AgenticTitle = { link = 'FloatTitle' } } }
+      )
+    end,
+  },
+  {
+    src = 'https://github.com/kylesnowschwartz/prompt-tower.nvim',
+    cond = function()
+      return ar.get_plugin_cond('prompt-tower.nvim', ar.ai.enable)
+    end,
+    init = function()
+      ar.add_to_select('ai', {
+        ['Prompt Tower'] = function()
+          ar.create_select_menu('Prompt Tower', {
+            ['UI'] = 'PromptTower ui',
+            ['Clear'] = 'PromptTower clear',
+            ['Select'] = 'PromptTower select',
+            ['Format'] = 'PromptTower format',
+            ['Generate'] = 'PromptTower generate',
+          })()
+        end,
+      })
+    end,
+    cmd = { 'PromptTower' },
+    setup = function()
+      require('prompt-tower').setup({
+        output_format = {
+          default_format = 'markdown', -- Options: 'xml', 'markdown', 'minimal'
+        },
+      })
+    end,
+  },
+})
