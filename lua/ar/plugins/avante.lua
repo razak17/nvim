@@ -33,8 +33,6 @@ local function toggle_action(action, opts)
   return function() require('avante.api').toggle[action](opts) end
 end
 
-local function get_cond() return ar.get_plugin_cond('avante.nvim', ar.ai.enable) end
-
 return {
   {
     'yetone/avante.nvim',

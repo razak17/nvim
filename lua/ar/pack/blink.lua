@@ -462,6 +462,15 @@ ar.pack.add({
     if ar.pack.copilot then
       ar.pack.blink_opts = ar.pack.copilot.blink(ar.pack.blink_opts)
     end
+    if ar.pack.avante_blink then
+      ar.pack.blink_opts = ar.pack.avante_blink(ar.pack.blink_opts)
+    end
+    if ar.pack.codecompanion_blink then
+      ar.pack.blink_opts = ar.pack.codecompanion_blink(ar.pack.blink_opts)
+    end
+    if ar.pack.dadbod_blink then
+      ar.pack.blink_opts = ar.pack.dadbod_blink(ar.pack.blink_opts)
+    end
     require('blink.cmp').setup(ar.pack.blink_opts)
   end,
   dependencies = {

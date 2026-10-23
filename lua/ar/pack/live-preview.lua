@@ -4,7 +4,9 @@ ar.pack.add({
   --------------------------------------------------------------------------------
   {
     src = 'https://github.com/selimacerbas/mdkite.nvim',
-    cond = ar.get_plugin_cond('mdkite.nvim', not ar.plugins.minimal),
+    cond = function()
+      return ar.get_plugin_cond('mdkite.nvim', not ar.plugins.minimal)
+    end,
     cmd = { 'MdKite' },
     setup = function() require('mdkite').setup() end,
     dependencies = {
@@ -16,7 +18,9 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/wallpants/github-preview.nvim',
-    cond = ar.get_plugin_cond('github-preview.nvim', not ar.plugins.minimal),
+    cond = function()
+      return ar.get_plugin_cond('github-preview.nvim', not ar.plugins.minimal)
+    end,
     build = function(event)
       local result = vim
         .system(
@@ -50,7 +54,9 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/wallpants/previm/previm',
-    cond = ar.get_plugin_cond('previm', not ar.plugins.minimal),
+    cond = function()
+      return ar.get_plugin_cond('previm', not ar.plugins.minimal)
+    end,
     cmd = { 'PrevimOpen', 'PrevimRefresh', 'PrevimWipeCache' },
     setup = function()
       vim.g.previm_open_cmd = 'zen'
@@ -94,18 +100,22 @@ ar.pack.add({
   --------------------------------------------------------------------------------
   {
     src = 'https://github.com/selimacerbas/kitehost.nvim',
-    cond = ar.get_plugin_cond('kitehost.nvim', not ar.plugins.minimal),
+    cond = function()
+      return ar.get_plugin_cond('kitehost.nvim', not ar.plugins.minimal)
+    end,
     cmd = { 'KiteHost' },
     setup = function() require('kitehost').setup() end,
   },
   {
     src = 'https://github.com/brianhuster/live-preview.nvim',
-    cond = ar.get_plugin_cond('live-preview'),
+    cond = function() return ar.get_plugin_cond('live-preview') end,
     cmd = { 'LivePreview' },
   },
   {
     src = 'https://github.com/wallpants/hat0uma/prelive.nvim',
-    cond = ar.get_plugin_cond('prelive.nvim', not ar.plugins.minimal),
+    cond = function()
+      return ar.get_plugin_cond('prelive.nvim', not ar.plugins.minimal)
+    end,
     cmd = {
       'PreLiveGo',
       'PreLiveStatus',

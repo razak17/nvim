@@ -12,7 +12,7 @@ ar.pack.add({
     cmd = { 'FloatermToggle' },
     cond = get_cond('floaterm', 'floaterm'),
     setup = function()
-      local opts = {
+      require('floaterm').setup({
         mappings = {
           term = function(buf)
             local function float(dir)
@@ -22,8 +22,7 @@ ar.pack.add({
             map({ 'n', 't' }, '<C-n>', float('next'), { buffer = buf })
           end,
         },
-      }
-      require('floaterm').setup(opts)
+      })
     end,
     keys = function(load)
       map({ 'n', 't' }, '<C-\\>', function()
@@ -41,7 +40,7 @@ ar.pack.add({
     event = 'VeryLazy',
     cmd = { 'Termite' },
     setup = function()
-      local opts = {
+      require('termite').setup({
         width = 0.4, -- Fraction of editor width for left/right positions (0.0 - 1.0)
         height = 0.5, -- Fraction of editor height for top/bottom positions (0.0 - 1.0)
         position = 'right', -- Panel position: "left", "right", "top", or "bottom"
@@ -63,8 +62,7 @@ ar.pack.add({
           border_inactive = 'WinSeparator', -- Highlight for inactive terminal borders (string = hl group, table = direct definition)
         },
         wo = { signcolumn = 'no' },
-      }
-      require('termite').setup(opts)
+      })
     end,
   },
   {
@@ -72,7 +70,7 @@ ar.pack.add({
     cond = get_cond('toggleterm.nvim', 'toggleterm'),
     event = 'VeryLazy',
     setup = function()
-      local opts = {
+      require('toggleterm').setup({
         open_mapping = [[<c-\>]],
         -- shade_filetypes = { 'none' },
         direction = 'float',
@@ -94,8 +92,7 @@ ar.pack.add({
             return math.floor(vim.o.columns * 0.4)
           end
         end,
-      }
-      require('toggleterm').setup(opts)
+      })
 
       local float_handler = function(term)
         vim.wo.sidescrolloff = 0
@@ -122,16 +119,13 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/carldaws/surface.nvim',
-    cond = ar.get_plugin_cond('surface.nvim'),
+    cond = function() return ar.get_plugin_cond('surface.nvim') end,
     keys = function(load)
       map('n', '<localleader>o/', function()
         load()
         require('surface').open(vim.env.SHELL, 'center')
       end, { desc = 'surface: open shell' })
     end,
-    setup = function()
-      local opts = { default_position = 'right' }
-      require('surface').setup(opts)
-    end,
+    setup = function() require('surface').setup({ default_position = 'right' }) end,
   },
 })

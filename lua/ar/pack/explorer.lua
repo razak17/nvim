@@ -85,12 +85,11 @@ ar.pack.add({
       end, { desc = 'filebuf: open' })
     end,
     setup = function()
-      local opts = {
+      require('filebuf').setup({
         permanent_delete = false,
         show_hidden = false,
         hijack_netrw = true,
-      }
-      require('filebuf').setup(opts)
+      })
     end,
   },
   {
@@ -112,7 +111,18 @@ ar.pack.add({
       end, { desc = 'toggle tree' })
     end,
     setup = function()
-      local opts = {
+      ar.highlight.plugin('Fyler', {
+        { FylerRed = { link = 'Error' } },
+        { FylerGreen = { link = 'DiagnosticHint' } },
+        { FylerYellow = { link = 'DiagnosticWarn' } },
+        { FylerNormal = { link = 'NormalFloat' } },
+        { FylerNormalNC = { link = 'NormalFloat' } },
+        { FylerBorder = { link = 'Error' } },
+        { FylerFsFile = { link = 'NormalFloat' } },
+        { FylerGitDeleted = { link = 'DiffDelete' } },
+        { FylerIndentMarker = { link = 'NonText' } },
+      })
+      require('fyler').setup({
         auto_confirm_simple_mutation = false,
         extensions = {
           git = {
@@ -161,19 +171,7 @@ ar.pack.add({
           cursorline = true,
           winhighlight = 'NormalFloat:NormalFloat,NormalNC:NormalFloat',
         },
-      }
-      ar.highlight.plugin('Fyler', {
-        { FylerRed = { link = 'Error' } },
-        { FylerGreen = { link = 'DiagnosticHint' } },
-        { FylerYellow = { link = 'DiagnosticWarn' } },
-        { FylerNormal = { link = 'NormalFloat' } },
-        { FylerNormalNC = { link = 'NormalFloat' } },
-        { FylerBorder = { link = 'Error' } },
-        { FylerFsFile = { link = 'NormalFloat' } },
-        { FylerGitDeleted = { link = 'DiffDelete' } },
-        { FylerIndentMarker = { link = 'NonText' } },
       })
-      require('fyler').setup(opts)
     end,
   },
   {
@@ -491,12 +489,11 @@ ar.pack.add({
       end, { desc = 'open mini.files (cwd)' })
     end,
     setup = function()
-      local opts = {
+      require('mini.files').setup({
         windows = { preview = true, width_focus = 30, width_preview = 50 },
         mappings = { reset = ',', reveal_cwd = '.' },
         options = { use_as_default_explorer = true, permanent_delete = false },
-      }
-      require('mini.files').setup(opts)
+      })
 
       ar.augroup('mini.files', {
         event = { 'User' },

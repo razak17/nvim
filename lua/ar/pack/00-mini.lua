@@ -1,16 +1,18 @@
 ar.pack.add({
   {
     src = 'https://github.com/nvim-mini/mini.extra',
-    cond = ar.get_plugin_cond('mini.extra'),
+    cond = function() return ar.get_plugin_cond('mini.extra') end,
     setup = function() require('mini.extra').setup() end,
   },
   {
     src = 'https://github.com/nvim-mini/mini.hipatterns',
-    cond = ar.get_plugin_cond('mini.hipatterns'),
+    cond = function() return ar.get_plugin_cond('mini.hipatterns') end,
   },
   {
     src = 'https://github.com/nvim-mini/mini.bracketed',
-    cond = ar.get_plugin_cond('mini.bracketed', not ar.plugins.minimal),
+    cond = function()
+      return ar.get_plugin_cond('mini.bracketed', not ar.plugins.minimal)
+    end,
     event = { 'BufRead', 'BufNewFile' },
     setup = function()
       require('mini.bracketed').setup({ buffer = { suffix = '' } })
@@ -18,7 +20,9 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/nvim-mini/mini.trailspace',
-    cond = ar.get_plugin_cond('mini.trailspace', not ar.plugins.minimal),
+    cond = function()
+      return ar.get_plugin_cond('mini.trailspace', not ar.plugins.minimal)
+    end,
     init = function()
       ar.add_to_select('command_palette', {
         ['Remove Trailing Empty Lines'] = function()
@@ -33,7 +37,7 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/nvim-mini/mini.splitjoin',
-    cond = ar.get_plugin_cond('mini.splitjoin'),
+    cond = function() return ar.get_plugin_cond('mini.splitjoin') end,
     keys = function(load)
       vim.keymap.set({ 'n', 'x' }, '<leader>J', function()
         load()
@@ -48,7 +52,9 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/nvim-mini/mini.comment',
-    cond = ar.get_plugin_cond('mini.comment', ar.plugins.coding),
+    cond = function()
+      return ar.get_plugin_cond('mini.comment', ar.plugins.coding)
+    end,
     event = 'VeryLazy',
     setup = function()
       require('mini.comment').setup({

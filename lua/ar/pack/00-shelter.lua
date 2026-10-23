@@ -7,7 +7,9 @@ end
 ar.pack.add({
   {
     src = 'https://github.com/ck-zhang/obfuscate.nvim',
-    cond = ar.get_plugin_cond('obfuscate.nvim', not ar.plugins.minimal),
+    cond = function()
+      return ar.get_plugin_cond('obfuscate.nvim', not ar.plugins.minimal)
+    end,
     init = function()
       ar.add_to_select(
         'toggle',

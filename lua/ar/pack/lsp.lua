@@ -82,7 +82,7 @@ end
 ar.pack.add({
   {
     src = 'https://github.com/williamboman/mason-lspconfig.nvim',
-    cond = ar.get_plugin_cond('mason.nvim', ar.lsp.enable),
+    cond = function() return ar.get_plugin_cond('mason.nvim', ar.lsp.enable) end,
     lazy = false, -- Don't lazy load. Causes highlight issues on :restart
     setup = function()
       require('lspconfig.ui.windows').default_options.border = border
@@ -105,10 +105,12 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/antosha417/nvim-lsp-file-operations',
-    cond = ar.get_plugin_cond(
-      'nvim-lsp-file-operations',
-      not ar.plugins.minimal and enabled
-    ),
+    cond = function()
+      return ar.get_plugin_cond(
+        'nvim-lsp-file-operations',
+        not ar.plugins.minimal and enabled
+      )
+    end,
     event = { 'LspAttach' },
     setup = function() require('lsp-file-operations').setup() end,
   },

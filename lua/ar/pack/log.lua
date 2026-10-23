@@ -1,6 +1,6 @@
 ar.pack.add({
   src = 'https://github.com/andrewferrier/debugprint.nvim',
-  cond = ar.get_plugin_cond('debugprint.nvim'),
+  cond = function() return ar.get_plugin_cond('debugprint.nvim') end,
   event = 'VeryLazy',
   lazy = false,
   setup = function()

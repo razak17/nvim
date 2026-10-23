@@ -600,7 +600,14 @@ ar.pack.add({
     if ar.pack.copilot then
       ar.pack.cmp_opts = ar.pack.copilot.cmp(ar.pack.cmp_opts)
     end
+    if ar.pack.codecompanion_cmp then
+      ar.pack.cmp_opts = ar.pack.codecompanion_cmp(ar.pack.cmp_opts)
+    end
+    if ar.pack.dadbod_cmp then
+      ar.pack.cmp_opts = ar.pack.dadbod_cmp(ar.pack.cmp_opts)
+    end
     require('cmp').setup(ar.pack.cmp_opts)
+    if ar.pack.dap_cmp then ar.pack.dap_cmp() end
     ar.command('CmpInfo', function() require('cmp').status() end, {})
     -- cmp's handlers were registered after the event that loaded it.
     if load_event then

@@ -218,9 +218,9 @@ return {
                   if cols > maxcols then maxcols = cols end
                 end
                 vim.w.orig_width = api.nvim_win_get_width(0)
-                api.nvim_win_set_width(0, maxcols)
+                api.nvim_win_resize(0, maxcols, -1)
               else
-                api.nvim_win_set_width(0, vim.w.orig_width)
+                api.nvim_win_resize(0, vim.w.orig_width, -1)
                 vim.w.orig_width = nil
               end
             end,

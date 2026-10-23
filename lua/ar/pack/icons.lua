@@ -61,7 +61,9 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/2kabhishek/nerdy.nvim',
-    cond = ar.get_plugin_cond('nerdy.nvim', not ar.plugins.minimal),
+    cond = function()
+      return ar.get_plugin_cond('nerdy.nvim', not ar.plugins.minimal)
+    end,
     cmd = { 'Nerdy' },
     init = function()
       ar.add_to_select('command_palette', { ['Nerdy'] = 'Nerdy list' })
@@ -70,7 +72,9 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/SaptanshuWanjari/icon-picker.nvim',
-    cond = ar.get_plugin_cond('icon-picker.nvim', ar.plugins.coding),
+    cond = function()
+      return ar.get_plugin_cond('icon-picker.nvim', ar.plugins.coding)
+    end,
     cmd = { 'IconPicker' },
     keys = {
       { '<leader>oI', '<Cmd>IconPicker<CR>', desc = 'icon_picker: open' },
