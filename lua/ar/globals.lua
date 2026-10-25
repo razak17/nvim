@@ -139,16 +139,16 @@ end
 ---@param opts { forward: boolean }
 ---@return function
 function ar.jump(callback, opts)
-  local has_demicolon, has_repeatable
+    local has_demicolon, has_repeatable
 
-  if ar.package_manager == 'lazy' then
-    has_demicolon = ar.has('demicolon.nvim')
-    has_repeatable = ar.has('repeatable-move.nvim')
-  end
-  if ar.package_manager == 'vim.pack' then
-    has_demicolon = package.loaded['demicolon']
-    has_repeatable = package.loaded['repeatable_move']
-  end
+    if ar.package_manager == 'lazy' then
+      has_demicolon = ar.has('demicolon.nvim')
+      has_repeatable = ar.has('repeatable-move.nvim')
+    end
+    if ar.package_manager == 'vim.pack' then
+      has_demicolon = package.loaded['demicolon']
+      has_repeatable = package.loaded['repeatable_move']
+    end
 
   return function()
     if has_demicolon then return ar.demicolon_jump(callback, opts)() end
@@ -788,21 +788,47 @@ local function check_condition(spec)
   return spec.cond
 end
 
+local pack_states, loading_path = {}, {}
+
 ---@param spec PackSpec|PackDependency
 local function load_spec(spec)
-  if ar.pack.loaded[spec.src] or not check_condition(spec) then return end
-  for _, dep in ipairs(spec.dependencies or {}) do
-    load_spec(dep)
-  end
-  if spec.dev then
-    load_dev(spec)
-  else
-    vim.pack.add(
-      { { src = spec.src, name = spec.name, version = spec.version } },
-      { confirm = false, load = spec.load }
+  if ar.pack.loaded[spec.src] then return end
+  local state = pack_states[spec.src]
+  if state and state.status == 'failed' then error(state.error, 0) end
+  if state and state.status == 'loading' then
+    error(
+      'Circular plugin load: '
+        .. table.concat(loading_path, ' -> ')
+        .. ' -> '
+        .. spec.src,
+      0
     )
   end
-  if spec.setup then spec.setup() end
+  if not check_condition(spec) then return end
+  state = state or {}
+  pack_states[spec.src] = state
+  state.status = 'loading'
+  loading_path[#loading_path + 1] = spec.src
+  local ok, err = xpcall(function()
+    for _, dep in ipairs(spec.dependencies or {}) do
+      load_spec(dep)
+    end
+    if spec.dev then
+      load_dev(spec)
+    else
+      vim.pack.add(
+        { { src = spec.src, name = spec.name, version = spec.version } },
+        { confirm = false, load = spec.load }
+      )
+    end
+    if spec.setup then spec.setup() end
+  end, debug.traceback)
+  loading_path[#loading_path] = nil
+  if not ok then
+    state.status, state.error = 'failed', err
+    error(err, 0)
+  end
+  state.status = 'loaded'
   ar.pack.loaded[spec.src] = true
 end
 
@@ -828,7 +854,13 @@ end
 ---@param spec PackSpec
 local function add_spec(spec)
   if ar.pack.loaded[spec.src] then return end
+  local state = pack_states[spec.src]
+  if state and (state.status == 'loading' or state.status == 'failed') then
+    load_spec(spec)
+    return
+  end
   if not check_condition(spec) then return end
+  pack_states[spec.src] = state or { status = 'registered' }
   if spec.lazy == nil then spec.lazy = ar.pack.defaults.lazy end
   if spec.init then spec.init() end
   if spec.build and not spec.dev then build(spec.src, spec.build, spec.name) end
@@ -910,7 +942,11 @@ end
 ---
 --- Dependencies load before the plugin, and setup runs after vim.pack.add().
 --- Each source URL loads and configures once through this wrapper, so use the
---- same full URL in standalone entries and dependencies. Installation does not
+--- same full URL in standalone entries and dependencies. Recursive loads are
+--- rejected; cycles report the active source URL path. A failed
+--- load retains its error and is not retried in the same session, since plugin
+--- scripts or setup may have already run partially. Only successful setup marks
+--- the source as loaded in ar.pack.loaded. Installation does not
 --- prompt for confirmation. Set cond = false to skip loading and trigger creation.
 --- cond also accepts a function returning a boolean. Its result is cached on the
 --- spec at registration, or on first load for dependency-only specs. A false
