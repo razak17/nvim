@@ -650,7 +650,7 @@ function ar.pack.has(plugin)
   return has
 end
 
---- Create a command that will load a module when called
+--- Load a plugin on command execution or completion, then use its real command.
 ---@param name string|string[]
 ---@param load? fun()
 function ar.pack.cmd(name, load)
@@ -658,11 +658,40 @@ function ar.pack.cmd(name, load)
     vim.iter(name):each(function(c) ar.pack.cmd(c, load) end)
     return
   end
-  api.nvim_create_user_command(name, function(info)
+  local function load_command()
     pcall(api.nvim_del_user_command, name)
     if load then load() end
-    vim.cmd(name .. ' ' .. (info.args or ''))
-  end, { nargs = '?' })
+    assert(fn.exists(':' .. name) == 2, 'Plugin did not define command: ' .. name)
+  end
+  api.nvim_create_user_command(name, function(info)
+    load_command()
+    local range = ''
+    if info.range == 1 then
+      range = tostring(info.line2)
+    elseif info.range == 2 then
+      range = info.line1 .. ',' .. info.line2
+    end
+    -- Parse after loading so nargs, count, and escaping follow the real command.
+    local command = api.nvim_parse_cmd(
+      range .. name .. (info.bang and '!' or '') .. ' ' .. info.args,
+      {}
+    )
+    command.mods = info.smods
+    -- Let the command apply its default count without creating an explicit range.
+    if info.range == 0 then command.count = nil end
+    api.nvim_cmd(command, {})
+    if command.nextcmd ~= '' then vim.cmd(command.nextcmd) end
+  end, {
+    nargs = '*',
+    bang = true,
+    range = true,
+    -- Counts may exceed the number of lines; the real command validates addresses.
+    addr = 'other',
+    complete = function(_, cmdline, cursorpos)
+      load_command()
+      return fn.getcompletion(cmdline:sub(1, cursorpos), 'cmdline')
+    end,
+  })
 end
 
 ---@class PackDependency
