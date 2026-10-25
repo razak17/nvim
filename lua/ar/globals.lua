@@ -714,17 +714,7 @@ function ar.pack.cmd(name, load)
   return cleanup
 end
 
----@class PackDependency
----@field src string
----@field load? boolean Forwarded to native package loading; false skips plugin scripts.
----@field name? string
----@field version? string|vim.VersionRange
----@field dev? boolean
----@field build? fun(args: AutocmdArgs):nil
----@field cond? boolean|fun():boolean
----@field cmd? string[]
----@field ft? string[]
----@field setup? fun():nil
+---@alias PackDependency PackSpec
 
 ---@class PackKey
 ---@field [1] string
@@ -744,8 +734,8 @@ end
 ---@field init? fun():nil
 ---@field build? fun(args: AutocmdArgs):nil
 ---@field cond? boolean|fun():boolean
----@field cmd? string[]
----@field ft? string[]
+---@field cmd? string|string[]
+---@field ft? string|string[]
 ---@field setup? fun():nil
 ---@field dependencies? PackDependency[]
 ---@field keys? PackKey[]|fun(load: fun()):PackKey[]|nil
@@ -754,11 +744,13 @@ end
 ---@param src string
 ---@param f fun(args: AutocmdArgs):nil
 ---@param name? string
+---@return fun() cleanup
 local function build(src, f, name)
-  name = name or src:match('([^/]+)$')
-  ar.augroup(name .. '_build', {
-    event = 'PackChanged',
-    command = function(args)
+  name = name or src:gsub('/+$', ''):match('([^/]+)$'):gsub('%.git$', '')
+  local group = api.nvim_create_augroup(name .. '_build', { clear = true })
+  local id = api.nvim_create_autocmd('PackChanged', {
+    group = group,
+    callback = function(args)
       local data = args.data
       if data.spec.name ~= name then return end
       if data.kind == 'install' or data.kind == 'update' then
@@ -766,6 +758,7 @@ local function build(src, f, name)
       end
     end,
   })
+  return function() pcall(api.nvim_del_autocmd, id) end
 end
 
 local dev_package_root
@@ -825,6 +818,7 @@ local function load_spec(spec)
     )
   end
   if not check_condition(spec) then return end
+  spec = state and state.spec or spec
   state = state or {}
   pack_states[spec.src] = state
   state.status = 'loading'
@@ -948,7 +942,7 @@ local function global_keymap(mode, lhs)
   end
 end
 
-local function register_key(state, key, load)
+local function register_key(state, key, load, declaration)
   local lhs, rhs = key[1], key[2]
   local modes = key.mode or 'n'
   if type(modes) == 'string' then modes = { modes } end
@@ -962,6 +956,20 @@ local function register_key(state, key, load)
   for _, mode in ipairs(modes) do
     for _, actual in ipairs(aliases[mode] or { mode }) do
       expanded[actual] = true
+    end
+  end
+  state.keybindings = state.keybindings or {}
+  local normalized = api.nvim_replace_termcodes(lhs, true, true, true)
+  for mode in pairs(expanded) do
+    local id = mode .. '\0' .. normalized
+    local previous = state.keybindings[id]
+    if
+      previous
+      and state.declarations[previous] > state.declarations[declaration]
+    then
+      expanded[mode] = nil
+    else
+      state.keybindings[id] = declaration
     end
   end
   local opts = {
@@ -1000,20 +1008,7 @@ local function register_key(state, key, load)
 end
 
 ---@param spec PackSpec
-local function add_spec(spec)
-  if ar.pack.loaded[spec.src] then return end
-  local state = pack_states[spec.src]
-  if state and (state.status == 'loading' or state.status == 'failed') then
-    load_spec(spec)
-    return
-  end
-  if not check_condition(spec) then return end
-  state = state or { status = 'registered' }
-  pack_states[spec.src] = state
-  state.cleanups, state.keymaps = state.cleanups or {}, state.keymaps or {}
-  if spec.lazy == nil then spec.lazy = ar.pack.defaults.lazy end
-  if spec.init then spec.init() end
-  if spec.build and not spec.dev then build(spec.src, spec.build, spec.name) end
+local function register_triggers(spec, state)
   local function load(event)
     if
       type(event) ~= 'table'
@@ -1027,7 +1022,7 @@ local function add_spec(spec)
     load_spec(spec)
     if ar.pack.loaded[spec.src] then replay_event(event, existing_groups) end
   end
-  if spec.cmd then
+  if spec.cmd and not ar.pack.loaded[spec.src] then
     state.cleanups[#state.cleanups + 1] = ar.pack.cmd(spec.cmd, load)
   end
   local function register_event(event, opts)
@@ -1036,7 +1031,7 @@ local function add_spec(spec)
       pcall(api.nvim_del_autocmd, id)
     end
   end
-  if spec.event then
+  if spec.event and not ar.pack.loaded[spec.src] then
     local events = type(spec.event) == 'string' and { spec.event } or spec.event
     for _, event in ipairs(events) do
       if event == 'VeryLazy' then
@@ -1049,7 +1044,7 @@ local function add_spec(spec)
       end
     end
   end
-  if spec.ft then
+  if spec.ft and not ar.pack.loaded[spec.src] then
     register_event('FileType', {
       pattern = spec.ft,
       once = true,
@@ -1057,24 +1052,146 @@ local function add_spec(spec)
     })
   end
   if spec.keys then
-    if type(spec.keys) == 'function' then spec.keys = spec.keys(load) end
+    local keys = spec.keys
+    if type(keys) == 'function' then keys = keys(load) end
     if state.status == 'failed' then load() end
-    if type(spec.keys) ~= 'table' then
-      if not spec.lazy then load() end
-      return
-    end
-    for _, key in ipairs(spec.keys) do
-      register_key(state, key, load)
+    if type(keys) ~= 'table' then return end
+    for _, key in ipairs(keys) do
+      register_key(state, key, load, spec)
     end
   end
-  if not spec.lazy then load() end
 end
 
---- Register one plugin spec or a list of specs with vim.pack. Lists register
---- in order; an empty list does nothing. Supports command, filetype, key, or event
---- loading. lazy defaults to ar.pack.defaults.lazy when omitted. Set lazy = false
---- to load immediately, even with triggers. With lazy = true, loading requires a
---- trigger or use as a dependency; no triggers means no automatic loading.
+local function collect_spec(spec, dependency, order, seen)
+  if ar.pack.loaded[spec.src] then return end
+  local state = pack_states[spec.src]
+  if state and (state.status == 'loading' or state.status == 'failed') then
+    load_spec(spec)
+    return
+  end
+  if not check_condition(spec) then return end
+  if not state then
+    state = {
+      status = 'registered',
+      spec = { src = spec.src, dependencies = {} },
+      declarations = {},
+      priorities = {},
+      dependencies = {},
+      pending = {},
+      default_lazy = true,
+    }
+    pack_states[spec.src] = state
+  end
+  if not seen[state] then
+    order[#order + 1], seen[state] = state, true
+  end
+  if not dependency and not state.standalone then
+    state.standalone, state.default_lazy = true, ar.pack.defaults.lazy
+  end
+  local priority = dependency and 1 or 2
+  local previous = state.declarations[spec] or 0
+  if previous >= priority or state.preparing then return end
+  state.declarations[spec] = priority
+  if previous == 0 then state.pending[#state.pending + 1] = spec end
+  for field, value in pairs(spec) do
+    if
+      field ~= 'dependencies' and priority >= (state.priorities[field] or 0)
+    then
+      state.spec[field], state.priorities[field] = value, priority
+    end
+  end
+  for _, dep in ipairs(spec.dependencies or {}) do
+    if check_condition(dep) then
+      if not state.dependencies[dep.src] then
+        state.dependencies[dep.src] = true
+        state.spec.dependencies[#state.spec.dependencies + 1] = dep
+      end
+      collect_spec(dep, true, order, seen)
+    end
+  end
+end
+
+local function prepare_spec(state)
+  local spec = state.spec
+  if ar.pack.loaded[spec.src] or state.preparing then return end
+  if state.status == 'loading' or state.status == 'failed' then
+    load_spec(spec)
+    return
+  end
+  state.preparing = true
+  state.cleanups, state.keymaps = state.cleanups or {}, state.keymaps or {}
+  local ok, err = xpcall(function()
+    for _, dep in ipairs(spec.dependencies) do
+      if check_condition(dep) and pack_states[dep.src] then
+        prepare_spec(pack_states[dep.src])
+      end
+    end
+    if spec.init and not state.initialized then
+      state.initialized = true
+      spec.init()
+    end
+    local changed_build = state.build ~= spec.build
+      or state.build_name ~= spec.name
+    if
+      state.build_cleanup and (changed_build or spec.dev or not spec.build)
+    then
+      state.build_cleanup()
+      state.build_cleanup = nil
+    end
+    if spec.build and not spec.dev and not state.build_cleanup then
+      state.build_cleanup = build(spec.src, spec.build, spec.name)
+      state.build, state.build_name = spec.build, spec.name
+    end
+    local pending = state.pending
+    state.pending = {}
+    for _, declaration in ipairs(pending) do
+      register_triggers(declaration, state)
+    end
+  end, debug.traceback)
+  state.preparing = nil
+  if not ok then
+    for _, cleanup in ipairs(state.cleanups or {}) do
+      pcall(cleanup)
+    end
+    state.cleanups, state.keymaps = nil, nil
+    state.status, state.error = 'failed', err
+    error(err, 0)
+  end
+end
+
+--- Load a registered source URL or an unambiguous native package name.
+---@param name string
+---@return boolean loaded True only when this call loads the plugin.
+function ar.pack.load(name)
+  local state = pack_states[name]
+  if not state then
+    for src, candidate in pairs(pack_states) do
+      local package_name = candidate.spec.name
+        or src:gsub('/+$', ''):match('([^/]+)$'):gsub('%.git$', '')
+      if package_name == name then
+        assert(
+          not state,
+          'Ambiguous plugin name: ' .. name .. '; use its source URL'
+        )
+        state = candidate
+      end
+    end
+  end
+  assert(state, 'Unknown registered plugin: ' .. name)
+  if ar.pack.loaded[state.spec.src] then return false end
+  prepare_spec(state)
+  load_spec(state.spec)
+  return ar.pack.loaded[state.spec.src] == true
+end
+
+--- Register one plugin spec or a list of specs with vim.pack. The whole batch
+--- and its dependency specs register before eager loading; an empty list does
+--- nothing. Supports command, filetype, key, or event loading. Standalone specs
+--- default to ar.pack.defaults.lazy; dependency-only specs default to lazy.
+--- Set lazy = false to load after registration, even with triggers. With
+--- lazy = true, loading requires a trigger or use as a dependency; no triggers
+--- means no automatic loading. ar.pack.load(src_or_name) explicitly loads a
+--- registered source URL or unambiguous package name, returning false if loaded.
 --- Any supplied trigger can load it. Filetype triggers handle future FileType events.
 --- Owned command, key, event, and filetype triggers are removed before loading
 --- dependencies or setup, including when loading later fails. Successful loading
@@ -1101,10 +1218,17 @@ end
 --- loads and the pressed key is replayed through the resulting mapping.
 --- Counts and registers on the first press are not explicitly preserved.
 ---
---- init runs when ar.pack.add() is called, before registering triggers or loading
---- the plugin. This runs during startup when the calling module loads then.
---- Use init for globals or other configuration that must precede plugin loading.
---- It runs on each registration; cond = false skips it.
+--- init runs once per source during registration, before its triggers or loading.
+--- Dependency initialization precedes parent initialization. Use init for globals
+--- or other configuration that must precede plugin loading. cond = false skips
+--- registration, initialization, build hooks, and that declaration's dependencies.
+---
+--- Declarations share a source registry. Standalone fields take precedence over
+--- inline dependency fields; later declarations at the same level win. Dependency
+--- lists combine in declaration order and triggers accumulate. Conflicting key
+--- actions prefer standalone declarations, then the latest declaration. Reusing
+--- a spec table does not repeat its registration callbacks. Already loaded
+--- sources ignore later declarations and are never reconfigured automatically.
 ---
 --- Dependencies load before the plugin, and setup runs after vim.pack.add().
 --- Each source URL loads and configures once through this wrapper, so use the
@@ -1115,8 +1239,7 @@ end
 --- the source as loaded in ar.pack.loaded. Installation does not
 --- prompt for confirmation. Set cond = false to skip loading and trigger creation.
 --- cond also accepts a function returning a boolean. Its result is cached on the
---- spec at registration, or on first load for dependency-only specs. A false
---- result also skips init and build hooks.
+--- declaration at registration, including dependency declarations.
 ---
 --- dev = true loads ar.pack.dev.path/<repository-name> through a temporary native
 --- package symlink. The default dev directory is ~/projects. A trailing .git is
@@ -1127,8 +1250,8 @@ end
 --- Build hooks match the explicit name when supplied.
 ---
 --- An optional build callback receives PackChanged arguments on install or
---- update. Its hook is skipped when cond is false. Dependency entries
---- use src, dev, cond, and setup; their cmd, ft, and build fields are not registered.
+--- update. Its hook is skipped when cond is false. Dependency entries support
+--- the full spec, including init, build, nested dependencies, and load triggers.
 ---
 --- e.g.
 --- ```lua
@@ -1157,12 +1280,21 @@ end
 --- ```
 ---@param specs PackSpec|PackSpec[]
 function ar.pack.add(specs)
+  local order, seen = {}, {}
   if specs.src then
-    add_spec(specs)
+    collect_spec(specs, false, order, seen)
   else
     for _, spec in ipairs(specs) do
-      add_spec(spec)
+      collect_spec(spec, false, order, seen)
     end
+  end
+  for _, state in ipairs(order) do
+    prepare_spec(state)
+  end
+  for _, state in ipairs(order) do
+    local lazy = state.spec.lazy
+    if lazy == nil then lazy = state.default_lazy end
+    if not lazy and not state.preparing then load_spec(state.spec) end
   end
 end
 
