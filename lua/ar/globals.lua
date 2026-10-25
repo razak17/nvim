@@ -139,6 +139,7 @@ end
 ---@param opts { forward: boolean }
 ---@return function
 function ar.jump(callback, opts)
+  return function()
     local has_demicolon, has_repeatable
 
     if ar.package_manager == 'lazy' then
@@ -150,10 +151,9 @@ function ar.jump(callback, opts)
       has_repeatable = package.loaded['repeatable_move']
     end
 
-  return function()
     if has_demicolon then return ar.demicolon_jump(callback, opts)() end
     if has_repeatable then return ar.repeatable_jump(callback, opts)() end
-    return function() callback(opts) end
+    return callback(opts)
   end
 end
 
