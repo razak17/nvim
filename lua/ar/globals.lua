@@ -653,17 +653,30 @@ end
 --- Load a plugin on command execution or completion, then use its real command.
 ---@param name string|string[]
 ---@param load? fun()
+---@return fun() cleanup Removes only command stubs still owned by this call.
 function ar.pack.cmd(name, load)
   if type(name) == 'table' then
-    vim.iter(name):each(function(c) ar.pack.cmd(c, load) end)
-    return
+    local cleanups = {}
+    for _, command in ipairs(name) do
+      cleanups[#cleanups + 1] = ar.pack.cmd(command, load)
+    end
+    return function()
+      for _, cleanup in ipairs(cleanups) do cleanup() end
+    end
+  end
+  local invoke
+  local function cleanup()
+    local command = api.nvim_get_commands({})[name]
+    if command and command.callback == invoke then
+      api.nvim_del_user_command(name)
+    end
   end
   local function load_command()
-    pcall(api.nvim_del_user_command, name)
+    cleanup()
     if load then load() end
     assert(fn.exists(':' .. name) == 2, 'Plugin did not define command: ' .. name)
   end
-  api.nvim_create_user_command(name, function(info)
+  invoke = function(info)
     load_command()
     local range = ''
     if info.range == 1 then
@@ -681,7 +694,8 @@ function ar.pack.cmd(name, load)
     if info.range == 0 then command.count = nil end
     api.nvim_cmd(command, {})
     if command.nextcmd ~= '' then vim.cmd(command.nextcmd) end
-  end, {
+  end
+  api.nvim_create_user_command(name, invoke, {
     nargs = '*',
     bang = true,
     range = true,
@@ -692,6 +706,7 @@ function ar.pack.cmd(name, load)
       return fn.getcompletion(cmdline:sub(1, cursorpos), 'cmdline')
     end,
   })
+  return cleanup
 end
 
 ---@class PackDependency
@@ -810,6 +825,9 @@ local function load_spec(spec)
   state.status = 'loading'
   loading_path[#loading_path + 1] = spec.src
   local ok, err = xpcall(function()
+    local cleanups = state.cleanups or {}
+    state.cleanups = nil
+    for _, cleanup in ipairs(cleanups) do cleanup() end
     for _, dep in ipairs(spec.dependencies or {}) do
       load_spec(dep)
     end
@@ -822,7 +840,9 @@ local function load_spec(spec)
       )
     end
     if spec.setup then spec.setup() end
+    for _, restore in ipairs(state.keymaps or {}) do restore() end
   end, debug.traceback)
+  state.keymaps = nil
   loading_path[#loading_path] = nil
   if not ok then
     state.status, state.error = 'failed', err
@@ -833,10 +853,12 @@ local function load_spec(spec)
 end
 
 ---@param load fun()
+---@return fun() cancel
 local function on_very_lazy(load)
+  local active, autocmd = true, nil
   local function schedule_load()
     vim.schedule(function()
-      if vim.v.exiting ~= vim.NIL then return end
+      if not active or vim.v.exiting ~= vim.NIL then return end
       load()
     end)
   end
@@ -844,10 +866,71 @@ local function on_very_lazy(load)
   if vim.v.vim_did_enter == 1 then
     schedule_load()
   else
-    vim.api.nvim_create_autocmd('VimEnter', {
+    autocmd = vim.api.nvim_create_autocmd('VimEnter', {
       once = true,
       callback = schedule_load,
     })
+  end
+  return function()
+    active = false
+    if autocmd then pcall(api.nvim_del_autocmd, autocmd) end
+  end
+end
+
+local function global_keymap(mode, lhs)
+  local expand = api.nvim_replace_termcodes
+  local target = expand(lhs, true, true, true)
+  for _, mapping in ipairs(api.nvim_get_keymap(mode)) do
+    if expand(mapping.lhs, true, true, true) == target then return mapping end
+  end
+end
+
+local function register_key(state, key, load)
+  local lhs, rhs = key[1], key[2]
+  local modes = key.mode or 'n'
+  if type(modes) == 'string' then modes = { modes } end
+  -- Expand combined modes so a replacement in one mode preserves the others.
+  local aliases = {
+    v = { 'x', 's' },
+    [''] = { 'n', 'x', 's', 'o' },
+    ['!'] = { 'i', 'c' },
+  }
+  local expanded = {}
+  for _, mode in ipairs(modes) do
+    for _, actual in ipairs(aliases[mode] or { mode }) do expanded[actual] = true end
+  end
+  local opts = {
+    desc = key.desc,
+    remap = key.noremap == false,
+    silent = key.silent ~= false,
+  }
+  -- A keys callback can load synchronously before returning its declarations.
+  if state.status == 'loaded' then
+    for mode in pairs(expanded) do
+      if rhs ~= nil and not global_keymap(mode, lhs) then
+        vim.keymap.set(mode, lhs, rhs, opts)
+      end
+    end
+    return
+  end
+  local replay = api.nvim_replace_termcodes(lhs, true, false, true)
+  local function trigger()
+    load()
+    api.nvim_feedkeys(replay, 'mi', false)
+  end
+  for mode in pairs(expanded) do
+    local owned = false
+    vim.keymap.set(mode, lhs, trigger, opts)
+    state.cleanups[#state.cleanups + 1] = function()
+      local mapping = global_keymap(mode, lhs)
+      owned = mapping ~= nil and mapping.callback == trigger
+      if owned then vim.keymap.del(mode, lhs) end
+    end
+    state.keymaps[#state.keymaps + 1] = function()
+      if owned and rhs ~= nil and not global_keymap(mode, lhs) then
+        vim.keymap.set(mode, lhs, rhs, opts)
+      end
+    end
   end
 end
 
@@ -860,19 +943,29 @@ local function add_spec(spec)
     return
   end
   if not check_condition(spec) then return end
-  pack_states[spec.src] = state or { status = 'registered' }
+  state = state or { status = 'registered' }
+  pack_states[spec.src] = state
+  state.cleanups, state.keymaps = state.cleanups or {}, state.keymaps or {}
   if spec.lazy == nil then spec.lazy = ar.pack.defaults.lazy end
   if spec.init then spec.init() end
   if spec.build and not spec.dev then build(spec.src, spec.build, spec.name) end
   local function load() load_spec(spec) end
-  if spec.cmd then ar.pack.cmd(spec.cmd, load) end
+  if spec.cmd then
+    state.cleanups[#state.cleanups + 1] = ar.pack.cmd(spec.cmd, load)
+  end
+  local function register_event(event, opts)
+    local id = api.nvim_create_autocmd(event, opts)
+    state.cleanups[#state.cleanups + 1] = function()
+      pcall(api.nvim_del_autocmd, id)
+    end
+  end
   if spec.event then
     local events = type(spec.event) == 'string' and { spec.event } or spec.event
     for _, event in ipairs(events) do
       if event == 'VeryLazy' then
-        on_very_lazy(load)
+        state.cleanups[#state.cleanups + 1] = on_very_lazy(load)
       else
-        vim.api.nvim_create_autocmd(event, {
+        register_event(event, {
           once = true,
           callback = function() load() end,
         })
@@ -880,7 +973,7 @@ local function add_spec(spec)
     end
   end
   if spec.ft then
-    vim.api.nvim_create_autocmd('FileType', {
+    register_event('FileType', {
       pattern = spec.ft,
       once = true,
       callback = load,
@@ -888,28 +981,12 @@ local function add_spec(spec)
   end
   if spec.keys then
     if type(spec.keys) == 'function' then spec.keys = spec.keys(load) end
+    if state.status == 'failed' then load() end
     if type(spec.keys) ~= 'table' then
       if not spec.lazy then load() end
       return
     end
-    for _, key in ipairs(spec.keys) do
-      local lhs, rhs = key[1], key[2]
-      local modes = key.mode or 'n'
-      if key.noremap == nil then key.noremap = true end
-      if key.silent == nil then key.silent = true end
-      local opts =
-        { desc = key.desc, noremap = key.noremap, silent = key.silent }
-      local replay = vim.api.nvim_replace_termcodes(lhs, true, false, true)
-      vim.keymap.set(modes, lhs, function()
-        load()
-        vim.keymap.set(modes, lhs, rhs, opts)
-        if type(rhs) == 'function' then
-          rhs()
-        else
-          vim.api.nvim_feedkeys(replay, 'mi', false)
-        end
-      end, opts)
-    end
+    for _, key in ipairs(spec.keys) do register_key(state, key, load) end
   end
   if not spec.lazy then load() end
 end
@@ -920,6 +997,11 @@ end
 --- to load immediately, even with triggers. With lazy = true, loading requires a
 --- trigger or use as a dependency; no triggers means no automatic loading.
 --- Any supplied trigger can load it. Filetype triggers handle future FileType events.
+--- Owned command, key, event, and filetype triggers are removed before loading
+--- dependencies or setup, including when loading later fails. Successful loading
+--- installs declared key actions where setup has not supplied a mapping. Later
+--- command and key replacements are preserved. Pending VeryLazy work is cancelled.
+--- Triggers created manually inside keys(load) remain the caller's responsibility.
 --- load = false uses native :packadd! behavior: add runtime paths without sourcing
 --- plugin scripts immediately. setup still runs; lazy controls registration timing.
 ---
@@ -932,7 +1014,7 @@ end
 ---
 --- keys entries contain a lhs and a string or function action, with optional
 --- mode and desc fields. The default mode is normal. On first use, the plugin
---- loads, the trigger becomes the real mapping, and the pressed key is replayed.
+--- loads and the pressed key is replayed through the resulting mapping.
 --- Counts and registers on the first press are not explicitly preserved.
 ---
 --- init runs when ar.pack.add() is called, before registering triggers or loading
