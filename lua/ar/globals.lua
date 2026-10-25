@@ -661,7 +661,9 @@ function ar.pack.cmd(name, load)
       cleanups[#cleanups + 1] = ar.pack.cmd(command, load)
     end
     return function()
-      for _, cleanup in ipairs(cleanups) do cleanup() end
+      for _, cleanup in ipairs(cleanups) do
+        cleanup()
+      end
     end
   end
   local invoke
@@ -674,7 +676,10 @@ function ar.pack.cmd(name, load)
   local function load_command()
     cleanup()
     if load then load() end
-    assert(fn.exists(':' .. name) == 2, 'Plugin did not define command: ' .. name)
+    assert(
+      fn.exists(':' .. name) == 2,
+      'Plugin did not define command: ' .. name
+    )
   end
   invoke = function(info)
     load_command()
@@ -827,7 +832,9 @@ local function load_spec(spec)
   local ok, err = xpcall(function()
     local cleanups = state.cleanups or {}
     state.cleanups = nil
-    for _, cleanup in ipairs(cleanups) do cleanup() end
+    for _, cleanup in ipairs(cleanups) do
+      cleanup()
+    end
     for _, dep in ipairs(spec.dependencies or {}) do
       load_spec(dep)
     end
@@ -840,7 +847,9 @@ local function load_spec(spec)
       )
     end
     if spec.setup then spec.setup() end
-    for _, restore in ipairs(state.keymaps or {}) do restore() end
+    for _, restore in ipairs(state.keymaps or {}) do
+      restore()
+    end
   end, debug.traceback)
   state.keymaps = nil
   loading_path[#loading_path] = nil
@@ -850,6 +859,60 @@ local function load_spec(spec)
   end
   state.status = 'loaded'
   ar.pack.loaded[spec.src] = true
+end
+
+local function event_groups(event)
+  local groups = {}
+  for _, autocmd in ipairs(api.nvim_get_autocmds({ event = event })) do
+    if autocmd.group then groups[autocmd.group] = true end
+  end
+  return groups
+end
+
+local function replay_event(event, existing_groups)
+  if
+    not api.nvim_buf_is_valid(event.buf)
+    or not api.nvim_buf_is_loaded(event.buf)
+  then
+    return
+  end
+  local groups, seen = {}, {}
+  for _, autocmd in ipairs(api.nvim_get_autocmds({ event = event.event })) do
+    local group = autocmd.group
+    if group and not existing_groups[group] and not seen[group] then
+      groups[#groups + 1], seen[group] = group, true
+    end
+  end
+  for _, group in ipairs(groups) do
+    if
+      not api.nvim_buf_is_valid(event.buf)
+      or not api.nvim_buf_is_loaded(event.buf)
+    then
+      return
+    end
+    -- An earlier handler may have deleted the next group.
+    local ok, handlers =
+      pcall(api.nvim_get_autocmds, { event = event.event, group = group })
+    if ok and #handlers > 0 then
+      local opts = { group = group, data = event.data, modeline = false }
+      local buffer_match = event.match == api.nvim_buf_get_name(event.buf)
+        or (event.event == 'FileType' and event.match == vim.bo[event.buf].filetype)
+        or (event.event == 'Syntax' and event.match == vim.bo[event.buf].syntax)
+      if buffer_match then
+        opts.buffer = event.buf
+        api.nvim_exec_autocmds(event.event, opts)
+      else
+        -- User, CmdlineEnter, ModeChanged, etc. match something other than a file.
+        opts.pattern = event.match
+        local function execute() api.nvim_exec_autocmds(event.event, opts) end
+        if api.nvim_get_current_buf() == event.buf then
+          execute()
+        else
+          api.nvim_buf_call(event.buf, execute)
+        end
+      end
+    end
+  end
 end
 
 ---@param load fun()
@@ -897,7 +960,9 @@ local function register_key(state, key, load)
   }
   local expanded = {}
   for _, mode in ipairs(modes) do
-    for _, actual in ipairs(aliases[mode] or { mode }) do expanded[actual] = true end
+    for _, actual in ipairs(aliases[mode] or { mode }) do
+      expanded[actual] = true
+    end
   end
   local opts = {
     desc = key.desc,
@@ -949,7 +1014,19 @@ local function add_spec(spec)
   if spec.lazy == nil then spec.lazy = ar.pack.defaults.lazy end
   if spec.init then spec.init() end
   if spec.build and not spec.dev then build(spec.src, spec.build, spec.name) end
-  local function load() load_spec(spec) end
+  local function load(event)
+    if
+      type(event) ~= 'table'
+      or not event.event
+      or ar.pack.loaded[spec.src]
+    then
+      load_spec(spec)
+      return
+    end
+    local existing_groups = event_groups(event.event)
+    load_spec(spec)
+    if ar.pack.loaded[spec.src] then replay_event(event, existing_groups) end
+  end
   if spec.cmd then
     state.cleanups[#state.cleanups + 1] = ar.pack.cmd(spec.cmd, load)
   end
@@ -967,7 +1044,7 @@ local function add_spec(spec)
       else
         register_event(event, {
           once = true,
-          callback = function() load() end,
+          callback = load,
         })
       end
     end
@@ -986,7 +1063,9 @@ local function add_spec(spec)
       if not spec.lazy then load() end
       return
     end
-    for _, key in ipairs(spec.keys) do register_key(state, key, load) end
+    for _, key in ipairs(spec.keys) do
+      register_key(state, key, load)
+    end
   end
   if not spec.lazy then load() end
 end
@@ -1007,7 +1086,12 @@ end
 ---
 --- event accepts an autocmd event name or list, such as 'InsertEnter' or
 --- { 'BufReadPost', 'BufNewFile' }. Only future events trigger loading; the event
---- is not replayed for handlers registered by the plugin during loading.
+--- is replayed after successful loading for augroups with no prior handlers for
+--- that event, including handlers added by dependencies during loading. Existing
+--- groups for that event and ungrouped handlers are skipped to avoid rerunning
+--- unrelated handlers. Replay preserves the triggering buffer, match and data,
+--- uses native pattern matching and once behavior, and skips deleted buffers.
+--- Command, key and VeryLazy loading do not synthesize past events.
 --- 'VeryLazy' schedules loading after VimEnter, or on the next scheduled callback
 --- if startup has finished. It can appear in event lists and does not emit a
 --- global User VeryLazy event. Scheduled loading is skipped while exiting.

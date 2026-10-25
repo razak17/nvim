@@ -34,23 +34,12 @@ ar.completion.config = vim.tbl_extend('force', ar.completion.config or {}, {
   menu = { Color = '[COLOR]' },
 })
 
-local load_event
-
 ar.pack.add({
   src = 'https://github.com/hrsh7th/nvim-cmp',
   event = { 'InsertEnter', 'CmdlineEnter' },
   dependencies = {
     { src = 'https://github.com/razak17/lspkind.nvim' },
   },
-  init = function()
-    -- Capture the first trigger before ar.pack registers its loading handlers.
-    vim.api.nvim_create_autocmd({ 'InsertEnter', 'CmdlineEnter' }, {
-      once = true,
-      callback = function(event)
-        if not load_event then load_event = event end
-      end,
-    })
-  end,
   setup = function()
     if ar.snippets then ar.snippets.load() end
 
@@ -609,9 +598,5 @@ ar.pack.add({
     require('cmp').setup(ar.pack.cmp_opts)
     if ar.pack.dap_cmp then ar.pack.dap_cmp() end
     ar.command('CmpInfo', function() require('cmp').status() end, {})
-    -- cmp's handlers were registered after the event that loaded it.
-    if load_event then
-      require('cmp.utils.autocmd').emit(load_event.event, load_event)
-    end
   end,
 })
