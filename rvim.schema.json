@@ -987,6 +987,15 @@
               },
               "type": "object"
             },
+            "difftool": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
             "dir": {
               "additionalProperties": false,
               "properties": {
@@ -1050,15 +1059,6 @@
               },
               "type": "object"
             },
-            "pack": {
-              "additionalProperties": false,
-              "properties": {
-                "enable": {
-                  "type": "boolean"
-                }
-              },
-              "type": "object"
-            },
             "rooter": {
               "additionalProperties": false,
               "properties": {
@@ -1078,6 +1078,15 @@
               "type": "object"
             },
             "tmux": {
+              "additionalProperties": false,
+              "properties": {
+                "enable": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "undo": {
               "additionalProperties": false,
               "properties": {
                 "enable": {
