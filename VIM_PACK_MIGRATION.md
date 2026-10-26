@@ -1,53 +1,53 @@
 ## 📦 Plugin Modules
 
 - [x] aerial
-- [ ] ai
-- [ ] annotation
-- [ ] api
-- [ ] autopair
-- [ ] avante
+- [x] ai
+- [x] annotation
+- [x] api
+- [x] autopair
+- [x] avante
 - [x] blink
 - [x] blink-sources
-- [ ] buffers
-- [ ] cmdline
+- [x] buffers
+- [x] cmdline
 - [x] cmp-sources
-- [ ] code-block
-- [ ] code-runner
-- [ ] codecompanion
-- [ ] colorizer
-- [ ] comment
+- [x] code-block
+- [x] code-runner
+- [x] codecompanion
+- [x] colorizer
+- [x] comment
 - [x] completion
-- [ ] context
+- [x] context
 - [x] copilot
-- [ ] CopilotChat
+- [x] CopilotChat
 - [x] core
-- [ ] cursor
-- [ ] dashboard
-- [ ] db
-- [ ] debugger
+- [x] cursor
+- [x] dashboard
+- [x] db
+- [x] debugger
 - [x] dial
-- [ ] diff
-- [ ] docs
-- [ ] dropbar
+- [x] diff
+- [x] docs
+- [x] dropbar
 - [x] editing
-- [ ] experiments
+- [x] experiments
 - [x] explorer
-- [ ] file-operations
+- [x] file-operations
 - [x] file-path
-- [ ] fold
-- [ ] ft
+- [x] fold
+- [x] ft
 - [x] git
-- [ ] git-conflict
-- [ ] git-diff
-- [ ] git-extra
-- [ ] git-repo
+- [x] git-conflict
+- [x] git-diff
+- [x] git-extra
+- [x] git-repo
 - [x] gitpad
 - [ ] gp
 - [ ] heirline
 - [ ] heirline-statuscolumn
 - [ ] heirline-statusline
 - [ ] ibl
-- [ ] icons
+- [x] icons
 - [ ] incline
 - [x] init
 - [ ] lang
@@ -111,7 +111,7 @@
 - [x] snippets
 - [ ] sort
 - [ ] surf
-- [ ] swap
+- [x] swap
 - [ ] tailwind
 - [x] telescope
 - [x] telescope-any
