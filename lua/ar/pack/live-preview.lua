@@ -21,17 +21,7 @@ ar.pack.add({
     cond = function()
       return ar.get_plugin_cond('github-preview.nvim', not ar.plugins.minimal)
     end,
-    build = function(event)
-      local result = vim
-        .system(
-          { 'bun', 'install', '--frozen-lockfile' },
-          { cwd = event.data.path, text = true }
-        )
-        :wait()
-      if result.code ~= 0 then
-        error('github-preview build failed: ' .. (result.stderr or ''))
-      end
-    end,
+    build = { 'bun', 'install', '--frozen-lockfile' },
     cmd = { 'GithubPreviewStart', 'GithubPreviewStop', 'GithubPreviewToggle' },
     setup = function() require('github-preview').setup() end,
   },

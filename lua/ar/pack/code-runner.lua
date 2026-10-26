@@ -140,17 +140,7 @@ ar.pack.add({
     cond = function()
       return ar.get_plugin_cond('zignite.nvim', ar.plugins.coding)
     end,
-    build = function(event)
-      local result = vim
-        .system({ 'zig', 'build' }, {
-          cwd = vim.fs.joinpath(event.data.path, 'zig'),
-          text = true,
-        })
-        :wait()
-      if result.code ~= 0 then
-        error('Zignite build failed: ' .. (result.stderr or ''))
-      end
-    end,
+    build = 'cd zig && zig build',
     -- stylua: ignore
     keys = {
       { '<localleader>rr', ':RunFile<CR>', desc = 'zignite: run file' },
@@ -216,17 +206,7 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/michaelb/sniprun',
-    build = function(event)
-      local result = vim
-        .system({ 'sh', 'install.sh' }, {
-          cwd = event.data.path,
-          text = true,
-        })
-        :wait()
-      if result.code ~= 0 then
-        error('Sniprun build failed: ' .. (result.stderr or ''))
-      end
-    end,
+    build = { 'sh', 'install.sh' },
     cmd = { 'SnipRun', 'SnipInfo' },
     cond = function() return ar.get_plugin_cond('sniprun', ar.plugins.coding) end,
     init = function()

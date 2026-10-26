@@ -144,17 +144,7 @@ ar.pack.add({
 
       require('avante').setup(opts)
     end,
-    build = function(event)
-      local result = vim
-        .system({ 'make' }, {
-          cwd = event.data.path,
-          text = true,
-        })
-        :wait()
-      if result.code ~= 0 then
-        error('Avante build failed: ' .. (result.stderr or ''))
-      end
-    end,
+    build = 'make',
     dependencies = {
       { src = 'https://github.com/nvim-lua/plenary.nvim' },
       { src = 'https://github.com/MunifTanjim/nui.nvim' },
