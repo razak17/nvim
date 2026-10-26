@@ -1,11 +1,10 @@
 if not ar then return end
 
-local enabled = ar.config.plugin.core.pack.enable
+local enabled = ar.config.plugin.core.undo.enable
 
 if not ar or ar.none or not enabled then return end
 
 vim.cmd('packadd nvim.undotree')
-vim.cmd('packadd nvim.difftool')
 
 local function undo()
   require('undotree').open({

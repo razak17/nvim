@@ -521,6 +521,7 @@ local config = {
     core = {
       autocommands = { enable = true },
       colors = { enable = true },
+      difftool = { enable = true },
       dir = { enable = true },
       env = { enable = true },
       experimental = { enable = true },
@@ -528,10 +529,10 @@ local config = {
       lists = { enable = true },
       mappings = { enable = true },
       numbers = { enable = true },
-      pack = { enable = true },
       rooter = { enable = true },
       select = { enable = true },
       tmux = { enable = true },
+      undo = { enable = true },
       whitespace = { enable = true },
     },
     extra = {
