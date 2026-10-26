@@ -98,7 +98,7 @@ ar.highlight.all(hls)
 ------------------------------------------------------------------------------
 -- Settings {{{1
 ------------------------------------------------------------------------------
-local o, opt, fn = vim.o, vim.opt, vim.fn
+local o, fn = vim.o, vim.fn
 o.udir = fn.stdpath('cache') .. '/undodir'
 o.viewdir = fn.stdpath('cache') .. '/view'
 o.backup = false
@@ -117,7 +117,6 @@ vim.keymap.set(
 ------------------------------------------------------------------------------
 -- Plugns {{{1
 ------------------------------------------------------------------------------
-local api, fn = vim.api, vim.fn
 local data = fn.stdpath('data')
 
 local lazy_path = data .. '/lazy' .. '/lazy.nvim'
@@ -127,7 +126,7 @@ if not vim.uv.fs_stat(lazy_path) then
   local out = vim.system({ 'git', 'clone', '--filter=blob:none', '--single-branch', lazyrepo, lazy_path }):wait().stdout
   -- stylua: ignore end
   if vim.v.shell_error ~= 0 then
-    api.nvim_echo({
+    vim.api.nvim_echo({
       { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
       { out, 'WarningMsg' },
       { '\nPress any key to exit...' },
