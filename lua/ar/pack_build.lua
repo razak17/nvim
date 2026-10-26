@@ -16,6 +16,8 @@
 ---@field stderr? string
 ---@field code? integer
 ---@field error? string
+---@field started_ns? number
+---@field duration_ms? number
 
 local M = {}
 ---@type table<string, PackBuildJob>
@@ -89,6 +91,7 @@ local function record_success(job)
 end
 
 local function finish(job, result, err)
+  job.duration_ms = (vim.uv.hrtime() - job.started_ns) / 1e6
   job.code, job.stdout, job.stderr =
     result.code, result.stdout or '', result.stderr or ''
   job.status = not err and result.code == 0 and 'success' or 'failed'
@@ -110,6 +113,7 @@ local function finish(job, result, err)
 end
 
 local function start(job)
+  job.started_ns = vim.uv.hrtime()
   job.status, job.uses_slot, running[job.src], active =
     'running', true, true, active + 1
   -- A failed rebuild may have overwritten artifacts from the previous recipe.
@@ -195,6 +199,7 @@ local function run(spec, event, loading)
     -- Callbacks can synchronously load plugins with their own builds. Keeping
     -- them outside the process queue allows those nested builds to start.
     job.status, job.in_callback = 'running', true
+    job.started_ns = vim.uv.hrtime()
     local ok, err = xpcall(function() recipe(event) end, debug.traceback)
     job.in_callback = false
     finish(job, { code = ok and 0 or 1 }, not ok and err or nil)

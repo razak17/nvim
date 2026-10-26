@@ -652,7 +652,7 @@ end
 
 --- Load a plugin on command execution or completion, then use its real command.
 ---@param name string|string[]
----@param load? fun()
+---@param load? fun(reason?: table)
 ---@return fun() cleanup Removes only command stubs still owned by this call.
 function ar.pack.cmd(name, load)
   if type(name) == 'table' then
@@ -673,16 +673,16 @@ function ar.pack.cmd(name, load)
       api.nvim_del_user_command(name)
     end
   end
-  local function load_command()
+  local function load_command(kind)
     cleanup()
-    if load then load() end
+    if load then load({ kind = kind, value = name }) end
     assert(
       fn.exists(':' .. name) == 2,
       'Plugin did not define command: ' .. name
     )
   end
   invoke = function(info)
-    load_command()
+    load_command('command')
     local range = ''
     if info.range == 1 then
       range = tostring(info.line2)
@@ -707,7 +707,7 @@ function ar.pack.cmd(name, load)
     -- Counts may exceed the number of lines; the real command validates addresses.
     addr = 'other',
     complete = function(_, cmdline, cursorpos)
-      load_command()
+      load_command('completion')
       return fn.getcompletion(cmdline:sub(1, cursorpos), 'cmdline')
     end,
   })
@@ -785,8 +785,16 @@ end
 
 local pack_states, loading_path = {}, {}
 
+local function note_trigger(state, kind, value)
+  state.triggers = state.triggers
+    or { commands = {}, events = {}, filetypes = {}, keys = {} }
+  local values = state.triggers[kind]
+  if not vim.tbl_contains(values, value) then values[#values + 1] = value end
+end
+
 ---@param spec PackSpec|PackDependency
-local function load_spec(spec)
+---@param reason? table
+local function load_spec(spec, reason)
   if ar.pack.loaded[spec.src] then return end
   local state = pack_states[spec.src]
   if state and state.status == 'failed' then error(state.error, 0) end
@@ -803,6 +811,8 @@ local function load_spec(spec)
   spec = state and state.spec or spec
   state = state or {}
   pack_states[spec.src] = state
+  local started = vim.uv.hrtime()
+  state.started_ns, state.reason = started, reason or { kind = 'manual' }
   state.status = 'loading'
   loading_path[#loading_path + 1] = spec.src
   local ok, err = xpcall(function()
@@ -812,7 +822,7 @@ local function load_spec(spec)
       cleanup()
     end
     for _, dep in ipairs(spec.dependencies or {}) do
-      load_spec(dep)
+      load_spec(dep, { kind = 'dependency', parent = spec.src })
     end
     if spec.dev then
       load_dev(spec)
@@ -835,6 +845,7 @@ local function load_spec(spec)
     end
   end, debug.traceback)
   state.keymaps = nil
+  state.load_ms = (vim.uv.hrtime() - started) / 1e6
   loading_path[#loading_path] = nil
   if not ok then
     state.status, state.error = 'failed', err
@@ -898,14 +909,14 @@ local function replay_event(event, existing_groups)
   end
 end
 
----@param load fun()
+---@param load fun(reason?: table)
 ---@return fun() cancel
 local function on_very_lazy(load)
   local active, autocmd = true, nil
   local function schedule_load()
     vim.schedule(function()
       if not active or vim.v.exiting ~= vim.NIL then return end
-      load()
+      load({ kind = 'deferred', value = 'VeryLazy' })
     end)
   end
 
@@ -961,6 +972,9 @@ local function register_key(state, key, load, declaration)
       state.keybindings[id] = declaration
     end
   end
+  for mode in pairs(expanded) do
+    note_trigger(state, 'keys', mode .. ' ' .. lhs)
+  end
   local opts = {
     desc = key.desc,
     remap = key.noremap == false,
@@ -977,7 +991,7 @@ local function register_key(state, key, load, declaration)
   end
   local replay = api.nvim_replace_termcodes(lhs, true, false, true)
   local function trigger()
-    load()
+    load({ kind = 'key', value = lhs, mode = fn.mode(1) })
     api.nvim_feedkeys(replay, 'mi', false)
   end
   for mode in pairs(expanded) do
@@ -999,17 +1013,41 @@ end
 ---@param spec PackSpec
 local function register_triggers(spec, state)
   local function load(event)
+    local reason = { kind = 'manual' }
+    if type(event) == 'table' then
+      if event.event then
+        reason = {
+          kind = 'event',
+          value = event.event,
+          buf = event.buf,
+          match = event.match,
+        }
+      elseif event.kind then
+        reason = { kind = event.kind, value = event.value, mode = event.mode }
+      end
+    end
     if
       type(event) ~= 'table'
       or not event.event
       or ar.pack.loaded[spec.src]
     then
-      load_spec(spec)
+      load_spec(spec, reason)
       return
     end
     local existing_groups = event_groups(event.event)
-    load_spec(spec)
+    load_spec(spec, reason)
     if ar.pack.loaded[spec.src] then replay_event(event, existing_groups) end
+  end
+  for field, kind in pairs({
+    cmd = 'commands',
+    event = 'events',
+    ft = 'filetypes',
+  }) do
+    local values = spec[field]
+    if type(values) == 'string' then values = { values } end
+    for _, value in ipairs(values or {}) do
+      note_trigger(state, kind, value)
+    end
   end
   if spec.cmd and not ar.pack.loaded[spec.src] then
     state.cleanups[#state.cleanups + 1] = ar.pack.cmd(spec.cmd, load)
@@ -1042,7 +1080,10 @@ local function register_triggers(spec, state)
   end
   if spec.keys then
     local keys = spec.keys
-    if type(keys) == 'function' then keys = keys(load) end
+    if type(keys) == 'function' then
+      state.keys_callback = true
+      keys = keys(load)
+    end
     if state.status == 'failed' then load() end
     if type(keys) ~= 'table' then return end
     for _, key in ipairs(keys) do
@@ -1144,14 +1185,12 @@ local function prepare_spec(state)
     end
     state.cleanups, state.keymaps = nil, nil
     state.status, state.error = 'failed', err
+    state.reason = state.reason or { kind = 'registration' }
     error(err, 0)
   end
 end
 
---- Load a registered source URL or an unambiguous native package name.
----@param name string
----@return boolean loaded True only when this call loads the plugin.
-function ar.pack.load(name)
+local function registered_state(name)
   local state = pack_states[name]
   if not state then
     for src, candidate in pairs(pack_states) do
@@ -1167,11 +1206,145 @@ function ar.pack.load(name)
     end
   end
   assert(state, 'Unknown registered plugin: ' .. name)
+  return state
+end
+
+--- Load a registered source URL or an unambiguous native package name.
+---@param name string
+---@return boolean loaded True only when this call loads the plugin.
+function ar.pack.load(name)
+  local state = registered_state(name)
   if ar.pack.loaded[state.spec.src] then return false end
   prepare_spec(state)
-  load_spec(state.spec)
+  load_spec(state.spec, { kind = 'manual', value = name })
   return ar.pack.loaded[state.spec.src] == true
 end
+
+---@class PackInfo
+---@field src string
+---@field name string
+---@field status string
+---@field lazy boolean
+---@field dev boolean
+---@field dependencies string[]
+---@field triggers table
+---@field keys_callback boolean
+---@field reason? table
+---@field load_ms? number Inclusive of dependencies and waited builds.
+---@field error? string
+---@field build? table
+
+local function pack_info(state)
+  local spec = state.spec
+  local lazy = spec.lazy
+  if lazy == nil then lazy = state.default_lazy end
+  local info = {
+    src = spec.src,
+    name = spec.name
+      or spec.src:gsub('/+$', ''):match('([^/]+)$'):gsub('%.git$', ''),
+    status = state.status,
+    lazy = lazy == true,
+    dev = spec.dev == true,
+    dependencies = {},
+    triggers = vim.deepcopy(
+      state.triggers
+        or { commands = {}, events = {}, filetypes = {}, keys = {} }
+    ),
+    keys_callback = state.keys_callback == true,
+    reason = state.reason and vim.deepcopy(state.reason) or nil,
+    load_ms = state.load_ms,
+    error = state.error ~= nil and tostring(state.error) or nil,
+  }
+  if state.status == 'loading' and state.started_ns then
+    info.load_ms = (vim.uv.hrtime() - state.started_ns) / 1e6
+  end
+  for _, dep in ipairs(spec.dependencies) do
+    info.dependencies[#info.dependencies + 1] = dep.src
+  end
+  local builds = package.loaded['ar.pack_build']
+  local job = builds and builds.jobs[spec.src]
+  if job then
+    info.build = {}
+    for _, field in ipairs({
+      'status',
+      'path',
+      'revision',
+      'duration_ms',
+      'code',
+      'stdout',
+      'stderr',
+      'error',
+    }) do
+      info.build[field] = job[field]
+    end
+    info.build.command = type(job.recipe) == 'function' and 'Lua callback'
+      or vim.deepcopy(job.recipe)
+  end
+  return info
+end
+
+--- Return copied diagnostics without loading plugins or querying package updates.
+---@param name? string Source URL or unambiguous native package name.
+---@return PackInfo|PackInfo[]
+function ar.pack.info(name)
+  if name then return pack_info(registered_state(name)) end
+  local info = {}
+  for _, state in pairs(pack_states) do
+    info[#info + 1] = pack_info(state)
+  end
+  table.sort(info, function(a, b)
+    if a.name == b.name then return a.src < b.src end
+    return a.name < b.name
+  end)
+  return info
+end
+
+--- Counts describe wrapper registrations, not every plugin installed on disk.
+---@return table
+function ar.pack.stats()
+  local stats = {
+    count = 0,
+    registered = 0,
+    loading = 0,
+    loaded = 0,
+    failed = 0,
+    builds = {},
+  }
+  local builds = package.loaded['ar.pack_build']
+  for src, state in pairs(pack_states) do
+    stats.count = stats.count + 1
+    stats[state.status] = stats[state.status] + 1
+    local job = builds and builds.jobs[src]
+    if job then
+      local status = job.status
+      stats.builds[status] = (stats.builds[status] or 0) + 1
+    end
+  end
+  return stats
+end
+
+api.nvim_create_user_command('ArPackInfo', function(args)
+  local name = args.args ~= '' and args.args or nil
+  require('ar.pack_info').open(function() return ar.pack.info(name) end)
+end, {
+  nargs = '?',
+  desc = 'Inspect plugin loading, dependencies and build results',
+  complete = function(lead)
+    local counts, candidates = {}, {}
+    for _, info in ipairs(ar.pack.info()) do
+      counts[info.name] = (counts[info.name] or 0) + 1
+      candidates[#candidates + 1] = info.src
+    end
+    for name, count in pairs(counts) do
+      if count == 1 then candidates[#candidates + 1] = name end
+    end
+    table.sort(candidates)
+    return vim.tbl_filter(
+      function(candidate) return vim.startswith(candidate, lead) end,
+      candidates
+    )
+  end,
+})
 
 --- Register one plugin spec or a list of specs with vim.pack. The whole batch
 --- and its dependency specs register before eager loading; an empty list does
@@ -1181,6 +1354,10 @@ end
 --- lazy = true, loading requires a trigger or use as a dependency; no triggers
 --- means no automatic loading. ar.pack.load(src_or_name) explicitly loads a
 --- registered source URL or unambiguous package name, returning false if loaded.
+--- ar.pack.info(name) returns a copied plugin snapshot; no argument lists all
+--- registrations. ar.pack.stats() returns state and build counts. :ArPackInfo
+--- [name] opens a scratch report, with r to refresh and q to close. Load timings
+--- include dependencies and waited builds; their sum is not a startup duration.
 --- Any supplied trigger can load it. Filetype triggers handle future FileType events.
 --- Owned command, key, event, and filetype triggers are removed before loading
 --- dependencies or setup, including when loading later fails. Successful loading
@@ -1295,7 +1472,9 @@ function ar.pack.add(specs)
   for _, state in ipairs(order) do
     local lazy = state.spec.lazy
     if lazy == nil then lazy = state.default_lazy end
-    if not lazy and not state.preparing then load_spec(state.spec) end
+    if not lazy and not state.preparing then
+      load_spec(state.spec, { kind = 'eager' })
+    end
   end
 end
 
