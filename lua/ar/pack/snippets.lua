@@ -66,15 +66,6 @@ end
 
 if not get_cond() then return end
 
-local function build(path)
-  local result = vim
-    .system({ 'make', 'install_jsregexp' }, { cwd = path, text = true })
-    :wait()
-  if result.code ~= 0 then
-    error('LuaSnip jsregexp build failed: ' .. (result.stderr or ''))
-  end
-end
-
 local load
 
 local mappings = {
@@ -101,7 +92,7 @@ local mappings = {
 ar.pack.add({
   src = 'https://github.com/L3MON4D3/LuaSnip',
   event = 'InsertEnter',
-  build = function(event) build(event.data.path) end,
+  build = { 'make', 'install_jsregexp' },
   keys = function(loader)
     load = loader
     ar.snippets = { load = loader }

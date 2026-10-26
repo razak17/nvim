@@ -732,7 +732,9 @@ end
 ---@field dev? boolean Load from ar.pack.dev.path instead of installing from src.
 ---@field lazy? boolean Defaults to ar.pack.defaults.lazy.
 ---@field init? fun():nil
----@field build? fun(args: AutocmdArgs):nil
+---@field build? string|string[]|fun(args: AutocmdArgs):nil
+---@field build_wait? boolean Wait for command builds before setup; defaults to true.
+---@field build_timeout? integer Command timeout in milliseconds; defaults to 300000.
 ---@field cond? boolean|fun():boolean
 ---@field cmd? string|string[]
 ---@field ft? string|string[]
@@ -740,26 +742,6 @@ end
 ---@field dependencies? PackDependency[]
 ---@field keys? PackKey[]|fun(load: fun()):PackKey[]|nil
 ---@field event? string|string[]
-
----@param src string
----@param f fun(args: AutocmdArgs):nil
----@param name? string
----@return fun() cleanup
-local function build(src, f, name)
-  name = name or src:gsub('/+$', ''):match('([^/]+)$'):gsub('%.git$', '')
-  local group = api.nvim_create_augroup(name .. '_build', { clear = true })
-  local id = api.nvim_create_autocmd('PackChanged', {
-    group = group,
-    callback = function(args)
-      local data = args.data
-      if data.spec.name ~= name then return end
-      if data.kind == 'install' or data.kind == 'update' then
-        if f then f(args) end
-      end
-    end,
-  })
-  return function() pcall(api.nvim_del_autocmd, id) end
-end
 
 local dev_package_root
 
@@ -839,6 +821,13 @@ local function load_spec(spec)
         { { src = spec.src, name = spec.name, version = spec.version } },
         { confirm = false, load = spec.load }
       )
+    end
+    if spec.build and not spec.dev then
+      local builds = require('ar.pack_build')
+      builds.ensure(spec)
+      if type(spec.build) == 'function' or spec.build_wait ~= false then
+        builds.wait(spec.src)
+      end
     end
     if spec.setup then spec.setup() end
     for _, restore in ipairs(state.keymaps or {}) do
@@ -1139,7 +1128,7 @@ local function prepare_spec(state)
       state.build_cleanup = nil
     end
     if spec.build and not spec.dev and not state.build_cleanup then
-      state.build_cleanup = build(spec.src, spec.build, spec.name)
+      state.build_cleanup = require('ar.pack_build').register(spec)
       state.build, state.build_name = spec.build, spec.name
     end
     local pending = state.pending
@@ -1249,9 +1238,21 @@ end
 --- name and version are forwarded to vim.pack for remote plugins and dependencies.
 --- Build hooks match the explicit name when supplied.
 ---
---- An optional build callback receives PackChanged arguments on install or
---- update. Its hook is skipped when cond is false. Dependency entries support
---- the full spec, including init, build, nested dependencies, and load triggers.
+--- build accepts a shell command string, an argument list, or a Lua callback.
+--- Commands run in the plugin directory through vim.system, with at most two
+--- command builds running concurrently and one per source. build_wait defaults
+--- to true so builds finish before setup; false permits background command
+--- builds. build_timeout sets the command timeout in milliseconds, default 300000.
+--- Failures capture stdout, stderr, and exit code; waited failures prevent setup.
+--- require('ar.pack_build').jobs[src] exposes the latest build result.
+---
+--- Successful command builds are cached by revision and command under the state
+--- directory's ar-pack/builds folder. Commands also run on first load if no build
+--- record exists. Fresh installations always rebuild; failed attempts invalidate
+--- earlier records. Lua callbacks retain their original PackChanged arguments,
+--- run synchronously on each install or update, and manage any work they schedule
+--- themselves. Callback results are not cached across revisions or sessions.
+--- Dependency entries support the full spec, including init, build and triggers.
 ---
 --- e.g.
 --- ```lua
