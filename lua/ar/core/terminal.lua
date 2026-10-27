@@ -1,5 +1,7 @@
 if not ar then return end
 
+if ar.config.terminal.variant ~= 'custom' then return end
+
 local api, fn, bo, o = vim.api, vim.fn, vim.bo, vim.o
 
 -- https://github.com/theopn/dotfiles/blob/27952026aa8ee8b9a1cff3741eb5150e9468c493/nvim/.config/nvim/lua/theovim/keymaps.lua#L2

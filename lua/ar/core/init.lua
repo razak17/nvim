@@ -3,6 +3,7 @@ local whitelist = {
   'lsp',
   'statuscolumn',
   'statusline',
+  'terminal',
   'winbar',
 }
 
