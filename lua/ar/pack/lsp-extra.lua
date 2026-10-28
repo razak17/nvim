@@ -44,7 +44,7 @@ ar.pack.add({
       return ar.get_plugin_cond('output-panel.nvim', condition)
     end,
     cmd = { 'OutputPanel' },
-    setup = function() require('output_panel').setup({}) end,
+    setup = function() require('output_panel').setup() end,
   },
   {
     src = 'https://github.com/stevanmilic/nvim-lspimport',

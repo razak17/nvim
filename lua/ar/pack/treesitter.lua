@@ -25,7 +25,7 @@ local ensure_installed = {
 ar.pack.add({
   {
     src = 'https://github.com/nvim-treesitter/nvim-treesitter',
-    cond = function() return ar.get_plugin_cond('nvim-treesitter', ts_enabled) end,
+    cond = ar.get_plugin_cond('nvim-treesitter', ts_enabled),
     lazy = false,
     load = false,
     build = function()
@@ -224,9 +224,7 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
-    cond = function()
-      return ar.get_plugin_cond('nvim-treesitter-textobjects', ts_enabled)
-    end,
+    cond = ar.get_plugin_cond('nvim-treesitter-textobjects', ts_enabled),
     event = 'BufRead',
     keys = function(load)
       map({ 'n', 'x', 'o' }, 'a=', function()
@@ -312,9 +310,7 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/windwp/nvim-ts-autotag',
-    cond = function()
-      return ar.get_plugin_cond('nvim-ts-autotag', ar.plugins.coding)
-    end,
+    cond = ar.get_plugin_cond('nvim-ts-autotag', ar.plugins.coding),
     ft = {
       'typescriptreact',
       'javascript',
@@ -327,9 +323,7 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/andymass/vim-matchup',
-    cond = function()
-      return ar.get_plugin_cond('vim-matchup', ar.plugins.coding)
-    end,
+    cond = ar.get_plugin_cond('vim-matchup', ar.plugins.coding),
     event = { 'BufReadPre', 'BufNewFile' },
     keys = {
       {

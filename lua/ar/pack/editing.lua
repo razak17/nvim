@@ -1,7 +1,7 @@
 ar.pack.add({
   {
     src = 'https://github.com/gbprod/yanky.nvim',
-    cond = function() return ar.get_plugin_cond('yanky.nvim') end,
+    cond = ar.get_plugin_cond('yanky.nvim'),
     init = function()
       vim.g.whichkey_add_spec({
         '<C-w>y',
@@ -33,7 +33,7 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/Wansmer/treesj',
-    cond = function() return ar.get_plugin_cond('treesj', ar.plugins.coding) end,
+    cond = ar.get_plugin_cond('treesj', ar.plugins.coding),
     cmd = { 'TSJSplit', 'TSJJoin' },
     keys = {
       { '<leader>oK', '<Cmd>TSJToggle<CR>', desc = 'split/join lines' },
@@ -117,9 +117,7 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/hinell/duplicate.nvim',
-    cond = function()
-      return ar.get_plugin_cond('duplicate.nvim', not ar.plugins.minimal)
-    end,
+    cond = ar.get_plugin_cond('duplicate.nvim', not ar.plugins.minimal),
     cmd = { 'LineDuplicate', 'VisualDuplicate' },
     -- stylua: ignore
     keys = {
@@ -131,9 +129,7 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/mfussenegger/nvim-treehopper',
-    cond = function()
-      return ar.get_plugin_cond('nvim-treehopper', not ar.plugins.minimal)
-    end,
+    cond = ar.get_plugin_cond('nvim-treehopper', not ar.plugins.minimal),
     keys = {
       {
         'u',
@@ -159,9 +155,7 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/max397574/better-escape.nvim',
-    cond = function()
-      return ar.get_plugin_cond('better-escape.nvim', not ar.plugins.minimal)
-    end,
+    cond = ar.get_plugin_cond('better-escape.nvim', not ar.plugins.minimal),
     event = { 'InsertEnter' },
     setup = function()
       require('better_escape').setup({

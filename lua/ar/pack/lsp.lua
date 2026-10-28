@@ -60,16 +60,7 @@ local function get_servers()
     :map(function(name)
       local config = ar_servers.get(name)
       if not config then return nil end -- skip if config missing
-      if name == 'tsc' then
-        vim.lsp.config('tsc', {
-          capabilities = { experimental = { hoverVerbosityLevel = true } },
-          -- Optional. The server cuts long types at 500 characters and shows
-          -- "... N more ..." in their place. Raise the cap to see big types whole.
-          settings = { ['js/ts'] = { maximumHoverLength = 5000 } },
-        })
-      else
-        vim.lsp.config(name, config)
-      end
+      vim.lsp.config(name, config)
       return name
     end)
     :filter(function(x) return x ~= nil end)
@@ -82,7 +73,7 @@ end
 ar.pack.add({
   {
     src = 'https://github.com/williamboman/mason-lspconfig.nvim',
-    cond = function() return ar.get_plugin_cond('mason.nvim', ar.lsp.enable) end,
+    cond = ar.get_plugin_cond('mason.nvim', ar.lsp.enable),
     lazy = false, -- Don't lazy load. Causes highlight issues on :restart
     setup = function()
       require('lspconfig.ui.windows').default_options.border = border
@@ -105,12 +96,10 @@ ar.pack.add({
   },
   {
     src = 'https://github.com/antosha417/nvim-lsp-file-operations',
-    cond = function()
-      return ar.get_plugin_cond(
-        'nvim-lsp-file-operations',
-        not ar.plugins.minimal and enabled
-      )
-    end,
+    cond = ar.get_plugin_cond(
+      'nvim-lsp-file-operations',
+      not ar.plugins.minimal and enabled
+    ),
     event = { 'LspAttach' },
     setup = function() require('lsp-file-operations').setup() end,
   },
