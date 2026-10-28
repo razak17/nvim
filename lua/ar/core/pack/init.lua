@@ -628,7 +628,7 @@ local function pack_info(state)
   for _, dep in ipairs(spec.dependencies) do
     info.dependencies[#info.dependencies + 1] = dep.src
   end
-  local builds = package.loaded['ar.pack_build']
+  local builds = package.loaded['ar.core.pack.build']
   local job = builds and builds.jobs[spec.src]
   if job then
     info.build = {}
@@ -677,7 +677,7 @@ function ar.pack.stats()
     failed = 0,
     builds = {},
   }
-  local builds = package.loaded['ar.pack_build']
+  local builds = package.loaded['ar.core.pack.build']
   for src, state in pairs(pack_states) do
     stats.count = stats.count + 1
     stats[state.status] = stats[state.status] + 1
