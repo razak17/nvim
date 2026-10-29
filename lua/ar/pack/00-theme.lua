@@ -31,6 +31,15 @@ ar.pack.add({
         theming.generate_lsp_overrides()
       )
       theming.apply_overrides('onedark', { default = overrides })
+      -- Highlight preview
+      local root = vim.fs.root(0, '.git') or vim.uv.cwd()
+      local theme = vim.fs.joinpath(ar.pack.dev.path, 'onedark.nvim')
+      if vim.uv.fs_realpath(root) == vim.uv.fs_realpath(theme) then
+        vim.schedule(function()
+          ar.pack.load('mini.hipatterns')
+          require('onedark.dev').setup()
+        end)
+      end
     end,
   },
   {
