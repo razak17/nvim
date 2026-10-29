@@ -17,6 +17,7 @@ ar.pack.add({
   src = 'https://github.com/zbirenbaum/copilot.lua',
   cmd = { 'Copilot' },
   event = 'InsertEnter',
+  lazy = false,
   dependencies = {
     { src = 'https://github.com/copilotlsp-nvim/copilot-lsp' },
     { src = 'https://github.com/samiulsami/copilot-eldritch.nvim' },
