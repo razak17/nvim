@@ -11,7 +11,19 @@ ar.pack.add({
   end,
   event = 'UIEnter',
   setup = function()
-    local opts = {
+    ar.highlight.plugin('mini-indentscope', {
+      theme = {
+        ['onedark'] = {
+          { MiniIndentscopeSymbol = { link = 'IndentBlanklineContextChar' } },
+          { MiniIndentscopeSymbolOff = { link = 'IndentBlanklineChar' } },
+        },
+        ['default'] = {
+          { MiniIndentscopeSymbol = { link = 'NonText' } },
+          { MiniIndentscopeSymbolOff = { link = 'NonText' } },
+        },
+      },
+    })
+    require('mini.indentscope').setup({
       symbol = separators.left_thin_block,
       draw = {
         delay = 100,
@@ -25,20 +37,7 @@ ar.pack.add({
           'markdown', 'norg', 'org', 'orgagenda', 'snacks_dashboard', 'sidekick_terminal',
           '', -- for all buffers without a file type
         },
-    }
-    ar.highlight.plugin('mini-indentscope', {
-      theme = {
-        ['onedark'] = {
-          { MiniIndentscopeSymbol = { link = 'IndentBlanklineContextChar' } },
-          { MiniIndentscopeSymbolOff = { link = 'IndentBlanklineChar' } },
-        },
-        ['default'] = {
-          { MiniIndentscopeSymbol = { link = 'NonText' } },
-          { MiniIndentscopeSymbolOff = { link = 'NonText' } },
-        },
-      },
     })
-    require('mini.indentscope').setup(opts)
 
     ar.augroup('MiniIndentscopeDisable', {
       event = { 'FileType' },

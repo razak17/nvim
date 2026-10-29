@@ -85,7 +85,7 @@ ar.pack.add({
         },
       },
     })
-    require('copilot-eldritch').setup({})
+    require('copilot-eldritch').setup()
   end,
 })
 
@@ -125,7 +125,7 @@ ar.pack.copilot = {
       lazy = false,
       setup = function()
         local copilot_cmp = require('copilot_cmp')
-        copilot_cmp.setup({})
+        copilot_cmp.setup()
         vim.api.nvim_create_autocmd('LspAttach', {
           callback = function(args)
             local client = vim.lsp.get_client_by_id(args.data.client_id)

@@ -1,0 +1,61 @@
+ar.pack.add({
+  {
+    src = 'https://github.com/sQVe/sort.nvim',
+    cond = function() return ar.get_plugin_cond('sort.nvim') end,
+    cmd = { 'Sort' },
+    init = function()
+      vim.g.whichkey_add_spec({
+        '<localleader>S',
+        group = 'Sort',
+        mode = { 'n', 'x' },
+      })
+    end,
+    keys = {
+      {
+        '<localleader>Ss',
+        ':Sort<CR>',
+        desc = 'sort: selection',
+        mode = { 'n', 'x' },
+        silent = true,
+      },
+      {
+        '<localleader>SS',
+        ':Sort!<CR>',
+        desc = 'sort: selection (reverse)',
+        mode = { 'n', 'x' },
+        silent = true,
+      },
+      {
+        '<localleader>Si',
+        ':Sort i<CR>',
+        desc = 'sort: ignore case',
+        mode = { 'n', 'x' },
+        silent = true,
+      },
+      {
+        '<localleader>SI',
+        ':Sort! i<CR>',
+        desc = 'sort: ignore case (reverse)',
+        mode = { 'n', 'x' },
+        silent = true,
+      },
+    },
+  },
+  {
+    src = 'https://github.com/mtrajano/tssorter.nvim',
+    cond = function() return ar.get_plugin_cond('tssorter.nvim') end,
+    keys = {
+      {
+        '<leader>is',
+        function() require('tssorter').sort() end,
+        desc = 'tssorter: sort',
+      },
+      {
+        '<leader>iS',
+        function() require('tssorter').sort({ reverse = true }) end,
+        desc = 'tssorter: reverse sort',
+      },
+    },
+    setup = function() require('tssorter').setup() end,
+  },
+})

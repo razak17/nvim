@@ -5,7 +5,7 @@ local load
 local keys
 
 local function setup()
-  local opts = {
+  require('sidekick').setup({
     nes = {
       enabled = true,
     },
@@ -21,8 +21,7 @@ local function setup()
         },
       },
     },
-  }
-  require('sidekick').setup(opts)
+  })
 
   if ar.has('tiny-inline-diagnostic.nvim') then
     vim.api.nvim_create_autocmd('User', {

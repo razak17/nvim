@@ -44,14 +44,13 @@ ar.pack.add({
     },
   },
   setup = function()
-    local opts = {
+    require('gitpad').setup({
       title = 'Notes',
       default_text = '',
       on_attach = function(bufnr)
         -- stylua: ignore
         vim.api.nvim_buf_set_keymap(bufnr, 'n', 'q', '<Cmd>wq<CR>', { noremap = true, silent = true })
       end,
-    }
-    require('gitpad').setup(opts)
+    })
   end,
 })

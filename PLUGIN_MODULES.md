@@ -49,7 +49,6 @@
 - ibl
 - icons
 - incline
-- init
 - lang
 - lazydev
 - leetcode

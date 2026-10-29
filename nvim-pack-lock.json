@@ -176,6 +176,18 @@
       "rev": "070a5d7b985546cc57e1fc61e5bc507fecac6045",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
+    "gp.nvim": {
+      "rev": "74e37e09130464166d478fa7ff6a1991492d0874",
+      "src": "https://github.com/razak17/gp.nvim"
+    },
+    "heirline.nvim": {
+      "rev": "fae936abb5e0345b85c3a03ecf38525b0828b992",
+      "src": "https://github.com/rebelot/heirline.nvim"
+    },
+    "hierarchy.nvim": {
+      "rev": "0aa589993a4026513952e3c081c06643855fdeb7",
+      "src": "https://github.com/razak17/hierarchy.nvim"
+    },
     "icon-picker.nvim": {
       "rev": "6feda2881efa74bb977d8990970ed53f315e3812",
       "src": "https://github.com/SaptanshuWanjari/icon-picker.nvim"
@@ -268,9 +280,17 @@
       "rev": "5d2d37f828a6df2f85e6df6b0a2b375f45bd5125",
       "src": "https://github.com/2kabhishek/nerdy.nvim"
     },
+    "noice.nvim": {
+      "rev": "7bfd942445fb63089b59f97ca487d605e715f155",
+      "src": "https://github.com/folke/noice.nvim"
+    },
     "nui.nvim": {
       "rev": "10fc361835c856ba4233ef5ea135b919bf3dce97",
       "src": "https://github.com/MunifTanjim/nui.nvim"
+    },
+    "nvim-bqf": {
+      "rev": "c282a62bec6c0621a1ef5132aa3f4c9fc4dcc2c7",
+      "src": "https://github.com/kevinhwang91/nvim-bqf"
     },
     "nvim-cmp": {
       "rev": "2ffe79f1f021def8dd1fcd81deb16f1bb0d989f3",
@@ -291,6 +311,10 @@
     "nvim-lint": {
       "rev": "3d55c8f67c6ae5c15e1042571e107c7a3d5c5f4e",
       "src": "https://github.com/mfussenegger/nvim-lint"
+    },
+    "nvim-lsp-endhints": {
+      "rev": "3224a1c1b2fe1b067049764a154d4d727425fa6d",
+      "src": "https://github.com/chrisgrieser/nvim-lsp-endhints"
     },
     "nvim-lsp-file-operations": {
       "rev": "57a446f3ada9f8e994aaeebcb5c1dc5f5c037a81",
@@ -360,13 +384,13 @@
       "rev": "29ecb9c5ba4bae4ba214df567f9eca6da2a8ec93",
       "src": "https://github.com/ck-zhang/obfuscate.nvim"
     },
-    "onedark.nvim": {
-      "rev": "9e43b2a3f903255bf5ec7cbcd6a2760463adb8e2",
-      "src": "https://github.com/razak17/onedark.nvim"
-    },
     "output-panel.nvim": {
       "rev": "f1bfa500a2462a106015df62531e0d74636b5aac",
       "src": "https://github.com/mhanberg/output-panel.nvim"
+    },
+    "persist-quickfix.nvim": {
+      "rev": "0f846d9a4f4b33634e21c4de1424f5ad24cc44ff",
+      "src": "https://github.com/brunobmello25/persist-quickfix.nvim"
     },
     "persisted.nvim": {
       "rev": "f276b33befabbe92796605eaeb191e8058da95c9",
@@ -379,6 +403,10 @@
     "prompt-tower.nvim": {
       "rev": "73f111562fe0a2d3abf756a4f18a556a84367938",
       "src": "https://github.com/kylesnowschwartz/prompt-tower.nvim"
+    },
+    "render-markdown.nvim": {
+      "rev": "8e8795368391036643b622875a6da6a51bcd33f4",
+      "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "repeatable-move.nvim": {
       "rev": "0c8d75dc04e2c149a9de1beff2e85dabb99990ef",

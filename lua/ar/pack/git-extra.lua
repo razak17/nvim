@@ -49,7 +49,7 @@ ar.pack.add({
     src = 'https://github.com/yutkat/git-rebase-auto-diff.nvim',
     cond = function() return git_cond('git-rebase-auto-diff.nvim') end,
     ft = { 'gitrebase' },
-    setup = function() require('git-rebase-auto-diff').setup({}) end,
+    setup = function() require('git-rebase-auto-diff').setup() end,
   },
   {
     src = 'https://github.com/aaronhallaert/advanced-git-search.nvim',

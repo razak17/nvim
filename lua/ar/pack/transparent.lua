@@ -6,7 +6,7 @@ end
 
 ar.pack.add({
   src = 'https://github.com/tribela/transparent.nvim',
-  -- cmd = { 'TransparentToggle', 'TransparentEnable', 'TransparentDisable' },
+  cmd = { 'TransparentToggle', 'TransparentEnable', 'TransparentDisable' },
   init = function()
     ar.add_to_select(
       'toggle',

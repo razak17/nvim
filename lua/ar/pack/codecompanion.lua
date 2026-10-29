@@ -290,7 +290,6 @@ ar.pack.add({
         end
         return opts
       end
-      local opts = get_opts()
       ar.highlight.plugin('CodeCompanion', {
         theme = {
           ['onedark'] = {
@@ -316,14 +315,14 @@ ar.pack.add({
         },
       })
 
-      require('codecompanion').setup(opts)
+      require('codecompanion').setup(get_opts())
     end,
     dependencies = {
       { src = 'https://github.com/ravitemer/codecompanion-history.nvim' },
       {
         src = 'https://github.com/franco-ruggeri/codecompanion-spinner.nvim',
         dependencies = { { src = 'https://github.com/nvim-lua/plenary.nvim' } },
-        setup = function() require('codecompanion-spinner').setup({}) end,
+        setup = function() require('codecompanion-spinner').setup() end,
       },
     },
   },

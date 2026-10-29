@@ -444,7 +444,6 @@ ar.pack.add({
           },
         }
       end
-      local opts = get_opts()
       local transparent = ar.config.ui.transparent.enable
       highlight.plugin('NeoTree', {
         { NeoTreeNormal = { link = 'PanelBackground' } },
@@ -458,7 +457,7 @@ ar.pack.add({
         },
         { NeoTreeTitleBar = { link = 'FloatTitle' } },
       })
-      require('neo-tree').setup(opts)
+      require('neo-tree').setup(get_opts())
     end,
     dependencies = {
       { src = 'https://github.com/MunifTanjim/nui.nvim' },

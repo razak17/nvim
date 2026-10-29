@@ -96,8 +96,7 @@ ar.pack.add({
           },
         }
       end
-      local opts = get_opts()
-      require('dropbar').setup(opts)
+      require('dropbar').setup(get_opts())
       highlight.plugin('dropbar', {
         theme = {
           ['onedark'] = {

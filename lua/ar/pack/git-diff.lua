@@ -9,7 +9,7 @@ local specs = {
     keys = {
       { '<localleader>gdl', '<Cmd>InlineDiff<CR>', desc = 'inlinediff: toggle' },
     },
-    setup = function() require('inlinediff').setup({}) end,
+    setup = function() require('inlinediff').setup() end,
   },
   {
     src = 'https://github.com/esmuellert/codediff.nvim',
@@ -19,14 +19,13 @@ local specs = {
       { '<localleader>gdo', '<Cmd>CodeDiff<CR>', desc = 'codediff: open' },
     },
     setup = function()
-      local opts = {
+      require('codediff').setup({
         keymaps = {
           view = {
             toggle_explorer = '<leader>e',
           },
         },
-      }
-      require('codediff').setup(opts)
+      })
     end,
     dependencies = { { src = 'https://github.com/MunifTanjim/nui.nvim' } },
   },

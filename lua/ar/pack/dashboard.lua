@@ -325,14 +325,13 @@ ar.pack.add({
           parts = { 'header', 'clock', 'statistics' },
         }
       end
-      local opts = get_opts()
-      require('startup').setup(opts)
+      require('startup').setup(get_opts())
     end,
   },
   {
     src = 'https://github.com/letieu/btw.nvim',
     cond = get_cond('btw.nvim', 'btw'),
     lazy = false,
-    setup = function() require('btw').setup({}) end,
+    setup = function() require('btw').setup() end,
   },
 })

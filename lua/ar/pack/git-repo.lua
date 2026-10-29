@@ -62,7 +62,7 @@ ar.pack.add({
     },
     setup = function()
       local ru = require('repo-url')
-      ru.setup({})
+      ru.setup()
 
       -- For Go's go.mod file, generate permalinks to the dependency under the
       -- cursor and copy to the clipboard or open in the default browser.

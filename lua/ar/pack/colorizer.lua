@@ -76,6 +76,6 @@ ar.pack.add({
       })
     end,
 
-    setup = function() require('oklch-color-picker').setup({}) end,
+    setup = function() require('oklch-color-picker').setup() end,
   },
 })

@@ -595,6 +595,15 @@ ar.pack.add({
     if ar.pack.dadbod_cmp then
       ar.pack.cmp_opts = ar.pack.dadbod_cmp(ar.pack.cmp_opts)
     end
+    if ar.pack.markdown_cmp then
+      ar.pack.cmp_opts = ar.pack.markdown_cmp(ar.pack.cmp_opts)
+    end
+    if ar.pack.minuet_cmp then
+      ar.pack.cmp_opts = ar.pack.minuet_cmp(ar.pack.cmp_opts)
+    end
+    if ar.pack.px_to_rem_cmp then
+      ar.pack.cmp_opts = ar.pack.px_to_rem_cmp(ar.pack.cmp_opts)
+    end
     require('cmp').setup(ar.pack.cmp_opts)
     if ar.pack.dap_cmp then ar.pack.dap_cmp() end
     ar.command('CmpInfo', function() require('cmp').status() end, {})

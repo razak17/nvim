@@ -43,7 +43,7 @@ ar.pack.add({
     setup = function() require('beside').setup() end,
   },
   {
-    src = 'https://github.com/wallpants/previm/previm',
+    src = 'https://github.com/previm/previm',
     cond = function()
       return ar.get_plugin_cond('previm', not ar.plugins.minimal)
     end,
@@ -102,7 +102,7 @@ ar.pack.add({
     cmd = { 'LivePreview' },
   },
   {
-    src = 'https://github.com/wallpants/hat0uma/prelive.nvim',
+    src = 'https://github.com/hat0uma/prelive.nvim',
     cond = function()
       return ar.get_plugin_cond('prelive.nvim', not ar.plugins.minimal)
     end,

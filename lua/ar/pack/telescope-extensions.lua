@@ -383,7 +383,7 @@ ar.pack.add({
     cond = get_cond('telescope-directory.nvim'),
     lazy = false,
     setup = function()
-      require('telescope-directory').setup({})
+      require('telescope-directory').setup()
       local opts = ar.telescope.opts
       vim.g.telescope_add_extension({ 'directory' }, opts)
       local function get_keys()

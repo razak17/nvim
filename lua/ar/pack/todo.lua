@@ -120,6 +120,9 @@ ar.pack.add({
       )
     end
   end,
+  init = function()
+    vim.g.whichkey_add_spec({ '<localleader>t', group = 'TODO' })
+  end,
   setup = function()
     require('todo-comments').setup({ highlight = { after = '' } })
 

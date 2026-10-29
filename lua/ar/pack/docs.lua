@@ -5,7 +5,7 @@ ar.pack.add({
       return ar.get_plugin_cond('apidocs.nvim', not ar.plugins.minimal)
     end,
     cmd = { 'ApidocsInstall', 'ApidocsOpen', 'ApidocsSearch' },
-    setup = function() require('apidocs').setup({}) end,
+    setup = function() require('apidocs').setup() end,
   },
   {
     src = 'https://github.com/maskudo/devdocs.nvim',

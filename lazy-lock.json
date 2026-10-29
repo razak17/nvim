@@ -98,6 +98,7 @@
   "grug-far.nvim": { "branch": "main", "commit": "11595bf747edc270bce2069d1020502ad4ae56cf" },
   "guess-indent.nvim": { "branch": "main", "commit": "84a4987ff36798c2fc1169cbaff67960aed9776f" },
   "guts.nvim": { "branch": "main", "commit": "a834d0f06a7439594f8ab76635dcaa9440b68aff" },
+  "heirline.nvim": { "branch": "master", "commit": "fae936abb5e0345b85c3a03ecf38525b0828b992" },
   "highlight-undo.nvim": { "branch": "main", "commit": "ee32e12693d70e66f954d09a504a7371d110fc27" },
   "highlighturl.nvim": { "branch": "main", "commit": "7d83c21178042ed7b118f536d7d2cdb545c38210" },
   "icon-picker.nvim": { "branch": "main", "commit": "6feda2881efa74bb977d8990970ed53f315e3812" },

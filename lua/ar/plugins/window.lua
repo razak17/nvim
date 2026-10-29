@@ -21,7 +21,7 @@ return {
     },
     opts = {},
     config = function(_, opts)
-      require('neo-zoom').setup({})
+      require('neo-zoom').setup()
       require('windows').setup(opts)
     end,
     dependencies = { 'anuvyklack/middleclass', 'nyngwang/NeoZoom.lua' },

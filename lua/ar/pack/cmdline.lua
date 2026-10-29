@@ -34,7 +34,7 @@ ar.pack.add({
     end,
     cmd = { 'Bmessages', 'Bmessagesvs', 'Bmessagessp', 'BmessagesEdit' },
     event = 'CmdlineEnter',
-    setup = function() require('bmessages').setup({}) end,
+    setup = function() require('bmessages').setup() end,
   },
   {
     src = 'https://github.com/smjonas/live-command.nvim',

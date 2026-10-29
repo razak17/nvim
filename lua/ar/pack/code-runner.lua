@@ -227,7 +227,7 @@ ar.pack.add({
         { SniprunVirtualTextErr = { link = 'DiffDelete' } },
         { SniprunFloatingWinErr = { link = 'DiffDelete' } },
       })
-      require('sniprun').setup({})
+      require('sniprun').setup()
     end,
   },
 })

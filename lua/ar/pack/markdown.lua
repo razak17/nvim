@@ -1,0 +1,300 @@
+local ui, highlight = ar.ui, ar.highlight
+local coding, minimal = ar.plugins.coding, ar.plugins.minimal
+
+-- Example for configuring Neovim to load user-installed installed Lua rocks:
+local rocks_dir = vim.env.HOME .. '/.luarocks/share/lua/5.1'
+package.path = package.path .. ';' .. rocks_dir .. '/?/init.lua;'
+package.path = package.path .. ';' .. rocks_dir .. '/?.lua;'
+
+ar.pack.add({
+  {
+    src = 'https://github.com/sotte/presenting.nvim',
+    cond = function() return ar.get_plugin_cond('presenting.nvim') end,
+    cmd = { 'Presenting' },
+    setup = function() require('presenting').setup() end,
+  },
+  {
+    src = 'https://github.com/hamidi-dev/org-list.nvim',
+    cond = function() return ar.get_plugin_cond('org-list.nvim') end,
+    keys = { { '<leader>oh', desc = 'org-list: toggle checkbox' } },
+    dependencies = {
+      { src = 'https://github.com/tpope/vim-repeat' },
+    },
+    setup = function()
+      require('org-list').setup({ checkbox_toggle = { key = '<leader>oh' } })
+    end,
+  },
+  {
+    src = 'https://github.com/bullets-vim/bullets.vim',
+    cond = function() return ar.get_plugin_cond('bullets.vim', not minimal) end,
+    ft = { 'markdown' },
+    keys = {
+      -- { 'o', '<Plug>(bullets-newline)', desc = 'bullets: new line' },
+      { 'gN', '<Plug>(bullets-renumber)', desc = 'bullets: renumber' },
+      {
+        'gN',
+        '<Plug>(bullets-renumber)',
+        desc = 'bullets: renumber',
+        mode = { 'x' },
+      },
+      {
+        '<leader>om',
+        '<Plug>(bullets-toggle-checkbox)',
+        desc = 'bullets: toggle checkbox',
+      },
+      {
+        '<C-t>',
+        '<Plug>(bullets-demote)',
+        desc = 'bullets: demote',
+        mode = { 'i' },
+      },
+      { '>>', '<Plug>(bullets-demote)', desc = 'bullets: demote' },
+      {
+        '>',
+        '<Plug>(bullets-demote)',
+        desc = 'bullets: demote',
+        mode = { 'x' },
+      },
+      {
+        '<C-d>',
+        '<Plug>(bullets-promote)',
+        desc = 'bullets: promote',
+        mode = { 'i' },
+      },
+      { '<<', '<Plug>(bullets-promote)', desc = 'bullets: promote' },
+      {
+        '<',
+        '<Plug>(bullets-promote)',
+        desc = 'bullets: promote',
+        mode = { 'x' },
+      },
+    },
+    init = function()
+      vim.g.bullets_set_mappings = 0
+      vim.g.bullets_custom_mappings = {
+        { 'nmap', 'o', '<Plug>(bullets-newline)' },
+        -- { 'imap', '<cr>', '<Plug>(bullets-newline)' },
+        -- { 'inoremap', '<C-cr>', '<cr>' },
+      }
+
+      ar.augroup('BulletsMappings', {
+        event = 'FileType',
+        pattern = { 'markdown' },
+        command = function(args)
+          map('i', '<cr>', '<Plug>(bullets-newline)', { buffer = args.buf })
+          map('i', '<C-cr>', '<cr>', { buffer = args.buf })
+        end,
+      })
+    end,
+  },
+  {
+    src = 'https://github.com/HakonHarnes/img-clip.nvim',
+    cmd = { 'PasteImage' },
+    cond = function() return ar.get_plugin_cond('img-clip.nvim', not minimal) end,
+    setup = function()
+      require('img-clip').setup((function(_, opts)
+        return vim.tbl_extend('force', opts or {}, {
+          default = vim.tbl_deep_extend('force', opts.default or {}, {
+            verbose = false, -- To hide annoying "Content is not an image." warning
+          }),
+        })
+      end)(nil, {}) or {})
+    end,
+  },
+  {
+    src = 'https://github.com/3rd/image.nvim',
+    cond = function()
+      local condition = not minimal
+        and not vim.g.neovide
+        and not ar.kitty_scrollback.enable
+        and ar.config.image.variant == 'image.nvim'
+      return ar.get_plugin_cond('image.nvim', condition)
+    end,
+    ft = { 'markdown' },
+    setup = function()
+      require('image').setup({
+        backend = 'kitty',
+        integrations = {
+          markdown = {
+            floating_windows = true,
+            only_render_image_at_cursor = true,
+          },
+        },
+      })
+    end,
+  },
+  {
+    src = 'https://github.com/Zeioth/markmap.nvim',
+    cond = function() return ar.get_plugin_cond('markmap.nvim', not minimal) end,
+    build = 'yarn global add markmap-cli',
+    cmd = { 'MarkmapOpen', 'MarkmapSave', 'MarkmapWatch', 'MarkmapWatchStop' },
+    setup = function() require('markmap').setup() end,
+  },
+  {
+    src = 'https://github.com/arminveres/md-pdf.nvim',
+    cond = function() return ar.get_plugin_cond('md-pdf.nvim', not minimal) end,
+    keys = {
+      {
+        '<localleader>mp',
+        function() require('md-pdf').convert_md_to_pdf() end,
+        desc = 'md-pdf: convert to pdf',
+      },
+    },
+    setup = function() require('md-pdf').setup() end,
+  },
+  {
+    src = 'https://github.com/NFrid/due.nvim',
+    cond = function() return ar.get_plugin_cond('due.nvim', not minimal) end,
+    ft = 'markdown',
+    setup = function()
+      require('due_nvim').setup({
+        use_clock_time = true,
+        use_clock_today = true,
+        use_seconds = false,
+      })
+    end,
+  },
+  {
+    src = 'https://github.com/AntonVanAssche/md-headers.nvim',
+    cond = function() return ar.get_plugin_cond('md-headers.nvim', coding) end,
+    cmd = { 'MDHeaders', 'MDHeadersCurrent', 'MDHeadersQuickfix' },
+    keys = {
+      { '<localleader>mh', '<Cmd>MDHeaders<CR>', desc = 'md-header: headers' },
+      {
+        '<localleader>mn',
+        '<Cmd>MDHeadersCurrent<CR>',
+        desc = 'md-header: current',
+      },
+    },
+    setup = function()
+      require('md-headers').setup({
+        borderchars = ui.current.border.rectangle,
+      })
+      highlight.plugin('md-headers', {
+        { MarkdownHeadersBorder = { link = 'FloatBorder' } },
+        { MarkdownHeadersTitle = { link = 'FloatTitle' } },
+      })
+    end,
+  },
+  {
+    src = 'https://github.com/AckslD/nvim-FeMaco.lua',
+    cond = function() return ar.get_plugin_cond('nvim-FeMaco.lua', not minimal) end,
+    cmd = { 'FeMaco' },
+    setup = function()
+      require('femaco').setup({
+        float_opts = function(code_block)
+          local clip_val = require('femaco.utils').clip_val
+          return {
+            relative = 'cursor',
+            width = clip_val(5, 120, vim.api.nvim_win_get_width(0) - 10),
+            height = clip_val(
+              5,
+              #code_block.lines,
+              vim.api.nvim_win_get_height(0) - 6
+            ),
+            anchor = 'NW',
+            row = 0,
+            col = 0,
+            style = 'minimal',
+            border = ui.current.border.default,
+            zindex = 1,
+          }
+        end,
+      })
+    end,
+  },
+  {
+    src = 'https://github.com/MeanderingProgrammer/render-markdown.nvim',
+    cond = function() return ar.get_plugin_cond('render-markdown.nvim', coding) end,
+    cmd = { 'RenderMarkdown' },
+    ft = { 'markdown', 'Avante', 'Avante', 'codecompanion' },
+    init = function()
+      ar.add_to_select('command_palette', {
+        ['Toggle RenderMarkdown'] = 'RenderMarkdown toggle',
+      })
+    end,
+    setup = function()
+      require('render-markdown').setup({
+        latex = { enabled = false },
+        completions = {
+          blink = { enabled = ar.config.completion.variant == 'blink' },
+          lsp = { enabled = ar.lsp.enable },
+        },
+        file_types = { 'markdown', 'Avante' },
+        heading = {
+          enabled = true,
+          sign = false, --  { '󰫎 ' }
+          icons = { '󰎤 ', '󰎧 ', '󰎪 ', '󰎭 ', '󰎱 ', '󰎳 ' },
+        },
+        checkbox = {
+          enabled = true,
+          -- position = 'inline',
+          unchecked = {
+            icon = '', -- 🔲
+            highlight = '@markup.list.unchecked',
+          },
+          checked = {
+            icon = '', -- ✅
+            highlight = '@markup.heading',
+          },
+        },
+        bullet = {
+          enabled = true,
+          icons = { '▶', '○', '●', '▷' }, --  '◆', '◇'
+          highlight = 'Directory',
+        },
+        code = {
+          enabled = true,
+          sign = false,
+          render_modes = false,
+          style = ar.config.ui.transparent.enable and 'language' or 'full', -- 'normal' | 'full' | 'language' | 'none'
+          highlight = 'CodeBlock',
+          language_icon = true,
+          language_name = true,
+        },
+      })
+
+      local color1_bg = '#f265b5'
+      local color2_bg = '#37f499'
+      local color3_bg = '#04d1f9'
+      local color4_bg = '#a48cf2'
+      local color5_bg = '#f1fc79'
+      local color6_bg = '#f7c67f'
+      local color_fg = '#323449'
+
+      highlight.plugin('render-markdown', {
+        -- stylua: ignore
+        theme = {
+          ['onedark'] = {
+            -- Heading colors (when not hovered over), extends through the entire line
+            { RenderMarkdownH1Bg = { fg = color_fg, bg = color1_bg } },
+            { RenderMarkdownH2Bg = { fg = color_fg, bg = color2_bg } },
+            { RenderMarkdownH3Bg = { fg = color_fg, bg = color3_bg } },
+            { RenderMarkdownH4Bg = { fg = color_fg, bg = color4_bg } },
+            { RenderMarkdownH5Bg = { fg = color_fg, bg = color5_bg } },
+            { RenderMarkdownH6Bg = { fg = color_fg, bg = color6_bg } },
+            -- Highlight for the heading and sign icons (symbol on the left)
+            -- I have the sign disabled for now, so this makes no effect
+            { RenderMarkdownH1 = { fg = color1_bg, cterm = 'bold', gui = 'bold' } },
+            { RenderMarkdownH2 = { fg = color2_bg, cterm = 'bold', gui = 'bold' } },
+            { RenderMarkdownH3 = { fg = color3_bg, cterm = 'bold', gui = 'bold' } },
+            { RenderMarkdownH4 = { fg = color4_bg, cterm = 'bold', gui = 'bold' } },
+            { RenderMarkdownH5 = { fg = color5_bg, cterm = 'bold', gui = 'bold' } },
+            { RenderMarkdownH6 = { fg = color6_bg, cterm = 'bold', gui = 'bold' } },
+          },
+        },
+      })
+    end,
+  },
+})
+
+ar.pack.markdown_cmp = function(opts)
+  if not ar.has('render-markdown.nvim') then return opts end
+  ar.pack.load('https://github.com/MeanderingProgrammer/render-markdown.nvim')
+  return (function(_, cmp_opts)
+    vim.g.cmp_add_source(cmp_opts, {
+      source = { name = 'render-markdown', group_index = 2 },
+      menu = { ['render-markdown'] = '[RMD]' },
+    })
+  end)(nil, opts) or opts
+end

@@ -19,7 +19,7 @@ ar.pack.add({
     end,
     event = 'UIEnter', -- needed for folds to load in time and comments being closed
     setup = function()
-      local opts = {
+      require('origami').setup({
         useLspFoldsWithTreesitterFallback = { enabled = false }, -- required for `autoFold`
         foldtext = {
           enabled = true,
@@ -32,8 +32,7 @@ ar.pack.add({
           setup = false, -- modifies `h` and `l`
           hOnlyOpensOnFirstColumn = false,
         },
-      }
-      require('origami').setup(opts)
+      })
     end,
   },
   {
@@ -138,7 +137,6 @@ ar.pack.add({
           end,
         }
       end
-      local opts = get_opts()
       ar.highlight.plugin('ufo', {
         theme = {
           ['onedark'] = {
@@ -146,7 +144,7 @@ ar.pack.add({
           },
         },
       })
-      require('ufo').setup(opts)
+      require('ufo').setup(get_opts())
     end,
     dependencies = { { src = 'https://github.com/kevinhwang91/promise-async' } },
   },
@@ -156,9 +154,6 @@ ar.pack.add({
       return ar.get_plugin_cond('fold-imports.nvim', ar.plugins.coding)
     end,
     event = 'BufRead',
-    setup = function()
-      local opts = {}
-      require('fold_imports').setup(opts)
-    end,
+    setup = function() require('fold_imports').setup() end,
   },
 })

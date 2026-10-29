@@ -1,0 +1,103 @@
+local ui, highlight = ar.ui, ar.highlight
+local separators = ui.icons.separators
+local left_thin_block = ui.icons.separators.left_thin_block
+local indentline_enable = ar.config.ui.indentline.enable
+local indentline_variant = ar.config.ui.indentline.variant
+
+ar.pack.add({
+  {
+    src = 'https://github.com/nvimdev/indentmini.nvim',
+    cond = function()
+      local condition = indentline_enable and indentline_variant == 'indentmini'
+      return ar.get_plugin_cond('indentmini.nvim', condition)
+    end,
+    event = 'UIEnter',
+    setup = function()
+      ar.highlight.plugin('indentmini', {
+        { IndentLineCurrent = { link = 'IndentBlanklineContextChar' } },
+        { IndentLine = { link = 'IndentBlanklineChar' } },
+      })
+      require('indentmini').setup({
+        char = separators.left_thin_block,
+        only_current = true,
+        -- stylua: ignore
+        exclude = {
+          'aerial', 'alpha', 'dbout', 'flutterToolsOutline', 'git', 'gitcommit', 'help',
+          'lazy', 'log', 'markdown', 'neogitstatus', 'neo-tree', 'neo-tree-popup', 'norg',
+          'org', 'orgagenda', 'snacks_dashboard', 'startify', 'txt', 'Trouble', 'undotree',
+        },
+      })
+    end,
+  },
+  {
+    src = 'https://github.com/lukas-reineke/indent-blankline.nvim',
+    cond = function()
+      local condition = indentline_enable and indentline_variant == 'ibl'
+      return ar.get_plugin_cond('indent-blankline.nvim', condition)
+    end,
+    event = 'UIEnter',
+    setup = function()
+      require('ibl').setup({
+        indent = {
+          char = left_thin_block,
+          tab_char = left_thin_block,
+          highlight = 'IndentBlanklineChar',
+        },
+        scope = {
+          char = left_thin_block,
+          show_start = false,
+          show_end = false,
+          include = {
+            node_type = {
+              ['*'] = { '*' },
+            },
+          },
+          highlight = { 'IndentBlanklineContextChar' },
+        },
+        exclude = {
+          buftypes = { 'nofile', 'terminal' },
+          -- stylua: ignore
+          filetypes = {
+            'aerial', 'alpha', 'dbout', 'flutterToolsOutline', 'git', 'gitcommit', 'help',
+            'lazy', 'log', 'markdown', 'neogitstatus', 'neo-tree', 'neo-tree-popup', 'norg',
+            'org', 'orgagenda', 'snacks_dashboard', 'startify', 'txt', 'Trouble', 'undotree',
+          },
+        },
+      })
+    end,
+  },
+  {
+    src = 'https://github.com/shellRaining/hlchunk.nvim',
+    cond = function()
+      local condition = indentline_enable and indentline_variant == 'hlchunk'
+      return ar.get_plugin_cond('hlchunk.nvim', condition)
+    end,
+    event = 'BufRead',
+    setup = function()
+      require('hlchunk').setup({
+        indent = {
+          enable = false,
+          chars = { '▏' },
+          style = highlight.get('IndentBlanklineChar', 'fg'),
+        },
+        blank = { enable = false },
+        chunk = {
+          enable = true,
+          use_treesitter = ar.treesitter.enable,
+          chars = {
+            horizontal_line = '─',
+            vertical_line = '│',
+            left_top = '┌',
+            left_bottom = '└',
+            right_arrow = '─',
+          },
+          style = highlight.get('IndentBlanklineContextChar', 'fg'),
+        },
+        line_num = {
+          enable = true,
+          style = highlight.get('CursorLineNr', 'fg'),
+        },
+      })
+    end,
+  },
+})
