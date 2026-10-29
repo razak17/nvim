@@ -581,6 +581,8 @@ local config = {
     disabled = {
       'VectorCode',
       'agentic.nvim',
+      'avante.nvim',
+      'bmessages.nvim',
       'cmp-path',
       'codecompanion.nvim',
       'conflict.nvim',
