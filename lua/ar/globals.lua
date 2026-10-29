@@ -1098,9 +1098,7 @@ function ar.list_insert(list, ...)
 end
 
 --- source: https://github.com/tjdevries/lazy-require.nvim
-
 --- Require on index.
----
 --- Will only require the module after the first index of a module.
 --- Only works for modules that export a table.
 function ar.reqidx(require_path)

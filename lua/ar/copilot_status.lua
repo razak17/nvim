@@ -1,17 +1,7 @@
 local M = {}
 
--- From TJDevries
--- https://github.com/tjdevries/lazy-require.nvim
-local function lazy_require(require_path)
-  return setmetatable({}, {
-    __index = function(_, key) return require(require_path)[key] end,
-
-    __newindex = function(_, key, value) require(require_path)[key] = value end,
-  })
-end
-
-local c = lazy_require('copilot.client')
-local s = lazy_require('copilot.status')
+local c = ar.reqidx('copilot.client')
+local s = ar.reqidx('copilot.status')
 
 local is_current_buffer_attached = function()
   return c.buf_is_attached(vim.api.nvim_get_current_buf())
@@ -61,7 +51,7 @@ M.is_sleep = function()
   if not is_current_buffer_attached() then return false end
 
   if vim.b.copilot_suggestion_auto_trigger == nil then
-    return lazy_require('copilot.config').suggestion.auto_trigger
+    return ar.reqidx('copilot.config').suggestion.auto_trigger
   end
   return vim.b.copilot_suggestion_auto_trigger
 end
