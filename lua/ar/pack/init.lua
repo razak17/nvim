@@ -2,6 +2,8 @@
 local plugins_path = vim.fn.stdpath('config') .. '/lua/ar/pack'
 local module_overrides = ar.config.plugins.modules.override
 
+map('n', '<localleader>L', '<Cmd>ArPack<CR>', { desc = 'open pack ui' })
+
 -- Check if a module is disabled
 ---@param module string The module to search for.
 ---@return boolean disabled # Whether the module is disabled.

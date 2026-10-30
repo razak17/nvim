@@ -164,7 +164,7 @@ local function await(job)
   end
 end
 
-local function run(spec, event, loading)
+local function run(spec, event, loading, force)
   local path = assert(event.data.path, 'Build requires a plugin directory')
   local recipe = type(spec.build) == 'table' and vim.deepcopy(spec.build)
     or spec.build
@@ -177,7 +177,11 @@ local function run(spec, event, loading)
     and latest.path == path
     and latest.fingerprint == fingerprint
     and latest.revision == rev
-    and (loading or latest.status == 'queued' or latest.status == 'running')
+    and (
+      (loading and not force)
+      or latest.status == 'queued'
+      or latest.status == 'running'
+    )
   then
     return latest
   end
@@ -191,7 +195,11 @@ local function run(spec, event, loading)
     event = event,
     timeout = spec.build_timeout or 300000,
     status = 'queued',
-    notify = spec.build_wait == false or event.data.kind == 'update',
+    notify = event.data.kind == 'build' and event.data.background == true
+      or (
+        event.data.kind ~= 'build'
+        and (spec.build_wait == false or event.data.kind == 'update')
+      ),
   }
   M.jobs[spec.src] = job
   -- A fresh checkout has no generated artifacts, even if its revision is cached.
@@ -203,7 +211,7 @@ local function run(spec, event, loading)
     local ok, err = xpcall(function() recipe(event) end, debug.traceback)
     job.in_callback = false
     finish(job, { code = ok and 0 or 1 }, not ok and err or nil)
-  elseif event.data.kind ~= 'install' and cached(job) then
+  elseif not force and event.data.kind ~= 'install' and cached(job) then
     job.status = 'skipped'
   else
     queue[#queue + 1] = job
@@ -212,7 +220,7 @@ local function run(spec, event, loading)
   return job
 end
 
-function M.register(spec)
+local function validate(spec)
   local recipe = spec.build
   local valid = type(recipe) == 'function'
     or (type(recipe) == 'string' and vim.trim(recipe) ~= '')
@@ -239,6 +247,11 @@ function M.register(spec)
       ),
     'build_timeout must be a positive integer'
   )
+end
+
+function M.register(spec)
+  validate(spec)
+  local recipe = spec.build
   local name = spec.name
     or spec.src:gsub('/+$', ''):match('([^/]+)$'):gsub('%.git$', '')
   local group = vim.api.nvim_create_augroup(name .. '_build', { clear = true })
@@ -283,6 +296,33 @@ function M.ensure(spec)
       spec = { name = name, src = spec.src },
     },
   }, true)
+end
+
+-- Manual builds bypass cached success. They do not rerun plugin setup.
+function M.rebuild(spec, path, opts)
+  opts = opts or {}
+  validate(spec)
+  assert(
+    opts.wait == nil or type(opts.wait) == 'boolean',
+    'wait must be boolean'
+  )
+  assert(vim.fn.isdirectory(path) == 1, 'Plugin directory not found: ' .. path)
+  local name = spec.name
+    or spec.src:gsub('/+$', ''):match('([^/]+)$'):gsub('%.git$', '')
+  local job = run(spec, {
+    event = 'User',
+    match = 'ArPackBuild',
+    buf = vim.api.nvim_get_current_buf(),
+    data = {
+      kind = 'build',
+      path = path,
+      spec = { src = spec.src, name = name, version = spec.version },
+      active = ar.pack.loaded[spec.src] == true,
+      background = opts.wait == false,
+    },
+  }, false, true)
+  if opts.wait ~= false then M.wait(spec.src) end
+  return job
 end
 
 function M.wait(src)

@@ -166,4 +166,5 @@ function M.open(snapshot)
   return buf
 end
 
+M.details = details
 return M

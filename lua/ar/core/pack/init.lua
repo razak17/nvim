@@ -587,6 +587,39 @@ function ar.pack.load(name)
   return ar.pack.loaded[state.spec.src] == true
 end
 
+--- Force a registered plugin's build without repeating its setup.
+--- Lua callbacks require a loaded plugin and receive data.kind = 'build'.
+---@param name string Source URL or unambiguous native package name.
+---@param opts? {wait?: boolean} Defaults to waiting; false returns a background job.
+---@return PackBuildJob
+function ar.pack.rebuild(name, opts)
+  local state = registered_state(name)
+  local spec = state.spec
+  assert(spec.build, 'No build configured for ' .. name)
+  assert(
+    type(spec.build) ~= 'function' or ar.pack.loaded[spec.src],
+    'Load the plugin before rebuilding its Lua callback'
+  )
+  local path
+  if spec.dev then
+    local repository =
+      spec.src:gsub('/+$', ''):match('([^/]+)$'):gsub('%.git$', '')
+    path = vim.fs.joinpath(vim.fn.expand(ar.pack.dev.path), repository)
+  else
+    local package_name = spec.name
+      or spec.src:gsub('/+$', ''):match('([^/]+)$'):gsub('%.git$', '')
+    local package =
+      vim.pack.get({ package_name }, { info = false, offline = true })[1]
+    assert(
+      package and package.spec and package.spec.src == spec.src,
+      'Installed package source does not match ' .. spec.src
+    )
+    path = package.path
+  end
+  assert(path, 'Plugin directory is unavailable for ' .. name)
+  return require('ar.core.pack.build').rebuild(spec, path, opts)
+end
+
 ---@class PackInfo
 ---@field src string
 ---@field name string
@@ -600,6 +633,8 @@ end
 ---@field load_ms? number Inclusive of dependencies and waited builds.
 ---@field error? string
 ---@field build? table
+---@field has_build boolean
+---@field build_type? string
 
 local function pack_info(state)
   local spec = state.spec
@@ -612,6 +647,8 @@ local function pack_info(state)
     status = state.status,
     lazy = lazy == true,
     dev = spec.dev == true,
+    has_build = spec.build ~= nil and spec.build ~= false,
+    build_type = spec.build and type(spec.build) or nil,
     dependencies = {},
     triggers = vim.deepcopy(
       state.triggers
@@ -689,6 +726,27 @@ function ar.pack.stats()
   end
   return stats
 end
+
+--- Browse registered and installed packages using local metadata.
+--- l loads a registered plugin, b forces its configured build, and o opens its
+--- directory in a split. Manual builds preserve cached loader failures.
+--- c checks the selected package, C checks installed remote packages, and u
+--- applies its displayed target with native version constraints and build hooks.
+--- Browsing and r refresh stay offline. Checks can also run on a configured timer.
+---@param opts? {query?: string, filter?: string}
+function ar.pack.open(opts) return require('ar.core.pack.ui').open(opts) end
+
+--- Configure periodic update checks for this session. Durations are in seconds.
+---@param opts? {enabled?: boolean, interval?: number, delay?: number, notify?: boolean}
+function ar.pack.setup_checker(opts)
+  require('ar.core.pack.checker').setup(opts or ar.pack.checker)
+end
+
+api.nvim_create_user_command(
+  'ArPack',
+  function(args) ar.pack.open(args.args ~= '' and { query = args.args } or nil) end,
+  { nargs = '*', desc = 'Browse packages, dependencies and build output' }
+)
 
 api.nvim_create_user_command('ArPackInfo', function(args)
   local name = args.args ~= '' and args.args or nil
@@ -844,3 +902,6 @@ function ar.pack.add(specs)
     end
   end
 end
+
+require('ar.core.pack.update-status').setup()
+ar.pack.setup_checker()

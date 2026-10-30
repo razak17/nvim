@@ -642,6 +642,7 @@ _G.ar = ar or namespace
 _G.ar.config = config
 _G.ar.pack = {
   defaults = { lazy = true },
+  checker = { enabled = true, interval = 3600, delay = 30, notify = false },
   dev = { path = vim.fs.joinpath(vim.g.projects_dir, 'plugins') },
   loaded = {},
 }
