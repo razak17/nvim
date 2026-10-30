@@ -159,10 +159,10 @@ function M.file_size()
   return string.format(' %.1f%s', fsize / math.pow(1024, i), suffix[i + 1])
 end
 
-function M.file_icon()
+function M.file_icon(name)
   if ar.has('nvim-web-devicons') or ar.has('mini.icons') then
-    local icon, icon_hl =
-      require('nvim-web-devicons').get_icon(fn.expand('%:t'))
+    name = name or fn.expand('%:t')
+    local icon, icon_hl = require('nvim-web-devicons').get_icon(name)
     return icon, icon_hl
   end
   return codicons.documents.default_file, 'DevIconDefault'
@@ -241,6 +241,15 @@ function M.lazy_updates()
   local has_pending_updates = lazy_ok and lazy.has_updates() or false
   if has_pending_updates then return pending_updates end
   return ''
+end
+
+--- Formatted package update count; empty when nothing is available.
+function M.package_updates()
+  if ar.package_manager ~= 'vim.pack' then return M.lazy_updates() end
+  local updates = require('ar.core.pack.update-status').get()
+  if not updates then return '' end
+  local count = updates.available
+  return count > 0 and (' ' .. count) or ''
 end
 
 function M.package_info()

@@ -132,9 +132,9 @@ local function python_env()
 end
 
 --- @return string
-local function lazy()
-  if not ar.has('lazy.nvim') then return '' end
-  local updates = stl.lazy_updates()
+local function package_updates()
+  local updates = stl.package_updates()
+  if updates == '' then return '' end
   return string.format('%%#StatusLineLazyUpdates# %s%%*', updates)
 end
 
@@ -356,7 +356,7 @@ function ar.ui.statusline.render()
     search_matches(),
     lsp_active(),
     python_env(),
-    lazy(),
+    package_updates(),
     filetype(),
     lsp_clients(),
     location(),

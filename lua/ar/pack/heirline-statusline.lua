@@ -88,9 +88,12 @@ return function(opts)
 
   local file_icon = {
     init = function(self)
-      self.icon, self.icon_hl = stl.file_icon()
+      local name = fn.expand('%:t')
+      self.icon, self.icon_hl = stl.file_icon(name)
     end,
-    provider = function(self) return self.icon and (' ' .. self.icon) end,
+    provider = function(self)
+      return not ar.falsy(self.icon) and (' ' .. self.icon) or ''
+    end,
     hl = function(self)
       local bg = api.nvim_get_option_value('background', { scope = 'global' })
       if not self.icon_hl then return nil end
@@ -410,7 +413,7 @@ return function(opts)
       hl = { fg = 'comment', bold = true },
     },
     {
-      provider = function() return ' ' .. stl.lazy_updates() end,
+      provider = function() return ' ' .. stl.package_updates() end,
       hl = { fg = 'dark_orange' },
     },
     align,
@@ -836,7 +839,7 @@ return function(opts)
     {
       flexible = 5,
       {
-        provider = function() return ' ' .. stl.lazy_updates() end,
+        provider = function() return ' ' .. stl.package_updates() end,
         hl = { fg = 'dark_orange' },
         on_click = {
           callback = function() require('lazy').update() end,
