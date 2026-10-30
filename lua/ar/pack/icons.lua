@@ -21,15 +21,12 @@ ar.pack.add({
       vim.schedule(function()
         require('mini.icons').setup({
           file = {
-            ['devcontainer.json'] = { glyph = '', hl = 'MiniIconsAzure' },
             ['init.lua'] = { glyph = '󰢱', hl = 'MiniIconsAzure' }, -- disable nvim glyph: https://github.com/nvim-mini/mini.nvim/issues/1384
             ['README.md'] = { glyph = '' },
             ['.ignore'] = { glyph = '󰈉', hl = 'MiniIconsGrey' },
             ['pre-commit'] = { glyph = '󰊢' },
           },
           filetype = {
-            json = { glyph = '' },
-            jsonc = { glyph = '' },
             dotenv = { glyph = '', hl = 'MiniIconsYellow' },
             css = { glyph = '', hl = 'MiniIconsRed' },
             typescript = { hl = 'MiniIconsCyan' },
