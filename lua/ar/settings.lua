@@ -2,6 +2,37 @@ if not ar then return end
 
 local ui = ar.ui
 local o, opt, fn = vim.o, vim.opt, vim.fn
+
+local function safe_winborder()
+  local winborder_opts = {
+    'bold',
+    'single',
+    'double',
+    'rounded',
+    'solid',
+    'shadow',
+    'none',
+  }
+  if not vim.tbl_contains(winborder_opts, ar.config.ui.border) then
+    vim.schedule(
+      function()
+        vim.notify(
+          string.format(
+            "ar.config.ui.border value '%s' is invalid. Falling back to 'single'. Valid options are: %s",
+            ar.config.ui.border,
+            table.concat(winborder_opts, ', ')
+          ),
+          vim.log.levels.WARN,
+          { title = 'ar.nvim' }
+        )
+      end
+    )
+    return 'single'
+  end
+  return ar.config.ui.border
+end
+
+local winborder = safe_winborder()
 --------------------------------------------------------------------------------
 -- Neovim Directories {{{1
 --------------------------------------------------------------------------------
@@ -165,35 +196,7 @@ o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→', '↴'
 if not ar.config.plugin.extra['auto-cursorline'].enable then
   o.cursorline = true
 end
-local function safe_winborder()
-  local winborder_opts = {
-    'bold',
-    'single',
-    'double',
-    'rounded',
-    'solid',
-    'shadow',
-    'none',
-  }
-  if not vim.tbl_contains(winborder_opts, ar.config.ui.border) then
-    vim.schedule(
-      function()
-        vim.notify(
-          string.format(
-            "ar.config.ui.border value '%s' is invalid. Falling back to 'single'. Valid options are: %s",
-            ar.config.ui.border,
-            table.concat(winborder_opts, ', ')
-          ),
-          vim.log.levels.WARN,
-          { title = 'ar.nvim' }
-        )
-      end
-    )
-    return 'single'
-  end
-  return ar.config.ui.border
-end
-o.winborder = safe_winborder()
+o.winborder = winborder
 --------------------------------------------------------------------------------
 -- List chars {{{1
 --------------------------------------------------------------------------------
@@ -222,7 +225,7 @@ o.cindent = true -- Increase indent on line after opening brace
 o.smartindent = true
 --------------------------------------------------------------------------------
 -- LSP autocompletion
-o.pumborder = safe_winborder()
+o.pumborder = winborder
 o.pumheight = 15
 o.confirm = true -- make vim prompt me to save before doing destructive things
 if ar.config.completion.variant == 'native' then
