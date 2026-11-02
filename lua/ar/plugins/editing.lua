@@ -64,7 +64,7 @@ return {
     cmd = { 'YankyRingHistory' },
     opts = { ring = { storage = 'sqlite' } },
     config = function(_, opts)
-      ar.highlight.plugin('treehopper', {
+      ar.highlight.plugin('yanky', {
         theme = {
           ['onedark'] = { { YankyYanked = { link = 'IncSearch' } } },
         },

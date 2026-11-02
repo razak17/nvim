@@ -8,7 +8,7 @@ ar.pack.add({
         group = 'Yanky',
         mode = { 'n', 'x' },
       })
-      ar.highlight.plugin('treehopper', {
+      ar.highlight.plugin('yanky', {
         { YankyYanked = { link = 'IncSearch' } },
       })
     end,
