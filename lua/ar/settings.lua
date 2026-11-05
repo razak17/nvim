@@ -238,6 +238,21 @@ if ar.config.completion.variant == 'native' then
       vim.bo[args.buf].autocomplete = fn.win_gettype() ~= 'popup'
     end,
   })
+  -- https://github.com/neovim/neovim/issues/38248
+  vim.api.nvim_create_autocmd('CompleteChanged', {
+    group = vim.api.nvim_create_augroup(
+      'CompletionPopupBorder',
+      { clear = true }
+    ),
+    callback = function()
+      vim.schedule(function()
+        local win = vim.fn.complete_info().preview_winid
+        if win and vim.api.nvim_win_is_valid(win) then
+          vim.api.nvim_win_set_config(win, { border = winborder })
+        end
+      end)
+    end,
+  })
 end
 opt.completeopt = { 'fuzzy', 'menuone', 'noselect', 'popup' }
 o.hlsearch = true
