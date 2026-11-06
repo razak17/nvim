@@ -1,4 +1,3 @@
-local fn = vim.fn
 local coding = ar.plugins.coding
 
 local function expand_or_jump()
@@ -33,8 +32,8 @@ end
 
 local function get_snippets_list()
   local modules_dir =
-    vim.fs.joinpath(fn.stdpath('config'), 'lua', 'ar', 'snippets')
-  local tmp = vim.split(fn.globpath(modules_dir, '*.lua'), '\n')
+    vim.fs.joinpath(vim.fn.stdpath('config'), 'lua', 'ar', 'snippets')
+  local tmp = vim.split(vim.fn.globpath(modules_dir, '*.lua'), '\n')
   return vim
     .iter(tmp)
     :map(function(f) return string.match(f, 'lua/(.+).lua$') end)
@@ -124,11 +123,6 @@ ar.pack.add({
             virt_text = { { ' ', 'TSTextReference' } },
           },
         },
-        [types.insertNode] = {
-          active = {
-            virt_text = { { ' ', 'TSEmphasis' } },
-          },
-        },
       },
       enable_autosnippets = ar.config.completion.variant ~= 'native',
       snip_env = {
@@ -147,7 +141,7 @@ ar.pack.add({
     require('luasnip.loaders.from_lua').lazy_load()
 
     local paths = {
-      vim.fs.joinpath(fn.stdpath('config'), 'snippets'),
+      vim.fs.joinpath(vim.fn.stdpath('config'), 'snippets'),
     }
 
     if friendly then
