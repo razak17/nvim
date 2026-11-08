@@ -33,6 +33,7 @@ vim.o.softtabstop = -1
 vim.o.cindent = true -- Increase indent on line after opening brace
 vim.o.smartindent = true
 vim.o.laststatus = 3
+vim.o.autocomplete = true
 ------------------------------------------------------------------------------
 -- Leader {{{1
 ------------------------------------------------------------------------------
@@ -298,6 +299,25 @@ vim.keymap.set(
   end,
   { desc = 'undotree toggle' }
 )
+ar.augroup('LspCompletion', {
+  event = { 'LspAttach' },
+  command = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if not client then return end
+    local M = vim.lsp.protocol.Methods
+    if client:supports_method(M.textDocument_completion) then
+      vim.lsp.completion.enable(true, client.id, bufnr, {
+        autotrigger = true,
+        convert = function(item)
+          return {
+            abbr = item.label:gsub('%b()', ''),
+            kind = vim.lsp.protocol.CompletionItemKind[item.kind] or 'Text',
+          }
+        end,
+      })
+    end
+  end,
+})
 
 vim.lsp.config('lua_ls', {
   ---@type lspconfig.settings.lua_ls
