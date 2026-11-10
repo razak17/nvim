@@ -21,7 +21,7 @@ vim.g.python3_host_prog = vim.fs.joinpath(data, 'venv', 'bin', 'python3')
 for _, v in pairs({ 'python', 'ruby', 'perl' }) do
   g['loaded_' .. v .. '_provider'] = 0
 end
-for _, v in pairs({ 'netrw', 'netrwPlugin' }) do
+for _, v in pairs({ 'gtags_cscope', 'netrw', 'netrwPlugin' }) do
   g['loaded_' .. v] = 1
 end
 --------------------------------------------------------------------------------
