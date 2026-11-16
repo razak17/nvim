@@ -306,7 +306,7 @@ ar.augroup('LspCompletion', {
     if not client then return end
     local M = vim.lsp.protocol.Methods
     if client:supports_method(M.textDocument_completion) then
-      vim.lsp.completion.enable(true, client.id, bufnr, {
+      vim.lsp.completion.enable(true, client.id, args.buf, {
         autotrigger = true,
         convert = function(item)
           return {
